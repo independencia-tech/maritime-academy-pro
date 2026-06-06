@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Maritime Academy Pro" },
+      { name: "description", content: "Maritime Academy Pro is an IMO/STCW certified maritime training platform." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Maritime Academy Pro" },
+      { property: "og:description", content: "Maritime Academy Pro is an IMO/STCW certified maritime training platform." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Maritime Academy Pro" },
+      { name: "twitter:description", content: "Maritime Academy Pro is an IMO/STCW certified maritime training platform." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/Ck4Em8W96Lb4Nh1QAZy2OFz2FOr2/social-images/social-1780777350475-1000018437.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/Ck4Em8W96Lb4Nh1QAZy2OFz2FOr2/social-images/social-1780777350475-1000018437.webp" },
     ],
     links: [
       {
