@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 const LS_KEY = "map_registrations";
-const ADMIN_CODE = "admin123";
+const ADMIN_CODE = "Mapmarino2025";
 
 function loadRegs() {
   try {
