@@ -45,6 +45,7 @@ const T = {
     successSub:"Tu seras notifié(e) en priorité dès le lancement officiel de Maritime Academy Pro.",
     successWith:"Inscrit avec",
     backHome:"← RETOUR À L'ACCUEIL",
+    alreadyRegistered:"Déjà inscrit ? Tu seras contacté(e) au lancement 🚀",
     errName:"Le nom est requis",
     errEmail:"L'email est requis",
     errEmailInvalid:"Email invalide",
@@ -90,6 +91,7 @@ const T = {
     successSub:"You will be notified first when Maritime Academy Pro officially launches.",
     successWith:"Registered with",
     backHome:"← BACK TO HOME",
+    alreadyRegistered:"Already registered? You will be contacted at launch 🚀",
     errName:"Full name is required",
     errEmail:"Email is required",
     errEmailInvalid:"Invalid email",
@@ -135,6 +137,7 @@ const T = {
     successSub:"Serás notificado/a al lanzamiento oficial de Maritime Academy Pro.",
     successWith:"Registrado con",
     backHome:"← VOLVER AL INICIO",
+    alreadyRegistered:"¿Ya registrado? Serás contactado en el lanzamiento 🚀",
     errName:"El nombre es obligatorio",
     errEmail:"El correo es obligatorio",
     errEmailInvalid:"Correo no válido",
@@ -180,6 +183,7 @@ const T = {
     successSub:"Você será notificado/a no lançamento oficial do Maritime Academy Pro.",
     successWith:"Inscrito com",
     backHome:"← VOLTAR AO INÍCIO",
+    alreadyRegistered:"Já inscrito? Você será contactado no lançamento 🚀",
     errName:"O nome é obrigatório",
     errEmail:"O email é obrigatório",
     errEmailInvalid:"Email inválido",
@@ -648,6 +652,8 @@ function RegisterPage({ setPage, lang }) {
               cursor:loading?"default":"pointer",
               boxShadow:"0 8px 32px rgba(26,111,212,0.4)",marginTop:8,
             }}>{loading ? t.submitting : t.submitBtn}</button>
+            <p style={{fontSize:11,textAlign:"center",
+              color:"rgba(240,244,255,0.35)",marginTop:4}}>{t.alreadyRegistered}</p>
             <p style={{fontSize:10,textAlign:"center",
               color:"rgba(240,244,255,0.25)",lineHeight:1.6}}>{t.privacyNote}</p>
           </div>
