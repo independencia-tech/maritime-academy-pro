@@ -4,10 +4,16 @@ const LS_KEY = "map_registrations";
 const ADMIN_CODE = "admin123";
 
 function loadRegs() {
-  try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
+  try {
+    if (typeof window === "undefined") return [];
+    return JSON.parse(localStorage.getItem(LS_KEY) || "[]");
+  }
   catch { return []; }
 }
-function saveRegs(data) { localStorage.setItem(LS_KEY, JSON.stringify(data)); }
+function saveRegs(data) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(LS_KEY, JSON.stringify(data));
+}
 
 const T = {
   fr: {
