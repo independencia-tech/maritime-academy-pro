@@ -884,7 +884,8 @@ export default function QuestionnaireS7({
               <span style={{color:C.gold2,fontWeight:700}}>
                 {requiredKeys.filter(k=>answers[k]!==null).length+
                   (country.trim().length>0?1:0)}/
-                {requiredKeys.length+1} complétées
+                {requiredKeys.length+1}{" "}
+                {lang==="en"?"completed":lang==="es"?"completadas":lang==="pt"?"concluídas":"complétées"}
               </span>
             </div>
           )}
