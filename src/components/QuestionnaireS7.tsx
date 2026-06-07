@@ -81,6 +81,11 @@ const T = {
     errRequired:"⚠️ Cette question est obligatoire",
     errCountry:"⚠️ Indique ton pays de résidence",
     errSummary:"Merci de compléter les champs surlignés en rouge",
+    // Photo upload
+    errPhotoType:"⚠️ Seuls les formats JPG, PNG, GIF et WEBP sont acceptés",
+    errPhotoSize:"⚠️ La photo ne doit pas dépasser 2 Mo",
+    photoRemove:"Supprimer la photo",
+    photoChange:"Changer la photo",
   },
   en:{
     back:"◀ Back",
