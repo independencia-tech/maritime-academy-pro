@@ -78,6 +78,9 @@ const T = {
     qBtnWait:"Réponds à toutes les questions pour continuer",
     // Summary label
     summaryTitle:"🗺️ TON PARCOURS PERSONNALISÉ",
+    errRequired:"⚠️ Cette question est obligatoire",
+    errCountry:"⚠️ Indique ton pays de résidence",
+    errSummary:"Merci de compléter les champs surlignés en rouge",
   },
   en:{
     back:"◀ Back",
@@ -133,6 +136,9 @@ const T = {
     qBtn:"GENERATE MY STATUS →",
     qBtnWait:"Answer all questions to continue",
     summaryTitle:"🗺️ YOUR PERSONALIZED JOURNEY",
+    errRequired:"⚠️ This question is required",
+    errCountry:"⚠️ Please enter your country of residence",
+    errSummary:"Please complete the fields highlighted in red",
   },
   es:{
     back:"◀ Volver",
@@ -188,6 +194,9 @@ const T = {
     qBtn:"GENERAR MI ESTADO →",
     qBtnWait:"Responde todas las preguntas para continuar",
     summaryTitle:"🗺️ TU CAMINO PERSONALIZADO",
+    errRequired:"⚠️ Esta pregunta es obligatoria",
+    errCountry:"⚠️ Indica tu país de residencia",
+    errSummary:"Por favor completa los campos en rojo",
   },
   pt:{
     back:"◀ Voltar",
@@ -243,6 +252,9 @@ const T = {
     qBtn:"GERAR MEU STATUS →",
     qBtnWait:"Responda todas as perguntas para continuar",
     summaryTitle:"🗺️ SUA JORNADA PERSONALIZADA",
+    errRequired:"⚠️ Esta pergunta é obrigatória",
+    errCountry:"⚠️ Indique seu país de residência",
+    errSummary:"Por favor complete os campos em vermelho",
   },
 };
 
