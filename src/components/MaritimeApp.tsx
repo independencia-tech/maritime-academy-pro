@@ -308,7 +308,7 @@ function LanguageSelect({ setLang, setPage }) {
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:24}}>
           {langs.map(l => (
             <button key={l.code}
-              onClick={() => { setLang(l.code); setPage("landing"); }}
+              onClick={() => { setLang(l.code); setPage("music"); }}
               style={{
                 display:"flex",alignItems:"center",gap:12,
                 padding:"14px 16px",borderRadius:16,
