@@ -96,6 +96,9 @@ const T = {
     notifOfficer:"Officer {nom}, the sea awaits you!",
     notifMaster:"Master {nom}, knowledge calls you!",
     notifCaptain:"Captain {nom}, your command awaits!",
+    resetBtn:"🗑️ Reset my data",
+    resetConfirm:"⚠️ Confirm deletion?",
+    resetCancel:"Cancel",
     goalLabels:{
       nav:"Master navigation",
       stcw:"STCW Certifications",
@@ -152,6 +155,9 @@ const T = {
     notifOfficer:"Oficial {nom}, ¡el mar te espera!",
     notifMaster:"Maestro {nom}, ¡el conocimiento te llama!",
     notifCaptain:"Capitán {nom}, ¡tu mando te espera!",
+    resetBtn:"🗑️ Borrar mis datos",
+    resetConfirm:"⚠️ ¿Confirmar el borrado?",
+    resetCancel:"Cancelar",
     goalLabels:{
       nav:"Dominar la navegación",
       stcw:"Certificaciones STCW",
@@ -208,6 +214,9 @@ const T = {
     notifOfficer:"Oficial {nom}, o mar aguarda você!",
     notifMaster:"Mestre {nom}, o conhecimento chama você!",
     notifCaptain:"Capitão {nom}, seu comando aguarda!",
+    resetBtn:"🗑️ Apagar meus dados",
+    resetConfirm:"⚠️ Confirmar a exclusão?",
+    resetCancel:"Cancelar",
     goalLabels:{
       nav:"Dominar a navegação",
       stcw:"Certificações STCW",
