@@ -921,10 +921,11 @@ export default function App() {
       {page==="questionnaire" && (
         <QuestionnaireS7
           lang={lang}
-          onBack={() => setPage("landing")}
-          onNext={() => setPage("register")}
+          onBack={() => setPage("register")}
+          onNext={() => setPage("status")}
         />
       )}
+      {page==="status"      && <StatusPage setPage={setPage} lang={lang}/>}
     </>
   );
 }
