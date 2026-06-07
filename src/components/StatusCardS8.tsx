@@ -451,6 +451,17 @@ export default function StatusCardS8({
     alert("📥 Dans l'app finale, ta carte sera téléchargée en PNG !");
   };
 
+  const handleReset=()=>{
+    if(!confirmReset){ setConfirmReset(true); return; }
+    try{
+      localStorage.removeItem("map_status_card");
+      localStorage.removeItem("map_last_reg");
+      localStorage.removeItem("map_regs");
+      localStorage.removeItem("map_registrations");
+    }catch{}
+    window.location.reload();
+  };
+
   return (
     <div style={{
       minHeight:"100vh",
