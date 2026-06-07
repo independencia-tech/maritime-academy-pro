@@ -659,6 +659,13 @@ function RegisterPage({ setPage, lang }) {
             }}>{loading ? t.submitting : t.submitBtn}</button>
             <p style={{fontSize:11,textAlign:"center",
               color:"rgba(240,244,255,0.35)",marginTop:4}}>{t.alreadyRegistered}</p>
+            <button onClick={() => setPage("questionnaire")} style={{
+              width:"100%",padding:"12px 0",borderRadius:14,border:"none",
+              background:"rgba(255,255,255,0.07)",
+              borderBottom:"1px solid rgba(201,146,42,0.25)",
+              fontFamily:"'Nunito',sans-serif",fontSize:12,fontWeight:700,
+              color:"rgba(240,244,255,0.55)",cursor:"pointer",marginTop:4,
+            }}>{t.startQuestionnaire}</button>
             <p style={{fontSize:10,textAlign:"center",
               color:"rgba(240,244,255,0.25)",lineHeight:1.6}}>{t.privacyNote}</p>
           </div>
