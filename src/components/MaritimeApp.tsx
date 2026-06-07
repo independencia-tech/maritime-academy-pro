@@ -46,6 +46,7 @@ const T = {
     successSub:"Tu seras notifié(e) en priorité dès le lancement officiel de Maritime Academy Pro.",
     successWith:"Inscrit avec",
     backHome:"← RETOUR À L'ACCUEIL",
+    startQuestionnaire:"📝 Commencer le questionnaire",
     alreadyRegistered:"Déjà inscrit ? Tu seras contacté(e) au lancement 🚀",
     errName:"Le nom est requis",
     errEmail:"L'email est requis",
