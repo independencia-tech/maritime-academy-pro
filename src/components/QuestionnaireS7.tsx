@@ -506,8 +506,10 @@ export default function QuestionnaireS7({
   setProfile=()=>{},
 }) {
   const t=T[lang]||T.fr;
+  const LS_KEY="map_questionnaire";
   const [vis,setVis]=useState(false);
   const [showMoreShips,setShowMoreShips]=useState(false);
+  const [hydrated,setHydrated]=useState(false);
   const [country,setCountry]=useState("");
   const [attempted,setAttempted]=useState(false);
   const [answers,setAnswers]=useState({
@@ -515,6 +517,28 @@ export default function QuestionnaireS7({
     ship:null,duration:null,time:null,
     reminder:null,country:"",photo:null,
   });
+
+  // Restore from localStorage
+  useEffect(()=>{
+    if(typeof window==="undefined"){ setHydrated(true); return; }
+    try{
+      const raw=localStorage.getItem(LS_KEY);
+      if(raw){
+        const saved=JSON.parse(raw);
+        if(saved&&typeof saved==="object"){
+          if(saved.answers) setAnswers(p=>({...p,...saved.answers}));
+          if(typeof saved.country==="string") setCountry(saved.country);
+        }
+      }
+    }catch{}
+    setHydrated(true);
+  },[]);
+
+  // Persist on change (after hydration so we don't overwrite saved data)
+  useEffect(()=>{
+    if(!hydrated||typeof window==="undefined") return;
+    try{ localStorage.setItem(LS_KEY,JSON.stringify({answers,country})); }catch{}
+  },[answers,country,hydrated]);
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
@@ -805,20 +829,23 @@ export default function QuestionnaireS7({
           </Card>
 
           {/* ── SUBMIT ── */}
-          <button onClick={handleSubmit} style={{
-            width:"100%",padding:"17px 0",
-            border:"none",borderRadius:16,
-            background:allDone
-              ?`linear-gradient(135deg,${C.blue},${C.gold})`
-              :"rgba(26,111,212,0.25)",
-            fontFamily:"'Cinzel',serif",fontSize:15,
-            fontWeight:700,letterSpacing:2,
-            color:allDone?C.white:"rgba(240,244,255,0.35)",
-            cursor:"pointer",
-            boxShadow:allDone?"0 10px 36px rgba(26,111,212,0.4)":"none",
-            transition:"all 0.3s",
-            marginBottom:12,
-          }}>{t.qBtn}</button>
+          <button onClick={handleSubmit} disabled={!allDone}
+            aria-disabled={!allDone}
+            style={{
+              width:"100%",padding:"17px 0",
+              border:"none",borderRadius:16,
+              background:allDone
+                ?`linear-gradient(135deg,${C.blue},${C.gold})`
+                :"rgba(26,111,212,0.25)",
+              fontFamily:"'Cinzel',serif",fontSize:15,
+              fontWeight:700,letterSpacing:2,
+              color:allDone?C.white:"rgba(240,244,255,0.35)",
+              cursor:allDone?"pointer":"not-allowed",
+              opacity:allDone?1:0.7,
+              boxShadow:allDone?"0 10px 36px rgba(26,111,212,0.4)":"none",
+              transition:"all 0.3s",
+              marginBottom:12,
+            }}>{t.qBtn}</button>
 
           {attempted&&!allDone&&(
             <div style={{
