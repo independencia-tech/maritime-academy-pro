@@ -46,6 +46,7 @@ const T = {
     successSub:"Tu seras notifié(e) en priorité dès le lancement officiel de Maritime Academy Pro.",
     successWith:"Inscrit avec",
     backHome:"← RETOUR À L'ACCUEIL",
+    startQuestionnaire:"📝 Commencer le questionnaire",
     alreadyRegistered:"Déjà inscrit ? Tu seras contacté(e) au lancement 🚀",
     errName:"Le nom est requis",
     errEmail:"L'email est requis",
@@ -92,6 +93,7 @@ const T = {
     successSub:"You will be notified first when Maritime Academy Pro officially launches.",
     successWith:"Registered with",
     backHome:"← BACK TO HOME",
+    startQuestionnaire:"📝 Start questionnaire",
     alreadyRegistered:"Already registered? You will be contacted at launch 🚀",
     errName:"Full name is required",
     errEmail:"Email is required",
@@ -138,6 +140,7 @@ const T = {
     successSub:"Serás notificado/a al lanzamiento oficial de Maritime Academy Pro.",
     successWith:"Registrado con",
     backHome:"← VOLVER AL INICIO",
+    startQuestionnaire:"📝 Comenzar el cuestionario",
     alreadyRegistered:"¿Ya registrado? Serás contactado en el lanzamiento 🚀",
     errName:"El nombre es obligatorio",
     errEmail:"El correo es obligatorio",
@@ -184,6 +187,7 @@ const T = {
     successSub:"Você será notificado/a no lançamento oficial do Maritime Academy Pro.",
     successWith:"Inscrito com",
     backHome:"← VOLTAR AO INÍCIO",
+    startQuestionnaire:"📝 Iniciar o questionário",
     alreadyRegistered:"Já inscrito? Você será contactado no lançamento 🚀",
     errName:"O nome é obrigatório",
     errEmail:"O email é obrigatório",
@@ -590,6 +594,13 @@ function RegisterPage({ setPage, lang }) {
             <div style={{fontSize:15,fontWeight:700,color:"#fff"}}>{form.name}</div>
             <div style={{fontSize:12,color:"rgba(240,244,255,0.5)",marginTop:2}}>{form.email}</div>
           </div>
+          <button onClick={() => setPage("questionnaire")} style={{
+            width:"100%",padding:"14px 0",borderRadius:16,border:"none",
+            background:"rgba(201,146,42,0.15)",
+            border:"1px solid rgba(201,146,42,0.35)",
+            fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:700,
+            color:"#e8b94f",cursor:"pointer",marginBottom:12,
+          }}>{t.startQuestionnaire}</button>
           <button onClick={() => setPage("landing")} style={{
             width:"100%",padding:"15px 0",borderRadius:16,border:"none",
             background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
@@ -655,6 +666,13 @@ function RegisterPage({ setPage, lang }) {
             }}>{loading ? t.submitting : t.submitBtn}</button>
             <p style={{fontSize:11,textAlign:"center",
               color:"rgba(240,244,255,0.35)",marginTop:4}}>{t.alreadyRegistered}</p>
+            <button onClick={() => setPage("questionnaire")} style={{
+              width:"100%",padding:"12px 0",borderRadius:14,border:"none",
+              background:"rgba(255,255,255,0.07)",
+              borderBottom:"1px solid rgba(201,146,42,0.25)",
+              fontFamily:"'Nunito',sans-serif",fontSize:12,fontWeight:700,
+              color:"rgba(240,244,255,0.55)",cursor:"pointer",marginTop:4,
+            }}>{t.startQuestionnaire}</button>
             <p style={{fontSize:10,textAlign:"center",
               color:"rgba(240,244,255,0.25)",lineHeight:1.6}}>{t.privacyNote}</p>
           </div>
