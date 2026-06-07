@@ -510,6 +510,13 @@ export default function StatusCardS8({
             <div style={{fontSize:14,color:C.muted,fontStyle:"italic"}}>
               {notif||t.statusSub?.replace("{nom}",name)}
             </div>
+            <div style={{fontSize:12,color:"rgba(232,185,79,0.85)",
+              fontStyle:"italic",letterSpacing:0.5,marginTop:10}}>
+              {lang==="en"?"Complete maritime training — deck and engine"
+                :lang==="es"?"Formación marítima completa — puente y máquinas"
+                :lang==="pt"?"Formação marítima completa — convés e máquinas"
+                :"La formation maritime complète — pont et machine"}
+            </div>
           </div>
 
           {/* ── THE CARD ── */}
