@@ -1,59 +1,79 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
 
-// ── COLOURS ──────────────────────────────────
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
   gold:"#c9922a", gold2:"#e8b94f",
   blue:"#1a6fd4", blue2:"#4da6ff",
   white:"#f0f4ff", muted:"rgba(240,244,255,0.45)",
   border:"rgba(201,146,42,0.22)", red:"#c0392b",
-  green:"#1e8a4a",
+  green:"#1e8a4a", orange:"#e67e22",
 };
 
-// ── TRANSLATIONS ─────────────────────────────
+// ── SLOGAN UNIVERSEL ──────────────────────────
+// FR: "La formation maritime complète — pont et machine"
+// EN: "Complete maritime training — deck and engine"
+// ES: "Formación marítima completa — puente y máquinas"
+// PT: "Formação marítima completa — convés e máquinas"
+
 const T = {
   fr:{
     back:"◀ Retour",
+    slogan:"La formation maritime complète — pont et machine",
     qTitle:"TON PROFIL MARITIME",
     qSub:"Personnalise ton parcours — 2 minutes suffisent",
-    // Section labels
-    s1:"⚓ Qui es-tu ?",
-    s2:"🎯 Ton objectif principal ?",
-    s3:"📊 Ton niveau actuel ?",
-    s4:"🚢 Ton navire de rêve ?",
-    s4more:"Voir tous les navires →",
-    s4less:"← Réduire",
-    s5:"⏱️ Durée d'étude quotidienne ?",
-    s6:"⏰ Heure préférée ?",
-    s7:"🌍 Ton pays de résidence ?",
-    s7ph:"Ex: Cameroun, France, Maroc...",
-    s8:"🔔 Rappel de formation par email ?",
-    s9:"📸 Ta photo (optionnel)",
-    s9cta:"Ajouter ma photo",
-    s9note:"Confidentielle · Utilisée pour ta carte statut personnalisée et ta surprise finale 🎁",
-    // Who
-    qFuture:"⛵ Futur marin", qCadet:"🎓 Cadet",
-    qAB:"⚓ Matelot / AB", qOfficer:"🧭 Officier",
-    qCaptain:"👑 Capitaine",
-    // Goal
-    qNav:"🧭 Maîtriser la navigation",
+    // Département
+    deptTitle:"🚢 Ton département ?",
+    deptDeck:"🧭 PONT — Navigation",
+    deptDeckSub:"Capitaine, officier, matelot...",
+    deptEngine:"⚙️ MACHINE — Énergie & Propulsion",
+    deptEngineSub:"Chef mécanicien, officier machine, oiler...",
+    // Pont — Qui es-tu
+    s1Deck:"⚓ Qui es-tu ? (Pont)",
+    qFutureDeck:"⛵ Futur marin (pont)",
+    qCadetDeck:"🎓 Cadet navigation",
+    qAB:"⚓ Matelot / AB",
+    qOfficerDeck:"🧭 Officier de navigation",
+    qCaptain:"👑 Capitaine / Master",
+    // Machine — Qui es-tu
+    s1Engine:"⚙️ Qui es-tu ? (Machine)",
+    qFutureEngine:"🔧 Futur mécanicien",
+    qCadetEngine:"🎓 Cadet machine",
+    qOiler:"🛢️ Graisseur / Oiler",
+    qJuniorEng:"⚙️ Mécanicien junior",
+    qOfficerEngine:"🛠️ Officier mécanicien (OICM)",
+    qChiefEng:"👑 Chef mécanicien",
+    // Objectif Pont
+    s2Deck:"🎯 Ton objectif (Pont) ?",
+    qNavigation:"🧭 Maîtriser la navigation",
     qSTCW:"🛟 Certifications STCW",
     qLaw:"⚖️ Droit maritime",
-    qCareer:"🚢 Progresser dans ma carrière",
+    qCareerDeck:"🚢 Progresser — pont",
     qSafety:"🛡️ Sécurité et survie en mer",
-    // Level
+    // Objectif Machine
+    s2Engine:"🎯 Ton objectif (Machine) ?",
+    qMoteur:"⚙️ Maîtriser le moteur principal",
+    qAuxiliaries:"🔧 Systèmes auxiliaires",
+    qMARPOL:"🌊 MARPOL machine",
+    qCareerEngine:"🛠️ Progresser — machine",
+    qEnergy:"⚡ SEEMP / Efficacité énergétique",
+    // Niveau
+    s3:"📊 Ton niveau actuel ?",
     qZero:"🌱 Débutant total",
     qBasic:"📄 Bases maritimes",
     qExp:"⚓ Expérimenté",
-    // Ships (6 principaux)
+    // Navire de rêve
+    s4:"🚢 Ton navire de rêve ?",
+    s4more:"Voir tous les navires →",
+    s4less:"← Réduire",
+    // Ships main
     shipContainer:"🚢 Porte-conteneurs",
     shipTanker:"🛢️ Pétrolier",
     shipCruise:"🛳️ Croisière",
-    shipOffshore:"🏗️ Offshore",
+    shipOffshore:"🏗️ Offshore OSV",
     shipYacht:"⛵ Yacht / Voilier",
     shipSAR:"🆘 Sauvetage SAR",
-    // Ships (voir plus)
+    // Ships more
     shipChemical:"⚗️ Chimiquier",
     shipGas:"💨 Gazier LNG",
     shipCar:"🚗 Roulier",
@@ -62,228 +82,213 @@ const T = {
     shipFishing:"🎣 Pêche hauturière",
     shipPWC:"🏄 Jet-ski / Surf sauvetage",
     shipNavy:"🏛️ Marine nationale",
-    // Duration
+    // Durée
+    s5:"⏱️ Durée d'étude quotidienne ?",
     dur15:"⚡ 15 min / jour",
     dur30:"📚 30 min / jour",
     dur60:"🎯 1 heure / jour",
     durFree:"🌊 À mon rythme",
-    // Time
-    qMorning:"🌅 Matin", qAfternoon:"☀️ Après-midi",
-    qEvening:"🌆 Soir", qNight:"🌙 Nuit",
-    // Reminder
-    qYes:"✅ Oui, me rappeler",
-    qNo:"❌ Non merci",
+    // Heure
+    s6:"⏰ Heure préférée ?",
+    qMorning:"🌅 Matin",qAfternoon:"☀️ Après-midi",
+    qEvening:"🌆 Soir",qNight:"🌙 Nuit",
+    // Pays
+    s7:"🌍 Ton pays de résidence ?",
+    s7ph:"Ex: Cameroun, France, Maroc...",
+    // Rappel
+    s8:"🔔 Rappel de formation par email ?",
+    qYes:"✅ Oui",qNo:"❌ Non",
+    // Photo
+    s9:"📸 Ta photo (optionnel)",
+    s9cta:"Ajouter ma photo",
+    s9note:"Confidentielle · Pour ta carte statut personnalisée 🎁",
     // Submit
     qBtn:"GÉNÉRER MON STATUT →",
     qBtnWait:"Réponds à toutes les questions pour continuer",
-    // Summary label
     summaryTitle:"🗺️ TON PARCOURS PERSONNALISÉ",
-    errRequired:"⚠️ Cette question est obligatoire",
-    errCountry:"⚠️ Indique ton pays de résidence",
-    errSummary:"Merci de compléter les champs surlignés en rouge",
-    // Photo upload
-    errPhotoType:"⚠️ Seuls les formats JPG, PNG, GIF et WEBP sont acceptés",
-    errPhotoSize:"⚠️ La photo ne doit pas dépasser 2 Mo",
-    errPhotoRead:"⚠️ Impossible de lire le fichier. Vérifie qu'il n'est pas corrompu.",
-    errPhotoEncode:"⚠️ Échec de l'encodage de l'image. Essaie un autre fichier.",
-    photoRetry:"🔄 Réessayer",
-    photoRemove:"Supprimer la photo",
-    photoChange:"Changer la photo",
+    // Dept labels for summary
+    deptDeckShort:"🧭 Pont",
+    deptEngineShort:"⚙️ Machine",
   },
   en:{
     back:"◀ Back",
+    slogan:"Complete maritime training — deck and engine",
     qTitle:"YOUR MARITIME PROFILE",
     qSub:"Personalize your journey — takes 2 minutes",
-    s1:"⚓ Who are you?",
-    s2:"🎯 Your main goal?",
-    s3:"📊 Your current level?",
-    s4:"🚢 Your dream ship?",
-    s4more:"See all ships →",
-    s4less:"← Reduce",
-    s5:"⏱️ Daily study duration?",
-    s6:"⏰ Preferred time?",
-    s7:"🌍 Your country of residence?",
-    s7ph:"E.g: Nigeria, UK, Philippines...",
-    s8:"🔔 Training reminder by email?",
-    s9:"📸 Your photo (optional)",
-    s9cta:"Add my photo",
-    s9note:"Confidential · Used for your personalized status card and final surprise 🎁",
-    qFuture:"⛵ Future sailor", qCadet:"🎓 Cadet",
-    qAB:"⚓ Sailor / AB", qOfficer:"🧭 Officer",
-    qCaptain:"👑 Captain",
-    qNav:"🧭 Master navigation",
-    qSTCW:"🛟 STCW Certifications",
+    deptTitle:"🚢 Your department?",
+    deptDeck:"🧭 DECK — Navigation",
+    deptDeckSub:"Captain, officer, sailor...",
+    deptEngine:"⚙️ ENGINE — Energy & Propulsion",
+    deptEngineSub:"Chief engineer, engineer officer, oiler...",
+    s1Deck:"⚓ Who are you? (Deck)",
+    qFutureDeck:"⛵ Future deck sailor",
+    qCadetDeck:"🎓 Navigation cadet",
+    qAB:"⚓ Sailor / AB",
+    qOfficerDeck:"🧭 Navigation officer",
+    qCaptain:"👑 Captain / Master",
+    s1Engine:"⚙️ Who are you? (Engine)",
+    qFutureEngine:"🔧 Future engineer",
+    qCadetEngine:"🎓 Engine cadet",
+    qOiler:"🛢️ Oiler / Greaser",
+    qJuniorEng:"⚙️ Junior engineer",
+    qOfficerEngine:"🛠️ Engineer officer (EOOW)",
+    qChiefEng:"👑 Chief engineer",
+    s2Deck:"🎯 Your goal (Deck)?",
+    qNavigation:"🧭 Master navigation",
+    qSTCW:"🛟 STCW certifications",
     qLaw:"⚖️ Maritime law",
-    qCareer:"🚢 Advance my career",
+    qCareerDeck:"🚢 Advance — deck",
     qSafety:"🛡️ Safety & survival at sea",
+    s2Engine:"🎯 Your goal (Engine)?",
+    qMoteur:"⚙️ Master the main engine",
+    qAuxiliaries:"🔧 Auxiliary systems",
+    qMARPOL:"🌊 MARPOL engine room",
+    qCareerEngine:"🛠️ Advance — engine",
+    qEnergy:"⚡ SEEMP / Energy efficiency",
+    s3:"📊 Your current level?",
     qZero:"🌱 Total beginner",
     qBasic:"📄 Basic maritime",
     qExp:"⚓ Experienced",
-    shipContainer:"🚢 Container ship",
-    shipTanker:"🛢️ Oil tanker",
-    shipCruise:"🛳️ Cruise ship",
-    shipOffshore:"🏗️ Offshore",
-    shipYacht:"⛵ Yacht / Sailboat",
-    shipSAR:"🆘 SAR Rescue",
-    shipChemical:"⚗️ Chemical tanker",
-    shipGas:"💨 LNG Gas carrier",
-    shipCar:"🚗 Car carrier",
-    shipResearch:"🔬 Research vessel",
-    shipTug:"⚓ Tugboat",
-    shipFishing:"🎣 Fishing vessel",
-    shipPWC:"🏄 Jet-ski / Surf rescue",
-    shipNavy:"🏛️ Navy",
-    dur15:"⚡ 15 min / day",
-    dur30:"📚 30 min / day",
-    dur60:"🎯 1 hour / day",
-    durFree:"🌊 At my own pace",
-    qMorning:"🌅 Morning", qAfternoon:"☀️ Afternoon",
-    qEvening:"🌆 Evening", qNight:"🌙 Night",
-    qYes:"✅ Yes, remind me",
-    qNo:"❌ No thanks",
+    s4:"🚢 Your dream ship?",
+    s4more:"See all ships →",s4less:"← Reduce",
+    shipContainer:"🚢 Container ship",shipTanker:"🛢️ Oil tanker",
+    shipCruise:"🛳️ Cruise ship",shipOffshore:"🏗️ Offshore OSV",
+    shipYacht:"⛵ Yacht / Sailboat",shipSAR:"🆘 SAR Rescue",
+    shipChemical:"⚗️ Chemical tanker",shipGas:"💨 LNG Gas carrier",
+    shipCar:"🚗 Car carrier",shipResearch:"🔬 Research vessel",
+    shipTug:"⚓ Tugboat",shipFishing:"🎣 Fishing vessel",
+    shipPWC:"🏄 Jet-ski / Surf rescue",shipNavy:"🏛️ Navy",
+    s5:"⏱️ Daily study duration?",
+    dur15:"⚡ 15 min / day",dur30:"📚 30 min / day",
+    dur60:"🎯 1 hour / day",durFree:"🌊 At my own pace",
+    s6:"⏰ Preferred time?",
+    qMorning:"🌅 Morning",qAfternoon:"☀️ Afternoon",
+    qEvening:"🌆 Evening",qNight:"🌙 Night",
+    s7:"🌍 Country of residence?",s7ph:"E.g: Nigeria, UK, Philippines...",
+    s8:"🔔 Training reminder by email?",
+    qYes:"✅ Yes",qNo:"❌ No",
+    s9:"📸 Your photo (optional)",
+    s9cta:"Add my photo",s9note:"Confidential · For your personalized status card 🎁",
     qBtn:"GENERATE MY STATUS →",
     qBtnWait:"Answer all questions to continue",
     summaryTitle:"🗺️ YOUR PERSONALIZED JOURNEY",
-    errRequired:"⚠️ This question is required",
-    errCountry:"⚠️ Please enter your country of residence",
-    errSummary:"Please complete the fields highlighted in red",
-    errPhotoType:"⚠️ Only JPG, PNG, GIF and WEBP formats are accepted",
-    errPhotoSize:"⚠️ Photo must not exceed 2 MB",
-    errPhotoRead:"⚠️ Could not read the file. Make sure it isn't corrupted.",
-    errPhotoEncode:"⚠️ Failed to encode the image. Try another file.",
-    photoRetry:"🔄 Retry",
-    photoRemove:"Remove photo",
-    photoChange:"Change photo",
+    deptDeckShort:"🧭 Deck",deptEngineShort:"⚙️ Engine",
   },
   es:{
     back:"◀ Volver",
+    slogan:"Formación marítima completa — puente y máquinas",
     qTitle:"TU PERFIL MARÍTIMO",
     qSub:"Personaliza tu camino — 2 minutos bastan",
-    s1:"⚓ ¿Quién eres?",
-    s2:"🎯 ¿Tu objetivo principal?",
-    s3:"📊 ¿Tu nivel actual?",
-    s4:"🚢 ¿Tu barco soñado?",
-    s4more:"Ver todos los barcos →",
-    s4less:"← Reducir",
-    s5:"⏱️ ¿Duración de estudio diario?",
-    s6:"⏰ ¿Hora preferida?",
-    s7:"🌍 ¿Tu país de residencia?",
-    s7ph:"Ej: España, México, Argentina...",
-    s8:"🔔 ¿Recordatorio por email?",
-    s9:"📸 Tu foto (opcional)",
-    s9cta:"Agregar mi foto",
-    s9note:"Confidencial · Usada para tu tarjeta personalizada y sorpresa final 🎁",
-    qFuture:"⛵ Futuro marino", qCadet:"🎓 Cadete",
-    qAB:"⚓ Marinero / AB", qOfficer:"🧭 Oficial",
-    qCaptain:"👑 Capitán",
-    qNav:"🧭 Dominar la navegación",
+    deptTitle:"🚢 ¿Tu departamento?",
+    deptDeck:"🧭 PUENTE — Navegación",
+    deptDeckSub:"Capitán, oficial, marinero...",
+    deptEngine:"⚙️ MÁQUINAS — Energía y Propulsión",
+    deptEngineSub:"Jefe de máquinas, oficial, engrasador...",
+    s1Deck:"⚓ ¿Quién eres? (Puente)",
+    qFutureDeck:"⛵ Futuro marino (puente)",
+    qCadetDeck:"🎓 Cadete navegación",
+    qAB:"⚓ Marinero / AB",
+    qOfficerDeck:"🧭 Oficial de navegación",
+    qCaptain:"👑 Capitán / Master",
+    s1Engine:"⚙️ ¿Quién eres? (Máquinas)",
+    qFutureEngine:"🔧 Futuro mecánico",
+    qCadetEngine:"🎓 Cadete máquinas",
+    qOiler:"🛢️ Engrasador / Oiler",
+    qJuniorEng:"⚙️ Mecánico junior",
+    qOfficerEngine:"🛠️ Oficial de máquinas (OMCV)",
+    qChiefEng:"👑 Jefe de máquinas",
+    s2Deck:"🎯 ¿Tu objetivo (Puente)?",
+    qNavigation:"🧭 Dominar la navegación",
     qSTCW:"🛟 Certificaciones STCW",
     qLaw:"⚖️ Derecho marítimo",
-    qCareer:"🚢 Avanzar en mi carrera",
+    qCareerDeck:"🚢 Avanzar — puente",
     qSafety:"🛡️ Seguridad y supervivencia",
-    qZero:"🌱 Principiante total",
-    qBasic:"📄 Bases marítimas",
-    qExp:"⚓ Experimentado",
-    shipContainer:"🚢 Portacontenedores",
-    shipTanker:"🛢️ Petrolero",
-    shipCruise:"🛳️ Crucero",
-    shipOffshore:"🏗️ Offshore",
-    shipYacht:"⛵ Yate / Velero",
-    shipSAR:"🆘 Salvamento SAR",
-    shipChemical:"⚗️ Quimiquero",
-    shipGas:"💨 Gasero LNG",
-    shipCar:"🚗 Ro-Ro",
-    shipResearch:"🔬 Buque científico",
-    shipTug:"⚓ Remolcador",
-    shipFishing:"🎣 Pesca de altura",
-    shipPWC:"🏄 Moto de agua / Socorrismo",
-    shipNavy:"🏛️ Marina nacional",
-    dur15:"⚡ 15 min / día",
-    dur30:"📚 30 min / día",
-    dur60:"🎯 1 hora / día",
-    durFree:"🌊 A mi ritmo",
-    qMorning:"🌅 Mañana", qAfternoon:"☀️ Tarde",
-    qEvening:"🌆 Noche", qNight:"🌙 Madrugada",
-    qYes:"✅ Sí, recordarme",
-    qNo:"❌ No gracias",
-    qBtn:"GENERAR MI ESTADO →",
-    qBtnWait:"Responde todas las preguntas para continuar",
+    s2Engine:"🎯 ¿Tu objetivo (Máquinas)?",
+    qMoteur:"⚙️ Dominar el motor principal",
+    qAuxiliaries:"🔧 Sistemas auxiliares",
+    qMARPOL:"🌊 MARPOL sala de máquinas",
+    qCareerEngine:"🛠️ Avanzar — máquinas",
+    qEnergy:"⚡ SEEMP / Eficiencia energética",
+    s3:"📊 ¿Tu nivel actual?",
+    qZero:"🌱 Principiante total",qBasic:"📄 Bases marítimas",qExp:"⚓ Experimentado",
+    s4:"🚢 ¿Tu barco soñado?",s4more:"Ver todos →",s4less:"← Reducir",
+    shipContainer:"🚢 Portacontenedores",shipTanker:"🛢️ Petrolero",
+    shipCruise:"🛳️ Crucero",shipOffshore:"🏗️ Offshore OSV",
+    shipYacht:"⛵ Yate / Velero",shipSAR:"🆘 Salvamento SAR",
+    shipChemical:"⚗️ Quimiquero",shipGas:"💨 Gasero LNG",
+    shipCar:"🚗 Ro-Ro",shipResearch:"🔬 Buque científico",
+    shipTug:"⚓ Remolcador",shipFishing:"🎣 Pesca de altura",
+    shipPWC:"🏄 Moto de agua",shipNavy:"🏛️ Marina nacional",
+    s5:"⏱️ ¿Duración de estudio diario?",
+    dur15:"⚡ 15 min / día",dur30:"📚 30 min / día",
+    dur60:"🎯 1 hora / día",durFree:"🌊 A mi ritmo",
+    s6:"⏰ ¿Hora preferida?",
+    qMorning:"🌅 Mañana",qAfternoon:"☀️ Tarde",qEvening:"🌆 Noche",qNight:"🌙 Madrugada",
+    s7:"🌍 ¿Tu país de residencia?",s7ph:"Ej: España, México...",
+    s8:"🔔 ¿Recordatorio por email?",qYes:"✅ Sí",qNo:"❌ No",
+    s9:"📸 Tu foto (opcional)",s9cta:"Agregar mi foto",
+    s9note:"Confidencial · Para tu tarjeta personalizada 🎁",
+    qBtn:"GENERAR MI ESTADO →",qBtnWait:"Responde todas las preguntas para continuar",
     summaryTitle:"🗺️ TU CAMINO PERSONALIZADO",
-    errRequired:"⚠️ Esta pregunta es obligatoria",
-    errCountry:"⚠️ Indica tu país de residencia",
-    errSummary:"Por favor completa los campos en rojo",
-    errPhotoType:"⚠️ Solo se aceptan formatos JPG, PNG, GIF y WEBP",
-    errPhotoSize:"⚠️ La foto no debe superar 2 MB",
-    errPhotoRead:"⚠️ No se pudo leer el archivo. Verifica que no esté dañado.",
-    errPhotoEncode:"⚠️ Falló la codificación de la imagen. Prueba otro archivo.",
-    photoRetry:"🔄 Reintentar",
-    photoRemove:"Eliminar foto",
-    photoChange:"Cambiar foto",
+    deptDeckShort:"🧭 Puente",deptEngineShort:"⚙️ Máquinas",
   },
   pt:{
     back:"◀ Voltar",
+    slogan:"Formação marítima completa — convés e máquinas",
     qTitle:"SEU PERFIL MARÍTIMO",
     qSub:"Personalize sua jornada — leva 2 minutos",
-    s1:"⚓ Quem é você?",
-    s2:"🎯 Seu objetivo principal?",
-    s3:"📊 Seu nível atual?",
-    s4:"🚢 Seu navio dos sonhos?",
-    s4more:"Ver todos os navios →",
-    s4less:"← Reduzir",
-    s5:"⏱️ Duração de estudo diário?",
-    s6:"⏰ Horário preferido?",
-    s7:"🌍 Seu país de residência?",
-    s7ph:"Ex: Brasil, Portugal, Angola...",
-    s8:"🔔 Lembrete de formação por email?",
-    s9:"📸 Sua foto (opcional)",
-    s9cta:"Adicionar minha foto",
-    s9note:"Confidencial · Usada para seu cartão personalizado e surpresa final 🎁",
-    qFuture:"⛵ Futuro marinheiro", qCadet:"🎓 Cadete",
-    qAB:"⚓ Marinheiro / AB", qOfficer:"🧭 Oficial",
-    qCaptain:"👑 Capitão",
-    qNav:"🧭 Dominar a navegação",
+    deptTitle:"🚢 Seu departamento?",
+    deptDeck:"🧭 CONVÉS — Navegação",
+    deptDeckSub:"Capitão, oficial, marinheiro...",
+    deptEngine:"⚙️ MÁQUINAS — Energia e Propulsão",
+    deptEngineSub:"Chefe de máquinas, oficial, oiler...",
+    s1Deck:"⚓ Quem é você? (Convés)",
+    qFutureDeck:"⛵ Futuro marinheiro (convés)",
+    qCadetDeck:"🎓 Cadete navegação",
+    qAB:"⚓ Marinheiro / AB",
+    qOfficerDeck:"🧭 Oficial de navegação",
+    qCaptain:"👑 Capitão / Master",
+    s1Engine:"⚙️ Quem é você? (Máquinas)",
+    qFutureEngine:"🔧 Futuro mecânico",
+    qCadetEngine:"🎓 Cadete máquinas",
+    qOiler:"🛢️ Oiler / Lubrificador",
+    qJuniorEng:"⚙️ Mecânico júnior",
+    qOfficerEngine:"🛠️ Oficial de máquinas (OMCV)",
+    qChiefEng:"👑 Chefe de máquinas",
+    s2Deck:"🎯 Seu objetivo (Convés)?",
+    qNavigation:"🧭 Dominar a navegação",
     qSTCW:"🛟 Certificações STCW",
     qLaw:"⚖️ Direito marítimo",
-    qCareer:"🚢 Avançar na carreira",
+    qCareerDeck:"🚢 Avançar — convés",
     qSafety:"🛡️ Segurança e sobrevivência",
-    qZero:"🌱 Iniciante total",
-    qBasic:"📄 Bases marítimas",
-    qExp:"⚓ Experiente",
-    shipContainer:"🚢 Porta-contêineres",
-    shipTanker:"🛢️ Petroleiro",
-    shipCruise:"🛳️ Cruzeiro",
-    shipOffshore:"🏗️ Offshore",
-    shipYacht:"⛵ Iate / Veleiro",
-    shipSAR:"🆘 Salvamento SAR",
-    shipChemical:"⚗️ Químico",
-    shipGas:"💨 Gaseiro LNG",
-    shipCar:"🚗 Ro-Ro",
-    shipResearch:"🔬 Navio científico",
-    shipTug:"⚓ Rebocador",
-    shipFishing:"🎣 Pesca de altura",
-    shipPWC:"🏄 Jet-ski / Salva-vidas",
-    shipNavy:"🏛️ Marinha nacional",
-    dur15:"⚡ 15 min / dia",
-    dur30:"📚 30 min / dia",
-    dur60:"🎯 1 hora / dia",
-    durFree:"🌊 No meu ritmo",
-    qMorning:"🌅 Manhã", qAfternoon:"☀️ Tarde",
-    qEvening:"🌆 Noite", qNight:"🌙 Madrugada",
-    qYes:"✅ Sim, me lembrar",
-    qNo:"❌ Não obrigado",
-    qBtn:"GERAR MEU STATUS →",
-    qBtnWait:"Responda todas as perguntas para continuar",
+    s2Engine:"🎯 Seu objetivo (Máquinas)?",
+    qMoteur:"⚙️ Dominar o motor principal",
+    qAuxiliaries:"🔧 Sistemas auxiliares",
+    qMARPOL:"🌊 MARPOL sala de máquinas",
+    qCareerEngine:"🛠️ Avançar — máquinas",
+    qEnergy:"⚡ SEEMP / Eficiência energética",
+    s3:"📊 Seu nível atual?",
+    qZero:"🌱 Iniciante total",qBasic:"📄 Bases marítimas",qExp:"⚓ Experiente",
+    s4:"🚢 Seu navio dos sonhos?",s4more:"Ver todos →",s4less:"← Reduzir",
+    shipContainer:"🚢 Porta-contêineres",shipTanker:"🛢️ Petroleiro",
+    shipCruise:"🛳️ Cruzeiro",shipOffshore:"🏗️ Offshore OSV",
+    shipYacht:"⛵ Iate / Veleiro",shipSAR:"🆘 Salvamento SAR",
+    shipChemical:"⚗️ Químico",shipGas:"💨 Gaseiro LNG",
+    shipCar:"🚗 Ro-Ro",shipResearch:"🔬 Navio científico",
+    shipTug:"⚓ Rebocador",shipFishing:"🎣 Pesca de altura",
+    shipPWC:"🏄 Jet-ski / Salva-vidas",shipNavy:"🏛️ Marinha nacional",
+    s5:"⏱️ Duração de estudo diário?",
+    dur15:"⚡ 15 min / dia",dur30:"📚 30 min / dia",
+    dur60:"🎯 1 hora / dia",durFree:"🌊 No meu ritmo",
+    s6:"⏰ Horário preferido?",
+    qMorning:"🌅 Manhã",qAfternoon:"☀️ Tarde",qEvening:"🌆 Noite",qNight:"🌙 Madrugada",
+    s7:"🌍 Seu país de residência?",s7ph:"Ex: Brasil, Portugal, Angola...",
+    s8:"🔔 Lembrete de formação por email?",qYes:"✅ Sim",qNo:"❌ Não",
+    s9:"📸 Sua foto (opcional)",s9cta:"Adicionar minha foto",
+    s9note:"Confidencial · Para seu cartão de status personalizado 🎁",
+    qBtn:"GERAR MEU STATUS →",qBtnWait:"Responda todas as perguntas para continuar",
     summaryTitle:"🗺️ SUA JORNADA PERSONALIZADA",
-    errRequired:"⚠️ Esta pergunta é obrigatória",
-    errCountry:"⚠️ Indique seu país de residência",
-    errSummary:"Por favor complete os campos em vermelho",
-    errPhotoType:"⚠️ Apenas formatos JPG, PNG, GIF e WEBP são aceitos",
-    errPhotoSize:"⚠️ A foto não deve ultrapassar 2 MB",
-    errPhotoRead:"⚠️ Não foi possível ler o arquivo. Verifique se não está corrompido.",
-    errPhotoEncode:"⚠️ Falha ao codificar a imagem. Tente outro arquivo.",
-    photoRetry:"🔄 Tentar novamente",
-    photoRemove:"Remover foto",
-    photoChange:"Alterar foto",
+    deptDeckShort:"🧭 Convés",deptEngineShort:"⚙️ Máquinas",
   },
 };
 
@@ -300,8 +305,9 @@ function Stars() {
         {s.map((st,i)=>(
           <div key={i} style={{
             position:"absolute",left:`${st.x}%`,top:`${st.y}%`,
-            width:st.sz,height:st.sz,borderRadius:"50%",background:"white",
-            animation:`tw ${st.dur}s ease-in-out ${st.delay}s infinite`,opacity:0,
+            width:st.sz,height:st.sz,borderRadius:"50%",
+            background:"white",opacity:0,
+            animation:`tw ${st.dur}s ease-in-out ${st.delay}s infinite`,
           }}/>
         ))}
       </div>
@@ -309,6 +315,7 @@ function Stars() {
         @keyframes tw{0%,100%{opacity:0}50%{opacity:0.5}}
         @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
         @keyframes checkPop{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+        @keyframes deptGlow{0%,100%{box-shadow:0 4px 16px rgba(0,0,0,0.2)}50%{box-shadow:0 8px 28px rgba(26,111,212,0.3)}}
       `}</style>
     </>
   );
@@ -322,8 +329,10 @@ function TopBar({onBack,backLabel,step,total}) {
       background:"rgba(6,14,26,0.96)",backdropFilter:"blur(14px)",
       borderBottom:`1px solid ${C.border}`,
     }}>
-      <div style={{height:54,display:"flex",alignItems:"center",
-        padding:"0 16px",gap:12}}>
+      <div style={{
+        height:54,display:"flex",alignItems:"center",
+        padding:"0 16px",gap:12,
+      }}>
         <button onClick={onBack} style={{
           display:"flex",alignItems:"center",gap:7,
           background:"rgba(255,255,255,0.09)",
@@ -335,8 +344,7 @@ function TopBar({onBack,backLabel,step,total}) {
         }}>{backLabel}</button>
         <div style={{flex:1,height:3,borderRadius:3,
           background:"rgba(255,255,255,0.07)",overflow:"hidden"}}>
-          <div style={{height:"100%",borderRadius:3,
-            width:`${pct}%`,
+          <div style={{height:"100%",borderRadius:3,width:`${pct}%`,
             background:`linear-gradient(90deg,${C.blue2},${C.gold2})`,
             transition:"width 0.5s ease"}}/>
         </div>
@@ -345,9 +353,8 @@ function TopBar({onBack,backLabel,step,total}) {
           {step}/{total}
         </span>
       </div>
-      {/* Mini progress dots */}
-      <div style={{display:"flex",justifyContent:"center",
-        gap:4,paddingBottom:8}}>
+      {/* Progress dots */}
+      <div style={{display:"flex",justifyContent:"center",gap:4,paddingBottom:8}}>
         {Array.from({length:total},(_,i)=>(
           <div key={i} style={{
             width:i+1===step?20:6,height:4,borderRadius:2,
@@ -362,14 +369,13 @@ function TopBar({onBack,backLabel,step,total}) {
   );
 }
 
-function Card({children,style={},error=false}) {
+function Card({children,style={}}) {
   return (
     <div style={{
       background:"rgba(13,31,60,0.72)",
-      border:`1px solid ${error?C.red:C.border}`,
-      boxShadow:error?`0 0 0 2px ${C.red}33`:"none",
+      border:`1px solid ${C.border}`,
       borderRadius:20,padding:"18px 16px",...style,
-    }} data-error={error?"true":"false"}>{children}</div>
+    }}>{children}</div>
   );
 }
 
@@ -377,14 +383,12 @@ function SectionLabel({text,done}) {
   return (
     <div style={{
       display:"flex",alignItems:"center",
-      justifyContent:"space-between",
-      marginBottom:12,
+      justifyContent:"space-between",marginBottom:12,
     }}>
       <div style={{fontSize:13,fontWeight:700,
-        color:done?C.gold2:C.muted,
-        letterSpacing:0.5,transition:"color 0.3s",
-      }}>{text}</div>
-      {done && (
+        color:done?C.gold2:C.muted,letterSpacing:0.5,
+        transition:"color 0.3s"}}>{text}</div>
+      {done&&(
         <div style={{
           width:22,height:22,borderRadius:"50%",
           background:C.green,
@@ -429,7 +433,7 @@ function ShipCard({emoji,label,selected,onClick}) {
       boxShadow:selected?`0 8px 20px rgba(201,146,42,0.2)`:"none",
       position:"relative",
     }}>
-      {selected && (
+      {selected&&(
         <div style={{
           position:"absolute",top:6,right:6,
           width:16,height:16,borderRadius:"50%",
@@ -456,19 +460,11 @@ function GLine() {
 }
 
 // ── PROGRESS SUMMARY ─────────────────────────
-function ProgressSummary({answers,t,lang}) {
-  const total=9;
-  const done=Object.values(answers).filter(v=>v&&v!=="").length;
-  const pct=Math.round((done/total)*100);
-
-  const profileLabels={
-    future:t.qFuture,cadet:t.qCadet,ab:t.qAB,
-    officer:t.qOfficer,captain:t.qCaptain,
-  };
-  const goalLabels={
-    nav:t.qNav,stcw:t.qSTCW,law:t.qLaw,
-    career:t.qCareer,safety:t.qSafety,
-  };
+function ProgressSummary({answers,t}) {
+  const required=["dept","who","goal","level","ship","duration","time","reminder"];
+  const done=required.filter(k=>answers[k]!==null&&answers[k]!=="").length;
+  const total=required.length+(answers.country?.trim().length>0?1:0);
+  const pct=Math.round((done/required.length)*100);
 
   return (
     <Card style={{
@@ -477,49 +473,38 @@ function ProgressSummary({answers,t,lang}) {
     }}>
       <div style={{display:"flex",justifyContent:"space-between",
         alignItems:"center",marginBottom:10}}>
-        <div style={{fontSize:11,letterSpacing:2,
-          color:C.gold,fontFamily:"'Cinzel',serif"}}>
-          {t.summaryTitle}
-        </div>
+        <div style={{fontSize:11,letterSpacing:2,color:C.gold,
+          fontFamily:"'Cinzel',serif"}}>{t.summaryTitle}</div>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:16,
-          fontWeight:700,color:pct===100?C.gold2:C.blue2}}>
-          {pct}%
-        </div>
+          fontWeight:700,color:pct===100?C.gold2:C.blue2}}>{pct}%</div>
       </div>
       <div style={{height:4,borderRadius:4,
         background:"rgba(255,255,255,0.08)",overflow:"hidden",marginBottom:12}}>
-        <div style={{height:"100%",borderRadius:4,
-          width:`${pct}%`,
+        <div style={{height:"100%",borderRadius:4,width:`${pct}%`,
           background:`linear-gradient(90deg,${C.blue2},${C.gold2})`,
           transition:"width 0.5s ease"}}/>
       </div>
       <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-        {answers.who && (
+        {answers.dept&&(
           <span style={{fontSize:11,padding:"3px 10px",borderRadius:10,
-            background:"rgba(30,138,74,0.2)",border:"1px solid rgba(30,138,74,0.4)",
-            color:"#4caf80"}}>
-            {profileLabels[answers.who]||answers.who}
+            background:answers.dept==="deck"?"rgba(26,111,212,0.2)":"rgba(230,126,34,0.2)",
+            border:`1px solid ${answers.dept==="deck"?C.blue2:C.orange}44`,
+            color:answers.dept==="deck"?C.blue2:C.orange}}>
+            {answers.dept==="deck"?t.deptDeckShort:t.deptEngineShort}
           </span>
         )}
-        {answers.goal && (
+        {answers.ship&&(
           <span style={{fontSize:11,padding:"3px 10px",borderRadius:10,
-            background:"rgba(77,166,255,0.15)",border:`1px solid ${C.blue2}44`,
-            color:C.blue2}}>
-            {goalLabels[answers.goal]||answers.goal}
+            background:"rgba(201,146,42,0.15)",
+            border:`1px solid ${C.gold}44`,color:C.gold2}}>
+            🚢 {answers.ship}
           </span>
         )}
-        {answers.ship && (
+        {answers.duration&&(
           <span style={{fontSize:11,padding:"3px 10px",borderRadius:10,
-            background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}44`,
-            color:C.gold2}}>
-            {answers.ship}
-          </span>
-        )}
-        {answers.duration && (
-          <span style={{fontSize:11,padding:"3px 10px",borderRadius:10,
-            background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",
-            color:C.muted}}>
-            {answers.duration}
+            background:"rgba(255,255,255,0.06)",
+            border:"1px solid rgba(255,255,255,0.1)",color:C.muted}}>
+            ⏱️ {answers.duration}
           </span>
         )}
       </div>
@@ -527,7 +512,7 @@ function ProgressSummary({answers,t,lang}) {
   );
 }
 
-// ── MAIN QUESTIONNAIRE ────────────────────────
+// ── MAIN ──────────────────────────────────────
 export default function QuestionnaireS7({
   lang="fr",
   onNext=()=>{},
@@ -535,50 +520,49 @@ export default function QuestionnaireS7({
   setProfile=()=>{},
 }) {
   const t=T[lang]||T.fr;
-  const LS_KEY="map_questionnaire";
   const [vis,setVis]=useState(false);
   const [showMoreShips,setShowMoreShips]=useState(false);
-  const [hydrated,setHydrated]=useState(false);
   const [country,setCountry]=useState("");
-  const [attempted,setAttempted]=useState(false);
-  const [photoError,setPhotoError]=useState(null);
-  const [lastFile,setLastFile]=useState(null);
   const [answers,setAnswers]=useState({
-    who:null,goal:null,level:null,
+    dept:null,who:null,goal:null,level:null,
     ship:null,duration:null,time:null,
     reminder:null,country:"",photo:null,
   });
 
-  // Restore from localStorage
-  useEffect(()=>{
-    if(typeof window==="undefined"){ setHydrated(true); return; }
-    try{
-      const raw=localStorage.getItem(LS_KEY);
-      if(raw){
-        const saved=JSON.parse(raw);
-        if(saved&&typeof saved==="object"){
-          if(saved.answers) setAnswers(p=>({...p,...saved.answers}));
-          if(typeof saved.country==="string") setCountry(saved.country);
-        }
-      }
-    }catch{}
-    setHydrated(true);
-  },[]);
-
-  // Persist on change (after hydration so we don't overwrite saved data)
-  useEffect(()=>{
-    if(!hydrated||typeof window==="undefined") return;
-    try{ localStorage.setItem(LS_KEY,JSON.stringify({answers,country})); }catch{}
-  },[answers,country,hydrated]);
-
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
   const set=(k,v)=>setAnswers(p=>({...p,[k]:v}));
-  const setCountryVal=(v)=>{ setCountry(v); set("country",v); };
 
-  const requiredKeys=["who","goal","level","ship","duration","time","reminder"];
+  const requiredKeys=["dept","who","goal","level","ship","duration","time","reminder"];
   const allDone=requiredKeys.every(k=>answers[k]!==null)&&country.trim().length>0;
 
+  const isDeck=answers.dept==="deck";
+  const isEngine=answers.dept==="engine";
+
+  // Who options — adapts to department
+  const whoOptsDeck=[
+    {v:"future_deck",l:t.qFutureDeck},{v:"cadet_deck",l:t.qCadetDeck},
+    {v:"ab",l:t.qAB},{v:"officer_deck",l:t.qOfficerDeck},
+    {v:"captain",l:t.qCaptain},
+  ];
+  const whoOptsEngine=[
+    {v:"future_eng",l:t.qFutureEngine},{v:"cadet_eng",l:t.qCadetEngine},
+    {v:"oiler",l:t.qOiler},{v:"junior_eng",l:t.qJuniorEng},
+    {v:"officer_eng",l:t.qOfficerEngine},{v:"chief_eng",l:t.qChiefEng},
+  ];
+  const goalOptsDeck=[
+    {v:"nav",l:t.qNavigation},{v:"stcw",l:t.qSTCW},
+    {v:"law",l:t.qLaw},{v:"career_deck",l:t.qCareerDeck},
+    {v:"safety",l:t.qSafety},
+  ];
+  const goalOptsEngine=[
+    {v:"engine",l:t.qMoteur},{v:"aux",l:t.qAuxiliaries},
+    {v:"marpol",l:t.qMARPOL},{v:"career_eng",l:t.qCareerEngine},
+    {v:"energy",l:t.qEnergy},
+  ];
+  const levelOpts=[
+    {v:"zero",l:t.qZero},{v:"basic",l:t.qBasic},{v:"exp",l:t.qExp},
+  ];
   const mainShips=[
     {id:"container",emoji:"🚢",label:t.shipContainer},
     {id:"tanker",emoji:"🛢️",label:t.shipTanker},
@@ -587,7 +571,6 @@ export default function QuestionnaireS7({
     {id:"yacht",emoji:"⛵",label:t.shipYacht},
     {id:"sar",emoji:"🆘",label:t.shipSAR},
   ];
-
   const moreShips=[
     {id:"chemical",emoji:"⚗️",label:t.shipChemical},
     {id:"gas",emoji:"💨",label:t.shipGas},
@@ -598,72 +581,19 @@ export default function QuestionnaireS7({
     {id:"pwc",emoji:"🏄",label:t.shipPWC},
     {id:"navy",emoji:"🏛️",label:t.shipNavy},
   ];
-
   const allShips=showMoreShips?[...mainShips,...moreShips]:mainShips;
-
-  const sections=[
-    {key:"who",label:t.s1,opts:[
-      {v:"future",l:t.qFuture},{v:"cadet",l:t.qCadet},
-      {v:"ab",l:t.qAB},{v:"officer",l:t.qOfficer},
-      {v:"captain",l:t.qCaptain},
-    ]},
-    {key:"goal",label:t.s2,opts:[
-      {v:"nav",l:t.qNav},{v:"stcw",l:t.qSTCW},
-      {v:"law",l:t.qLaw},{v:"career",l:t.qCareer},
-      {v:"safety",l:t.qSafety},
-    ]},
-    {key:"level",label:t.s3,opts:[
-      {v:"zero",l:t.qZero},{v:"basic",l:t.qBasic},{v:"exp",l:t.qExp},
-    ]},
-  ];
-
   const durationOpts=[
     {v:"15min",l:t.dur15},{v:"30min",l:t.dur30},
     {v:"60min",l:t.dur60},{v:"free",l:t.durFree},
   ];
-
   const timeOpts=[
     {v:"morning",l:t.qMorning},{v:"afternoon",l:t.qAfternoon},
     {v:"evening",l:t.qEvening},{v:"night",l:t.qNight},
   ];
 
-  const readPhoto=(f)=>{
-    setPhotoError(null);
-    try{
-      const r=new FileReader();
-      r.onload=()=>{
-        try{
-          const res=r.result;
-          if(typeof res!=="string"||!res.startsWith("data:image/")){
-            setPhotoError("encode");
-            return;
-          }
-          set("photo",res);
-        }catch{ setPhotoError("encode"); }
-      };
-      r.onerror=()=>setPhotoError("read");
-      r.onabort=()=>setPhotoError("read");
-      r.readAsDataURL(f);
-    }catch{
-      setPhotoError("read");
-    }
-  };
   const handleSubmit=()=>{
-    if(!allDone){
-      setAttempted(true);
-      if(typeof window!=="undefined"){
-        setTimeout(()=>{
-          const el=document.querySelector("[data-error='true']");
-          if(el) el.scrollIntoView({behavior:"smooth",block:"center"});
-        },50);
-      }
-      return;
-    }
-    const data={...answers,country,lang};
-    setProfile(data);
-    if(typeof window!=="undefined"){
-      try{ localStorage.setItem("map_status_card",JSON.stringify(data)); }catch{}
-    }
+    if(!allDone) return;
+    setProfile({...answers,country,lang});
     onNext();
   };
 
@@ -686,42 +616,143 @@ export default function QuestionnaireS7({
         <div style={{maxWidth:440,margin:"0 auto"}}>
 
           {/* Header */}
-          <div style={{textAlign:"center",marginBottom:20}}>
-            <div style={{fontFamily:"'Cinzel',serif",fontSize:21,
-              fontWeight:700,color:C.white,marginBottom:4}}>
-              {t.qTitle}
-            </div>
-            <div style={{fontSize:13,color:C.muted}}>{t.qSub}</div>
+          <div style={{textAlign:"center",marginBottom:8}}>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:20,
+              fontWeight:700,color:C.white,marginBottom:4}}>{t.qTitle}</div>
+            <div style={{fontSize:12,color:C.muted,marginBottom:4}}>{t.qSub}</div>
+            {/* Nouveau slogan */}
+            <div style={{
+              fontSize:11,color:C.gold,fontStyle:"italic",
+              letterSpacing:0.5,padding:"4px 0",
+            }}>{t.slogan}</div>
           </div>
 
-          {/* Live summary */}
-          <ProgressSummary answers={answers} t={t} lang={lang}/>
+          <div style={{height:1,margin:"12px 0 16px",
+            background:`linear-gradient(90deg,transparent,${C.gold}44,transparent)`}}/>
 
-          {/* ── SECTIONS 1-3 : WHO / GOAL / LEVEL ── */}
-          {sections.map(sec=>(
-            <Card key={sec.key} style={{marginBottom:14}}
-              error={attempted&&answers[sec.key]===null}>
-              <SectionLabel text={sec.label} done={answers[sec.key]!==null}/>
+          <ProgressSummary answers={answers} t={t}/>
+
+          {/* ── 0 — DÉPARTEMENT ── */}
+          <Card style={{marginBottom:14,
+            border:`1px solid ${answers.dept?"rgba(201,146,42,0.4)":C.border}`,
+            boxShadow:answers.dept?`0 4px 20px rgba(201,146,42,0.1)`:"none",
+          }}>
+            <SectionLabel text={t.deptTitle} done={answers.dept!==null}/>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+              {/* PONT */}
+              <button onClick={()=>{
+                set("dept","deck");
+                // Reset who/goal if switching dept
+                set("who",null);set("goal",null);
+              }} style={{
+                padding:"16px 12px",borderRadius:16,
+                background:answers.dept==="deck"
+                  ?"linear-gradient(135deg,rgba(26,111,212,0.3),rgba(13,31,60,0.8))"
+                  :"rgba(255,255,255,0.04)",
+                border:`2px solid ${answers.dept==="deck"?C.blue2:"rgba(255,255,255,0.1)"}`,
+                cursor:"pointer",textAlign:"center",
+                transform:answers.dept==="deck"?"translateY(-2px)":"translateY(0)",
+                boxShadow:answers.dept==="deck"?`0 8px 24px rgba(26,111,212,0.25)`:"none",
+                transition:"all 0.25s",
+              }}>
+                <div style={{fontSize:32,marginBottom:6}}>🧭</div>
+                <div style={{fontSize:13,fontWeight:700,
+                  color:answers.dept==="deck"?C.white:C.muted,
+                  fontFamily:"'Cinzel',serif",letterSpacing:1,marginBottom:4}}>
+                  {lang==="fr"?"PONT":lang==="es"?"PUENTE":lang==="pt"?"CONVÉS":"DECK"}
+                </div>
+                <div style={{fontSize:10,color:C.muted,lineHeight:1.4}}>
+                  {t.deptDeckSub}
+                </div>
+                {answers.dept==="deck"&&(
+                  <div style={{marginTop:8,fontSize:11,color:C.blue2,fontWeight:700}}>
+                    ✓ Sélectionné
+                  </div>
+                )}
+              </button>
+
+              {/* MACHINE */}
+              <button onClick={()=>{
+                set("dept","engine");
+                set("who",null);set("goal",null);
+              }} style={{
+                padding:"16px 12px",borderRadius:16,
+                background:answers.dept==="engine"
+                  ?"linear-gradient(135deg,rgba(230,126,34,0.25),rgba(13,31,60,0.8))"
+                  :"rgba(255,255,255,0.04)",
+                border:`2px solid ${answers.dept==="engine"?C.orange:"rgba(255,255,255,0.1)"}`,
+                cursor:"pointer",textAlign:"center",
+                transform:answers.dept==="engine"?"translateY(-2px)":"translateY(0)",
+                boxShadow:answers.dept==="engine"?`0 8px 24px rgba(230,126,34,0.2)`:"none",
+                transition:"all 0.25s",
+              }}>
+                <div style={{fontSize:32,marginBottom:6}}>⚙️</div>
+                <div style={{fontSize:13,fontWeight:700,
+                  color:answers.dept==="engine"?C.white:C.muted,
+                  fontFamily:"'Cinzel',serif",letterSpacing:1,marginBottom:4}}>
+                  {lang==="fr"?"MACHINE":lang==="es"?"MÁQUINAS":lang==="pt"?"MÁQUINAS":"ENGINE"}
+                </div>
+                <div style={{fontSize:10,color:C.muted,lineHeight:1.4}}>
+                  {t.deptEngineSub}
+                </div>
+                {answers.dept==="engine"&&(
+                  <div style={{marginTop:8,fontSize:11,color:C.orange,fontWeight:700}}>
+                    ✓ Sélectionné
+                  </div>
+                )}
+              </button>
+            </div>
+          </Card>
+
+          {/* ── 1 — QUI ES-TU (adapté au dept) ── */}
+          {answers.dept&&(
+            <Card style={{marginBottom:14}}>
+              <SectionLabel
+                text={isDeck?t.s1Deck:t.s1Engine}
+                done={answers.who!==null}/>
               <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-                {sec.opts.map(o=>(
+                {(isDeck?whoOptsDeck:whoOptsEngine).map(o=>(
                   <Chip key={o.v} label={o.l}
-                    selected={answers[sec.key]===o.v}
-                    onClick={()=>set(sec.key,o.v)}/>
+                    selected={answers.who===o.v}
+                    onClick={()=>set("who",o.v)}/>
                 ))}
               </div>
-              {attempted&&answers[sec.key]===null&&(
-                <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
-                  {t.errRequired}
-                </div>
-              )}
             </Card>
-          ))}
+          )}
 
-          {/* ── SECTION 4 : SHIP ── */}
-          <Card style={{marginBottom:14}}
-            error={attempted&&answers.ship===null}>
+          {/* ── 2 — OBJECTIF (adapté au dept) ── */}
+          {answers.dept&&(
+            <Card style={{marginBottom:14}}>
+              <SectionLabel
+                text={isDeck?t.s2Deck:t.s2Engine}
+                done={answers.goal!==null}/>
+              <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                {(isDeck?goalOptsDeck:goalOptsEngine).map(o=>(
+                  <Chip key={o.v} label={o.l}
+                    selected={answers.goal===o.v}
+                    onClick={()=>set("goal",o.v)}/>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* ── 3 — NIVEAU ── */}
+          <Card style={{marginBottom:14}}>
+            <SectionLabel text={t.s3} done={answers.level!==null}/>
+            <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+              {levelOpts.map(o=>(
+                <Chip key={o.v} label={o.l}
+                  selected={answers.level===o.v}
+                  onClick={()=>set("level",o.v)}/>
+              ))}
+            </div>
+          </Card>
+
+          {/* ── 4 — NAVIRE DE RÊVE ── */}
+          <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s4} done={answers.ship!==null}/>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10,marginBottom:12}}>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",
+              gap:10,marginBottom:12}}>
               {allShips.map(s=>(
                 <ShipCard key={s.id} emoji={s.emoji} label={s.label}
                   selected={answers.ship===s.id}
@@ -733,21 +764,14 @@ export default function QuestionnaireS7({
               background:"rgba(255,255,255,0.04)",
               border:`1px dashed ${C.border}`,
               color:C.blue2,fontSize:12,fontWeight:700,
-              cursor:"pointer",letterSpacing:0.5,
-              fontFamily:"'Nunito',sans-serif",
+              cursor:"pointer",fontFamily:"'Nunito',sans-serif",
             }}>
               {showMoreShips?t.s4less:t.s4more}
             </button>
-            {attempted&&answers.ship===null&&(
-              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
-                {t.errRequired}
-              </div>
-            )}
           </Card>
 
-          {/* ── SECTION 5 : DURATION ── */}
-          <Card style={{marginBottom:14}}
-            error={attempted&&answers.duration===null}>
+          {/* ── 5 — DURÉE ── */}
+          <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s5} done={answers.duration!==null}/>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
               {durationOpts.map(o=>(
@@ -760,19 +784,13 @@ export default function QuestionnaireS7({
               <div style={{marginTop:10,padding:"8px 12px",borderRadius:10,
                 background:"rgba(201,146,42,0.1)",border:`1px solid ${C.gold}33`,
                 fontSize:12,color:C.gold2}}>
-                ⭐ Recommandé — 15 min / jour c'est suffisant pour progresser régulièrement
-              </div>
-            )}
-            {attempted&&answers.duration===null&&(
-              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
-                {t.errRequired}
+                ⭐ Recommandé — 15 min / jour suffit pour progresser régulièrement
               </div>
             )}
           </Card>
 
-          {/* ── SECTION 6 : TIME ── */}
-          <Card style={{marginBottom:14}}
-            error={attempted&&answers.time===null}>
+          {/* ── 6 — HEURE ── */}
+          <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s6} done={answers.time!==null}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
               {timeOpts.map(o=>(
@@ -781,50 +799,31 @@ export default function QuestionnaireS7({
                   onClick={()=>set("time",o.v)}/>
               ))}
             </div>
-            {attempted&&answers.time===null&&(
-              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
-                {t.errRequired}
-              </div>
-            )}
           </Card>
 
-          {/* ── SECTION 7 : COUNTRY ── */}
-          <Card style={{marginBottom:14}}
-            error={attempted&&country.trim().length===0}>
+          {/* ── 7 — PAYS ── */}
+          <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s7} done={country.trim().length>0}/>
-            <input
-              type="text"
-              placeholder={t.s7ph}
+            <input type="text" placeholder={t.s7ph}
               value={country}
-              onChange={e=>setCountryVal(e.target.value)}
-              maxLength={60}
+              onChange={e=>{ setCountry(e.target.value); set("country",e.target.value); }}
               style={{
                 width:"100%",padding:"13px 14px",borderRadius:12,
                 background:"rgba(255,255,255,0.07)",
-                border:`1.5px solid ${
-                  attempted&&country.trim().length===0
-                    ?C.red
-                    :country.trim().length>0?C.gold:C.border
-                }`,
+                border:`1.5px solid ${country.trim().length>0?C.gold:C.border}`,
                 color:C.white,fontSize:14,outline:"none",
                 fontFamily:"'Nunito',sans-serif",
                 transition:"border-color 0.2s",
               }}/>
             {country.trim().length>0&&(
               <div style={{marginTop:8,fontSize:11,color:C.muted}}>
-                🌍 La réglementation maritime sera adaptée à ton pays
-              </div>
-            )}
-            {attempted&&country.trim().length===0&&(
-              <div style={{marginTop:8,fontSize:12,color:C.red,fontWeight:600}}>
-                {t.errCountry}
+                🌍 La réglementation sera adaptée à ton pays
               </div>
             )}
           </Card>
 
-          {/* ── SECTION 8 : REMINDER ── */}
-          <Card style={{marginBottom:14}}
-            error={attempted&&answers.reminder===null}>
+          {/* ── 8 — RAPPEL ── */}
+          <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s8} done={answers.reminder!==null}/>
             <div style={{display:"flex",gap:10}}>
               <Chip label={t.qYes} wide
@@ -836,183 +835,60 @@ export default function QuestionnaireS7({
             </div>
             {answers.reminder==="yes"&&answers.time&&(
               <div style={{marginTop:10,padding:"10px 12px",borderRadius:10,
-                background:"rgba(77,166,255,0.1)",
-                border:`1px solid ${C.blue2}33`,
+                background:`rgba(77,166,255,0.1)`,border:`1px solid ${C.blue2}33`,
                 fontSize:12,color:C.blue2}}>
-                🔔 Tu recevras un rappel{" "}
-                {answers.time==="morning"?"le matin"
-                  :answers.time==="afternoon"?"l'après-midi"
-                  :answers.time==="evening"?"le soir"
-                  :"la nuit"}{" "}
-                à l'heure choisie
-              </div>
-            )}
-            {attempted&&answers.reminder===null&&(
-              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
-                {t.errRequired}
+                🔔 Rappel configuré selon ton heure préférée
               </div>
             )}
           </Card>
 
-          {/* ── SECTION 9 : PHOTO ── */}
-          <Card style={{marginBottom:20}}
-            error={!!photoError}>
+          {/* ── 9 — PHOTO ── */}
+          <Card style={{marginBottom:20}}>
             <div style={{fontSize:13,fontWeight:700,
-              color:C.muted,marginBottom:10,letterSpacing:0.5}}>
-              {t.s9}
+              color:C.muted,marginBottom:10}}>{t.s9}</div>
+            <div style={{borderRadius:14,padding:"16px 14px",
+              background:"rgba(255,255,255,0.04)",
+              border:`1px dashed ${C.border}`,
+              display:"flex",alignItems:"center",gap:14,cursor:"pointer"}}>
+              <div style={{width:52,height:52,borderRadius:"50%",flexShrink:0,
+                background:`linear-gradient(135deg,${C.navy3},#112244)`,
+                border:`1.5px dashed ${C.gold}66`,
+                display:"flex",alignItems:"center",justifyContent:"center",fontSize:22}}>
+                📸
+              </div>
+              <div>
+                <div style={{fontSize:13,color:C.white,fontWeight:600,marginBottom:4}}>
+                  {t.s9cta}
+                </div>
+                <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>{t.s9note}</div>
+              </div>
             </div>
-
-            {/* Live preview */}
-            {answers.photo && (
-              <div style={{
-                display:"flex",flexDirection:"column",
-                alignItems:"center",gap:12,
-                marginBottom:16,
-              }}>
-                <img
-                  src={answers.photo}
-                  alt="Preview"
-                  style={{
-                    width:120,height:120,
-                    borderRadius:"50%",
-                    objectFit:"cover",
-                    border:`2px solid ${C.gold}66`,
-                    boxShadow:`0 8px 24px rgba(0,0,0,0.3)`,
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={()=>{ set("photo",null); setPhotoError(null); }}
-                  style={{
-                    fontSize:12,color:C.red,
-                    background:"transparent",border:"none",
-                    cursor:"pointer",fontWeight:600,
-                    fontFamily:"'Nunito',sans-serif",
-                    textDecoration:"underline",
-                  }}
-                >{t.photoRemove}</button>
-              </div>
-            )}
-
-            <label style={{
-              borderRadius:14,padding:"16px 14px",
-              background:photoError?"rgba(192,57,43,0.08)":"rgba(255,255,255,0.04)",
-              border:`1.5px dashed ${photoError?C.red:C.border}`,
-              display:"flex",alignItems:"center",
-              gap:14,cursor:"pointer",
-              transition:"all 0.2s",
-            }}>
-              <div style={{
-                width:52,height:52,borderRadius:"50%",flexShrink:0,
-                background:answers.photo
-                  ?`url(${answers.photo}) center/cover`
-                  :`linear-gradient(135deg,${C.navy3},#112244)`,
-                border:`1.5px dashed ${photoError?C.red:C.gold}66`,
-                display:"flex",alignItems:"center",
-                justifyContent:"center",fontSize:22,
-              }}>{answers.photo?"":"📸"}</div>
-              <div style={{flex:1}}>
-                <div style={{fontSize:13,color:C.white,
-                  fontWeight:600,marginBottom:4}}>
-                  {answers.photo?t.photoChange:t.s9cta}
-                </div>
-                <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>
-                  {t.s9note}
-                </div>
-              </div>
-              <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" style={{display:"none"}}
-                onChange={(e)=>{
-                  const f=e.target.files&&e.target.files[0];
-                  if(!f){ setPhotoError(null); return; }
-                  const validTypes=["image/jpeg","image/png","image/gif","image/webp"];
-                  if(!validTypes.includes(f.type)){
-                    setPhotoError("type");
-                    e.target.value="";
-                    return;
-                  }
-                  const MAX_MB=2;
-                  if(f.size>MAX_MB*1024*1024){
-                    setPhotoError("size");
-                    e.target.value="";
-                    return;
-                  }
-                  setLastFile(f);
-                  readPhoto(f);
-                }}/>
-            </label>
-            {photoError==="type"&&(
-              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
-                {t.errPhotoType}
-              </div>
-            )}
-            {photoError==="size"&&(
-              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
-                {t.errPhotoSize}
-              </div>
-            )}
-            {(photoError==="read"||photoError==="encode")&&(
-              <div style={{marginTop:10,display:"flex",flexDirection:"column",gap:8}}>
-                <div style={{fontSize:12,color:C.red,fontWeight:600}}>
-                  {photoError==="read"?t.errPhotoRead:t.errPhotoEncode}
-                </div>
-                {lastFile&&(
-                  <button type="button"
-                    onClick={()=>readPhoto(lastFile)}
-                    style={{
-                      alignSelf:"flex-start",
-                      padding:"8px 14px",borderRadius:10,
-                      background:`linear-gradient(135deg,${C.blue},${C.gold})`,
-                      border:"none",color:C.white,
-                      fontSize:12,fontWeight:700,cursor:"pointer",
-                      fontFamily:"'Nunito',sans-serif",
-                    }}>{t.photoRetry}</button>
-                )}
-              </div>
-            )}
           </Card>
 
           {/* ── SUBMIT ── */}
-          <button onClick={handleSubmit} disabled={!allDone}
-            aria-disabled={!allDone}
-            style={{
-              width:"100%",padding:"17px 0",
-              border:"none",borderRadius:16,
-              background:allDone
-                ?`linear-gradient(135deg,${C.blue},${C.gold})`
-                :"rgba(26,111,212,0.25)",
-              fontFamily:"'Cinzel',serif",fontSize:15,
-              fontWeight:700,letterSpacing:2,
-              color:allDone?C.white:"rgba(240,244,255,0.35)",
-              cursor:allDone?"pointer":"not-allowed",
-              opacity:allDone?1:0.7,
-              boxShadow:allDone?"0 10px 36px rgba(26,111,212,0.4)":"none",
-              transition:"all 0.3s",
-              marginBottom:12,
-            }}>{t.qBtn}</button>
-
-          {attempted&&!allDone&&(
-            <div style={{
-              textAlign:"center",fontSize:12,fontWeight:700,
-              color:C.red,marginBottom:10,padding:"10px 12px",
-              borderRadius:10,background:"rgba(192,57,43,0.12)",
-              border:`1px solid ${C.red}55`,
-            }}>
-              {t.errSummary}
-            </div>
-          )}
+          <button onClick={handleSubmit} disabled={!allDone} style={{
+            width:"100%",padding:"17px 0",border:"none",borderRadius:16,
+            background:allDone
+              ?`linear-gradient(135deg,${C.blue},${C.gold})`
+              :"rgba(26,111,212,0.25)",
+            fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,
+            color:allDone?C.white:"rgba(240,244,255,0.35)",
+            cursor:allDone?"pointer":"not-allowed",
+            boxShadow:allDone?"0 10px 36px rgba(26,111,212,0.4)":"none",
+            transition:"all 0.3s",marginBottom:12,
+          }}>{t.qBtn}</button>
 
           {!allDone&&(
-            <div style={{textAlign:"center",fontSize:12,
-              color:C.muted,lineHeight:1.6}}>
-              {t.qBtnWait}
-              <br/>
+            <div style={{textAlign:"center",fontSize:12,color:C.muted,lineHeight:1.6}}>
+              {t.qBtnWait}<br/>
               <span style={{color:C.gold2,fontWeight:700}}>
-                {requiredKeys.filter(k=>answers[k]!==null).length +
+                {requiredKeys.filter(k=>answers[k]!==null).length+
                   (country.trim().length>0?1:0)}/
                 {requiredKeys.length+1} complétées
               </span>
             </div>
           )}
+
         </div>
       </div>
     </div>
