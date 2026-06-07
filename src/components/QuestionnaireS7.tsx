@@ -144,6 +144,10 @@ const T = {
     errRequired:"⚠️ This question is required",
     errCountry:"⚠️ Please enter your country of residence",
     errSummary:"Please complete the fields highlighted in red",
+    errPhotoType:"⚠️ Only JPG, PNG, GIF and WEBP formats are accepted",
+    errPhotoSize:"⚠️ Photo must not exceed 2 MB",
+    photoRemove:"Remove photo",
+    photoChange:"Change photo",
   },
   es:{
     back:"◀ Volver",
