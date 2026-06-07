@@ -298,7 +298,7 @@ export function SplashS1({onDone}) {
 // ══════════════════════════════════════════════
 //  S3 — MUSIC
 // ══════════════════════════════════════════════
-export function MusicS3({lang="fr",onYes,onNo}) {
+export function MusicS3({lang="fr",onYes,onNo,onBack}) {
   const t=T[lang]||T.fr;
   const [vis,setVis]=useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
@@ -306,7 +306,7 @@ export function MusicS3({lang="fr",onYes,onNo}) {
 
   return (
     <Screen>
-      <TopBar onBack={onNo} backLabel={t.back} step={3} total={8}/>
+      <TopBar onBack={onBack||onNo} backLabel={t.back} step={3} total={8}/>
       <div style={{
         minHeight:"calc(100vh - 54px)",
         display:"flex",flexDirection:"column",

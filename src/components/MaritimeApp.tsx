@@ -938,6 +938,7 @@ export default function App() {
           lang={lang}
           onYes={() => setPage("welcome")}
           onNo={() => setPage("welcome")}
+          onBack={() => setPage("lang")}
         />
       )}
       {page==="landing"     && <LandingPage setPage={setPage} lang={lang} setLang={setLang}/>}
