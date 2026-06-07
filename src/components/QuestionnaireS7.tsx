@@ -536,6 +536,26 @@ export default function QuestionnaireS7({
   const requiredKeys=["dept","who","goal","level","ship","duration","time","reminder"];
   const allDone=requiredKeys.every(k=>answers[k]!==null)&&country.trim().length>0;
 
+  const sectionRefs=useRef({});
+  const [errorKey,setErrorKey]=useState(null);
+  const [errorMsg,setErrorMsg]=useState("");
+
+  const errorLabels={
+    fr:{dept:"ton département",who:"qui tu es",goal:"ton objectif",level:"ton niveau",
+      ship:"ton navire de rêve",duration:"la durée d'étude",time:"ton moment préféré",
+      reminder:"si tu veux un rappel",country:"ton pays"},
+    en:{dept:"your department",who:"who you are",goal:"your goal",level:"your level",
+      ship:"your dream ship",duration:"the study duration",time:"your preferred time",
+      reminder:"if you want a reminder",country:"your country"},
+    es:{dept:"tu departamento",who:"quién eres",goal:"tu objetivo",level:"tu nivel",
+      ship:"tu barco soñado",duration:"la duración",time:"tu momento preferido",
+      reminder:"si quieres un recordatorio",country:"tu país"},
+    pt:{dept:"seu departamento",who:"quem você é",goal:"seu objetivo",level:"seu nível",
+      ship:"seu navio dos sonhos",duration:"a duração",time:"seu horário preferido",
+      reminder:"se quer um lembrete",country:"seu país"},
+  };
+  const errorPrefix={fr:"Réponds à",en:"Please answer",es:"Responde",pt:"Responda"};
+
   const isDeck=answers.dept==="deck";
   const isEngine=answers.dept==="engine";
 
