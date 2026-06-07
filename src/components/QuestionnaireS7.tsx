@@ -84,6 +84,9 @@ const T = {
     // Photo upload
     errPhotoType:"⚠️ Seuls les formats JPG, PNG, GIF et WEBP sont acceptés",
     errPhotoSize:"⚠️ La photo ne doit pas dépasser 2 Mo",
+    errPhotoRead:"⚠️ Impossible de lire le fichier. Vérifie qu'il n'est pas corrompu.",
+    errPhotoEncode:"⚠️ Échec de l'encodage de l'image. Essaie un autre fichier.",
+    photoRetry:"🔄 Réessayer",
     photoRemove:"Supprimer la photo",
     photoChange:"Changer la photo",
   },
@@ -146,6 +149,9 @@ const T = {
     errSummary:"Please complete the fields highlighted in red",
     errPhotoType:"⚠️ Only JPG, PNG, GIF and WEBP formats are accepted",
     errPhotoSize:"⚠️ Photo must not exceed 2 MB",
+    errPhotoRead:"⚠️ Could not read the file. Make sure it isn't corrupted.",
+    errPhotoEncode:"⚠️ Failed to encode the image. Try another file.",
+    photoRetry:"🔄 Retry",
     photoRemove:"Remove photo",
     photoChange:"Change photo",
   },
@@ -208,6 +214,9 @@ const T = {
     errSummary:"Por favor completa los campos en rojo",
     errPhotoType:"⚠️ Solo se aceptan formatos JPG, PNG, GIF y WEBP",
     errPhotoSize:"⚠️ La foto no debe superar 2 MB",
+    errPhotoRead:"⚠️ No se pudo leer el archivo. Verifica que no esté dañado.",
+    errPhotoEncode:"⚠️ Falló la codificación de la imagen. Prueba otro archivo.",
+    photoRetry:"🔄 Reintentar",
     photoRemove:"Eliminar foto",
     photoChange:"Cambiar foto",
   },
@@ -270,6 +279,9 @@ const T = {
     errSummary:"Por favor complete os campos em vermelho",
     errPhotoType:"⚠️ Apenas formatos JPG, PNG, GIF e WEBP são aceitos",
     errPhotoSize:"⚠️ A foto não deve ultrapassar 2 MB",
+    errPhotoRead:"⚠️ Não foi possível ler o arquivo. Verifique se não está corrompido.",
+    errPhotoEncode:"⚠️ Falha ao codificar a imagem. Tente outro arquivo.",
+    photoRetry:"🔄 Tentar novamente",
     photoRemove:"Remover foto",
     photoChange:"Alterar foto",
   },
@@ -530,6 +542,7 @@ export default function QuestionnaireS7({
   const [country,setCountry]=useState("");
   const [attempted,setAttempted]=useState(false);
   const [photoError,setPhotoError]=useState(null);
+  const [lastFile,setLastFile]=useState(null);
   const [answers,setAnswers]=useState({
     who:null,goal:null,level:null,
     ship:null,duration:null,time:null,
@@ -614,6 +627,27 @@ export default function QuestionnaireS7({
     {v:"evening",l:t.qEvening},{v:"night",l:t.qNight},
   ];
 
+  const readPhoto=(f)=>{
+    setPhotoError(null);
+    try{
+      const r=new FileReader();
+      r.onload=()=>{
+        try{
+          const res=r.result;
+          if(typeof res!=="string"||!res.startsWith("data:image/")){
+            setPhotoError("encode");
+            return;
+          }
+          set("photo",res);
+        }catch{ setPhotoError("encode"); }
+      };
+      r.onerror=()=>setPhotoError("read");
+      r.onabort=()=>setPhotoError("read");
+      r.readAsDataURL(f);
+    }catch{
+      setPhotoError("read");
+    }
+  };
   const handleSubmit=()=>{
     if(!allDone){
       setAttempted(true);
@@ -625,7 +659,11 @@ export default function QuestionnaireS7({
       }
       return;
     }
-    setProfile({...answers,country,lang});
+    const data={...answers,country,lang};
+    setProfile(data);
+    if(typeof window!=="undefined"){
+      try{ localStorage.setItem("map_status_card",JSON.stringify(data)); }catch{}
+    }
     onNext();
   };
 
@@ -898,10 +936,8 @@ export default function QuestionnaireS7({
                     e.target.value="";
                     return;
                   }
-                  setPhotoError(null);
-                  const r=new FileReader();
-                  r.onload=()=>set("photo",r.result);
-                  r.readAsDataURL(f);
+                  setLastFile(f);
+                  readPhoto(f);
                 }}/>
             </label>
             {photoError==="type"&&(
@@ -912,6 +948,25 @@ export default function QuestionnaireS7({
             {photoError==="size"&&(
               <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
                 {t.errPhotoSize}
+              </div>
+            )}
+            {(photoError==="read"||photoError==="encode")&&(
+              <div style={{marginTop:10,display:"flex",flexDirection:"column",gap:8}}>
+                <div style={{fontSize:12,color:C.red,fontWeight:600}}>
+                  {photoError==="read"?t.errPhotoRead:t.errPhotoEncode}
+                </div>
+                {lastFile&&(
+                  <button type="button"
+                    onClick={()=>readPhoto(lastFile)}
+                    style={{
+                      alignSelf:"flex-start",
+                      padding:"8px 14px",borderRadius:10,
+                      background:`linear-gradient(135deg,${C.blue},${C.gold})`,
+                      border:"none",color:C.white,
+                      fontSize:12,fontWeight:700,cursor:"pointer",
+                      fontFamily:"'Nunito',sans-serif",
+                    }}>{t.photoRetry}</button>
+                )}
               </div>
             )}
           </Card>
