@@ -1,5 +1,6 @@
 // @ts-nocheck
 import QuestionnaireS7 from "./QuestionnaireS7";
+import StatusCardS8 from "./StatusCardS8";
 import { useState, useEffect } from "react";
 
 const LS_KEY = "map_registrations";
@@ -903,6 +904,7 @@ function AdminPage({ setPage }) {
 export default function App() {
   const [page, setPage] = useState("lang");
   const [lang, setLang] = useState("fr");
+  const [profile, setProfile] = useState({});
   return (
     <>
       <style>{`
@@ -923,9 +925,27 @@ export default function App() {
           lang={lang}
           onBack={() => setPage("register")}
           onNext={() => setPage("status")}
+          setProfile={setProfile}
         />
       )}
-      {page==="status"      && <StatusPage setPage={setPage} lang={lang}/>}
+      {page==="status"      && (() => {
+        let last:any = {};
+        try {
+          if (typeof window !== "undefined") {
+            last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
+          }
+        } catch {}
+        return (
+          <StatusCardS8
+            lang={lang}
+            username={last.name || "Marin"}
+            photo={profile.photo || null}
+            profile={profile}
+            onBack={() => setPage("questionnaire")}
+            onStart={() => setPage("landing")}
+          />
+        );
+      })()}
     </>
   );
 }
