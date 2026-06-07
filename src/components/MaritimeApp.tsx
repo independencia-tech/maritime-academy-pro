@@ -1,6 +1,7 @@
 // @ts-nocheck
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
+import RegisterS6 from "./RegisterS6";
 import { useState, useEffect } from "react";
 
 const LS_KEY = "map_registrations";
