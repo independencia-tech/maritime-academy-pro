@@ -206,6 +206,10 @@ const T = {
     errRequired:"⚠️ Esta pregunta es obligatoria",
     errCountry:"⚠️ Indica tu país de residencia",
     errSummary:"Por favor completa los campos en rojo",
+    errPhotoType:"⚠️ Solo se aceptan formatos JPG, PNG, GIF y WEBP",
+    errPhotoSize:"⚠️ La foto no debe superar 2 MB",
+    photoRemove:"Eliminar foto",
+    photoChange:"Cambiar foto",
   },
   pt:{
     back:"◀ Voltar",
@@ -264,6 +268,10 @@ const T = {
     errRequired:"⚠️ Esta pergunta é obrigatória",
     errCountry:"⚠️ Indique seu país de residência",
     errSummary:"Por favor complete os campos em vermelho",
+    errPhotoType:"⚠️ Apenas formatos JPG, PNG, GIF e WEBP são aceitos",
+    errPhotoSize:"⚠️ A foto não deve ultrapassar 2 MB",
+    photoRemove:"Remover foto",
+    photoChange:"Alterar foto",
   },
 };
 
