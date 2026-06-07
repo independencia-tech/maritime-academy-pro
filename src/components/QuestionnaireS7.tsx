@@ -926,17 +926,27 @@ export default function QuestionnaireS7({
           </Card>
 
           {/* ── SUBMIT ── */}
-          <button onClick={handleSubmit} disabled={!allDone} style={{
+          <button onClick={handleSubmit}
+            aria-disabled={!allDone}
+            aria-describedby="qs-status"
+            style={{
             width:"100%",padding:"17px 0",border:"none",borderRadius:16,
             background:allDone
               ?`linear-gradient(135deg,${C.blue},${C.gold})`
               :"rgba(26,111,212,0.25)",
             fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,
             color:allDone?C.white:"rgba(240,244,255,0.35)",
-            cursor:allDone?"pointer":"not-allowed",
+            cursor:"pointer",
             boxShadow:allDone?"0 10px 36px rgba(26,111,212,0.4)":"none",
             transition:"all 0.3s",marginBottom:12,
           }}>{t.qBtn}</button>
+
+          <div id="qs-status" role="status" aria-live="polite"
+            style={{textAlign:"center",fontSize:12,lineHeight:1.6,
+              color:errorMsg?"#ff8a80":C.muted,
+              fontWeight:errorMsg?700:400,marginBottom:8,minHeight:18}}>
+            {errorMsg}
+          </div>
 
           {!allDone&&(
             <div style={{textAlign:"center",fontSize:12,color:C.muted,lineHeight:1.6}}>
