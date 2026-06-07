@@ -545,17 +545,19 @@ function RegisterPage({ setPage, lang }) {
     setLoading(true);
     setTimeout(() => {
       const regs = loadRegs();
-      regs.push({
+      const reg = {
         id: Date.now(),
         name: form.name.trim(),
         email: form.email.trim().toLowerCase(),
         phone: form.phone.trim(),
         lang,
         date: new Date().toLocaleString("fr-FR"),
-      });
+      };
+      regs.push(reg);
       saveRegs(regs);
+      try { localStorage.setItem("map_last_reg", JSON.stringify(reg)); } catch {}
       setLoading(false);
-      setSubmitted(true);
+      setPage("questionnaire");
     }, 800);
   };
 
