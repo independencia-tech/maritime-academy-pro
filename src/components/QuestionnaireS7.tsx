@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -536,6 +536,26 @@ export default function QuestionnaireS7({
   const requiredKeys=["dept","who","goal","level","ship","duration","time","reminder"];
   const allDone=requiredKeys.every(k=>answers[k]!==null)&&country.trim().length>0;
 
+  const sectionRefs=useRef({});
+  const [errorKey,setErrorKey]=useState(null);
+  const [errorMsg,setErrorMsg]=useState("");
+
+  const errorLabels={
+    fr:{dept:"ton département",who:"qui tu es",goal:"ton objectif",level:"ton niveau",
+      ship:"ton navire de rêve",duration:"la durée d'étude",time:"ton moment préféré",
+      reminder:"si tu veux un rappel",country:"ton pays"},
+    en:{dept:"your department",who:"who you are",goal:"your goal",level:"your level",
+      ship:"your dream ship",duration:"the study duration",time:"your preferred time",
+      reminder:"if you want a reminder",country:"your country"},
+    es:{dept:"tu departamento",who:"quién eres",goal:"tu objetivo",level:"tu nivel",
+      ship:"tu barco soñado",duration:"la duración",time:"tu momento preferido",
+      reminder:"si quieres un recordatorio",country:"tu país"},
+    pt:{dept:"seu departamento",who:"quem você é",goal:"seu objetivo",level:"seu nível",
+      ship:"seu navio dos sonhos",duration:"a duração",time:"seu horário preferido",
+      reminder:"se quer um lembrete",country:"seu país"},
+  };
+  const errorPrefix={fr:"Réponds à",en:"Please answer",es:"Responde",pt:"Responda"};
+
   const isDeck=answers.dept==="deck";
   const isEngine=answers.dept==="engine";
 
@@ -592,10 +612,30 @@ export default function QuestionnaireS7({
   ];
 
   const handleSubmit=()=>{
-    if(!allDone) return;
+    const firstMissing=requiredKeys.find(k=>answers[k]===null)
+      ||(country.trim().length===0?"country":null);
+    if(firstMissing){
+      const labels=errorLabels[lang]||errorLabels.fr;
+      setErrorKey(firstMissing);
+      setErrorMsg(`${errorPrefix[lang]||errorPrefix.fr} ${labels[firstMissing]}.`);
+      const node=sectionRefs.current[firstMissing];
+      if(node){
+        node.scrollIntoView({behavior:"smooth",block:"center"});
+        setTimeout(()=>{ try{ node.focus({preventScroll:true}); }catch(e){} },300);
+      }
+      return;
+    }
+    setErrorKey(null);setErrorMsg("");
     setProfile({...answers,country,lang});
     onNext();
   };
+
+  const sectionProps=(key)=>({
+    ref:(el)=>{ sectionRefs.current[key]=el; },
+    tabIndex:-1,
+    "aria-invalid":errorKey===key||undefined,
+    style:{outline:"none",scrollMarginTop:80},
+  });
 
   return (
     <div style={{
@@ -633,6 +673,7 @@ export default function QuestionnaireS7({
           <ProgressSummary answers={answers} t={t}/>
 
           {/* ── 0 — DÉPARTEMENT ── */}
+          <div {...sectionProps("dept")}>
           <Card style={{marginBottom:14,
             border:`1px solid ${answers.dept?"rgba(201,146,42,0.4)":C.border}`,
             boxShadow:answers.dept?`0 4px 20px rgba(201,146,42,0.1)`:"none",
@@ -703,9 +744,11 @@ export default function QuestionnaireS7({
               </button>
             </div>
           </Card>
+          </div>
 
           {/* ── 1 — QUI ES-TU (adapté au dept) ── */}
           {answers.dept&&(
+            <div {...sectionProps("who")}>
             <Card style={{marginBottom:14}}>
               <SectionLabel
                 text={isDeck?t.s1Deck:t.s1Engine}
@@ -718,10 +761,12 @@ export default function QuestionnaireS7({
                 ))}
               </div>
             </Card>
+            </div>
           )}
 
           {/* ── 2 — OBJECTIF (adapté au dept) ── */}
           {answers.dept&&(
+            <div {...sectionProps("goal")}>
             <Card style={{marginBottom:14}}>
               <SectionLabel
                 text={isDeck?t.s2Deck:t.s2Engine}
@@ -734,9 +779,11 @@ export default function QuestionnaireS7({
                 ))}
               </div>
             </Card>
+            </div>
           )}
 
           {/* ── 3 — NIVEAU ── */}
+          <div {...sectionProps("level")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s3} done={answers.level!==null}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
@@ -747,8 +794,10 @@ export default function QuestionnaireS7({
               ))}
             </div>
           </Card>
+          </div>
 
           {/* ── 4 — NAVIRE DE RÊVE ── */}
+          <div {...sectionProps("ship")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s4} done={answers.ship!==null}/>
             <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",
@@ -769,8 +818,10 @@ export default function QuestionnaireS7({
               {showMoreShips?t.s4less:t.s4more}
             </button>
           </Card>
+          </div>
 
           {/* ── 5 — DURÉE ── */}
+          <div {...sectionProps("duration")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s5} done={answers.duration!==null}/>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
@@ -788,8 +839,10 @@ export default function QuestionnaireS7({
               </div>
             )}
           </Card>
+          </div>
 
           {/* ── 6 — HEURE ── */}
+          <div {...sectionProps("time")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s6} done={answers.time!==null}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
@@ -800,8 +853,10 @@ export default function QuestionnaireS7({
               ))}
             </div>
           </Card>
+          </div>
 
           {/* ── 7 — PAYS ── */}
+          <div {...sectionProps("country")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s7} done={country.trim().length>0}/>
             <input type="text" placeholder={t.s7ph}
@@ -814,15 +869,19 @@ export default function QuestionnaireS7({
                 color:C.white,fontSize:14,outline:"none",
                 fontFamily:"'Nunito',sans-serif",
                 transition:"border-color 0.2s",
-              }}/>
+              }}
+              aria-invalid={errorKey==="country"||undefined}
+              aria-label={t.s7}/>
             {country.trim().length>0&&(
               <div style={{marginTop:8,fontSize:11,color:C.muted}}>
                 🌍 La réglementation sera adaptée à ton pays
               </div>
             )}
           </Card>
+          </div>
 
           {/* ── 8 — RAPPEL ── */}
+          <div {...sectionProps("reminder")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s8} done={answers.reminder!==null}/>
             <div style={{display:"flex",gap:10}}>
@@ -841,6 +900,7 @@ export default function QuestionnaireS7({
               </div>
             )}
           </Card>
+          </div>
 
           {/* ── 9 — PHOTO ── */}
           <Card style={{marginBottom:20}}>
@@ -866,17 +926,27 @@ export default function QuestionnaireS7({
           </Card>
 
           {/* ── SUBMIT ── */}
-          <button onClick={handleSubmit} disabled={!allDone} style={{
+          <button onClick={handleSubmit}
+            aria-disabled={!allDone}
+            aria-describedby="qs-status"
+            style={{
             width:"100%",padding:"17px 0",border:"none",borderRadius:16,
             background:allDone
               ?`linear-gradient(135deg,${C.blue},${C.gold})`
               :"rgba(26,111,212,0.25)",
             fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,
             color:allDone?C.white:"rgba(240,244,255,0.35)",
-            cursor:allDone?"pointer":"not-allowed",
+            cursor:"pointer",
             boxShadow:allDone?"0 10px 36px rgba(26,111,212,0.4)":"none",
             transition:"all 0.3s",marginBottom:12,
           }}>{t.qBtn}</button>
+
+          <div id="qs-status" role="status" aria-live="polite"
+            style={{textAlign:"center",fontSize:12,lineHeight:1.6,
+              color:errorMsg?"#ff8a80":C.muted,
+              fontWeight:errorMsg?700:400,marginBottom:8,minHeight:18}}>
+            {errorMsg}
+          </div>
 
           {!allDone&&(
             <div style={{textAlign:"center",fontSize:12,color:C.muted,lineHeight:1.6}}>
