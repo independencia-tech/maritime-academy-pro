@@ -542,6 +542,7 @@ export default function QuestionnaireS7({
   const [country,setCountry]=useState("");
   const [attempted,setAttempted]=useState(false);
   const [photoError,setPhotoError]=useState(null);
+  const [lastFile,setLastFile]=useState(null);
   const [answers,setAnswers]=useState({
     who:null,goal:null,level:null,
     ship:null,duration:null,time:null,
