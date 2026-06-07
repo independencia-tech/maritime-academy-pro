@@ -931,7 +931,14 @@ export default function App() {
       `}</style>
       {page==="lang"        && <LanguageSelect setLang={setLang} setPage={setPage}/>}
       {page==="landing"     && <LandingPage setPage={setPage} lang={lang} setLang={setLang}/>}
-      {page==="register"    && <RegisterPage setPage={setPage} lang={lang}/>}
+      {page==="register"    && (
+        <RegisterS6
+          lang={lang}
+          onBack={() => setPage("landing")}
+          onNext={() => setPage("questionnaire")}
+          setUsername={(name) => setProfile((p) => ({ ...p, name }))}
+        />
+      )}
       {page==="admin-login" && <AdminLogin setPage={setPage}/>}
       {page==="admin"       && <AdminPage setPage={setPage}/>}
       {page==="questionnaire" && (
