@@ -37,6 +37,9 @@ const T = {
     notifOfficer:"Officier {nom}, la mer vous attend !",
     notifMaster:"Maître {nom}, la connaissance vous appelle !",
     notifCaptain:"Capitaine {nom}, votre commandement vous attend !",
+    resetBtn:"🗑️ Réinitialiser mes données",
+    resetConfirm:"⚠️ Confirmer la suppression ?",
+    resetCancel:"Annuler",
     goalLabels:{
       nav:"Maîtriser la navigation",
       stcw:"Certifications STCW",
