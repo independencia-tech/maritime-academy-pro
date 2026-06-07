@@ -905,6 +905,13 @@ export default function App() {
       {page==="register"    && <RegisterPage setPage={setPage} lang={lang}/>}
       {page==="admin-login" && <AdminLogin setPage={setPage}/>}
       {page==="admin"       && <AdminPage setPage={setPage}/>}
+      {page==="questionnaire" && (
+        <QuestionnaireS7
+          lang={lang}
+          onBack={() => setPage("landing")}
+          onNext={() => setPage("register")}
+        />
+      )}
     </>
   );
 }
