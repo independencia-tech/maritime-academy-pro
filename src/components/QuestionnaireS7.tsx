@@ -333,13 +333,14 @@ function TopBar({onBack,backLabel,step,total}) {
   );
 }
 
-function Card({children,style={}}) {
+function Card({children,style={},error=false}) {
   return (
     <div style={{
       background:"rgba(13,31,60,0.72)",
-      border:`1px solid ${C.border}`,
+      border:`1px solid ${error?C.red:C.border}`,
+      boxShadow:error?`0 0 0 2px ${C.red}33`:"none",
       borderRadius:20,padding:"18px 16px",...style,
-    }}>{children}</div>
+    }} data-error={error?"true":"false"}>{children}</div>
   );
 }
 
