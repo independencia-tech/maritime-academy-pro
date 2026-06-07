@@ -594,6 +594,13 @@ function RegisterPage({ setPage, lang }) {
             <div style={{fontSize:15,fontWeight:700,color:"#fff"}}>{form.name}</div>
             <div style={{fontSize:12,color:"rgba(240,244,255,0.5)",marginTop:2}}>{form.email}</div>
           </div>
+          <button onClick={() => setPage("questionnaire")} style={{
+            width:"100%",padding:"14px 0",borderRadius:16,border:"none",
+            background:"rgba(201,146,42,0.15)",
+            border:"1px solid rgba(201,146,42,0.35)",
+            fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:700,
+            color:"#e8b94f",cursor:"pointer",marginBottom:12,
+          }}>{t.startQuestionnaire}</button>
           <button onClick={() => setPage("landing")} style={{
             width:"100%",padding:"15px 0",borderRadius:16,border:"none",
             background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
