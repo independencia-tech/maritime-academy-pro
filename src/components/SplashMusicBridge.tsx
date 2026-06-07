@@ -264,7 +264,10 @@ export function SplashS1({onDone}) {
         {phase>=1&&(
           <div style={{fontSize:13,color:C.muted,letterSpacing:1,
             fontStyle:"italic",animation:"fadeUp 0.6s ease both"}}>
-            Du cadet au capitaine, maîtrise ta mer.
+            {lang==="en"?"Complete maritime training — deck and engine"
+              :lang==="es"?"Formación marítima completa — puente y máquinas"
+              :lang==="pt"?"Formação marítima completa — convés e máquinas"
+              :"La formation maritime complète — pont et machine"}
           </div>
         )}
 

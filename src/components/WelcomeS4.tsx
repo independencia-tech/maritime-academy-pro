@@ -13,7 +13,7 @@ const T = {
   fr:{
     back:"◀ Retour",
     welcomeOn:"sur MARITIME ACADEMY PRO",
-    slogan:"Du cadet au capitaine, maîtrise ta mer.",
+    slogan:"La formation maritime complète — pont et machine",
     quote:"La mer ne pardonne pas l'ignorance.\n\nMais elle récompense généreusement ceux qui la respectent, l'étudient et la connaissent.",
     quoteBy:"— Maritime Academy Pro",
     appDesc1:"La première plateforme de formation maritime",
@@ -30,7 +30,7 @@ const T = {
   en:{
     back:"◀ Back",
     welcomeOn:"to MARITIME ACADEMY PRO",
-    slogan:"From cadet to captain, master your sea.",
+    slogan:"Complete maritime training — deck and engine",
     quote:"The sea does not forgive ignorance.\n\nBut it generously rewards those who respect, study and understand it.",
     quoteBy:"— Maritime Academy Pro",
     appDesc1:"The first maritime training platform",
@@ -47,7 +47,7 @@ const T = {
   es:{
     back:"◀ Volver",
     welcomeOn:"a MARITIME ACADEMY PRO",
-    slogan:"Del cadete al capitán, domina tu mar.",
+    slogan:"Formación marítima completa — puente y máquinas",
     quote:"El mar no perdona la ignorancia.\n\nPero recompensa generosamente a quienes lo respetan, lo estudian y lo conocen.",
     quoteBy:"— Maritime Academy Pro",
     appDesc1:"La primera plataforma de formación marítima",
@@ -64,7 +64,7 @@ const T = {
   pt:{
     back:"◀ Voltar",
     welcomeOn:"ao MARITIME ACADEMY PRO",
-    slogan:"Do cadete ao capitão, domine o seu mar.",
+    slogan:"Formação marítima completa — convés e máquinas",
     quote:"O mar não perdoa a ignorância.\n\nMas recompensa generosamente quem o respeita, o estuda e o conhece.",
     quoteBy:"— Maritime Academy Pro",
     appDesc1:"A primeira plataforma de formação marítima",
