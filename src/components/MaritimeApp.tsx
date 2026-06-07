@@ -2,6 +2,7 @@
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
 import RegisterS6 from "./RegisterS6";
+import WelcomeS4 from "./WelcomeS4";
 import { useState, useEffect } from "react";
 
 const LS_KEY = "map_registrations";
@@ -941,6 +942,13 @@ export default function App() {
       )}
       {page==="admin-login" && <AdminLogin setPage={setPage}/>}
       {page==="admin"       && <AdminPage setPage={setPage}/>}
+      {page==="welcome"     && (
+        <WelcomeS4
+          lang={lang}
+          onBack={() => setPage("music")}
+          onNext={() => setPage("bridge")}
+        />
+      )}
       {page==="questionnaire" && (
         <QuestionnaireS7
           lang={lang}
