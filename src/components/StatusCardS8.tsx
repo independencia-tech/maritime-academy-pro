@@ -735,6 +735,28 @@ export default function StatusCardS8({
             </div>
           </div>
 
+          {/* Reset data */}
+          <div style={{marginTop:10,textAlign:"center"}}>
+            <button onClick={handleReset} style={{
+              width:"100%",padding:"13px 0",borderRadius:14,
+              background:confirmReset?"rgba(192,57,43,0.2)":"rgba(255,255,255,0.04)",
+              border:`1px solid ${confirmReset?"#c0392b":"rgba(255,255,255,0.1)"}`,
+              color:confirmReset?"#e74c3c":"rgba(240,244,255,0.35)",
+              fontFamily:"'Nunito',sans-serif",
+              fontSize:12,fontWeight:700,cursor:"pointer",
+              transition:"all 0.3s",
+            }}>
+              {confirmReset?t.resetConfirm:t.resetBtn}
+            </button>
+            {confirmReset&&(
+              <button onClick={()=>setConfirmReset(false)} style={{
+                width:"100%",padding:"10px 0",marginTop:8,
+                background:"none",border:"none",
+                color:"rgba(240,244,255,0.3)",fontSize:12,cursor:"pointer",
+              }}>{t.resetCancel}</button>
+            )}
+          </div>
+
         </div>
       </div>
     </div>
