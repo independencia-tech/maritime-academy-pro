@@ -673,6 +673,7 @@ export default function QuestionnaireS7({
           <ProgressSummary answers={answers} t={t}/>
 
           {/* ── 0 — DÉPARTEMENT ── */}
+          <div {...sectionProps("dept")}>
           <Card style={{marginBottom:14,
             border:`1px solid ${answers.dept?"rgba(201,146,42,0.4)":C.border}`,
             boxShadow:answers.dept?`0 4px 20px rgba(201,146,42,0.1)`:"none",
@@ -743,9 +744,11 @@ export default function QuestionnaireS7({
               </button>
             </div>
           </Card>
+          </div>
 
           {/* ── 1 — QUI ES-TU (adapté au dept) ── */}
           {answers.dept&&(
+            <div {...sectionProps("who")}>
             <Card style={{marginBottom:14}}>
               <SectionLabel
                 text={isDeck?t.s1Deck:t.s1Engine}
@@ -758,10 +761,12 @@ export default function QuestionnaireS7({
                 ))}
               </div>
             </Card>
+            </div>
           )}
 
           {/* ── 2 — OBJECTIF (adapté au dept) ── */}
           {answers.dept&&(
+            <div {...sectionProps("goal")}>
             <Card style={{marginBottom:14}}>
               <SectionLabel
                 text={isDeck?t.s2Deck:t.s2Engine}
@@ -774,9 +779,11 @@ export default function QuestionnaireS7({
                 ))}
               </div>
             </Card>
+            </div>
           )}
 
           {/* ── 3 — NIVEAU ── */}
+          <div {...sectionProps("level")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s3} done={answers.level!==null}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
@@ -787,8 +794,10 @@ export default function QuestionnaireS7({
               ))}
             </div>
           </Card>
+          </div>
 
           {/* ── 4 — NAVIRE DE RÊVE ── */}
+          <div {...sectionProps("ship")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s4} done={answers.ship!==null}/>
             <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",
@@ -809,8 +818,10 @@ export default function QuestionnaireS7({
               {showMoreShips?t.s4less:t.s4more}
             </button>
           </Card>
+          </div>
 
           {/* ── 5 — DURÉE ── */}
+          <div {...sectionProps("duration")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s5} done={answers.duration!==null}/>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
@@ -828,8 +839,10 @@ export default function QuestionnaireS7({
               </div>
             )}
           </Card>
+          </div>
 
           {/* ── 6 — HEURE ── */}
+          <div {...sectionProps("time")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s6} done={answers.time!==null}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
@@ -840,8 +853,10 @@ export default function QuestionnaireS7({
               ))}
             </div>
           </Card>
+          </div>
 
           {/* ── 7 — PAYS ── */}
+          <div {...sectionProps("country")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s7} done={country.trim().length>0}/>
             <input type="text" placeholder={t.s7ph}
@@ -854,15 +869,19 @@ export default function QuestionnaireS7({
                 color:C.white,fontSize:14,outline:"none",
                 fontFamily:"'Nunito',sans-serif",
                 transition:"border-color 0.2s",
-              }}/>
+              }}
+              aria-invalid={errorKey==="country"||undefined}
+              aria-label={t.s7}/>
             {country.trim().length>0&&(
               <div style={{marginTop:8,fontSize:11,color:C.muted}}>
                 🌍 La réglementation sera adaptée à ton pays
               </div>
             )}
           </Card>
+          </div>
 
           {/* ── 8 — RAPPEL ── */}
+          <div {...sectionProps("reminder")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s8} done={answers.reminder!==null}/>
             <div style={{display:"flex",gap:10}}>
@@ -881,6 +900,7 @@ export default function QuestionnaireS7({
               </div>
             )}
           </Card>
+          </div>
 
           {/* ── 9 — PHOTO ── */}
           <Card style={{marginBottom:20}}>
