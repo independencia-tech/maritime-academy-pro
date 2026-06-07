@@ -638,7 +638,11 @@ export default function QuestionnaireS7({
       }
       return;
     }
-    setProfile({...answers,country,lang});
+    const data={...answers,country,lang};
+    setProfile(data);
+    if(typeof window!=="undefined"){
+      try{ localStorage.setItem("map_status_card",JSON.stringify(data)); }catch{}
+    }
     onNext();
   };
 
