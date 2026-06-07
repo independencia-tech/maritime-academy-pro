@@ -905,7 +905,7 @@ function AdminPage({ setPage }) {
 
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
-  const [page, setPage] = useState("lang");
+  const [page, setPage] = useState("splash");
   const [lang, setLang] = useState("fr");
   const [profile, setProfile] = useState({});
   useEffect(() => {
@@ -931,12 +931,20 @@ export default function App() {
         ::selection{background:rgba(201,146,42,0.3);}
         button:active{opacity:0.82;transform:scale(0.98);}
       `}</style>
+      {page==="splash"      && <SplashS1 onDone={() => setPage("lang")}/>}
       {page==="lang"        && <LanguageSelect setLang={setLang} setPage={setPage}/>}
+      {page==="music"       && (
+        <MusicS3
+          lang={lang}
+          onYes={() => setPage("welcome")}
+          onNo={() => setPage("welcome")}
+        />
+      )}
       {page==="landing"     && <LandingPage setPage={setPage} lang={lang} setLang={setLang}/>}
       {page==="register"    && (
         <RegisterS6
           lang={lang}
-          onBack={() => setPage("landing")}
+          onBack={() => setPage("bridge")}
           onNext={() => setPage("questionnaire")}
           setUsername={(name) => setProfile((p) => ({ ...p, name }))}
         />
@@ -948,6 +956,13 @@ export default function App() {
           lang={lang}
           onBack={() => setPage("music")}
           onNext={() => setPage("bridge")}
+        />
+      )}
+      {page==="bridge"      && (
+        <BridgeS5
+          lang={lang}
+          onBack={() => setPage("welcome")}
+          onNext={() => setPage("register")}
         />
       )}
       {page==="questionnaire" && (
