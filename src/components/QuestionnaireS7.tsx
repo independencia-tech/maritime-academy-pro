@@ -805,7 +805,7 @@ export default function QuestionnaireS7({
           </Card>
 
           {/* ── SUBMIT ── */}
-          <button onClick={handleSubmit} disabled={!allDone} style={{
+          <button onClick={handleSubmit} style={{
             width:"100%",padding:"17px 0",
             border:"none",borderRadius:16,
             background:allDone
@@ -814,11 +814,22 @@ export default function QuestionnaireS7({
             fontFamily:"'Cinzel',serif",fontSize:15,
             fontWeight:700,letterSpacing:2,
             color:allDone?C.white:"rgba(240,244,255,0.35)",
-            cursor:allDone?"pointer":"not-allowed",
+            cursor:"pointer",
             boxShadow:allDone?"0 10px 36px rgba(26,111,212,0.4)":"none",
             transition:"all 0.3s",
             marginBottom:12,
           }}>{t.qBtn}</button>
+
+          {attempted&&!allDone&&(
+            <div style={{
+              textAlign:"center",fontSize:12,fontWeight:700,
+              color:C.red,marginBottom:10,padding:"10px 12px",
+              borderRadius:10,background:"rgba(192,57,43,0.12)",
+              border:`1px solid ${C.red}55`,
+            }}>
+              {t.errSummary}
+            </div>
+          )}
 
           {!allDone&&(
             <div style={{textAlign:"center",fontSize:12,
