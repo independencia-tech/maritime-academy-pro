@@ -378,6 +378,7 @@ export default function StatusCardS8({
   const [badgeAnim,setBadgeAnim]=useState(false);
   const [downloaded,setDownloaded]=useState(false);
   const [shared,setShared]=useState(false);
+  const [confirmReset,setConfirmReset]=useState(false);
   const cardRef=useRef(null);
 
   useEffect(()=>{
