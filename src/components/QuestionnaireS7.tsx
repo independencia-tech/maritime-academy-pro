@@ -627,9 +627,6 @@ export default function QuestionnaireS7({
     {v:"evening",l:t.qEvening},{v:"night",l:t.qNight},
   ];
 
-  const handleSubmit=()=>{
-    void 0;
-  };
   const readPhoto=(f)=>{
     setPhotoError(null);
     try{
@@ -651,7 +648,7 @@ export default function QuestionnaireS7({
       setPhotoError("read");
     }
   };
-  const _handleSubmit=()=>{
+  const handleSubmit=()=>{
     if(!allDone){
       setAttempted(true);
       if(typeof window!=="undefined"){
