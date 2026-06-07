@@ -37,6 +37,9 @@ const T = {
     notifOfficer:"Officier {nom}, la mer vous attend !",
     notifMaster:"Maître {nom}, la connaissance vous appelle !",
     notifCaptain:"Capitaine {nom}, votre commandement vous attend !",
+    resetBtn:"🗑️ Réinitialiser mes données",
+    resetConfirm:"⚠️ Confirmer la suppression ?",
+    resetCancel:"Annuler",
     goalLabels:{
       nav:"Maîtriser la navigation",
       stcw:"Certifications STCW",
@@ -93,6 +96,9 @@ const T = {
     notifOfficer:"Officer {nom}, the sea awaits you!",
     notifMaster:"Master {nom}, knowledge calls you!",
     notifCaptain:"Captain {nom}, your command awaits!",
+    resetBtn:"🗑️ Reset my data",
+    resetConfirm:"⚠️ Confirm deletion?",
+    resetCancel:"Cancel",
     goalLabels:{
       nav:"Master navigation",
       stcw:"STCW Certifications",
@@ -149,6 +155,9 @@ const T = {
     notifOfficer:"Oficial {nom}, ¡el mar te espera!",
     notifMaster:"Maestro {nom}, ¡el conocimiento te llama!",
     notifCaptain:"Capitán {nom}, ¡tu mando te espera!",
+    resetBtn:"🗑️ Borrar mis datos",
+    resetConfirm:"⚠️ ¿Confirmar el borrado?",
+    resetCancel:"Cancelar",
     goalLabels:{
       nav:"Dominar la navegación",
       stcw:"Certificaciones STCW",
@@ -205,6 +214,9 @@ const T = {
     notifOfficer:"Oficial {nom}, o mar aguarda você!",
     notifMaster:"Mestre {nom}, o conhecimento chama você!",
     notifCaptain:"Capitão {nom}, seu comando aguarda!",
+    resetBtn:"🗑️ Apagar meus dados",
+    resetConfirm:"⚠️ Confirmar a exclusão?",
+    resetCancel:"Cancelar",
     goalLabels:{
       nav:"Dominar a navegação",
       stcw:"Certificações STCW",
@@ -366,6 +378,7 @@ export default function StatusCardS8({
   const [badgeAnim,setBadgeAnim]=useState(false);
   const [downloaded,setDownloaded]=useState(false);
   const [shared,setShared]=useState(false);
+  const [confirmReset,setConfirmReset]=useState(false);
   const cardRef=useRef(null);
 
   useEffect(()=>{
@@ -436,6 +449,17 @@ export default function StatusCardS8({
     setTimeout(()=>setDownloaded(false),3000);
     // In real app: use html2canvas to capture cardRef
     alert("📥 Dans l'app finale, ta carte sera téléchargée en PNG !");
+  };
+
+  const handleReset=()=>{
+    if(!confirmReset){ setConfirmReset(true); return; }
+    try{
+      localStorage.removeItem("map_status_card");
+      localStorage.removeItem("map_last_reg");
+      localStorage.removeItem("map_regs");
+      localStorage.removeItem("map_registrations");
+    }catch{}
+    window.location.reload();
   };
 
   return (
@@ -709,6 +733,28 @@ export default function StatusCardS8({
                 ?"O mar pertence a quem ousa navegá-lo. Sua jornada começa agora."
                 :"The sea belongs to those who dare to sail it. Your journey starts now."}
             </div>
+          </div>
+
+          {/* Reset data */}
+          <div style={{marginTop:10,textAlign:"center"}}>
+            <button onClick={handleReset} style={{
+              width:"100%",padding:"13px 0",borderRadius:14,
+              background:confirmReset?"rgba(192,57,43,0.2)":"rgba(255,255,255,0.04)",
+              border:`1px solid ${confirmReset?"#c0392b":"rgba(255,255,255,0.1)"}`,
+              color:confirmReset?"#e74c3c":"rgba(240,244,255,0.35)",
+              fontFamily:"'Nunito',sans-serif",
+              fontSize:12,fontWeight:700,cursor:"pointer",
+              transition:"all 0.3s",
+            }}>
+              {confirmReset?t.resetConfirm:t.resetBtn}
+            </button>
+            {confirmReset&&(
+              <button onClick={()=>setConfirmReset(false)} style={{
+                width:"100%",padding:"10px 0",marginTop:8,
+                background:"none",border:"none",
+                color:"rgba(240,244,255,0.3)",fontSize:12,cursor:"pointer",
+              }}>{t.resetCancel}</button>
+            )}
           </div>
 
         </div>
