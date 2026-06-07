@@ -905,6 +905,19 @@ export default function App() {
   const [page, setPage] = useState("lang");
   const [lang, setLang] = useState("fr");
   const [profile, setProfile] = useState({});
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = localStorage.getItem("map_status_card");
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (saved && typeof saved === "object") {
+          setProfile(saved);
+          if (saved.lang) setLang(saved.lang);
+        }
+      }
+    } catch {}
+  }, []);
   return (
     <>
       <style>{`
