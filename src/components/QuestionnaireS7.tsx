@@ -508,6 +508,7 @@ export default function QuestionnaireS7({
   const [vis,setVis]=useState(false);
   const [showMoreShips,setShowMoreShips]=useState(false);
   const [country,setCountry]=useState("");
+  const [attempted,setAttempted]=useState(false);
   const [answers,setAnswers]=useState({
     who:null,goal:null,level:null,
     ship:null,duration:null,time:null,
@@ -571,7 +572,16 @@ export default function QuestionnaireS7({
   ];
 
   const handleSubmit=()=>{
-    if(!allDone)return;
+    if(!allDone){
+      setAttempted(true);
+      if(typeof window!=="undefined"){
+        setTimeout(()=>{
+          const el=document.querySelector("[data-error='true']");
+          if(el) el.scrollIntoView({behavior:"smooth",block:"center"});
+        },50);
+      }
+      return;
+    }
     setProfile({...answers,country,lang});
     onNext();
   };
