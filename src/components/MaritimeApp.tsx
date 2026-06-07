@@ -527,7 +527,6 @@ function RegisterPage({ setPage, lang }) {
   const t = T[lang] || T.fr;
   const [form, setForm] = useState({ name:"", email:"", phone:"" });
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
@@ -545,17 +544,19 @@ function RegisterPage({ setPage, lang }) {
     setLoading(true);
     setTimeout(() => {
       const regs = loadRegs();
-      regs.push({
+      const reg = {
         id: Date.now(),
         name: form.name.trim(),
         email: form.email.trim().toLowerCase(),
         phone: form.phone.trim(),
         lang,
         date: new Date().toLocaleString("fr-FR"),
-      });
+      };
+      regs.push(reg);
       saveRegs(regs);
+      try { localStorage.setItem("map_last_reg", JSON.stringify(reg)); } catch {}
       setLoading(false);
-      setSubmitted(true);
+      setPage("questionnaire");
     }, 800);
   };
 
@@ -571,46 +572,6 @@ function RegisterPage({ setPage, lang }) {
     color:"#f0f4ff",fontSize:14,outline:"none",
     fontFamily:"'Nunito',sans-serif",
   });
-
-  if (submitted) {
-    return (
-      <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",
-        alignItems:"center",justifyContent:"center",
-        padding:"40px 24px",textAlign:"center",
-        background:"linear-gradient(160deg,#0d1f3c,#060e1a)",
-        fontFamily:"'Nunito',sans-serif"}}>
-        <div style={{maxWidth:380,width:"100%"}}>
-          <div style={{fontSize:64,marginBottom:20}}>✅</div>
-          <h2 style={{fontFamily:"'Cinzel',serif",fontSize:24,
-            fontWeight:700,color:"#fff",marginBottom:12}}>{t.successTitle}</h2>
-          <p style={{fontSize:13,color:"rgba(240,244,255,0.5)",
-            marginBottom:28,lineHeight:1.7}}>{t.successSub}</p>
-          <div style={{borderRadius:16,padding:16,marginBottom:28,
-            background:"rgba(201,146,42,0.1)",
-            border:"1px solid rgba(201,146,42,0.3)"}}>
-            <div style={{fontSize:11,color:"rgba(240,244,255,0.4)",marginBottom:4}}>
-              {t.successWith}
-            </div>
-            <div style={{fontSize:15,fontWeight:700,color:"#fff"}}>{form.name}</div>
-            <div style={{fontSize:12,color:"rgba(240,244,255,0.5)",marginTop:2}}>{form.email}</div>
-          </div>
-          <button onClick={() => setPage("questionnaire")} style={{
-            width:"100%",padding:"14px 0",borderRadius:16,border:"none",
-            background:"rgba(201,146,42,0.15)",
-            border:"1px solid rgba(201,146,42,0.35)",
-            fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:700,
-            color:"#e8b94f",cursor:"pointer",marginBottom:12,
-          }}>{t.startQuestionnaire}</button>
-          <button onClick={() => setPage("landing")} style={{
-            width:"100%",padding:"15px 0",borderRadius:16,border:"none",
-            background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
-            fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,
-            letterSpacing:2,color:"#fff",cursor:"pointer",
-          }}>{t.backHome}</button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div style={{minHeight:"100vh",
@@ -666,17 +627,51 @@ function RegisterPage({ setPage, lang }) {
             }}>{loading ? t.submitting : t.submitBtn}</button>
             <p style={{fontSize:11,textAlign:"center",
               color:"rgba(240,244,255,0.35)",marginTop:4}}>{t.alreadyRegistered}</p>
-            <button onClick={() => setPage("questionnaire")} style={{
-              width:"100%",padding:"12px 0",borderRadius:14,border:"none",
-              background:"rgba(255,255,255,0.07)",
-              borderBottom:"1px solid rgba(201,146,42,0.25)",
-              fontFamily:"'Nunito',sans-serif",fontSize:12,fontWeight:700,
-              color:"rgba(240,244,255,0.55)",cursor:"pointer",marginTop:4,
-            }}>{t.startQuestionnaire}</button>
             <p style={{fontSize:10,textAlign:"center",
               color:"rgba(240,244,255,0.25)",lineHeight:1.6}}>{t.privacyNote}</p>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ── STATUS PAGE (after questionnaire) ──────────────────────────
+function StatusPage({ setPage, lang }) {
+  const t = T[lang] || T.fr;
+  let last = { name: "", email: "" };
+  try {
+    if (typeof window !== "undefined") {
+      last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
+    }
+  } catch {}
+  return (
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",
+      alignItems:"center",justifyContent:"center",
+      padding:"40px 24px",textAlign:"center",
+      background:"linear-gradient(160deg,#0d1f3c,#060e1a)",
+      fontFamily:"'Nunito',sans-serif"}}>
+      <div style={{maxWidth:380,width:"100%"}}>
+        <div style={{fontSize:64,marginBottom:20}}>✅</div>
+        <h2 style={{fontFamily:"'Cinzel',serif",fontSize:24,
+          fontWeight:700,color:"#fff",marginBottom:12}}>{t.successTitle}</h2>
+        <p style={{fontSize:13,color:"rgba(240,244,255,0.5)",
+          marginBottom:28,lineHeight:1.7}}>{t.successSub}</p>
+        <div style={{borderRadius:16,padding:16,marginBottom:28,
+          background:"rgba(201,146,42,0.1)",
+          border:"1px solid rgba(201,146,42,0.3)"}}>
+          <div style={{fontSize:11,color:"rgba(240,244,255,0.4)",marginBottom:4}}>
+            {t.successWith}
+          </div>
+          <div style={{fontSize:15,fontWeight:700,color:"#fff"}}>{last.name}</div>
+          <div style={{fontSize:12,color:"rgba(240,244,255,0.5)",marginTop:2}}>{last.email}</div>
+        </div>
+        <button onClick={() => setPage("landing")} style={{
+          width:"100%",padding:"15px 0",borderRadius:16,border:"none",
+          background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
+          fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,
+          letterSpacing:2,color:"#fff",cursor:"pointer",
+        }}>{t.backHome}</button>
       </div>
     </div>
   );
@@ -926,10 +921,11 @@ export default function App() {
       {page==="questionnaire" && (
         <QuestionnaireS7
           lang={lang}
-          onBack={() => setPage("landing")}
-          onNext={() => setPage("register")}
+          onBack={() => setPage("register")}
+          onNext={() => setPage("status")}
         />
       )}
+      {page==="status"      && <StatusPage setPage={setPage} lang={lang}/>}
     </>
   );
 }
