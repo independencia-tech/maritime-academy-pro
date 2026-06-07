@@ -915,10 +915,8 @@ export default function QuestionnaireS7({
                     e.target.value="";
                     return;
                   }
-                  setPhotoError(null);
-                  const r=new FileReader();
-                  r.onload=()=>set("photo",r.result);
-                  r.readAsDataURL(f);
+                  setLastFile(f);
+                  readPhoto(f);
                 }}/>
             </label>
             {photoError==="type"&&(
@@ -929,6 +927,25 @@ export default function QuestionnaireS7({
             {photoError==="size"&&(
               <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
                 {t.errPhotoSize}
+              </div>
+            )}
+            {(photoError==="read"||photoError==="encode")&&(
+              <div style={{marginTop:10,display:"flex",flexDirection:"column",gap:8}}>
+                <div style={{fontSize:12,color:C.red,fontWeight:600}}>
+                  {photoError==="read"?t.errPhotoRead:t.errPhotoEncode}
+                </div>
+                {lastFile&&(
+                  <button type="button"
+                    onClick={()=>readPhoto(lastFile)}
+                    style={{
+                      alignSelf:"flex-start",
+                      padding:"8px 14px",borderRadius:10,
+                      background:`linear-gradient(135deg,${C.blue},${C.gold})`,
+                      border:"none",color:C.white,
+                      fontSize:12,fontWeight:700,cursor:"pointer",
+                      fontFamily:"'Nunito',sans-serif",
+                    }}>{t.photoRetry}</button>
+                )}
               </div>
             )}
           </Card>
