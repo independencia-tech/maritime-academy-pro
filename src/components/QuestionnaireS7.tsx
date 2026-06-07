@@ -529,6 +529,7 @@ export default function QuestionnaireS7({
   const [hydrated,setHydrated]=useState(false);
   const [country,setCountry]=useState("");
   const [attempted,setAttempted]=useState(false);
+  const [photoError,setPhotoError]=useState(null);
   const [answers,setAnswers]=useState({
     who:null,goal:null,level:null,
     ship:null,duration:null,time:null,
@@ -816,45 +817,103 @@ export default function QuestionnaireS7({
           </Card>
 
           {/* ── SECTION 9 : PHOTO ── */}
-          <Card style={{marginBottom:20}}>
+          <Card style={{marginBottom:20}}
+            error={!!photoError}>
             <div style={{fontSize:13,fontWeight:700,
               color:C.muted,marginBottom:10,letterSpacing:0.5}}>
               {t.s9}
             </div>
+
+            {/* Live preview */}
+            {answers.photo && (
+              <div style={{
+                display:"flex",flexDirection:"column",
+                alignItems:"center",gap:12,
+                marginBottom:16,
+              }}>
+                <img
+                  src={answers.photo}
+                  alt="Preview"
+                  style={{
+                    width:120,height:120,
+                    borderRadius:"50%",
+                    objectFit:"cover",
+                    border:`2px solid ${C.gold}66`,
+                    boxShadow:`0 8px 24px rgba(0,0,0,0.3)`,
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={()=>{ set("photo",null); setPhotoError(null); }}
+                  style={{
+                    fontSize:12,color:C.red,
+                    background:"transparent",border:"none",
+                    cursor:"pointer",fontWeight:600,
+                    fontFamily:"'Nunito',sans-serif",
+                    textDecoration:"underline",
+                  }}
+                >{t.photoRemove}</button>
+              </div>
+            )}
+
             <label style={{
               borderRadius:14,padding:"16px 14px",
-              background:"rgba(255,255,255,0.04)",
-              border:`1px dashed ${C.border}`,
+              background:photoError?"rgba(192,57,43,0.08)":"rgba(255,255,255,0.04)",
+              border:`1.5px dashed ${photoError?C.red:C.border}`,
               display:"flex",alignItems:"center",
               gap:14,cursor:"pointer",
+              transition:"all 0.2s",
             }}>
               <div style={{
                 width:52,height:52,borderRadius:"50%",flexShrink:0,
                 background:answers.photo
                   ?`url(${answers.photo}) center/cover`
                   :`linear-gradient(135deg,${C.navy3},#112244)`,
-                border:`1.5px dashed ${C.gold}66`,
+                border:`1.5px dashed ${photoError?C.red:C.gold}66`,
                 display:"flex",alignItems:"center",
                 justifyContent:"center",fontSize:22,
               }}>{answers.photo?"":"📸"}</div>
               <div style={{flex:1}}>
                 <div style={{fontSize:13,color:C.white,
                   fontWeight:600,marginBottom:4}}>
-                  {answers.photo?"✅":""} {t.s9cta}
+                  {answers.photo?t.photoChange:t.s9cta}
                 </div>
                 <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>
                   {t.s9note}
                 </div>
               </div>
-              <input type="file" accept="image/*" style={{display:"none"}}
+              <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" style={{display:"none"}}
                 onChange={(e)=>{
                   const f=e.target.files&&e.target.files[0];
-                  if(!f) return;
+                  if(!f){ setPhotoError(null); return; }
+                  const validTypes=["image/jpeg","image/png","image/gif","image/webp"];
+                  if(!validTypes.includes(f.type)){
+                    setPhotoError("type");
+                    e.target.value="";
+                    return;
+                  }
+                  const MAX_MB=2;
+                  if(f.size>MAX_MB*1024*1024){
+                    setPhotoError("size");
+                    e.target.value="";
+                    return;
+                  }
+                  setPhotoError(null);
                   const r=new FileReader();
                   r.onload=()=>set("photo",r.result);
                   r.readAsDataURL(f);
                 }}/>
             </label>
+            {photoError==="type"&&(
+              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
+                {t.errPhotoType}
+              </div>
+            )}
+            {photoError==="size"&&(
+              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
+                {t.errPhotoSize}
+              </div>
+            )}
           </Card>
 
           {/* ── SUBMIT ── */}
