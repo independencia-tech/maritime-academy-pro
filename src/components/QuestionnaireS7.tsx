@@ -628,6 +628,30 @@ export default function QuestionnaireS7({
   ];
 
   const handleSubmit=()=>{
+    void 0;
+  };
+  const readPhoto=(f)=>{
+    setPhotoError(null);
+    try{
+      const r=new FileReader();
+      r.onload=()=>{
+        try{
+          const res=r.result;
+          if(typeof res!=="string"||!res.startsWith("data:image/")){
+            setPhotoError("encode");
+            return;
+          }
+          set("photo",res);
+        }catch{ setPhotoError("encode"); }
+      };
+      r.onerror=()=>setPhotoError("read");
+      r.onabort=()=>setPhotoError("read");
+      r.readAsDataURL(f);
+    }catch{
+      setPhotoError("read");
+    }
+  };
+  const _handleSubmit=()=>{
     if(!allDone){
       setAttempted(true);
       if(typeof window!=="undefined"){
