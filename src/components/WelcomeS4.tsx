@@ -356,7 +356,7 @@ export default function WelcomeS4({
           {/* ── MARITIME ICONS ROW ── */}
           <div style={{
             display:"flex",justifyContent:"center",
-            gap:18,fontSize:24,opacity:0.3,
+            gap:18,fontSize:24,
             marginBottom:24,
             opacity:phase>=3?0.35:0,
             transition:"opacity 0.6s ease 0.3s",
