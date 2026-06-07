@@ -174,6 +174,11 @@ export default function WelcomeS4({
 
   const current=WELCOMES[idx];
 
+  // Guard: block Continue until the screen has fully loaded.
+  // If required fields are added to S4 later, AND them into `canContinue`.
+  const canContinue = phase >= 3;
+  const handleContinue = () => { if (canContinue) onNext(); };
+
   return (
     <div style={{
       minHeight:"100vh",
@@ -369,16 +374,16 @@ export default function WelcomeS4({
           </div>
 
           {/* ── CTA BUTTON ── */}
-          <button onClick={onNext} style={{
+          <button onClick={handleContinue} disabled={!canContinue} aria-disabled={!canContinue} style={{
             width:"100%",padding:"17px 0",
             border:"none",borderRadius:16,
             background:`linear-gradient(135deg,${C.blue},${C.gold})`,
             fontFamily:"'Cinzel',serif",fontSize:15,
             fontWeight:700,letterSpacing:2,color:C.white,
-            cursor:"pointer",
+            cursor:canContinue?"pointer":"not-allowed",
             boxShadow:"0 10px 36px rgba(26,111,212,0.45)",
             position:"relative",overflow:"hidden",
-            opacity:phase>=3?1:0,
+            opacity:canContinue?1:0.5,
             transition:"opacity 0.6s ease 0.4s",
           }}>
             <span style={{position:"relative",zIndex:1}}>
