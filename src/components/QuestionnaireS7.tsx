@@ -78,6 +78,9 @@ const T = {
     qBtnWait:"Réponds à toutes les questions pour continuer",
     // Summary label
     summaryTitle:"🗺️ TON PARCOURS PERSONNALISÉ",
+    errRequired:"⚠️ Cette question est obligatoire",
+    errCountry:"⚠️ Indique ton pays de résidence",
+    errSummary:"Merci de compléter les champs surlignés en rouge",
   },
   en:{
     back:"◀ Back",
@@ -133,6 +136,9 @@ const T = {
     qBtn:"GENERATE MY STATUS →",
     qBtnWait:"Answer all questions to continue",
     summaryTitle:"🗺️ YOUR PERSONALIZED JOURNEY",
+    errRequired:"⚠️ This question is required",
+    errCountry:"⚠️ Please enter your country of residence",
+    errSummary:"Please complete the fields highlighted in red",
   },
   es:{
     back:"◀ Volver",
@@ -188,6 +194,9 @@ const T = {
     qBtn:"GENERAR MI ESTADO →",
     qBtnWait:"Responde todas las preguntas para continuar",
     summaryTitle:"🗺️ TU CAMINO PERSONALIZADO",
+    errRequired:"⚠️ Esta pregunta es obligatoria",
+    errCountry:"⚠️ Indica tu país de residencia",
+    errSummary:"Por favor completa los campos en rojo",
   },
   pt:{
     back:"◀ Voltar",
@@ -243,6 +252,9 @@ const T = {
     qBtn:"GERAR MEU STATUS →",
     qBtnWait:"Responda todas as perguntas para continuar",
     summaryTitle:"🗺️ SUA JORNADA PERSONALIZADA",
+    errRequired:"⚠️ Esta pergunta é obrigatória",
+    errCountry:"⚠️ Indique seu país de residência",
+    errSummary:"Por favor complete os campos em vermelho",
   },
 };
 
@@ -321,13 +333,14 @@ function TopBar({onBack,backLabel,step,total}) {
   );
 }
 
-function Card({children,style={}}) {
+function Card({children,style={},error=false}) {
   return (
     <div style={{
       background:"rgba(13,31,60,0.72)",
-      border:`1px solid ${C.border}`,
+      border:`1px solid ${error?C.red:C.border}`,
+      boxShadow:error?`0 0 0 2px ${C.red}33`:"none",
       borderRadius:20,padding:"18px 16px",...style,
-    }}>{children}</div>
+    }} data-error={error?"true":"false"}>{children}</div>
   );
 }
 
@@ -496,6 +509,7 @@ export default function QuestionnaireS7({
   const [vis,setVis]=useState(false);
   const [showMoreShips,setShowMoreShips]=useState(false);
   const [country,setCountry]=useState("");
+  const [attempted,setAttempted]=useState(false);
   const [answers,setAnswers]=useState({
     who:null,goal:null,level:null,
     ship:null,duration:null,time:null,
@@ -559,7 +573,16 @@ export default function QuestionnaireS7({
   ];
 
   const handleSubmit=()=>{
-    if(!allDone)return;
+    if(!allDone){
+      setAttempted(true);
+      if(typeof window!=="undefined"){
+        setTimeout(()=>{
+          const el=document.querySelector("[data-error='true']");
+          if(el) el.scrollIntoView({behavior:"smooth",block:"center"});
+        },50);
+      }
+      return;
+    }
     setProfile({...answers,country,lang});
     onNext();
   };
@@ -596,7 +619,8 @@ export default function QuestionnaireS7({
 
           {/* ── SECTIONS 1-3 : WHO / GOAL / LEVEL ── */}
           {sections.map(sec=>(
-            <Card key={sec.key} style={{marginBottom:14}}>
+            <Card key={sec.key} style={{marginBottom:14}}
+              error={attempted&&answers[sec.key]===null}>
               <SectionLabel text={sec.label} done={answers[sec.key]!==null}/>
               <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
                 {sec.opts.map(o=>(
@@ -605,11 +629,17 @@ export default function QuestionnaireS7({
                     onClick={()=>set(sec.key,o.v)}/>
                 ))}
               </div>
+              {attempted&&answers[sec.key]===null&&(
+                <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
+                  {t.errRequired}
+                </div>
+              )}
             </Card>
           ))}
 
           {/* ── SECTION 4 : SHIP ── */}
-          <Card style={{marginBottom:14}}>
+          <Card style={{marginBottom:14}}
+            error={attempted&&answers.ship===null}>
             <SectionLabel text={t.s4} done={answers.ship!==null}/>
             <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10,marginBottom:12}}>
               {allShips.map(s=>(
@@ -628,10 +658,16 @@ export default function QuestionnaireS7({
             }}>
               {showMoreShips?t.s4less:t.s4more}
             </button>
+            {attempted&&answers.ship===null&&(
+              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
+                {t.errRequired}
+              </div>
+            )}
           </Card>
 
           {/* ── SECTION 5 : DURATION ── */}
-          <Card style={{marginBottom:14}}>
+          <Card style={{marginBottom:14}}
+            error={attempted&&answers.duration===null}>
             <SectionLabel text={t.s5} done={answers.duration!==null}/>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
               {durationOpts.map(o=>(
@@ -647,10 +683,16 @@ export default function QuestionnaireS7({
                 ⭐ Recommandé — 15 min / jour c'est suffisant pour progresser régulièrement
               </div>
             )}
+            {attempted&&answers.duration===null&&(
+              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
+                {t.errRequired}
+              </div>
+            )}
           </Card>
 
           {/* ── SECTION 6 : TIME ── */}
-          <Card style={{marginBottom:14}}>
+          <Card style={{marginBottom:14}}
+            error={attempted&&answers.time===null}>
             <SectionLabel text={t.s6} done={answers.time!==null}/>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
               {timeOpts.map(o=>(
@@ -659,20 +701,31 @@ export default function QuestionnaireS7({
                   onClick={()=>set("time",o.v)}/>
               ))}
             </div>
+            {attempted&&answers.time===null&&(
+              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
+                {t.errRequired}
+              </div>
+            )}
           </Card>
 
           {/* ── SECTION 7 : COUNTRY ── */}
-          <Card style={{marginBottom:14}}>
+          <Card style={{marginBottom:14}}
+            error={attempted&&country.trim().length===0}>
             <SectionLabel text={t.s7} done={country.trim().length>0}/>
             <input
               type="text"
               placeholder={t.s7ph}
               value={country}
               onChange={e=>setCountryVal(e.target.value)}
+              maxLength={60}
               style={{
                 width:"100%",padding:"13px 14px",borderRadius:12,
                 background:"rgba(255,255,255,0.07)",
-                border:`1.5px solid ${country.trim().length>0?C.gold:C.border}`,
+                border:`1.5px solid ${
+                  attempted&&country.trim().length===0
+                    ?C.red
+                    :country.trim().length>0?C.gold:C.border
+                }`,
                 color:C.white,fontSize:14,outline:"none",
                 fontFamily:"'Nunito',sans-serif",
                 transition:"border-color 0.2s",
@@ -682,10 +735,16 @@ export default function QuestionnaireS7({
                 🌍 La réglementation maritime sera adaptée à ton pays
               </div>
             )}
+            {attempted&&country.trim().length===0&&(
+              <div style={{marginTop:8,fontSize:12,color:C.red,fontWeight:600}}>
+                {t.errCountry}
+              </div>
+            )}
           </Card>
 
           {/* ── SECTION 8 : REMINDER ── */}
-          <Card style={{marginBottom:14}}>
+          <Card style={{marginBottom:14}}
+            error={attempted&&answers.reminder===null}>
             <SectionLabel text={t.s8} done={answers.reminder!==null}/>
             <div style={{display:"flex",gap:10}}>
               <Chip label={t.qYes} wide
@@ -706,6 +765,11 @@ export default function QuestionnaireS7({
                   :answers.time==="evening"?"le soir"
                   :"la nuit"}{" "}
                 à l'heure choisie
+              </div>
+            )}
+            {attempted&&answers.reminder===null&&(
+              <div style={{marginTop:10,fontSize:12,color:C.red,fontWeight:600}}>
+                {t.errRequired}
               </div>
             )}
           </Card>
@@ -741,7 +805,7 @@ export default function QuestionnaireS7({
           </Card>
 
           {/* ── SUBMIT ── */}
-          <button onClick={handleSubmit} disabled={!allDone} style={{
+          <button onClick={handleSubmit} style={{
             width:"100%",padding:"17px 0",
             border:"none",borderRadius:16,
             background:allDone
@@ -750,11 +814,22 @@ export default function QuestionnaireS7({
             fontFamily:"'Cinzel',serif",fontSize:15,
             fontWeight:700,letterSpacing:2,
             color:allDone?C.white:"rgba(240,244,255,0.35)",
-            cursor:allDone?"pointer":"not-allowed",
+            cursor:"pointer",
             boxShadow:allDone?"0 10px 36px rgba(26,111,212,0.4)":"none",
             transition:"all 0.3s",
             marginBottom:12,
           }}>{t.qBtn}</button>
+
+          {attempted&&!allDone&&(
+            <div style={{
+              textAlign:"center",fontSize:12,fontWeight:700,
+              color:C.red,marginBottom:10,padding:"10px 12px",
+              borderRadius:10,background:"rgba(192,57,43,0.12)",
+              border:`1px solid ${C.red}55`,
+            }}>
+              {t.errSummary}
+            </div>
+          )}
 
           {!allDone&&(
             <div style={{textAlign:"center",fontSize:12,
