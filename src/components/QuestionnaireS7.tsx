@@ -612,10 +612,30 @@ export default function QuestionnaireS7({
   ];
 
   const handleSubmit=()=>{
-    if(!allDone) return;
+    const firstMissing=requiredKeys.find(k=>answers[k]===null)
+      ||(country.trim().length===0?"country":null);
+    if(firstMissing){
+      const labels=errorLabels[lang]||errorLabels.fr;
+      setErrorKey(firstMissing);
+      setErrorMsg(`${errorPrefix[lang]||errorPrefix.fr} ${labels[firstMissing]}.`);
+      const node=sectionRefs.current[firstMissing];
+      if(node){
+        node.scrollIntoView({behavior:"smooth",block:"center"});
+        setTimeout(()=>{ try{ node.focus({preventScroll:true}); }catch(e){} },300);
+      }
+      return;
+    }
+    setErrorKey(null);setErrorMsg("");
     setProfile({...answers,country,lang});
     onNext();
   };
+
+  const sectionProps=(key)=>({
+    ref:(el)=>{ sectionRefs.current[key]=el; },
+    tabIndex:-1,
+    "aria-invalid":errorKey===key||undefined,
+    style:{outline:"none",scrollMarginTop:80},
+  });
 
   return (
     <div style={{
