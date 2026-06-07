@@ -804,7 +804,7 @@ export default function QuestionnaireS7({
               color:C.muted,marginBottom:10,letterSpacing:0.5}}>
               {t.s9}
             </div>
-            <div style={{
+            <label style={{
               borderRadius:14,padding:"16px 14px",
               background:"rgba(255,255,255,0.04)",
               border:`1px dashed ${C.border}`,
@@ -813,19 +813,31 @@ export default function QuestionnaireS7({
             }}>
               <div style={{
                 width:52,height:52,borderRadius:"50%",flexShrink:0,
-                background:`linear-gradient(135deg,${C.navy3},#112244)`,
+                background:answers.photo
+                  ?`url(${answers.photo}) center/cover`
+                  :`linear-gradient(135deg,${C.navy3},#112244)`,
                 border:`1.5px dashed ${C.gold}66`,
                 display:"flex",alignItems:"center",
                 justifyContent:"center",fontSize:22,
-              }}>📸</div>
-              <div>
+              }}>{answers.photo?"":"📸"}</div>
+              <div style={{flex:1}}>
                 <div style={{fontSize:13,color:C.white,
-                  fontWeight:600,marginBottom:4}}>{t.s9cta}</div>
+                  fontWeight:600,marginBottom:4}}>
+                  {answers.photo?"✅":""} {t.s9cta}
+                </div>
                 <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>
                   {t.s9note}
                 </div>
               </div>
-            </div>
+              <input type="file" accept="image/*" style={{display:"none"}}
+                onChange={(e)=>{
+                  const f=e.target.files&&e.target.files[0];
+                  if(!f) return;
+                  const r=new FileReader();
+                  r.onload=()=>set("photo",r.result);
+                  r.readAsDataURL(f);
+                }}/>
+            </label>
           </Card>
 
           {/* ── SUBMIT ── */}
