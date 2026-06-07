@@ -1,4 +1,5 @@
 // @ts-nocheck
+import QuestionnaireS7 from "./QuestionnaireS7";
 import { useState, useEffect } from "react";
 
 const LS_KEY = "map_registrations";
