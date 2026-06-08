@@ -976,16 +976,18 @@ export default function App() {
       )}
       {page==="status"      && (() => {
         let last:any = {};
+        let storedPhoto: string | null = null;
         try {
           if (typeof window !== "undefined") {
             last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
+            storedPhoto = localStorage.getItem("map_user_photo");
           }
         } catch {}
         return (
           <StatusCardS8
             lang={lang}
             username={last.name || "Marin"}
-            photo={profile.photo || null}
+            photo={storedPhoto || profile.photo || null}
             profile={profile}
             onBack={() => setPage("questionnaire")}
             onStart={() => setPage("landing")}
