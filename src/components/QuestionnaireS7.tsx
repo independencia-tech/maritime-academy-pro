@@ -937,7 +937,6 @@ export default function QuestionnaireS7({
             <div style={{fontSize:13,fontWeight:700,
               color:C.muted,marginBottom:10}}>{t.s9}</div>
             <input ref={photoInputRef} type="file" accept="image/*"
-              capture="user"
               onChange={handlePhotoChange}
               style={{position:"absolute",width:1,height:1,opacity:0,pointerEvents:"none"}}
               aria-label={t.s9cta}/>
