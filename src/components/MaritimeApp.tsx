@@ -959,6 +959,7 @@ export default function App() {
           onBack={() => setPage("bridge")}
           onNext={() => setPage("questionnaire")}
           setUsername={(name) => setProfile((p) => ({ ...p, name }))}
+          onSignIn={() => setPage("status")}
         />
       )}
       {page==="admin-login" && <AdminLogin setPage={setPage}/>}
@@ -982,7 +983,7 @@ export default function App() {
           lang={lang}
           onBack={() => setPage("register")}
           onNext={() => setPage("status")}
-          setProfile={setProfile}
+          setProfile={persistProfile}
         />
       )}
       {page==="status"      && (() => {
@@ -1001,6 +1002,7 @@ export default function App() {
             photo={storedPhoto || profile.photo || null}
             profile={profile}
             onBack={() => setPage("questionnaire")}
+            onEdit={() => setPage("questionnaire")}
             onStart={() => setPage("landing")}
           />
         );
