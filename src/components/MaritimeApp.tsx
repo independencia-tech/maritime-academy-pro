@@ -6,6 +6,7 @@ import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
 import { useState, useEffect } from "react";
+import { MusicProvider, useMusic } from "./MusicProvider";
 
 const LS_KEY = "map_registrations";
 const ADMIN_CODE = "Mapmarino2025";
@@ -906,6 +907,15 @@ function AdminPage({ setPage }) {
 
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
+  return (
+    <MusicProvider>
+      <AppInner />
+    </MusicProvider>
+  );
+}
+
+function AppInner() {
+  const { enable } = useMusic();
   const [page, setPage] = useState(() => {
     if (typeof window === "undefined") return "splash";
     try { return localStorage.getItem("map_status_card") ? "dashboard" : "splash"; }
@@ -948,7 +958,7 @@ export default function App() {
       {page==="music"       && (
         <MusicS3
           lang={lang}
-          onYes={() => setPage("welcome")}
+          onYes={() => { enable(); setPage("welcome"); }}
           onNo={() => setPage("welcome")}
           onBack={() => setPage("lang")}
         />
