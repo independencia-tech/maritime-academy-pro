@@ -460,48 +460,105 @@ export default function StatusCardS8({
   };
 
   const handleDownload=async()=>{
-    if(!cardRef.current||downloading)return;
+    if(downloading)return;
     setDownloading(true);
     const toastMsg=lang==="en"?"Card saved ✅":lang==="es"?"Tarjeta guardada ✅":lang==="pt"?"Cartão salvo ✅":"Carte sauvegardée ✅";
     try{
-      const node=document.getElementById("status-card")||cardRef.current;
-      if(typeof html2canvas!=="function") throw new Error("html2canvas unavailable");
-      const canvas=await html2canvas(node,{
-        backgroundColor:C.navy,
-        scale:2,
-        useCORS:true,
-        logging:false,
+      const W=720,H=1100;
+      const canvas=document.createElement("canvas");
+      canvas.width=W;canvas.height=H;
+      const ctx=canvas.getContext("2d");
+      // Background gradient
+      const bg=ctx.createLinearGradient(0,0,0,H);
+      bg.addColorStop(0,C.navy3);bg.addColorStop(1,C.navy);
+      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+      // Border
+      ctx.strokeStyle=C.gold;ctx.lineWidth=3;
+      ctx.strokeRect(20,20,W-40,H-40);
+      // Header band
+      ctx.fillStyle=C.gold;
+      ctx.font="bold 28px 'Cinzel',serif";
+      ctx.textAlign="center";
+      ctx.fillText("MARITIME ACADEMY PRO",W/2,90);
+      ctx.fillStyle=C.green;
+      ctx.font="bold 14px sans-serif";
+      ctx.fillText("CERTIFIED IMO / STCW",W/2,120);
+      // Avatar circle
+      ctx.beginPath();
+      ctx.arc(W/2,220,70,0,Math.PI*2);
+      ctx.fillStyle=C.blue;
+      ctx.fill();
+      ctx.strokeStyle=C.gold2;ctx.lineWidth=4;ctx.stroke();
+      ctx.fillStyle=C.white;
+      ctx.font="bold 54px sans-serif";
+      ctx.textBaseline="middle";
+      ctx.fillText(initials,W/2,222);
+      ctx.textBaseline="alphabetic";
+      // Name
+      ctx.fillStyle=C.white;
+      ctx.font="bold 36px 'Cinzel',serif";
+      ctx.fillText(name,W/2,340);
+      // Level
+      ctx.fillStyle=levelColor;
+      ctx.font="bold 22px sans-serif";
+      ctx.fillText(currentLevel.label,W/2,378);
+      // Divider
+      ctx.strokeStyle=C.border;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(80,410);ctx.lineTo(W-80,410);ctx.stroke();
+      // Info rows
+      const rows=[
+        [t.objectiveLabel,goal],
+        [t.shipLabel,ship],
+        [t.countryLabel,country],
+        [t.studyLabel,duration],
+      ];
+      ctx.textAlign="left";
+      let y=460;
+      rows.forEach(([label,val])=>{
+        ctx.fillStyle=C.muted;
+        ctx.font="600 16px sans-serif";
+        ctx.fillText(label,80,y);
+        ctx.fillStyle=C.white;
+        ctx.font="bold 22px sans-serif";
+        ctx.fillText(String(val),80,y+32);
+        y+=80;
       });
+      // Stats row
+      ctx.strokeStyle=C.border;
+      ctx.beginPath();ctx.moveTo(80,y);ctx.lineTo(W-80,y);ctx.stroke();
+      y+=50;
+      const stats=[[t.statLessons,"0"],[t.statCerts,"0"],[t.statPoints,"0"]];
+      const sw=(W-160)/3;
+      ctx.textAlign="center";
+      stats.forEach(([lbl,v],i)=>{
+        const cx=80+sw*i+sw/2;
+        ctx.fillStyle=C.gold2;
+        ctx.font="bold 38px sans-serif";
+        ctx.fillText(v,cx,y+10);
+        ctx.fillStyle=C.muted;
+        ctx.font="600 12px sans-serif";
+        ctx.fillText(lbl,cx,y+38);
+      });
+      // Footer
+      ctx.fillStyle=C.muted;
+      ctx.font="14px sans-serif";
+      ctx.fillText(`${t.memberSince} ${memberDate}`,W/2,H-90);
+      ctx.fillStyle=C.gold2;
+      ctx.font="bold 14px sans-serif";
+      ctx.fillText("maritime-academy-pro.lovable.app",W/2,H-60);
+      // Download
       const link=document.createElement("a");
-      link.download="maritime-academy-pro-status.png";
+      link.download="maritime-status-card.png";
       link.href=canvas.toDataURL("image/png");
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
       setDownloaded(true);
       setTimeout(()=>setDownloaded(false),3000);
       toast.success(toastMsg);
     }catch(e){
       console.error("Download failed",e);
-      // Fallback: open card in new window for print/save
-      try{
-        const node=document.getElementById("status-card")||cardRef.current;
-        const html=node?node.outerHTML:"";
-        const w=window.open("","_blank","width=480,height=800");
-        if(w){
-          w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Maritime Academy Pro — Status</title>
-<style>
-  @media print { @page { size:auto; margin:0; } body { margin:0; } }
-  body{margin:0;background:${C.navy};font-family:'Nunito',sans-serif;display:flex;justify-content:center;padding:20px;}
-  #wrap{max-width:420px;width:100%;}
-</style></head><body><div id="wrap">${html}</div>
-<script>window.onload=()=>setTimeout(()=>window.print(),400);<\/script>
-</body></html>`);
-          w.document.close();
-          toast.success(toastMsg);
-        }
-      }catch(err){
-        console.error("Fallback failed",err);
-        toast.error(lang==="en"?"Download failed":"Échec du téléchargement");
-      }
+      toast.error(lang==="en"?"Download failed":"Échec du téléchargement");
     }finally{
       setDownloading(false);
     }
