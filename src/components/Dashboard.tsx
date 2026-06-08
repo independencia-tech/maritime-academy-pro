@@ -304,6 +304,10 @@ function ModuleCard({module,lang,t,onStart}) {
           {/* Progress bar */}
           {!isComing&&(
             <div style={{marginBottom:8}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+                <span style={{fontSize:9,color:C.muted,letterSpacing:0.5}}>Progression</span>
+                <span style={{fontSize:10,color:C.gold2,fontWeight:700,fontFamily:"'Cinzel',serif"}}>{module.progress}%</span>
+              </div>
               <div style={{height:3,borderRadius:3,
                 background:"rgba(255,255,255,0.08)",overflow:"hidden"}}>
                 <div style={{height:"100%",borderRadius:3,
