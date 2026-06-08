@@ -101,6 +101,8 @@ const T = {
     // Photo
     s9:"📸 Ta photo (optionnel)",
     s9cta:"Ajouter ma photo",
+    s9camera:"Appareil",
+    s9gallery:"Galerie",
     s9note:"Confidentielle · Pour ta carte statut personnalisée 🎁 · Max 5 Mo",
     s9error:"Photo trop lourde — maximum 5 Mo",
     // Submit
@@ -169,7 +171,8 @@ const T = {
     s8:"🔔 Training reminder by email?",
     qYes:"✅ Yes",qNo:"❌ No",
     s9:"📸 Your photo (optional)",
-    s9cta:"Add my photo",s9note:"Confidential · For your personalized status card 🎁 · Max 5 MB",
+    s9cta:"Add my photo",s9camera:"Camera",s9gallery:"Gallery",
+    s9note:"Confidential · For your personalized status card 🎁 · Max 5 MB",
     s9error:"Photo too large — maximum 5 MB",
     qBtn:"GENERATE MY STATUS →",
     qBtnWait:"Answer all questions to continue",
@@ -229,6 +232,8 @@ const T = {
     s7:"🌍 ¿Tu país de residencia?",s7ph:"Ej: España, México...",
     s8:"🔔 ¿Recordatorio por email?",qYes:"✅ Sí",qNo:"❌ No",
     s9:"📸 Tu foto (opcional)",s9cta:"Agregar mi foto",
+    s9camera:"Cámara",
+    s9gallery:"Galería",
     s9note:"Confidencial · Para tu tarjeta personalizada 🎁 · Max 5 MB",
     s9error:"Foto demasiado grande — máximo 5 MB",
     qBtn:"GENERAR MI ESTADO →",qBtnWait:"Responde todas las preguntas para continuar",
@@ -288,6 +293,8 @@ const T = {
     s7:"🌍 Seu país de residência?",s7ph:"Ex: Brasil, Portugal, Angola...",
     s8:"🔔 Lembrete de formação por email?",qYes:"✅ Sim",qNo:"❌ Não",
     s9:"📸 Sua foto (opcional)",s9cta:"Adicionar minha foto",
+    s9camera:"Câmera",
+    s9gallery:"Galeria",
     s9note:"Confidencial · Para seu cartão de status personalizado 🎁 · Max 5 MB",
     s9error:"Foto muito grande — máximo 5 MB",
     qBtn:"GERAR MEU STATUS →",qBtnWait:"Responda todas as perguntas para continuar",
@@ -543,7 +550,8 @@ export default function QuestionnaireS7({
   const sectionRefs=useRef({});
   const [errorKey,setErrorKey]=useState(null);
   const [errorMsg,setErrorMsg]=useState("");
-  const photoInputRef=useRef(null);
+  const cameraInputRef=useRef(null);
+  const galleryInputRef=useRef(null);
   const [photo,setPhoto]=useState(null);
   const [photoError,setPhotoError]=useState(false);
 
@@ -560,7 +568,8 @@ export default function QuestionnaireS7({
     const MAX_SIZE=5*1024*1024;
     if(file.size>MAX_SIZE){
       setPhotoError(true);
-      if(photoInputRef.current) photoInputRef.current.value="";
+      if(cameraInputRef.current) cameraInputRef.current.value="";
+      if(galleryInputRef.current) galleryInputRef.current.value="";
       return;
     }
     setPhotoError(false);
@@ -580,7 +589,8 @@ export default function QuestionnaireS7({
     setPhotoError(false);
     try{ localStorage.removeItem("map_user_photo"); }catch{}
     set("photo",null);
-    if(photoInputRef.current) photoInputRef.current.value="";
+    if(cameraInputRef.current) cameraInputRef.current.value="";
+    if(galleryInputRef.current) galleryInputRef.current.value="";
   };
 
   const errorLabels={
@@ -949,36 +959,29 @@ export default function QuestionnaireS7({
           <Card style={{marginBottom:20}}>
             <div style={{fontSize:13,fontWeight:700,
               color:C.muted,marginBottom:10}}>{t.s9}</div>
-            <input ref={photoInputRef} type="file" accept="image/*"
+            <input ref={cameraInputRef} type="file" accept="image/*" capture="user"
               onChange={handlePhotoChange}
               style={{position:"absolute",width:1,height:1,opacity:0,pointerEvents:"none"}}
-              aria-label={t.s9cta}/>
-            <div role="button" tabIndex={0}
-              onClick={()=>photoInputRef.current&&photoInputRef.current.click()}
-              onKeyDown={(e)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();photoInputRef.current&&photoInputRef.current.click();}}}
-              style={{borderRadius:14,padding:"16px 14px",
-                background:"rgba(255,255,255,0.04)",
-                border:`1px dashed ${C.border}`,
-                display:"flex",alignItems:"center",gap:14,cursor:"pointer"}}>
-              <div style={{width:52,height:52,borderRadius:"50%",flexShrink:0,
+              aria-label={t.s9camera}/>
+            <input ref={galleryInputRef} type="file" accept="image/*"
+              onChange={handlePhotoChange}
+              style={{position:"absolute",width:1,height:1,opacity:0,pointerEvents:"none"}}
+              aria-label={t.s9gallery}/>
+
+            <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:14}}>
+              <div style={{width:64,height:64,borderRadius:"50%",flexShrink:0,
                 background:photo
                   ?`url(${photo}) center/cover`
                   :`linear-gradient(135deg,${C.navy3},#112244)`,
                 border:`1.5px dashed ${C.gold}66`,
-                display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,
+                display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,
                 overflow:"hidden"}}>
                 {!photo&&"📸"}
               </div>
-              <div style={{flex:1,minWidth:0}}>
-                <div style={{fontSize:13,color:C.white,fontWeight:600,marginBottom:4}}>
-                  {photo?(lang==="fr"?"Photo ajoutée ✓":lang==="es"?"Foto añadida ✓":lang==="pt"?"Foto adicionada ✓":"Photo added ✓"):t.s9cta}
-                </div>
-                <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>{t.s9note}</div>
-              </div>
-              {photo&&(
+              {photo && (
                 <button type="button" onClick={removePhoto}
                   aria-label={lang==="fr"?"Retirer la photo":lang==="es"?"Quitar foto":lang==="pt"?"Remover foto":"Remove photo"}
-                  style={{flexShrink:0,width:32,height:32,borderRadius:"50%",
+                  style={{width:32,height:32,borderRadius:"50%",
                     border:`1px solid ${C.border}`,background:"rgba(0,0,0,0.4)",
                     color:C.white,cursor:"pointer",fontSize:16,lineHeight:1,
                     display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -986,6 +989,39 @@ export default function QuestionnaireS7({
                 </button>
               )}
             </div>
+
+            <div style={{display:"flex",gap:10}}>
+              <button type="button" onClick={()=>cameraInputRef.current&&cameraInputRef.current.click()}
+                style={{
+                  flex:1,
+                  display:"flex",flexDirection:"column",alignItems:"center",gap:6,
+                  padding:"14px 10px",borderRadius:14,
+                  background:"rgba(255,255,255,0.05)",
+                  border:`1.5px solid ${C.border}`,
+                  color:C.white,cursor:"pointer",
+                  fontFamily:"'Nunito',sans-serif",
+                  fontSize:13,fontWeight:600,
+                }}>
+                <span style={{fontSize:22}}>📷</span>
+                <span>{t.s9camera}</span>
+              </button>
+              <button type="button" onClick={()=>galleryInputRef.current&&galleryInputRef.current.click()}
+                style={{
+                  flex:1,
+                  display:"flex",flexDirection:"column",alignItems:"center",gap:6,
+                  padding:"14px 10px",borderRadius:14,
+                  background:"rgba(255,255,255,0.05)",
+                  border:`1.5px solid ${C.border}`,
+                  color:C.white,cursor:"pointer",
+                  fontFamily:"'Nunito',sans-serif",
+                  fontSize:13,fontWeight:600,
+                }}>
+                <span style={{fontSize:22}}>🖼️</span>
+                <span>{t.s9gallery}</span>
+              </button>
+            </div>
+
+            <div style={{marginTop:10,fontSize:11,color:C.muted,lineHeight:1.5}}>{t.s9note}</div>
             {photoError&&(
               <div style={{marginTop:8,fontSize:12,color:"#ff6b6b",fontWeight:600}}>
                 {t.s9error}
