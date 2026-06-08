@@ -539,6 +539,36 @@ export default function QuestionnaireS7({
   const sectionRefs=useRef({});
   const [errorKey,setErrorKey]=useState(null);
   const [errorMsg,setErrorMsg]=useState("");
+  const photoInputRef=useRef(null);
+  const [photo,setPhoto]=useState(null);
+
+  useEffect(()=>{
+    try{
+      const p=typeof window!=="undefined"&&localStorage.getItem("map_user_photo");
+      if(p) setPhoto(p);
+    }catch{}
+  },[]);
+
+  const handlePhotoChange=(e)=>{
+    const file=e.target.files&&e.target.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=()=>{
+      const dataUrl=String(reader.result||"");
+      setPhoto(dataUrl);
+      try{ localStorage.setItem("map_user_photo",dataUrl); }catch{}
+      set("photo",dataUrl);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removePhoto=(e)=>{
+    e&&e.stopPropagation&&e.stopPropagation();
+    setPhoto(null);
+    try{ localStorage.removeItem("map_user_photo"); }catch{}
+    set("photo",null);
+    if(photoInputRef.current) photoInputRef.current.value="";
+  };
 
   const errorLabels={
     fr:{dept:"ton département",who:"qui tu es",goal:"ton objectif",level:"ton niveau",
