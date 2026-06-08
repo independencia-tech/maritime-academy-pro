@@ -19,6 +19,10 @@ const T = {
     bridgeTitle:"TU AS CHOISI LA BONNE VOIE",
     bridgeText:"Chaque grand marin a commencé par le bas. Qu'il soit cadet sur le pont ou oiler en salle des machines, le premier pas est toujours le même. Créons ton compte pour que ton voyage commence vraiment.",
     bridgeBtn:"⚓ CRÉER MON COMPTE",
+    deckLabel:"🧭 PONT",
+    engineLabel:"⚙️ MACHINE",
+    deck:["Cadet","Officier","Maître","Capitaine"],
+    engine:["Oiler","Mécanicien","Off. Machine","Chef Méc."],
   },
   en:{
     back:"◀ Back",
@@ -29,6 +33,10 @@ const T = {
     bridgeTitle:"YOU CHOSE THE RIGHT PATH",
     bridgeText:"Every great seafarer started from the bottom. Whether cadet on deck or oiler in the engine room, the first step is always the same. Let's create your account so your voyage truly begins.",
     bridgeBtn:"⚓ CREATE MY ACCOUNT",
+    deckLabel:"🧭 DECK",
+    engineLabel:"⚙️ ENGINE",
+    deck:["Cadet","Officer","Master","Captain"],
+    engine:["Oiler","Motorman","Engine Off.","Chief Eng."],
   },
   es:{
     back:"◀ Volver",
@@ -39,6 +47,10 @@ const T = {
     bridgeTitle:"ELEGISTE EL CAMINO CORRECTO",
     bridgeText:"Todo gran marino empezó desde abajo. Ya sea cadete en cubierta o engrasador en la sala de máquinas, el primer paso es siempre el mismo. Creemos tu cuenta para que tu viaje comience de verdad.",
     bridgeBtn:"⚓ CREAR MI CUENTA",
+    deckLabel:"🧭 CUBIERTA",
+    engineLabel:"⚙️ MÁQUINAS",
+    deck:["Cadete","Oficial","Contramaestre","Capitán"],
+    engine:["Engrasador","Mecánico","Of. Máquinas","Jefe Máq."],
   },
   pt:{
     back:"◀ Voltar",
@@ -49,6 +61,10 @@ const T = {
     bridgeTitle:"VOCÊ ESCOLHEU O CAMINHO CERTO",
     bridgeText:"Todo grande marinheiro começou de baixo. Seja cadete no convés ou oiler na sala de máquinas, o primeiro passo é sempre o mesmo. Vamos criar sua conta para que sua viagem comece de verdade.",
     bridgeBtn:"⚓ CRIAR MINHA CONTA",
+    deckLabel:"🧭 CONVÉS",
+    engineLabel:"⚙️ MÁQUINAS",
+    deck:["Cadete","Oficial","Mestre","Capitão"],
+    engine:["Oiler","Mecânico","Of. Máquinas","Chefe Máq."],
   },
 };
 
