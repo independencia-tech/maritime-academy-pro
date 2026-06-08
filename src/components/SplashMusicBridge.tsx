@@ -449,31 +449,27 @@ export function BridgeS5({lang="fr",onNext,onBack}) {
         {/* Maritime progress icons */}
         {phase>=2&&(
           <div style={{
-            display:"flex",gap:8,alignItems:"center",
-            opacity:0.5,
+            display:"flex",flexDirection:"column",gap:10,
+            opacity:0.7,alignItems:"center",
             animation:"fadeUp 0.6s ease both",
           }}>
             {[
-              {icon:"⛵",label:"Cadet"},
-              {icon:"→",label:""},
-              {icon:"🧭",label:"Officier"},
-              {icon:"→",label:""},
-              {icon:"🔱",label:"Maître"},
-              {icon:"→",label:""},
-              {icon:"👑",label:"Capitaine"},
-            ].map((item,i)=>(
-              <div key={i} style={{
-                display:"flex",flexDirection:"column",
-                alignItems:"center",gap:2,
-              }}>
-                <span style={{fontSize:item.icon==="→"?14:20}}>
-                  {item.icon}
-                </span>
-                {item.label&&(
-                  <span style={{fontSize:8,color:C.muted,letterSpacing:0.5}}>
-                    {item.label}
-                  </span>
-                )}
+              {label:t.deckLabel,icons:["⛵","🧭","🔱","👑"],names:t.deck},
+              {label:t.engineLabel,icons:["🛢️","⚙️","🛠️","👑"],names:t.engine},
+            ].map((row,ri)=>(
+              <div key={ri} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3}}>
+                <span style={{fontSize:9,color:C.gold,letterSpacing:1,fontWeight:700}}>{row.label}</span>
+                <div style={{display:"flex",gap:6,alignItems:"center"}}>
+                  {row.icons.map((ic,i)=>(
+                    <React.Fragment key={i}>
+                      <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:2}}>
+                        <span style={{fontSize:18}}>{ic}</span>
+                        <span style={{fontSize:8,color:C.muted,letterSpacing:0.3}}>{row.names[i]}</span>
+                      </div>
+                      {i<row.icons.length-1&&<span style={{fontSize:12,color:C.muted}}>→</span>}
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
