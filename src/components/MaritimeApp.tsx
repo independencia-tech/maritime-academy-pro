@@ -2,6 +2,7 @@
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
 import Dashboard from "./Dashboard";
+import LessonNavigation from "./LessonNavigation";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -923,6 +924,19 @@ function AppInner() {
   });
   const [lang, setLang] = useState("fr");
   const [profile, setProfile] = useState({});
+  const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    try { return JSON.parse(localStorage.getItem("map_completed_lessons") || "[]"); }
+    catch { return []; }
+  });
+  const markLessonCompleted = (id: string) => {
+    setCompletedLessons((prev) => {
+      if (prev.includes(id)) return prev;
+      const next = [...prev, id];
+      try { localStorage.setItem("map_completed_lessons", JSON.stringify(next)); } catch {}
+      return next;
+    });
+  };
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
@@ -1034,12 +1048,22 @@ function AppInner() {
             photo={storedPhoto || profile?.photo || null}
             profile={profile || {}}
             userLevel="cadet"
+            completedLessons={completedLessons}
             onViewStatus={() => setPage("status")}
             onEditProfile={() => setPage("questionnaire")}
-            onStartModule={() => {}}
+            onStartModule={(m:any) => {
+              if (m?.id === "d1") setPage("lesson_navigation");
+            }}
           />
         );
       })()}
+      {page === "lesson_navigation" && (
+        <LessonNavigation
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          onComplete={() => { markLessonCompleted("d1"); setPage("dashboard"); }}
+        />
+      )}
     </>
   );
 }
