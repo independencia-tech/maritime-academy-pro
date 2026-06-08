@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
+import { toast } from "sonner";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -454,8 +455,11 @@ export default function StatusCardS8({
   const handleDownload=async()=>{
     if(!cardRef.current||downloading)return;
     setDownloading(true);
+    const toastMsg=lang==="en"?"Card saved ✅":lang==="es"?"Tarjeta guardada ✅":lang==="pt"?"Cartão salvo ✅":"Carte sauvegardée ✅";
     try{
-      const canvas=await html2canvas(cardRef.current,{
+      const node=document.getElementById("status-card")||cardRef.current;
+      if(typeof html2canvas!=="function") throw new Error("html2canvas unavailable");
+      const canvas=await html2canvas(node,{
         backgroundColor:C.navy,
         scale:2,
         useCORS:true,
@@ -467,8 +471,30 @@ export default function StatusCardS8({
       link.click();
       setDownloaded(true);
       setTimeout(()=>setDownloaded(false),3000);
+      toast.success(toastMsg);
     }catch(e){
       console.error("Download failed",e);
+      // Fallback: open card in new window for print/save
+      try{
+        const node=document.getElementById("status-card")||cardRef.current;
+        const html=node?node.outerHTML:"";
+        const w=window.open("","_blank","width=480,height=800");
+        if(w){
+          w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Maritime Academy Pro — Status</title>
+<style>
+  @media print { @page { size:auto; margin:0; } body { margin:0; } }
+  body{margin:0;background:${C.navy};font-family:'Nunito',sans-serif;display:flex;justify-content:center;padding:20px;}
+  #wrap{max-width:420px;width:100%;}
+</style></head><body><div id="wrap">${html}</div>
+<script>window.onload=()=>setTimeout(()=>window.print(),400);<\/script>
+</body></html>`);
+          w.document.close();
+          toast.success(toastMsg);
+        }
+      }catch(err){
+        console.error("Fallback failed",err);
+        toast.error(lang==="en"?"Download failed":"Échec du téléchargement");
+      }
     }finally{
       setDownloading(false);
     }
@@ -543,7 +569,7 @@ export default function StatusCardS8({
           </div>
 
           {/* ── THE CARD ── */}
-          <div ref={cardRef} style={{
+          <div ref={cardRef} id="status-card" style={{
             width:"100%",
             background:"linear-gradient(160deg,#0a2040,#061020)",
             border:`1.5px solid ${C.gold}44`,
