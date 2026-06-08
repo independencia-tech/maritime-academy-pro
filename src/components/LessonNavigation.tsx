@@ -1414,7 +1414,13 @@ export default function LessonNavigation({
     lang === "pt" ? "6 instrumentos: Bússola, Giro, GPS, ECDIS, Radar, AIS" :
     "6 instruments: Compass, Gyro, GPS, ECDIS, Radar, AIS",
 
+    lang === "en" ? "1 nautical mile = 1,852 m" :
+    lang === "es" ? "1 milla náutica = 1.852 m" :
+    lang === "pt" ? "1 milha náutica = 1 852 m" :
     "1 mille nautique = 1 852 m",
+    lang === "en" ? "1 knot = 1 nm/h · D = S × T" :
+    lang === "es" ? "1 nudo = 1 mn/h · D = V × T" :
+    lang === "pt" ? "1 nó = 1 mn/h · D = V × T" :
     "1 nœud = 1 mn/h · D = V × T",
     lang === "fr" ? "N=000° E=090° S=180° W=270°" :
     "N=000° E=090° S=180° W=270°",
