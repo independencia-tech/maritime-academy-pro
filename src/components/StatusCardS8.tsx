@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect, useRef } from "react";
+import html2canvas from "html2canvas";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -377,6 +378,7 @@ export default function StatusCardS8({
   const [cardAnim,setCardAnim]=useState(false);
   const [badgeAnim,setBadgeAnim]=useState(false);
   const [downloaded,setDownloaded]=useState(false);
+  const [downloading,setDownloading]=useState(false);
   const [shared,setShared]=useState(false);
   const [confirmReset,setConfirmReset]=useState(false);
   const cardRef=useRef(null);
@@ -444,11 +446,27 @@ export default function StatusCardS8({
     setTimeout(()=>setShared(false),3000);
   };
 
-  const handleDownload=()=>{
-    setDownloaded(true);
-    setTimeout(()=>setDownloaded(false),3000);
-    // In real app: use html2canvas to capture cardRef
-    alert("📥 Dans l'app finale, ta carte sera téléchargée en PNG !");
+  const handleDownload=async()=>{
+    if(!cardRef.current||downloading)return;
+    setDownloading(true);
+    try{
+      const canvas=await html2canvas(cardRef.current,{
+        backgroundColor:C.navy,
+        scale:2,
+        useCORS:true,
+        logging:false,
+      });
+      const link=document.createElement("a");
+      link.download="maritime-academy-pro-status.png";
+      link.href=canvas.toDataURL("image/png");
+      link.click();
+      setDownloaded(true);
+      setTimeout(()=>setDownloaded(false),3000);
+    }catch(e){
+      console.error("Download failed",e);
+    }finally{
+      setDownloading(false);
+    }
   };
 
   const handleReset=()=>{
@@ -692,18 +710,31 @@ export default function StatusCardS8({
           {/* Download + Share row */}
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
             {/* Download */}
-            <button onClick={handleDownload} style={{
+            <button onClick={handleDownload} disabled={downloading} style={{
               padding:"13px 8px",borderRadius:14,
               background:downloaded?"rgba(30,138,74,0.2)":"rgba(255,255,255,0.06)",
               border:`1px solid ${downloaded?C.green+"55":"rgba(255,255,255,0.16)"}`,
               color:downloaded?C.green:C.muted,
               fontFamily:"'Nunito',sans-serif",
-              fontSize:12,fontWeight:700,cursor:"pointer",
+              fontSize:12,fontWeight:700,cursor:downloading?"wait":"pointer",
+              opacity:downloading?0.7:1,
               transition:"all 0.3s",
               display:"flex",alignItems:"center",
               justifyContent:"center",gap:6,
             }}>
-              {downloaded?"✅ Sauvegardé":t.downloadBtn}
+              {downloading?(
+                <>
+                  <span style={{
+                    width:14,height:14,borderRadius:"50%",
+                    border:`2px solid ${C.muted}`,
+                    borderTopColor:C.gold2,
+                    display:"inline-block",
+                    animation:"spin 0.8s linear infinite",
+                  }}/>
+                  <span>…</span>
+                  <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+                </>
+              ):downloaded?"✅ Sauvegardé":t.downloadBtn}
             </button>
 
             {/* Share WhatsApp */}
