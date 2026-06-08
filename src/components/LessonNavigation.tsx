@@ -369,7 +369,12 @@ function GPSDisplay() {
         </div>
       </div>
       <div style={{ fontSize: 11, color: C.blue2, marginTop: 6 }}>
-        🛰️ GPS — {sats.filter(s => s.active).length} satellites actifs
+        🛰️ GPS — {sats.filter(s => s.active).length} {
+          (typeof window !== "undefined" && (window as any).__lessonLang === "en") ? "active satellites" :
+          (typeof window !== "undefined" && (window as any).__lessonLang === "es") ? "satélites activos" :
+          (typeof window !== "undefined" && (window as any).__lessonLang === "pt") ? "satélites ativos" :
+          "satellites actifs"
+        }
       </div>
     </div>
   );
