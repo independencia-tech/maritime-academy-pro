@@ -80,7 +80,7 @@ function MuteButton() {
       aria-label={muted ? "Activer le son" : "Couper le son"}
       style={{
         position: "fixed",
-        top: 12,
+        top: 58,
         right: 12,
         zIndex: 9999,
         width: 40,
