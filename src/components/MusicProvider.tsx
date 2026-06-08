@@ -38,7 +38,15 @@ export function MusicProvider({ children }) {
 
   const enable = () => {
     try { localStorage.setItem(LS_ENABLED, "1"); } catch {}
+    setMuted(false);
+    try { localStorage.setItem(LS_MUTED, "0"); } catch {}
     setEnabled(true);
+  };
+  const disable = () => {
+    try { localStorage.setItem(LS_ENABLED, "0"); } catch {}
+    try { localStorage.setItem(LS_MUTED, "1"); } catch {}
+    setEnabled(false);
+    setMuted(true);
   };
   const toggleMute = () => {
     setMuted((m) => {
@@ -46,11 +54,14 @@ export function MusicProvider({ children }) {
       try { localStorage.setItem(LS_MUTED, n ? "1" : "0"); } catch {}
       return n;
     });
-    if (!enabled) enable();
+    if (!enabled) {
+      try { localStorage.setItem(LS_ENABLED, "1"); } catch {}
+      setEnabled(true);
+    }
   };
 
   return (
-    <MusicCtx.Provider value={{ enabled, muted, enable, toggleMute }}>
+    <MusicCtx.Provider value={{ enabled, muted, enable, disable, toggleMute }}>
       {children}
       <MuteButton />
     </MusicCtx.Provider>
@@ -58,7 +69,7 @@ export function MusicProvider({ children }) {
 }
 
 export function useMusic() {
-  return useContext(MusicCtx) || { enabled: false, muted: false, enable: () => {}, toggleMute: () => {} };
+  return useContext(MusicCtx) || { enabled: false, muted: false, enable: () => {}, disable: () => {}, toggleMute: () => {} };
 }
 
 function MuteButton() {
