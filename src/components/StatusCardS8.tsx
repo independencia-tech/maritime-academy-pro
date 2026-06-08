@@ -41,6 +41,7 @@ const T = {
     resetBtn:"🗑️ Réinitialiser mes données",
     resetConfirm:"⚠️ Confirmer la suppression ?",
     resetCancel:"Annuler",
+    editBtn:"✏️ Modifier mon profil",
     goalLabels:{
       nav:"Maîtriser la navigation",
       stcw:"Certifications STCW",
@@ -100,6 +101,7 @@ const T = {
     resetBtn:"🗑️ Reset my data",
     resetConfirm:"⚠️ Confirm deletion?",
     resetCancel:"Cancel",
+    editBtn:"✏️ Edit my profile",
     goalLabels:{
       nav:"Master navigation",
       stcw:"STCW Certifications",
@@ -159,6 +161,7 @@ const T = {
     resetBtn:"🗑️ Borrar mis datos",
     resetConfirm:"⚠️ ¿Confirmar el borrado?",
     resetCancel:"Cancelar",
+    editBtn:"✏️ Editar mi perfil",
     goalLabels:{
       nav:"Dominar la navegación",
       stcw:"Certificaciones STCW",
@@ -218,6 +221,7 @@ const T = {
     resetBtn:"🗑️ Apagar meus dados",
     resetConfirm:"⚠️ Confirmar a exclusão?",
     resetCancel:"Cancelar",
+    editBtn:"✏️ Editar meu perfil",
     goalLabels:{
       nav:"Dominar a navegação",
       stcw:"Certificações STCW",
