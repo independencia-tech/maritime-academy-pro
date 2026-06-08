@@ -539,6 +539,36 @@ export default function QuestionnaireS7({
   const sectionRefs=useRef({});
   const [errorKey,setErrorKey]=useState(null);
   const [errorMsg,setErrorMsg]=useState("");
+  const photoInputRef=useRef(null);
+  const [photo,setPhoto]=useState(null);
+
+  useEffect(()=>{
+    try{
+      const p=typeof window!=="undefined"&&localStorage.getItem("map_user_photo");
+      if(p) setPhoto(p);
+    }catch{}
+  },[]);
+
+  const handlePhotoChange=(e)=>{
+    const file=e.target.files&&e.target.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=()=>{
+      const dataUrl=String(reader.result||"");
+      setPhoto(dataUrl);
+      try{ localStorage.setItem("map_user_photo",dataUrl); }catch{}
+      set("photo",dataUrl);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removePhoto=(e)=>{
+    e&&e.stopPropagation&&e.stopPropagation();
+    setPhoto(null);
+    try{ localStorage.removeItem("map_user_photo"); }catch{}
+    set("photo",null);
+    if(photoInputRef.current) photoInputRef.current.value="";
+  };
 
   const errorLabels={
     fr:{dept:"ton département",who:"qui tu es",goal:"ton objectif",level:"ton niveau",
@@ -906,22 +936,43 @@ export default function QuestionnaireS7({
           <Card style={{marginBottom:20}}>
             <div style={{fontSize:13,fontWeight:700,
               color:C.muted,marginBottom:10}}>{t.s9}</div>
-            <div style={{borderRadius:14,padding:"16px 14px",
-              background:"rgba(255,255,255,0.04)",
-              border:`1px dashed ${C.border}`,
-              display:"flex",alignItems:"center",gap:14,cursor:"pointer"}}>
+            <input ref={photoInputRef} type="file" accept="image/*"
+              capture="user"
+              onChange={handlePhotoChange}
+              style={{position:"absolute",width:1,height:1,opacity:0,pointerEvents:"none"}}
+              aria-label={t.s9cta}/>
+            <div role="button" tabIndex={0}
+              onClick={()=>photoInputRef.current&&photoInputRef.current.click()}
+              onKeyDown={(e)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();photoInputRef.current&&photoInputRef.current.click();}}}
+              style={{borderRadius:14,padding:"16px 14px",
+                background:"rgba(255,255,255,0.04)",
+                border:`1px dashed ${C.border}`,
+                display:"flex",alignItems:"center",gap:14,cursor:"pointer"}}>
               <div style={{width:52,height:52,borderRadius:"50%",flexShrink:0,
-                background:`linear-gradient(135deg,${C.navy3},#112244)`,
+                background:photo
+                  ?`url(${photo}) center/cover`
+                  :`linear-gradient(135deg,${C.navy3},#112244)`,
                 border:`1.5px dashed ${C.gold}66`,
-                display:"flex",alignItems:"center",justifyContent:"center",fontSize:22}}>
-                📸
+                display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,
+                overflow:"hidden"}}>
+                {!photo&&"📸"}
               </div>
-              <div>
+              <div style={{flex:1,minWidth:0}}>
                 <div style={{fontSize:13,color:C.white,fontWeight:600,marginBottom:4}}>
-                  {t.s9cta}
+                  {photo?(lang==="fr"?"Photo ajoutée ✓":lang==="es"?"Foto añadida ✓":lang==="pt"?"Foto adicionada ✓":"Photo added ✓"):t.s9cta}
                 </div>
                 <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>{t.s9note}</div>
               </div>
+              {photo&&(
+                <button type="button" onClick={removePhoto}
+                  aria-label={lang==="fr"?"Retirer la photo":lang==="es"?"Quitar foto":lang==="pt"?"Remover foto":"Remove photo"}
+                  style={{flexShrink:0,width:32,height:32,borderRadius:"50%",
+                    border:`1px solid ${C.border}`,background:"rgba(0,0,0,0.4)",
+                    color:C.white,cursor:"pointer",fontSize:16,lineHeight:1,
+                    display:"flex",alignItems:"center",justifyContent:"center"}}>
+                  ✕
+                </button>
+              )}
             </div>
           </Card>
 
