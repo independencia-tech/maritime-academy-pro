@@ -780,6 +780,17 @@ export default function StatusCardS8({
 
           {/* Reset data */}
           <div style={{marginTop:10,textAlign:"center"}}>
+            {onEdit && (
+              <button onClick={onEdit} style={{
+                width:"100%",padding:"13px 0",borderRadius:14,marginBottom:8,
+                background:"rgba(26,111,212,0.12)",
+                border:`1px solid ${C.blue2}55`,
+                color:C.blue2,
+                fontFamily:"'Nunito',sans-serif",
+                fontSize:13,fontWeight:700,cursor:"pointer",
+                transition:"all 0.3s",
+              }}>{t.editBtn}</button>
+            )}
             <button onClick={handleReset} style={{
               width:"100%",padding:"13px 0",borderRadius:14,
               background:confirmReset?"rgba(192,57,43,0.2)":"rgba(255,255,255,0.04)",
