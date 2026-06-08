@@ -858,6 +858,35 @@ export default function StatusCardS8({
             </button>
           </div>
 
+          {/* PDF Export */}
+          <button onClick={handlePdf} disabled={pdfing} style={{
+            width:"100%",padding:"14px 0",borderRadius:14,marginBottom:16,
+            background:pdfDone
+              ?"rgba(30,138,74,0.18)"
+              :`linear-gradient(135deg,rgba(201,146,42,0.18),rgba(26,111,212,0.18))`,
+            border:`1px solid ${pdfDone?C.green+"66":C.gold+"55"}`,
+            color:pdfDone?C.green:C.gold2,
+            fontFamily:"'Nunito',sans-serif",
+            fontSize:13,fontWeight:700,letterSpacing:0.5,
+            cursor:pdfing?"wait":"pointer",
+            opacity:pdfing?0.7:1,
+            transition:"all 0.3s",
+            display:"flex",alignItems:"center",justifyContent:"center",gap:8,
+          }}>
+            {pdfing?(
+              <>
+                <span style={{
+                  width:14,height:14,borderRadius:"50%",
+                  border:`2px solid ${C.muted}`,
+                  borderTopColor:C.gold2,
+                  display:"inline-block",
+                  animation:"spin 0.8s linear infinite",
+                }}/>
+                <span>…</span>
+              </>
+            ):pdfDone?"✅ PDF":t.pdfBtn}
+          </button>
+
           {/* Motivational note */}
           <div style={{
             borderRadius:16,padding:"14px 16px",
