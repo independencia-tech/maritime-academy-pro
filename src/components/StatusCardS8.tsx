@@ -41,6 +41,7 @@ const T = {
     resetBtn:"🗑️ Réinitialiser mes données",
     resetConfirm:"⚠️ Confirmer la suppression ?",
     resetCancel:"Annuler",
+    editBtn:"✏️ Modifier mon profil",
     goalLabels:{
       nav:"Maîtriser la navigation",
       stcw:"Certifications STCW",
@@ -100,6 +101,7 @@ const T = {
     resetBtn:"🗑️ Reset my data",
     resetConfirm:"⚠️ Confirm deletion?",
     resetCancel:"Cancel",
+    editBtn:"✏️ Edit my profile",
     goalLabels:{
       nav:"Master navigation",
       stcw:"STCW Certifications",
@@ -159,6 +161,7 @@ const T = {
     resetBtn:"🗑️ Borrar mis datos",
     resetConfirm:"⚠️ ¿Confirmar el borrado?",
     resetCancel:"Cancelar",
+    editBtn:"✏️ Editar mi perfil",
     goalLabels:{
       nav:"Dominar la navegación",
       stcw:"Certificaciones STCW",
@@ -218,6 +221,7 @@ const T = {
     resetBtn:"🗑️ Apagar meus dados",
     resetConfirm:"⚠️ Confirmar a exclusão?",
     resetCancel:"Cancelar",
+    editBtn:"✏️ Editar meu perfil",
     goalLabels:{
       nav:"Dominar a navegação",
       stcw:"Certificações STCW",
@@ -372,6 +376,7 @@ export default function StatusCardS8({
   profile={},
   onStart=()=>{},
   onBack=()=>{},
+  onEdit=null,
 }) {
   const t=T[lang]||T.fr;
   const [vis,setVis]=useState(false);
@@ -775,6 +780,17 @@ export default function StatusCardS8({
 
           {/* Reset data */}
           <div style={{marginTop:10,textAlign:"center"}}>
+            {onEdit && (
+              <button onClick={onEdit} style={{
+                width:"100%",padding:"13px 0",borderRadius:14,marginBottom:8,
+                background:"rgba(26,111,212,0.12)",
+                border:`1px solid ${C.blue2}55`,
+                color:C.blue2,
+                fontFamily:"'Nunito',sans-serif",
+                fontSize:13,fontWeight:700,cursor:"pointer",
+                transition:"all 0.3s",
+              }}>{t.editBtn}</button>
+            )}
             <button onClick={handleReset} style={{
               width:"100%",padding:"13px 0",borderRadius:14,
               background:confirmReset?"rgba(192,57,43,0.2)":"rgba(255,255,255,0.04)",
