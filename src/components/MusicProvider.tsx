@@ -69,7 +69,7 @@ export function MusicProvider({ children }) {
 }
 
 export function useMusic() {
-  return useContext(MusicCtx) || { enabled: false, muted: false, enable: () => {}, toggleMute: () => {} };
+  return useContext(MusicCtx) || { enabled: false, muted: false, enable: () => {}, disable: () => {}, toggleMute: () => {} };
 }
 
 function MuteButton() {
