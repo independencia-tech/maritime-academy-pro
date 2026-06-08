@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -19,6 +19,10 @@ const T = {
     bridgeTitle:"TU AS CHOISI LA BONNE VOIE",
     bridgeText:"Chaque grand marin a commencé par le bas. Qu'il soit cadet sur le pont ou oiler en salle des machines, le premier pas est toujours le même. Créons ton compte pour que ton voyage commence vraiment.",
     bridgeBtn:"⚓ CRÉER MON COMPTE",
+    deckLabel:"🧭 PONT",
+    engineLabel:"⚙️ MACHINE",
+    deck:["Cadet","Officier","Maître","Capitaine"],
+    engine:["Oiler","Mécanicien","Off. Machine","Chef Méc."],
   },
   en:{
     back:"◀ Back",
@@ -29,6 +33,10 @@ const T = {
     bridgeTitle:"YOU CHOSE THE RIGHT PATH",
     bridgeText:"Every great seafarer started from the bottom. Whether cadet on deck or oiler in the engine room, the first step is always the same. Let's create your account so your voyage truly begins.",
     bridgeBtn:"⚓ CREATE MY ACCOUNT",
+    deckLabel:"🧭 DECK",
+    engineLabel:"⚙️ ENGINE",
+    deck:["Cadet","Officer","Master","Captain"],
+    engine:["Oiler","Motorman","Engine Off.","Chief Eng."],
   },
   es:{
     back:"◀ Volver",
@@ -39,6 +47,10 @@ const T = {
     bridgeTitle:"ELEGISTE EL CAMINO CORRECTO",
     bridgeText:"Todo gran marino empezó desde abajo. Ya sea cadete en cubierta o engrasador en la sala de máquinas, el primer paso es siempre el mismo. Creemos tu cuenta para que tu viaje comience de verdad.",
     bridgeBtn:"⚓ CREAR MI CUENTA",
+    deckLabel:"🧭 CUBIERTA",
+    engineLabel:"⚙️ MÁQUINAS",
+    deck:["Cadete","Oficial","Contramaestre","Capitán"],
+    engine:["Engrasador","Mecánico","Of. Máquinas","Jefe Máq."],
   },
   pt:{
     back:"◀ Voltar",
@@ -49,6 +61,10 @@ const T = {
     bridgeTitle:"VOCÊ ESCOLHEU O CAMINHO CERTO",
     bridgeText:"Todo grande marinheiro começou de baixo. Seja cadete no convés ou oiler na sala de máquinas, o primeiro passo é sempre o mesmo. Vamos criar sua conta para que sua viagem comece de verdade.",
     bridgeBtn:"⚓ CRIAR MINHA CONTA",
+    deckLabel:"🧭 CONVÉS",
+    engineLabel:"⚙️ MÁQUINAS",
+    deck:["Cadete","Oficial","Mestre","Capitão"],
+    engine:["Oiler","Mecânico","Of. Máquinas","Chefe Máq."],
   },
 };
 
@@ -433,31 +449,27 @@ export function BridgeS5({lang="fr",onNext,onBack}) {
         {/* Maritime progress icons */}
         {phase>=2&&(
           <div style={{
-            display:"flex",gap:8,alignItems:"center",
-            opacity:0.5,
+            display:"flex",flexDirection:"column",gap:10,
+            opacity:0.7,alignItems:"center",
             animation:"fadeUp 0.6s ease both",
           }}>
             {[
-              {icon:"⛵",label:"Cadet"},
-              {icon:"→",label:""},
-              {icon:"🧭",label:"Officier"},
-              {icon:"→",label:""},
-              {icon:"🔱",label:"Maître"},
-              {icon:"→",label:""},
-              {icon:"👑",label:"Capitaine"},
-            ].map((item,i)=>(
-              <div key={i} style={{
-                display:"flex",flexDirection:"column",
-                alignItems:"center",gap:2,
-              }}>
-                <span style={{fontSize:item.icon==="→"?14:20}}>
-                  {item.icon}
-                </span>
-                {item.label&&(
-                  <span style={{fontSize:8,color:C.muted,letterSpacing:0.5}}>
-                    {item.label}
-                  </span>
-                )}
+              {label:t.deckLabel,icons:["⛵","🧭","🔱","👑"],names:t.deck},
+              {label:t.engineLabel,icons:["🛢️","⚙️","🛠️","👑"],names:t.engine},
+            ].map((row,ri)=>(
+              <div key={ri} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3}}>
+                <span style={{fontSize:9,color:C.gold,letterSpacing:1,fontWeight:700}}>{row.label}</span>
+                <div style={{display:"flex",gap:6,alignItems:"center"}}>
+                  {row.icons.map((ic,i)=>(
+                    <React.Fragment key={i}>
+                      <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:2}}>
+                        <span style={{fontSize:18}}>{ic}</span>
+                        <span style={{fontSize:8,color:C.muted,letterSpacing:0.3}}>{row.names[i]}</span>
+                      </div>
+                      {i<row.icons.length-1&&<span style={{fontSize:12,color:C.muted}}>→</span>}
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
