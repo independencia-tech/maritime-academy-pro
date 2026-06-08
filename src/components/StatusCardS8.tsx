@@ -390,6 +390,8 @@ export default function StatusCardS8({
   const [badgeAnim,setBadgeAnim]=useState(false);
   const [downloaded,setDownloaded]=useState(false);
   const [downloading,setDownloading]=useState(false);
+  const [pdfing,setPdfing]=useState(false);
+  const [pdfDone,setPdfDone]=useState(false);
   const [shared,setShared]=useState(false);
   const [confirmReset,setConfirmReset]=useState(false);
   const cardRef=useRef(null);
