@@ -568,7 +568,8 @@ export default function QuestionnaireS7({
     const MAX_SIZE=5*1024*1024;
     if(file.size>MAX_SIZE){
       setPhotoError(true);
-      if(photoInputRef.current) photoInputRef.current.value="";
+      if(cameraInputRef.current) cameraInputRef.current.value="";
+      if(galleryInputRef.current) galleryInputRef.current.value="";
       return;
     }
     setPhotoError(false);
