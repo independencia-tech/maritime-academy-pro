@@ -507,6 +507,73 @@ export default function StatusCardS8({
     }
   };
 
+  const handlePdf=async()=>{
+    if(!cardRef.current||pdfing)return;
+    setPdfing(true);
+    const toastMsg=lang==="en"?"PDF saved ✅":lang==="es"?"PDF guardado ✅":lang==="pt"?"PDF salvo ✅":"PDF sauvegardé ✅";
+    try{
+      const node=document.getElementById("status-card")||cardRef.current;
+      const canvas=await html2canvas(node,{
+        backgroundColor:C.navy,
+        scale:2,
+        useCORS:true,
+        logging:false,
+      });
+      const imgData=canvas.toDataURL("image/png");
+
+      // A4 portrait: 210 x 297 mm
+      const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+      const pageW=210, pageH=297;
+
+      // Background navy
+      pdf.setFillColor(6,14,26);
+      pdf.rect(0,0,pageW,pageH,"F");
+
+      // Header band
+      pdf.setFillColor(10,32,64);
+      pdf.rect(0,0,pageW,22,"F");
+      pdf.setTextColor(201,146,42);
+      pdf.setFont("helvetica","bold");
+      pdf.setFontSize(14);
+      pdf.text("MARITIME ACADEMY PRO",pageW/2,11,{align:"center"});
+      pdf.setFontSize(8);
+      pdf.setTextColor(232,185,79);
+      pdf.text("CERTIFIED IMO / STCW",pageW/2,17,{align:"center"});
+
+      // Card image: fit width with margins, keep aspect ratio
+      const margin=18;
+      const maxW=pageW-margin*2;
+      const ratio=canvas.height/canvas.width;
+      let imgW=maxW;
+      let imgH=imgW*ratio;
+      const maxH=pageH-22-30; // header + footer
+      if(imgH>maxH){ imgH=maxH; imgW=imgH/ratio; }
+      const x=(pageW-imgW)/2;
+      const y=28;
+      pdf.addImage(imgData,"PNG",x,y,imgW,imgH);
+
+      // Footer
+      pdf.setFontSize(9);
+      pdf.setTextColor(240,244,255);
+      pdf.text((username||"Marin"),pageW/2,pageH-18,{align:"center"});
+      pdf.setFontSize(8);
+      pdf.setTextColor(150,160,180);
+      pdf.text(memberDate,pageW/2,pageH-13,{align:"center"});
+      pdf.setTextColor(201,146,42);
+      pdf.text("maritime-academy-pro.lovable.app",pageW/2,pageH-7,{align:"center"});
+
+      pdf.save("maritime-academy-pro-status.pdf");
+      setPdfDone(true);
+      setTimeout(()=>setPdfDone(false),3000);
+      toast.success(toastMsg);
+    }catch(e){
+      console.error("PDF export failed",e);
+      toast.error(lang==="en"?"PDF export failed":"Échec de l'export PDF");
+    }finally{
+      setPdfing(false);
+    }
+  };
+
   const handleReset=()=>{
     if(!confirmReset){ setConfirmReset(true); return; }
     try{
