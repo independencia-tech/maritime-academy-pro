@@ -363,6 +363,7 @@ export default function Dashboard({
   photo=null,
   profile={},
   userLevel="cadet",
+  completedLessons=[],
   onViewStatus=()=>{},
   onEditProfile=()=>{},
   onStartModule=()=>{},
@@ -401,12 +402,19 @@ export default function Dashboard({
     {key:"tools",label:t.tabTools},
   ];
 
-  const currentModules=MODULES[activeTab]||[];
+  const baseModules=MODULES[activeTab]||[];
+  const currentModules=baseModules.map((m)=>
+    completedLessons.includes(m.id)
+      ? {...m, status:"completed", progress:100}
+      : m
+  );
 
   // Global progress
-  const totalModules=Object.values(MODULES).flat().length;
-  const completedModules=Object.values(MODULES).flat()
-    .filter(m=>m.status==="completed").length;
+  const allModules=Object.values(MODULES).flat();
+  const totalModules=allModules.length;
+  const completedModules=allModules.filter(m=>
+    m.status==="completed" || completedLessons.includes(m.id)
+  ).length;
   const globalPct=Math.round((completedModules/totalModules)*100);
 
   return (
