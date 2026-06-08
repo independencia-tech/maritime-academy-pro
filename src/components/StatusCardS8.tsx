@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { toast } from "sonner";
 
 const C = {
@@ -34,6 +35,7 @@ const T = {
     certifiedBadge:"CERTIFIÉ IMO / STCW",
     startBtn:"⚓ COMMENCER LA FORMATION",
     downloadBtn:"📥 Télécharger ma carte",
+    pdfBtn:"📄 Exporter en PDF",
     shareBtn:"📲 Partager sur WhatsApp",
     notifCadet:"Cadet {nom}, ta formation commence aujourd'hui !",
     notifOfficer:"Officier {nom}, la mer vous attend !",
@@ -94,6 +96,7 @@ const T = {
     certifiedBadge:"CERTIFIED IMO / STCW",
     startBtn:"⚓ START TRAINING",
     downloadBtn:"📥 Download my card",
+    pdfBtn:"📄 Export as PDF",
     shareBtn:"📲 Share on WhatsApp",
     notifCadet:"Cadet {nom}, your training starts today!",
     notifOfficer:"Officer {nom}, the sea awaits you!",
@@ -154,6 +157,7 @@ const T = {
     certifiedBadge:"CERTIFICADO IMO / STCW",
     startBtn:"⚓ COMENZAR FORMACIÓN",
     downloadBtn:"📥 Descargar mi tarjeta",
+    pdfBtn:"📄 Exportar a PDF",
     shareBtn:"📲 Compartir en WhatsApp",
     notifCadet:"Cadete {nom}, ¡tu formación comienza hoy!",
     notifOfficer:"Oficial {nom}, ¡el mar te espera!",
@@ -214,6 +218,7 @@ const T = {
     certifiedBadge:"CERTIFICADO IMO / STCW",
     startBtn:"⚓ COMEÇAR FORMAÇÃO",
     downloadBtn:"📥 Baixar meu cartão",
+    pdfBtn:"📄 Exportar como PDF",
     shareBtn:"📲 Compartilhar no WhatsApp",
     notifCadet:"Cadete {nom}, sua formação começa hoje!",
     notifOfficer:"Oficial {nom}, o mar aguarda você!",
@@ -385,6 +390,8 @@ export default function StatusCardS8({
   const [badgeAnim,setBadgeAnim]=useState(false);
   const [downloaded,setDownloaded]=useState(false);
   const [downloading,setDownloading]=useState(false);
+  const [pdfing,setPdfing]=useState(false);
+  const [pdfDone,setPdfDone]=useState(false);
   const [shared,setShared]=useState(false);
   const [confirmReset,setConfirmReset]=useState(false);
   const cardRef=useRef(null);
@@ -497,6 +504,73 @@ export default function StatusCardS8({
       }
     }finally{
       setDownloading(false);
+    }
+  };
+
+  const handlePdf=async()=>{
+    if(!cardRef.current||pdfing)return;
+    setPdfing(true);
+    const toastMsg=lang==="en"?"PDF saved ✅":lang==="es"?"PDF guardado ✅":lang==="pt"?"PDF salvo ✅":"PDF sauvegardé ✅";
+    try{
+      const node=document.getElementById("status-card")||cardRef.current;
+      const canvas=await html2canvas(node,{
+        backgroundColor:C.navy,
+        scale:2,
+        useCORS:true,
+        logging:false,
+      });
+      const imgData=canvas.toDataURL("image/png");
+
+      // A4 portrait: 210 x 297 mm
+      const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+      const pageW=210, pageH=297;
+
+      // Background navy
+      pdf.setFillColor(6,14,26);
+      pdf.rect(0,0,pageW,pageH,"F");
+
+      // Header band
+      pdf.setFillColor(10,32,64);
+      pdf.rect(0,0,pageW,22,"F");
+      pdf.setTextColor(201,146,42);
+      pdf.setFont("helvetica","bold");
+      pdf.setFontSize(14);
+      pdf.text("MARITIME ACADEMY PRO",pageW/2,11,{align:"center"});
+      pdf.setFontSize(8);
+      pdf.setTextColor(232,185,79);
+      pdf.text("CERTIFIED IMO / STCW",pageW/2,17,{align:"center"});
+
+      // Card image: fit width with margins, keep aspect ratio
+      const margin=18;
+      const maxW=pageW-margin*2;
+      const ratio=canvas.height/canvas.width;
+      let imgW=maxW;
+      let imgH=imgW*ratio;
+      const maxH=pageH-22-30; // header + footer
+      if(imgH>maxH){ imgH=maxH; imgW=imgH/ratio; }
+      const x=(pageW-imgW)/2;
+      const y=28;
+      pdf.addImage(imgData,"PNG",x,y,imgW,imgH);
+
+      // Footer
+      pdf.setFontSize(9);
+      pdf.setTextColor(240,244,255);
+      pdf.text((username||"Marin"),pageW/2,pageH-18,{align:"center"});
+      pdf.setFontSize(8);
+      pdf.setTextColor(150,160,180);
+      pdf.text(memberDate,pageW/2,pageH-13,{align:"center"});
+      pdf.setTextColor(201,146,42);
+      pdf.text("maritime-academy-pro.lovable.app",pageW/2,pageH-7,{align:"center"});
+
+      pdf.save("maritime-academy-pro-status.pdf");
+      setPdfDone(true);
+      setTimeout(()=>setPdfDone(false),3000);
+      toast.success(toastMsg);
+    }catch(e){
+      console.error("PDF export failed",e);
+      toast.error(lang==="en"?"PDF export failed":"Échec de l'export PDF");
+    }finally{
+      setPdfing(false);
     }
   };
 
@@ -783,6 +857,35 @@ export default function StatusCardS8({
               {shared?"✅ Partagé !":t.shareBtn}
             </button>
           </div>
+
+          {/* PDF Export */}
+          <button onClick={handlePdf} disabled={pdfing} style={{
+            width:"100%",padding:"14px 0",borderRadius:14,marginBottom:16,
+            background:pdfDone
+              ?"rgba(30,138,74,0.18)"
+              :`linear-gradient(135deg,rgba(201,146,42,0.18),rgba(26,111,212,0.18))`,
+            border:`1px solid ${pdfDone?C.green+"66":C.gold+"55"}`,
+            color:pdfDone?C.green:C.gold2,
+            fontFamily:"'Nunito',sans-serif",
+            fontSize:13,fontWeight:700,letterSpacing:0.5,
+            cursor:pdfing?"wait":"pointer",
+            opacity:pdfing?0.7:1,
+            transition:"all 0.3s",
+            display:"flex",alignItems:"center",justifyContent:"center",gap:8,
+          }}>
+            {pdfing?(
+              <>
+                <span style={{
+                  width:14,height:14,borderRadius:"50%",
+                  border:`2px solid ${C.muted}`,
+                  borderTopColor:C.gold2,
+                  display:"inline-block",
+                  animation:"spin 0.8s linear infinite",
+                }}/>
+                <span>…</span>
+              </>
+            ):pdfDone?"✅ PDF":t.pdfBtn}
+          </button>
 
           {/* Motivational note */}
           <div style={{
