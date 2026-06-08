@@ -908,7 +908,7 @@ function AdminPage({ setPage }) {
 export default function App() {
   const [page, setPage] = useState(() => {
     if (typeof window === "undefined") return "splash";
-    try { return localStorage.getItem("map_status_card") ? "status" : "splash"; }
+    try { return localStorage.getItem("map_status_card") ? "dashboard" : "splash"; }
     catch { return "splash"; }
   });
   const [lang, setLang] = useState("fr");
