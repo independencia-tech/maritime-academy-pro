@@ -347,14 +347,20 @@ export default function RegisterS6({
   onNext=()=>{},
   onBack=()=>{},
   setUsername=(_:string)=>{},
+  onSignIn,
 }:{
   lang?:string;
   onNext?:()=>void;
   onBack?:()=>void;
   setUsername?:(name:string)=>void;
+  onSignIn?:()=>void;
 }) {
   const t=T[lang]||T.fr;
   const [vis,setVis]=useState(false);
+  const [hasSaved,setHasSaved]=useState(false);
+  useEffect(()=>{
+    try { setHasSaved(!!localStorage.getItem("map_status_card")); } catch {}
+  },[]);
   const [form,setForm]=useState({ name:"",email:"",pass:"",confirm:"" });
   const [errors,setErrors]=useState<any>({});
   const [touched,setTouched]=useState<any>({});
