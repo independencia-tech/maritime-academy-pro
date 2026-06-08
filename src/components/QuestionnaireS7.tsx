@@ -577,6 +577,7 @@ export default function QuestionnaireS7({
   const removePhoto=(e)=>{
     e&&e.stopPropagation&&e.stopPropagation();
     setPhoto(null);
+    setPhotoError(false);
     try{ localStorage.removeItem("map_user_photo"); }catch{}
     set("photo",null);
     if(photoInputRef.current) photoInputRef.current.value="";
