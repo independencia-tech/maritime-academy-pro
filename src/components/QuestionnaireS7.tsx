@@ -101,7 +101,8 @@ const T = {
     // Photo
     s9:"📸 Ta photo (optionnel)",
     s9cta:"Ajouter ma photo",
-    s9note:"Confidentielle · Pour ta carte statut personnalisée 🎁",
+    s9note:"Confidentielle · Pour ta carte statut personnalisée 🎁 · Max 5 Mo",
+    s9error:"Photo trop lourde — maximum 5 Mo",
     // Submit
     qBtn:"GÉNÉRER MON STATUT →",
     qBtnWait:"Réponds à toutes les questions pour continuer",
