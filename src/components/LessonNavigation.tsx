@@ -1300,7 +1300,139 @@ function Quiz({ questions, lang, t, onComplete }) {
 }
 
 // ── MEMO DOWNLOAD ─────────────────────────────
+const MEMO_T: any = {
+  fr: {
+    title: "FICHE MÉMO — LEÇON 1",
+    subtitle: "Navigation & Instruments · Maritime Academy Pro",
+    chronoH: "CHRONOLOGIE",
+    instrH: "INSTRUMENTS",
+    unitsH: "UNITÉS",
+    cardinalH: "POINTS CARDINAUX",
+    chrono: [
+      "3000 av.J.-C. → Phéniciens (côtière aux étoiles)",
+      "1100          → Boussole magnétique",
+      "1731          → Sextant (latitude)",
+      "1762          → Chronomètre (longitude)",
+      "1935          → Radar",
+      "1983          → GPS civil",
+      "2012          → ECDIS obligatoire",
+    ],
+    instr: [
+      "Compas    → Cap sans électricité, OBLIGATOIRE",
+      "Gyrocomp. → Nord vrai, avec électricité",
+      "GPS       → Position ± 5m (4 sats min)",
+      "ECDIS     → Carte électronique officielle",
+      "Radar     → Détection, CPA/TCPA (ARPA)",
+      "AIS       → Identification (MMSI unique)",
+    ],
+    units: [
+      "1 mn = 1 852 m = 1 minute d'arc latitude",
+      "1 nœud = 1 mn/heure",
+    ],
+    formula: "D = V × T  |  V = D÷T  |  T = D÷V",
+    cable: "1 encablure = 185,2 m (1/10 mn)",
+    file: "MAP-Lecon1-Navigation-Memo.png",
+  },
+  en: {
+    title: "MEMO SHEET — LESSON 1",
+    subtitle: "Navigation & Instruments · Maritime Academy Pro",
+    chronoH: "TIMELINE",
+    instrH: "INSTRUMENTS",
+    unitsH: "UNITS",
+    cardinalH: "CARDINAL POINTS",
+    chrono: [
+      "3000 BC      → Phoenicians (coastal by stars)",
+      "1100         → Magnetic compass",
+      "1731         → Sextant (latitude)",
+      "1762         → Chronometer (longitude)",
+      "1935         → Radar",
+      "1983         → Civilian GPS",
+      "2012         → ECDIS mandatory",
+    ],
+    instr: [
+      "Compass   → Heading without power, MANDATORY",
+      "Gyro      → True north, with power",
+      "GPS       → Position ± 5m (min 4 sats)",
+      "ECDIS     → Official electronic chart",
+      "Radar     → Detection, CPA/TCPA (ARPA)",
+      "AIS       → Identification (unique MMSI)",
+    ],
+    units: [
+      "1 nm = 1,852 m = 1 arc-minute of latitude",
+      "1 knot = 1 nm/hour",
+    ],
+    formula: "D = S × T  |  S = D÷T  |  T = D÷S",
+    cable: "1 cable = 185.2 m (1/10 nm)",
+    file: "MAP-Lesson1-Navigation-Memo.png",
+  },
+  es: {
+    title: "FICHA RESUMEN — LECCIÓN 1",
+    subtitle: "Navegación & Instrumentos · Maritime Academy Pro",
+    chronoH: "CRONOLOGÍA",
+    instrH: "INSTRUMENTOS",
+    unitsH: "UNIDADES",
+    cardinalH: "PUNTOS CARDINALES",
+    chrono: [
+      "3000 a.C.    → Fenicios (costera por estrellas)",
+      "1100         → Brújula magnética",
+      "1731         → Sextante (latitud)",
+      "1762         → Cronómetro (longitud)",
+      "1935         → Radar",
+      "1983         → GPS civil",
+      "2012         → ECDIS obligatorio",
+    ],
+    instr: [
+      "Brújula   → Rumbo sin electricidad, OBLIGATORIA",
+      "Giro      → Norte verdadero, con electricidad",
+      "GPS       → Posición ± 5m (mín. 4 sats)",
+      "ECDIS     → Carta electrónica oficial",
+      "Radar     → Detección, CPA/TCPA (ARPA)",
+      "AIS       → Identificación (MMSI único)",
+    ],
+    units: [
+      "1 mn = 1.852 m = 1 minuto de arco de latitud",
+      "1 nudo = 1 mn/hora",
+    ],
+    formula: "D = V × T  |  V = D÷T  |  T = D÷V",
+    cable: "1 cable = 185,2 m (1/10 mn)",
+    file: "MAP-Leccion1-Navegacion-Resumen.png",
+  },
+  pt: {
+    title: "FICHA RESUMO — LIÇÃO 1",
+    subtitle: "Navegação & Instrumentos · Maritime Academy Pro",
+    chronoH: "CRONOLOGIA",
+    instrH: "INSTRUMENTOS",
+    unitsH: "UNIDADES",
+    cardinalH: "PONTOS CARDEAIS",
+    chrono: [
+      "3000 a.C.    → Fenícios (costeira pelas estrelas)",
+      "1100         → Bússola magnética",
+      "1731         → Sextante (latitude)",
+      "1762         → Cronómetro (longitude)",
+      "1935         → Radar",
+      "1983         → GPS civil",
+      "2012         → ECDIS obrigatório",
+    ],
+    instr: [
+      "Bússola   → Rumo sem eletricidade, OBRIGATÓRIA",
+      "Giro      → Norte verdadeiro, com eletricidade",
+      "GPS       → Posição ± 5m (mín. 4 sats)",
+      "ECDIS     → Carta eletrónica oficial",
+      "Radar     → Deteção, CPA/TCPA (ARPA)",
+      "AIS       → Identificação (MMSI único)",
+    ],
+    units: [
+      "1 mn = 1 852 m = 1 minuto de arco de latitude",
+      "1 nó = 1 mn/hora",
+    ],
+    formula: "D = V × T  |  V = D÷T  |  T = D÷V",
+    cable: "1 cabo = 185,2 m (1/10 mn)",
+    file: "MAP-Licao1-Navegacao-Resumo.png",
+  },
+};
+
 function downloadMemo(lang) {
+  const m = MEMO_T[lang] || MEMO_T.fr;
   const canvas = document.createElement("canvas");
   canvas.width = 600; canvas.height = 700;
   const ctx = canvas.getContext("2d");
@@ -1318,41 +1450,29 @@ function downloadMemo(lang) {
   ctx.fillStyle = "#e8b94f";
   ctx.font = "bold 20px serif";
   ctx.textAlign = "center";
-  ctx.fillText("FICHE MÉMO — LEÇON 1", 300, 50);
+  ctx.fillText(m.title, 300, 50);
   ctx.fillStyle = "#4da6ff";
   ctx.font = "14px serif";
-  ctx.fillText("Navigation & Instruments · Maritime Academy Pro", 300, 75);
+  ctx.fillText(m.subtitle, 300, 75);
 
   // Divider
   ctx.strokeStyle = "#c9922a";
   ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(30, 90); ctx.lineTo(570, 90); ctx.stroke();
 
-  const lines = [
-    ["#c9922a", "bold 14px serif", "CHRONOLOGIE"],
-    ["#f0f4ff", "12px monospace", "3000 av.J.-C. → Phéniciens (côtière aux étoiles)"],
-    ["#f0f4ff", "12px monospace", "1100          → Boussole magnétique"],
-    ["#f0f4ff", "12px monospace", "1731          → Sextant (latitude)"],
-    ["#f0f4ff", "12px monospace", "1762          → Chronomètre (longitude)"],
-    ["#f0f4ff", "12px monospace", "1935          → Radar"],
-    ["#f0f4ff", "12px monospace", "1983          → GPS civil"],
-    ["#f0f4ff", "12px monospace", "2012          → ECDIS obligatoire"],
+  const lines: any[] = [
+    ["#c9922a", "bold 14px serif", m.chronoH],
+    ...m.chrono.map((s: string) => ["#f0f4ff", "12px monospace", s]),
     ["#c9922a", "bold 14px serif", ""],
-    ["#c9922a", "bold 14px serif", "INSTRUMENTS"],
-    ["#f0f4ff", "12px monospace", "Compas    → Cap sans électricité, OBLIGATOIRE"],
-    ["#f0f4ff", "12px monospace", "Gyrocomp. → Nord vrai, avec électricité"],
-    ["#f0f4ff", "12px monospace", "GPS       → Position ± 5m (4 sats min)"],
-    ["#f0f4ff", "12px monospace", "ECDIS     → Carte électronique officielle"],
-    ["#f0f4ff", "12px monospace", "Radar     → Détection, CPA/TCPA (ARPA)"],
-    ["#f0f4ff", "12px monospace", "AIS       → Identification (MMSI unique)"],
+    ["#c9922a", "bold 14px serif", m.instrH],
+    ...m.instr.map((s: string) => ["#f0f4ff", "12px monospace", s]),
     ["#c9922a", "bold 14px serif", ""],
-    ["#c9922a", "bold 14px serif", "UNITÉS"],
-    ["#f0f4ff", "12px monospace", "1 mn = 1 852 m = 1 minute d'arc latitude"],
-    ["#f0f4ff", "12px monospace", "1 nœud = 1 mn/heure"],
-    ["#4da6ff", "bold 14px monospace", "D = V × T  |  V = D÷T  |  T = D÷V"],
-    ["#f0f4ff", "12px monospace", "1 encablure = 185,2 m (1/10 mn)"],
+    ["#c9922a", "bold 14px serif", m.unitsH],
+    ...m.units.map((s: string) => ["#f0f4ff", "12px monospace", s]),
+    ["#4da6ff", "bold 14px monospace", m.formula],
+    ["#f0f4ff", "12px monospace", m.cable],
     ["#c9922a", "bold 14px serif", ""],
-    ["#c9922a", "bold 14px serif", "POINTS CARDINAUX"],
+    ["#c9922a", "bold 14px serif", m.cardinalH],
     ["#f0f4ff", "12px monospace", "N=000° · E=090° · S=180° · W=270°"],
     ["#f0f4ff", "12px monospace", "NE=045° · SE=135° · SW=225° · NW=315°"],
   ];
@@ -1374,7 +1494,7 @@ function downloadMemo(lang) {
 
   // Download
   const link = document.createElement("a");
-  link.download = "MAP-Lecon1-Navigation-Memo.png";
+  link.download = m.file;
   link.href = canvas.toDataURL("image/png");
   link.click();
 }
