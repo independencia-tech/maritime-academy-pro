@@ -760,7 +760,7 @@ CONTENT.pt = [
   },
 ];
 
-const QUIZ = {
+const QUIZ: any = {
   fr: [
     {
       q: "Quel peuple a colonisé le Pacifique sur 5 000 km sans aucun instrument ?",
@@ -794,6 +794,60 @@ const QUIZ = {
     },
   ],
 };
+
+QUIZ.en = [
+  { q: "Which people colonised the Pacific over 5,000 km without any instruments?",
+    opts: ["The Phoenicians","The Vikings","The Polynesians","The Arabs"], correct: 2,
+    expl: "The Polynesians colonised Hawaii, New Zealand and Easter Island by reading the stars, waves and birds — without any instruments." },
+  { q: "Why was the invention of the marine chronometer (1762) revolutionary?",
+    opts: ["It measured ship speed","It gave the time in each port","It allowed longitude to be calculated","It replaced the sextant"], correct: 2,
+    expl: "Knowing the exact time allows you to calculate the difference with local time (sun), hence the longitude. Before Harrison, longitude at sea was a mystery." },
+  { q: "A ship sails at 18 knots for 3h30. What distance has it covered?",
+    opts: ["54 nautical miles","63 nautical miles","72 nautical miles","84 nautical miles"], correct: 1,
+    expl: "D = S × T = 18 kn × 3.5 h = 63 nautical miles. Always convert hours to decimals (3h30 = 3.5 hours)." },
+  { q: "What does CPA mean in the context of ARPA radar?",
+    opts: ["Course Probable of Approach","Closest Point of Approach — minimum passing distance","Automatic Position Control","Automated Piloting Centre"], correct: 1,
+    expl: "CPA = Closest Point of Approach. It is the minimum distance at which a detected ship will pass. ARPA also calculates TCPA — time before that point." },
+  { q: "Why does the magnetic compass remain MANDATORY despite GPS and ECDIS?",
+    opts: ["It is more accurate than GPS","It is cheaper","It works without electricity and resists jamming and spoofing","It is required by MARPOL"], correct: 2,
+    expl: "The magnetic compass is the only operational instrument during a total power failure. It cannot be jammed or spoofed. It is the last-resort instrument — SOLAS requires it." },
+];
+
+QUIZ.es = [
+  { q: "¿Qué pueblo colonizó el Pacífico a lo largo de 5.000 km sin ningún instrumento?",
+    opts: ["Los fenicios","Los vikingos","Los polinesios","Los árabes"], correct: 2,
+    expl: "Los polinesios colonizaron Hawái, Nueva Zelanda y la isla de Pascua gracias a la lectura de las estrellas, las olas y las aves — sin ningún instrumento." },
+  { q: "¿Por qué la invención del cronómetro marino (1762) fue revolucionaria?",
+    opts: ["Medía la velocidad del buque","Daba la hora en cada puerto","Permitía calcular la longitud","Sustituía al sextante"], correct: 2,
+    expl: "Conocer la hora exacta permite calcular la diferencia con la hora local (sol), por lo tanto la longitud. Antes de Harrison, la longitud en el mar era un misterio." },
+  { q: "Un buque navega a 18 nudos durante 3h30. ¿Qué distancia ha recorrido?",
+    opts: ["54 millas náuticas","63 millas náuticas","72 millas náuticas","84 millas náuticas"], correct: 1,
+    expl: "D = V × T = 18 kn × 3,5 h = 63 millas náuticas. Convertir siempre las horas a decimales (3h30 = 3,5 horas)." },
+  { q: "¿Qué significa CPA en el contexto del radar ARPA?",
+    opts: ["Cabo Probable de Abordaje","Closest Point of Approach — distancia mínima de paso","Control de Posición Automático","Centro de Pilotaje Automatizado"], correct: 1,
+    expl: "CPA = Closest Point of Approach. Es la distancia mínima a la que pasará un buque detectado. El ARPA también calcula el TCPA — tiempo antes de ese punto." },
+  { q: "¿Por qué la brújula magnética sigue siendo OBLIGATORIA a pesar del GPS y ECDIS?",
+    opts: ["Es más precisa que el GPS","Es más barata","Funciona sin electricidad y resiste el jamming y el spoofing","La exige MARPOL"], correct: 2,
+    expl: "La brújula magnética es el único instrumento operativo durante un fallo eléctrico total. No puede ser interferida ni engañada. Es el instrumento de último recurso — SOLAS lo impone." },
+];
+
+QUIZ.pt = [
+  { q: "Que povo colonizou o Pacífico ao longo de 5 000 km sem qualquer instrumento?",
+    opts: ["Os fenícios","Os vikings","Os polinésios","Os árabes"], correct: 2,
+    expl: "Os polinésios colonizaram o Havaí, a Nova Zelândia e a Ilha de Páscoa através da leitura das estrelas, das ondas e das aves — sem qualquer instrumento." },
+  { q: "Por que a invenção do cronómetro marítimo (1762) foi revolucionária?",
+    opts: ["Media a velocidade do navio","Dava a hora em cada porto","Permitia calcular a longitude","Substituía o sextante"], correct: 2,
+    expl: "Conhecer a hora exata permite calcular a diferença com a hora local (sol), logo a longitude. Antes de Harrison, a longitude no mar era um mistério." },
+  { q: "Um navio navega a 18 nós durante 3h30. Que distância percorreu?",
+    opts: ["54 milhas náuticas","63 milhas náuticas","72 milhas náuticas","84 milhas náuticas"], correct: 1,
+    expl: "D = V × T = 18 kn × 3,5 h = 63 milhas náuticas. Converter sempre as horas em decimais (3h30 = 3,5 horas)." },
+  { q: "O que significa CPA no contexto do radar ARPA?",
+    opts: ["Cabo Provável de Abalroamento","Closest Point of Approach — distância mínima de passagem","Controlo de Posição Automático","Centro de Pilotagem Automatizado"], correct: 1,
+    expl: "CPA = Closest Point of Approach. É a distância mínima a que um navio detetado vai passar. O ARPA também calcula o TCPA — tempo antes desse ponto." },
+  { q: "Porque é que a bússola magnética continua OBRIGATÓRIA apesar do GPS e ECDIS?",
+    opts: ["É mais precisa que o GPS","É mais barata","Funciona sem eletricidade e resiste a jamming e spoofing","É exigida pela MARPOL"], correct: 2,
+    expl: "A bússola magnética é o único instrumento operacional numa falha elétrica total. Não pode ser perturbada nem enganada. É o instrumento de último recurso — SOLAS impõe-o." },
+];
 
 // ── SHARED UI ─────────────────────────────────
 function Stars() {
