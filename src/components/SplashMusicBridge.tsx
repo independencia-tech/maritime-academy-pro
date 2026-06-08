@@ -17,7 +17,7 @@ const T = {
     musicYes:"🎵 OUI, ACTIVER",
     musicNo:"Non merci, continuer sans son",
     bridgeTitle:"TU AS CHOISI LA BONNE VOIE",
-    bridgeText:"Chaque grand capitaine a commencé comme simple cadet.\n\nAujourd'hui tu fais le premier pas vers la maîtrise maritime.\n\nCréons ton compte pour que ton voyage commence vraiment.",
+    bridgeText:"Chaque grand marin a commencé par le bas. Qu'il soit cadet sur le pont ou oiler en salle des machines, le premier pas est toujours le même. Créons ton compte pour que ton voyage commence vraiment.",
     bridgeBtn:"⚓ CRÉER MON COMPTE",
   },
   en:{
@@ -27,7 +27,7 @@ const T = {
     musicYes:"🎵 YES, ENABLE",
     musicNo:"No thanks, without sound",
     bridgeTitle:"YOU CHOSE THE RIGHT PATH",
-    bridgeText:"Every great captain started as a simple cadet.\n\nToday you take the first step toward maritime mastery.\n\nLet's create your account so your voyage truly begins.",
+    bridgeText:"Every great seafarer started from the bottom. Whether cadet on deck or oiler in the engine room, the first step is always the same. Let's create your account so your voyage truly begins.",
     bridgeBtn:"⚓ CREATE MY ACCOUNT",
   },
   es:{
@@ -37,7 +37,7 @@ const T = {
     musicYes:"🎵 SÍ, ACTIVAR",
     musicNo:"No gracias, sin sonido",
     bridgeTitle:"ELEGISTE EL CAMINO CORRECTO",
-    bridgeText:"Todo gran capitán comenzó como simple cadete.\n\nHoy das el primer paso hacia el dominio marítimo.\n\nCreemos tu cuenta para que tu viaje comience de verdad.",
+    bridgeText:"Todo gran marino empezó desde abajo. Ya sea cadete en cubierta o engrasador en la sala de máquinas, el primer paso es siempre el mismo. Creemos tu cuenta para que tu viaje comience de verdad.",
     bridgeBtn:"⚓ CREAR MI CUENTA",
   },
   pt:{
@@ -47,7 +47,7 @@ const T = {
     musicYes:"🎵 SIM, ATIVAR",
     musicNo:"Não obrigado, sem som",
     bridgeTitle:"VOCÊ ESCOLHEU O CAMINHO CERTO",
-    bridgeText:"Todo grande capitão começou como simples cadete.\n\nHoje você dá o primeiro passo rumo ao domínio marítimo.\n\nVamos criar sua conta para que sua viagem comece de verdade.",
+    bridgeText:"Todo grande marinheiro começou de baixo. Seja cadete no convés ou oiler na sala de máquinas, o primeiro passo é sempre o mesmo. Vamos criar sua conta para que sua viagem comece de verdade.",
     bridgeBtn:"⚓ CRIAR MINHA CONTA",
   },
 };
