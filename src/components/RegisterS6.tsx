@@ -628,10 +628,22 @@ export default function RegisterS6({
 
             <div style={{textAlign:"center",fontSize:13,color:C.muted}}>
               {t.alreadyAcc}{" "}
-              <span style={{color:C.blue2,cursor:"pointer",
+              <span onClick={()=>{ if(hasSaved && onSignIn) onSignIn(); }}
+                style={{color:C.blue2,cursor:hasSaved?"pointer":"default",
                 borderBottom:`1px solid ${C.blue2}55`,
                 fontWeight:600}}>{t.signIn}</span>
             </div>
+
+            {hasSaved && onSignIn && (
+              <button onClick={onSignIn} style={{
+                width:"100%",padding:"14px",borderRadius:14,marginTop:4,
+                background:`linear-gradient(135deg,${C.blue}33,${C.gold}22)`,
+                border:`1px solid ${C.blue2}66`,
+                color:C.white,
+                fontFamily:"'Cinzel',serif",
+                fontSize:13,fontWeight:700,letterSpacing:1.5,cursor:"pointer",
+              }}>🔑 {t.signIn}</button>
+            )}
 
           </div>
         </div>
