@@ -931,7 +931,7 @@ export default function App() {
         ::selection{background:rgba(201,146,42,0.3);}
         button:active{opacity:0.82;transform:scale(0.98);}
       `}</style>
-      {page==="splash"      && <SplashS1 onDone={() => setPage("lang")}/>}
+      {page==="splash"      && <SplashS1 lang={lang} onDone={() => setPage("lang")}/>}
       {page==="lang"        && <LanguageSelect setLang={setLang} setPage={setPage}/>}
       {page==="music"       && (
         <MusicS3
