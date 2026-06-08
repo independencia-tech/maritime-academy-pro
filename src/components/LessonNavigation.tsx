@@ -1516,16 +1516,10 @@ export default function LessonNavigation({
                   fontFamily: "'Cinzel',serif", fontSize: 18,
                   fontWeight: 700, color: C.white, marginBottom: 4,
                 }}>
-                  {lang === "fr" ? "Teste tes connaissances" :
-                   lang === "es" ? "Pon a prueba tus conocimientos" :
-                   lang === "pt" ? "Teste seus conhecimentos" :
-                   "Test your knowledge"}
+                  {t.quiz_intro_title}
                 </div>
                 <div style={{ fontSize: 12, color: C.muted }}>
-                  {lang === "fr" ? "5 questions · Leçon 1" :
-                   lang === "es" ? "5 preguntas · Lección 1" :
-                   lang === "pt" ? "5 perguntas · Lição 1" :
-                   "5 questions · Lesson 1"}
+                  {t.quiz_intro_sub}
                 </div>
               </div>
               <Quiz
@@ -1593,10 +1587,7 @@ export default function LessonNavigation({
                 letterSpacing: 2, color: C.white, cursor: "pointer",
                 boxShadow: "0 8px 28px rgba(26,111,212,0.4)", marginBottom: 10,
               }}>
-                {lang === "fr" ? "LEÇON 2 — LE NAVIRE →" :
-                 lang === "es" ? "LECCIÓN 2 — EL BUQUE →" :
-                 lang === "pt" ? "LIÇÃO 2 — O NAVIO →" :
-                 "LESSON 2 — THE SHIP →"}
+                {t.next_lesson_btn}
               </button>
               <button onClick={onBack} style={{
                 width: "100%", padding: "12px 0",
