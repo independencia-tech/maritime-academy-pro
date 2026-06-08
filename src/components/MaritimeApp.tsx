@@ -1,6 +1,7 @@
 // @ts-nocheck
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
+import Dashboard from "./Dashboard";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1003,7 +1004,29 @@ export default function App() {
             profile={profile}
             onBack={() => setPage("questionnaire")}
             onEdit={() => setPage("questionnaire")}
-            onStart={() => setPage("landing")}
+            onStart={() => setPage("dashboard")}
+          />
+        );
+      })()}
+      {page === "dashboard" && (() => {
+        let last:any = {};
+        let storedPhoto: string | null = null;
+        try {
+          if (typeof window !== "undefined") {
+            last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
+            storedPhoto = localStorage.getItem("map_user_photo");
+          }
+        } catch {}
+        return (
+          <Dashboard
+            lang={lang}
+            username={last.name || profile?.name || "Marin"}
+            photo={storedPhoto || profile?.photo || null}
+            profile={profile || {}}
+            userLevel="cadet"
+            onViewStatus={() => setPage("status")}
+            onEditProfile={() => setPage("questionnaire")}
+            onStartModule={() => {}}
           />
         );
       })()}
