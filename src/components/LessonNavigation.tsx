@@ -1164,7 +1164,7 @@ function Quiz({ questions, lang, t, onComplete }) {
           fontWeight: 900, color: C.white, marginBottom: 4,
         }}>{finalScore}/{questions.length}</div>
         <div style={{ fontSize: 13, color: C.gold2, marginBottom: 12 }}>
-          {pct === 100 ? "Parfait ! 🌟" : pct >= 80 ? "Excellent ! 💪" : "Continue ! 📚"}
+          {pct === 100 ? t.score_perfect : pct >= 80 ? t.score_excellent : t.score_keep}
         </div>
         <div style={{
           display: "inline-block", padding: "6px 16px", borderRadius: 20,
