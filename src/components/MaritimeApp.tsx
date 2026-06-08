@@ -905,7 +905,11 @@ function AdminPage({ setPage }) {
 
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
-  const [page, setPage] = useState("splash");
+  const [page, setPage] = useState(() => {
+    if (typeof window === "undefined") return "splash";
+    try { return localStorage.getItem("map_status_card") ? "status" : "splash"; }
+    catch { return "splash"; }
+  });
   const [lang, setLang] = useState("fr");
   const [profile, setProfile] = useState({});
   useEffect(() => {
@@ -921,6 +925,13 @@ export default function App() {
       }
     } catch {}
   }, []);
+  const persistProfile = (p:any) => {
+    setProfile(p);
+    try {
+      const last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
+      localStorage.setItem("map_status_card", JSON.stringify({ ...p, name: p?.name || last?.name }));
+    } catch {}
+  };
   return (
     <>
       <style>{`
