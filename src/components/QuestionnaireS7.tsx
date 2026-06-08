@@ -101,7 +101,8 @@ const T = {
     // Photo
     s9:"📸 Ta photo (optionnel)",
     s9cta:"Ajouter ma photo",
-    s9note:"Confidentielle · Pour ta carte statut personnalisée 🎁",
+    s9note:"Confidentielle · Pour ta carte statut personnalisée 🎁 · Max 5 Mo",
+    s9error:"Photo trop lourde — maximum 5 Mo",
     // Submit
     qBtn:"GÉNÉRER MON STATUT →",
     qBtnWait:"Réponds à toutes les questions pour continuer",
@@ -168,7 +169,8 @@ const T = {
     s8:"🔔 Training reminder by email?",
     qYes:"✅ Yes",qNo:"❌ No",
     s9:"📸 Your photo (optional)",
-    s9cta:"Add my photo",s9note:"Confidential · For your personalized status card 🎁",
+    s9cta:"Add my photo",s9note:"Confidential · For your personalized status card 🎁 · Max 5 MB",
+    s9error:"Photo too large — maximum 5 MB",
     qBtn:"GENERATE MY STATUS →",
     qBtnWait:"Answer all questions to continue",
     summaryTitle:"🗺️ YOUR PERSONALIZED JOURNEY",
@@ -227,7 +229,8 @@ const T = {
     s7:"🌍 ¿Tu país de residencia?",s7ph:"Ej: España, México...",
     s8:"🔔 ¿Recordatorio por email?",qYes:"✅ Sí",qNo:"❌ No",
     s9:"📸 Tu foto (opcional)",s9cta:"Agregar mi foto",
-    s9note:"Confidencial · Para tu tarjeta personalizada 🎁",
+    s9note:"Confidencial · Para tu tarjeta personalizada 🎁 · Max 5 MB",
+    s9error:"Foto demasiado grande — máximo 5 MB",
     qBtn:"GENERAR MI ESTADO →",qBtnWait:"Responde todas las preguntas para continuar",
     summaryTitle:"🗺️ TU CAMINO PERSONALIZADO",
     deptDeckShort:"🧭 Puente",deptEngineShort:"⚙️ Máquinas",
@@ -285,7 +288,8 @@ const T = {
     s7:"🌍 Seu país de residência?",s7ph:"Ex: Brasil, Portugal, Angola...",
     s8:"🔔 Lembrete de formação por email?",qYes:"✅ Sim",qNo:"❌ Não",
     s9:"📸 Sua foto (opcional)",s9cta:"Adicionar minha foto",
-    s9note:"Confidencial · Para seu cartão de status personalizado 🎁",
+    s9note:"Confidencial · Para seu cartão de status personalizado 🎁 · Max 5 MB",
+    s9error:"Foto muito grande — máximo 5 MB",
     qBtn:"GERAR MEU STATUS →",qBtnWait:"Responda todas as perguntas para continuar",
     summaryTitle:"🗺️ SUA JORNADA PERSONALIZADA",
     deptDeckShort:"🧭 Convés",deptEngineShort:"⚙️ Máquinas",
@@ -541,6 +545,7 @@ export default function QuestionnaireS7({
   const [errorMsg,setErrorMsg]=useState("");
   const photoInputRef=useRef(null);
   const [photo,setPhoto]=useState(null);
+  const [photoError,setPhotoError]=useState(false);
 
   useEffect(()=>{
     try{
@@ -552,6 +557,13 @@ export default function QuestionnaireS7({
   const handlePhotoChange=(e)=>{
     const file=e.target.files&&e.target.files[0];
     if(!file) return;
+    const MAX_SIZE=5*1024*1024;
+    if(file.size>MAX_SIZE){
+      setPhotoError(true);
+      if(photoInputRef.current) photoInputRef.current.value="";
+      return;
+    }
+    setPhotoError(false);
     const reader=new FileReader();
     reader.onload=()=>{
       const dataUrl=String(reader.result||"");
@@ -565,6 +577,7 @@ export default function QuestionnaireS7({
   const removePhoto=(e)=>{
     e&&e.stopPropagation&&e.stopPropagation();
     setPhoto(null);
+    setPhotoError(false);
     try{ localStorage.removeItem("map_user_photo"); }catch{}
     set("photo",null);
     if(photoInputRef.current) photoInputRef.current.value="";
@@ -973,6 +986,11 @@ export default function QuestionnaireS7({
                 </button>
               )}
             </div>
+            {photoError&&(
+              <div style={{marginTop:8,fontSize:12,color:"#ff6b6b",fontWeight:600}}>
+                {t.s9error}
+              </div>
+            )}
           </Card>
 
           {/* ── SUBMIT ── */}
