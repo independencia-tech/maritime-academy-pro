@@ -376,6 +376,7 @@ export default function StatusCardS8({
   profile={},
   onStart=()=>{},
   onBack=()=>{},
+  onEdit=null,
 }) {
   const t=T[lang]||T.fr;
   const [vis,setVis]=useState(false);
