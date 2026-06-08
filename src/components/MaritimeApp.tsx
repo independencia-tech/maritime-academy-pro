@@ -915,7 +915,7 @@ export default function App() {
 }
 
 function AppInner() {
-  const { enable } = useMusic();
+  const { enable, disable } = useMusic();
   const [page, setPage] = useState(() => {
     if (typeof window === "undefined") return "splash";
     try { return localStorage.getItem("map_status_card") ? "dashboard" : "splash"; }
