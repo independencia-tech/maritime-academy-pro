@@ -545,6 +545,7 @@ export default function QuestionnaireS7({
   const [errorMsg,setErrorMsg]=useState("");
   const photoInputRef=useRef(null);
   const [photo,setPhoto]=useState(null);
+  const [photoError,setPhotoError]=useState(false);
 
   useEffect(()=>{
     try{
