@@ -589,7 +589,8 @@ export default function QuestionnaireS7({
     setPhotoError(false);
     try{ localStorage.removeItem("map_user_photo"); }catch{}
     set("photo",null);
-    if(photoInputRef.current) photoInputRef.current.value="";
+    if(cameraInputRef.current) cameraInputRef.current.value="";
+    if(galleryInputRef.current) galleryInputRef.current.value="";
   };
 
   const errorLabels={
