@@ -189,7 +189,7 @@ function MaritimeLogo({size=70}) {
 // ══════════════════════════════════════════════
 //  S1 — SPLASH
 // ══════════════════════════════════════════════
-export function SplashS1({onDone}) {
+export function SplashS1({onDone, lang="fr"}) {
   const [pct,setPct]=useState(0);
   const [phase,setPhase]=useState(0);
 
