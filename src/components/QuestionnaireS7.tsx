@@ -986,6 +986,11 @@ export default function QuestionnaireS7({
                 </button>
               )}
             </div>
+            {photoError&&(
+              <div style={{marginTop:8,fontSize:12,color:"#ff6b6b",fontWeight:600}}>
+                {t.s9error}
+              </div>
+            )}
           </Card>
 
           {/* ── SUBMIT ── */}
