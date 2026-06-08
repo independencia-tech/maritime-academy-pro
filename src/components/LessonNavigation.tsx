@@ -1070,11 +1070,11 @@ function ContentBlock({ block, lang }) {
           <div style={{
             fontSize: 11, color: C.gold, letterSpacing: 2,
             fontFamily: "'Cinzel',serif", marginBottom: 14,
-          }}>🧭 COMPAS MAGNÉTIQUE — Interactif</div>
+          }}>{(T[lang]||T.fr).compass_title}</div>
           <CompassSVG />
           <GLine />
           <div style={{ fontSize: 12, color: C.muted, textAlign: "left", marginTop: 8 }}>
-            L'aiguille rouge pointe toujours vers le nord magnétique. La graduation indique les caps de 0° à 360°. La ligne de foi ▲ en haut indique le cap suivi par le navire.
+            {(T[lang]||T.fr).compass_caption}
           </div>
         </Card>
       );
@@ -1085,11 +1085,11 @@ function ContentBlock({ block, lang }) {
           <div style={{
             fontSize: 11, color: C.green, letterSpacing: 2,
             fontFamily: "'Cinzel',serif", marginBottom: 14,
-          }}>📡 RADAR — Balayage en temps réel</div>
+          }}>{(T[lang]||T.fr).radar_title}</div>
           <RadarSVG />
           <GLine />
           <div style={{ fontSize: 12, color: C.muted, textAlign: "left", marginTop: 8 }}>
-            La ligne verte balaye à 360°. Les taches lumineuses sont des échos (navires, côtes). Les cercles indiquent les distances. Le navire propre est au centre (●).
+            {(T[lang]||T.fr).radar_caption}
           </div>
         </Card>
       );
@@ -1100,11 +1100,11 @@ function ContentBlock({ block, lang }) {
           <div style={{
             fontSize: 11, color: C.blue2, letterSpacing: 2,
             fontFamily: "'Cinzel',serif", marginBottom: 14,
-          }}>🛰️ GPS — Vue satellites et position</div>
-          <GPSDisplay />
+          }}>{(T[lang]||T.fr).gps_title}</div>
+          <GPSDisplay lang={lang} />
           <GLine />
           <div style={{ fontSize: 12, color: C.muted, textAlign: "left", marginTop: 8 }}>
-            Vue du ciel : les cercles bleus sont les satellites visibles. Les satellites actifs (bleu brillant) participent au calcul de position. La position et la vitesse s'affichent en temps réel.
+            {(T[lang]||T.fr).gps_caption}
           </div>
         </Card>
       );
