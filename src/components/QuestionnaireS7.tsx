@@ -557,6 +557,13 @@ export default function QuestionnaireS7({
   const handlePhotoChange=(e)=>{
     const file=e.target.files&&e.target.files[0];
     if(!file) return;
+    const MAX_SIZE=5*1024*1024;
+    if(file.size>MAX_SIZE){
+      setPhotoError(true);
+      if(photoInputRef.current) photoInputRef.current.value="";
+      return;
+    }
+    setPhotoError(false);
     const reader=new FileReader();
     reader.onload=()=>{
       const dataUrl=String(reader.result||"");
