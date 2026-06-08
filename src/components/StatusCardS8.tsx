@@ -484,16 +484,46 @@ export default function StatusCardS8({
       ctx.font="bold 14px sans-serif";
       ctx.fillText("CERTIFIED IMO / STCW",W/2,120);
       // Avatar circle
-      ctx.beginPath();
-      ctx.arc(W/2,220,70,0,Math.PI*2);
-      ctx.fillStyle=C.blue;
-      ctx.fill();
-      ctx.strokeStyle=C.gold2;ctx.lineWidth=4;ctx.stroke();
-      ctx.fillStyle=C.white;
-      ctx.font="bold 54px sans-serif";
-      ctx.textBaseline="middle";
-      ctx.fillText(initials,W/2,222);
-      ctx.textBaseline="alphabetic";
+      const cx=W/2, cy=220, cr=70;
+      let photoData=photo;
+      if(!photoData){
+        try{ photoData=localStorage.getItem("map_user_photo")||null; }catch{}
+      }
+      const drawInitials=()=>{
+        ctx.beginPath();
+        ctx.arc(cx,cy,cr,0,Math.PI*2);
+        ctx.fillStyle=C.blue;ctx.fill();
+        ctx.strokeStyle=C.gold2;ctx.lineWidth=4;ctx.stroke();
+        ctx.fillStyle=C.white;
+        ctx.font="bold 54px sans-serif";
+        ctx.textBaseline="middle";
+        ctx.fillText(initials,cx,cy+2);
+        ctx.textBaseline="alphabetic";
+      };
+      if(photoData && typeof photoData==="string" && photoData.startsWith("data:")){
+        await new Promise((resolve)=>{
+          const img=new Image();
+          img.onload=()=>{
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(cx,cy,cr,0,Math.PI*2);
+            ctx.closePath();
+            ctx.clip();
+            const s=Math.min(img.width,img.height);
+            const sx=(img.width-s)/2, sy=(img.height-s)/2;
+            ctx.drawImage(img,sx,sy,s,s,cx-cr,cy-cr,cr*2,cr*2);
+            ctx.restore();
+            ctx.beginPath();
+            ctx.arc(cx,cy,cr,0,Math.PI*2);
+            ctx.strokeStyle=C.gold2;ctx.lineWidth=4;ctx.stroke();
+            resolve(null);
+          };
+          img.onerror=()=>{ drawInitials(); resolve(null); };
+          img.src=photoData;
+        });
+      } else {
+        drawInitials();
+      }
       // Name
       ctx.fillStyle=C.white;
       ctx.font="bold 36px 'Cinzel',serif";
