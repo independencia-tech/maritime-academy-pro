@@ -959,36 +959,29 @@ export default function QuestionnaireS7({
           <Card style={{marginBottom:20}}>
             <div style={{fontSize:13,fontWeight:700,
               color:C.muted,marginBottom:10}}>{t.s9}</div>
-            <input ref={photoInputRef} type="file" accept="image/*"
+            <input ref={cameraInputRef} type="file" accept="image/*" capture="user"
               onChange={handlePhotoChange}
               style={{position:"absolute",width:1,height:1,opacity:0,pointerEvents:"none"}}
-              aria-label={t.s9cta}/>
-            <div role="button" tabIndex={0}
-              onClick={()=>photoInputRef.current&&photoInputRef.current.click()}
-              onKeyDown={(e)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();photoInputRef.current&&photoInputRef.current.click();}}}
-              style={{borderRadius:14,padding:"16px 14px",
-                background:"rgba(255,255,255,0.04)",
-                border:`1px dashed ${C.border}`,
-                display:"flex",alignItems:"center",gap:14,cursor:"pointer"}}>
-              <div style={{width:52,height:52,borderRadius:"50%",flexShrink:0,
+              aria-label={t.s9camera}/>
+            <input ref={galleryInputRef} type="file" accept="image/*"
+              onChange={handlePhotoChange}
+              style={{position:"absolute",width:1,height:1,opacity:0,pointerEvents:"none"}}
+              aria-label={t.s9gallery}/>
+
+            <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:14}}>
+              <div style={{width:64,height:64,borderRadius:"50%",flexShrink:0,
                 background:photo
                   ?`url(${photo}) center/cover`
                   :`linear-gradient(135deg,${C.navy3},#112244)`,
                 border:`1.5px dashed ${C.gold}66`,
-                display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,
+                display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,
                 overflow:"hidden"}}>
                 {!photo&&"📸"}
               </div>
-              <div style={{flex:1,minWidth:0}}>
-                <div style={{fontSize:13,color:C.white,fontWeight:600,marginBottom:4}}>
-                  {photo?(lang==="fr"?"Photo ajoutée ✓":lang==="es"?"Foto añadida ✓":lang==="pt"?"Foto adicionada ✓":"Photo added ✓"):t.s9cta}
-                </div>
-                <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>{t.s9note}</div>
-              </div>
-              {photo&&(
+              {photo && (
                 <button type="button" onClick={removePhoto}
                   aria-label={lang==="fr"?"Retirer la photo":lang==="es"?"Quitar foto":lang==="pt"?"Remover foto":"Remove photo"}
-                  style={{flexShrink:0,width:32,height:32,borderRadius:"50%",
+                  style={{width:32,height:32,borderRadius:"50%",
                     border:`1px solid ${C.border}`,background:"rgba(0,0,0,0.4)",
                     color:C.white,cursor:"pointer",fontSize:16,lineHeight:1,
                     display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -996,6 +989,39 @@ export default function QuestionnaireS7({
                 </button>
               )}
             </div>
+
+            <div style={{display:"flex",gap:10}}>
+              <button type="button" onClick={()=>cameraInputRef.current&&cameraInputRef.current.click()}
+                style={{
+                  flex:1,
+                  display:"flex",flexDirection:"column",alignItems:"center",gap:6,
+                  padding:"14px 10px",borderRadius:14,
+                  background:"rgba(255,255,255,0.05)",
+                  border:`1.5px solid ${C.border}`,
+                  color:C.white,cursor:"pointer",
+                  fontFamily:"'Nunito',sans-serif",
+                  fontSize:13,fontWeight:600,
+                }}>
+                <span style={{fontSize:22}}>📷</span>
+                <span>{t.s9camera}</span>
+              </button>
+              <button type="button" onClick={()=>galleryInputRef.current&&galleryInputRef.current.click()}
+                style={{
+                  flex:1,
+                  display:"flex",flexDirection:"column",alignItems:"center",gap:6,
+                  padding:"14px 10px",borderRadius:14,
+                  background:"rgba(255,255,255,0.05)",
+                  border:`1.5px solid ${C.border}`,
+                  color:C.white,cursor:"pointer",
+                  fontFamily:"'Nunito',sans-serif",
+                  fontSize:13,fontWeight:600,
+                }}>
+                <span style={{fontSize:22}}>🖼️</span>
+                <span>{t.s9gallery}</span>
+              </button>
+            </div>
+
+            <div style={{marginTop:10,fontSize:11,color:C.muted,lineHeight:1.5}}>{t.s9note}</div>
             {photoError&&(
               <div style={{marginTop:8,fontSize:12,color:"#ff6b6b",fontWeight:600}}>
                 {t.s9error}
