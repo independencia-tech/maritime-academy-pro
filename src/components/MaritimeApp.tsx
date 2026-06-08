@@ -959,7 +959,7 @@ function AppInner() {
         <MusicS3
           lang={lang}
           onYes={() => { enable(); setPage("welcome"); }}
-          onNo={() => setPage("welcome")}
+          onNo={() => { disable(); setPage("welcome"); }}
           onBack={() => setPage("lang")}
         />
       )}
