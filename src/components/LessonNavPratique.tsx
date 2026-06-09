@@ -144,8 +144,8 @@ function BearingsSVG({ lang }) {
 
   const landmarks = [
     {id:"lighthouse", x:50, y:30, icon:"⚡", label:{fr:"Phare Kribi",en:"Kribi LH",es:"Faro Kribi",pt:"Farol Kribi"}, bearing:315, color:C.gold2},
-    {id:"tower", x:240, y:25, icon:"📡", label:{fr:"Tour radar",en:"Radar tower",es:"Torre radar",pt:"Torre radar"}, bearing:045, color:C.orange},
-    {id:"cape", x:260, y:120, icon:"⛰️", label:{fr:"Cap rocheux",en:"Rocky cape",es:"Cabo rocoso",pt:"Cabo rochoso"}, bearing:092, color:C.red},
+    {id:"tower", x:240, y:25, icon:"📡", label:{fr:"Tour radar",en:"Radar tower",es:"Torre radar",pt:"Torre radar"}, bearing:45, color:C.orange},
+    {id:"cape", x:260, y:120, icon:"⛰️", label:{fr:"Cap rocheux",en:"Rocky cape",es:"Cabo rocoso",pt:"Cabo rochoso"}, bearing:92, color:C.red},
   ];
 
   const ship = {x:145, y:130};
