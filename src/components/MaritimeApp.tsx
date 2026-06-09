@@ -7,6 +7,7 @@ import LessonCOLREG from "./LessonCOLREG";
 import LessonCoord from "./LessonCoord";
 import LessonCarteMarine from "./LessonCarteMarine";
 import LessonCompas from "./LessonCompas";
+import LessonNavPratique from "./LessonNavPratique";
 import LessonNavire from "./LessonNavire";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
@@ -971,7 +972,7 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4","l5"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1199,6 +1200,7 @@ function AppInner() {
             else if (lid === "l3") setPage("lesson_coord");
             else if (lid === "l4") setPage("lesson_carte");
             else if (lid === "l5") setPage("lesson_compas");
+            else if (lid === "l6") setPage("lesson_navpratique");
           }}
         />
       )}
@@ -1235,6 +1237,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l5"); setPage("dashboard"); }}
+        />
+      )}
+      {page === "lesson_navpratique" && (
+        <LessonNavPratique
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          onComplete={() => { markLessonCompleted("d1-l6"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_colreg" && (
