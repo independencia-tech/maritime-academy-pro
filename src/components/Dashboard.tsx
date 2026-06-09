@@ -563,9 +563,10 @@ function ModuleCard({module,lang,t,userPlan,onStart,onUnlock,completedLessons=[]
   const moduleColor=module.color;
 
   // Compute progress from completed lessons (overrides hardcoded module.progress/status)
-  const lessonsList=Array.isArray(module.lessons)?module.lessons:[];
+  const rawLessons=Array.isArray(module.lessons)?module.lessons:[];
+  const total=module.totalLessons||rawLessons.length||0;
+  const lessonsList=rawLessons.length>0?rawLessons:Array.from({length:total},(_,i)=>({id:`l${i+1}`}));
   const doneCount=lessonsList.filter(l=>completedLessons.includes(`${module.id}-${l.id}`)).length;
-  const total=module.totalLessons||lessonsList.length||0;
   const computedPct=total>0?Math.round((doneCount/total)*100):(module.progress||0);
   const isDone=total>0?doneCount>=total:module.status==="completed";
   const isProgress=hasAccess&&!isDone&&(doneCount>0||module.status==="inProgress");
