@@ -969,7 +969,7 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l3"]);
+  const playable = new Set(["l1","l3","l4"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1194,6 +1194,7 @@ function AppInner() {
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_navigation");
             else if (lid === "l3") setPage("lesson_coord");
+            else if (lid === "l4") setPage("lesson_carte");
           }}
         />
       )}
@@ -1209,6 +1210,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l3"); setPage("dashboard"); }}
+        />
+      )}
+      {page === "lesson_carte" && (
+        <LessonCarteMarine
+          lang={lang}
+          onBack={() => setPage("nav_lessons")}
+          onComplete={() => { markLessonCompleted("d1-l4"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_colreg" && (
