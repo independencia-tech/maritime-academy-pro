@@ -169,7 +169,7 @@ function DriftSimulator({ lang }) {
     const a=Math.atan2(y2-y1,x2-x1)*180/Math.PI;
     return <g><line x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="2.5" strokeDasharray={dash||""} strokeLinecap="round"/><polygon points="0,-5 4,4 -4,4" fill={color} transform={`translate(${x2},${y2}) rotate(${a+90})`}/></g>;
   };
-  const L={fr:{sc:"Cap",cd:"Courant",cog:"Route fond",dr:"Dérive"},en:{sc:"Course",cd:"Current",cog:"COG",dr:"Drift"},es:{sc:"Rumbo",cd:"Corriente",cog:"Derrota",dr:"Deriva"},pt:{sc:"Rumo",cd:"Corrente",cog:"Rumo fundo",dr:"Deriva"}};
+  const L={fr:{sc:"Cap",cd:"Courant",cog:"Route fond",dr:"Dérive",wind:"Vent (Bf)"},en:{sc:"Course",cd:"Current",cog:"COG",dr:"Drift",wind:"Wind (Bf)"},es:{sc:"Rumbo",cd:"Corriente",cog:"Derrota",dr:"Deriva",wind:"Viento (Bf)"},pt:{sc:"Rumo",cd:"Corrente",cog:"Rumo fundo",dr:"Deriva",wind:"Vento (Bf)"}};
   const lb=L[lang]||L.fr;
   return (
     <div>
@@ -191,7 +191,7 @@ function DriftSimulator({ lang }) {
         <text x="200" y="68" fontSize="7" fill={drift>5?C.red:drift>2?C.orange:C.green}>{lb.dr}: {drift.toFixed(1)}°</text>
       </svg>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginTop:8}}>
-        {[{l:`${lb.sc}: ${sc2}°`,v:sc2,s:setSc,min:0,max:359,c:C.blue2},{l:`${lb.cd}: ${cDir}°`,v:cDir,s:setCDir,min:0,max:359,c:C.green},{l:`${lb.cd} (kn): ${cSpd}`,v:cSpd,s:setCSpd,min:0,max:5,c:C.green},{l:`Vent (Bf): ${wFrc}`,v:wFrc,s:setWFrc,min:0,max:12,c:C.orange}].map((s,i)=>(
+        {[{l:`${lb.sc}: ${sc2}°`,v:sc2,s:setSc,min:0,max:359,c:C.blue2},{l:`${lb.cd}: ${cDir}°`,v:cDir,s:setCDir,min:0,max:359,c:C.green},{l:`${lb.cd} (kn): ${cSpd}`,v:cSpd,s:setCSpd,min:0,max:5,c:C.green},{l:`${lb.wind}: ${wFrc}`,v:wFrc,s:setWFrc,min:0,max:12,c:C.orange}].map((s,i)=>(
           <div key={i}><div style={{fontSize:10,color:s.c,marginBottom:3,fontWeight:600}}>{s.l}</div>
           <input type="range" min={s.min} max={s.max} value={s.v} onChange={e=>s.s(Number(e.target.value))} style={{width:"100%",accentColor:s.c}}/></div>
         ))}
@@ -233,7 +233,7 @@ function Exercise1({ lang, t }) {
         <div key={q.id} style={{marginBottom:12}}>
           <div style={{fontSize:12,color:C.white,marginBottom:6,lineHeight:1.5,whiteSpace:"pre-line",fontWeight:600}}>{i+1}. {q.q}</div>
           <input type="number" value={ans[q.id]} onChange={e=>setAns(a=>({...a,[q.id]:e.target.value}))}
-            placeholder="0 à 359"
+            placeholder={lang==="fr"?"0 à 359":lang==="en"?"0 to 359":lang==="es"?"0 a 359":"0 a 359"}
             style={{width:"100%",padding:"10px",borderRadius:10,background:"rgba(255,255,255,0.07)",
               border:`1px solid ${showC?(Number(ans[q.id])===correct[q.id]?C.green:C.red):C.border}`,
               color:C.white,fontSize:18,fontFamily:"monospace",fontWeight:700,textAlign:"center",boxSizing:"border-box"}}/>
@@ -266,7 +266,7 @@ function AccidentCase({ lang }) {
       </div>
       {exp&&<div style={{padding:"0 16px 16px"}}>
         <div style={{fontSize:12,color:C.white,lineHeight:1.7,marginBottom:10}}>{c.what}</div>
-        <div style={{fontSize:11,color:C.red,fontWeight:700,marginBottom:5,fontFamily:"'Cinzel',serif"}}>{lang==="fr"?"CAUSES":"CAUSES"}</div>
+        <div style={{fontSize:11,color:C.red,fontWeight:700,marginBottom:5,fontFamily:"'Cinzel',serif"}}>{lang==="es"||lang==="pt"?"CAUSAS":"CAUSES"}</div>
         <div style={{fontSize:12,color:C.white,lineHeight:1.7,whiteSpace:"pre-line",marginBottom:10}}>{c.cause}</div>
         <div style={{fontSize:11,color:C.green,fontWeight:700,marginBottom:5,fontFamily:"'Cinzel',serif"}}>{lang==="fr"?"LEÇONS":lang==="en"?"LESSONS":lang==="es"?"LECCIONES":"LIÇÕES"}</div>
         <div style={{fontSize:12,color:C.white,lineHeight:1.7,whiteSpace:"pre-line",marginBottom:10}}>{c.lessons}</div>
