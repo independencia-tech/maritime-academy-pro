@@ -39,7 +39,7 @@ const T = {
     tabDeck:"🧭 Pont", tabEngine:"⚙️ Machine",
     tabSafety:"🛟 Sécurité", tabTools:"🔧 Outils",
     locked:"🔒 Verrouillé", available:"Disponible",
-    inProgress:"En cours", completed:"Terminé ✓",
+    inProgress:"En cours", completed:"Terminé ✓", upcoming:"À venir",
     startBtn:"COMMENCER", continueBtn:"CONTINUER", completedBtn:"REVOIR",
     xp:"XP", lessons:"leçons",
     viewStatus:"Voir ma carte statut", editProfile:"Modifier mon profil",
@@ -78,7 +78,7 @@ const T = {
     tabDeck:"🧭 Deck", tabEngine:"⚙️ Engine",
     tabSafety:"🛟 Safety", tabTools:"🔧 Tools",
     locked:"🔒 Locked", available:"Available",
-    inProgress:"In progress", completed:"Completed ✓",
+    inProgress:"In progress", completed:"Completed ✓", upcoming:"Upcoming",
     startBtn:"START", continueBtn:"CONTINUE", completedBtn:"REVIEW",
     xp:"XP", lessons:"lessons",
     viewStatus:"View my status card", editProfile:"Edit my profile",
@@ -117,7 +117,7 @@ const T = {
     tabDeck:"🧭 Puente", tabEngine:"⚙️ Máquinas",
     tabSafety:"🛟 Seguridad", tabTools:"🔧 Herramientas",
     locked:"🔒 Bloqueado", available:"Disponible",
-    inProgress:"En progreso", completed:"Completado ✓",
+    inProgress:"En progreso", completed:"Completado ✓", upcoming:"Próximo",
     startBtn:"EMPEZAR", continueBtn:"CONTINUAR", completedBtn:"REPASAR",
     xp:"XP", lessons:"lecciones",
     viewStatus:"Ver mi tarjeta", editProfile:"Editar mi perfil",
@@ -154,7 +154,7 @@ const T = {
     tabDeck:"🧭 Convés", tabEngine:"⚙️ Máquinas",
     tabSafety:"🛟 Segurança", tabTools:"🔧 Ferramentas",
     locked:"🔒 Bloqueado", available:"Disponível",
-    inProgress:"Em andamento", completed:"Concluído ✓",
+    inProgress:"Em andamento", completed:"Concluído ✓", upcoming:"Próximo",
     startBtn:"COMEÇAR", continueBtn:"CONTINUAR", completedBtn:"REVISAR",
     xp:"XP", lessons:"lições",
     viewStatus:"Ver meu cartão", editProfile:"Editar meu perfil",
@@ -563,9 +563,10 @@ function ModuleCard({module,lang,t,userPlan,onStart,onUnlock,completedLessons=[]
   const moduleColor=module.color;
 
   // Compute progress from completed lessons (overrides hardcoded module.progress/status)
-  const lessonsList=Array.isArray(module.lessons)?module.lessons:[];
+  const rawLessons=Array.isArray(module.lessons)?module.lessons:[];
+  const total=module.totalLessons||rawLessons.length||0;
+  const lessonsList=rawLessons.length>0?rawLessons:Array.from({length:total},(_,i)=>({id:`l${i+1}`}));
   const doneCount=lessonsList.filter(l=>completedLessons.includes(`${module.id}-${l.id}`)).length;
-  const total=module.totalLessons||lessonsList.length||0;
   const computedPct=total>0?Math.round((doneCount/total)*100):(module.progress||0);
   const isDone=total>0?doneCount>=total:module.status==="completed";
   const isProgress=hasAccess&&!isDone&&(doneCount>0||module.status==="inProgress");
@@ -667,6 +668,41 @@ function ModuleCard({module,lang,t,userPlan,onStart,onUnlock,completedLessons=[]
                   <span style={{color:isDone?C.gold2:C.muted}}>{computedPct}%</span>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Lesson tracker */}
+          {total>0&&(
+            <div style={{marginBottom:8}}>
+              <div style={{display:"flex",flexWrap:"wrap",gap:4,marginBottom:4}}>
+                {lessonsList.map((lesson,idx)=>{
+                  const key=`${module.id}-${lesson.id}`;
+                  const isCompleted=completedLessons.includes(key);
+                  const isInProgress=!isCompleted&&idx===doneCount;
+                  let bg,border,color;
+                  if(isCompleted){
+                    bg=`${C.green}22`;border=`${C.green}66`;color=C.green;
+                  }else if(isInProgress){
+                    bg=`${C.gold}18`;border=`${C.gold}66`;color=C.gold;
+                  }else{
+                    bg="rgba(255,255,255,0.05)";border="rgba(255,255,255,0.1)";color="rgba(240,244,255,0.35)";
+                  }
+                  return(
+                    <div key={key} title={lesson.title?.[lang]||lesson.title?.fr||`L${idx+1}`} style={{
+                      width:22,height:22,borderRadius:6,
+                      display:"flex",alignItems:"center",justifyContent:"center",
+                      fontSize:9,fontWeight:700,
+                      background:bg,border:`1px solid ${border}`,color,
+                      flexShrink:0,
+                    }}>{idx+1}</div>
+                  );
+                })}
+              </div>
+              <div style={{fontSize:9,color:C.muted,display:"flex",gap:8,flexWrap:"wrap"}}>
+                {doneCount>0&&<span style={{color:C.green}}>✓ {doneCount} {t.completed.toLowerCase().replace(" ✓","")}</span>}
+                {doneCount<total&&<span style={{color:C.gold}}>→ {t.inProgress.toLowerCase()}</span>}
+                {total-doneCount>0&&<span style={{color:"rgba(240,244,255,0.35)"}}>··· {total-doneCount} {t.upcoming}</span>}
+              </div>
             </div>
           )}
 
