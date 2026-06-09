@@ -7,6 +7,7 @@ import LessonCOLREG from "./LessonCOLREG";
 import LessonCoord from "./LessonCoord";
 import LessonCarteMarine from "./LessonCarteMarine";
 import LessonCompas from "./LessonCompas";
+import LessonNavPratique from "./LessonNavPratique";
 import LessonNavire from "./LessonNavire";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
