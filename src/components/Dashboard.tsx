@@ -734,6 +734,7 @@ export default function Dashboard({
   profile={},
   userPlan="free",
   userLevel="cadet",
+  completedLessons=[],
   onViewStatus=()=>{},
   onEditProfile=()=>{},
   onStartModule=()=>{},
@@ -965,6 +966,7 @@ export default function Dashboard({
                 lang={lang}
                 t={t}
                 userPlan={userPlan}
+                completedLessons={completedLessons}
                 onStart={onStartModule}
                 onUnlock={setUnlockModal}
               />
