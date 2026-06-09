@@ -1041,6 +1041,13 @@ function AppInner() {
             storedPhoto = localStorage.getItem("map_user_photo");
           }
         } catch {}
+        let userPlan: "free" | "premium" | "premium_plus" = "free";
+        try {
+          if (typeof window !== "undefined") {
+            const p = localStorage.getItem("map_user_plan");
+            if (p === "premium" || p === "premium_plus" || p === "free") userPlan = p;
+          }
+        } catch {}
         return (
           <Dashboard
             lang={lang}
@@ -1048,6 +1055,7 @@ function AppInner() {
             photo={storedPhoto || profile?.photo || null}
             profile={profile || {}}
             userLevel="cadet"
+            userPlan={userPlan}
             completedLessons={completedLessons}
             onViewStatus={() => setPage("status")}
             onEditProfile={() => setPage("questionnaire")}
