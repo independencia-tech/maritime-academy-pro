@@ -6,6 +6,7 @@ import LessonNavigation from "./LessonNavigation";
 import LessonCOLREG from "./LessonCOLREG";
 import LessonCoord from "./LessonCoord";
 import LessonCarteMarine from "./LessonCarteMarine";
+import LessonCompas from "./LessonCompas";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1195,6 +1196,7 @@ function AppInner() {
             if (lid === "l1") setPage("lesson_navigation");
             else if (lid === "l3") setPage("lesson_coord");
             else if (lid === "l4") setPage("lesson_carte");
+            else if (lid === "l5") setPage("lesson_compas");
           }}
         />
       )}
@@ -1217,6 +1219,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l4"); setPage("dashboard"); }}
+        />
+      )}
+      {page === "lesson_compas" && (
+        <LessonCompas
+          lang={lang}
+          onBack={() => setPage("nav_lessons")}
+          onComplete={() => { markLessonCompleted("d1-l5"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_colreg" && (
