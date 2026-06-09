@@ -21,9 +21,8 @@ const PLANS = {
   premium_plus:{ key:"premium_plus", icon:"👑", color:C.purple, price:"25$/mois", next:null },
 };
 
-const canAccess = (userPlan, moduleAccess) => {
-  const order = { free:0, premium:1, premium_plus:2 };
-  return order[userPlan] >= order[moduleAccess];
+const canAccess = (_userPlan, _moduleAccess) => {
+  return true;
 };
 
 // ══════════════════════════════════════════════
