@@ -966,11 +966,14 @@ export default function App() {
 
 function AppInner() {
   const { enable, disable } = useMusic();
-  const [page, setPage] = useState(() => {
-    if (typeof window === "undefined") return "splash";
-    try { return localStorage.getItem("map_status_card") ? "dashboard" : "splash"; }
-    catch { return "splash"; }
-  });
+  const [page, setPage] = useState<string>("splash");
+  useEffect(() => {
+    try {
+      if (typeof window !== "undefined" && localStorage.getItem("map_status_card")) {
+        setPage("dashboard");
+      }
+    } catch {}
+  }, []);
   const [lang, setLang] = useState("fr");
   const [profile, setProfile] = useState({});
   const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
