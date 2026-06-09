@@ -1,7 +1,7 @@
 // @ts-nocheck
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
-import Dashboard from "./Dashboard";
+import Dashboard, { MODULES as ALL_MODULES } from "./Dashboard";
 import LessonNavigation from "./LessonNavigation";
 import LessonCOLREG from "./LessonCOLREG";
 import RegisterS6 from "./RegisterS6";
