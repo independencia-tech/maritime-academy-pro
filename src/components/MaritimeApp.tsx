@@ -3,6 +3,7 @@ import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
 import Dashboard from "./Dashboard";
 import LessonNavigation from "./LessonNavigation";
+import LessonCOLREG from "./LessonCOLREG";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1061,6 +1062,7 @@ function AppInner() {
             onEditProfile={() => setPage("questionnaire")}
             onStartModule={(m:any) => {
               if (m?.id === "d1") setPage("lesson_navigation");
+              else if (m?.id === "s1") setPage("lesson_colreg");
             }}
           />
         );
@@ -1070,6 +1072,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("dashboard")}
           onComplete={() => { markLessonCompleted("d1"); setPage("dashboard"); }}
+        />
+      )}
+      {page === "lesson_colreg" && (
+        <LessonCOLREG
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          onComplete={() => { markLessonCompleted("s1"); setPage("dashboard"); }}
         />
       )}
     </>
