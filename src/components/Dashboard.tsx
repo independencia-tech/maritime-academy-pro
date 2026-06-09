@@ -973,22 +973,24 @@ export default function Dashboard({
         justifyContent:"space-around",padding:"0 8px",
       }}>
         {[
-          {icon:"🏠",labelKey:"navHome",active:true},
-          {icon:"📚",labelKey:"navModules",active:false},
-          {icon:"🚢",labelKey:"navShips",active:false},
-          {icon:"👤",labelKey:"navProfile",active:false},
-        ].map((item,i)=>(
-          <button key={i} style={{
+          {icon:"🏠",labelKey:"navHome",key:"home",onClick:onNavHome},
+          {icon:"📚",labelKey:"navModules",key:"modules",onClick:onNavModules},
+          {icon:"🚢",labelKey:"navShips",key:"ships",onClick:onNavShips},
+          {icon:"👤",labelKey:"navProfile",key:"profile",onClick:onNavProfile},
+        ].map((item,i)=>{
+          const active = activeNav===item.key;
+          return (
+          <button key={i} onClick={item.onClick} style={{
             display:"flex",flexDirection:"column",alignItems:"center",gap:3,
-            background:item.active?"rgba(201,146,42,0.1)":"transparent",
+            background:active?"rgba(201,146,42,0.1)":"transparent",
             border:"none",cursor:"pointer",padding:"6px 12px",borderRadius:10,
           }}>
             <span style={{fontSize:20}}>{item.icon}</span>
-            <span style={{fontSize:9,letterSpacing:0.5,color:item.active?C.gold2:C.muted,fontWeight:item.active?700:400}}>
+            <span style={{fontSize:9,letterSpacing:0.5,color:active?C.gold2:C.muted,fontWeight:active?700:400}}>
               {t[item.labelKey]}
             </span>
           </button>
-        ))}
+        );})}
       </div>
     </div>
   );
