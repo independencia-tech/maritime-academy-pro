@@ -198,7 +198,7 @@ export const MODULES = {
         {id:"l2",title:{fr:"Le Navire",en:"The Ship",es:"El Buque",pt:"O Navio"},access:"free",status:"locked"},
         {id:"l3",title:{fr:"La Terre & Coordonnées",en:"Earth & Coordinates",es:"La Tierra & Coordenadas",pt:"A Terra & Coordenadas"},access:"premium",status:"locked"},
         {id:"l4",title:{fr:"La Carte Marine",en:"The Nautical Chart",es:"La Carta Náutica",pt:"A Carta Náutica"},access:"premium",status:"locked"},
-        {id:"l5",title:{fr:"Le Compas & Les Caps",en:"Compass & Headings",es:"La Brújula & Los Rumbos",pt:"A Bússola & Os Rumos"},access:"premium",status:"locked"},
+        {id:"l5",title:{fr:"Le Compas & Les Caps",en:"Compass & Headings",es:"La Brújula & Los Rumbos",pt:"A Bússola & Os Rumos"},access:"premium",status:"available"},
         {id:"l6",title:{fr:"Navigation Pratique",en:"Practical Navigation",es:"Navegación Práctica",pt:"Navegação Prática"},access:"premium",status:"locked"},
         {id:"l7",title:{fr:"Les Marées",en:"Tides",es:"Las Mareas",pt:"As Marés"},access:"premium",status:"locked"},
         {id:"l8",title:{fr:"COLREG Avancé",en:"Advanced COLREG",es:"COLREG Avanzado",pt:"COLREG Avançado"},access:"premium",status:"locked"},
