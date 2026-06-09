@@ -4,6 +4,7 @@ import StatusCardS8 from "./StatusCardS8";
 import Dashboard, { MODULES as ALL_MODULES } from "./Dashboard";
 import LessonNavigation from "./LessonNavigation";
 import LessonCOLREG from "./LessonCOLREG";
+import LessonCoord from "./LessonCoord";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
