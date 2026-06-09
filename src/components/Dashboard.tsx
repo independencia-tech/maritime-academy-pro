@@ -671,6 +671,41 @@ function ModuleCard({module,lang,t,userPlan,onStart,onUnlock,completedLessons=[]
             </div>
           )}
 
+          {/* Lesson tracker */}
+          {total>0&&(
+            <div style={{marginBottom:8}}>
+              <div style={{display:"flex",flexWrap:"wrap",gap:4,marginBottom:4}}>
+                {lessonsList.map((lesson,idx)=>{
+                  const key=`${module.id}-${lesson.id}`;
+                  const isCompleted=completedLessons.includes(key);
+                  const isInProgress=!isCompleted&&idx===doneCount;
+                  let bg,border,color;
+                  if(isCompleted){
+                    bg=`${C.green}22`;border=`${C.green}66`;color=C.green;
+                  }else if(isInProgress){
+                    bg=`${C.gold}18`;border=`${C.gold}66`;color=C.gold;
+                  }else{
+                    bg="rgba(255,255,255,0.05)";border="rgba(255,255,255,0.1)";color="rgba(240,244,255,0.35)";
+                  }
+                  return(
+                    <div key={key} title={lesson.title?.[lang]||lesson.title?.fr||`L${idx+1}`} style={{
+                      width:22,height:22,borderRadius:6,
+                      display:"flex",alignItems:"center",justifyContent:"center",
+                      fontSize:9,fontWeight:700,
+                      background:bg,border:`1px solid ${border}`,color,
+                      flexShrink:0,
+                    }}>{idx+1}</div>
+                  );
+                })}
+              </div>
+              <div style={{fontSize:9,color:C.muted,display:"flex",gap:8,flexWrap:"wrap"}}>
+                {doneCount>0&&<span style={{color:C.green}}>✓ {doneCount} {t.completed.toLowerCase().replace(" ✓","")}</span>}
+                {doneCount<total&&<span style={{color:C.gold}}>→ {t.inProgress.toLowerCase()}</span>}
+                {total-doneCount>0&&<span style={{color:"rgba(240,244,255,0.35)"}}>··· {total-doneCount} {t.upcoming}</span>}
+              </div>
+            </div>
+          )}
+
           {/* Meta */}
           <div style={{display:"flex",alignItems:"center",
             justifyContent:"space-between"}}>
