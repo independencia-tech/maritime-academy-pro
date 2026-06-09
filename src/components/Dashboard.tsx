@@ -555,15 +555,21 @@ function PlanCard({userPlan,t,lang}) {
 }
 
 // ── MODULE CARD ───────────────────────────────
-function ModuleCard({module,lang,t,userPlan,onStart,onUnlock}) {
+function ModuleCard({module,lang,t,userPlan,onStart,onUnlock,completedLessons=[]}) {
   const hasAccess=canAccess(userPlan,module.access);
   const isComing=module.status==="coming";
-  const isAvail=module.status==="available"&&hasAccess;
-  const isDone=module.status==="completed";
-  const isProgress=module.status==="inProgress"&&hasAccess;
   const isLocked=!hasAccess&&!isComing;
 
   const moduleColor=module.color;
+
+  // Compute progress from completed lessons (overrides hardcoded module.progress/status)
+  const lessonsList=Array.isArray(module.lessons)?module.lessons:[];
+  const doneCount=lessonsList.filter(l=>completedLessons.includes(`${module.id}-${l.id}`)).length;
+  const total=module.totalLessons||lessonsList.length||0;
+  const computedPct=total>0?Math.round((doneCount/total)*100):(module.progress||0);
+  const isDone=total>0?doneCount>=total:module.status==="completed";
+  const isProgress=hasAccess&&!isDone&&(doneCount>0||module.status==="inProgress");
+  const isAvail=hasAccess&&!isDone&&!isProgress&&module.status==="available";
 
   return (
     <div style={{
@@ -647,10 +653,20 @@ function ModuleCard({module,lang,t,userPlan,onStart,onUnlock}) {
               <div style={{height:3,borderRadius:3,
                 background:"rgba(255,255,255,0.08)",overflow:"hidden"}}>
                 <div style={{height:"100%",borderRadius:3,
-                  width:`${module.progress||0}%`,
+                  width:`${computedPct}%`,
                   background:`linear-gradient(90deg,${moduleColor},${C.gold2})`,
                   transition:"width 0.5s ease"}}/>
               </div>
+              {total>0&&(
+                <div style={{
+                  marginTop:4,fontSize:9,color:C.muted,
+                  display:"flex",justifyContent:"space-between",
+                  fontFamily:"'Cinzel',serif",letterSpacing:0.6,
+                }}>
+                  <span>{doneCount}/{total} {t.lessons}</span>
+                  <span style={{color:isDone?C.gold2:C.muted}}>{computedPct}%</span>
+                </div>
+              )}
             </div>
           )}
 
@@ -718,6 +734,7 @@ export default function Dashboard({
   profile={},
   userPlan="free",
   userLevel="cadet",
+  completedLessons=[],
   onViewStatus=()=>{},
   onEditProfile=()=>{},
   onStartModule=()=>{},
@@ -949,6 +966,7 @@ export default function Dashboard({
                 lang={lang}
                 t={t}
                 userPlan={userPlan}
+                completedLessons={completedLessons}
                 onStart={onStartModule}
                 onUnlock={setUnlockModal}
               />
