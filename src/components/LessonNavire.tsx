@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
+import ShipTypesCarousel from "./MAP_M1_L2_ShipTypes";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -427,7 +428,7 @@ export default function LessonNavire({ lang="fr", onBack=()=>{}, onComplete=()=>
             <Card style={{marginBottom:14,textAlign:"center"}}><div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"STABILITÉ — G, M, GM":lang==="en"?"STABILITY — G, M, GM":lang==="es"?"ESTABILIDAD":"ESTABILIDADE"}</div><StabilitySVG lang={lang}/></Card>
 
             <SL icon="🚢" text={lc.p5}/>
-            <Card style={{marginBottom:14}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>🚢</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s5t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s5}</div></Card>
+            <Card style={{marginBottom:14}}><ShipTypesCarousel lang={lang} /></Card>
 
             <SL icon="👥" text={lc.p6}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.gold,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>👥 {lang==="fr"?"ORGANIGRAMME":lang==="en"?"ORG CHART":lang==="es"?"ORGANIGRAMA":"ORGANOGRAMA"}</div><OrgChart lang={lang}/></Card>
