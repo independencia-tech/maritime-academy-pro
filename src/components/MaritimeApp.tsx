@@ -1,7 +1,7 @@
 // @ts-nocheck
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
-import Dashboard from "./Dashboard";
+import Dashboard, { MODULES as ALL_MODULES } from "./Dashboard";
 import LessonNavigation from "./LessonNavigation";
 import LessonCOLREG from "./LessonCOLREG";
 import RegisterS6 from "./RegisterS6";
@@ -907,6 +907,54 @@ function AdminPage({ setPage }) {
   );
 }
 
+// ── MODULES LIST & SHIPS PAGES ─────────────────────────────────
+const NAV_T:any = {
+  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour" },
+  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back" },
+  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver" },
+  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar" },
+};
+
+function ModulesListPage({ lang, onBack, onStart }:{lang:string;onBack:()=>void;onStart:(m:any)=>void}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const all = Object.values(ALL_MODULES as any).flat() as any[];
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={t.modules} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:10}}>
+        {all.map((m:any)=>(
+          <button key={m.id} onClick={()=>onStart(m)} style={{
+            display:"flex",alignItems:"center",gap:12,padding:"14px",
+            background:"rgba(13,31,60,0.8)",border:`1px solid ${m.color}44`,
+            borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
+          }}>
+            <div style={{width:44,height:44,borderRadius:12,background:`${m.color}22`,border:`1px solid ${m.color}44`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{m.icon}</div>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{m.title?.[lang] || m.title?.fr}</div>
+              <div style={{fontSize:11,color:"rgba(240,244,255,0.5)"}}>{m.desc?.[lang] || m.desc?.fr}</div>
+            </div>
+            <div style={{fontSize:10,padding:"3px 8px",borderRadius:8,background:m.access==="free"?"rgba(30,138,74,0.2)":m.access==="premium_plus"?"rgba(142,68,173,0.2)":"rgba(201,146,42,0.2)",color:m.access==="free"?"#1e8a4a":m.access==="premium_plus"?"#9b59b6":"#c9922a",fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{m.access==="free"?"FREE":m.access==="premium_plus"?"P+":"PRO"}</div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ShipsPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
+      <TopBar onBack={onBack} title={t.ships} backLabel={t.back}/>
+      <div style={{padding:"60px 24px",textAlign:"center",maxWidth:400,margin:"0 auto"}}>
+        <div style={{fontSize:72,marginBottom:16}}>🚢</div>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,marginBottom:8}}>{t.ships}</div>
+        <div style={{fontSize:13,color:"rgba(240,244,255,0.5)"}}>{t.shipsSoon}</div>
+      </div>
+    </div>
+  );
+}
+
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
   return (
@@ -1064,9 +1112,28 @@ function AppInner() {
               if (m?.id === "d1") setPage("lesson_navigation");
               else if (m?.id === "s1") setPage("lesson_colreg");
             }}
+            activeNav="home"
+            onNavHome={() => setPage("dashboard")}
+            onNavModules={() => setPage("modules")}
+            onNavShips={() => setPage("ships")}
+            onNavProfile={() => setPage("status")}
           />
         );
       })()}
+      {page === "modules" && (
+        <ModulesListPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          onStart={(m:any) => {
+            if (m?.id === "d1") setPage("lesson_navigation");
+            else if (m?.id === "s1") setPage("lesson_colreg");
+            else setPage("dashboard");
+          }}
+        />
+      )}
+      {page === "ships" && (
+        <ShipsPage lang={lang} onBack={() => setPage("dashboard")}/>
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
