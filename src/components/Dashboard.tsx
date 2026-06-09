@@ -187,7 +187,7 @@ const T = {
 // ══════════════════════════════════════════════
 //  MODULES DATA
 // ══════════════════════════════════════════════
-const MODULES = {
+export const MODULES = {
   deck:[
     { id:"d1", icon:"🧭", color:C.blue2, access:"free",
       freeLessons:2, totalLessons:8,
