@@ -1160,7 +1160,7 @@ function AppInner() {
             onViewStatus={() => setPage("status")}
             onEditProfile={() => setPage("questionnaire")}
             onStartModule={(m:any) => {
-              if (m?.id === "d1") setPage("lesson_navigation");
+              if (m?.id === "d1") setPage("nav_lessons");
               else if (m?.id === "s1") setPage("lesson_colreg");
             }}
             activeNav="home"
@@ -1176,7 +1176,7 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("dashboard")}
           onStart={(m:any) => {
-            if (m?.id === "d1") setPage("lesson_navigation");
+            if (m?.id === "d1") setPage("nav_lessons");
             else if (m?.id === "s1") setPage("lesson_colreg");
             else setPage("dashboard");
           }}
@@ -1185,11 +1185,29 @@ function AppInner() {
       {page === "ships" && (
         <ShipsPage lang={lang} onBack={() => setPage("dashboard")}/>
       )}
+      {page === "nav_lessons" && (
+        <NavigationLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_navigation");
+            else if (lid === "l3") setPage("lesson_coord");
+          }}
+        />
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
-          onBack={() => setPage("dashboard")}
-          onComplete={() => { markLessonCompleted("d1"); setPage("dashboard"); }}
+          onBack={() => setPage("nav_lessons")}
+          onComplete={() => { markLessonCompleted("d1-l1"); setPage("dashboard"); }}
+        />
+      )}
+      {page === "lesson_coord" && (
+        <LessonCoord
+          lang={lang}
+          onBack={() => setPage("nav_lessons")}
+          onComplete={() => { markLessonCompleted("d1-l3"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_colreg" && (
