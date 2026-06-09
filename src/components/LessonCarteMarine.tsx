@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
+import CartesInteractives from "./CartesInteractives";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -427,6 +428,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
     {type:"content",icon:"🛳️",title:"TSS, Chenaux et Repérage de Position",text:"TSS (Traffic Separation Scheme) = Autoroute en mer\n\nObligations COLREG Rule 10 :\n✅ Naviguer dans le sens général du trafic\n✅ Si traversée : angle DROIT du TSS\n❌ Pas de demi-tour · ❌ Zone de séparation interdite\n\nExemples de TSS majeurs :\n• Manche/Pas-de-Calais (plus fréquenté au monde)\n• Détroit de Malacca\n• Cap de Bonne-Espérance\n\nREPÉRAGE DE POSITION par relèvements :\n• Relèvement 1 sur amer A (ex: 045°V) → droite tracée sur la carte\n• Relèvement 2 sur amer B (ex: 315°V) → droite tracée sur la carte\n• Intersection des 2 droites = POSITION DU NAVIRE\n\nPlus l'angle entre les 2 droites est proche de 90°, plus le point est précis !"},
     {type:"tss"},
     {type:"slabel",icon:"🎯",text:"EXERCICE AVANCÉ PREMIUM",color:C.gold},
+    {type:"cartes"},
     {type:"exercise"},
     {type:"slabel",icon:"⚠️",text:"CAS RÉEL D'ACCIDENT MARITIME",color:C.red},
     {type:"accident"},
@@ -452,6 +454,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
     {type:"content",icon:"🛳️",title:"TSS, Channels and Position Fixing",text:"TSS (Traffic Separation Scheme) = Highway at sea\n\nCOLREG Rule 10 obligations:\n✅ Navigate in general traffic direction\n✅ If crossing: RIGHT ANGLE to TSS\n❌ No U-turns · ❌ Separation zone forbidden\n\nMajor TSS examples:\n• English Channel/Dover Strait (world's busiest)\n• Strait of Malacca\n• Cape of Good Hope\n\nPOSITION FIX by cross bearings:\n• Bearing 1 on landmark A (e.g.: 045°T) → line drawn on chart\n• Bearing 2 on landmark B (e.g.: 315°T) → line drawn on chart\n• Intersection of 2 lines = VESSEL POSITION\n\nThe closer the angle between the 2 lines is to 90°, the more accurate the fix!"},
     {type:"tss"},
     {type:"slabel",icon:"🎯",text:"ADVANCED PREMIUM EXERCISE",color:C.gold},
+    {type:"cartes"},
     {type:"exercise"},
     {type:"slabel",icon:"⚠️",text:"REAL MARITIME ACCIDENT CASE",color:C.red},
     {type:"accident"},
@@ -477,6 +480,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
     {type:"content",icon:"🛳️",title:"DST, Canales y Determinación de Posición",text:"DST = Autopista en el mar\n\nObligaciones Regla 10 COLREG:\n✅ Navegar en sentido del tráfico · ✅ Si cruce: ÁNGULO RECTO\n❌ Sin media vuelta · ❌ Zona separación prohibida\n\nDETERMINACIÓN DE POSICIÓN por marcaciones :\n• Marcación 1 sobre amer A → línea trazada en la carta\n• Marcación 2 sobre amer B → línea trazada en la carta\n• Intersección = POSICIÓN DEL BUQUE"},
     {type:"tss"},
     {type:"slabel",icon:"🎯",text:"EJERCICIO AVANZADO PREMIUM",color:C.gold},
+    {type:"cartes"},
     {type:"exercise"},
     {type:"slabel",icon:"⚠️",text:"CASO REAL DE ACCIDENTE MARÍTIMO",color:C.red},
     {type:"accident"},
@@ -502,6 +506,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
     {type:"content",icon:"🛳️",title:"DST, Canais e Determinação de Posição",text:"DST = Autoestrada no mar\n\nObrigações Regra 10 COLREG:\n✅ Navegar no sentido do tráfego · ✅ Se cruzar: ÂNGULO RETO\n❌ Sem meias-voltas · ❌ Zona separação proibida\n\nDETERMINAÇÃO DE POSIÇÃO por marcações:\n• Marcação 1 sobre ponto de referência A → linha traçada na carta\n• Marcação 2 sobre ponto de referência B → linha traçada na carta\n• Interseção = POSIÇÃO DO NAVIO"},
     {type:"tss"},
     {type:"slabel",icon:"🎯",text:"EXERCÍCIO AVANÇADO PREMIUM",color:C.gold},
+    {type:"cartes"},
     {type:"exercise"},
     {type:"slabel",icon:"⚠️",text:"CASO REAL DE ACIDENTE MARÍTIMO",color:C.red},
     {type:"accident"},
@@ -524,6 +529,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
       case "lighthouse": return <Card key={i} style={{marginBottom:12}}><div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💡 {t.exerciseTitle.replace("🎯 EXERCICE AVANCÉ — ","").replace("🎯 ADVANCED EXERCISE — ","").replace("🎯 EJERCICIO AVANZADO — ","").replace("🎯 EXERCÍCIO AVANÇADO — ","")}</div><LighthouseSVG lang={lang} t={t}/></Card>;
       case "buoys": return <Card key={i} style={{marginBottom:12,textAlign:"center"}}><div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚢 {lang==="fr"?"BOUÉES AISM INTERACTIVES":lang==="en"?"IALA INTERACTIVE BUOYS":lang==="es"?"BALIZAS IALA INTERACTIVAS":"BOIAS IALA INTERATIVAS"}</div><BuoysSVG lang={lang} t={t}/></Card>;
       case "tss": return <Card key={i} style={{marginBottom:12,textAlign:"center"}}><div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛳️ TSS — {lang==="fr"?"Dispositif de Séparation du Trafic":lang==="en"?"Traffic Separation Scheme":lang==="es"?"Dispositivo de Separación del Tráfico":"Dispositivo de Separação do Tráfego"}</div><TSS_SVG lang={lang} t={t}/></Card>;
+      case "cartes": return <div key={i} style={{marginBottom:12}}><CartesInteractives lang={lang}/></div>;
       case "exercise": return <Card key={i} style={{marginBottom:12,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><div style={{fontSize:11,color:C.gold,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>{t.exerciseTitle}</div><Exercise1 lang={lang} t={t}/></Card>;
       case "accident": return <div key={i} style={{marginBottom:12}}><AccidentCase lang={lang}/></div>;
       case "bank": return <Card key={i} style={{marginBottom:12,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}><div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>{t.bankTitle}</div><QuestionBank lang={lang}/></Card>;
