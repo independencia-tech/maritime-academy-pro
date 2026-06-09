@@ -723,6 +723,11 @@ export default function Dashboard({
   onEditProfile=()=>{},
   onStartModule=()=>{},
   onUpgrade=()=>{},
+  onNavHome=()=>{},
+  onNavModules=()=>{},
+  onNavShips=()=>{},
+  onNavProfile=()=>{},
+  activeNav="home",
 }) {
   const t=T[lang]||T.fr;
   const [activeTab,setActiveTab]=useState(
