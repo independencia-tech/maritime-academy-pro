@@ -1064,9 +1064,28 @@ function AppInner() {
               if (m?.id === "d1") setPage("lesson_navigation");
               else if (m?.id === "s1") setPage("lesson_colreg");
             }}
+            activeNav="home"
+            onNavHome={() => setPage("dashboard")}
+            onNavModules={() => setPage("modules")}
+            onNavShips={() => setPage("ships")}
+            onNavProfile={() => setPage("status")}
           />
         );
       })()}
+      {page === "modules" && (
+        <ModulesListPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          onStart={(m:any) => {
+            if (m?.id === "d1") setPage("lesson_navigation");
+            else if (m?.id === "s1") setPage("lesson_colreg");
+            else setPage("dashboard");
+          }}
+        />
+      )}
+      {page === "ships" && (
+        <ShipsPage lang={lang} onBack={() => setPage("dashboard")}/>
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
