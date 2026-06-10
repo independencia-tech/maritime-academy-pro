@@ -1226,6 +1226,7 @@ function AppInner() {
             onNavModules={() => setPage("modules")}
             onNavShips={() => setPage("ships")}
             onNavProfile={() => setPage("status")}
+            onAdmin={() => setPage("admin-login")}
           />
         );
       })()}
