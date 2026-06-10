@@ -1015,6 +1015,15 @@ export default function Dashboard({
             <button onClick={onViewStatus} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 6px 24px rgba(26,111,212,0.35)"}}>{t.viewStatus}</button>
             <button onClick={onEditProfile} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.editProfile}</button>
           </div>
+
+          {/* ADMIN LOCK */}
+          <div style={{textAlign:"center",marginTop:18,marginBottom:4}}>
+            <button onClick={onAdmin} aria-label="Admin" style={{
+              background:"none",border:"none",cursor:"pointer",
+              fontSize:16,opacity:0.35,padding:6,
+              color:C.muted,
+            }}>🔒</button>
+          </div>
         </div>
       </div>
 
