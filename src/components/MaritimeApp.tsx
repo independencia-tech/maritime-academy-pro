@@ -13,7 +13,7 @@ import LessonNavire from "./LessonNavire";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
 
 const LS_KEY = "map_registrations";
@@ -1115,6 +1115,89 @@ function AppInner() {
       localStorage.setItem("map_status_card", JSON.stringify({ ...p, name: p?.name || last?.name }));
     } catch {}
   };
+
+  // ── HARDWARE BACK BUTTON HANDLING ──────────────────────
+  const pageRef = useRef(page);
+  useEffect(() => { pageRef.current = page; }, [page]);
+  const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
+  const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try { window.history.pushState({ map: page }, ""); } catch {}
+  }, [page]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onPop = () => {
+      const cur = pageRef.current;
+      const hasProfile = !!localStorage.getItem("map_status_card");
+      if (cur === "dashboard") {
+        const exit = window.confirm(
+          lang === "fr" ? "Quitter l'application ?" :
+          lang === "es" ? "¿Salir de la aplicación?" :
+          lang === "pt" ? "Sair do aplicativo?" :
+          "Exit app?"
+        );
+        if (exit) { try { window.close(); } catch {} window.history.back(); }
+        else { window.history.pushState({ map: cur }, ""); }
+        return;
+      }
+      if (LESSONS.includes(cur)) {
+        window.history.pushState({ map: "nav_lessons" }, "");
+        setPage("nav_lessons");
+        return;
+      }
+      if (["modules","ships","nav_lessons","admin","admin-login"].includes(cur)) {
+        window.history.pushState({ map: "dashboard" }, "");
+        setPage("dashboard");
+        return;
+      }
+      if (hasProfile && ONBOARDING.includes(cur)) {
+        window.history.pushState({ map: "dashboard" }, "");
+        setPage("dashboard");
+        return;
+      }
+      // otherwise re-push to swallow back during onboarding
+      window.history.pushState({ map: cur }, "");
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [lang]);
+
+  // ── SETTINGS ACTIONS ───────────────────────────────────
+  const handleChangeLanguage = (code: string) => {
+    setLang(code);
+    try {
+      const raw = localStorage.getItem("map_status_card");
+      if (raw) {
+        const saved = JSON.parse(raw);
+        localStorage.setItem("map_status_card", JSON.stringify({ ...saved, lang: code }));
+      }
+    } catch {}
+  };
+  const handleChangeDepartment = (dept: "deck" | "engine") => {
+    const next = { ...(profile || {}), dept };
+    setProfile(next);
+    try {
+      const raw = localStorage.getItem("map_status_card");
+      const saved = raw ? JSON.parse(raw) : {};
+      localStorage.setItem("map_status_card", JSON.stringify({ ...saved, ...next }));
+    } catch {}
+  };
+  const handleResetProfile = () => {
+    try {
+      [
+        "map_status_card","map_last_reg","map_user_photo","map_user_plan",
+        "map_completed_lessons","map_premium_trial","map_premium_promo",
+        "map_admin_grant","map_registrations",
+      ].forEach(k => localStorage.removeItem(k));
+    } catch {}
+    setProfile({});
+    setCompletedLessons([]);
+    setPage("lang");
+  };
+
   return (
     <>
       <style>{`
@@ -1227,6 +1310,9 @@ function AppInner() {
             onNavShips={() => setPage("ships")}
             onNavProfile={() => setPage("status")}
             onAdmin={() => setPage("admin-login")}
+            onChangeLanguage={handleChangeLanguage}
+            onChangeDepartment={handleChangeDepartment}
+            onResetProfile={handleResetProfile}
           />
         );
       })()}
