@@ -752,6 +752,7 @@ function AdminPage({ setPage }) {
   const [regs, setRegs] = useState(loadRegs());
   const [confirmClear, setConfirmClear] = useState(false);
   const [search, setSearch] = useState("");
+  const [pwMsg, setPwMsg] = useState("");
 
   const filtered = regs.filter(r =>
     r.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -762,6 +763,20 @@ function AdminPage({ setPage }) {
   const handleDelete = (id) => {
     const upd = regs.filter(r => r.id !== id);
     saveRegs(upd); setRegs(upd);
+  };
+
+  const togglePremium = (id) => {
+    const upd = regs.map(r => r.id === id ? { ...r, premium: !r.premium } : r);
+    saveRegs(upd); setRegs(upd);
+  };
+
+  const changePassword = () => {
+    const np = typeof window !== "undefined" ? window.prompt("Nouveau mot de passe administrateur :") : null;
+    if (!np) return;
+    if (np.length < 6) { setPwMsg("⚠️ Min. 6 caractères"); return; }
+    setAdminPassword(np);
+    setPwMsg("✅ Mot de passe mis à jour");
+    setTimeout(() => setPwMsg(""), 2500);
   };
 
   const handleClear = () => {
@@ -782,7 +797,7 @@ function AdminPage({ setPage }) {
         display:"flex",alignItems:"center",justifyContent:"space-between",
       }}>
         <div style={{display:"flex",alignItems:"center",gap:12}}>
-          <button onClick={() => setPage("landing")} style={{
+          <button onClick={() => setPage("dashboard")} style={{
             display:"flex",alignItems:"center",gap:8,
             background:"rgba(255,255,255,0.1)",
             border:"1px solid rgba(255,255,255,0.25)",
