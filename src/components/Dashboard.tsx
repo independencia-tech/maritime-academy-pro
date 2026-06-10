@@ -1072,6 +1072,17 @@ export default function Dashboard({
           </button>
         );})}
       </div>
+
+      {showUpgrade && (
+        <UpgradeModal
+          lang={lang}
+          onClose={()=>{ setShowUpgrade(false); setPremiumTick(t=>t+1); }}
+          onTrialStart={()=>setPremiumTick(t=>t+1)}
+        />
+      )}
+      {showAdmin && (
+        <AdminPanel onClose={()=>{ setShowAdmin(false); setPremiumTick(t=>t+1); }}/>
+      )}
     </div>
   );
 }
