@@ -17,7 +17,18 @@ import { useState, useEffect } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
 
 const LS_KEY = "map_registrations";
-const ADMIN_CODE = "Mapmarino2025";
+const ADMIN_CODE_DEFAULT = "MAP2024admin";
+const ADMIN_PW_KEY = "map_admin_password";
+function getAdminPassword() {
+  try {
+    if (typeof window === "undefined") return ADMIN_CODE_DEFAULT;
+    return localStorage.getItem(ADMIN_PW_KEY) || ADMIN_CODE_DEFAULT;
+  } catch { return ADMIN_CODE_DEFAULT; }
+}
+function setAdminPassword(pw) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(ADMIN_PW_KEY, pw);
+}
 
 function loadRegs() {
   try {
@@ -696,14 +707,14 @@ function AdminLogin({ setPage }) {
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
   const handle = () => {
-    if (code === ADMIN_CODE) setPage("admin");
+    if (code === getAdminPassword()) setPage("admin");
     else { setError(true); setCode(""); }
   };
   return (
     <div style={{minHeight:"100vh",
       background:"linear-gradient(160deg,#0d1f3c,#060e1a)",
       fontFamily:"'Nunito',sans-serif"}}>
-      <TopBar onBack={() => setPage("landing")} title="Admin" backLabel="◀ Retour"/>
+      <TopBar onBack={() => setPage("dashboard")} title="Admin" backLabel="◀ Retour"/>
       <div style={{display:"flex",flexDirection:"column",alignItems:"center",
         justifyContent:"center",padding:"60px 24px",minHeight:"calc(100vh - 56px)"}}>
         <div style={{maxWidth:320,width:"100%",textAlign:"center"}}>
@@ -741,6 +752,7 @@ function AdminPage({ setPage }) {
   const [regs, setRegs] = useState(loadRegs());
   const [confirmClear, setConfirmClear] = useState(false);
   const [search, setSearch] = useState("");
+  const [pwMsg, setPwMsg] = useState("");
 
   const filtered = regs.filter(r =>
     r.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -751,6 +763,20 @@ function AdminPage({ setPage }) {
   const handleDelete = (id) => {
     const upd = regs.filter(r => r.id !== id);
     saveRegs(upd); setRegs(upd);
+  };
+
+  const togglePremium = (id) => {
+    const upd = regs.map(r => r.id === id ? { ...r, premium: !r.premium } : r);
+    saveRegs(upd); setRegs(upd);
+  };
+
+  const changePassword = () => {
+    const np = typeof window !== "undefined" ? window.prompt("Nouveau mot de passe administrateur :") : null;
+    if (!np) return;
+    if (np.length < 6) { setPwMsg("⚠️ Min. 6 caractères"); return; }
+    setAdminPassword(np);
+    setPwMsg("✅ Mot de passe mis à jour");
+    setTimeout(() => setPwMsg(""), 2500);
   };
 
   const handleClear = () => {
@@ -771,7 +797,7 @@ function AdminPage({ setPage }) {
         display:"flex",alignItems:"center",justifyContent:"space-between",
       }}>
         <div style={{display:"flex",alignItems:"center",gap:12}}>
-          <button onClick={() => setPage("landing")} style={{
+          <button onClick={() => setPage("dashboard")} style={{
             display:"flex",alignItems:"center",gap:8,
             background:"rgba(255,255,255,0.1)",
             border:"1px solid rgba(255,255,255,0.25)",
@@ -794,7 +820,7 @@ function AdminPage({ setPage }) {
           gap:10,marginBottom:20}}>
           {[
             {val:regs.length,label:"Total inscrits"},
-            {val:filtered.length,label:"Affichés"},
+            {val:regs.filter(r=>r.premium).length,label:"Premium"},
             {val:regs.length>0?regs[regs.length-1].date.split(" ")[0]:"—",label:"Dernier"},
           ].map(s => (
             <div key={s.label} style={{borderRadius:14,padding:"12px 8px",
@@ -806,6 +832,17 @@ function AdminPage({ setPage }) {
                 marginTop:3,letterSpacing:1}}>{s.label}</div>
             </div>
           ))}
+        </div>
+
+        <div style={{marginBottom:16}}>
+          <button onClick={changePassword} style={{
+            width:"100%",padding:"12px 0",borderRadius:14,
+            background:"rgba(26,111,212,0.15)",
+            border:"1px solid rgba(26,111,212,0.4)",
+            color:"#4da6ff",fontSize:13,fontWeight:700,cursor:"pointer",
+            fontFamily:"'Nunito',sans-serif",
+          }}>🔑 Changer le mot de passe admin</button>
+          {pwMsg && <div style={{textAlign:"center",fontSize:11,color:"#e8b94f",marginTop:6}}>{pwMsg}</div>}
         </div>
 
         <div style={{position:"relative",marginBottom:16}}>
@@ -864,13 +901,29 @@ function AdminPage({ setPage }) {
                     <span style={{fontSize:10,color:"rgba(240,244,255,0.3)"}}>
                       · {r.date}
                     </span>
+                    {r.premium && (
+                      <span style={{fontSize:10,color:"#e8b94f",fontWeight:700,
+                        padding:"2px 8px",borderRadius:10,
+                        background:"rgba(201,146,42,0.15)",
+                        border:"1px solid rgba(201,146,42,0.4)"}}>⭐ PREMIUM</span>
+                    )}
                   </div>
                 </div>
-                <button onClick={() => handleDelete(r.id)} style={{
-                  background:"none",border:"none",
-                  color:"rgba(240,244,255,0.25)",fontSize:22,
-                  cursor:"pointer",lineHeight:1,flexShrink:0,padding:"0 4px",
-                }}>×</button>
+                <div style={{display:"flex",flexDirection:"column",gap:6,flexShrink:0,alignItems:"flex-end"}}>
+                  <button onClick={() => togglePremium(r.id)} style={{
+                    fontSize:10,fontWeight:700,
+                    padding:"5px 10px",borderRadius:10,cursor:"pointer",
+                    background:r.premium?"rgba(192,57,43,0.15)":"rgba(201,146,42,0.18)",
+                    border:`1px solid ${r.premium?"#c0392b":"#c9922a"}`,
+                    color:r.premium?"#e74c3c":"#e8b94f",
+                    fontFamily:"'Nunito',sans-serif",whiteSpace:"nowrap",
+                  }}>{r.premium?"Désactiver":"Activer ⭐"}</button>
+                  <button onClick={() => handleDelete(r.id)} style={{
+                    background:"none",border:"none",
+                    color:"rgba(240,244,255,0.35)",fontSize:18,
+                    cursor:"pointer",lineHeight:1,padding:"0 4px",
+                  }}>×</button>
+                </div>
               </div>
             ))}
           </div>
@@ -1173,6 +1226,7 @@ function AppInner() {
             onNavModules={() => setPage("modules")}
             onNavShips={() => setPage("ships")}
             onNavProfile={() => setPage("status")}
+            onAdmin={() => setPage("admin-login")}
           />
         );
       })()}
