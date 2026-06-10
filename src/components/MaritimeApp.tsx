@@ -707,14 +707,14 @@ function AdminLogin({ setPage }) {
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
   const handle = () => {
-    if (code === ADMIN_CODE) setPage("admin");
+    if (code === getAdminPassword()) setPage("admin");
     else { setError(true); setCode(""); }
   };
   return (
     <div style={{minHeight:"100vh",
       background:"linear-gradient(160deg,#0d1f3c,#060e1a)",
       fontFamily:"'Nunito',sans-serif"}}>
-      <TopBar onBack={() => setPage("landing")} title="Admin" backLabel="◀ Retour"/>
+      <TopBar onBack={() => setPage("dashboard")} title="Admin" backLabel="◀ Retour"/>
       <div style={{display:"flex",flexDirection:"column",alignItems:"center",
         justifyContent:"center",padding:"60px 24px",minHeight:"calc(100vh - 56px)"}}>
         <div style={{maxWidth:320,width:"100%",textAlign:"center"}}>
