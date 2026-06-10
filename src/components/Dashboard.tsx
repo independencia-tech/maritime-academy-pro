@@ -782,6 +782,9 @@ export default function Dashboard({
   onNavProfile=()=>{},
   activeNav="home",
   onAdmin=()=>{},
+  onChangeLanguage=()=>{},
+  onChangeDepartment=()=>{},
+  onResetProfile=()=>{},
 }) {
   const t=T[lang]||T.fr;
   const [activeTab,setActiveTab]=useState(
@@ -793,6 +796,8 @@ export default function Dashboard({
   const [showAdmin,setShowAdmin]=useState(false);
   const [showUpgrade,setShowUpgrade]=useState(false);
   const [premiumTick,setPremiumTick]=useState(0);
+  const [showSettings,setShowSettings]=useState(false);
+  const [settingsView,setSettingsView]=useState("main"); // main | lang | dept | about
   const logoTapsRef = (typeof window!=="undefined") ? (window as any).__logoTapsRef || ((window as any).__logoTapsRef = {count:0, last:0}) : {count:0,last:0};
   const handleLogoTap = ()=>{
     const now = Date.now();
@@ -892,6 +897,13 @@ export default function Dashboard({
             }}>⭐ {lang==="fr"?"Essai Premium":lang==="es"?"Probar Premium":lang==="pt"?"Testar Premium":"Try Premium"}</button>
           )}
           <PlanBadge access={effectivePlan} t={t} small/>
+          <button onClick={()=>{ setSettingsView("main"); setShowSettings(true); }} aria-label="Settings" style={{
+            width:34,height:34,borderRadius:"50%",
+            background:"rgba(255,255,255,0.08)",
+            border:`1px solid ${C.border}`,
+            color:C.white,fontSize:16,cursor:"pointer",
+            display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,
+          }}>⚙️</button>
           <button onClick={onViewStatus} style={{
             width:36,height:36,borderRadius:"50%",
             background:photo?`url(${photo}) center/cover`
