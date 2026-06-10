@@ -17,7 +17,18 @@ import { useState, useEffect } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
 
 const LS_KEY = "map_registrations";
-const ADMIN_CODE = "Mapmarino2025";
+const ADMIN_CODE_DEFAULT = "MAP2024admin";
+const ADMIN_PW_KEY = "map_admin_password";
+function getAdminPassword() {
+  try {
+    if (typeof window === "undefined") return ADMIN_CODE_DEFAULT;
+    return localStorage.getItem(ADMIN_PW_KEY) || ADMIN_CODE_DEFAULT;
+  } catch { return ADMIN_CODE_DEFAULT; }
+}
+function setAdminPassword(pw) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(ADMIN_PW_KEY, pw);
+}
 
 function loadRegs() {
   try {
