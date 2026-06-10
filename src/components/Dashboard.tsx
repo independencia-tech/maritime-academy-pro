@@ -874,7 +874,16 @@ export default function Dashboard({
         </div>
         {/* Plan + Avatar */}
         <div style={{display:"flex",alignItems:"center",gap:8}}>
-          <PlanBadge access={userPlan} t={t} small/>
+          {effectivePlan==="free" && (
+            <button onClick={()=>setShowUpgrade(true)} style={{
+              padding:"5px 10px",borderRadius:14,
+              background:`linear-gradient(135deg,${C.gold},${C.gold2})`,
+              border:"none",color:C.navy,fontSize:10,fontWeight:800,
+              cursor:"pointer",fontFamily:"'Cinzel',serif",letterSpacing:0.5,
+              boxShadow:"0 2px 10px rgba(201,146,42,0.4)",whiteSpace:"nowrap",
+            }}>⭐ {lang==="fr"?"Essai Premium":lang==="es"?"Probar Premium":lang==="pt"?"Testar Premium":"Try Premium"}</button>
+          )}
+          <PlanBadge access={effectivePlan} t={t} small/>
           <button onClick={onViewStatus} style={{
             width:36,height:36,borderRadius:"50%",
             background:photo?`url(${photo}) center/cover`
