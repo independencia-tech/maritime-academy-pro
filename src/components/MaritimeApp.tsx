@@ -901,13 +901,29 @@ function AdminPage({ setPage }) {
                     <span style={{fontSize:10,color:"rgba(240,244,255,0.3)"}}>
                       · {r.date}
                     </span>
+                    {r.premium && (
+                      <span style={{fontSize:10,color:"#e8b94f",fontWeight:700,
+                        padding:"2px 8px",borderRadius:10,
+                        background:"rgba(201,146,42,0.15)",
+                        border:"1px solid rgba(201,146,42,0.4)"}}>⭐ PREMIUM</span>
+                    )}
                   </div>
                 </div>
-                <button onClick={() => handleDelete(r.id)} style={{
-                  background:"none",border:"none",
-                  color:"rgba(240,244,255,0.25)",fontSize:22,
-                  cursor:"pointer",lineHeight:1,flexShrink:0,padding:"0 4px",
-                }}>×</button>
+                <div style={{display:"flex",flexDirection:"column",gap:6,flexShrink:0,alignItems:"flex-end"}}>
+                  <button onClick={() => togglePremium(r.id)} style={{
+                    fontSize:10,fontWeight:700,
+                    padding:"5px 10px",borderRadius:10,cursor:"pointer",
+                    background:r.premium?"rgba(192,57,43,0.15)":"rgba(201,146,42,0.18)",
+                    border:`1px solid ${r.premium?"#c0392b":"#c9922a"}`,
+                    color:r.premium?"#e74c3c":"#e8b94f",
+                    fontFamily:"'Nunito',sans-serif",whiteSpace:"nowrap",
+                  }}>{r.premium?"Désactiver":"Activer ⭐"}</button>
+                  <button onClick={() => handleDelete(r.id)} style={{
+                    background:"none",border:"none",
+                    color:"rgba(240,244,255,0.35)",fontSize:18,
+                    cursor:"pointer",lineHeight:1,padding:"0 4px",
+                  }}>×</button>
+                </div>
               </div>
             ))}
           </div>
