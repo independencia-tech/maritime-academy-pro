@@ -1216,7 +1216,7 @@ function AppInner() {
       {page === "lesson_navire" && (
         <LessonNavire
           lang={lang}
-          onBack={() => setPage("dashboard")}
+          onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l2"); setPage("dashboard"); }}
         />
       )}
@@ -1244,14 +1244,14 @@ function AppInner() {
       {page === "lesson_navpratique" && (
         <LessonNavPratique
           lang={lang}
-          onBack={() => setPage("dashboard")}
+          onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l6"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_marees" && (
         <LessonMarees
           lang={lang}
-          onBack={() => setPage("dashboard")}
+          onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l7"); setPage("dashboard"); }}
         />
       )}
