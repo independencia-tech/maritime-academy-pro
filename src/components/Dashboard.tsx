@@ -790,6 +790,12 @@ export default function Dashboard({
   const [vis,setVis]=useState(false);
   const [unlockModal,setUnlockModal]=useState(null);
   const [stats]=useState({lessons:0,certs:0,points:0,streak:1});
+  const [showAdmin,setShowAdmin]=useState(false);
+  const [showUpgrade,setShowUpgrade]=useState(false);
+  const [premiumTick,setPremiumTick]=useState(0);
+
+  const hasPremium = (typeof window !== "undefined") && PremiumManager.hasAccess();
+  const effectivePlan = hasPremium && userPlan === "free" ? "premium" : userPlan;
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
@@ -817,6 +823,7 @@ export default function Dashboard({
   ];
 
   const currentModules=MODULES[activeTab]||[];
+  void premiumTick;
 
   // Global progress
   const allModules=Object.values(MODULES).flat();
