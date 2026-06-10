@@ -780,6 +780,7 @@ export default function Dashboard({
   onNavShips=()=>{},
   onNavProfile=()=>{},
   activeNav="home",
+  onAdmin=()=>{},
 }) {
   const t=T[lang]||T.fr;
   const [activeTab,setActiveTab]=useState(
