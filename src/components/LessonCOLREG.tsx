@@ -3,1049 +3,552 @@ import { useState, useEffect, useRef } from "react";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
-  gold:"#c9922a", gold2:"#e8b94f",
-  blue:"#1a6fd4", blue2:"#4da6ff",
-  white:"#f0f4ff", muted:"rgba(240,244,255,0.45)",
-  border:"rgba(201,146,42,0.22)",
-  green:"#1e8a4a", red:"#c0392b", orange:"#e67e22",
+  gold:"#c9922a", gold2:"#e8b94f", blue:"#1a6fd4", blue2:"#4da6ff",
+  white:"#f0f4ff", muted:"rgba(240,244,255,0.45)", border:"rgba(201,146,42,0.22)",
+  green:"#1e8a4a", red:"#c0392b", orange:"#e67e22", teal:"#0a8a6c", purple:"#8e44ad",
 };
 
-// ══════════════════════════════════════════════
-//  TRANSLATIONS
-// ══════════════════════════════════════════════
 const T = {
-  fr:{
-    back:"◀ Retour", module:"Sécurité Maritime — COLREG",
-    lesson:"Leçon", xp:"XP gagnés",
-    quiz:"QUIZ", question:"Question", ofQ:"sur",
-    correct:"✓ Bonne réponse !", wrong:"✗ Mauvaise réponse",
-    expl:"Explication :", next:"SUIVANT →", finish:"VOIR MON SCORE →",
-    startQuiz:"✅ COMMENCER LE QUIZ", result:"RÉSULTAT",
-    complete:"🏅 LEÇON TERMINÉE !", nextLesson:"LEÇON 2 (Premium) →",
-    backDash:"← RETOUR AU DASHBOARD", youLearned:"Tu as appris :",
-    downloadMemo:"📥 Télécharger la fiche mémo",
-    readFirst:"Lis le contenu puis commence le quiz",
-    scorePerf:"Parfait ! 🌟", scoreGreat:"Excellent ! 💪",
-    scoreGood:"Continue ! 📚",
-    // Schema labels
-    shipA:"NAVIRE A", shipB:"NAVIRE B",
-    collision:"⚠️ RISQUE D'ABORDAGE",
-    correct_action:"✅ MANŒUVRE CORRECTE",
-    wrong_action:"❌ MANŒUVRE INCORRECTE",
-    rule14title:"RULE 14 — Navires bout au bout",
-    rule15title:"RULE 15 — Routes qui se croisent",
-    rule13title:"RULE 13 — Navire qui rattrape",
-    btnPlay:"▶ Animer", btnReset:"↺ Reset",
-    btnCorrect:"✅ Voir manœuvre correcte",
-    btnWrong:"❌ Voir erreur fatale",
-    privileged:"Navire PRIVILÉGIÉ\n(maintient cap)",
-    giveway:"Navire OBLIGÉ\n(cède passage)",
-    portLight:"Feu ROUGE\n(Bâbord)",
-    stbdLight:"Feu VERT\n(Tribord)",
-    bothSeeRed:"Les deux voient\nrouge + vert",
-    turnStbd:"Vire à TRIBORD",
-    seesRedOnRight:"Voit feu rouge\nà DROITE",
-    mustGiveWay:"DOIT céder\nle passage",
-    overtaking:"Navire qui RATTRAPE\n(doit s'écarter)",
-    beingOvertaken:"Navire RATTRAPÉ\n(navire privilégié)",
-  },
-  en:{
-    back:"◀ Back", module:"Maritime Safety — COLREG",
-    lesson:"Lesson", xp:"XP earned",
-    quiz:"QUIZ", question:"Question", ofQ:"of",
-    correct:"✓ Correct!", wrong:"✗ Wrong answer",
-    expl:"Explanation:", next:"NEXT →", finish:"SEE MY SCORE →",
-    startQuiz:"✅ START QUIZ", result:"RESULT",
-    complete:"🏅 LESSON COMPLETE!", nextLesson:"LESSON 2 (Premium) →",
-    backDash:"← BACK TO DASHBOARD", youLearned:"You learned:",
-    downloadMemo:"📥 Download memo sheet",
-    readFirst:"Read the content then start the quiz",
-    scorePerf:"Perfect! 🌟", scoreGreat:"Excellent! 💪",
-    scoreGood:"Keep going! 📚",
-    shipA:"VESSEL A", shipB:"VESSEL B",
-    collision:"⚠️ COLLISION RISK",
-    correct_action:"✅ CORRECT MANEUVER",
-    wrong_action:"❌ WRONG MANEUVER",
-    rule14title:"RULE 14 — Head-on situation",
-    rule15title:"RULE 15 — Crossing situation",
-    rule13title:"RULE 13 — Overtaking",
-    btnPlay:"▶ Animate", btnReset:"↺ Reset",
-    btnCorrect:"✅ See correct maneuver",
-    btnWrong:"❌ See fatal mistake",
-    privileged:"PRIVILEGED vessel\n(hold course)",
-    giveway:"GIVE-WAY vessel\n(must maneuver)",
-    portLight:"RED light\n(Port)",
-    stbdLight:"GREEN light\n(Starboard)",
-    bothSeeRed:"Both see\nred + green",
-    turnStbd:"Turn STARBOARD",
-    seesRedOnRight:"Sees red light\non RIGHT",
-    mustGiveWay:"MUST give way",
-    overtaking:"OVERTAKING vessel\n(must keep clear)",
-    beingOvertaken:"OVERTAKEN vessel\n(privileged)",
-  },
-  es:{
-    back:"◀ Volver", module:"Seguridad Marítima — COLREG",
-    lesson:"Lección", xp:"XP ganados",
-    quiz:"QUIZ", question:"Pregunta", ofQ:"de",
-    correct:"✓ ¡Correcta!", wrong:"✗ Respuesta incorrecta",
-    expl:"Explicación:", next:"SIGUIENTE →", finish:"VER MI PUNTUACIÓN →",
-    startQuiz:"✅ EMPEZAR EL QUIZ", result:"RESULTADO",
-    complete:"🏅 ¡LECCIÓN COMPLETADA!", nextLesson:"LECCIÓN 2 (Premium) →",
-    backDash:"← VOLVER AL PANEL", youLearned:"Has aprendido:",
-    downloadMemo:"📥 Descargar ficha resumen",
-    readFirst:"Lee el contenido y luego comienza el quiz",
-    scorePerf:"¡Perfecto! 🌟", scoreGreat:"¡Excelente! 💪",
-    scoreGood:"¡Sigue! 📚",
-    shipA:"BUQUE A", shipB:"BUQUE B",
-    collision:"⚠️ RIESGO DE ABORDAJE",
-    correct_action:"✅ MANIOBRA CORRECTA",
-    wrong_action:"❌ MANIOBRA INCORRECTA",
-    rule14title:"REGLA 14 — Situación de proa",
-    rule15title:"REGLA 15 — Situaciones de cruce",
-    rule13title:"REGLA 13 — Alcance",
-    btnPlay:"▶ Animar", btnReset:"↺ Reset",
-    btnCorrect:"✅ Ver maniobra correcta",
-    btnWrong:"❌ Ver error fatal",
-    privileged:"Buque PRIVILEGIADO\n(mantiene rumbo)",
-    giveway:"Buque CEDENTE\n(debe maniobrar)",
-    portLight:"Luz ROJA\n(Babor)",
-    stbdLight:"Luz VERDE\n(Estribor)",
-    bothSeeRed:"Ambos ven\nrojo + verde",
-    turnStbd:"Vira a ESTRIBOR",
-    seesRedOnRight:"Ve luz roja\na la DERECHA",
-    mustGiveWay:"DEBE ceder\nel paso",
-    overtaking:"Buque que ALCANZA\n(debe apartarse)",
-    beingOvertaken:"Buque ALCANZADO\n(privilegiado)",
-  },
-  pt:{
-    back:"◀ Voltar", module:"Segurança Marítima — COLREG",
-    lesson:"Lição", xp:"XP ganhos",
-    quiz:"QUIZ", question:"Pergunta", ofQ:"de",
-    correct:"✓ Correto!", wrong:"✗ Resposta errada",
-    expl:"Explicação:", next:"PRÓXIMO →", finish:"VER MINHA PONTUAÇÃO →",
-    startQuiz:"✅ COMEÇAR O QUIZ", result:"RESULTADO",
-    complete:"🏅 LIÇÃO CONCLUÍDA!", nextLesson:"LIÇÃO 2 (Premium) →",
-    backDash:"← VOLTAR AO PAINEL", youLearned:"Você aprendeu:",
-    downloadMemo:"📥 Baixar ficha resumo",
-    readFirst:"Leia o conteúdo e depois comece o quiz",
-    scorePerf:"Perfeito! 🌟", scoreGreat:"Excelente! 💪",
-    scoreGood:"Continue! 📚",
-    shipA:"NAVIO A", shipB:"NAVIO B",
-    collision:"⚠️ RISCO DE ABALROAMENTO",
-    correct_action:"✅ MANOBRA CORRETA",
-    wrong_action:"❌ MANOBRA INCORRETA",
-    rule14title:"REGRA 14 — Navios em rota de colisão",
-    rule15title:"REGRA 15 — Rotas que se cruzam",
-    rule13title:"REGRA 13 — Ultrapassagem",
-    btnPlay:"▶ Animar", btnReset:"↺ Reset",
-    btnCorrect:"✅ Ver manobra correta",
-    btnWrong:"❌ Ver erro fatal",
-    privileged:"Navio PRIVILEGIADO\n(mantém rumo)",
-    giveway:"Navio CEDENTE\n(deve manobrар)",
-    portLight:"Luz VERMELHA\n(Bombordo)",
-    stbdLight:"Luz VERDE\n(Estibordo)",
-    bothSeeRed:"Ambos veem\nvermelho + verde",
-    turnStbd:"Vira a ESTIBORDO",
-    seesRedOnRight:"Vê luz vermelha\nà DIREITA",
-    mustGiveWay:"DEVE ceder\na passagem",
-    overtaking:"Navio que ULTRAPASSA\n(deve afastar-se)",
-    beingOvertaken:"Navio ULTRAPASSADO\n(privilegiado)",
-  },
+  fr:{ back:"◀ Retour", module:"Navigation & Cartographie", xp:"XP gagnés", quiz:"QUIZ", question:"Question", ofQ:"sur", correct:"✓ Bonne réponse!", wrong:"✗ Mauvaise réponse", expl:"Explication:", next:"SUIVANT →", finish:"VOIR MON SCORE →", startQuiz:"✅ COMMENCER LE QUIZ", result:"RÉSULTAT", complete:"🏅 MODULE TERMINÉ!", backDash:"← RETOUR AU DASHBOARD", youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz", scorePerf:"Parfait ! 🌟", scoreGreat:"Excellent ! 💪", scoreGood:"Continue ! 📚", showCorr:"Voir la correction", hideCorr:"Masquer" },
+  en:{ back:"◀ Back", module:"Navigation & Cartography", xp:"XP earned", quiz:"QUIZ", question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer", expl:"Explanation:", next:"NEXT →", finish:"SEE MY SCORE →", startQuiz:"✅ START QUIZ", result:"RESULT", complete:"🏅 MODULE COMPLETE!", backDash:"← BACK TO DASHBOARD", youLearned:"You learned:", readFirst:"Read the content then start the quiz", scorePerf:"Perfect! 🌟", scoreGreat:"Excellent! 💪", scoreGood:"Keep going! 📚", showCorr:"Show correction", hideCorr:"Hide" },
+  es:{ back:"◀ Volver", module:"Navegación & Cartografía", xp:"XP ganados", quiz:"QUIZ", question:"Pregunta", ofQ:"de", correct:"✓ ¡Correcta!", wrong:"✗ Incorrecta", expl:"Explicación:", next:"SIGUIENTE →", finish:"VER PUNTUACIÓN →", startQuiz:"✅ EMPEZAR QUIZ", result:"RESULTADO", complete:"🏅 ¡MÓDULO COMPLETO!", backDash:"← VOLVER AL PANEL", youLearned:"Has aprendido:", readFirst:"Lee y luego comienza", scorePerf:"¡Perfecto! 🌟", scoreGreat:"¡Excelente! 💪", scoreGood:"¡Sigue! 📚", showCorr:"Ver corrección", hideCorr:"Ocultar" },
+  pt:{ back:"◀ Voltar", module:"Navegação & Cartografia", xp:"XP ganhos", quiz:"QUIZ", question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada", expl:"Explicação:", next:"PRÓXIMO →", finish:"VER PONTUAÇÃO →", startQuiz:"✅ COMEÇAR QUIZ", result:"RESULTADO", complete:"🏅 MÓDULO CONCLUÍDO!", backDash:"← VOLTAR AO PAINEL", youLearned:"Você aprendeu:", readFirst:"Leia o conteúdo e depois comece", scorePerf:"Perfeito! 🌟", scoreGreat:"Excelente! 💪", scoreGood:"Continue! 📚", showCorr:"Ver correção", hideCorr:"Ocultar" },
 };
 
-// ══════════════════════════════════════════════
-//  QUIZ DATA
-// ══════════════════════════════════════════════
-const QUIZ = {
-  fr:[
-    { q:"Deux navires se font face et risquent l'abordage. Que doivent-ils faire selon la Rule 14 ?",
-      opts:["Le plus grand navire maintient son cap","Les deux navires virent à BÂBORD","Les deux navires virent à TRIBORD","Un navire stoppe, l'autre continue"],
-      correct:2,
-      expl:"Rule 14 : Quand deux navires à propulsion mécanique font route en sens contraires et risquent un abordage, CHACUN doit virer à TRIBORD pour passer à bâbord l'un de l'autre. Les deux voient le feu rouge ET le feu vert de l'autre = situation bout au bout." },
-    { q:"La Rule 5 impose une veille permanente. Par quels moyens ?",
-      opts:["GPS et AIS uniquement","Vue, ouïe et tous les moyens disponibles","Radar uniquement, surtout de nuit","VHF canal 16 en permanence"],
-      correct:1,
-      expl:"Rule 5 : Tout navire doit en permanence assurer une veille visuelle et auditive appropriée, en utilisant TOUS les moyens disponibles (vue, ouïe, radar, AIS...). C'est la règle la plus fondamentale du COLREG." },
-    { q:"Navire A est sur la route de Navire B — B voit le feu ROUGE de A sur sa droite (tribord). Qui doit céder ?",
-      opts:["Navire A — car il est plus petit","Navire B — car il voit le feu rouge à tribord","Les deux doivent manœuvrer ensemble","Celui qui est le plus rapide"],
-      correct:1,
-      expl:"Rule 15 — Routes croisées : Quand un navire voit l'autre sur son tribord (à droite), il doit céder le passage. Voir le feu ROUGE d'un navire à tribord = obligation de céder. Moyen mnémotechnique : Rouge à tribord = DANGER = je m'écarte." },
-    { q:"Un navire rattrape un autre par l'arrière (Rule 13). Qui a la priorité ?",
-      opts:["Le navire qui rattrape — car il est plus rapide","Le navire rattrapé — il est navire privilégié","Les deux ont la même priorité","Le navire de plus grand tonnage"],
-      correct:1,
-      expl:"Rule 13 — Navire qui en rattrape un autre : Le navire qui rattrape DOIT s'écarter du navire rattrapé. Le navire rattrapé est NAVIRE PRIVILÉGIÉ — il maintient son cap et sa vitesse. Cette règle s'applique quelle que soit la vitesse ou la taille des navires." },
-    { q:"Selon la Rule 2, un marin peut déroger aux règles COLREG si :",
-      opts:["Son navire est plus grand","Pour éviter un danger immédiat — le bon sens prime","Son capitaine le demande","Son pavillon national l'autorise"],
-      correct:1,
-      expl:"Rule 2 — Responsabilité : Aucune règle ne dispense de prendre toutes les précautions commandées par l'expérience ordinaire du marin. En cas de danger immédiat, le bon sens et les usages maritimes priment. C'est la 'règle du bon sens marin'." },
-  ],
-  en:[
-    { q:"Two vessels meet head-on and risk collision. What must they do under Rule 14?",
-      opts:["The larger vessel holds course","Both vessels turn to PORT","Both vessels turn to STARBOARD","One vessel stops, the other continues"],
-      correct:2,
-      expl:"Rule 14: When two power-driven vessels are meeting on reciprocal courses and there is risk of collision, EACH shall alter course to STARBOARD so they pass port to port. Both see each other's red AND green lights = head-on situation." },
-    { q:"Rule 5 requires a proper lookout. By what means?",
-      opts:["GPS and AIS only","Sight, hearing and all available means","Radar only, especially at night","VHF channel 16 continuously"],
-      correct:1,
-      expl:"Rule 5: Every vessel shall at all times maintain a proper lookout by sight and hearing as well as by ALL available means (radar, AIS...). This is the most fundamental rule in COLREG." },
-    { q:"Vessel B sees Vessel A's RED light on its starboard (right) side. Who must give way?",
-      opts:["Vessel A — it's smaller","Vessel B — it sees the red light on starboard","Both must maneuver together","The faster one"],
-      correct:1,
-      expl:"Rule 15 — Crossing situation: When a vessel sees another on its starboard side, it must give way. Seeing a RED light on starboard = obligation to give way. Memory aid: Red on starboard = DANGER = I give way." },
-    { q:"A vessel is overtaking another from astern (Rule 13). Who has right of way?",
-      opts:["The overtaking vessel — it's faster","The overtaken vessel — it is the privileged vessel","Both have equal priority","The larger vessel"],
-      correct:1,
-      expl:"Rule 13 — Overtaking: The overtaking vessel SHALL keep out of the way of the vessel being overtaken. The overtaken vessel is PRIVILEGED — it holds course and speed. This applies regardless of speed or size." },
-    { q:"Under Rule 2, a mariner may deviate from COLREG rules when:",
-      opts:["Their vessel is larger","To avoid immediate danger — seamanship prevails","The captain orders it","Their national flag permits it"],
-      correct:1,
-      expl:"Rule 2 — Responsibility: Nothing shall exonerate any vessel from the consequences of neglecting the ordinary practice of seamen. In immediate danger, good seamanship prevails. This is the 'good seamanship rule'." },
-  ],
-  es:[
-    { q:"Dos buques se aproximan de proa y arriesgan colisión. ¿Qué deben hacer según la Regla 14?",
-      opts:["El buque más grande mantiene su rumbo","Ambos buques viran a BABOR","Ambos buques viran a ESTRIBOR","Un buque para, el otro continúa"],
-      correct:2,
-      expl:"Regla 14: Cuando dos buques de propulsión mecánica navegan en rumbos opuestos con riesgo de abordaje, CADA UNO debe cambiar a ESTRIBOR para pasar por babor el uno del otro. Ambos ven el luz roja Y verde del otro = situación de proa." },
-    { q:"La Regla 5 impone una vigilancia permanente. ¿Por qué medios?",
-      opts:["Solo GPS y AIS","Vista, oído y todos los medios disponibles","Solo radar, especialmente de noche","VHF canal 16 permanentemente"],
-      correct:1,
-      expl:"Regla 5: Todo buque debe mantener en todo momento una vigilancia visual y auditiva apropiada, usando TODOS los medios disponibles (vista, oído, radar, AIS...). Es la regla más fundamental del COLREG." },
-    { q:"El Buque B ve la luz ROJA del Buque A a su estribor (derecha). ¿Quién debe ceder?",
-      opts:["El Buque A — es más pequeño","El Buque B — ve la luz roja a estribor","Ambos deben maniobrar juntos","El más rápido"],
-      correct:1,
-      expl:"Regla 15 — Cruce: Cuando un buque ve al otro por su costado de estribor, debe ceder el paso. Ver la luz ROJA a estribor = obligación de ceder. Regla mnemotécnica: Rojo a estribor = PELIGRO = me aparto." },
-    { q:"Un buque alcanza a otro por la popa (Regla 13). ¿Quién tiene prioridad?",
-      opts:["El buque que alcanza — es más rápido","El buque alcanzado — es el buque privilegiado","Ambos tienen igual prioridad","El de mayor tonelaje"],
-      correct:1,
-      expl:"Regla 13: El buque que alcanza a otro DEBE apartarse del buque alcanzado. El buque alcanzado es PRIVILEGIADO — mantiene rumbo y velocidad. Se aplica independientemente de la velocidad o el tamaño." },
-    { q:"Según la Regla 2, un marino puede apartarse del COLREG cuando:",
-      opts:["Su buque es más grande","Para evitar un peligro inmediato — prevalece el buen sentido","Su capitán lo ordena","Su pabellón nacional lo permite"],
-      correct:1,
-      expl:"Regla 2 — Responsabilidad: Nada exonerará a ningún buque de las consecuencias de descuidar las prácticas ordinarias del marino. En peligro inmediato, prevalece la buena práctica marinera." },
-  ],
-  pt:[
-    { q:"Dois navios se aproximam de proa e correm risco de abalroamento. O que devem fazer pela Regra 14?",
-      opts:["O navio maior mantém o rumo","Ambos os navios viram a BOMBORDO","Ambos os navios viram a ESTIBORDO","Um navio para, o outro continua"],
-      correct:2,
-      expl:"Regra 14: Quando dois navios a motor navegam em rumos opostos com risco de abalroamento, CADA UM deve mudar para ESTIBORDO para passarem pelo lado de bombordo um do outro. Ambos veem luz vermelha E verde = situação de proa." },
-    { q:"A Regra 5 impõe uma vigilância permanente. Por que meios?",
-      opts:["Apenas GPS e AIS","Vista, audição e todos os meios disponíveis","Apenas radar, especialmente à noite","VHF canal 16 permanentemente"],
-      correct:1,
-      expl:"Regra 5: Todo navio deve manter em todo momento uma vigilância visual e auditiva adequada, usando TODOS os meios disponíveis (radar, AIS...). É a regra mais fundamental do COLREG." },
-    { q:"O Navio B vê a luz VERMELHA do Navio A a seu estibordo (direita). Quem deve ceder?",
-      opts:["O Navio A — é menor","O Navio B — vê a luz vermelha a estibordo","Ambos devem manobrар juntos","O mais rápido"],
-      correct:1,
-      expl:"Regra 15 — Cruzamento: Quando um navio vê o outro pelo seu bordo de estibordo, deve ceder a passagem. Ver luz VERMELHA a estibordo = obrigação de ceder. Regra mnemônica: Vermelho a estibordo = PERIGO = eu me afasto." },
-    { q:"Um navio ultrapassa outro pela popa (Regra 13). Quem tem prioridade?",
-      opts:["O navio que ultrapassa — é mais rápido","O navio ultrapassado — é o navio privilegiado","Ambos têm igual prioridade","O de maior tonelagem"],
-      correct:1,
-      expl:"Regra 13: O navio que ultrapassa DEVE afastar-se do navio ultrapassado. O navio ultrapassado é PRIVILEGIADO — mantém rumo e velocidade. Aplica-se independentemente da velocidade ou tamanho." },
-    { q:"Pela Regra 2, um marinheiro pode desviar-se do COLREG quando:",
-      opts:["Seu navio é maior","Para evitar perigo imediato — prevalece o bom senso","O capitão ordena","Seu pavilhão nacional permite"],
-      correct:1,
-      expl:"Regra 2 — Responsabilidade: Nada isentará qualquer navio das consequências de negligenciar as práticas ordinárias do marinheiro. Em perigo imediato, prevalece a boa prática marinheira." },
-  ],
-};
-
-// ══════════════════════════════════════════════
-//  SVG SCHEMAS ANIMÉS
-// ══════════════════════════════════════════════
-
-// Helper: Draw a ship at position and angle
-function ShipShape({ x, y, angle, color, size=1, showLights=false, side="" }) {
-  const s = size;
-  const rad = angle * Math.PI / 180;
-
-  // Ship body points (facing up = 0°)
-  const points = [
-    [0, -16*s],   // bow
-    [6*s, -8*s],  // bow right
-    [7*s, 8*s],   // mid right
-    [5*s, 16*s],  // stern right
-    [-5*s, 16*s], // stern left
-    [-7*s, 8*s],  // mid left
-    [-6*s, -8*s], // bow left
-  ].map(([px, py]) => {
-    const rx = px * Math.cos(rad) - py * Math.sin(rad);
-    const ry = px * Math.sin(rad) + py * Math.cos(rad);
-    return [x + rx, y + ry];
-  });
-
-  const ptStr = points.map(p => p.join(",")).join(" ");
-
-  // Light positions
-  const lightX = x + (7*s+6) * Math.cos(rad - Math.PI/2);
-  const lightY = y + (7*s+6) * Math.sin(rad - Math.PI/2);
-  const lightX2 = x + (7*s+6) * Math.cos(rad + Math.PI/2);
-  const lightY2 = y + (7*s+6) * Math.sin(rad + Math.PI/2);
-
-  return (
-    <g>
-      <polygon points={ptStr} fill={color} stroke="rgba(255,255,255,0.4)" strokeWidth="1"/>
-      {/* Mast dot */}
-      <circle cx={x} cy={y} r={2*s} fill="white" opacity="0.6"/>
-      {/* Navigation lights */}
-      {showLights && (
-        <>
-          <circle cx={lightX} cy={lightY} r={4} fill={C.green} opacity="0.9"/>
-          <circle cx={lightX2} cy={lightY2} r={4} fill={C.red} opacity="0.9"/>
-        </>
-      )}
-    </g>
-  );
-}
-
-// ── RULE 14 — Head-on ────────────────────────
-function Rule14Schema({ t, lang }) {
-  const [step, setStep] = useState(0); // 0=initial 1=approaching 2=correct 3=wrong
-  const [animating, setAnimating] = useState(false);
-  const timerRef = useRef(null);
-
-  const animate = (type) => {
-    if (animating) return;
-    setAnimating(true);
-    setStep(1);
-    timerRef.current = setTimeout(() => {
-      setStep(type === "correct" ? 2 : 3);
-      setAnimating(false);
-    }, 1200);
-  };
-
-  useEffect(() => () => clearTimeout(timerRef.current), []);
-
-  const reset = () => { setStep(0); setAnimating(false); };
-
-  // Ship positions based on step
-  const shipA = {
-    x: step === 0 ? 80  : step === 1 ? 110 : step === 2 ? 130 : 140,
-    y: step === 2 ? 100 : step === 3 ? 110 : 120,
-    angle: step === 2 ? 45 : step === 3 ? 0 : 90,
-  };
-  const shipB = {
-    x: step === 0 ? 220 : step === 1 ? 190 : step === 2 ? 170 : 160,
-    y: step === 2 ? 140 : step === 3 ? 130 : 120,
-    angle: step === 2 ? 225 : step === 3 ? 180 : 270,
-  };
-
-  const statusColor = step === 0 ? C.muted : step === 1 ? C.orange : step === 2 ? C.green : C.red;
-  const statusText = {
-    0: lang === "fr" ? "Situation initiale — routes opposées" : lang === "es" ? "Situación inicial — rumbos opuestos" : lang === "pt" ? "Situação inicial — rumos opostos" : "Initial situation — opposite courses",
-    1: lang === "fr" ? "⚠️ Rapprochement — risque d'abordage !" : lang === "es" ? "⚠️ Aproximación — ¡riesgo de abordaje!" : lang === "pt" ? "⚠️ Aproximação — risco de abalroamento!" : "⚠️ Approaching — collision risk!",
-    2: lang === "fr" ? "✅ Correct — les deux virent à TRIBORD" : lang === "es" ? "✅ Correcto — ambos viran a ESTRIBOR" : lang === "pt" ? "✅ Correto — ambos viram a ESTIBORDO" : "✅ Correct — both turn STARBOARD",
-    3: lang === "fr" ? "💥 COLLISION — manœuvre incorrecte !" : lang === "es" ? "💥 COLISIÓN — ¡maniobra incorrecta!" : lang === "pt" ? "💥 COLISÃO — manobra incorreta!" : "💥 COLLISION — wrong maneuver!",
-  }[step];
-
+// ══════════════════════════════════════
+// SVG 1 — VESSEL HIERARCHY Rule 18
+// ══════════════════════════════════════
+function HierarchySVG({ lang }) {
+  const [sel, setSel] = useState(null);
+  const vessels = [
+    {id:"nuc",rank:1,icon:"🔴🔴",label:{fr:"NUC",en:"NUC",es:"NBC",pt:"NMC"},full:{fr:"Non Maîtrisable",en:"Not Under Command",es:"No Gobernado",pt:"Não Governável"},desc:{fr:"Panne moteur ou avarie grave\nFeux : 2 feux rouges verticaux\nTOUS les navires doivent s'écarter\nSignal : 1 long + 2 courts / 2 min",en:"Engine failure or serious breakdown\nLights: 2 vertical red lights\nALL vessels must keep clear\nSignal: 1 long + 2 short / 2 min",es:"Avería grave · 2 luces rojas verticales\nTodos deben apartarse",pt:"Avaria grave · 2 luzes vermelhas verticais\nTodos devem afastar-se"},color:C.red},
+    {id:"ram",rank:2,icon:"🔴⚪🔴",label:{fr:"RAM",en:"RAM",es:"MCM",pt:"CAM"},full:{fr:"Capacité Manœuvre Restreinte",en:"Restricted in Ability to Manœuvre",es:"Maniobra Restringida",pt:"Capacidade Manobra Restrita"},desc:{fr:"Dragage, pose câbles, ravitaillement en mer\nFeux : rouge-blanc-rouge verticaux\nDifficile de dévier de sa route",en:"Dredging, cable laying, RAS\nLights: red-white-red vertical\nUnable to easily deviate from course",es:"Dragado, tendido cables, reabastecimiento\nLuces: rojo-blanco-rojo",pt:"Dragagem, cabos, abastecimento\nLuzes: vermelho-branco-vermelho"},color:C.orange},
+    {id:"draft",rank:3,icon:"🟡🟡🟡",label:{fr:"Tirant d'eau",en:"Constrained by draft",es:"Calado",pt:"Calado"},full:{fr:"Gêné par son tirant d'eau",en:"Constrained by draft",es:"Calado restringido",pt:"Constrangido pelo calado"},desc:{fr:"Ne peut s'écarter à cause de la profondeur\nFeux : 3 feux rouges verticaux\nRoutes commerciales profondes",en:"Cannot deviate due to draft\nLights: 3 vertical red lights\nDeep commercial shipping lanes",es:"No puede desviarse por su calado\n3 luces rojas verticales",pt:"Não pode desviar devido ao calado\n3 luzes vermelhas verticais"},color:C.gold2},
+    {id:"fishing",rank:4,icon:"🟢⚪",label:{fr:"Pêche",en:"Fishing",es:"Pesca",pt:"Pesca"},full:{fr:"Navire en train de pêcher",en:"Vessel engaged in fishing",es:"Buque pescando",pt:"Navio a pescar"},desc:{fr:"Chalutier ou filets déployés\nFeux : vert-blanc verticaux\nFilet peut s'étirer sur 1 km\nManœuvre rapide difficile",en:"Trawler or nets deployed\nLights: green-white vertical\nNet can stretch 1 km",es:"Redes desplegadas · verde-blanco\nLa red puede extenderse 1 km",pt:"Redes deployadas · verde-branco\nRede pode estender 1 km"},color:C.green},
+    {id:"sail",rank:5,icon:"⛵",label:{fr:"Voilier",en:"Sailing",es:"Velero",pt:"Veleiro"},full:{fr:"Navire à voiles en marche",en:"Vessel under sail",es:"Buque a vela",pt:"Embarcação à vela"},desc:{fr:"Priorité sur navires à moteur\nMais cède aux 4 navires ci-dessus\nSi moteur allumé → navire à moteur\nFeux : rouge + vert (pas de blanc avant)",en:"Priority over powered vessels\nBut gives way to vessels above\nIf engine on → powered vessel\nLights: red + green (no forward white)",es:"Prioridad sobre buques de motor\nSi motor encendido → buque de motor",pt:"Prioridade sobre navios a motor\nSe motor ligado → navio a motor"},color:C.teal},
+    {id:"power",rank:6,icon:"🚢",label:{fr:"Moteur",en:"Power",es:"Motor",pt:"Motor"},full:{fr:"Navire à propulsion mécanique",en:"Power-driven vessel",es:"Buque propulsado mecánicamente",pt:"Embarcação a motor"},desc:{fr:"PRIORITÉ LA PLUS BASSE\nDoit céder à TOUS les navires ci-dessus\nFeux : blanc mât + rouge/vert côtés + blanc poupe\nObligatoire : veille permanente Rule 5",en:"LOWEST PRIORITY\nMust give way to ALL vessels above\nLights: white mast + red/green sides + white stern\nMandatory: permanent watch Rule 5",es:"PRIORIDAD MÁS BAJA\nCede a TODOS los buques superiores",pt:"PRIORIDADE MAIS BAIXA\nCede a TODOS os navios acima"},color:C.blue2},
+  ];
+  const sel_ = sel ? vessels.find(v=>v.id===sel) : null;
   return (
     <div>
-      <svg width="300" height="240" viewBox="0 0 300 240">
-        {/* Ocean */}
-        <rect width="300" height="240" fill="#0a1628"/>
-        {/* Wave lines */}
-        {[40,80,120,160,200].map(y => (
-          <path key={y} d={`M0,${y} Q75,${y-5} 150,${y} Q225,${y+5} 300,${y}`}
-            stroke="rgba(77,166,255,0.08)" strokeWidth="1" fill="none"/>
+      <div style={{display:"flex",flexDirection:"column",gap:6}}>
+        {vessels.map((v,i)=>(
+          <div key={v.id} onClick={()=>setSel(sel===v.id?null:v.id)}
+            style={{display:"flex",alignItems:"center",gap:10,padding:"10px 12px",borderRadius:12,cursor:"pointer",
+              background:sel===v.id?`${v.color}22`:"rgba(255,255,255,0.04)",
+              border:`1.5px solid ${sel===v.id?v.color:"rgba(255,255,255,0.08)"}`,
+              marginLeft:i*6}}>
+            <div style={{width:28,height:28,borderRadius:8,background:`${v.color}22`,border:`1px solid ${v.color}44`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:800,color:v.color,flexShrink:0}}>#{v.rank}</div>
+            <span style={{fontSize:16}}>{v.icon}</span>
+            <div style={{flex:1}}>
+              <div style={{fontSize:12,fontWeight:700,color:v.color,fontFamily:"'Cinzel',serif"}}>{v.label[lang]||v.label.fr}</div>
+              <div style={{fontSize:10,color:C.muted}}>{v.full[lang]||v.full.fr}</div>
+            </div>
+            <span style={{fontSize:10,color:C.muted}}>{sel===v.id?"▲":"▼"}</span>
+          </div>
         ))}
-
-        {/* Center collision zone */}
-        {step === 1 && (
-          <circle cx="150" cy="120" r="25"
-            fill="rgba(192,57,43,0.2)" stroke={C.red}
-            strokeWidth="1.5" strokeDasharray="4,3">
-            <animate attributeName="r" values="20;30;20" dur="0.8s" repeatCount="indefinite"/>
-          </circle>
-        )}
-
-        {/* Arrows showing routes */}
-        {step === 0 && (
-          <>
-            <line x1="95" y1="120" x2="200" y2="120"
-              stroke={C.gold2} strokeWidth="1.5" strokeDasharray="5,3" opacity="0.5"/>
-            <polygon points="200,115 210,120 200,125" fill={C.gold2} opacity="0.5"/>
-            <polygon points="95,115 85,120 95,125" fill={C.gold2} opacity="0.5"/>
-          </>
-        )}
-
-        {/* Turn arrows for correct */}
-        {step === 2 && (
-          <>
-            {/* A turns right */}
-            <path d="M 115,130 Q 130,160 155,155"
-              stroke={C.green} strokeWidth="2" fill="none" strokeDasharray="4,2"/>
-            <polygon points="155,148 162,157 153,162" fill={C.green}/>
-            {/* B turns right */}
-            <path d="M 185,110 Q 170,80 145,85"
-              stroke={C.green} strokeWidth="2" fill="none" strokeDasharray="4,2"/>
-            <polygon points="145,92 138,83 147,78" fill={C.green}/>
-          </>
-        )}
-
-        {/* Collision for wrong */}
-        {step === 3 && (
-          <g>
-            <circle cx="150" cy="120" r="30"
-              fill="rgba(192,57,43,0.35)" stroke={C.red} strokeWidth="2"/>
-            <text x="150" y="116" textAnchor="middle" fontSize="18">💥</text>
-            <text x="150" y="134" textAnchor="middle" fontSize="8"
-              fill={C.red} fontWeight="bold">COLLISION</text>
-          </g>
-        )}
-
-        {/* Ships */}
-        <ShipShape {...shipA} color={C.blue2} showLights size={0.9}/>
-        <ShipShape {...shipB} color={C.orange} showLights size={0.9}/>
-
-        {/* Labels */}
-        <text x={shipA.x} y={shipA.y + 28} textAnchor="middle"
-          fontSize="9" fill={C.blue2} fontWeight="bold">
-          {t.shipA}
-        </text>
-        <text x={shipB.x} y={shipB.y + 28} textAnchor="middle"
-          fontSize="9" fill={C.orange} fontWeight="bold">
-          {t.shipB}
-        </text>
-
-        {/* Light indicators when initial */}
-        {step === 0 && (
-          <>
-            <circle cx="60" cy="30" r="5" fill={C.green}/>
-            <text x="70" y="35" fontSize="7" fill={C.green}>
-              {lang==="fr"?"Feu vert→":lang==="es"?"Luz verde→":lang==="pt"?"Luz verde→":"Green→"}
-            </text>
-            <circle cx="240" cy="30" r="5" fill={C.red}/>
-            <text x="202" y="35" fontSize="7" fill={C.red}>
-              {lang==="fr"?"←Feu rouge":lang==="es"?"←Luz roja":lang==="pt"?"←Luz verm.":"←Red"}
-            </text>
-            <text x="150" y="22" textAnchor="middle" fontSize="7"
-              fill={C.gold2}>
-              {lang==="fr"?"Les deux voient rouge + vert = Rule 14"
-               :lang==="es"?"Ambos ven rojo + verde = Regla 14"
-               :lang==="pt"?"Ambos veem verm + verde = Regra 14"
-               :"Both see red + green = Rule 14"}
-            </text>
-          </>
-        )}
-
-        {/* Status bar */}
-        <rect x="0" y="210" width="300" height="30"
-          fill="rgba(0,0,0,0.4)"/>
-        <text x="150" y="229" textAnchor="middle" fontSize="9"
-          fill={statusColor} fontWeight="bold">{statusText}</text>
-      </svg>
-
-      {/* Controls */}
-      <div style={{ display:"flex", gap:8, justifyContent:"center", flexWrap:"wrap", marginTop:8 }}>
-        {step > 0 && (
-          <button onClick={reset} style={{
-            padding:"7px 12px", borderRadius:10, fontSize:10,
-            background:"rgba(255,255,255,0.08)",
-            border:"1px solid rgba(255,255,255,0.15)",
-            color:C.white, cursor:"pointer",
-          }}>{t.btnReset}</button>
-        )}
-        {step === 0 && (
-          <>
-            <button onClick={() => animate("correct")} style={{
-              padding:"7px 14px", borderRadius:10, fontSize:10,
-              background:"rgba(30,138,74,0.2)",
-              border:`1px solid ${C.green}44`, color:C.green,
-              cursor:"pointer", fontWeight:700,
-            }}>{t.btnCorrect}</button>
-            <button onClick={() => animate("wrong")} style={{
-              padding:"7px 14px", borderRadius:10, fontSize:10,
-              background:"rgba(192,57,43,0.15)",
-              border:`1px solid ${C.red}44`, color:C.red,
-              cursor:"pointer", fontWeight:700,
-            }}>{t.btnWrong}</button>
-          </>
-        )}
       </div>
-
-      {/* Rule summary */}
-      <div style={{
-        marginTop:10, padding:"10px 12px", borderRadius:12,
-        background:`linear-gradient(135deg,rgba(26,111,212,0.12),rgba(13,31,60,0.6))`,
-        border:`1px solid ${C.blue2}33`, fontSize:12, color:C.white,
-        lineHeight:1.6,
-      }}>
-        {lang==="fr"
-          ?"📌 Rule 14 : Les deux navires voient rouge ET vert → les deux virent à TRIBORD → ils passent bâbord à bâbord."
-          :lang==="es"
-          ?"📌 Regla 14 : Ambos ven rojo Y verde → ambos viran a ESTRIBOR → pasan babor con babor."
-          :lang==="pt"
-          ?"📌 Regra 14 : Ambos veem vermelho E verde → ambos viram a ESTIBORDO → passam bombordo com bombordo."
-          :"📌 Rule 14: Both vessels see red AND green → both turn STARBOARD → they pass port to port."}
-      </div>
+      {sel_&&<div style={{marginTop:8,padding:"10px 12px",borderRadius:12,background:`${sel_.color}15`,border:`1px solid ${sel_.color}44`,fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line",animation:"fadeUp 0.3s ease"}}>{sel_.desc[lang]||sel_.desc.fr}</div>}
     </div>
   );
 }
 
-// ── RULE 15 — Crossing ───────────────────────
-function Rule15Schema({ t, lang }) {
-  const [step, setStep] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const timerRef = useRef(null);
+// ══════════════════════════════════════
+// SVG 2 — COLREG SCENARIO SIMULATOR
+// ══════════════════════════════════════
+function ScenarioSimulator({ lang }) {
+  const [scenario, setScenario] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [tick, setTick] = useState(0);
+  const animRef = useRef(null);
+  const W=290, H=200;
 
-  const animate = (type) => {
-    if (animating) return;
-    setAnimating(true);
-    setStep(1);
-    timerRef.current = setTimeout(() => {
-      setStep(type === "correct" ? 2 : 3);
-      setAnimating(false);
-    }, 1200);
-  };
-
-  useEffect(() => () => clearTimeout(timerRef.current), []);
-
-  const reset = () => { setStep(0); setAnimating(false); };
-
-  // Vessel A goes right (90°), Vessel B comes from right going left+down (225°)
-  // B sees A's red light on starboard → B must give way
-  const shipA = {
-    x: step === 0 ? 70  : step === 1 ? 100 : step === 2 ? 120 : 130,
-    y: step === 0 ? 120 : step === 1 ? 120 : step === 2 ? 120 : 120,
-    angle: 90, // going right
-  };
-  const shipB = {
-    x: step === 0 ? 220 : step === 1 ? 195 : step === 2 ? 185 : 160,
-    y: step === 0 ? 60  : step === 1 ? 90  : step === 2 ? 130 : 120,
-    angle: step === 2 ? 270 : 200,
-  };
-
-  const statusColor = step===0?C.muted:step===1?C.orange:step===2?C.green:C.red;
-  const statusText = {
-    0: lang==="fr"?"Navire B voit le feu ROUGE de A à tribord":lang==="es"?"Buque B ve la luz ROJA de A a estribor":lang==="pt"?"Navio B vê luz VERMELHA de A a estibordo":"Vessel B sees A's RED light on starboard",
-    1: lang==="fr"?"⚠️ Risque d'abordage — B doit céder !":lang==="es"?"⚠️ Riesgo de abordaje — ¡B debe ceder!":lang==="pt"?"⚠️ Risco de abalroamento — B deve ceder!":"⚠️ Collision risk — B must give way!",
-    2: lang==="fr"?"✅ B ralentit et passe derrière A":lang==="es"?"✅ B frena y pasa detrás de A":"✅ B slows and passes astern of A",
-    3: lang==="fr"?"💥 COLLISION — B n'a pas cédé !":lang==="es"?"💥 COLISIÓN — ¡B no cedió!":lang==="pt"?"💥 COLISÃO — B não cedeu!":"💥 COLLISION — B didn't give way!",
-  }[step];
-
-  return (
-    <div>
-      <svg width="300" height="240" viewBox="0 0 300 240">
-        <rect width="300" height="240" fill="#0a1628"/>
-        {[40,80,120,160,200].map(y=>(
-          <path key={y} d={`M0,${y} Q75,${y-5} 150,${y} Q225,${y+5} 300,${y}`}
-            stroke="rgba(77,166,255,0.08)" strokeWidth="1" fill="none"/>
-        ))}
-
-        {/* Crossing lines */}
-        {step===0&&(
-          <>
-            {/* A's route → right */}
-            <line x1="70" y1="120" x2="250" y2="120"
-              stroke={C.blue2} strokeWidth="1" strokeDasharray="5,3" opacity="0.4"/>
-            <polygon points="250,116 258,120 250,124" fill={C.blue2} opacity="0.4"/>
-            {/* B's route ↙ */}
-            <line x1="220" y1="60" x2="130" y2="150"
-              stroke={C.orange} strokeWidth="1" strokeDasharray="5,3" opacity="0.4"/>
-            <polygon points="133,147 123,155 128,143" fill={C.orange} opacity="0.4"/>
-          </>
-        )}
-
-        {/* Danger zone */}
-        {step===1&&(
-          <circle cx="145" cy="120" r="20"
-            fill="rgba(192,57,43,0.25)" stroke={C.red}
-            strokeWidth="1.5" strokeDasharray="4,3">
-            <animate attributeName="r" values="15;25;15" dur="0.8s" repeatCount="indefinite"/>
-          </circle>
-        )}
-
-        {/* Correct: B passes astern */}
-        {step===2&&(
-          <path d="M 195,125 Q 190,155 175,160 Q 155,168 140,155"
-            stroke={C.green} strokeWidth="2" fill="none" strokeDasharray="5,3"/>
-        )}
-
-        {/* Wrong: collision */}
-        {step===3&&(
-          <g>
-            <circle cx="145" cy="120" r="28"
-              fill="rgba(192,57,43,0.35)" stroke={C.red} strokeWidth="2"/>
-            <text x="145" y="116" textAnchor="middle" fontSize="18">💥</text>
-            <text x="145" y="134" textAnchor="middle" fontSize="8"
-              fill={C.red} fontWeight="bold">COLLISION</text>
-          </g>
-        )}
-
-        {/* Ships */}
-        <ShipShape {...shipA} color={C.blue2} showLights size={0.9}/>
-        <ShipShape {...shipB} color={C.orange} showLights size={0.9}/>
-
-        {/* Labels */}
-        <text x={shipA.x} y={shipA.y+28} textAnchor="middle"
-          fontSize="8" fill={C.blue2} fontWeight="bold">{t.shipA}</text>
-        <text x={shipB.x} y={shipB.y+28} textAnchor="middle"
-          fontSize="8" fill={C.orange} fontWeight="bold">{t.shipB}</text>
-
-        {/* Initial annotations */}
-        {step===0&&(
-          <>
-            {/* B sees red light of A */}
-            <circle cx="195" cy="58" r="6" fill={C.red} opacity="0.9"/>
-            <text x="205" y="55" fontSize="7" fill={C.red}>
-              {lang==="fr"?"Feu rouge de A":lang==="es"?"Luz roja de A":lang==="pt"?"Luz verm. de A":"A's red light"}
-            </text>
-            <text x="205" y="67" fontSize="7" fill={C.red}>
-              {lang==="fr"?"visible à tribord":lang==="es"?"visible a estribor":lang==="pt"?"visível a estibordo":"visible on stbd"}
-            </text>
-            {/* Privilege label */}
-            <rect x="30" y="95" width="60" height="28" rx="6"
-              fill={`${C.blue2}22`} stroke={`${C.blue2}44`}/>
-            <text x="60" y="108" textAnchor="middle" fontSize="7"
-              fill={C.blue2}>
-              {lang==="fr"?"PRIVILÉGIÉ":lang==="es"?"PRIVILEGIADO":lang==="pt"?"PRIVILEGIADO":"PRIVILEGED"}
-            </text>
-            <text x="60" y="119" textAnchor="middle" fontSize="7"
-              fill={C.blue2}>
-              {lang==="fr"?"maintient cap":lang==="es"?"mantiene rumbo":lang==="pt"?"mantém rumo":"holds course"}
-            </text>
-            {/* Giveway label */}
-            <rect x="200" y="38" width="60" height="28" rx="6"
-              fill={`${C.red}22`} stroke={`${C.red}44`}/>
-            <text x="230" y="51" textAnchor="middle" fontSize="7"
-              fill={C.red}>
-              {lang==="fr"?"OBLIGÉ":lang==="es"?"CEDENTE":lang==="pt"?"CEDENTE":"GIVE-WAY"}
-            </text>
-            <text x="230" y="62" textAnchor="middle" fontSize="7"
-              fill={C.red}>
-              {lang==="fr"?"doit céder":lang==="es"?"debe ceder":lang==="pt"?"deve ceder":"must give way"}
-            </text>
-          </>
-        )}
-
-        <rect x="0" y="210" width="300" height="30" fill="rgba(0,0,0,0.4)"/>
-        <text x="150" y="229" textAnchor="middle" fontSize="8"
-          fill={statusColor} fontWeight="bold">{statusText}</text>
-      </svg>
-
-      <div style={{ display:"flex", gap:8, justifyContent:"center", flexWrap:"wrap", marginTop:8 }}>
-        {step>0 && (
-          <button onClick={reset} style={{padding:"7px 12px",borderRadius:10,fontSize:10,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",color:C.white,cursor:"pointer"}}>{t.btnReset}</button>
-        )}
-        {step===0&&(
-          <>
-            <button onClick={()=>animate("correct")} style={{padding:"7px 14px",borderRadius:10,fontSize:10,background:"rgba(30,138,74,0.2)",border:`1px solid ${C.green}44`,color:C.green,cursor:"pointer",fontWeight:700}}>{t.btnCorrect}</button>
-            <button onClick={()=>animate("wrong")} style={{padding:"7px 14px",borderRadius:10,fontSize:10,background:"rgba(192,57,43,0.15)",border:`1px solid ${C.red}44`,color:C.red,cursor:"pointer",fontWeight:700}}>{t.btnWrong}</button>
-          </>
-        )}
-      </div>
-
-      <div style={{marginTop:10,padding:"10px 12px",borderRadius:12,background:`linear-gradient(135deg,rgba(230,126,34,0.12),rgba(13,31,60,0.6))`,border:`1px solid ${C.orange}33`,fontSize:12,color:C.white,lineHeight:1.6}}>
-        {lang==="fr"
-          ?"📌 Rule 15 : Tu vois le feu ROUGE d'un navire à TRIBORD → tu es le navire OBLIGÉ → tu dois t'écarter. Moyen mémo : Rouge à tribord = DANGER = je cède."
-          :lang==="es"
-          ?"📌 Regla 15 : Ves luz ROJA de un buque a ESTRIBOR → eres el buque CEDENTE → debes apartarte. Regla: Rojo a estribor = PELIGRO = cedo."
-          :lang==="pt"
-          ?"📌 Regra 15 : Vê luz VERMELHA de um navio a ESTIBORDO → você é o navio CEDENTE → deve afastar-se. Regra: Vermelho a estibordo = PERIGO = cedo."
-          :"📌 Rule 15: You see RED light of a vessel on STARBOARD → you are the give-way vessel → you must keep clear. Rule: Red on starboard = DANGER = I give way."}
-      </div>
-    </div>
-  );
-}
-
-// ── RULE 13 — Overtaking ─────────────────────
-function Rule13Schema({ t, lang }) {
-  const [play, setPlay] = useState(false);
-  const [pos, setPos] = useState(0);
-  const timerRef = useRef(null);
-
-  useEffect(() => {
-    if (play) {
-      timerRef.current = setInterval(() => {
-        setPos(p => {
-          if (p >= 100) { setPlay(false); return 100; }
-          return p + 1.5;
-        });
-      }, 30);
-    }
-    return () => clearInterval(timerRef.current);
-  }, [play]);
-
-  const resetAnim = () => { setPlay(false); setPos(0); };
-
-  const aX = 30 + pos * 0.8;
-  const bX = 80 + pos * 0.4;
-  const sternZone = pos > 10 && pos < 60;
-
-  return (
-    <div>
-      <svg width="300" height="180" viewBox="0 0 300 180">
-        <rect width="300" height="180" fill="#0a1628"/>
-        {[40,80,120,150].map(y=>(
-          <path key={y} d={`M0,${y} Q75,${y-4} 150,${y} Q225,${y+4} 300,${y}`}
-            stroke="rgba(77,166,255,0.08)" strokeWidth="1" fill="none"/>
-        ))}
-
-        {/* 135° stern arc for overtaking zone */}
-        {sternZone && (
-          <g>
-            <path
-              d={`M ${bX} 90 L ${bX-30} 115 A 35 35 0 0 0 ${bX-30} 65 Z`}
-              fill="rgba(201,146,42,0.1)" stroke={C.gold2}
-              strokeWidth="0.5" strokeDasharray="3,2"/>
-            <text x={bX-45} y="92" fontSize="7" fill={C.gold2} textAnchor="middle">
-              {lang==="fr"?"Zone de":lang==="es"?"Zona de":lang==="pt"?"Zona de":"Overtaking"}
-            </text>
-            <text x={bX-45} y="102" fontSize="7" fill={C.gold2} textAnchor="middle">
-              {lang==="fr"?"rattrapage":lang==="es"?"alcance":lang==="pt"?"ultrapassagem":"zone"}
-            </text>
-          </g>
-        )}
-
-        {/* Ship B (being overtaken) */}
-        <ShipShape x={bX} y={90} angle={90} color={C.blue2} showLights size={0.9}/>
-        <text x={bX} y={118} textAnchor="middle" fontSize="8"
-          fill={C.blue2} fontWeight="bold">{t.shipB}</text>
-        {pos < 20 && (
-          <text x={bX} y={128} textAnchor="middle" fontSize="7" fill={C.muted}>
-            {lang==="fr"?"(privilégié)":lang==="es"?"(privilegiado)":lang==="pt"?"(privilegiado)":"(privileged)"}
-          </text>
-        )}
-
-        {/* Ship A (overtaking) */}
-        <ShipShape x={aX} y={90} angle={90} color={C.orange} showLights size={0.9}/>
-        <text x={aX} y={118} textAnchor="middle" fontSize="8"
-          fill={C.orange} fontWeight="bold">{t.shipA}</text>
-        {pos < 20 && (
-          <text x={aX} y={128} textAnchor="middle" fontSize="7" fill={C.muted}>
-            {lang==="fr"?"(rattrape)":lang==="es"?"(alcanza)":lang==="pt"?"(ultrapassa)":"(overtaking)"}
-          </text>
-        )}
-
-        {/* Speed indicator */}
-        <text x="150" y="20" textAnchor="middle" fontSize="8" fill={C.orange}>
-          {lang==="fr"?"Navire A plus rapide →":lang==="es"?"Buque A más rápido →":lang==="pt"?"Navio A mais rápido →":"Vessel A faster →"}
-        </text>
-
-        {/* Completion */}
-        {pos >= 95 && (
-          <g>
-            <rect x="60" y="50" width="180" height="40" rx="8"
-              fill="rgba(30,138,74,0.25)" stroke={C.green} strokeWidth="1"/>
-            <text x="150" y="68" textAnchor="middle" fontSize="9"
-              fill={C.green} fontWeight="bold">
-              {lang==="fr"?"✅ A a dépassé en s'écartant de B"
-               :lang==="es"?"✅ A adelantó apartándose de B"
-               :lang==="pt"?"✅ A ultrapassou afastando-se de B"
-               :"✅ A overtook keeping clear of B"}
-            </text>
-            <text x="150" y="82" textAnchor="middle" fontSize="8"
-              fill={C.green}>
-              {lang==="fr"?"B maintenu son cap ✓"
-               :lang==="es"?"B mantuvo su rumbo ✓"
-               :lang==="pt"?"B manteve seu rumo ✓"
-               :"B held course ✓"}
-            </text>
-          </g>
-        )}
-
-        <rect x="0" y="155" width="300" height="25" fill="rgba(0,0,0,0.4)"/>
-        <text x="150" y="171" textAnchor="middle" fontSize="8"
-          fill={C.gold2}>
-          {lang==="fr"?"Rule 13 — Le navire qui rattrape doit s'écarter en permanence"
-           :lang==="es"?"Regla 13 — El buque que alcanza debe mantenerse apartado"
-           :lang==="pt"?"Regra 13 — O navio que ultrapassa deve manter-se afastado"
-           :"Rule 13 — Overtaking vessel must at all times keep clear"}
-        </text>
-      </svg>
-
-      <div style={{ display:"flex", gap:8, justifyContent:"center", marginTop:8 }}>
-        {pos > 0 ? (
-          <button onClick={resetAnim} style={{padding:"7px 14px",borderRadius:10,fontSize:10,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",color:C.white,cursor:"pointer"}}>{t.btnReset}</button>
-        ) : (
-          <button onClick={() => setPlay(true)} style={{padding:"7px 14px",borderRadius:10,fontSize:10,background:"rgba(77,166,255,0.2)",border:`1px solid ${C.blue2}44`,color:C.blue2,cursor:"pointer",fontWeight:700}}>{t.btnPlay}</button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ── RULES SUMMARY TABLE ───────────────────────
-function RulesTable({ lang }) {
-  const rules = [
-    { num:"1-3", color:C.blue2,
-      title:{fr:"Application & Définitions",en:"Application & Definitions",es:"Aplicación & Definiciones",pt:"Aplicação & Definições"},
-      key:{fr:"S'applique à TOUS les navires sur TOUTES les eaux",en:"Applies to ALL vessels on ALL waters",es:"Se aplica a TODOS los buques en TODAS las aguas",pt:"Aplica-se a TODOS os navios em TODAS as águas"}},
-    { num:"2", color:C.orange,
-      title:{fr:"Responsabilité",en:"Responsibility",es:"Responsabilidad",pt:"Responsabilidade"},
-      key:{fr:"Le bon sens marin prime toujours sur les règles",en:"Good seamanship always prevails over rules",es:"El buen sentido marinero siempre prevalece",pt:"O bom senso marinheiro sempre prevalece"}},
-    { num:"5", color:C.red,
-      title:{fr:"Veille permanente",en:"Lookout",es:"Vigilancia",pt:"Vigilância"},
-      key:{fr:"Vue + ouïe + TOUS les moyens disponibles",en:"Sight + hearing + ALL available means",es:"Vista + oído + TODOS los medios disponibles",pt:"Vista + audição + TODOS os meios disponíveis"}},
-    { num:"6", color:C.gold,
-      title:{fr:"Vitesse de sécurité",en:"Safe speed",es:"Velocidad de seguridad",pt:"Velocidade segura"},
-      key:{fr:"Permettre d'arrêter avant tout obstacle",en:"Allow stopping before any obstacle",es:"Permitir detenerse antes de cualquier obstáculo",pt:"Permitir parar antes de qualquer obstáculo"}},
-    { num:"7", color:C.teal,
-      title:{fr:"Risque d'abordage",en:"Risk of collision",es:"Riesgo de abordaje",pt:"Risco de abalroamento"},
-      key:{fr:"Relèvement constant + radar + doute = il existe",en:"Constant bearing + radar + doubt = risk exists",es:"Marcación constante + radar + duda = existe",pt:"Marcação constante + radar + dúvida = existe"}},
-    { num:"8", color:C.purple||"#8e44ad",
-      title:{fr:"Manœuvre d'évitement",en:"Action to avoid collision",es:"Maniobra de evitación",pt:"Manobra de evitação"},
-      key:{fr:"Franche, ample, tôt → résultat visible",en:"Frank, large, early → clearly visible result",es:"Franca, amplia, temprana → resultado visible",pt:"Franca, ampla, cedo → resultado visível"}},
-    { num:"13", color:C.blue,
-      title:{fr:"Navire qui rattrape",en:"Overtaking vessel",es:"Buque que alcanza",pt:"Navio que ultrapassa"},
-      key:{fr:"Toujours obligé — quelle que soit sa taille",en:"Always give-way — regardless of size",es:"Siempre cedente — sea cual sea su tamaño",pt:"Sempre cedente — independente do tamanho"}},
-    { num:"14", color:C.orange,
-      title:{fr:"Bout au bout",en:"Head-on",es:"Proa con proa",pt:"Proa com proa"},
-      key:{fr:"Les DEUX virent à tribord → passent bâbord/bâbord",en:"BOTH turn starboard → pass port to port",es:"AMBOS viran a estribor → pasan babor/babor",pt:"AMBOS viram a estibordo → passam bordo/bordo"}},
-    { num:"15", color:C.red,
-      title:{fr:"Routes croisées",en:"Crossing",es:"Cruce",pt:"Cruzamento"},
-      key:{fr:"Rouge à tribord = obligé de céder",en:"Red on starboard = give-way vessel",es:"Rojo a estribor = buque cedente",pt:"Vermelho a estibordo = navio cedente"}},
-    { num:"16", color:C.green,
-      title:{fr:"Navire obligé",en:"Give-way vessel",es:"Buque cedente",pt:"Navio cedente"},
-      key:{fr:"Manœuvre large, franche, tôt",en:"Maneuver widely, frankly, early",es:"Maniobra amplia, franca, a tiempo",pt:"Manobrар amplamente, francamente, cedo"}},
-    { num:"17", color:C.teal,
-      title:{fr:"Navire privilégié",en:"Stand-on vessel",es:"Buque privilegiado",pt:"Navio privilegiado"},
-      key:{fr:"Maintient cap+vitesse → peut agir si collision imminente",en:"Holds course+speed → may act if collision imminent",es:"Mantiene rumbo+velocidad → puede actuar si inminente",pt:"Mantém rumo+velocidade → pode agir se iminente"}},
+  const scenarios = [
+    {
+      id:"crossing", rule:"Rule 15", color:C.orange,
+      label:{fr:"Croisement",en:"Crossing",es:"Cruce",pt:"Cruzamento"},
+      desc:{fr:"A vient de TRIBORD de B\n→ A = privilégié (maintient cap+vitesse)\n→ B = manœuvrant (cède la route)\nB évite de passer devant A",en:"A comes from B's STARBOARD\n→ A = stand-on (holds course+speed)\n→ B = give-way\nB avoids crossing ahead of A",es:"A viene por ESTRIBOR de B\n→ A = privilegiado (mantiene)\n→ B = maniobra (cede)",pt:"A vem de ESTIBORDO de B\n→ A = privilegiado (mantém)\n→ B = manobra (cede)"},
+      getA:t=>({x:20+t*2.2,y:100}), headA:90,
+      getB:t=>({x:145,y:185-t*1.8}), headB:0,
+      cA:C.green, cB:C.blue2, lA:"A ✅", lB:"B ⚠️",
+      danger:t=>t>55&&t<75,
+    },
+    {
+      id:"headon", rule:"Rule 14", color:C.red,
+      label:{fr:"Face à face",en:"Head-on",es:"Cara a cara",pt:"Frente a frente"},
+      desc:{fr:"Les DEUX navires se font face\n→ Les DEUX sont manœuvrants\n→ Les deux virent à TRIBORD\n→ Se croiser par BÂBORD",en:"Both vessels approaching head-on\n→ BOTH are give-way\n→ Both alter to STARBOARD\n→ Pass port-to-port",es:"Ambos se aproximan de frente\n→ AMBOS son de maniobra\n→ Ambos viran a ESTRIBOR",pt:"Ambos frente a frente\n→ AMBOS de manobra\n→ Ambos viram a ESTIBORDO"},
+      getA:t=>({x:20+t*2.2,y:100}), headA:90,
+      getB:t=>({x:270-t*2.2,y:100}), headB:270,
+      cA:C.blue2, cB:C.red, lA:"A →", lB:"← B",
+      danger:t=>t>50&&t<70,
+    },
+    {
+      id:"overtaking", rule:"Rule 13", color:C.purple,
+      label:{fr:"Rattrapage",en:"Overtaking",es:"Alcance",pt:"Ultrapassagem"},
+      desc:{fr:"B rattrape A par l'arrière\n→ B = TOUJOURS manœuvrant\n→ A = TOUJOURS privilégié\nMême si B est un voilier !",en:"B overtaking A from astern\n→ B = ALWAYS give-way\n→ A = ALWAYS stand-on\nEven if B is a sailing vessel!",es:"B alcanza a A por la popa\n→ B = SIEMPRE de maniobra\n→ A = SIEMPRE privilegiado",pt:"B ultrapassa A pela popa\n→ B = SEMPRE de manobra\n→ A = SEMPRE privilegiado"},
+      getA:t=>({x:30+t*1.2,y:100}), headA:90,
+      getB:t=>({x:10+t*2.4,y:115}), headB:90,
+      cA:C.green, cB:C.orange, lA:"A (lent)", lB:"B (rapide)",
+      danger:t=>t>45&&t<65,
+    },
+    {
+      id:"sailing", rule:"Rule 12", color:C.teal,
+      label:{fr:"Voiliers",en:"Sailing vessels",es:"Veleros",pt:"Veleiros"},
+      desc:{fr:"Amures différentes :\n→ Tribord amures = PRIVILÉGIÉ\n→ Bâbord amures = MANŒUVRANT\nA (tribord) = privilégié ici",en:"Different tacks:\n→ Starboard tack = STAND-ON\n→ Port tack = GIVE-WAY\nA (starboard tack) = stand-on",es:"Amuras diferentes:\n→ Estribor = PRIVILEGIADO\n→ Babor = MANIOBRA",pt:"Bolinas diferentes:\n→ Estibordo = PRIVILEGIADO\n→ Bombordo = MANOBRA"},
+      getA:t=>({x:60+t*1.5,y:80+t*0.3}), headA:110,
+      getB:t=>({x:220-t*1.8,y:140-t*0.5}), headB:300,
+      cA:C.teal, cB:C.orange, lA:"A ⛵ tribord", lB:"B ⛵ bâbord",
+      danger:t=>t>45&&t<65,
+    },
   ];
 
+  const sc = scenarios[scenario];
+  useEffect(()=>{
+    if(running){animRef.current=setInterval(()=>{setTick(p=>{if(p>=90){setRunning(false);return 0;}return p+1;});},60);}
+    else clearInterval(animRef.current);
+    return()=>clearInterval(animRef.current);
+  },[running]);
+
+  const reset=()=>{setRunning(false);setTick(0);};
+  const posA=sc.getA(tick), posB=sc.getB(tick);
+  const isDanger=sc.danger(tick);
+  const dx=posB.x-posA.x, dy=posB.y-posA.y;
+  const dist=Math.sqrt(dx*dx+dy*dy).toFixed(0);
+
+  const shipPts=(x,y,h,sz=13)=>{
+    const r=h*Math.PI/180;
+    const tx=x+sz*Math.cos(r),ty=y+sz*Math.sin(r);
+    const lx=x+sz*0.5*Math.cos(r+2.2),ly=y+sz*0.5*Math.sin(r+2.2);
+    const rx=x+sz*0.5*Math.cos(r-2.2),ry=y+sz*0.5*Math.sin(r-2.2);
+    const bx=x-sz*0.3*Math.cos(r),by=y-sz*0.3*Math.sin(r);
+    return `${tx},${ty} ${lx},${ly} ${bx},${by} ${rx},${ry}`;
+  };
+
   return (
-    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
-      {rules.map((r,i) => (
-        <div key={i} style={{
-          display:"flex", gap:10, alignItems:"flex-start",
-          padding:"8px 10px", borderRadius:10,
-          background:"rgba(255,255,255,0.04)",
-          border:`1px solid ${r.color}22`,
-        }}>
-          <div style={{
-            minWidth:28, height:28, borderRadius:8, flexShrink:0,
-            background:`${r.color}22`, border:`1px solid ${r.color}44`,
-            display:"flex", alignItems:"center", justifyContent:"center",
-            fontFamily:"'Cinzel',serif", fontSize:9, fontWeight:700,
-            color:r.color,
-          }}>{r.num}</div>
-          <div>
-            <div style={{ fontSize:12, fontWeight:700, color:r.color, marginBottom:2 }}>
-              {r.title[lang]||r.title.fr}
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:10}}>
+        {scenarios.map((s,i)=>(
+          <button key={i} onClick={()=>{setScenario(i);reset();}} style={{
+            padding:"7px 4px",borderRadius:10,fontSize:9,cursor:"pointer",
+            background:scenario===i?`${s.color}22`:"rgba(255,255,255,0.05)",
+            border:`1.5px solid ${scenario===i?s.color:"rgba(255,255,255,0.1)"}`,
+            color:scenario===i?s.color:C.muted,fontWeight:scenario===i?700:400,textAlign:"center",
+          }}>{s.label[lang]||s.label.fr}</button>
+        ))}
+      </div>
+
+      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
+        <rect width={W} height={H} fill="#061020" rx="8"/>
+        {[40,80,120,160].map(y=><path key={y} d={`M0,${y} Q72,${y-3} 145,${y} Q218,${y+3} ${W},${y}`} fill="none" stroke="rgba(77,166,255,0.05)" strokeWidth="0.8"/>)}
+        {isDanger&&<circle cx={(posA.x+posB.x)/2} cy={(posA.y+posB.y)/2} r={38} fill="rgba(192,57,43,0.1)" stroke={C.red} strokeWidth="1.5" strokeDasharray="4,3"><animate attributeName="r" values="33;43;33" dur="0.8s" repeatCount="indefinite"/></circle>}
+        <line x1={posA.x-18*Math.cos(sc.headA*Math.PI/180)} y1={posA.y-18*Math.sin(sc.headA*Math.PI/180)} x2={posA.x} y2={posA.y} stroke={sc.cA} strokeWidth="1" opacity="0.3" strokeDasharray="3,3"/>
+        <line x1={posB.x-18*Math.cos(sc.headB*Math.PI/180)} y1={posB.y-18*Math.sin(sc.headB*Math.PI/180)} x2={posB.x} y2={posB.y} stroke={sc.cB} strokeWidth="1" opacity="0.3" strokeDasharray="3,3"/>
+        {dist<60&&<line x1={posA.x} y1={posA.y} x2={posB.x} y2={posB.y} stroke={isDanger?C.red:C.gold2} strokeWidth="1" strokeDasharray="4,2" opacity="0.4"/>}
+        <polygon points={shipPts(posA.x,posA.y,sc.headA)} fill={sc.cA} opacity="0.9"/>
+        <polygon points={shipPts(posB.x,posB.y,sc.headB)} fill={sc.cB} opacity="0.9"/>
+        <rect x={posA.x-20} y={posA.y-26} width={40} height={14} rx={4} fill="rgba(0,0,0,0.7)" stroke={sc.cA} strokeWidth="0.8"/>
+        <text x={posA.x} y={posA.y-16} textAnchor="middle" fontSize="7" fill={sc.cA} fontWeight="700">{sc.lA}</text>
+        <rect x={posB.x-20} y={posB.y+14} width={40} height={14} rx={4} fill="rgba(0,0,0,0.7)" stroke={sc.cB} strokeWidth="0.8"/>
+        <text x={posB.x} y={posB.y+24} textAnchor="middle" fontSize="7" fill={sc.cB} fontWeight="700">{sc.lB}</text>
+        <rect x="0" y="0" width={W} height="16" fill="rgba(0,0,0,0.6)"/>
+        <text x="8" y="11" fontSize="7" fill={isDanger?C.red:C.green}>
+          {isDanger?(lang==="fr"?"⚠️ RISQUE D'ABORDAGE !":lang==="en"?"⚠️ COLLISION RISK!":"⚠️ ¡RIESGO ABORDAJE!"):`✅ ${sc.rule} · dist: ${dist}`}
+        </text>
+        <rect x="0" y={H-5} width={tick/90*W} height={5} fill={sc.color} opacity="0.4"/>
+      </svg>
+
+      <div style={{display:"flex",gap:8,marginTop:8}}>
+        <button onClick={()=>setRunning(v=>!v)} style={{flex:2,padding:"10px 0",borderRadius:12,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif",background:running?`rgba(192,57,43,0.2)`:`${sc.color}22`,border:`1.5px solid ${running?C.red:sc.color}`,color:running?C.red:sc.color}}>
+          {running?(lang==="fr"?"⏸ PAUSE":"⏸ PAUSE"):tick===0?(lang==="fr"?"▶ LANCER":"▶ START"):(lang==="fr"?"▶ REPRENDRE":"▶ RESUME")}
+        </button>
+        <button onClick={reset} style={{flex:1,padding:"10px 0",borderRadius:12,fontSize:11,cursor:"pointer",background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.12)",color:C.muted}}>↺</button>
+      </div>
+
+      <div style={{marginTop:8,padding:"10px 12px",borderRadius:12,background:`${sc.color}10`,border:`1px solid ${sc.color}33`,fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line"}}>
+        <div style={{fontWeight:700,color:sc.color,marginBottom:4}}>{sc.rule} — {sc.label[lang]||sc.label.fr}</div>
+        {sc.desc[lang]||sc.desc.fr}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// SVG 3 — NAVIGATION LIGHTS
+// ══════════════════════════════════════
+function NavLightsSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+  const vessels = [
+    {id:"power",label:{fr:"Moteur (de face)",en:"Power (ahead)",es:"Motor (de proa)",pt:"Motor (de proa)"},rule:"Rule 23",color:C.blue2,
+     lights:[{x:145,y:48,r:7,c:"white",l:{fr:"Blanc mât",en:"Masthead white",es:"Blanco palo",pt:"Branco mastro"}},{x:82,y:85,r:6,c:"#ff4444",l:{fr:"Rouge bâbord",en:"Port red",es:"Rojo babor",pt:"Vermelho bombordo"}},{x:208,y:85,r:6,c:"#44ff44",l:{fr:"Vert tribord",en:"Starboard green",es:"Verde estribor",pt:"Verde estibordo"}}],
+     desc:{fr:"De face : blanc + rouge + vert\nDe tribord : blanc + vert\nDe bâbord : blanc + rouge\nDe poupe : blanc uniquement",en:"Head-on: white+red+green · Starboard: white+green\nPort: white+red · Stern: white only",es:"De proa: blanco+rojo+verde · De popa: blanco solo",pt:"De proa: branco+verm+verde · De popa: branco só"}},
+    {id:"anchor",label:{fr:"Navire à l'ancre",en:"At anchor",es:"Fondeado",pt:"Fundeado"},rule:"Rule 30",color:C.gold2,
+     lights:[{x:145,y:55,r:9,c:"white",l:{fr:"Blanc tout-horizon",en:"All-round white",es:"Blanco todo horizonte",pt:"Branco todo-horizonte"}}],
+     desc:{fr:"1 blanc tout-horizon (< 50m)\n2 blancs (> 50m)\nJour : boule noire à la proue\nObligatoire même au mouillage",en:"1 all-round white (<50m) · 2 whites (>50m)\nDay: black ball at bow · Mandatory at anchor",es:"1 blanco todo horizonte (<50m) · 2 blancos (>50m)\nDía: bola negra en la proa",pt:"1 branco todo-horizonte (<50m) · 2 brancos (>50m)\nDia: bola negra na proa"}},
+    {id:"nuc",label:{fr:"NUC",en:"NUC",es:"NBC",pt:"NMC"},rule:"Rule 27",color:C.red,
+     lights:[{x:145,y:48,r:6,c:"#ff4444",l:{fr:"Rouge",en:"Red",es:"Rojo",pt:"Vermelho"}},{x:145,y:72,r:6,c:"#ff4444",l:{fr:"Rouge",en:"Red",es:"Rojo",pt:"Vermelho"}}],
+     desc:{fr:"2 rouges verticaux + feux de route\nSignal sonore : 1 long + 2 courts / 2 min\nTOUS les navires s'écartent",en:"2 vertical reds + running lights\nSound: 1 long+2 short / 2 min · ALL vessels clear",es:"2 rojos verticales + luces de navegación\nSeñal: 1 larga+2 cortas / 2 min",pt:"2 vermelhos verticais + luzes de navegação\nSinal: 1 longa+2 curtas / 2 min"}},
+    {id:"towing",label:{fr:"Remorqueur",en:"Towing",es:"Remolcador",pt:"Rebocador"},rule:"Rule 24",color:C.orange,
+     lights:[{x:145,y:38,r:7,c:"white",l:{fr:"Blanc (avant)",en:"White (fore)",es:"Blanco (proa)",pt:"Branco (proa)"}},{x:145,y:60,r:7,c:"white",l:{fr:"Blanc (arrière)",en:"White (aft)",es:"Blanco (popa)",pt:"Branco (popa)"}},{x:145,y:82,r:6,c:"#ffdd00",l:{fr:"Jaune (remorque)",en:"Yellow (tow)",es:"Amarillo (remolque)",pt:"Amarelo (reboque)"}}],
+     desc:{fr:"Remorque <200m : 2 blancs + 1 jaune\nRemorque >200m : 3 blancs + 1 jaune\n+ feux de côté rouge/vert",en:"Tow <200m: 2 white+1 yellow · Tow >200m: 3 white+1 yellow\n+ side lights red/green",es:"Remolque <200m: 2 blancos+1 amarillo\n>200m: 3 blancos+1 amarillo + luces costado",pt:"Reboque <200m: 2 brancos+1 amarelo\n>200m: 3 brancos+1 amarelo + luzes costado"}},
+  ];
+  const sel_ = sel ? vessels.find(v=>v.id===sel) : null;
+  return (
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:10}}>
+        {vessels.map(v=>(
+          <button key={v.id} onClick={()=>setSel(sel===v.id?null:v.id)} style={{padding:"8px 6px",borderRadius:10,fontSize:9,cursor:"pointer",background:sel===v.id?`${v.color}22`:"rgba(255,255,255,0.05)",border:`1.5px solid ${sel===v.id?v.color:"rgba(255,255,255,0.1)"}`,color:sel===v.id?v.color:C.muted,fontWeight:sel===v.id?700:400}}>
+            {v.label[lang]||v.label.fr}
+          </button>
+        ))}
+      </div>
+      {sel_ && <>
+        <svg width="290" height="130" viewBox="0 0 290 130">
+          <rect width="290" height="130" fill="#000814" rx="8"/>
+          {[[20,15],[60,25],[100,10],[180,20],[220,12],[260,28],[40,35],[150,8]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r={0.8} fill="white" opacity="0.3"/>)}
+          <path d="M80,105 L85,88 L145,83 L205,88 L215,105 Q200,113 145,115 Q90,113 80,105 Z" fill="#0a1628" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8"/>
+          <line x1="145" y1="38" x2="145" y2="88" stroke="rgba(255,255,255,0.12)" strokeWidth="1"/>
+          {sel_.lights.map((lt,i)=>(
+            <g key={i}>
+              <circle cx={lt.x} cy={lt.y} r={lt.r*3} fill={lt.c} opacity="0.05"/>
+              <circle cx={lt.x} cy={lt.y} r={lt.r*1.8} fill={lt.c} opacity="0.1"/>
+              <circle cx={lt.x} cy={lt.y} r={lt.r} fill={lt.c} opacity="0.95"><animate attributeName="opacity" values="0.95;0.55;0.95" dur="2s" repeatCount="indefinite"/></circle>
+            </g>
+          ))}
+          <rect x="5" y="5" width="55" height="14" rx="4" fill="rgba(0,0,0,0.6)" stroke={sel_.color} strokeWidth="0.8"/>
+          <text x="32" y="14" textAnchor="middle" fontSize="7" fill={sel_.color} fontWeight="700">{sel_.rule}</text>
+        </svg>
+        <div style={{display:"flex",flexWrap:"wrap",gap:5,margin:"8px 0"}}>
+          {sel_.lights.map((lt,i)=>(
+            <div key={i} style={{display:"flex",alignItems:"center",gap:4,padding:"3px 8px",borderRadius:8,background:`${lt.c}15`,border:`1px solid ${lt.c}44`}}>
+              <div style={{width:7,height:7,borderRadius:"50%",background:lt.c}}/>
+              <span style={{fontSize:9,color:lt.c}}>{lt.l[lang]||lt.l.fr}</span>
             </div>
-            <div style={{ fontSize:11, color:C.muted, lineHeight:1.4 }}>
-              {r.key[lang]||r.key.fr}
+          ))}
+        </div>
+        <div style={{padding:"10px 12px",borderRadius:12,background:`${sel_.color}10`,border:`1px solid ${sel_.color}33`,fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
+      </>}
+      {!sel_&&<div style={{textAlign:"center",padding:"16px",fontSize:11,color:C.muted}}>{lang==="fr"?"Sélectionne un type de navire":lang==="en"?"Select a vessel type":lang==="es"?"Selecciona un tipo de buque":"Selecione um tipo de navio"}</div>}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// SVG 4 — SOUND SIGNALS
+// ══════════════════════════════════════
+function SoundSignals({ lang }) {
+  const [open, setOpen] = useState(null);
+  const sigs = [
+    {id:"s1",sym:"·",color:C.blue2,label:{fr:"1 court",en:"1 short",es:"1 corto",pt:"1 curto"},meaning:{fr:"Je vire à TRIBORD",en:"Altering course to STARBOARD",es:"Giro a ESTRIBOR",pt:"Viro a ESTIBORDO"},rule:"Rule 34"},
+    {id:"s2",sym:"··",color:C.teal,label:{fr:"2 courts",en:"2 short",es:"2 cortos",pt:"2 curtos"},meaning:{fr:"Je vire à BÂBORD",en:"Altering course to PORT",es:"Giro a BABOR",pt:"Viro a BOMBORDO"},rule:"Rule 34"},
+    {id:"s3",sym:"···",color:C.orange,label:{fr:"3 courts",en:"3 short",es:"3 cortos",pt:"3 curtos"},meaning:{fr:"Je bats en ARRIÈRE",en:"My engines going ASTERN",es:"Mis máquinas van ATRÁS",pt:"Minhas máquinas a RÉ"},rule:"Rule 34"},
+    {id:"s5",sym:"·····",color:C.red,label:{fr:"5+ courts (ALARME)",en:"5+ short (ALARM)",es:"5+ cortos (ALARMA)",pt:"5+ curtos (ALARME)"},meaning:{fr:"DANGER ! Je ne comprends pas vos intentions\nOu : situation dangereuse imminente",en:"DANGER! I do not understand your intentions\nOr: imminent dangerous situation",es:"¡PELIGRO! No entiendo sus intenciones",pt:"PERIGO! Não entendo suas intenções"},rule:"Rule 34"},
+    {id:"l1",sym:"—",color:C.purple,label:{fr:"1 long (brume)",en:"1 long (fog)",es:"1 largo (niebla)",pt:"1 longo (nevoeiro)"},meaning:{fr:"Navire à moteur en marche avant\n(toutes les 2 minutes par brume)",en:"Power vessel making way\n(every 2 minutes in fog)",es:"Buque de motor en marcha\n(cada 2 minutos en niebla)",pt:"Navio a motor em marcha\n(cada 2 minutos em nevoeiro)"},rule:"Rule 35"},
+    {id:"l2",sym:"—··",color:C.gold2,label:{fr:"1 long + 2 courts",en:"1 long + 2 short",es:"1 largo + 2 cortos",pt:"1 longo + 2 curtos"},meaning:{fr:"Brume : NUC · RAM · Voilier · Ancre >100m\n(toutes les 2 minutes)",en:"Fog: NUC · RAM · Sailing · Anchor >100m\n(every 2 minutes)",es:"Niebla: NBC · MCM · Velero · Fondeado >100m",pt:"Nevoeiro: NMC · CAM · Veleiro · Fundeado >100m"},rule:"Rule 35"},
+  ];
+  return (
+    <div style={{display:"flex",flexDirection:"column",gap:7}}>
+      {sigs.map(s=>(
+        <div key={s.id} onClick={()=>setOpen(open===s.id?null:s.id)}
+          style={{padding:"10px 12px",borderRadius:12,cursor:"pointer",background:open===s.id?`${s.color}18`:"rgba(255,255,255,0.04)",border:`1.5px solid ${open===s.id?s.color:"rgba(255,255,255,0.08)"}`}}>
+          <div style={{display:"flex",alignItems:"center",gap:10}}>
+            <div style={{fontFamily:"monospace",fontSize:18,fontWeight:900,color:s.color,minWidth:56,letterSpacing:3}}>{s.sym}</div>
+            <div style={{flex:1}}>
+              <div style={{fontSize:11,fontWeight:700,color:s.color}}>{s.label[lang]||s.label.fr}</div>
+              <div style={{fontSize:9,color:C.muted}}>{s.rule}</div>
             </div>
+            <span style={{fontSize:10,color:C.muted}}>{open===s.id?"▲":"▼"}</span>
           </div>
+          {open===s.id&&<div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line",paddingTop:8,borderTop:`1px solid ${s.color}22`,marginTop:6,animation:"fadeUp 0.3s ease"}}>{s.meaning[lang]||s.meaning.fr}</div>}
         </div>
       ))}
     </div>
   );
 }
 
-// ══════════════════════════════════════════════
-//  LESSON CONTENT
-// ══════════════════════════════════════════════
-const SECTIONS = {
+// ══════════════════════════════════════
+// EXERCISE
+// ══════════════════════════════════════
+function Exercise1({ lang, t }) {
+  const [ans, setAns] = useState({q1:"",q2:"",q3:""});
+  const [showC, setShowC] = useState(false);
+  const correct = {q1:"b",q2:"a",q3:"c"};
+  const qs = {
+    fr:[
+      {id:"q1",q:"Croisement : A vient de TRIBORD de B.\nQui est le navire PRIVILÉGIÉ ?\na) B · b) A · c) les deux · d) aucun"},
+      {id:"q2",q:"Face à face (Rule 14). Que font A et B ?\na) Les deux virent à TRIBORD\nb) A maintient, B cède\nc) Le plus rapide maintient\nd) Rien"},
+      {id:"q3",q:"Rattrapage (Rule 13). B rattrape A.\nQui est TOUJOURS manœuvrant ?\na) A (rattrapé) · b) Le plus vite\nc) B (qui rattrape) · d) Dépend"},
+    ],
+    en:[
+      {id:"q1",q:"Crossing: A is on B's STARBOARD side.\nWho is the STAND-ON vessel?\na) B · b) A · c) both · d) neither"},
+      {id:"q2",q:"Head-on (Rule 14). What do A and B do?\na) Both alter to STARBOARD\nb) A stands on, B gives way\nc) Faster holds · d) Nothing"},
+      {id:"q3",q:"Overtaking (Rule 13). B overtakes A.\nWho is ALWAYS give-way?\na) A (overtaken) · b) The faster\nc) B (overtaking) · d) It depends"},
+    ],
+    es:[
+      {id:"q1",q:"Cruce: A está por ESTRIBOR de B.\n¿Quién es el buque PRIVILEGIADO?\na) B · b) A · c) ambos · d) ninguno"},
+      {id:"q2",q:"Cara a cara (Regla 14). ¿Qué hacen A y B?\na) Ambos viran a ESTRIBOR\nb) A mantiene, B cede\nc) El más rápido · d) Nada"},
+      {id:"q3",q:"Alcance (Regla 13). B alcanza a A.\n¿Quién es SIEMPRE de maniobra?\na) A (alcanzado) · b) El más rápido\nc) B (que alcanza) · d) Depende"},
+    ],
+    pt:[
+      {id:"q1",q:"Cruzamento: A está pelo ESTIBORDO de B.\nQuem é o navio PRIVILEGIADO?\na) B · b) A · c) ambos · d) nenhum"},
+      {id:"q2",q:"Frente a frente (Regra 14). O que fazem A e B?\na) Ambos viram a ESTIBORDO\nb) A mantém, B cede\nc) O mais rápido · d) Nada"},
+      {id:"q3",q:"Ultrapassagem (Regra 13). B ultrapassa A.\nQuem é SEMPRE de manobra?\na) A (ultrapassado) · b) O mais rápido\nc) B (que ultrapassa) · d) Depende"},
+    ],
+  };
+  const list = qs[lang]||qs.fr;
+  const chk = (id,val) => val.trim().toLowerCase()===correct[id];
+  return (
+    <div>
+      {list.map((q,i)=>(
+        <div key={q.id} style={{marginBottom:14}}>
+          <div style={{fontSize:12,color:C.white,marginBottom:6,lineHeight:1.6,whiteSpace:"pre-line",fontWeight:600}}>{i+1}. {q.q}</div>
+          <input type="text" value={ans[q.id]} onChange={e=>setAns(a=>({...a,[q.id]:e.target.value}))} placeholder="a, b, c ou d"
+            style={{width:"100%",padding:"10px",borderRadius:10,background:"rgba(255,255,255,0.07)",border:`1px solid ${showC?(chk(q.id,ans[q.id])?C.green:C.red):C.border}`,color:C.white,fontSize:18,fontFamily:"monospace",fontWeight:700,textAlign:"center",boxSizing:"border-box"}}/>
+          {showC&&<div style={{fontSize:11,marginTop:4,fontWeight:600,color:chk(q.id,ans[q.id])?C.green:C.red}}>{chk(q.id,ans[q.id])?"✓":`✗ → ${correct[q.id]}`}</div>}
+        </div>
+      ))}
+      {showC&&<div style={{padding:"12px",borderRadius:12,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:11,color:C.white,lineHeight:1.6,marginBottom:10}}>
+        {lang==="fr"?"✅ Q1: b — A vient de tribord → A est privilégié (Rule 15)\n✅ Q2: a — Face à face : les DEUX virent à tribord (Rule 14)\n✅ Q3: c — B qui rattrape = TOUJOURS manœuvrant (Rule 13)":
+         lang==="en"?"✅ Q1: b — A comes from starboard → A is stand-on (Rule 15)\n✅ Q2: a — Head-on: BOTH alter to starboard (Rule 14)\n✅ Q3: c — Overtaking vessel B = ALWAYS give-way (Rule 13)":
+         "✅ Q1: b · Q2: a · Q3: c"}
+      </div>}
+      <button onClick={()=>setShowC(v=>!v)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:showC?"rgba(30,138,74,0.2)":"rgba(201,146,42,0.15)",border:`1px solid ${showC?C.green:C.gold}44`,color:showC?C.green:C.gold2,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
+        {showC?t.hideCorr:t.showCorr}
+      </button>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// ACCIDENT
+// ══════════════════════════════════════
+function AccidentCase({ lang }) {
+  const [exp, setExp] = useState(false);
+  const d = {
+    fr:{title:"MV Bright Field — Mississippi, La Nouvelle-Orléans (1996)",teaser:"Cargo · Panne moteur · NUC non déclaré · 116 blessés · Quai touristique détruit",what:"Le cargo Bright Field descend le Mississippi à La Nouvelle-Orléans. Le moteur tombe en panne face au quai touristique Riverwalk. Le navire dérive et percute les boutiques du quai à grande vitesse. 116 blessés, dégâts matériels considérables.",cause:"• Panne moteur non déclarée immédiatement comme NUC (Rule 27)\n• Pas de remorqueur d'assistance prépositionné\n• Vitesse excessive pour le Mississippi (courant 5 kn)\n• Communication insuffisante pilote ↔ passerelle\n• Mouillage d'urgence non tenté\n• 5 sons courts d'alarme non émis",lessons:"✓ Déclarer NUC IMMÉDIATEMENT en cas de panne propulsion\n✓ Émettre 5+ sons courts (Rule 34) = alarme pour les autres navires\n✓ Vitesse adaptée aux courants de fleuve\n✓ Mouillage d'urgence = manœuvre obligatoire à maîtriser\n✓ Résultat : nouvelles règles navigation fluviale USA",link:"🔗 Lien L8 : Un NUC déclaré + 5 sons courts auraient alerté les autres navires et le port. COLREG = obligations LÉGALES, pas des recommandations."},
+    en:{title:"MV Bright Field — Mississippi, New Orleans (1996)",teaser:"Cargo vessel · Engine failure · NUC not declared · 116 injured · Tourist wharf destroyed",what:"The cargo vessel Bright Field descends the Mississippi at New Orleans. The engine fails opposite the Riverwalk tourist wharf. The vessel drifts and strikes the shopping area at high speed. 116 injured, major property damage.",cause:"• Engine failure not immediately declared as NUC (Rule 27)\n• No assist tug pre-positioned\n• Excessive speed for Mississippi River (5kn current)\n• Insufficient pilot ↔ bridge communication\n• Emergency anchoring not attempted\n• 5 short alarm blasts not sounded",lessons:"✓ Declare NUC IMMEDIATELY upon propulsion failure\n✓ Sound 5+ short blasts (Rule 34) = alarm for other vessels\n✓ Speed appropriate for river currents\n✓ Emergency anchoring = mandatory manœuvre to master\n✓ Result: new US inland waterway navigation rules",link:"🔗 L8 Link: A declared NUC + 5 short blasts would have alerted other vessels and the port. COLREG = LEGAL obligations, not recommendations."},
+    es:{title:"MV Bright Field — Mississippi, Nueva Orleans (1996)",teaser:"Buque de carga · Avería motor · NBC no declarado · 116 heridos · Muelle turístico destruido",what:"El buque Bright Field desciende el Mississippi en Nueva Orleans. El motor avería frente al muelle turístico Riverwalk. El buque deriva y choca con las tiendas del muelle a gran velocidad. 116 heridos.",cause:"• Avería motor no declarada como NBC (Regla 27)\n• Sin remolcador de asistencia\n• Velocidad excesiva para el Mississippi (corriente 5 kn)\n• Comunicación insuficiente práctico ↔ puente",lessons:"✓ Declarar NBC INMEDIATAMENTE ante fallo de propulsión\n✓ Emitir 5+ pitidos cortos (Regla 34)\n✓ Velocidad adaptada a las corrientes del río\n✓ Resultado: nuevas reglas navegación fluvial USA",link:"🔗 Vínculo L8: Un NBC declarado + 5 pitidos cortos habrían alertado a otros buques. COLREG = obligaciones LEGALES."},
+    pt:{title:"MV Bright Field — Mississippi, Nova Orleães (1996)",teaser:"Navio de carga · Avaria motor · NMC não declarado · 116 feridos · Cais turístico destruído",what:"O navio Bright Field desce o Mississippi em Nova Orleães. O motor avaria em frente ao cais turístico Riverwalk. O navio deriva e embate nas lojas do cais a grande velocidade. 116 feridos.",cause:"• Avaria motor não declarada como NMC (Regra 27)\n• Sem rebocador de assistência pré-posicionado\n• Velocidade excessiva para o Mississippi (corrente 5 nós)\n• Comunicação insuficiente piloto ↔ ponte",lessons:"✓ Declarar NMC IMEDIATAMENTE quando a propulsão falha\n✓ Emitir 5+ toques curtos (Regra 34)\n✓ Velocidade adaptada às correntes do rio\n✓ Resultado: novas regras navegação fluvial EUA",link:"🔗 Vínculo L8: Um NMC declarado + 5 toques curtos teriam alertado outros navios. COLREG = obrigações LEGAIS."},
+  };
+  const c = d[lang]||d.fr;
+  return (
+    <div style={{background:"rgba(192,57,43,0.08)",border:`1.5px solid ${C.red}44`,borderRadius:18,overflow:"hidden"}}>
+      <div style={{padding:"14px 16px",cursor:"pointer"}} onClick={()=>setExp(v=>!v)}>
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <span style={{fontSize:22}}>⚠️</span>
+          <div style={{flex:1}}><div style={{fontSize:13,fontWeight:700,color:C.red,marginBottom:2}}>{c.title}</div><div style={{fontSize:11,color:C.muted,lineHeight:1.4}}>{c.teaser}</div></div>
+          <span style={{fontSize:14,color:C.muted}}>{exp?"▲":"▼"}</span>
+        </div>
+      </div>
+      {exp&&<div style={{padding:"0 16px 16px"}}>
+        <div style={{fontSize:12,color:C.white,lineHeight:1.7,marginBottom:10}}>{c.what}</div>
+        <div style={{fontSize:11,color:C.red,fontWeight:700,marginBottom:5,fontFamily:"'Cinzel',serif"}}>CAUSES</div>
+        <div style={{fontSize:12,color:C.white,lineHeight:1.7,whiteSpace:"pre-line",marginBottom:10}}>{c.cause}</div>
+        <div style={{fontSize:11,color:C.green,fontWeight:700,marginBottom:5,fontFamily:"'Cinzel',serif"}}>{lang==="fr"?"LEÇONS":lang==="en"?"LESSONS":lang==="es"?"LECCIONES":"LIÇÕES"}</div>
+        <div style={{fontSize:12,color:C.white,lineHeight:1.7,whiteSpace:"pre-line",marginBottom:10}}>{c.lessons}</div>
+        <div style={{padding:"10px 12px",borderRadius:10,background:"rgba(201,146,42,0.1)",border:`1px solid ${C.gold}33`,fontSize:11,color:C.gold2,lineHeight:1.6}}>{c.link}</div>
+      </div>}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════
+const QUIZ = {
   fr:[
-    { type:"badge", text:"🛟 Sécurité Maritime — COLREG · Leçon 1/6 · 🆓 Gratuit · ⭐ 150 XP" },
-    { type:"title", text:"COLREG — Règles de collision en mer" },
-    { type:"intro",
-      text:"Chaque année, des centaines de collisions en mer font des morts, des blessés et causent des dégâts environnementaux catastrophiques.\n\nLa grande majorité aurait pu être évitée en respectant une seule chose : le COLREG.\n\nCette leçon te donne les règles essentielles qui sauvent des vies." },
-    { type:"keypoint", icon:"⚓", title:"Qu'est-ce que le COLREG ?",
-      text:"COLREG = Convention on the International Regulations for Preventing Collisions at Sea\n\nAdopté par l'IMO en 1972, entré en vigueur le 15 juillet 1977.\n\n38 règles organisées en 5 parties + 4 Annexes.\n\nS'applique à TOUS les navires sur TOUTES les eaux maritimes du monde — sans exception." },
-    { type:"rules_table" },
-    { type:"section_title", icon:"📐", text:"SCHEMAS INTERACTIFS" },
-    { type:"rule14_schema" },
-    { type:"content", icon:"🚢", title:"Rule 14 — Comment reconnaître la situation bout au bout",
-      text:"Tu es en situation bout au bout (head-on) si :\n✅ Tu vois le feu ROUGE ET le feu VERT de l'autre navire simultanément\n✅ Le navire vient droit sur toi (relèvement quasi constant)\n\nRègle : LES DEUX navires virent à TRIBORD → ils se croisent bâbord à bâbord.\n\n⚠️ Jamais virer à bâbord dans cette situation — vous vous retrouveriez face à face encore plus directement !\n\nSi tu doutes que tu es en situation Rule 14 : assume que oui et vire à tribord." },
-    { type:"rule15_schema" },
-    { type:"content", icon:"🎯", title:"Rule 15 — Le moyen mnémotechnique infaillible",
-      text:"ROUGE À TRIBORD = JE CÈDE\n\nSi tu vois le feu ROUGE d'un autre navire sur ton côté TRIBORD (droite) :\n→ Tu es le navire OBLIGÉ\n→ Tu DOIS t'écarter\n→ Tu viRes généralement à tribord ou tu réduis la vitesse\n\nSi tu vois le feu VERT d'un autre navire sur ton tribord :\n→ Tu es le navire PRIVILÉGIÉ\n→ Tu MAINTIENS ton cap et ta vitesse\n→ Tu surveilles si l'autre manœuvre bien\n\n💡 Pensez au sens de la circulation routière : en mer aussi, on se croise à droite." },
-    { type:"rule13_schema" },
-    { type:"content", icon:"⚓", title:"Rule 13 — Rattrapage : qui que tu sois, tu cèdes",
-      text:"Un navire est considéré en train d'en rattraper un autre quand il s'approche dans un secteur de 135° à l'arrière du navire rattrapé.\n\nDans ce secteur, la nuit : tu ne vois NI le feu rouge NI le feu vert du navire devant toi — seulement son feu de poupe BLANC.\n\nRègle absolue : Celui qui rattrape TOUJOURS cède.\n• Peu importe ta taille\n• Peu importe ta vitesse\n• Peu importe ton pavillon\n\nLe navire rattrapé est NAVIRE PRIVILÉGIÉ — il maintient cap et vitesse et ne doit pas manœuvrer (sauf danger imminent)." },
-    { type:"keypoint", icon:"⚡", title:"Rule 8 — La manœuvre parfaite",
-      text:"Quand tu dois manœuvrer pour éviter un abordage, ta manœuvre doit être :\n\n1️⃣ FRANCHE — Clairement visible par l'autre navire. Pas de petites corrections de quelques degrés.\n\n2️⃣ AMPLE — Suffisamment grande pour créer une distance de sécurité réelle.\n\n3️⃣ TÔT — Assez tôt pour que l'autre navire voit ta manœuvre et ne manœuvre pas lui-même, créant une confusion.\n\n4️⃣ RÉSULTAT — La manœuvre doit créer une distance de passage suffisante." },
-    { type:"summary",
-      title:"RÉSUMÉ — COLREG Leçon 1",
-      points:[
-        "38 règles · Adopté 1972 · Valable mondialement",
-        "Rule 5 : Veille permanente — vue + ouïe + tous les moyens",
-        "Rule 6 : Vitesse de sécurité — pouvoir s'arrêter à temps",
-        "Rule 13 : Navire qui rattrape → TOUJOURS obligé de céder",
-        "Rule 14 : Bout au bout → LES DEUX virent à TRIBORD",
-        "Rule 15 : Rouge à tribord → OBLIGÉ de céder",
-        "Rule 16 : Navire obligé → manœuvre franche, ample, tôt",
-        "Rule 17 : Navire privilégié → maintient cap et vitesse",
-      ]
-    },
+    {q:"Rule 15 — Croisement : A vient de TRIBORD de B. Qui cède la route ?",opts:["A — qui vient de tribord","B — navire manœuvrant, cède à celui de tribord","Les deux virent à tribord","Le plus lent"],correct:1,expl:"Rule 15 : en situation de croisement, le navire qui a l'autre sur son TRIBORD est le navire MANŒUVRANT. Il doit céder. Le navire venant de tribord = PRIVILÉGIÉ. Mémo : Tribord = Privilégié."},
+    {q:"Rule 14 — Face à face : deux navires se font face. Que font-ils ?",opts:["Le plus rapide maintient","Chacun vire à bâbord","Les DEUX virent à TRIBORD — se croiser par bâbord","Ils attendent"],correct:2,expl:"Rule 14 : face à face, les DEUX sont manœuvrants. Les deux virent à TRIBORD pour se croiser BÂBORD à BÂBORD. Même si pas sûr : virer à tribord dès le doute."},
+    {q:"Rule 13 — Rattrapage : qui est TOUJOURS le navire manœuvrant ?",opts:["Le navire rattrapé (A)","Le plus rapide","Le navire qui rattrape (B) — TOUJOURS","Dépend du type de navire"],correct:2,expl:"Rule 13 : le navire qui RATTRAPE est TOUJOURS manœuvrant. Même un voilier rattrapant un navire à moteur doit céder. Le navire rattrapé = TOUJOURS privilégié."},
+    {q:"Hiérarchie Rule 18 — Quel navire a la priorité absolue ?",opts:["Le voilier","Le navire à moteur","Le NUC (Non Maîtrisable)","Le navire de pêche"],correct:2,expl:"Rule 18 : NUC > RAM > Gêné par tirant d'eau > Pêche > Voilier > Navire à moteur. NUC = priorité absolue car en panne, incapable de manœuvrer. Le navire à moteur = priorité la plus basse, doit céder à tous."},
+    {q:"Que signifient 5 sons courts rapides sur la corne de brume ?",opts:["Signal de brume par mauvaise visibilité","ALARME : danger ou je ne comprends pas vos intentions","Je bats en arrière","Entrée en port"],correct:1,expl:"Rule 34 : 5 sons courts = signal d'ALARME ou de doute. Signifie : danger immédiat ou je ne comprends pas vos intentions. À émettre dès qu'on doute. Si on entend 5 sons courts : DANGER, réduire vitesse, évaluer la situation immédiatement."},
   ],
   en:[
-    { type:"badge", text:"🛟 Maritime Safety — COLREG · Lesson 1/6 · 🆓 Free · ⭐ 150 XP" },
-    { type:"title", text:"COLREG — Collision Regulations at Sea" },
-    { type:"intro",
-      text:"Every year, hundreds of collisions at sea cause deaths, injuries and catastrophic environmental damage.\n\nThe vast majority could have been avoided by respecting one thing: COLREG.\n\nThis lesson gives you the essential rules that save lives." },
-    { type:"keypoint", icon:"⚓", title:"What is COLREG?",
-      text:"COLREG = Convention on the International Regulations for Preventing Collisions at Sea\n\nAdopted by IMO in 1972, entered into force 15 July 1977.\n\n38 rules organized in 5 parts + 4 Annexes.\n\nApplies to ALL vessels on ALL maritime waters worldwide — without exception." },
-    { type:"rules_table" },
-    { type:"section_title", icon:"📐", text:"INTERACTIVE DIAGRAMS" },
-    { type:"rule14_schema" },
-    { type:"content", icon:"🚢", title:"Rule 14 — How to recognize a head-on situation",
-      text:"You are in a head-on situation if:\n✅ You see BOTH the RED and GREEN lights simultaneously\n✅ The vessel is coming straight at you (nearly constant bearing)\n\nRule: BOTH vessels alter course to STARBOARD → they pass port to port.\n\n⚠️ Never turn to port in this situation — you'd be facing each other more directly!\n\nIf in doubt whether Rule 14 applies: assume yes and turn starboard." },
-    { type:"rule15_schema" },
-    { type:"content", icon:"🎯", title:"Rule 15 — The infallible memory aid",
-      text:"RED ON STARBOARD = I GIVE WAY\n\nIf you see another vessel's RED light on your STARBOARD (right) side:\n→ You are the GIVE-WAY vessel\n→ You MUST keep clear\n→ You generally turn to starboard or reduce speed\n\nIf you see another vessel's GREEN light on your starboard:\n→ You are the STAND-ON vessel\n→ You HOLD your course and speed\n→ Watch to see if the other vessel maneuvers properly\n\n💡 Think of road traffic: at sea, we also pass on the right." },
-    { type:"rule13_schema" },
-    { type:"content", icon:"⚓", title:"Rule 13 — Overtaking: whoever you are, you give way",
-      text:"A vessel is overtaking another when it approaches within a sector of 135° of the other vessel's stern.\n\nAt night in this sector: you see NEITHER the red NOR the green light — only the WHITE stern light.\n\nAbsolute rule: The overtaking vessel ALWAYS gives way.\n• Regardless of size\n• Regardless of speed\n• Regardless of flag\n\nThe overtaken vessel is PRIVILEGED — holds course and speed." },
-    { type:"keypoint", icon:"⚡", title:"Rule 8 — The perfect maneuver",
-      text:"When you must maneuver to avoid collision, your action must be:\n\n1️⃣ POSITIVE — Clearly visible to the other vessel. Not small corrections of a few degrees.\n\n2️⃣ LARGE — Large enough to create real safety distance.\n\n3️⃣ EARLY — Early enough that the other vessel sees your maneuver.\n\n4️⃣ RESULT — The maneuver must create sufficient passing distance." },
-    { type:"summary",
-      title:"SUMMARY — COLREG Lesson 1",
-      points:[
-        "38 rules · Adopted 1972 · Valid worldwide",
-        "Rule 5: Lookout — sight + hearing + all means",
-        "Rule 6: Safe speed — able to stop in time",
-        "Rule 13: Overtaking → ALWAYS give way",
-        "Rule 14: Head-on → BOTH turn STARBOARD",
-        "Rule 15: Red on starboard → GIVE WAY",
-        "Rule 16: Give-way vessel → positive, large, early action",
-        "Rule 17: Stand-on vessel → hold course and speed",
-      ]
-    },
+    {q:"Rule 15 — Crossing: A is on B's STARBOARD. Who gives way?",opts:["A — coming from starboard","B — give-way vessel, must give way to vessel on its starboard","Both alter to starboard","The slower one"],correct:1,expl:"Rule 15: in a crossing situation, the vessel with the other on its STARBOARD is the GIVE-WAY vessel. Must give way. Vessel coming from starboard = STAND-ON. Memory: Starboard = Stand-on."},
+    {q:"Rule 14 — Head-on: two vessels meeting. What do they do?",opts:["Faster maintains","Each alters to port","BOTH alter to STARBOARD — pass port-to-port","They wait"],correct:2,expl:"Rule 14: head-on, BOTH are give-way. Both alter to STARBOARD to pass PORT-TO-PORT. Even if not sure: alter to starboard at first sign of doubt."},
+    {q:"Rule 13 — Overtaking: who is ALWAYS give-way?",opts:["The overtaken vessel (A)","The faster one","The overtaking vessel (B) — ALWAYS","Depends on vessel type"],correct:2,expl:"Rule 13: the OVERTAKING vessel is ALWAYS give-way. Even a sailing vessel overtaking a power vessel must give way. Overtaken vessel = ALWAYS stand-on."},
+    {q:"Hierarchy Rule 18 — Which vessel has absolute priority?",opts:["Sailing vessel","Power vessel","NUC (Not Under Command)","Fishing vessel"],correct:2,expl:"Rule 18: NUC > RAM > Constrained by draft > Fishing > Sailing > Power. NUC = absolute priority, unable to manœuvre. Power vessel = lowest priority, gives way to everyone."},
+    {q:"What do 5 rapid short blasts on the horn mean?",opts:["Fog signal in poor visibility","ALARM: danger or I don't understand your intentions","Going astern","Port entry"],correct:1,expl:"Rule 34: 5 short blasts = ALARM or doubt signal. Means: immediate danger or I don't understand your intentions. Sound whenever in doubt. On hearing 5 short blasts: DANGER, reduce speed, assess immediately."},
   ],
   es:[
-    { type:"badge", text:"🛟 Seguridad Marítima — COLREG · Lección 1/6 · 🆓 Gratis · ⭐ 150 XP" },
-    { type:"title", text:"COLREG — Reglamento de abordajes en el mar" },
-    { type:"intro",
-      text:"Cada año, cientos de colisiones marítimas causan muertes, heridos y daños ambientales catastróficos.\n\nLa gran mayoría podría haberse evitado respetando una sola cosa: el COLREG.\n\nEsta lección te da las reglas esenciales que salvan vidas." },
-    { type:"keypoint", icon:"⚓", title:"¿Qué es el COLREG?",
-      text:"COLREG = Convenio sobre el Reglamento Internacional para Prevenir los Abordajes en el Mar\n\nAdoptado por la OMI en 1972, entró en vigor el 15 de julio de 1977.\n\n38 reglas organizadas en 5 partes + 4 Anexos.\n\nSe aplica a TODOS los buques en TODAS las aguas marítimas del mundo — sin excepción." },
-    { type:"rules_table" },
-    { type:"section_title", icon:"📐", text:"ESQUEMAS INTERACTIVOS" },
-    { type:"rule14_schema" },
-    { type:"content", icon:"🚢", title:"Regla 14 — Cómo reconocer la situación de proa",
-      text:"Estás en situación de proa si:\n✅ Ves la luz ROJA Y la luz VERDE simultáneamente\n✅ El buque viene directo hacia ti (marcación casi constante)\n\nRegla: AMBOS buques viran a ESTRIBOR → pasan babor con babor.\n\n⚠️ ¡Nunca virar a babor en esta situación!\n\nSi dudas de que aplica la Regla 14: asume que sí y vira a estribor." },
-    { type:"rule15_schema" },
-    { type:"content", icon:"🎯", title:"Regla 15 — El truco mnemotécnico infalible",
-      text:"ROJO A ESTRIBOR = YO CEDO\n\nSi ves la luz ROJA de otro buque a tu ESTRIBOR (derecha):\n→ Eres el buque CEDENTE\n→ DEBES apartarte\n→ Viras generalmente a estribor o reduces velocidad\n\nSi ves la luz VERDE a estribor:\n→ Eres el buque PRIVILEGIADO\n→ MANTIENES rumbo y velocidad" },
-    { type:"rule13_schema" },
-    { type:"content", icon:"⚓", title:"Regla 13 — Alcance: seas quien seas, cedes",
-      text:"Un buque está alcanzando a otro cuando se aproxima en un sector de 135° por la popa del buque alcanzado.\n\nDe noche en este sector: no ves NI la luz roja NI la verde — solo la luz de popa BLANCA.\n\nRegla absoluta: El buque que alcanza SIEMPRE cede.\n• Sin importar el tamaño\n• Sin importar la velocidad\n• Sin importar el pabellón" },
-    { type:"keypoint", icon:"⚡", title:"Regla 8 — La maniobra perfecta",
-      text:"Cuando debes maniobrar para evitar un abordaje:\n\n1️⃣ FRANCA — Claramente visible por el otro buque.\n2️⃣ AMPLIA — Suficientemente grande para crear distancia real.\n3️⃣ A TIEMPO — Pronto para que el otro buque la vea.\n4️⃣ RESULTADO — Distancia de paso suficiente." },
-    { type:"summary",
-      title:"RESUMEN — COLREG Lección 1",
-      points:[
-        "38 reglas · Adoptado 1972 · Válido mundialmente",
-        "Regla 5: Vigilancia — vista + oído + todos los medios",
-        "Regla 6: Velocidad segura — poder detenerse a tiempo",
-        "Regla 13: Alcance → SIEMPRE cede el que alcanza",
-        "Regla 14: Proa con proa → AMBOS viran a ESTRIBOR",
-        "Regla 15: Rojo a estribor → CEDE",
-        "Regla 16: Buque cedente → maniobra franca, amplia, a tiempo",
-        "Regla 17: Buque privilegiado → mantiene rumbo y velocidad",
-      ]
-    },
+    {q:"Regla 15 — Cruce: A está por ESTRIBOR de B. ¿Quién cede?",opts:["A — el que viene por estribor","B — buque de maniobra, cede al de estribor","Ambos viran a estribor","El más lento"],correct:1,expl:"Regla 15: en cruce, el que tiene al otro por su ESTRIBOR es el buque DE MANIOBRA. Debe ceder. El que viene de estribor = PRIVILEGIADO."},
+    {q:"Regla 14 — Cara a cara: ¿qué hacen?",opts:["El más rápido mantiene","Cada uno vira a babor","AMBOS viran a ESTRIBOR — cruzarse babor a babor","Esperan"],correct:2,expl:"Regla 14: cara a cara, AMBOS son de maniobra. Ambos viran a ESTRIBOR para cruzarse BABOR CON BABOR."},
+    {q:"Regla 13 — Alcance: ¿quién es SIEMPRE de maniobra?",opts:["El buque alcanzado (A)","El más rápido","El buque que alcanza (B) — SIEMPRE","Depende del tipo"],correct:2,expl:"Regla 13: el buque que ALCANZA es SIEMPRE de maniobra. Incluso un velero que alcanza a un buque de motor debe ceder."},
+    {q:"Jerarquía Regla 18 — ¿Qué buque tiene prioridad absoluta?",opts:["El velero","El buque de motor","El NBC (No Gobernado)","El buque pesquero"],correct:2,expl:"Regla 18: NBC > MCM > Calado > Pesca > Velero > Motor. NBC = prioridad absoluta, incapaz de maniobrar. Motor = prioridad más baja."},
+    {q:"¿Qué significan 5 pitidos cortos rápidos?",opts:["Señal de niebla","ALARMA: peligro o no entiendo sus intenciones","Máquinas atrás","Entrada al puerto"],correct:1,expl:"Regla 34: 5 pitidos cortos = señal de ALARMA o duda. Al oír 5 pitidos: PELIGRO, reducir velocidad, evaluar inmediatamente."},
   ],
   pt:[
-    { type:"badge", text:"🛟 Segurança Marítima — COLREG · Lição 1/6 · 🆓 Grátis · ⭐ 150 XP" },
-    { type:"title", text:"COLREG — Regulamento de prevenção de abalroamentos" },
-    { type:"intro",
-      text:"Todo ano, centenas de colisões marítimas causam mortes, feridos e danos ambientais catastróficos.\n\nA grande maioria poderia ter sido evitada respeitando uma só coisa: o COLREG.\n\nEsta lição te dá as regras essenciais que salvam vidas." },
-    { type:"keypoint", icon:"⚓", title:"O que é o COLREG?",
-      text:"COLREG = Convenção sobre o Regulamento Internacional para Evitar Abalroamentos no Mar\n\nAdotado pela IMO em 1972, entrou em vigor em 15 de julho de 1977.\n\n38 regras organizadas em 5 partes + 4 Anexos.\n\nAplica-se a TODOS os navios em TODAS as águas marítimas do mundo — sem exceção." },
-    { type:"rules_table" },
-    { type:"section_title", icon:"📐", text:"ESQUEMAS INTERATIVOS" },
-    { type:"rule14_schema" },
-    { type:"content", icon:"🚢", title:"Regra 14 — Como reconhecer a situação de proa",
-      text:"Você está em situação de proa se:\n✅ Vê a luz VERMELHA E a luz VERDE simultaneamente\n✅ O navio vem direto em sua direção\n\nRegra: AMBOS os navios viram a ESTIBORDO → passam bombordo com bombordo.\n\n⚠️ Nunca virar a bombordo nesta situação!" },
-    { type:"rule15_schema" },
-    { type:"content", icon:"🎯", title:"Regra 15 — O truque mnemônico infalível",
-      text:"VERMELHO A ESTIBORDO = EU CEDO\n\nSe você vê a luz VERMELHA de outro navio a ESTIBORDO (direita):\n→ Você é o navio CEDENTE\n→ DEVE afastar-se\n\nSe vê a luz VERDE a estibordo:\n→ Você é o navio PRIVILEGIADO\n→ MANTÉM rumo e velocidade" },
-    { type:"rule13_schema" },
-    { type:"content", icon:"⚓", title:"Regra 13 — Ultrapassagem: seja quem for, você cede",
-      text:"Um navio está ultrapassando outro quando se aproxima num setor de 135° pela popa do navio ultrapassado.\n\nÀ noite neste setor: não vê NEM a luz vermelha NEM a verde — apenas a luz de popa BRANCA.\n\nRegra absoluta: O navio que ultrapassa SEMPRE cede.\n• Independente do tamanho\n• Independente da velocidade" },
-    { type:"keypoint", icon:"⚡", title:"Regra 8 — A manobra perfeita",
-      text:"Ao manobrар para evitar abalroamento:\n\n1️⃣ FRANCA — Claramente visível pelo outro navio.\n2️⃣ AMPLA — Grande o suficiente para distância real.\n3️⃣ CEDO — Suficientemente cedo.\n4️⃣ RESULTADO — Distância de passagem suficiente." },
-    { type:"summary",
-      title:"RESUMO — COLREG Lição 1",
-      points:[
-        "38 regras · Adotado 1972 · Válido mundialmente",
-        "Regra 5: Vigilância — vista + audição + todos os meios",
-        "Regra 6: Velocidade segura — poder parar a tempo",
-        "Regra 13: Ultrapassagem → SEMPRE cede quem ultrapassa",
-        "Regra 14: Proa com proa → AMBOS viram a ESTIBORDO",
-        "Regra 15: Vermelho a estibordo → CEDE",
-        "Regra 16: Navio cedente → manobra franca, ampla, cedo",
-        "Regra 17: Navio privilegiado → mantém rumo e velocidade",
-      ]
-    },
+    {q:"Regra 15 — Cruzamento: A está pelo ESTIBORDO de B. Quem cede?",opts:["A — que vem pelo estibordo","B — navio de manobra, cede ao de estibordo","Ambos viram a estibordo","O mais lento"],correct:1,expl:"Regra 15: em cruzamento, o que tem o outro pelo seu ESTIBORDO é o navio DE MANOBRA. Deve ceder. O que vem de estibordo = PRIVILEGIADO."},
+    {q:"Regra 14 — Frente a frente: o que fazem?",opts:["O mais rápido mantém","Cada um vira a bombordo","AMBOS viram a ESTIBORDO — cruzar bombordo com bombordo","Esperam"],correct:2,expl:"Regra 14: frente a frente, AMBOS são de manobra. Ambos viram a ESTIBORDO para cruzar BOMBORDO COM BOMBORDO."},
+    {q:"Regra 13 — Ultrapassagem: quem é SEMPRE de manobra?",opts:["O navio ultrapassado (A)","O mais rápido","O navio que ultrapassa (B) — SEMPRE","Depende do tipo"],correct:2,expl:"Regra 13: o navio que ULTRAPASSA é SEMPRE de manobra. Mesmo um veleiro que ultrapassa um navio a motor deve ceder."},
+    {q:"Hierarquia Regra 18 — Qual navio tem prioridade absoluta?",opts:["O veleiro","O navio a motor","O NMC (Não Governável)","O navio de pesca"],correct:2,expl:"Regra 18: NMC > CAM > Calado > Pesca > Veleiro > Motor. NMC = prioridade absoluta, incapaz de manobrar."},
+    {q:"O que significam 5 toques curtos rápidos?",opts:["Sinal de nevoeiro","ALARME: perigo ou não entendo suas intenções","Máquinas a ré","Entrada no porto"],correct:1,expl:"Regra 34: 5 toques curtos = sinal de ALARME ou dúvida. Ao ouvir 5 toques: PERIGO, reduzir velocidade, avaliar imediatamente."},
   ],
 };
 
-// ── Shared UI ─────────────────────────────────
-function Stars(){
-  const [s,setS]=useState([]);
-  useEffect(()=>{setS(Array.from({length:20},()=>({x:Math.random()*100,y:Math.random()*100,sz:Math.random()>0.7?2:1.5,dur:2+Math.random()*4,delay:Math.random()*6})));},[]);
-  return(<><div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0}}>{s.map((st,i)=><div key={i} style={{position:"absolute",left:`${st.x}%`,top:`${st.y}%`,width:st.sz,height:st.sz,borderRadius:"50%",background:"white",opacity:0,animation:`tw ${st.dur}s ease-in-out ${st.delay}s infinite`}}/>)}</div><style>{`@keyframes tw{0%,100%{opacity:0}50%{opacity:0.35}}@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes shimmer{0%{left:-100%}100%{left:200%}}@keyframes correctPop{0%{transform:scale(0.85)}60%{transform:scale(1.1)}100%{transform:scale(1)}}@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}`}</style></>);
+// ══════════════════════════════════════
+// BANK 15 QUESTIONS
+// ══════════════════════════════════════
+const BANK = [
+  {q:"Que signifie 'navire manœuvrant' (give-way vessel) ?",opts:["Le navire le plus rapide","Le navire qui doit s'écarter par une action franche et positive","Le navire le plus grand","Le navire militaire"],correct:1,expl:"Navire manœuvrant = doit prendre une action franche, positive et suffisamment tôt pour s'écarter. Action tardive = infraction Rule 8."},
+  {q:"Rule 5 : définition d'une bonne veille ?",opts:["Surveiller uniquement par radar","Veille permanente par vue, ouïe et tous les moyens disponibles","4 heures sur 24","Regarder uniquement à l'avant"],correct:1,expl:"Rule 5 : veille permanente par la vue, l'ouïe et tous les moyens disponibles. Vue + radar + AIS + VHF. 24h/24, par tous temps."},
+  {q:"Rule 7 : risque d'abordage — comment le détecter ?",opts:["Distance < 1 mille","Relèvement constant + distance diminue","Même vitesse","Même TSS"],correct:1,expl:"Rule 7 : risque d'abordage si le relèvement d'un navire approchant reste constant. Relèvement constant + distance diminue = collision certaine si pas de manœuvre."},
+  {q:"Rule 8 : qu'est-ce qu'une 'action franche' ?",opts:["Réduire de 1 nœud","Changement de cap/vitesse suffisamment grand pour être clairement perçu","Allumer les feux de détresse","Appeler sur VHF 16"],correct:1,expl:"Rule 8 : action franche = changement clairement perceptible. Un virement de 5° n'est pas franc. 30° ou plus = franc. Doit être pris tôt — pas à la dernière minute."},
+  {q:"Un voilier fait route moteur. Il est considéré comme ?",opts:["Voilier — conserve sa priorité","Navire à propulsion mécanique — priorité la plus basse","RAM — capacité restreinte","NUC — risque de panne"],correct:1,expl:"Rule 25 : voilier au moteur (même voiles dehors) = navire à propulsion mécanique. Doit afficher un cône noir pointe en bas. Priorité la plus basse."},
+  {q:"Rule 10 : traversée d'un TSS — quel angle ?",opts:["Dans le sens du trafic","À angle aussi proche que possible de 90° des voies","N'importe quel angle","Par les extrémités"],correct:1,expl:"Rule 10 : traverser un TSS à angle aussi proche que possible de 90°. Permet aux autres navires de voir clairement les intentions."},
+  {q:"Qu'est-ce que le CPA ?",opts:["Distance maximale entre navires","Distance minimale à laquelle deux navires se rapprocheront sans manœuvre","Distance à la côte","Visibilité par brouillard"],correct:1,expl:"CPA = Closest Point of Approach. Distance minimale si aucun navire ne manœuvre. Calculé par ARPA. TCPA = temps avant d'atteindre le CPA."},
+  {q:"Rule 9 — Chenal étroit : comment naviguer ?",opts:["Au centre","Longer le côté TRIBORD autant que possible","Côté bâbord","N'importe quel côté"],correct:1,expl:"Rule 9 : dans un chenal étroit, longer le bord tribord autant que possible. Comme sur une route. Interdit de traverser si on gêne un navire ne pouvant quitter le chenal."},
+  {q:"Les feux de navigation doivent être allumés quand ?",opts:["Uniquement de minuit à 6h","Du coucher au lever du soleil ET par visibilité réduite de jour","Uniquement la nuit","De 18h à 6h"],correct:1,expl:"Rule 20 : feux obligatoires du coucher au lever du soleil ET le jour par visibilité réduite (brouillard, pluie, neige)."},
+  {q:"Rule 19 — Conduite par visibilité réduite : règle principale ?",opts:["Mouiller immédiatement","Vitesse de sécurité + radar + signaux sonores de brume","Allumer tous les feux","Appeler les autorités"],correct:1,expl:"Rule 19 : visibilité réduite = vitesse de sécurité (arrêter en 1/2 distance de visibilité), radar, signaux sonores toutes les 2 min, prêt à stopper."},
+  {q:"Que signifie 'Mayday' (Rule 37 + Annexe IV) ?",opts:["Information nautique importante","DÉTRESSE — danger de mort, assistance immédiate requise","Problème sérieux sans danger de mort","Confirmation de position"],correct:1,expl:"Mayday = DÉTRESSE absolue. Répété 3 fois. Pan Pan = URGENCE (sérieux mais pas mortel). Sécurité = information nautique. Mayday prime tous les autres trafics."},
+  {q:"Un navire NUC doit émettre quel signal sonore par brume ?",opts:["1 son long","2 sons courts","1 long + 2 courts toutes les 2 minutes","5 sons courts"],correct:2,expl:"Rule 35 : NUC, RAM, voilier, navire à l'ancre > 100m = 1 long + 2 courts toutes les 2 minutes par brume. Le navire à moteur en marche = 1 long toutes les 2 minutes."},
+  {q:"Rule 16 : que doit faire le navire manœuvrant ?",opts:["Réduire de 10%","Action franche et positive suffisamment tôt","Allumer les feux de détresse","Appeler sur VHF 16"],correct:1,expl:"Rule 16 : le navire manœuvrant DOIT prendre une action franche et positive le plus tôt possible. Ne pas attendre que l'autre doute."},
+  {q:"Rule 17 : que peut faire le navire privilégié si collision imminente ?",opts:["Rien — il maintient toujours","Peut manœuvrer (Rule 17b) si collision inévitable malgré l'attente","Doit toujours virer à tribord","Doit accélérer"],correct:1,expl:"Rule 17 : normalement, le navire privilégié MAINTIENT. Mais si le manœuvrant n'agit pas et que collision devient inévitable, le privilégié PEUT manœuvrer (Rule 17b). Ne pas attendre jusqu'au dernier instant."},
+  {q:"Quelle est la règle COLREG qui s'applique quand les navires ne sont pas en vue l'un de l'autre ?",opts:["Rule 11 (visibilité)","Rule 15 (croisement)","Rule 19 (visibilité réduite)","Rule 14 (face à face)"],correct:2,expl:"Rule 19 : conduite par visibilité réduite. S'applique quand les navires ne peuvent pas se voir directement (brouillard, pluie, nuit sans visibilité). Vitesse de sécurité, radar, signaux sonores obligatoires."},
+];
+
+// ══════════════════════════════════════
+// BANK COMPONENT
+// ══════════════════════════════════════
+function QuestionBank({ lang }) {
+  const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [done,setDone]=useState(false);
+  const q=BANK[cur];const isOk=sel===q.correct;
+  const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
+  const next=()=>{if(cur<BANK.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
+  if(done) return <div style={{textAlign:"center",padding:"20px 0"}}><div style={{fontSize:48,marginBottom:8}}>{score>=12?"🏆":score>=8?"🎖️":"📚"}</div><div style={{fontFamily:"'Cinzel',serif",fontSize:20,color:C.white,marginBottom:4}}>{score}/{BANK.length}</div><div style={{fontSize:14,color:C.gold2}}>{Math.round(score/BANK.length*100)}%</div></div>;
+  return (
+    <div>
+      <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}><div style={{fontSize:10,color:C.muted}}>{cur+1}/{BANK.length}</div><div style={{fontSize:12,color:C.gold2,fontWeight:700}}>✓ {score}</div></div>
+      <div style={{height:3,background:"rgba(255,255,255,0.08)",borderRadius:3,marginBottom:12,overflow:"hidden"}}><div style={{height:"100%",width:`${(cur/BANK.length)*100}%`,background:`linear-gradient(90deg,${C.red},${C.gold2})`}}/></div>
+      <div style={{fontSize:13,fontWeight:700,color:C.white,lineHeight:1.5,marginBottom:12}}>{q.q}</div>
+      <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:10}}>
+        {q.opts.map((opt,i)=>{let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)";if(answered){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;}else if(i===sel){bg="rgba(192,57,43,0.2)";bd=C.red;}}return <button key={i} onClick={()=>pick(i)} style={{padding:"10px 12px",borderRadius:12,background:bg,border:`1.5px solid ${bd}`,color:C.muted,fontSize:12,textAlign:"left",cursor:answered?"default":"pointer",fontFamily:"'Nunito',sans-serif",lineHeight:1.4}}>{opt}</button>;})}
+      </div>
+      {answered&&<><div style={{padding:"10px 12px",borderRadius:10,marginBottom:10,background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",border:`1px solid ${isOk?C.green:C.red}44`,fontSize:11,color:C.white,lineHeight:1.6}}>{q.expl}</div>
+      <button onClick={next} style={{width:"100%",padding:"11px 0",border:"none",borderRadius:12,background:`linear-gradient(135deg,${C.red},${C.blue})`,fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer"}}>{cur<BANK.length-1?(lang==="fr"?"SUIVANT →":"NEXT →"):(lang==="fr"?"TERMINER":"FINISH")}</button></>}
+    </div>
+  );
 }
+
+// ══════════════════════════════════════
+// SHARED UI
+// ══════════════════════════════════════
+function Stars(){const s=Array.from({length:18},()=>({x:Math.random()*100,y:Math.random()*100,sz:Math.random()>0.7?2:1.5,dur:2+Math.random()*4,delay:Math.random()*6}));return(<><div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0}}>{s.map((st,i)=><div key={i} style={{position:"absolute",left:`${st.x}%`,top:`${st.y}%`,width:st.sz,height:st.sz,borderRadius:"50%",background:"white",opacity:0,animation:`tw ${st.dur}s ease-in-out ${st.delay}s infinite`}}/>)}</div><style>{`@keyframes tw{0%,100%{opacity:0}50%{opacity:0.35}}@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes correctPop{0%{transform:scale(0.85)}60%{transform:scale(1.1)}100%{transform:scale(1)}}@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}`}</style></>);}
 function Card({children,style={}}){return <div style={{background:"rgba(13,31,60,0.75)",border:`1px solid ${C.border}`,borderRadius:18,padding:"16px",...style}}>{children}</div>;}
 function GLine(){return <div style={{height:1,margin:"14px 0",background:`linear-gradient(90deg,transparent,${C.gold}33,${C.blue2}33,transparent)`}}/>;}
+function SL({icon,text,color}){return <div style={{display:"flex",alignItems:"center",gap:10,margin:"20px 0 12px"}}><span style={{fontSize:20}}>{icon}</span><div style={{fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:color||C.gold,letterSpacing:2}}>{text}</div><div style={{flex:1,height:1,background:`linear-gradient(90deg,${color||C.gold}44,transparent)`}}/></div>;}
 
-// ── Block renderer ────────────────────────────
-function Block({block,lang,t}){
-  switch(block.type){
-    case "badge": return <div style={{display:"inline-flex",alignItems:"center",padding:"5px 12px",borderRadius:20,marginBottom:10,background:"rgba(192,57,43,0.15)",border:`1px solid ${C.red}44`,fontSize:11,color:C.red,fontWeight:700}}>{block.text}</div>;
-    case "title": return <h1 style={{fontFamily:"'Cinzel',serif",fontSize:20,fontWeight:700,color:C.white,lineHeight:1.3,margin:"0 0 16px"}}>{block.text}</h1>;
-    case "intro": return <Card style={{marginBottom:14,borderLeft:`3px solid ${C.red}`}}><div style={{fontSize:14,color:"rgba(240,244,255,0.85)",lineHeight:1.85,whiteSpace:"pre-line"}}>{block.text}</div></Card>;
-    case "section_title": return <div style={{display:"flex",alignItems:"center",gap:10,margin:"20px 0 12px"}}><span style={{fontSize:20}}>{block.icon}</span><div style={{fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:C.gold,letterSpacing:2}}>{block.text}</div><div style={{flex:1,height:1,background:`linear-gradient(90deg,${C.gold}44,transparent)`}}/></div>;
-    case "content": return <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>{block.icon}</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{block.title}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{block.text}</div></Card>;
-    case "keypoint": return <div style={{background:`linear-gradient(135deg,rgba(192,57,43,0.1),rgba(13,31,60,0.6))`,border:`1px solid ${C.red}44`,borderLeft:`3px solid ${C.red}`,borderRadius:16,padding:"16px",marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:20}}>{block.icon}</span><span style={{fontSize:12,fontWeight:700,color:C.red,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>{block.title}</span></div><div style={{fontSize:13,color:C.white,lineHeight:1.85,whiteSpace:"pre-line"}}>{block.text}</div></div>;
-    case "summary": return <Card style={{marginBottom:14,background:`linear-gradient(135deg,rgba(192,57,43,0.08),rgba(13,31,60,0.8))`,border:`1px solid ${C.red}33`}}><div style={{fontSize:11,color:C.red,letterSpacing:3,fontFamily:"'Cinzel',serif",marginBottom:12}}>{block.title}</div>{block.points.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"5px 0",borderBottom:i<block.points.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.green,fontWeight:700}}>✓</span>{pt}</div>)}</Card>;
-    case "rules_table": return <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.gold,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>📋 {lang==="fr"?"TABLEAU DES RÈGLES ESSENTIELLES":lang==="es"?"TABLA DE REGLAS ESENCIALES":lang==="pt"?"TABELA DAS REGRAS ESSENCIAIS":"ESSENTIAL RULES TABLE"}</div><RulesTable lang={lang}/></Card>;
-    case "rule14_schema": return <Card style={{marginBottom:14,textAlign:"center"}}><div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>{t.rule14title}</div><Rule14Schema t={t} lang={lang}/></Card>;
-    case "rule15_schema": return <Card style={{marginBottom:14,textAlign:"center"}}><div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>{t.rule15title}</div><Rule15Schema t={t} lang={lang}/></Card>;
-    case "rule13_schema": return <Card style={{marginBottom:14,textAlign:"center"}}><div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>{t.rule13title}</div><Rule13Schema t={t} lang={lang}/></Card>;
-    default: return null;
-  }
-}
-
-// ── Quiz ──────────────────────────────────────
 function QuizComp({questions,t,onComplete}){
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [answers,setAnswers]=useState([]);const [done,setDone]=useState(false);
   const q=questions[cur];const isOk=sel===q.correct;
-  const pick=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);setAnswers(a=>[...a,{i,ok:i===q.correct}]);};
+  const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);setAnswers(a=>[...a,{i,ok:i===q.correct}]);};
   const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else{setDone(true);onComplete(score+(isOk?1:0));}};
-  if(done){const fs=score;const pct=Math.round(fs/questions.length*100);const xp=fs>=4?150:fs===3?100:50;const msg=pct===100?t.scorePerf:pct>=80?t.scoreGreat:t.scoreGood;return(<Card style={{textAlign:"center",border:`1px solid ${pct>=80?C.gold:C.border}`}}><div style={{fontSize:11,letterSpacing:3,color:C.gold,marginBottom:14,fontFamily:"'Cinzel',serif"}}>{t.result}</div><div style={{fontSize:52,marginBottom:8}}>{pct===100?"🏆":pct>=80?"🎖️":"📚"}</div><div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,color:C.white,marginBottom:4}}>{fs}/{questions.length}</div><div style={{fontSize:13,color:C.gold2,marginBottom:12}}>{msg}</div><div style={{display:"inline-block",padding:"6px 16px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}44`,fontSize:14,color:C.gold2,fontWeight:700}}>+{xp} {t.xp} ⭐</div><GLine/><div style={{display:"flex",justifyContent:"center",gap:8,marginTop:8}}>{answers.map((a,i)=><div key={i} style={{width:32,height:32,borderRadius:"50%",background:a.ok?C.green:C.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:C.white}}>{a.ok?"✓":"✗"}</div>)}</div></Card>);}
-  return(<Card style={{border:`1px solid ${C.red}33`}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}><div style={{fontSize:11,letterSpacing:3,color:C.red,fontFamily:"'Cinzel',serif"}}>{t.quiz}</div><div style={{fontSize:12,color:C.muted}}>{t.question} {cur+1} {t.ofQ} {questions.length}</div></div><div style={{display:"flex",gap:6,marginBottom:16}}>{questions.map((_,i)=><div key={i} style={{flex:1,height:3,borderRadius:3,background:i<cur?(answers[i]?.ok?C.green:C.red):i===cur?C.red:"rgba(255,255,255,0.1)"}}/>)}</div><div style={{fontSize:15,fontWeight:700,color:C.white,lineHeight:1.5,marginBottom:16}}>{q.q}</div><div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:14}}>{q.opts.map((opt,i)=>{let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)",anim="none";if(answered){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;anim="correctPop 0.4s ease";}else if(i===sel){bg="rgba(192,57,43,0.2)";bd=C.red;anim="wrongShake 0.4s ease";}}return<button key={i} onClick={()=>pick(i)} style={{padding:"13px 14px",borderRadius:14,background:bg,border:`1.5px solid ${bd}`,color:answered&&(i===q.correct||i===sel)?C.white:C.muted,fontSize:13,textAlign:"left",cursor:answered?"default":"pointer",fontFamily:"'Nunito',sans-serif",animation:anim,display:"flex",alignItems:"center",gap:10}}><div style={{width:26,height:26,borderRadius:"50%",flexShrink:0,background:answered&&i===q.correct?C.green:answered&&i===sel?C.red:"rgba(255,255,255,0.1)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,color:C.white}}>{answered&&i===q.correct?"✓":answered&&i===sel?"✗":String.fromCharCode(65+i)}</div><span>{opt}</span></button>;})}  </div>{answered&&<div style={{padding:"12px 14px",borderRadius:12,marginBottom:14,background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",border:`1px solid ${isOk?C.green:C.red}44`,animation:"fadeUp 0.4s ease"}}><div style={{fontSize:12,fontWeight:700,marginBottom:4,color:isOk?C.green:C.red}}>{isOk?t.correct:t.wrong}</div><div style={{fontSize:11,color:C.muted,fontWeight:600,marginBottom:2}}>{t.expl}</div><div style={{fontSize:12,color:C.white,lineHeight:1.6}}>{q.expl}</div></div>}{answered&&<button onClick={next} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:`linear-gradient(135deg,${C.red},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer"}}>{cur<questions.length-1?t.next:t.finish}</button>}</Card>);
+  if(done){const fs=score;const pct=Math.round(fs/questions.length*100);const xp=fs>=4?200:fs===3?120:60;const msg=pct===100?t.scorePerf:pct>=80?t.scoreGreat:t.scoreGood;return(<Card style={{textAlign:"center"}}><div style={{fontSize:52,marginBottom:8}}>{pct===100?"🏆":pct>=80?"🎖️":"📚"}</div><div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,color:C.white,marginBottom:4}}>{fs}/{questions.length}</div><div style={{fontSize:13,color:C.gold2,marginBottom:12}}>{msg}</div><div style={{display:"inline-block",padding:"6px 16px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}44`,fontSize:14,color:C.gold2,fontWeight:700}}>+{xp} {t.xp} ⭐</div><GLine/><div style={{display:"flex",justifyContent:"center",gap:8,marginTop:8}}>{answers.map((a,i)=><div key={i} style={{width:32,height:32,borderRadius:"50%",background:a.ok?C.green:C.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:C.white}}>{a.ok?"✓":"✗"}</div>)}</div></Card>);}
+  return(<Card style={{border:`1px solid ${C.blue2}33`}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}><div style={{fontSize:11,letterSpacing:3,color:C.blue2,fontFamily:"'Cinzel',serif"}}>{t.quiz}</div><div style={{fontSize:12,color:C.muted}}>{t.question} {cur+1} {t.ofQ} {questions.length}</div></div><div style={{display:"flex",gap:6,marginBottom:16}}>{questions.map((_,i)=><div key={i} style={{flex:1,height:3,borderRadius:3,background:i<cur?(answers[i]?.ok?C.green:C.red):i===cur?C.blue2:"rgba(255,255,255,0.1)"}}/>)}</div><div style={{fontSize:14,fontWeight:700,color:C.white,lineHeight:1.5,marginBottom:16}}>{q.q}</div><div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:14}}>{q.opts.map((opt,i)=>{let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)",anim="none";if(answered){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;anim="correctPop 0.4s ease";}else if(i===sel){bg="rgba(192,57,43,0.2)";bd=C.red;anim="wrongShake 0.4s ease";}}return<button key={i} onClick={()=>pick(i)} style={{padding:"12px 14px",borderRadius:14,background:bg,border:`1.5px solid ${bd}`,color:answered&&(i===q.correct||i===sel)?C.white:C.muted,fontSize:13,textAlign:"left",cursor:answered?"default":"pointer",fontFamily:"'Nunito',sans-serif",animation:anim,display:"flex",alignItems:"center",gap:10,lineHeight:1.4}}><div style={{width:26,height:26,borderRadius:"50%",flexShrink:0,background:answered&&i===q.correct?C.green:answered&&i===sel?C.red:"rgba(255,255,255,0.1)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,color:C.white}}>{answered&&i===q.correct?"✓":answered&&i===sel?"✗":String.fromCharCode(65+i)}</div><span>{opt}</span></button>;})} </div>{answered&&<div style={{padding:"12px 14px",borderRadius:12,marginBottom:14,background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",border:`1px solid ${isOk?C.green:C.red}44`,animation:"fadeUp 0.4s ease"}}><div style={{fontSize:12,fontWeight:700,marginBottom:4,color:isOk?C.green:C.red}}>{isOk?t.correct:t.wrong}</div><div style={{fontSize:11,color:C.muted,fontWeight:600,marginBottom:2}}>{t.expl}</div><div style={{fontSize:12,color:C.white,lineHeight:1.6}}>{q.expl}</div></div>}{answered&&<button onClick={next} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer"}}>{cur<questions.length-1?t.next:t.finish}</button>}</Card>);
 }
 
-// ══════════════════════════════════════════════
-//  MAIN LESSON
-// ══════════════════════════════════════════════
-export default function LessonCOLREG({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
-  const t=T[lang]||T.fr;
-  const sections=SECTIONS[lang]||SECTIONS.fr;
-  const quiz=QUIZ[lang]||QUIZ.fr;
-  const [phase,setPhase]=useState("content");
-  const [quizScore,setQuizScore]=useState(0);
-  const [vis,setVis]=useState(false);
-
-  useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
-
-  const progress=phase==="content"?20:phase==="quiz"?60:100;
-
-  const learnedPoints={
-    fr:["38 règles COLREG · Adoption 1972 · Valable mondialement","Rule 5 : Veille permanente vue + ouïe + tous moyens","Rule 14 : Bout au bout → les DEUX à tribord","Rule 15 : Rouge à tribord → je cède le passage","Rule 13 : Qui rattrape → toujours obligé de céder","Rule 8 : Manœuvre franche, ample, tôt"],
-    en:["38 COLREG rules · Adopted 1972 · Valid worldwide","Rule 5: Lookout sight + hearing + all means","Rule 14: Head-on → BOTH turn starboard","Rule 15: Red on starboard → I give way","Rule 13: Overtaking → always give way","Rule 8: Positive, large, early action"],
-    es:["38 reglas COLREG · Adoptado 1972 · Válido mundialmente","Regla 5: Vigilancia vista + oído + todos los medios","Regla 14: Proa con proa → AMBOS a estribor","Regla 15: Rojo a estribor → yo cedo","Regla 13: El que alcanza → siempre cede","Regla 8: Maniobra franca, amplia, a tiempo"],
-    pt:["38 regras COLREG · Adotado 1972 · Válido mundialmente","Regra 5: Vigilância vista + audição + todos os meios","Regra 14: Proa com proa → AMBOS a estibordo","Regra 15: Vermelho a estibordo → eu cedo","Regra 13: Quem ultrapassa → sempre cede","Regra 8: Manobra franca, ampla, cedo"],
+// ══════════════════════════════════════
+// TEXT CONTENT
+// ══════════════════════════════════════
+const getContent = lang => {
+  const d = {
+    fr:{
+      badge:"📚 Navigation & Cartographie · Leçon 8/8 · ⭐ Premium · 200 XP · 🏁 FIN DU MODULE",
+      title:"COLREG Avancé — Règles de Route en Mer",
+      intro:"Le COLREG (Convention on the International Regulations for Preventing Collisions at Sea) est la LOI internationale de la navigation. 38 règles et 4 annexes. Obligatoire sur TOUS les navires dans TOUTES les eaux.\n\nUne collision en mer = responsabilité pénale et civile. Ces règles ne sont pas des recommandations — ce sont des obligations légales.",
+      p1:"PARTIE 1 — STRUCTURE COLREG",s1t:"Les 38 règles organisées en 5 sections",
+      s1:"SECTION A — Généralités (Rules 1-3)\nChamp d'application · Définitions · Généralités\n\nSECTION B — Conduite des navires (Rules 4-19)\nVisibilité mutuelle (Rules 11-18)\nVisibilité réduite (Rule 19)\n\nSECTION C — Feux & Marques (Rules 20-31)\nFeux de navigation obligatoires par type de navire\n\nSECTION D — Signaux sonores & lumineux (Rules 32-37)\nManœuvres · Brume · Détresse\n\nSECTION E — Exemptions (Rule 38)\nNavires construits avant 1977",
+      p2:"PARTIE 2 — RÈGLES DE BARRE (Rules 11-18)",s2t:"Hiérarchie, croisement, face à face, rattrapage",
+      s2:"HIÉRARCHIE (Rule 18) :\n1. NUC (Non Maîtrisable)\n2. RAM (Capacité Manœuvre Restreinte)\n3. Gêné par tirant d'eau\n4. Navire de pêche\n5. Voilier\n6. Navire à moteur (priorité la plus basse)\n\nRule 13 — RATTRAPAGE :\nLe navire qui rattrape = TOUJOURS manœuvrant\nLe navire rattrapé = TOUJOURS privilégié\n\nRule 14 — FACE À FACE :\nLes DEUX navires virent à TRIBORD\n→ Se croiser par bâbord\n\nRule 15 — CROISEMENT :\nNavire de TRIBORD = PRIVILÉGIÉ\nNavire de BÂBORD = MANŒUVRANT\n\nRule 16 — NAVIRE MANŒUVRANT :\nAction franche, positive et TÔTE\n\nRule 17 — NAVIRE PRIVILÉGIÉ :\nMaintient cap+vitesse\nPeut agir si collision inévitable (Rule 17b)",
+      p3:"PARTIE 3 — SIMULATEUR DE SCÉNARIOS",
+      p4:"PARTIE 4 — FEUX DE NAVIGATION (Rules 20-31)",s4t:"Identifier un navire la nuit par ses feux",
+      s4:"FEUX OBLIGATOIRES (Rules 23-31) :\n\nNavire à moteur en route :\n• Feu blanc de tête de mât (avant)\n• Feux de côté : rouge (bâbord) + vert (tribord)\n• Feu blanc de poupe\n\nRule 20 : allumés du coucher au lever\nET par visibilité réduite de jour\n\nNavire à l'ancre :\n• 1 feu blanc tout-horizon (< 50m)\n• 2 feux blancs (> 50m)\n• Boule noire de jour à la proue\n\nNUC (Rule 27) :\n• 2 feux rouges verticaux\nRAM (Rule 27) : rouge-blanc-rouge\nPêche (Rule 26) : vert-blanc verticaux\nRemorqueur (Rule 24) : 2 blancs + 1 jaune",
+      p5:"PARTIE 5 — SIGNAUX SONORES (Rules 32-37)",
+      p6:"🎯 EXERCICES AVANCÉS PREMIUM",p7:"⚠️ CAS RÉEL",p8:"📝 BANQUE 15 QUESTIONS PREMIUM",
+      sumT:"RÉSUMÉ — LEÇON 8 · FIN DU MODULE",
+      sumP:["Rule 18 : NUC>RAM>Tirant>Pêche>Voilier>Moteur","Rule 13 : qui rattrape = TOUJOURS manœuvrant","Rule 14 : face à face → les DEUX virent à tribord","Rule 15 : croisement → tribord = privilégié","Rule 16 : action franche, positive et tôt","Feux : blanc(mât)+rouge+vert+blanc(poupe)","NUC : 2 rouges · RAM : rouge-blanc-rouge","5 sons courts = ALARME · 1 long = moteur brume"],
+      learnedP:["Rule 18 : NUC>RAM>Tirant>Pêche>Voilier>Moteur","Rule 13 rattrapage · Rule 14 face à face · Rule 15 croisement","Rule 16 action franche · Rule 17 privilégié","Feux navigation : moteur · ancre · NUC · remorqueur","5 sons courts = ALARME · signaux brume Rule 35","COLREG = obligations légales, pas recommandations"],
+    },
+    en:{
+      badge:"📚 Navigation & Cartography · Lesson 8/8 · ⭐ Premium · 200 XP · 🏁 MODULE COMPLETE",
+      title:"Advanced COLREG — Rules of the Road at Sea",
+      intro:"COLREG (Convention on the International Regulations for Preventing Collisions at Sea) is the international LAW of navigation. 38 rules and 4 annexes. Mandatory on ALL vessels in ALL waters.\n\nA collision at sea = criminal and civil liability. These rules are not recommendations — they are legal obligations.",
+      p1:"PART 1 — COLREG STRUCTURE",s1t:"38 rules organized in 5 sections",
+      s1:"SECTION A — General (Rules 1-3)\nApplication · Definitions · General\n\nSECTION B — Steering & Sailing Rules (Rules 4-19)\nIn sight of one another (Rules 11-18)\nRestricted visibility (Rule 19)\n\nSECTION C — Lights & Shapes (Rules 20-31)\nMandatory navigation lights by vessel type\n\nSECTION D — Sound & Light Signals (Rules 32-37)\nManœuvres · Fog · Distress\n\nSECTION E — Exemptions (Rule 38)",
+      p2:"PART 2 — STEERING RULES (Rules 11-18)",s2t:"Hierarchy, crossing, head-on, overtaking",
+      s2:"HIERARCHY (Rule 18):\n1. NUC · 2. RAM · 3. Constrained by draft\n4. Fishing · 5. Sailing · 6. Power (lowest)\n\nRule 13 — OVERTAKING:\nOvertaking vessel = ALWAYS give-way\nOvertaken vessel = ALWAYS stand-on\n\nRule 14 — HEAD-ON:\nBOTH vessels alter to STARBOARD → pass port-to-port\n\nRule 15 — CROSSING:\nVessel on STARBOARD = STAND-ON\nVessel on PORT = GIVE-WAY\n\nRule 16 — GIVE-WAY VESSEL:\nEarly, positive and substantial action\n\nRule 17 — STAND-ON VESSEL:\nMaintains course+speed\nMay act if collision inevitable (Rule 17b)",
+      p3:"PART 3 — SCENARIO SIMULATOR",
+      p4:"PART 4 — NAVIGATION LIGHTS (Rules 20-31)",s4t:"Identifying a vessel at night by its lights",
+      s4:"MANDATORY LIGHTS (Rules 23-31):\n\nPower vessel underway:\n• White masthead light\n• Side lights: red (port) + green (starboard)\n• White stern light\n\nRule 20: on from sunset to sunrise\nAND in restricted visibility by day\n\nVessel at anchor:\n• 1 all-round white (< 50m)\n• 2 white lights (> 50m)\n• Black ball at bow by day\n\nNUC (Rule 27): 2 vertical red lights\nRAM (Rule 27): red-white-red\nFishing (Rule 26): green-white vertical\nTowing (Rule 24): 2 white + 1 yellow",
+      p5:"PART 5 — SOUND SIGNALS (Rules 32-37)",
+      p6:"🎯 ADVANCED PREMIUM EXERCISES",p7:"⚠️ REAL ACCIDENT CASE",p8:"📝 QUESTION BANK — 15 PREMIUM",
+      sumT:"SUMMARY — LESSON 8 · MODULE COMPLETE",
+      sumP:["Rule 18: NUC>RAM>Draft>Fishing>Sailing>Power","Rule 13: overtaking = ALWAYS give-way","Rule 14: head-on → BOTH alter to starboard","Rule 15: crossing → starboard = stand-on","Rule 16: early, positive, substantial action","Lights: white(mast)+red+green+white(stern)","NUC: 2 red · RAM: red-white-red","5 short = ALARM · 1 long = power vessel fog"],
+      learnedP:["Rule 18: NUC>RAM>Draft>Fishing>Sailing>Power","Rule 13 overtaking · Rule 14 head-on · Rule 15 crossing","Rule 16 give-way action · Rule 17 stand-on","Navigation lights: power · anchor · NUC · towing","5 short = ALARM · fog signals Rule 35","COLREG = legal obligations, not recommendations"],
+    },
+    es:{
+      badge:"📚 Navegación & Cartografía · Lección 8/8 · ⭐ Premium · 200 XP · 🏁 FIN DEL MÓDULO",
+      title:"COLREG Avanzado — Reglas de la Vía Marítima",
+      intro:"El COLREG es la LEY internacional de navegación. 38 reglas y 4 anexos. Obligatorio en TODOS los buques en TODAS las aguas.\n\nUna colisión en el mar = responsabilidad penal y civil. Estas reglas son obligaciones legales.",
+      p1:"PARTE 1 — ESTRUCTURA COLREG",s1t:"38 reglas organizadas en 5 secciones",
+      s1:"SECCIÓN A — Generalidades (Reglas 1-3)\nSECCIÓN B — Conducta (Reglas 4-19)\nVisibilidad mutua (Reglas 11-18) · Visibilidad reducida (Regla 19)\nSECCIÓN C — Luces y marcas (Reglas 20-31)\nSECCIÓN D — Señales sonoras y luminosas (Reglas 32-37)\nSECCIÓN E — Exenciones (Regla 38)",
+      p2:"PARTE 2 — REGLAS DE GOBIERNO (Reglas 11-18)",s2t:"Jerarquía, cruce, cara a cara, alcance",
+      s2:"JERARQUÍA (Regla 18):\n1. NBC · 2. MCM · 3. Calado restringido\n4. Pesca · 5. Velero · 6. Motor (prioridad más baja)\n\nRegla 13 — ALCANCE:\nEl que alcanza = SIEMPRE de maniobra\nEl alcanzado = SIEMPRE privilegiado\n\nRegla 14 — CARA A CARA:\nAMBOS viran a ESTRIBOR → cruzarse babor a babor\n\nRegla 15 — CRUCE:\nBuque de ESTRIBOR = PRIVILEGIADO\nBuque de BABOR = MANIOBRA",
+      p3:"PARTE 3 — SIMULADOR DE ESCENARIOS",
+      p4:"PARTE 4 — LUCES DE NAVEGACIÓN (Reglas 20-31)",s4t:"Identificar un buque de noche por sus luces",
+      s4:"LUCES OBLIGATORIAS:\nBuque de motor: blanco palo + rojo/verde costados + blanco popa\nFondeado: 1 blanco todo horizonte (<50m) · 2 blancos (>50m)\nNBC (Regla 27): 2 rojos verticales\nMCM: rojo-blanco-rojo\nPesca (Regla 26): verde-blanco\nRemolcador (Regla 24): 2 blancos + 1 amarillo",
+      p5:"PARTE 5 — SEÑALES SONORAS (Reglas 32-37)",
+      p6:"🎯 EJERCICIOS AVANZADOS PREMIUM",p7:"⚠️ CASO REAL",p8:"📝 BANCO 15 PREGUNTAS PREMIUM",
+      sumT:"RESUMEN — LECCIÓN 8 · FIN DEL MÓDULO",
+      sumP:["Regla 18: NBC>MCM>Calado>Pesca>Velero>Motor","Regla 13: el que alcanza = SIEMPRE de maniobra","Regla 14: cara a cara → AMBOS viran a estribor","Regla 15: cruce → estribor = privilegiado","Luces: blanco(palo)+rojo+verde+blanco(popa)","NBC: 2 rojos · MCM: rojo-blanco-rojo","5 cortos = ALARMA · 1 largo = motor niebla"],
+      learnedP:["Regla 18 jerarquía · Regla 13 alcance · Regla 14 cara a cara","Regla 15 cruce · Regla 16 maniobra · Regla 17 privilegiado","Luces navegación · 5 cortos = ALARMA","COLREG = obligaciones legales"],
+    },
+    pt:{
+      badge:"📚 Navegação & Cartografia · Lição 8/8 · ⭐ Premium · 200 XP · 🏁 FIM DO MÓDULO",
+      title:"COLREG Avançado — Regras da Via Marítima",
+      intro:"O COLREG é a LEI internacional da navegação. 38 regras e 4 anexos. Obrigatório em TODOS os navios em TODAS as águas.\n\nUma colisão no mar = responsabilidade penal e civil. Estas regras são obrigações legais.",
+      p1:"PARTE 1 — ESTRUTURA COLREG",s1t:"38 regras organizadas em 5 secções",
+      s1:"SECÇÃO A — Generalidades (Regras 1-3)\nSECÇÃO B — Conduta (Regras 4-19)\nVisibilidade mútua (Regras 11-18) · Visibilidade reduzida (Regra 19)\nSECÇÃO C — Luzes e marcas (Regras 20-31)\nSECÇÃO D — Sinais sonoros e luminosos (Regras 32-37)\nSECÇÃO E — Isenções (Regra 38)",
+      p2:"PARTE 2 — REGRAS DE GOVERNO (Regras 11-18)",s2t:"Hierarquia, cruzamento, frente a frente, ultrapassagem",
+      s2:"HIERARQUIA (Regra 18):\n1. NMC · 2. CAM · 3. Calado restrito\n4. Pesca · 5. Veleiro · 6. Motor (prioridade mais baixa)\n\nRegra 13 — ULTRAPASSAGEM:\nO que ultrapassa = SEMPRE de manobra\nO ultrapassado = SEMPRE privilegiado\n\nRegra 14 — FRENTE A FRENTE:\nAMBOS viram a ESTIBORDO → cruzar bombordo com bombordo\n\nRegra 15 — CRUZAMENTO:\nNavio de ESTIBORDO = PRIVILEGIADO\nNavio de BOMBORDO = MANOBRA",
+      p3:"PARTE 3 — SIMULADOR DE CENÁRIOS",
+      p4:"PARTE 4 — LUZES DE NAVEGAÇÃO (Regras 20-31)",s4t:"Identificar um navio à noite pelas suas luzes",
+      s4:"LUZES OBRIGATÓRIAS:\nNavio a motor: branco mastro + vermelho/verde bordos + branco popa\nFundeado: 1 branco todo-horizonte (<50m) · 2 brancos (>50m)\nNMC (Regra 27): 2 vermelhos verticais\nCAM: vermelho-branco-vermelho\nPesca (Regra 26): verde-branco\nRebocador (Regra 24): 2 brancos + 1 amarelo",
+      p5:"PARTE 5 — SINAIS SONOROS (Regras 32-37)",
+      p6:"🎯 EXERCÍCIOS AVANÇADOS PREMIUM",p7:"⚠️ CASO REAL",p8:"📝 BANCO 15 QUESTÕES PREMIUM",
+      sumT:"RESUMO — LIÇÃO 8 · FIM DO MÓDULO",
+      sumP:["Regra 18: NMC>CAM>Calado>Pesca>Veleiro>Motor","Regra 13: o que ultrapassa = SEMPRE de manobra","Regra 14: frente a frente → AMBOS viram a estibordo","Regra 15: cruzamento → estibordo = privilegiado","Luzes: branco(mastro)+verm+verde+branco(popa)","NMC: 2 vermelhos · CAM: verm-branco-verm","5 curtos = ALARME · 1 longo = motor nevoeiro"],
+      learnedP:["Regra 18 hierarquia · Regra 13 · Regra 14 · Regra 15","Regra 16 manobra · Regra 17 privilegiado","Luzes navegação · 5 curtos = ALARME","COLREG = obrigações legais"],
+    },
   };
+  return d[lang]||d.fr;
+};
+
+// ══════════════════════════════════════
+// MAIN
+// ══════════════════════════════════════
+export default function LessonCOLREG({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+  const t = T[lang]||T.fr;
+  const quiz = QUIZ[lang]||QUIZ.fr;
+  const lc = getContent(lang);
+  const [phase, setPhase] = useState("content");
+  const [quizScore, setQuizScore] = useState(0);
+  const [vis, setVis] = useState(false);
+  useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
+  const progress = phase==="content"?15:phase==="quiz"?70:100;
 
   return (
     <div style={{height:"100vh",display:"flex",flexDirection:"column",background:`linear-gradient(160deg,${C.navy3} 0%,${C.navy2} 50%,${C.navy} 100%)`,color:C.white,fontFamily:"'Nunito',sans-serif",overflow:"hidden",position:"relative"}}>
       <Stars/>
-
-      {/* TOPBAR */}
       <div style={{position:"relative",zIndex:100,background:"rgba(6,14,26,0.97)",backdropFilter:"blur(14px)",borderBottom:`1px solid ${C.border}`}}>
         <div style={{height:54,display:"flex",alignItems:"center",padding:"0 16px",gap:12}}>
-          <button onClick={onBack} style={{display:"flex",alignItems:"center",gap:7,background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",flexShrink:0,fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
-          <div style={{flex:1,minWidth:0}}>
-            <div style={{fontSize:10,color:C.red,letterSpacing:1,fontFamily:"'Cinzel',serif",marginBottom:1}}>{t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>{t.lesson} 1/6</div>
+          <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
+          <div style={{flex:1}}>
+            <div style={{fontSize:10,color:C.gold,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>{t.module}</div>
+            <div style={{fontSize:11,color:C.muted}}>Leçon 8/8 🏁</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
-            <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(30,138,74,0.2)",border:`1px solid ${C.green}44`,color:C.green,fontWeight:700}}>🆓 FREE</div>
-            <div style={{fontSize:11,color:C.blue2,fontFamily:"'Cinzel',serif",letterSpacing:1}}>{progress}%</div>
+            <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>
+            <div style={{fontSize:11,color:C.blue2,fontFamily:"'Cinzel',serif"}}>{progress}%</div>
           </div>
         </div>
         <div style={{height:3,background:"rgba(255,255,255,0.07)",overflow:"hidden"}}>
@@ -1053,73 +556,95 @@ export default function LessonCOLREG({ lang="fr", onBack=()=>{}, onComplete=()=>
         </div>
       </div>
 
-      {/* SCROLL */}
       <div style={{flex:1,overflowY:"auto",padding:"20px 16px 40px",position:"relative",zIndex:1,opacity:vis?1:0,transform:vis?"translateY(0)":"translateY(14px)",transition:"all 0.5s ease"}}>
         <div style={{maxWidth:480,margin:"0 auto"}}>
 
-          {phase==="content"&&(
-            <>
-              {sections.map((block,i)=><Block key={i} block={block} lang={lang} t={t}/>)}
-              <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.red},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 10px 36px rgba(192,57,43,0.35)",marginTop:8}}>{t.startQuiz}</button>
-              <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
-            </>
-          )}
+          {phase==="content"&&<>
+            <div style={{display:"inline-flex",alignItems:"center",padding:"5px 12px",borderRadius:20,marginBottom:10,background:"rgba(192,57,43,0.15)",border:`1px solid ${C.red}44`,fontSize:11,color:C.red,fontWeight:700}}>{lc.badge}</div>
+            <h1 style={{fontFamily:"'Cinzel',serif",fontSize:20,fontWeight:700,color:C.white,lineHeight:1.3,margin:"0 0 16px"}}>{lc.title}</h1>
+            <Card style={{marginBottom:14,borderLeft:`3px solid ${C.red}`}}>
+              <div style={{fontSize:14,color:"rgba(240,244,255,0.85)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.intro}</div>
+            </Card>
 
-          {phase==="quiz"&&(
-            <>
-              <div style={{textAlign:"center",marginBottom:20}}>
-                <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
-                  {lang==="fr"?"Teste tes connaissances COLREG":lang==="es"?"Pon a prueba tus conocimientos COLREG":lang==="pt"?"Teste seus conhecimentos COLREG":"Test your COLREG knowledge"}
-                </div>
-                <div style={{fontSize:12,color:C.muted}}>
-                  {lang==="fr"?"5 questions · COLREG Leçon 1":lang==="es"?"5 preguntas · COLREG Lección 1":lang==="pt"?"5 perguntas · COLREG Lição 1":"5 questions · COLREG Lesson 1"}
-                </div>
+            <SL icon="📋" text={lc.p1}/>
+            <Card style={{marginBottom:14}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>📋</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s1t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
+
+            <SL icon="⚖️" text={lc.p2} color={C.orange}/>
+            <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>⚖️</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s2t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
+            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>⚓ {lang==="fr"?"HIÉRARCHIE RULE 18 — INTERACTIF":lang==="en"?"HIERARCHY RULE 18 — INTERACTIVE":lang==="es"?"JERARQUÍA REGLA 18 — INTERACTIVO":"HIERARQUIA REGRA 18 — INTERATIVO"}</div><HierarchySVG lang={lang}/></Card>
+
+            <SL icon="🎮" text={lc.p3} color={C.blue2}/>
+            <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`,background:"linear-gradient(135deg,rgba(26,111,212,0.08),rgba(13,31,60,0.8))"}}>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>🎮 {lang==="fr"?"SIMULATEUR COLREG ANIMÉ":lang==="en"?"ANIMATED COLREG SIMULATOR":lang==="es"?"SIMULADOR COLREG ANIMADO":"SIMULADOR COLREG ANIMADO"}</div>
+              <ScenarioSimulator lang={lang}/>
+            </Card>
+
+            <SL icon="💡" text={lc.p4} color={C.gold2}/>
+            <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>💡</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s4t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
+            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💡 {lang==="fr"?"FEUX DE NAVIGATION — INTERACTIF":lang==="en"?"NAVIGATION LIGHTS — INTERACTIVE":lang==="es"?"LUCES DE NAVEGACIÓN — INTERACTIVO":"LUZES DE NAVEGAÇÃO — INTERATIVO"}</div><NavLightsSVG lang={lang}/></Card>
+
+            <SL icon="📣" text={lc.p5} color={C.purple}/>
+            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>📣 {lang==="fr"?"SIGNAUX SONORES — INTERACTIF":lang==="en"?"SOUND SIGNALS — INTERACTIVE":lang==="es"?"SEÑALES SONORAS — INTERACTIVO":"SINAIS SONOROS — INTERATIVO"}</div><SoundSignals lang={lang}/></Card>
+
+            <SL icon="🎯" text={lc.p6} color={C.gold}/>
+            <Card style={{marginBottom:14,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><Exercise1 lang={lang} t={t}/></Card>
+
+            <SL icon="⚠️" text={lc.p7} color={C.red}/>
+            <div style={{marginBottom:14}}><AccidentCase lang={lang}/></div>
+
+            <SL icon="📝" text={lc.p8} color={C.purple}/>
+            <Card style={{marginBottom:14,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}><QuestionBank lang={lang}/></Card>
+
+            <Card style={{marginBottom:14,background:"linear-gradient(135deg,rgba(192,57,43,0.08),rgba(13,31,60,0.9))",border:`1px solid ${C.red}33`}}>
+              <div style={{fontSize:11,color:C.red,letterSpacing:3,fontFamily:"'Cinzel',serif",marginBottom:12}}>{lc.sumT}</div>
+              {lc.sumP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"5px 0",borderBottom:i<lc.sumP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.green,fontWeight:700}}>✓</span>{pt}</div>)}
+            </Card>
+
+            <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.red},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 10px 36px rgba(192,57,43,0.4)",marginTop:8}}>{t.startQuiz}</button>
+            <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
+          </>}
+
+          {phase==="quiz"&&<>
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
+                {lang==="fr"?"Quiz Final — COLREG Avancé":lang==="en"?"Final Quiz — Advanced COLREG":lang==="es"?"Quiz Final — COLREG Avanzado":"Quiz Final — COLREG Avançado"}
               </div>
-              <QuizComp questions={quiz} t={t} onComplete={(s)=>{ setQuizScore(s); setTimeout(()=>setPhase("done"),1200); }}/>
-            </>
-          )}
-
-          {phase==="done"&&(
-            <div style={{paddingTop:10}}>
-              <div style={{textAlign:"center",marginBottom:20}}>
-                <div style={{fontSize:64,marginBottom:10}}>🏅</div>
-                <div style={{fontFamily:"'Cinzel',serif",fontSize:22,fontWeight:700,color:C.white,marginBottom:8}}>{t.complete}</div>
-                <div style={{display:"inline-flex",alignItems:"center",gap:8,padding:"8px 20px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}55`,fontSize:14,color:C.gold2,fontWeight:700}}>
-                  +{quizScore>=4?150:quizScore===3?100:50} {t.xp} ⭐
-                </div>
-              </div>
-              <Card style={{marginBottom:16}}>
-                <div style={{fontSize:11,color:C.muted,marginBottom:10,fontFamily:"'Cinzel',serif",letterSpacing:1}}>{t.youLearned}</div>
-                {(learnedPoints[lang]||learnedPoints.fr).map((pt,i)=>(
-                  <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<5?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}>
-                    <span style={{color:C.green,fontWeight:700}}>✓</span>{pt}
-                  </div>
-                ))}
-              </Card>
-
-              {/* Premium teaser */}
-              <div style={{background:`linear-gradient(135deg,rgba(201,146,42,0.12),rgba(13,31,60,0.8))`,border:`1px solid ${C.gold}44`,borderRadius:18,padding:"16px",marginBottom:16,textAlign:"center"}}>
-                <div style={{fontSize:20,marginBottom:6}}>⭐</div>
-                <div style={{fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,color:C.gold2,marginBottom:6}}>
-                  {lang==="fr"?"Leçon 2 : Les 38 règles complètes"
-                   :lang==="es"?"Lección 2: Las 38 reglas completas"
-                   :lang==="pt"?"Lição 2: As 38 regras completas"
-                   :"Lesson 2: All 38 rules complete"}
-                </div>
-                <div style={{fontSize:11,color:C.muted,marginBottom:10}}>
-                  {lang==="fr"?"Feux de navigation · Signaux sonores · Cas réels d'accidents · Banque 200 questions STCW"
-                   :lang==="es"?"Luces de navegación · Señales sonoras · Casos reales · Banco 200 preguntas STCW"
-                   :lang==="pt"?"Luzes de navegação · Sinais sonoros · Casos reais · Banco 200 questões STCW"
-                   :"Navigation lights · Sound signals · Real cases · 200 STCW question bank"}
-                </div>
-                <div style={{fontSize:12,color:C.gold,fontWeight:700}}>⭐ Premium · 9$/mois</div>
-              </div>
-
-              <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(26,111,212,0.4)",marginBottom:10}}>
-                {lang==="fr"?"← RETOUR AU DASHBOARD":lang==="es"?"← VOLVER AL PANEL":lang==="pt"?"← VOLTAR AO PAINEL":"← BACK TO DASHBOARD"}
-              </button>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · Leçon 8/8 · 🏁</div>
             </div>
-          )}
+            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+          </>}
+
+          {phase==="done"&&<div style={{paddingTop:10}}>
+            {/* Module completion celebration */}
+            <div style={{textAlign:"center",marginBottom:20,padding:"20px 16px",borderRadius:20,background:"linear-gradient(135deg,rgba(201,146,42,0.15),rgba(26,111,212,0.1))",border:`1px solid ${C.gold}44`}}>
+              <div style={{fontSize:72,marginBottom:8}}>🏆</div>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:22,fontWeight:700,color:C.gold2,marginBottom:4}}>
+                {lang==="fr"?"MODULE TERMINÉ !":lang==="en"?"MODULE COMPLETE!":lang==="es"?"¡MÓDULO COMPLETADO!":"MÓDULO CONCLUÍDO!"}
+              </div>
+              <div style={{fontSize:14,color:C.white,marginBottom:12}}>
+                {lang==="fr"?"Navigation & Cartographie — 8 leçons maîtrisées 🧭":
+                 lang==="en"?"Navigation & Cartography — 8 lessons mastered 🧭":
+                 lang==="es"?"Navegación & Cartografía — 8 lecciones dominadas 🧭":
+                 "Navegação & Cartografia — 8 lições concluídas 🧭"}
+              </div>
+              <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
+                {["L1","L2","L3","L4","L5","L6","L7","L8"].map((l,i)=>(
+                  <div key={i} style={{width:36,height:36,borderRadius:10,background:C.green,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:C.white}}>{l}</div>
+                ))}
+              </div>
+            </div>
+            <div style={{display:"inline-flex",width:"100%",justifyContent:"center",alignItems:"center",gap:8,padding:"8px 20px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}55`,fontSize:14,color:C.gold2,fontWeight:700,marginBottom:16,boxSizing:"border-box"}}>
+              +{quizScore>=4?200:quizScore===3?120:60} {t.xp} ⭐ · {lang==="fr"?"Quiz":"Quiz"}: {quizScore}/5
+            </div>
+            <Card style={{marginBottom:16}}>
+              <div style={{fontSize:11,color:C.muted,marginBottom:10,fontFamily:"'Cinzel',serif",letterSpacing:1}}>{t.youLearned}</div>
+              {lc.learnedP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<lc.learnedP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.green,fontWeight:700}}>✓</span>{pt}</div>)}
+            </Card>
+            <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.gold},${C.blue})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(201,146,42,0.4)",marginBottom:10}}>
+              {lang==="fr"?"🎯 EXPLORER LES AUTRES MODULES →":lang==="en"?"🎯 EXPLORE OTHER MODULES →":lang==="es"?"🎯 EXPLORAR OTROS MÓDULOS →":"🎯 EXPLORAR OUTROS MÓDULOS →"}
+            </button>
+            <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>
+          </div>}
 
         </div>
       </div>
