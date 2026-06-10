@@ -918,7 +918,7 @@ export default function Dashboard({
           </div>
 
           {/* PLAN CARD */}
-          <PlanCard userPlan={userPlan} t={t} lang={lang}/>
+          <PlanCard userPlan={effectivePlan} t={t} lang={lang}/>
 
           {/* PROGRESS */}
           <div style={{background:"rgba(13,31,60,0.75)",border:`1px solid ${C.border}`,borderRadius:20,padding:"14px",marginBottom:14}}>
@@ -953,7 +953,7 @@ export default function Dashboard({
           </div>
 
           {/* UPGRADE BANNER (free users only) */}
-          {userPlan==="free"&&(
+          {effectivePlan==="free"&&(
             <div style={{
               background:`linear-gradient(135deg,rgba(201,146,42,0.15),rgba(26,111,212,0.1))`,
               border:`1px solid ${C.gold}44`,
@@ -1019,7 +1019,7 @@ export default function Dashboard({
                 module={module}
                 lang={lang}
                 t={t}
-                userPlan={userPlan}
+                userPlan={effectivePlan}
                 completedLessons={completedLessons}
                 onStart={onStartModule}
                 onUnlock={setUnlockModal}
@@ -1035,11 +1035,11 @@ export default function Dashboard({
 
           {/* ADMIN LOCK */}
           <div style={{textAlign:"center",marginTop:18,marginBottom:4}}>
-            <button onClick={onAdmin} aria-label="Admin" style={{
+            <button onClick={()=>setShowAdmin(true)} aria-label="Admin" style={{
               background:"none",border:"none",cursor:"pointer",
-              fontSize:16,opacity:0.35,padding:6,
+              fontSize:14,opacity:0.5,padding:6,
               color:C.muted,
-            }}>🔒</button>
+            }}>🔒 Admin</button>
           </div>
         </div>
       </div>
