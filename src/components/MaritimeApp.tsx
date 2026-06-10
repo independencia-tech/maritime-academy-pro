@@ -820,7 +820,7 @@ function AdminPage({ setPage }) {
           gap:10,marginBottom:20}}>
           {[
             {val:regs.length,label:"Total inscrits"},
-            {val:filtered.length,label:"Affichés"},
+            {val:regs.filter(r=>r.premium).length,label:"Premium"},
             {val:regs.length>0?regs[regs.length-1].date.split(" ")[0]:"—",label:"Dernier"},
           ].map(s => (
             <div key={s.label} style={{borderRadius:14,padding:"12px 8px",
@@ -832,6 +832,17 @@ function AdminPage({ setPage }) {
                 marginTop:3,letterSpacing:1}}>{s.label}</div>
             </div>
           ))}
+        </div>
+
+        <div style={{marginBottom:16}}>
+          <button onClick={changePassword} style={{
+            width:"100%",padding:"12px 0",borderRadius:14,
+            background:"rgba(26,111,212,0.15)",
+            border:"1px solid rgba(26,111,212,0.4)",
+            color:"#4da6ff",fontSize:13,fontWeight:700,cursor:"pointer",
+            fontFamily:"'Nunito',sans-serif",
+          }}>🔑 Changer le mot de passe admin</button>
+          {pwMsg && <div style={{textAlign:"center",fontSize:11,color:"#e8b94f",marginTop:6}}>{pwMsg}</div>}
         </div>
 
         <div style={{position:"relative",marginBottom:16}}>
