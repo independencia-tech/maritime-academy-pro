@@ -793,6 +793,14 @@ export default function Dashboard({
   const [showAdmin,setShowAdmin]=useState(false);
   const [showUpgrade,setShowUpgrade]=useState(false);
   const [premiumTick,setPremiumTick]=useState(0);
+  const logoTapsRef = (typeof window!=="undefined") ? (window as any).__logoTapsRef || ((window as any).__logoTapsRef = {count:0, last:0}) : {count:0,last:0};
+  const handleLogoTap = ()=>{
+    const now = Date.now();
+    if (now - logoTapsRef.last > 600) logoTapsRef.count = 0;
+    logoTapsRef.last = now;
+    logoTapsRef.count += 1;
+    if (logoTapsRef.count >= 7) { logoTapsRef.count = 0; setShowAdmin(true); }
+  };
 
   const hasPremium = (typeof window !== "undefined") && PremiumManager.hasAccess();
   const effectivePlan = hasPremium && userPlan === "free" ? "premium" : userPlan;
@@ -858,7 +866,7 @@ export default function Dashboard({
         height:54,display:"flex",alignItems:"center",
         justifyContent:"space-between",padding:"0 16px",
       }}>
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
+        <div onClick={handleLogoTap} style={{display:"flex",alignItems:"center",gap:10,cursor:"default",userSelect:"none"}}>
           <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
             <circle cx="50" cy="50" r="42" stroke={C.gold} strokeWidth="3" fill="none" opacity="0.5"/>
             {[0,60,120,180,240,300].map((a,i)=>{const r=a*Math.PI/180;return <line key={i} x1={50+18*Math.sin(r)} y1={50-18*Math.cos(r)} x2={50+38*Math.sin(r)} y2={50-38*Math.cos(r)} stroke={C.gold2} strokeWidth="2.5" strokeLinecap="round" opacity="0.6"/>;})}
@@ -1033,14 +1041,6 @@ export default function Dashboard({
             <button onClick={onEditProfile} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.editProfile}</button>
           </div>
 
-          {/* ADMIN LOCK */}
-          <div style={{textAlign:"center",marginTop:18,marginBottom:4}}>
-            <button onClick={()=>setShowAdmin(true)} aria-label="Admin" style={{
-              background:"none",border:"none",cursor:"pointer",
-              fontSize:14,opacity:0.5,padding:6,
-              color:C.muted,
-            }}>🔒 Admin</button>
-          </div>
         </div>
       </div>
 
