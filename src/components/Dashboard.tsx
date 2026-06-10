@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
+import AdminPanel, { UpgradeModal, PremiumManager } from "./AdminPanel";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -789,6 +790,12 @@ export default function Dashboard({
   const [vis,setVis]=useState(false);
   const [unlockModal,setUnlockModal]=useState(null);
   const [stats]=useState({lessons:0,certs:0,points:0,streak:1});
+  const [showAdmin,setShowAdmin]=useState(false);
+  const [showUpgrade,setShowUpgrade]=useState(false);
+  const [premiumTick,setPremiumTick]=useState(0);
+
+  const hasPremium = (typeof window !== "undefined") && PremiumManager.hasAccess();
+  const effectivePlan = hasPremium && userPlan === "free" ? "premium" : userPlan;
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
@@ -816,6 +823,7 @@ export default function Dashboard({
   ];
 
   const currentModules=MODULES[activeTab]||[];
+  void premiumTick;
 
   // Global progress
   const allModules=Object.values(MODULES).flat();
@@ -866,7 +874,16 @@ export default function Dashboard({
         </div>
         {/* Plan + Avatar */}
         <div style={{display:"flex",alignItems:"center",gap:8}}>
-          <PlanBadge access={userPlan} t={t} small/>
+          {effectivePlan==="free" && (
+            <button onClick={()=>setShowUpgrade(true)} style={{
+              padding:"5px 10px",borderRadius:14,
+              background:`linear-gradient(135deg,${C.gold},${C.gold2})`,
+              border:"none",color:C.navy,fontSize:10,fontWeight:800,
+              cursor:"pointer",fontFamily:"'Cinzel',serif",letterSpacing:0.5,
+              boxShadow:"0 2px 10px rgba(201,146,42,0.4)",whiteSpace:"nowrap",
+            }}>⭐ {lang==="fr"?"Essai Premium":lang==="es"?"Probar Premium":lang==="pt"?"Testar Premium":"Try Premium"}</button>
+          )}
+          <PlanBadge access={effectivePlan} t={t} small/>
           <button onClick={onViewStatus} style={{
             width:36,height:36,borderRadius:"50%",
             background:photo?`url(${photo}) center/cover`
@@ -901,7 +918,7 @@ export default function Dashboard({
           </div>
 
           {/* PLAN CARD */}
-          <PlanCard userPlan={userPlan} t={t} lang={lang}/>
+          <PlanCard userPlan={effectivePlan} t={t} lang={lang}/>
 
           {/* PROGRESS */}
           <div style={{background:"rgba(13,31,60,0.75)",border:`1px solid ${C.border}`,borderRadius:20,padding:"14px",marginBottom:14}}>
@@ -936,7 +953,7 @@ export default function Dashboard({
           </div>
 
           {/* UPGRADE BANNER (free users only) */}
-          {userPlan==="free"&&(
+          {effectivePlan==="free"&&(
             <div style={{
               background:`linear-gradient(135deg,rgba(201,146,42,0.15),rgba(26,111,212,0.1))`,
               border:`1px solid ${C.gold}44`,
@@ -1002,7 +1019,7 @@ export default function Dashboard({
                 module={module}
                 lang={lang}
                 t={t}
-                userPlan={userPlan}
+                userPlan={effectivePlan}
                 completedLessons={completedLessons}
                 onStart={onStartModule}
                 onUnlock={setUnlockModal}
@@ -1018,11 +1035,11 @@ export default function Dashboard({
 
           {/* ADMIN LOCK */}
           <div style={{textAlign:"center",marginTop:18,marginBottom:4}}>
-            <button onClick={onAdmin} aria-label="Admin" style={{
+            <button onClick={()=>setShowAdmin(true)} aria-label="Admin" style={{
               background:"none",border:"none",cursor:"pointer",
-              fontSize:16,opacity:0.35,padding:6,
+              fontSize:14,opacity:0.5,padding:6,
               color:C.muted,
-            }}>🔒</button>
+            }}>🔒 Admin</button>
           </div>
         </div>
       </div>
@@ -1055,6 +1072,17 @@ export default function Dashboard({
           </button>
         );})}
       </div>
+
+      {showUpgrade && (
+        <UpgradeModal
+          lang={lang}
+          onClose={()=>{ setShowUpgrade(false); setPremiumTick(t=>t+1); }}
+          onTrialStart={()=>setPremiumTick(t=>t+1)}
+        />
+      )}
+      {showAdmin && (
+        <AdminPanel onClose={()=>{ setShowAdmin(false); setPremiumTick(t=>t+1); }}/>
+      )}
     </div>
   );
 }
