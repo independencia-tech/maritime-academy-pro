@@ -1417,7 +1417,7 @@ function AppInner() {
             boxShadow:"0 20px 60px rgba(0,0,0,0.6)",
           }}>
             <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:900,marginBottom:8,textAlign:"center"}}>
-              {lang==="fr"?"Quitter l'application ?":lang==="es"?"¿Salir de la aplicación?":lang==="pt"?"Sair do aplicativo?":"Exit app?"}
+              {lang==="fr"?"Quitter MAP ?":lang==="es"?"¿Salir de MAP?":lang==="pt"?"Sair do MAP?":"Quit MAP?"}
             </div>
             <div style={{fontSize:13,color:"rgba(240,244,255,0.65)",textAlign:"center",marginBottom:20}}>
               {lang==="fr"?"Vous êtes sur le tableau de bord.":lang==="es"?"Estás en el panel principal.":lang==="pt"?"Você está no painel principal.":"You are on the dashboard."}
@@ -1431,13 +1431,13 @@ function AppInner() {
                   border:"1px solid rgba(255,255,255,0.2)",
                   color:"#f0f4ff",fontWeight:700,fontSize:14,cursor:"pointer",
                 }}>
-                {lang==="fr"?"Rester":lang==="es"?"Quedarme":lang==="pt"?"Ficar":"Stay"}
+                {lang==="fr"?"Non — Rester":lang==="es"?"No — Quedarme":lang==="pt"?"Não — Ficar":"No — Stay"}
               </button>
               <button
                 onClick={() => {
                   setShowExitConfirm(false);
-                  try { window.close(); } catch {}
                   try { window.history.go(-2); } catch { try { window.history.back(); } catch {} }
+                  try { window.close(); } catch {}
                 }}
                 style={{
                   padding:"12px",borderRadius:12,
@@ -1445,7 +1445,7 @@ function AppInner() {
                   border:"1px solid rgba(231,76,60,0.6)",
                   color:"#fff",fontWeight:800,fontSize:14,cursor:"pointer",
                 }}>
-                {lang==="fr"?"Quitter":lang==="es"?"Salir":lang==="pt"?"Sair":"Exit"}
+                {lang==="fr"?"Oui — Quitter":lang==="es"?"Sí — Salir":lang==="pt"?"Sim — Sair":"Yes — Quit"}
               </button>
             </div>
           </div>
