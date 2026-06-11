@@ -450,13 +450,13 @@ function EngineMonitorSVG({ lang }) {
         <div>
           <div style={{fontSize:12,fontWeight:700,color:statusColor(overallStatus)}}>
             {overallStatus==="danger"
-              ?(lang==="fr"?"⚠️ ALARME — ACTION REQUISE":lang==="en"?"⚠️ ALARM — ACTION REQUIRED":"⚠️ ALARMA — ACCIÓN REQUERIDA")
+              ?(({fr:"⚠️ ALARME — ACTION REQUISE",en:"⚠️ ALARM — ACTION REQUIRED",es:"⚠️ ALARMA — ACCIÓN REQUERIDA",pt:"⚠️ ALARME — AÇÃO NECESSÁRIA"})[lang]||"⚠️ ALARME — ACTION REQUISE")
               :overallStatus==="warning"
-              ?(lang==="fr"?"⚡ ATTENTION — Surveiller":lang==="en"?"⚡ CAUTION — Monitor":"⚡ ATENCIÓN — Vigilar")
-              :(lang==="fr"?"✅ Moteur nominal":lang==="en"?"✅ Engine nominal":"✅ Motor nominal")}
+              ?(({fr:"⚡ ATTENTION — Surveiller",en:"⚡ CAUTION — Monitor",es:"⚡ ATENCIÓN — Vigilar",pt:"⚡ ATENÇÃO — Vigiar"})[lang]||"⚡ ATTENTION — Surveiller")
+              :(({fr:"✅ Moteur nominal",en:"✅ Engine nominal",es:"✅ Motor nominal",pt:"✅ Motor nominal"})[lang]||"✅ Moteur nominal")}
           </div>
           <div style={{fontSize:10,color:C.muted}}>
-            {lang==="fr"?"Ajuste les curseurs pour simuler des pannes":lang==="en"?"Adjust sliders to simulate failures":lang==="es"?"Ajusta los controles para simular averías":"Ajuste os controles para simular avarias"}
+            {({fr:"Ajuste les curseurs pour simuler des pannes",en:"Adjust sliders to simulate failures",es:"Ajusta los controles para simular averías",pt:"Ajuste os controles para simular avarias"})[lang]||"Ajuste les curseurs pour simuler des pannes"}
           </div>
         </div>
       </div>
@@ -486,8 +486,8 @@ function EngineMonitorSVG({ lang }) {
             onChange={e=>p.set(Number(e.target.value))}
             style={{width:"100%",accentColor:statusColor(p.status),margin:"0 0 2px"}}/>
           <div style={{display:"flex",justifyContent:"space-between",fontSize:9,color:C.muted}}>
-            <span>{lang==="fr"?"Normal:":lang==="en"?"Normal:":"Normal:"} {p.normal}</span>
-            <span style={{color:C.red}}>{lang==="fr"?"Alarme:":lang==="en"?"Alarm:":"Alarma:"} {p.danger}</span>
+            <span>{({fr:"Normal:",en:"Normal:",es:"Normal:",pt:"Normal:"})[lang]||"Normal:"} {p.normal}</span>
+            <span style={{color:C.red}}>{({fr:"Alarme:",en:"Alarm:",es:"Alarma:",pt:"Alarme:"})[lang]||"Alarme:"} {p.danger}</span>
           </div>
         </div>
       ))}
