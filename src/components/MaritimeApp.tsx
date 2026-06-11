@@ -1122,6 +1122,8 @@ function AppInner() {
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
 
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     try { window.history.pushState({ map: page }, ""); } catch {}
@@ -1133,14 +1135,9 @@ function AppInner() {
       const cur = pageRef.current;
       const hasProfile = !!localStorage.getItem("map_status_card");
       if (cur === "dashboard") {
-        const exit = window.confirm(
-          lang === "fr" ? "Quitter l'application ?" :
-          lang === "es" ? "¿Salir de la aplicación?" :
-          lang === "pt" ? "Sair do aplicativo?" :
-          "Exit app?"
-        );
-        if (exit) { try { window.close(); } catch {} window.history.back(); }
-        else { window.history.pushState({ map: cur }, ""); }
+        // Re-push so back is intercepted again, then show our own modal
+        try { window.history.pushState({ map: cur }, ""); } catch {}
+        setShowExitConfirm(true);
         return;
       }
       if (LESSONS.includes(cur)) {
@@ -1402,6 +1399,57 @@ function AppInner() {
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
         />
+      )}
+      {showExitConfirm && (
+        <div
+          onClick={() => setShowExitConfirm(false)}
+          style={{
+            position:"fixed",inset:0,zIndex:9999,
+            background:"rgba(6,14,26,0.85)",backdropFilter:"blur(8px)",
+            display:"flex",alignItems:"center",justifyContent:"center",padding:24,
+            fontFamily:"'Nunito',sans-serif",
+          }}>
+          <div onClick={(e)=>e.stopPropagation()} style={{
+            width:"100%",maxWidth:360,
+            background:"linear-gradient(160deg,#112244,#0d1f3c)",
+            border:"1px solid rgba(201,146,42,0.35)",
+            borderRadius:20,padding:24,color:"#f0f4ff",
+            boxShadow:"0 20px 60px rgba(0,0,0,0.6)",
+          }}>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:900,marginBottom:8,textAlign:"center"}}>
+              {lang==="fr"?"Quitter l'application ?":lang==="es"?"¿Salir de la aplicación?":lang==="pt"?"Sair do aplicativo?":"Exit app?"}
+            </div>
+            <div style={{fontSize:13,color:"rgba(240,244,255,0.65)",textAlign:"center",marginBottom:20}}>
+              {lang==="fr"?"Vous êtes sur le tableau de bord.":lang==="es"?"Estás en el panel principal.":lang==="pt"?"Você está no painel principal.":"You are on the dashboard."}
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+              <button
+                onClick={() => setShowExitConfirm(false)}
+                style={{
+                  padding:"12px",borderRadius:12,
+                  background:"rgba(255,255,255,0.08)",
+                  border:"1px solid rgba(255,255,255,0.2)",
+                  color:"#f0f4ff",fontWeight:700,fontSize:14,cursor:"pointer",
+                }}>
+                {lang==="fr"?"Rester":lang==="es"?"Quedarme":lang==="pt"?"Ficar":"Stay"}
+              </button>
+              <button
+                onClick={() => {
+                  setShowExitConfirm(false);
+                  try { window.close(); } catch {}
+                  try { window.history.go(-2); } catch { try { window.history.back(); } catch {} }
+                }}
+                style={{
+                  padding:"12px",borderRadius:12,
+                  background:"linear-gradient(135deg,#c0392b,#922b21)",
+                  border:"1px solid rgba(231,76,60,0.6)",
+                  color:"#fff",fontWeight:800,fontSize:14,cursor:"pointer",
+                }}>
+                {lang==="fr"?"Quitter":lang==="es"?"Salir":lang==="pt"?"Sair":"Exit"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
