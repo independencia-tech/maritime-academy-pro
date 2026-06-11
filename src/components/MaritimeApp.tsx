@@ -1124,44 +1124,6 @@ function AppInner() {
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try { window.history.pushState({ map: page }, ""); } catch {}
-  }, [page]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const onPop = () => {
-      const cur = pageRef.current;
-      const hasProfile = !!localStorage.getItem("map_status_card");
-      if (cur === "dashboard") {
-        // Re-push so back is intercepted again, then show our own modal
-        try { window.history.pushState({ map: cur }, ""); } catch {}
-        setShowExitConfirm(true);
-        return;
-      }
-      if (LESSONS.includes(cur)) {
-        window.history.pushState({ map: "nav_lessons" }, "");
-        setPage("nav_lessons");
-        return;
-      }
-      if (["modules","ships","nav_lessons","admin","admin-login"].includes(cur)) {
-        window.history.pushState({ map: "dashboard" }, "");
-        setPage("dashboard");
-        return;
-      }
-      if (hasProfile && ONBOARDING.includes(cur)) {
-        window.history.pushState({ map: "dashboard" }, "");
-        setPage("dashboard");
-        return;
-      }
-      // otherwise re-push to swallow back during onboarding
-      window.history.pushState({ map: cur }, "");
-    };
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, [lang]);
-
   // Re-arm a history guard entry every time the active page changes, and
   // re-bind the popstate listener with cleanup so Android PWA hardware back
   // is reliably intercepted (some WebViews drop listeners across navigations).
