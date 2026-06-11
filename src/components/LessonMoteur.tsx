@@ -83,7 +83,7 @@ function DieselCycleSVG({ lang }) {
           fill={s.valveIn?"rgba(77,166,255,0.6)":"rgba(255,255,255,0.1)"}
           stroke={s.valveIn?C.blue2:"rgba(255,255,255,0.2)"} strokeWidth="1.5"/>
         <text x="117" y="14" textAnchor="middle" fontSize="6" fill={s.valveIn?C.blue2:C.muted}>
-          {lang==="fr"?"Adm.":lang==="en"?"In.":"Adm."}
+          {({fr:"Adm.",en:"In.",es:"Adm.",pt:"Adm."})[lang]||"Adm."}
         </text>
 
         {/* Exhaust valve */}
@@ -91,7 +91,7 @@ function DieselCycleSVG({ lang }) {
           fill={s.valveEx?"rgba(100,100,100,0.6)":"rgba(255,255,255,0.1)"}
           stroke={s.valveEx?C.steel:"rgba(255,255,255,0.2)"} strokeWidth="1.5"/>
         <text x="173" y="14" textAnchor="middle" fontSize="6" fill={s.valveEx?C.white:C.muted}>
-          {lang==="fr"?"Éch.":lang==="en"?"Ex.":"Esc."}
+          {({fr:"Éch.",en:"Ex.",es:"Esc.",pt:"Esc."})[lang]||"Éch."}
         </text>
 
         {/* Combustion chamber top */}
@@ -148,13 +148,13 @@ function DieselCycleSVG({ lang }) {
 
         {/* Labels */}
         <text x="60" y="40" textAnchor="middle" fontSize="7" fill={C.muted}>
-          {lang==="fr"?"Air":lang==="en"?"Air":"Aire"}
+          {({fr:"Air",en:"Air",es:"Aire",pt:"Ar"})[lang]||"Air"}
         </text>
         <text x="230" y="40" textAnchor="middle" fontSize="7" fill={C.muted}>
-          {lang==="fr"?"Gaz":lang==="en"?"Gas":"Gas"}
+          {({fr:"Gaz",en:"Gas",es:"Gas",pt:"Gás"})[lang]||"Gaz"}
         </text>
         <text x="145" y="186" textAnchor="middle" fontSize="7" fill={C.gold}>
-          {lang==="fr"?"Vilebrequin":lang==="en"?"Crankshaft":lang==="es"?"Cigüeñal":"Virabrequim"}
+          {({fr:"Vilebrequin",en:"Crankshaft",es:"Cigüeñal",pt:"Virabrequim"})[lang]||"Vilebrequin"}
         </text>
       </svg>
 
@@ -172,11 +172,11 @@ function DieselCycleSVG({ lang }) {
       <div style={{display:"flex",gap:8,marginTop:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"8px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":"Previous"}
+          ◀ {({fr:"Précédent",en:"Previous",es:"Anterior",pt:"Anterior"})[lang]||"Précédent"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(3,s+1))} disabled={step===3}
           style={{flex:1,padding:"8px",borderRadius:10,background:step===3?"rgba(255,255,255,0.06)":`linear-gradient(135deg,${s.color}44,${C.blue}44)`,border:`1px solid ${step===3?"rgba(255,255,255,0.1)":s.color}`,color:C.white,cursor:step===3?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":"Next"} ▶
+          {({fr:"Suivant",en:"Next",es:"Siguiente",pt:"Próximo"})[lang]||"Suivant"} ▶
         </button>
       </div>
     </div>
