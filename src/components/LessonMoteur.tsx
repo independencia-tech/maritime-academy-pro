@@ -643,6 +643,7 @@ const BANKS = { fr: BANK_FR, en: BANK_EN, es: BANK_ES, pt: BANK_PT };
 // BANK COMPONENT
 // ══════════════════════════════════════
 function QuestionBank({ lang }) {
+  const BANK = BANKS[lang]||BANKS.fr;
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [done,setDone]=useState(false);
   const q=BANK[cur];const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
