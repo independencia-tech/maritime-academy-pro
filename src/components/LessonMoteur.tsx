@@ -387,21 +387,24 @@ function CoolingCircuitSVG({ lang }) {
         background:highlight==="fw"?"rgba(26,111,212,0.1)":highlight==="sw"?"rgba(10,138,108,0.1)":"rgba(141,59,43,0.1)",
         border:`1px solid ${highlight==="fw"?C.blue2:highlight==="sw"?C.teal:C.rust}33`,
         fontSize:11,color:C.white,lineHeight:1.7}}>
-        {highlight==="fw"&&(lang==="fr"
-          ?"💧 EAU DOUCE (circuit fermé) :\n→ Refroidit directement les cylindres et l'huile\n→ Température normale : 70-85°C\n→ Alerte à 90°C · Arrêt d'urgence à 95°C\n→ Additifs anti-corrosion obligatoires"
-          :lang==="en"
-          ?"💧 FRESH WATER (closed circuit):\n→ Directly cools cylinders and oil\n→ Normal temperature: 70-85°C\n→ Alert at 90°C · Emergency stop at 95°C\n→ Anti-corrosion additives mandatory"
-          :"💧 AGUA DULCE (circuito cerrado):\n→ Enfría directamente cilindros y aceite\n→ Temperatura normal: 70-85°C\n→ Alarma 90°C · Parada emergencia 95°C")}
-        {highlight==="sw"&&(lang==="fr"
-          ?"🌊 EAU DE MER (circuit ouvert) :\n→ Refroidit l'eau douce via l'échangeur\n→ Puisée directement dans la mer\n→ Température : ~28°C (Golfe de Guinée)\n→ ⚠️ Filtre à entretenir régulièrement\n→ ⚠️ Risque de corrosion et de biofouling"
-          :lang==="en"
-          ?"🌊 SEA WATER (open circuit):\n→ Cools fresh water via heat exchanger\n→ Drawn directly from the sea\n→ Temperature: ~28°C (Gulf of Guinea)\n→ ⚠️ Filter requires regular maintenance\n→ ⚠️ Corrosion and biofouling risk"
-          :"🌊 AGUA DE MAR (circuito abierto):\n→ Enfría el agua dulce vía intercambiador\n→ Extraída directamente del mar\n→ Temperatura: ~28°C (Golfo de Guinea)\n→ ⚠️ Riesgo de corrosión y biofouling")}
-        {highlight==="oil"&&(lang==="fr"
-          ?"🛢️ CIRCUIT HUILE :\n→ Lubrifie ET refroidit simultanément\n→ Pression normale : 3-5 bars\n→ ⚠️ Chute de pression = arrêt immédiat\n→ Analyse huile tous les 500h d'utilisation\n→ Carter (sump) : contient 200-2000 litres"
-          :lang==="en"
-          ?"🛢️ OIL CIRCUIT:\n→ Lubricates AND cools simultaneously\n→ Normal pressure: 3-5 bar\n→ ⚠️ Pressure drop = immediate stop\n→ Oil analysis every 500 operating hours\n→ Sump: contains 200-2000 litres"
-          :"🛢️ CIRCUITO ACEITE:\n→ Lubrica Y enfría simultáneamente\n→ Presión normal: 3-5 bares\n→ ⚠️ Caída de presión = parada inmediata\n→ Análisis aceite cada 500h de uso")}
+        {highlight==="fw"&&(({
+          fr:"💧 EAU DOUCE (circuit fermé) :\n→ Refroidit directement les cylindres et l'huile\n→ Température normale : 70-85°C\n→ Alerte à 90°C · Arrêt d'urgence à 95°C\n→ Additifs anti-corrosion obligatoires",
+          en:"💧 FRESH WATER (closed circuit):\n→ Directly cools cylinders and oil\n→ Normal temperature: 70-85°C\n→ Alert at 90°C · Emergency stop at 95°C\n→ Anti-corrosion additives mandatory",
+          es:"💧 AGUA DULCE (circuito cerrado):\n→ Enfría directamente cilindros y aceite\n→ Temperatura normal: 70-85°C\n→ Alarma 90°C · Parada emergencia 95°C\n→ Aditivos anticorrosión obligatorios",
+          pt:"💧 ÁGUA DOCE (circuito fechado):\n→ Arrefece diretamente cilindros e óleo\n→ Temperatura normal: 70-85°C\n→ Alarme 90°C · Paragem de emergência 95°C\n→ Aditivos anticorrosão obrigatórios",
+        })[lang]||"")}
+        {highlight==="sw"&&(({
+          fr:"🌊 EAU DE MER (circuit ouvert) :\n→ Refroidit l'eau douce via l'échangeur\n→ Puisée directement dans la mer\n→ Température : ~28°C (Golfe de Guinée)\n→ ⚠️ Filtre à entretenir régulièrement\n→ ⚠️ Risque de corrosion et de biofouling",
+          en:"🌊 SEA WATER (open circuit):\n→ Cools fresh water via heat exchanger\n→ Drawn directly from the sea\n→ Temperature: ~28°C (Gulf of Guinea)\n→ ⚠️ Filter requires regular maintenance\n→ ⚠️ Corrosion and biofouling risk",
+          es:"🌊 AGUA DE MAR (circuito abierto):\n→ Enfría el agua dulce vía intercambiador\n→ Extraída directamente del mar\n→ Temperatura: ~28°C (Golfo de Guinea)\n→ ⚠️ Filtro requiere mantenimiento regular\n→ ⚠️ Riesgo de corrosión y biofouling",
+          pt:"🌊 ÁGUA SALGADA (circuito aberto):\n→ Arrefece a água doce via permutador\n→ Captada diretamente do mar\n→ Temperatura: ~28°C (Golfo da Guiné)\n→ ⚠️ Filtro requer manutenção regular\n→ ⚠️ Risco de corrosão e biofouling",
+        })[lang]||"")}
+        {highlight==="oil"&&(({
+          fr:"🛢️ CIRCUIT HUILE :\n→ Lubrifie ET refroidit simultanément\n→ Pression normale : 3-5 bars\n→ ⚠️ Chute de pression = arrêt immédiat\n→ Analyse huile tous les 500h d'utilisation\n→ Carter (sump) : contient 200-2000 litres",
+          en:"🛢️ OIL CIRCUIT:\n→ Lubricates AND cools simultaneously\n→ Normal pressure: 3-5 bar\n→ ⚠️ Pressure drop = immediate stop\n→ Oil analysis every 500 operating hours\n→ Sump: contains 200-2000 litres",
+          es:"🛢️ CIRCUITO ACEITE:\n→ Lubrica Y enfría simultáneamente\n→ Presión normal: 3-5 bares\n→ ⚠️ Caída de presión = parada inmediata\n→ Análisis aceite cada 500h de uso\n→ Cárter (sump): contiene 200-2000 litros",
+          pt:"🛢️ CIRCUITO ÓLEO:\n→ Lubrifica E arrefece simultaneamente\n→ Pressão normal: 3-5 bar\n→ ⚠️ Queda de pressão = paragem imediata\n→ Análise de óleo a cada 500h de uso\n→ Cárter (sump): contém 200-2000 litros",
+        })[lang]||"")}
       </div>
     </div>
   );
