@@ -1162,6 +1162,44 @@ function AppInner() {
     return () => window.removeEventListener("popstate", onPop);
   }, [lang]);
 
+  // Re-arm a history guard entry every time the active page changes, and
+  // re-bind the popstate listener with cleanup so Android PWA hardware back
+  // is reliably intercepted (some WebViews drop listeners across navigations).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // Always push a fresh guard state for the current page so there is
+    // something to pop when the user presses the hardware back button.
+    try { window.history.pushState({ map: page, guard: Date.now() }, ""); } catch {}
+
+    const onPop = (e: PopStateEvent) => {
+      const cur = pageRef.current;
+      const hasProfile = !!localStorage.getItem("map_status_card");
+      if (cur === "dashboard") {
+        try { window.history.pushState({ map: cur, guard: Date.now() }, ""); } catch {}
+        setShowExitConfirm(true);
+        return;
+      }
+      if (LESSONS.includes(cur)) {
+        try { window.history.pushState({ map: "nav_lessons" }, ""); } catch {}
+        setPage("nav_lessons");
+        return;
+      }
+      if (["modules","ships","nav_lessons","admin","admin-login"].includes(cur)) {
+        try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
+        setPage("dashboard");
+        return;
+      }
+      if (hasProfile && ONBOARDING.includes(cur)) {
+        try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
+        setPage("dashboard");
+        return;
+      }
+      try { window.history.pushState({ map: cur }, ""); } catch {}
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [page]);
+
   // ── SETTINGS ACTIONS ───────────────────────────────────
   const handleChangeLanguage = (code: string) => {
     setLang(code);
