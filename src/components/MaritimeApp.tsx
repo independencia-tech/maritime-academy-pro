@@ -1436,8 +1436,21 @@ function AppInner() {
               <button
                 onClick={() => {
                   setShowExitConfirm(false);
-                  try { window.history.go(-2); } catch { try { window.history.back(); } catch {} }
-                  try { window.close(); } catch {}
+                  // Attempt 1: jump past the entire history stack
+                  try { window.history.go(-(window.history.length)); } catch {}
+                  // Attempt 2: native exit (Cordova-style) or blank replace
+                  setTimeout(() => {
+                    try {
+                      const nav = navigator as Navigator & { app?: { exitApp?: () => void } };
+                      if (nav.app?.exitApp) { nav.app.exitApp(); return; }
+                    } catch {}
+                    try { window.location.replace("about:blank"); } catch {}
+                  }, 150);
+                  // Attempt 3: most reliable on Android PWA — blank then close
+                  setTimeout(() => {
+                    try { window.location.href = "about:blank"; } catch {}
+                    setTimeout(() => { try { window.close(); } catch {} }, 100);
+                  }, 300);
                 }}
                 style={{
                   padding:"12px",borderRadius:12,
