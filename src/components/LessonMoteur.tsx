@@ -851,7 +851,7 @@ export default function LessonMoteur({ lang="fr", onBack=()=>{}, onComplete=()=>
           <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
           <div style={{flex:1}}>
             <div style={{fontSize:10,color:C.orange,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>⚙️ {t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>Leçon 1/8</div>
+            <div style={{fontSize:11,color:C.muted}}>{t.lessonNum}</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(30,138,74,0.2)",border:`1px solid ${C.green}44`,color:C.green,fontWeight:700}}>🆓 FREE</div>
@@ -875,23 +875,23 @@ export default function LessonMoteur({ lang="fr", onBack=()=>{}, onComplete=()=>
 
             <SL icon="🔄" text={lc.p1} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>🔄</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s1t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
-            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔄 {lang==="fr"?"CYCLE DIESEL — ANIMÉ":lang==="en"?"DIESEL CYCLE — ANIMATED":lang==="es"?"CICLO DIESEL — ANIMADO":"CICLO DIESEL — ANIMADO"}</div><DieselCycleSVG lang={lang}/></Card>
+            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔄 {t.cycleAnim}</div><DieselCycleSVG lang={lang}/></Card>
 
             <SL icon="⚙️" text={lc.p2} color={C.steel}/>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>⚙️</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s2t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
-            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.steel,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚙️ {lang==="fr"?"COUPE MOTEUR — INTERACTIF":lang==="en"?"ENGINE CROSS-SECTION — INTERACTIVE":lang==="es"?"SECCIÓN MOTOR — INTERACTIVO":"SECÇÃO MOTOR — INTERATIVO"}</div><EngineCrossSectionSVG lang={lang}/></Card>
+            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.steel,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚙️ {t.crossInter}</div><EngineCrossSectionSVG lang={lang}/></Card>
 
             <SL icon="💧" text={lc.p3} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>💧</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s3t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`,background:"linear-gradient(135deg,rgba(26,111,212,0.06),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💧 {lang==="fr"?"CIRCUITS DE REFROIDISSEMENT — INTERACTIF":lang==="en"?"COOLING CIRCUITS — INTERACTIVE":lang==="es"?"CIRCUITOS DE REFRIGERACIÓN — INTERACTIVO":"CIRCUITOS DE ARREFECIMENTO — INTERATIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💧 {t.coolInter}</div>
               <CoolingCircuitSVG lang={lang}/>
             </Card>
 
             <SL icon="📊" text={lc.p4} color={C.green}/>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>📊</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s4t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}33`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>📊 {lang==="fr"?"SIMULATEUR PARAMÈTRES MOTEUR":lang==="en"?"ENGINE PARAMETER SIMULATOR":lang==="es"?"SIMULADOR PARÁMETROS MOTOR":"SIMULADOR PARÂMETROS MOTOR"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>📊 {t.simParam}</div>
               <EngineMonitorSVG lang={lang}/>
             </Card>
 
@@ -916,9 +916,9 @@ export default function LessonMoteur({ lang="fr", onBack=()=>{}, onComplete=()=>
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
-                {lang==="fr"?"Quiz — Moteur Diesel & Refroidissement":lang==="en"?"Quiz — Diesel Engine & Cooling":lang==="es"?"Quiz — Motor Diesel y Refrigeración":"Quiz — Motor Diesel e Arrefecimento"}
+                {t.quizTitle}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions · Leçon 1 Machine":"questions · Engine Lesson 1"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 {t.quizSub}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
@@ -934,7 +934,7 @@ export default function LessonMoteur({ lang="fr", onBack=()=>{}, onComplete=()=>
               {lc.learnedP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<lc.learnedP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.green,fontWeight:700}}>✓</span>{pt}</div>)}
             </Card>
             <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.orange},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(230,126,34,0.4)",marginBottom:10}}>
-              {lang==="fr"?"LEÇON 2 — AUXILIAIRES & GÉNÉRATEURS →":lang==="en"?"LESSON 2 — AUXILIARIES & GENERATORS →":lang==="es"?"LECCIÓN 2 — AUXILIARES Y GENERADORES →":"LIÇÃO 2 — AUXILIARES E GERADORES →"}
+              {t.lesson2Btn}
             </button>
             <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>
           </div>}
