@@ -1122,6 +1122,8 @@ function AppInner() {
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
 
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     try { window.history.pushState({ map: page }, ""); } catch {}
@@ -1133,14 +1135,9 @@ function AppInner() {
       const cur = pageRef.current;
       const hasProfile = !!localStorage.getItem("map_status_card");
       if (cur === "dashboard") {
-        const exit = window.confirm(
-          lang === "fr" ? "Quitter l'application ?" :
-          lang === "es" ? "¿Salir de la aplicación?" :
-          lang === "pt" ? "Sair do aplicativo?" :
-          "Exit app?"
-        );
-        if (exit) { try { window.close(); } catch {} window.history.back(); }
-        else { window.history.pushState({ map: cur }, ""); }
+        // Re-push so back is intercepted again, then show our own modal
+        try { window.history.pushState({ map: cur }, ""); } catch {}
+        setShowExitConfirm(true);
         return;
       }
       if (LESSONS.includes(cur)) {
