@@ -11,6 +11,7 @@ import LessonNavPratique from "./LessonNavPratique";
 import LessonMarees from "./LessonMarees";
 import LessonNavire from "./LessonNavire";
 import LessonMoteur from "./LessonMoteur";
+import LessonAuxiliaires from "./LessonAuxiliaires";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1122,7 +1123,7 @@ function AppInner() {
   useEffect(() => { pageRef.current = page; }, [page]);
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
-  const ENGINE_LESSONS = ["lesson_moteur"];
+  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1308,6 +1309,7 @@ function AppInner() {
               if (m?.id === "d1") setPage("nav_lessons");
               else if (m?.id === "s1") setPage("lesson_colreg");
               else if (m?.id === "e1") setPage("lesson_moteur");
+              else if (m?.id === "e2") setPage("lesson_auxiliaires");
             }}
             activeNav="home"
             onNavHome={() => setPage("dashboard")}
@@ -1329,6 +1331,7 @@ function AppInner() {
             if (m?.id === "d1") setPage("nav_lessons");
             else if (m?.id === "s1") setPage("lesson_colreg");
             else if (m?.id === "e1") setPage("lesson_moteur");
+            else if (m?.id === "e2") setPage("lesson_auxiliaires");
             else setPage("dashboard");
           }}
         />
@@ -1414,6 +1417,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("dashboard")}
           onComplete={() => { markLessonCompleted("e1-l1"); setPage("dashboard"); }}
+        />
+      )}
+      {page === "lesson_auxiliaires" && (
+        <LessonAuxiliaires
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          onComplete={() => { markLessonCompleted("e2-l1"); setPage("dashboard"); }}
         />
       )}
       {showExitConfirm && (
