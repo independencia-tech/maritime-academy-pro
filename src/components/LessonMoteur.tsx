@@ -722,9 +722,12 @@ function Exercise1({ lang, t }) {
         </div>
       ))}
       {showC&&<div style={{padding:"12px",borderRadius:12,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:11,color:C.white,lineHeight:1.6,marginBottom:10}}>
-        {lang==="fr"?"✅ Q1: 3 (combustion = seul temps producteur)\n✅ Q2: 70°C (normal : 70-85°C · alarme >90°C)\n✅ Q3: OUI — 2 bars < 2,5 bars → arrêt immédiat obligatoire":
-         lang==="en"?"✅ Q1: 3 (combustion = only power-producing stroke)\n✅ Q2: 70°C (normal: 70-85°C · alarm >90°C)\n✅ Q3: YES — 2 bar < 2.5 bar → immediate stop mandatory":
-         "✅ Q1: 3 · Q2: 70°C · Q3: SÍ/SIM — parada inmediata/imediata"}
+        {({
+          fr:"✅ Q1: 3 (combustion = seul temps producteur)\n✅ Q2: 70°C (normal : 70-85°C · alarme >90°C)\n✅ Q3: OUI — 2 bars < 2,5 bars → arrêt immédiat obligatoire",
+          en:"✅ Q1: 3 (combustion = only power-producing stroke)\n✅ Q2: 70°C (normal: 70-85°C · alarm >90°C)\n✅ Q3: YES — 2 bar < 2.5 bar → immediate stop mandatory",
+          es:"✅ Q1: 3 (combustión = único tiempo productor)\n✅ Q2: 70°C (normal: 70-85°C · alarma >90°C)\n✅ Q3: SÍ — 2 bar < 2,5 bar → parada inmediata obligatoria",
+          pt:"✅ Q1: 3 (combustão = único tempo produtor)\n✅ Q2: 70°C (normal: 70-85°C · alarme >90°C)\n✅ Q3: SIM — 2 bar < 2,5 bar → paragem imediata obrigatória",
+        })[lang]||""}
       </div>}
       <button onClick={()=>setShowC(v=>!v)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:showC?"rgba(30,138,74,0.2)":"rgba(201,146,42,0.15)",border:`1px solid ${showC?C.green:C.gold}44`,color:showC?C.green:C.gold2,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
         {showC?t.hideCorr:t.showCorr}
