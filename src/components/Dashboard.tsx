@@ -236,7 +236,7 @@ export const MODULES = {
       freeLessons:0, totalLessons:8,
       title:{fr:"Systèmes Auxiliaires",en:"Auxiliary Systems",es:"Sistemas Auxiliares",pt:"Sistemas Auxiliares"},
       desc:{fr:"Pompes, compresseurs, purificateurs",en:"Pumps, compressors, purifiers",es:"Bombas, compresores, purificadores",pt:"Bombas, compressores, purificadores"},
-      xp:400, status:"locked", progress:0 },
+      xp:400, status:"available", progress:0 },
     { id:"e3", icon:"⚡", color:C.gold2, access:"premium",
       freeLessons:0, totalLessons:7,
       title:{fr:"Production Électrique",en:"Electrical Generation",es:"Producción Eléctrica",pt:"Produção Elétrica"},
