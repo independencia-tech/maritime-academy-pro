@@ -10,10 +10,10 @@ const C = {
 };
 
 const T = {
-  fr:{ back:"◀ Retour", module:"Module Machine", xp:"XP gagnés", quiz:"QUIZ", question:"Question", ofQ:"sur", correct:"✓ Bonne réponse!", wrong:"✗ Mauvaise réponse", expl:"Explication:", next:"SUIVANT →", finish:"VOIR MON SCORE →", startQuiz:"✅ COMMENCER LE QUIZ", result:"RÉSULTAT", complete:"🏅 LEÇON TERMINÉE!", backDash:"← RETOUR AU DASHBOARD", youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz", scorePerf:"Parfait ! 🌟", scoreGreat:"Excellent ! 💪", scoreGood:"Continue ! 📚", showCorr:"Voir la correction", hideCorr:"Masquer" },
-  en:{ back:"◀ Back", module:"Engine Module", xp:"XP earned", quiz:"QUIZ", question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer", expl:"Explanation:", next:"NEXT →", finish:"SEE MY SCORE →", startQuiz:"✅ START QUIZ", result:"RESULT", complete:"🏅 LESSON COMPLETE!", backDash:"← BACK TO DASHBOARD", youLearned:"You learned:", readFirst:"Read the content then start the quiz", scorePerf:"Perfect! 🌟", scoreGreat:"Excellent! 💪", scoreGood:"Keep going! 📚", showCorr:"Show correction", hideCorr:"Hide" },
-  es:{ back:"◀ Volver", module:"Módulo Máquinas", xp:"XP ganados", quiz:"QUIZ", question:"Pregunta", ofQ:"de", correct:"✓ ¡Correcta!", wrong:"✗ Incorrecta", expl:"Explicación:", next:"SIGUIENTE →", finish:"VER PUNTUACIÓN →", startQuiz:"✅ EMPEZAR QUIZ", result:"RESULTADO", complete:"🏅 ¡COMPLETADA!", backDash:"← VOLVER AL PANEL", youLearned:"Has aprendido:", readFirst:"Lee y luego comienza", scorePerf:"¡Perfecto! 🌟", scoreGreat:"¡Excelente! 💪", scoreGood:"¡Sigue! 📚", showCorr:"Ver corrección", hideCorr:"Ocultar" },
-  pt:{ back:"◀ Voltar", module:"Módulo Máquinas", xp:"XP ganhos", quiz:"QUIZ", question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada", expl:"Explicação:", next:"PRÓXIMO →", finish:"VER PONTUAÇÃO →", startQuiz:"✅ COMEÇAR QUIZ", result:"RESULTADO", complete:"🏅 CONCLUÍDA!", backDash:"← VOLTAR AO PAINEL", youLearned:"Você aprendeu:", readFirst:"Leia o conteúdo e depois comece", scorePerf:"Perfeito! 🌟", scoreGreat:"Excelente! 💪", scoreGood:"Continue! 📚", showCorr:"Ver correção", hideCorr:"Ocultar" },
+  fr:{ back:"◀ Retour", module:"Module Machine", lessonNum:"Leçon 1/8", xp:"XP gagnés", quiz:"QUIZ", question:"Question", ofQ:"sur", correct:"✓ Bonne réponse!", wrong:"✗ Mauvaise réponse", expl:"Explication:", next:"SUIVANT →", finish:"VOIR MON SCORE →", startQuiz:"✅ COMMENCER LE QUIZ", result:"RÉSULTAT", complete:"🏅 LEÇON TERMINÉE!", backDash:"← RETOUR AU DASHBOARD", youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz", scorePerf:"Parfait ! 🌟", scoreGreat:"Excellent ! 💪", scoreGood:"Continue ! 📚", showCorr:"Voir la correction", hideCorr:"Masquer", prev:"Précédent", nextNav:"Suivant", bankNext:"SUIVANT →", bankFinish:"TERMINER", quizTitle:"Quiz — Moteur Diesel & Refroidissement", quizSub:"questions · Leçon 1 Machine", lesson2Btn:"LEÇON 2 — AUXILIAIRES & GÉNÉRATEURS →", cycleAnim:"CYCLE DIESEL — ANIMÉ", crossInter:"COUPE MOTEUR — INTERACTIF", coolInter:"CIRCUITS DE REFROIDISSEMENT — INTERACTIF", simParam:"SIMULATEUR PARAMÈTRES MOTEUR", lessonsLabel:"LEÇONS", normal:"Normal:", alarm:"Alarme:" },
+  en:{ back:"◀ Back", module:"Engine Module", lessonNum:"Lesson 1/8", xp:"XP earned", quiz:"QUIZ", question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer", expl:"Explanation:", next:"NEXT →", finish:"SEE MY SCORE →", startQuiz:"✅ START QUIZ", result:"RESULT", complete:"🏅 LESSON COMPLETE!", backDash:"← BACK TO DASHBOARD", youLearned:"You learned:", readFirst:"Read the content then start the quiz", scorePerf:"Perfect! 🌟", scoreGreat:"Excellent! 💪", scoreGood:"Keep going! 📚", showCorr:"Show correction", hideCorr:"Hide", prev:"Previous", nextNav:"Next", bankNext:"NEXT →", bankFinish:"FINISH", quizTitle:"Quiz — Diesel Engine & Cooling", quizSub:"questions · Engine Lesson 1", lesson2Btn:"LESSON 2 — AUXILIARIES & GENERATORS →", cycleAnim:"DIESEL CYCLE — ANIMATED", crossInter:"ENGINE CROSS-SECTION — INTERACTIVE", coolInter:"COOLING CIRCUITS — INTERACTIVE", simParam:"ENGINE PARAMETER SIMULATOR", lessonsLabel:"LESSONS", normal:"Normal:", alarm:"Alarm:" },
+  es:{ back:"◀ Volver", module:"Módulo Máquinas", lessonNum:"Lección 1/8", xp:"XP ganados", quiz:"QUIZ", question:"Pregunta", ofQ:"de", correct:"✓ ¡Correcta!", wrong:"✗ Incorrecta", expl:"Explicación:", next:"SIGUIENTE →", finish:"VER PUNTUACIÓN →", startQuiz:"✅ EMPEZAR QUIZ", result:"RESULTADO", complete:"🏅 ¡COMPLETADA!", backDash:"← VOLVER AL PANEL", youLearned:"Has aprendido:", readFirst:"Lee y luego comienza", scorePerf:"¡Perfecto! 🌟", scoreGreat:"¡Excelente! 💪", scoreGood:"¡Sigue! 📚", showCorr:"Ver corrección", hideCorr:"Ocultar", prev:"Anterior", nextNav:"Siguiente", bankNext:"SIGUIENTE →", bankFinish:"TERMINAR", quizTitle:"Quiz — Motor Diesel y Refrigeración", quizSub:"preguntas · Lección 1 Máquinas", lesson2Btn:"LECCIÓN 2 — AUXILIARES Y GENERADORES →", cycleAnim:"CICLO DIESEL — ANIMADO", crossInter:"SECCIÓN MOTOR — INTERACTIVO", coolInter:"CIRCUITOS DE REFRIGERACIÓN — INTERACTIVO", simParam:"SIMULADOR PARÁMETROS MOTOR", lessonsLabel:"LECCIONES", normal:"Normal:", alarm:"Alarma:" },
+  pt:{ back:"◀ Voltar", module:"Módulo Máquinas", lessonNum:"Lição 1/8", xp:"XP ganhos", quiz:"QUIZ", question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada", expl:"Explicação:", next:"PRÓXIMO →", finish:"VER PONTUAÇÃO →", startQuiz:"✅ COMEÇAR QUIZ", result:"RESULTADO", complete:"🏅 CONCLUÍDA!", backDash:"← VOLTAR AO PAINEL", youLearned:"Você aprendeu:", readFirst:"Leia o conteúdo e depois comece", scorePerf:"Perfeito! 🌟", scoreGreat:"Excelente! 💪", scoreGood:"Continue! 📚", showCorr:"Ver correção", hideCorr:"Ocultar", prev:"Anterior", nextNav:"Próximo", bankNext:"PRÓXIMO →", bankFinish:"TERMINAR", quizTitle:"Quiz — Motor Diesel e Arrefecimento", quizSub:"perguntas · Lição 1 Máquinas", lesson2Btn:"LIÇÃO 2 — AUXILIARES E GERADORES →", cycleAnim:"CICLO DIESEL — ANIMADO", crossInter:"SECÇÃO MOTOR — INTERATIVO", coolInter:"CIRCUITOS DE ARREFECIMENTO — INTERATIVO", simParam:"SIMULADOR PARÂMETROS MOTOR", lessonsLabel:"LIÇÕES", normal:"Normal:", alarm:"Alarme:" },
 };
 
 // ══════════════════════════════════════
@@ -83,7 +83,7 @@ function DieselCycleSVG({ lang }) {
           fill={s.valveIn?"rgba(77,166,255,0.6)":"rgba(255,255,255,0.1)"}
           stroke={s.valveIn?C.blue2:"rgba(255,255,255,0.2)"} strokeWidth="1.5"/>
         <text x="117" y="14" textAnchor="middle" fontSize="6" fill={s.valveIn?C.blue2:C.muted}>
-          {lang==="fr"?"Adm.":lang==="en"?"In.":"Adm."}
+          {({fr:"Adm.",en:"In.",es:"Adm.",pt:"Adm."})[lang]||"Adm."}
         </text>
 
         {/* Exhaust valve */}
@@ -91,7 +91,7 @@ function DieselCycleSVG({ lang }) {
           fill={s.valveEx?"rgba(100,100,100,0.6)":"rgba(255,255,255,0.1)"}
           stroke={s.valveEx?C.steel:"rgba(255,255,255,0.2)"} strokeWidth="1.5"/>
         <text x="173" y="14" textAnchor="middle" fontSize="6" fill={s.valveEx?C.white:C.muted}>
-          {lang==="fr"?"Éch.":lang==="en"?"Ex.":"Esc."}
+          {({fr:"Éch.",en:"Ex.",es:"Esc.",pt:"Esc."})[lang]||"Éch."}
         </text>
 
         {/* Combustion chamber top */}
@@ -148,13 +148,13 @@ function DieselCycleSVG({ lang }) {
 
         {/* Labels */}
         <text x="60" y="40" textAnchor="middle" fontSize="7" fill={C.muted}>
-          {lang==="fr"?"Air":lang==="en"?"Air":"Aire"}
+          {({fr:"Air",en:"Air",es:"Aire",pt:"Ar"})[lang]||"Air"}
         </text>
         <text x="230" y="40" textAnchor="middle" fontSize="7" fill={C.muted}>
-          {lang==="fr"?"Gaz":lang==="en"?"Gas":"Gas"}
+          {({fr:"Gaz",en:"Gas",es:"Gas",pt:"Gás"})[lang]||"Gaz"}
         </text>
         <text x="145" y="186" textAnchor="middle" fontSize="7" fill={C.gold}>
-          {lang==="fr"?"Vilebrequin":lang==="en"?"Crankshaft":lang==="es"?"Cigüeñal":"Virabrequim"}
+          {({fr:"Vilebrequin",en:"Crankshaft",es:"Cigüeñal",pt:"Virabrequim"})[lang]||"Vilebrequin"}
         </text>
       </svg>
 
@@ -172,11 +172,11 @@ function DieselCycleSVG({ lang }) {
       <div style={{display:"flex",gap:8,marginTop:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"8px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":"Previous"}
+          ◀ {({fr:"Précédent",en:"Previous",es:"Anterior",pt:"Anterior"})[lang]||"Précédent"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(3,s+1))} disabled={step===3}
           style={{flex:1,padding:"8px",borderRadius:10,background:step===3?"rgba(255,255,255,0.06)":`linear-gradient(135deg,${s.color}44,${C.blue}44)`,border:`1px solid ${step===3?"rgba(255,255,255,0.1)":s.color}`,color:C.white,cursor:step===3?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":"Next"} ▶
+          {({fr:"Suivant",en:"Next",es:"Siguiente",pt:"Próximo"})[lang]||"Suivant"} ▶
         </button>
       </div>
     </div>
@@ -293,7 +293,7 @@ function CoolingCircuitSVG({ lang }) {
         {/* ENGINE block */}
         <rect x="95" y="60" width="100" height="80" rx="8" fill="#0d1f3c" stroke={C.steel} strokeWidth="2"/>
         <text x="145" y="95" textAnchor="middle" fontSize="9" fill={C.steel} fontWeight="700">
-          {lang==="fr"?"MOTEUR":lang==="en"?"ENGINE":lang==="es"?"MOTOR":"MOTOR"}
+          {({fr:"MOTEUR",en:"ENGINE",es:"MOTOR",pt:"MOTOR"})[lang]||"MOTEUR"}
         </text>
         <text x="145" y="108" textAnchor="middle" fontSize="8" fill={C.muted}>🔥 80-90°C</text>
         {/* Heat waves */}
@@ -317,14 +317,14 @@ function CoolingCircuitSVG({ lang }) {
           {highlight==="fw"&&<>
             <rect x="5" y="55" width="40" height="22" rx="5" fill="rgba(26,111,212,0.15)" stroke={C.blue2} strokeWidth="0.8"/>
             <text x="25" y="65" textAnchor="middle" fontSize="7" fill={C.blue2}>70°C</text>
-            <text x="25" y="74" textAnchor="middle" fontSize="6" fill={C.muted}>vers moteur</text>
+            <text x="25" y="74" textAnchor="middle" fontSize="6" fill={C.muted}>{({fr:"vers moteur",en:"to engine",es:"al motor",pt:"ao motor"})[lang]||"vers moteur"}</text>
           </>}
         </>}
 
         {/* HEAT EXCHANGER */}
         <rect x="210" y="70" width="65" height="50" rx="6" fill="rgba(10,138,108,0.15)" stroke={C.teal} strokeWidth="1.5"/>
         <text x="242" y="91" textAnchor="middle" fontSize="7" fill={C.teal} fontWeight="700">
-          {lang==="fr"?"Échangeur":lang==="en"?"Heat Exch.":lang==="es"?"Intercamb.":"Permutador"}
+          {({fr:"Échangeur",en:"Heat Exch.",es:"Intercamb.",pt:"Permutador"})[lang]||"Échangeur"}
         </text>
         <text x="242" y="103" textAnchor="middle" fontSize="6" fill={C.muted}>FW ↔ SW</text>
         <text x="242" y="113" textAnchor="middle" fontSize="6" fill={C.teal}>-15°C</text>
@@ -350,12 +350,12 @@ function CoolingCircuitSVG({ lang }) {
           {/* Sea inlet */}
           <rect x="215" y="172" width="54" height="14" rx="4" fill="rgba(10,138,108,0.1)" stroke={C.teal} strokeWidth="0.8"/>
           <text x="242" y="182" textAnchor="middle" fontSize="7" fill={C.teal}>
-            {lang==="fr"?"Prise de mer":lang==="en"?"Sea chest":lang==="es"?"Toma de mar":"Tomada de mar"}
+            {({fr:"Prise de mer",en:"Sea chest",es:"Toma de mar",pt:"Tomada de mar"})[lang]||"Prise de mer"}
           </text>
           {/* Temp labels */}
           <rect x="158" y="150" width="46" height="22" rx="5" fill="rgba(10,138,108,0.15)" stroke={C.teal} strokeWidth="0.8"/>
           <text x="181" y="160" textAnchor="middle" fontSize="7" fill={C.teal}>~28°C</text>
-          <text x="181" y="169" textAnchor="middle" fontSize="6" fill={C.muted}>{lang==="fr"?"Golfe Guinée":"Gulf Guinea"}</text>
+          <text x="181" y="169" textAnchor="middle" fontSize="6" fill={C.muted}>{({fr:"Golfe Guinée",en:"Gulf of Guinea",es:"Golfo Guinea",pt:"Golfo Guiné"})[lang]||"Golfe Guinée"}</text>
         </>}
 
         {/* OIL circuit */}
@@ -369,12 +369,12 @@ function CoolingCircuitSVG({ lang }) {
           <line x1="95" y1="140" x2="68" y2="158" stroke={C.rust} strokeWidth="2" opacity="0.5"/>
           <rect x="5" y="172" width="86" height="14" rx="4" fill="rgba(141,59,43,0.1)" stroke={C.rust} strokeWidth="0.8"/>
           <text x="48" y="182" textAnchor="middle" fontSize="7" fill={C.rust}>
-            {lang==="fr"?"Carter huile (sump)":lang==="en"?"Oil sump":"Cárter aceite"}
+            {({fr:"Carter huile (sump)",en:"Oil sump",es:"Cárter aceite",pt:"Cárter óleo"})[lang]||"Carter huile (sump)"}
           </text>
           <rect x="5" y="30" width="86" height="20" rx="5" fill="rgba(141,59,43,0.15)" stroke={C.rust} strokeWidth="0.8"/>
           <text x="48" y="40" textAnchor="middle" fontSize="7" fill={C.rust}>SAE 30 · 3-5 bar</text>
           <text x="48" y="48" textAnchor="middle" fontSize="6" fill={C.muted}>
-            {lang==="fr"?"⚠️ Pression critique":lang==="en"?"⚠️ Critical pressure":"⚠️ Presión crítica"}
+            {({fr:"⚠️ Pression critique",en:"⚠️ Critical pressure",es:"⚠️ Presión crítica",pt:"⚠️ Pressão crítica"})[lang]||"⚠️ Pression critique"}
           </text>
         </>}
 
@@ -387,21 +387,24 @@ function CoolingCircuitSVG({ lang }) {
         background:highlight==="fw"?"rgba(26,111,212,0.1)":highlight==="sw"?"rgba(10,138,108,0.1)":"rgba(141,59,43,0.1)",
         border:`1px solid ${highlight==="fw"?C.blue2:highlight==="sw"?C.teal:C.rust}33`,
         fontSize:11,color:C.white,lineHeight:1.7}}>
-        {highlight==="fw"&&(lang==="fr"
-          ?"💧 EAU DOUCE (circuit fermé) :\n→ Refroidit directement les cylindres et l'huile\n→ Température normale : 70-85°C\n→ Alerte à 90°C · Arrêt d'urgence à 95°C\n→ Additifs anti-corrosion obligatoires"
-          :lang==="en"
-          ?"💧 FRESH WATER (closed circuit):\n→ Directly cools cylinders and oil\n→ Normal temperature: 70-85°C\n→ Alert at 90°C · Emergency stop at 95°C\n→ Anti-corrosion additives mandatory"
-          :"💧 AGUA DULCE (circuito cerrado):\n→ Enfría directamente cilindros y aceite\n→ Temperatura normal: 70-85°C\n→ Alarma 90°C · Parada emergencia 95°C")}
-        {highlight==="sw"&&(lang==="fr"
-          ?"🌊 EAU DE MER (circuit ouvert) :\n→ Refroidit l'eau douce via l'échangeur\n→ Puisée directement dans la mer\n→ Température : ~28°C (Golfe de Guinée)\n→ ⚠️ Filtre à entretenir régulièrement\n→ ⚠️ Risque de corrosion et de biofouling"
-          :lang==="en"
-          ?"🌊 SEA WATER (open circuit):\n→ Cools fresh water via heat exchanger\n→ Drawn directly from the sea\n→ Temperature: ~28°C (Gulf of Guinea)\n→ ⚠️ Filter requires regular maintenance\n→ ⚠️ Corrosion and biofouling risk"
-          :"🌊 AGUA DE MAR (circuito abierto):\n→ Enfría el agua dulce vía intercambiador\n→ Extraída directamente del mar\n→ Temperatura: ~28°C (Golfo de Guinea)\n→ ⚠️ Riesgo de corrosión y biofouling")}
-        {highlight==="oil"&&(lang==="fr"
-          ?"🛢️ CIRCUIT HUILE :\n→ Lubrifie ET refroidit simultanément\n→ Pression normale : 3-5 bars\n→ ⚠️ Chute de pression = arrêt immédiat\n→ Analyse huile tous les 500h d'utilisation\n→ Carter (sump) : contient 200-2000 litres"
-          :lang==="en"
-          ?"🛢️ OIL CIRCUIT:\n→ Lubricates AND cools simultaneously\n→ Normal pressure: 3-5 bar\n→ ⚠️ Pressure drop = immediate stop\n→ Oil analysis every 500 operating hours\n→ Sump: contains 200-2000 litres"
-          :"🛢️ CIRCUITO ACEITE:\n→ Lubrica Y enfría simultáneamente\n→ Presión normal: 3-5 bares\n→ ⚠️ Caída de presión = parada inmediata\n→ Análisis aceite cada 500h de uso")}
+        {highlight==="fw"&&(({
+          fr:"💧 EAU DOUCE (circuit fermé) :\n→ Refroidit directement les cylindres et l'huile\n→ Température normale : 70-85°C\n→ Alerte à 90°C · Arrêt d'urgence à 95°C\n→ Additifs anti-corrosion obligatoires",
+          en:"💧 FRESH WATER (closed circuit):\n→ Directly cools cylinders and oil\n→ Normal temperature: 70-85°C\n→ Alert at 90°C · Emergency stop at 95°C\n→ Anti-corrosion additives mandatory",
+          es:"💧 AGUA DULCE (circuito cerrado):\n→ Enfría directamente cilindros y aceite\n→ Temperatura normal: 70-85°C\n→ Alarma 90°C · Parada emergencia 95°C\n→ Aditivos anticorrosión obligatorios",
+          pt:"💧 ÁGUA DOCE (circuito fechado):\n→ Arrefece diretamente cilindros e óleo\n→ Temperatura normal: 70-85°C\n→ Alarme 90°C · Paragem de emergência 95°C\n→ Aditivos anticorrosão obrigatórios",
+        })[lang]||"")}
+        {highlight==="sw"&&(({
+          fr:"🌊 EAU DE MER (circuit ouvert) :\n→ Refroidit l'eau douce via l'échangeur\n→ Puisée directement dans la mer\n→ Température : ~28°C (Golfe de Guinée)\n→ ⚠️ Filtre à entretenir régulièrement\n→ ⚠️ Risque de corrosion et de biofouling",
+          en:"🌊 SEA WATER (open circuit):\n→ Cools fresh water via heat exchanger\n→ Drawn directly from the sea\n→ Temperature: ~28°C (Gulf of Guinea)\n→ ⚠️ Filter requires regular maintenance\n→ ⚠️ Corrosion and biofouling risk",
+          es:"🌊 AGUA DE MAR (circuito abierto):\n→ Enfría el agua dulce vía intercambiador\n→ Extraída directamente del mar\n→ Temperatura: ~28°C (Golfo de Guinea)\n→ ⚠️ Filtro requiere mantenimiento regular\n→ ⚠️ Riesgo de corrosión y biofouling",
+          pt:"🌊 ÁGUA SALGADA (circuito aberto):\n→ Arrefece a água doce via permutador\n→ Captada diretamente do mar\n→ Temperatura: ~28°C (Golfo da Guiné)\n→ ⚠️ Filtro requer manutenção regular\n→ ⚠️ Risco de corrosão e biofouling",
+        })[lang]||"")}
+        {highlight==="oil"&&(({
+          fr:"🛢️ CIRCUIT HUILE :\n→ Lubrifie ET refroidit simultanément\n→ Pression normale : 3-5 bars\n→ ⚠️ Chute de pression = arrêt immédiat\n→ Analyse huile tous les 500h d'utilisation\n→ Carter (sump) : contient 200-2000 litres",
+          en:"🛢️ OIL CIRCUIT:\n→ Lubricates AND cools simultaneously\n→ Normal pressure: 3-5 bar\n→ ⚠️ Pressure drop = immediate stop\n→ Oil analysis every 500 operating hours\n→ Sump: contains 200-2000 litres",
+          es:"🛢️ CIRCUITO ACEITE:\n→ Lubrica Y enfría simultáneamente\n→ Presión normal: 3-5 bares\n→ ⚠️ Caída de presión = parada inmediata\n→ Análisis aceite cada 500h de uso\n→ Cárter (sump): contiene 200-2000 litros",
+          pt:"🛢️ CIRCUITO ÓLEO:\n→ Lubrifica E arrefece simultaneamente\n→ Pressão normal: 3-5 bar\n→ ⚠️ Queda de pressão = paragem imediata\n→ Análise de óleo a cada 500h de uso\n→ Cárter (sump): contém 200-2000 litros",
+        })[lang]||"")}
       </div>
     </div>
   );
@@ -447,13 +450,13 @@ function EngineMonitorSVG({ lang }) {
         <div>
           <div style={{fontSize:12,fontWeight:700,color:statusColor(overallStatus)}}>
             {overallStatus==="danger"
-              ?(lang==="fr"?"⚠️ ALARME — ACTION REQUISE":lang==="en"?"⚠️ ALARM — ACTION REQUIRED":"⚠️ ALARMA — ACCIÓN REQUERIDA")
+              ?(({fr:"⚠️ ALARME — ACTION REQUISE",en:"⚠️ ALARM — ACTION REQUIRED",es:"⚠️ ALARMA — ACCIÓN REQUERIDA",pt:"⚠️ ALARME — AÇÃO NECESSÁRIA"})[lang]||"⚠️ ALARME — ACTION REQUISE")
               :overallStatus==="warning"
-              ?(lang==="fr"?"⚡ ATTENTION — Surveiller":lang==="en"?"⚡ CAUTION — Monitor":"⚡ ATENCIÓN — Vigilar")
-              :(lang==="fr"?"✅ Moteur nominal":lang==="en"?"✅ Engine nominal":"✅ Motor nominal")}
+              ?(({fr:"⚡ ATTENTION — Surveiller",en:"⚡ CAUTION — Monitor",es:"⚡ ATENCIÓN — Vigilar",pt:"⚡ ATENÇÃO — Vigiar"})[lang]||"⚡ ATTENTION — Surveiller")
+              :(({fr:"✅ Moteur nominal",en:"✅ Engine nominal",es:"✅ Motor nominal",pt:"✅ Motor nominal"})[lang]||"✅ Moteur nominal")}
           </div>
           <div style={{fontSize:10,color:C.muted}}>
-            {lang==="fr"?"Ajuste les curseurs pour simuler des pannes":lang==="en"?"Adjust sliders to simulate failures":lang==="es"?"Ajusta los controles para simular averías":"Ajuste os controles para simular avarias"}
+            {({fr:"Ajuste les curseurs pour simuler des pannes",en:"Adjust sliders to simulate failures",es:"Ajusta los controles para simular averías",pt:"Ajuste os controles para simular avarias"})[lang]||"Ajuste les curseurs pour simuler des pannes"}
           </div>
         </div>
       </div>
@@ -483,8 +486,8 @@ function EngineMonitorSVG({ lang }) {
             onChange={e=>p.set(Number(e.target.value))}
             style={{width:"100%",accentColor:statusColor(p.status),margin:"0 0 2px"}}/>
           <div style={{display:"flex",justifyContent:"space-between",fontSize:9,color:C.muted}}>
-            <span>{lang==="fr"?"Normal:":lang==="en"?"Normal:":"Normal:"} {p.normal}</span>
-            <span style={{color:C.red}}>{lang==="fr"?"Alarme:":lang==="en"?"Alarm:":"Alarma:"} {p.danger}</span>
+            <span>{({fr:"Normal:",en:"Normal:",es:"Normal:",pt:"Normal:"})[lang]||"Normal:"} {p.normal}</span>
+            <span style={{color:C.red}}>{({fr:"Alarme:",en:"Alarm:",es:"Alarma:",pt:"Alarme:"})[lang]||"Alarme:"} {p.danger}</span>
           </div>
         </div>
       ))}
@@ -515,7 +518,7 @@ function AccidentCase({ lang }) {
       </div>
       {exp&&<div style={{padding:"0 16px 16px"}}>
         <div style={{fontSize:12,color:C.white,lineHeight:1.7,marginBottom:10}}>{c.what}</div>
-        <div style={{fontSize:11,color:C.red,fontWeight:700,marginBottom:5,fontFamily:"'Cinzel',serif"}}>CAUSES</div>
+        <div style={{fontSize:11,color:C.red,fontWeight:700,marginBottom:5,fontFamily:"'Cinzel',serif"}}>{({fr:"CAUSES",en:"CAUSES",es:"CAUSAS",pt:"CAUSAS"})[lang]||"CAUSES"}</div>
         <div style={{fontSize:12,color:C.white,lineHeight:1.7,whiteSpace:"pre-line",marginBottom:10}}>{c.cause}</div>
         <div style={{fontSize:11,color:C.green,fontWeight:700,marginBottom:5,fontFamily:"'Cinzel',serif"}}>{lang==="fr"?"LEÇONS":lang==="en"?"LESSONS":lang==="es"?"LECCIONES":"LIÇÕES"}</div>
         <div style={{fontSize:12,color:C.white,lineHeight:1.7,whiteSpace:"pre-line",marginBottom:10}}>{c.lessons}</div>
@@ -560,9 +563,9 @@ const QUIZ = {
 };
 
 // ══════════════════════════════════════
-// BANK 15 QUESTIONS
+// BANK 15 QUESTIONS (multilingual)
 // ══════════════════════════════════════
-const BANK = [
+const BANK_FR = [
   {q:"Quelle est la différence fondamentale entre un moteur diesel et un moteur à essence ?",opts:["Le diesel utilise de l'électricité pour l'allumage","Le diesel allume le carburant par la chaleur de compression (pas de bougie)","Le diesel n'a pas de pistons","Le diesel est plus petit que l'essence"],correct:1,expl:"Diesel = allumage par compression. L'air est comprimé jusqu'à 500-700°C, puis le carburant est injecté et s'enflamme spontanément. Pas de bougie. C'est pourquoi le ratio de compression (14:1 à 25:1) est plus élevé qu'un moteur à essence (8:1 à 12:1)."},
   {q:"Les moteurs marins 2 temps utilisés sur les grands navires (MAN B&W, Wärtsilä) tournent à quelle vitesse ?",opts:["500-3000 RPM comme les voitures","200-400 RPM","80-130 RPM — très lentement pour entraîner directement l'hélice","20-50 RPM"],correct:2,expl:"Moteurs 2 temps slow speed : 80-130 RPM. Vitesse très basse permet d'entraîner directement l'hélice sans réducteur. Les moteurs 4 temps medium speed tournent à 400-1200 RPM et nécessitent un réducteur. Les moteurs auxiliaires peuvent tourner à 1500 RPM."},
   {q:"Qu'est-ce que le HFO (Heavy Fuel Oil) utilisé par les grands navires ?",opts:["Diesel ordinaire comme les voitures","Fuel lourd résiduel très visqueux, moins cher mais très polluant (MARPOL Annexe VI)","Gaz naturel liquéfié","Carburant d'aviation"],correct:1,expl:"HFO = Heavy Fuel Oil = mazout lourd résiduel. Viscosité élevée → doit être chauffé à 120-150°C avant injection. Très économique mais riche en soufre (MARPOL Annexe VI impose des limites). Zone ECA : obligation MDO/MGO (distillate). Prix HFO ~ 60% moins cher que le MDO."},
@@ -580,10 +583,67 @@ const BANK = [
   {q:"Pourquoi les moteurs marins principaux fonctionnent-ils au HFO chauffé et pas directement ?",opts:["Pour économiser l'électricité","Le HFO est très visqueux à température ambiante (comme du goudron) → doit être chauffé à 120-150°C pour être injectable","Pour réduire les émissions","Pour améliorer la combustion à froid"],correct:1,expl:"Le HFO a une viscosité très élevée à température ambiante (ressemble à du goudron). Il faut le chauffer à 120-150°C pour le rendre assez fluide pour passer dans les injecteurs. Circuit de réchauffage (serpentins vapeur ou électriques) obligatoire. En cas de panne de chauffe → impossibilité d'alimenter le moteur."},
 ];
 
+const BANK_EN = [
+  {q:"What is the fundamental difference between a diesel engine and a petrol engine?",opts:["Diesel uses electricity for ignition","Diesel ignites fuel via heat of compression (no spark plug)","Diesel has no pistons","Diesel is smaller than petrol"],correct:1,expl:"Diesel = compression ignition. Air is compressed to 500-700°C, then fuel is injected and ignites spontaneously. No spark plug. Compression ratio (14:1 to 25:1) is higher than petrol (8:1 to 12:1)."},
+  {q:"At what speed do 2-stroke marine engines used on large vessels (MAN B&W, Wärtsilä) run?",opts:["500-3000 RPM like cars","200-400 RPM","80-130 RPM — very slow to drive the propeller directly","20-50 RPM"],correct:2,expl:"Slow-speed 2-stroke engines: 80-130 RPM. Very low speed allows direct propeller drive without gearbox. Medium-speed 4-stroke: 400-1200 RPM with gearbox. Auxiliaries can run at 1500 RPM."},
+  {q:"What is HFO (Heavy Fuel Oil) used by large vessels?",opts:["Ordinary diesel like cars","Heavy residual very viscous fuel, cheaper but very polluting (MARPOL Annex VI)","Liquefied natural gas","Aviation fuel"],correct:1,expl:"HFO = Heavy Fuel Oil = heavy residual fuel. High viscosity → must be heated to 120-150°C before injection. Very economical but high in sulphur (MARPOL Annex VI limits). ECA zones require MDO/MGO (distillate). HFO ~60% cheaper than MDO."},
+  {q:"What is an 'emergency shutdown' of the main engine?",opts:["Voluntary speed reduction","Automatic stop triggered when a critical parameter exceeds limits (temperature, oil pressure, overspeed)","Scheduled stop for maintenance","Audible alarm signal only"],correct:1,expl:"Emergency shutdown = automatic stop triggered by engine protection systems: low oil pressure, high water temperature, overspeed, etc. Irreversible without manual intervention. Critical procedure — the vessel loses propulsion."},
+  {q:"Why doesn't sea water circulate directly through the engine to cool it?",opts:["Sea water is too cold","Sea water causes corrosion and salt deposits in engine ducts","Sea water is too salty for the pumps","Sea water contains dangerous plankton"],correct:1,expl:"Sea water (corrosive, scaling, biological) does not circulate through the engine. It cools fresh water via a heat exchanger. Closed fresh-water circuit (with anti-corrosion additives) inside the engine. Open sea-water circuit outside. Sea chests need maintenance (biofouling)."},
+  {q:"What is 'slow steaming', practised since 2008?",opts:["Sailing in bad weather","Voluntary speed reduction to save fuel and cut emissions","Sailing in ice","Slow berthing manoeuvre"],correct:1,expl:"Slow steaming = reducing speed to 12-15 kn instead of 18-25 kn. Fuel savings: 50% at 12 kn vs 25 kn (power ∝ speed³). Started in 2008 with oil price spike. Issue: engines designed for full power → increased wear at part load."},
+  {q:"What is the role of 'scavenging' in a marine 2-stroke engine?",opts:["Purify cooling water","Evacuate burnt gases and refill the cylinder with fresh air between exhaust and combustion","Filter HFO fuel","Lubricate pistons"],correct:1,expl:"In a 2-stroke engine, pressurised air (supplied by turbocharger + blower) sweeps out exhaust gases and refills the cylinder with fresh air. This is scavenging. Crucial for efficiency — if it fails: lack of air → black smoke → reduced power."},
+  {q:"How often should engine oil typically be analysed?",opts:["Every day","Every week","Every ~500 operating hours","Only at annual overhauls"],correct:2,expl:"Oil analysis every ~500 operating hours or per manufacturer recommendation. Reveals: metal wear (iron, copper, aluminium), contamination (water, fuel), viscosity. Detects failures before they become catastrophic."},
+  {q:"What is the SAE viscosity grade of an engine oil?",opts:["The colour of the oil","Density of oil relative to water","Classification of oil viscosity (thickness) with temperature","Sulphur content of the oil"],correct:2,expl:"SAE (Society of Automotive Engineers) classifies oil viscosity. SAE 30 = thinner. SAE 40 = thicker. Marine: SAE 30 or SAE 40 for main engines. Too thin → poor lubrication. Too thick → hard to pump at start-up."},
+  {q:"What is a 'heat exchanger' in the cooling system?",opts:["A radiator like in cars","A device that transfers heat from hot fresh water to cold sea water without mixing the two fluids","A device that heats sea water to make it potable","A filter for sea water"],correct:1,expl:"Heat exchanger = thermal transfer between two fluids without direct contact. Hot fresh water (80°C) gives heat to cold sea water (~28°C in Gulf of Guinea). Cooled fresh water → back to engine. Heated sea water → returned overboard."},
+  {q:"What is the difference between MDO and HFO?",opts:["They are two names for the same fuel","MDO = distillate marine diesel (cleaner, more expensive) · HFO = heavy residual fuel (cheaper, more polluting)","MDO = fuel for auxiliary engines only","HFO = fuel for 4-stroke engines only"],correct:1,expl:"MDO (Marine Diesel Oil) = distillate, clean, less viscous, used in ECA zones and for auxiliaries. HFO (Heavy Fuel Oil) = residual, very viscous, cheaper, used on high seas. LSFO (Low Sulfur Fuel Oil) = HFO with low sulphur content (<0.5%) since MARPOL 2020."},
+  {q:"What does MARPOL Annex VI cover for marine engines?",opts:["Solid waste regulation","NOx, SOx and PM emission limits for marine engines","Ballast water regulation","Engine noise standards"],correct:1,expl:"MARPOL Annex VI: air pollution prevention. Limits NOx (nitrogen oxides) by Tier (I/II/III), SOx (sulphur → global limit 0.5% since 2020, 0.1% in ECA), and PM. Tier III engines need SCR or EGR to cut NOx by 80%."},
+  {q:"What is a 'blackout' on board a ship?",opts:["Lighting failure only","Total electrical loss affecting propulsion and all vital systems","Main engine failure only","Navigation system failure"],correct:1,expl:"Blackout = total loss of electrical power. Impact: loss of propulsion (electric motors), navigation (ECDIS, radar, AIS), communications, pumps (fire, ballast). Emergency procedure: emergency generator must start in < 30 seconds (SOLAS)."},
+  {q:"What is the correct main engine start-up sequence?",opts:["Direct start at full power","Check parameters → preheat → air start → switch to fuel → progressive power ramp","Fuel start → check after","Direct electric start"],correct:1,expl:"Correct sequence: 1) Check oil, water, fuel levels. 2) Preheat engine (water circulation). 3) Compressed-air start (25-30 bar). 4) Switch from light fuel (MDO) to HFO once warm. 5) Progressive power ramp. 6) Parameter monitoring. Going straight to full power = guaranteed damage."},
+  {q:"Why do main marine engines run on heated HFO and not directly?",opts:["To save electricity","HFO is very viscous at ambient temperature (like tar) → must be heated to 120-150°C to be injectable","To reduce emissions","To improve cold combustion"],correct:1,expl:"HFO has very high viscosity at ambient temperature (like tar). It must be heated to 120-150°C to become fluid enough for injectors. Heating circuit (steam or electric coils) mandatory. If heating fails → engine cannot be fed."},
+];
+
+const BANK_ES = [
+  {q:"¿Cuál es la diferencia fundamental entre un motor diesel y un motor de gasolina?",opts:["El diesel usa electricidad para el encendido","El diesel inflama el combustible por el calor de la compresión (sin bujía)","El diesel no tiene pistones","El diesel es más pequeño que el de gasolina"],correct:1,expl:"Diesel = encendido por compresión. El aire se comprime a 500-700°C, luego el combustible se inyecta y se inflama espontáneamente. Sin bujía. Relación de compresión (14:1 a 25:1) más alta que la gasolina (8:1 a 12:1)."},
+  {q:"¿A qué velocidad giran los motores marinos de 2 tiempos de los grandes buques (MAN B&W, Wärtsilä)?",opts:["500-3000 RPM como los coches","200-400 RPM","80-130 RPM — muy lento para accionar la hélice directamente","20-50 RPM"],correct:2,expl:"Motores 2T lentos: 80-130 RPM. Velocidad muy baja para accionar directamente la hélice sin reductor. Motores 4T medium speed: 400-1200 RPM con reductor. Auxiliares: hasta 1500 RPM."},
+  {q:"¿Qué es el HFO (Heavy Fuel Oil) usado por los grandes buques?",opts:["Diesel ordinario como los coches","Fueloil pesado residual muy viscoso, más barato pero muy contaminante (MARPOL Anexo VI)","Gas natural licuado","Combustible de aviación"],correct:1,expl:"HFO = fueloil pesado residual. Alta viscosidad → debe calentarse a 120-150°C antes de la inyección. Muy económico pero rico en azufre (MARPOL Anexo VI). Zonas ECA: obligación MDO/MGO. HFO ~60% más barato que MDO."},
+  {q:"¿Qué es una 'parada de emergencia' del motor principal?",opts:["Reducción voluntaria de velocidad","Parada automática activada cuando un parámetro crítico supera los límites (temperatura, presión aceite, sobrevelocidad)","Parada programada para mantenimiento","Solo señal acústica de alarma"],correct:1,expl:"Parada de emergencia = activada por los sistemas de protección del motor: baja presión aceite, alta temperatura agua, sobrevelocidad, etc. Irreversible sin intervención manual. Crítica: el buque pierde propulsión."},
+  {q:"¿Por qué el agua de mar no circula directamente por el motor para enfriarlo?",opts:["El agua de mar es demasiado fría","El agua de mar provoca corrosión y depósitos de sal en los conductos","El agua de mar es demasiado salada para las bombas","Contiene plancton peligroso"],correct:1,expl:"El agua de mar (corrosiva, calcárea, biológica) no circula por el motor. Enfría el agua dulce a través de un intercambiador. Circuito cerrado de agua dulce (con aditivos anticorrosión) en el motor. Tomas de mar a mantener (biofouling)."},
+  {q:"¿Qué es el 'slow steaming' practicado desde 2008?",opts:["Navegación con mal tiempo","Reducción voluntaria de velocidad para ahorrar combustible y reducir emisiones","Navegación entre hielos","Maniobra lenta de atraque"],correct:1,expl:"Slow steaming = reducir velocidad a 12-15 nudos en lugar de 18-25 nudos. Ahorro de combustible: 50% a 12 vs 25 nudos (potencia ∝ velocidad³). Iniciado en 2008. Problema: motores diseñados a plena carga → desgaste en carga parcial."},
+  {q:"¿Cuál es el papel del 'barrido' (scavenging) en un motor 2T marino?",opts:["Purificar el agua de refrigeración","Evacuar los gases quemados y rellenar el cilindro con aire fresco entre el escape y la combustión","Filtrar el HFO","Lubricar los pistones"],correct:1,expl:"En un motor 2T, el aire a presión (turbocompresor + soplante) expulsa los gases de escape y rellena el cilindro con aire fresco. Es el barrido. Crucial para el rendimiento — si falla: falta de aire → humo negro → potencia reducida."},
+  {q:"¿Con qué frecuencia se analiza normalmente el aceite del motor?",opts:["Todos los días","Cada semana","Cada ~500h de uso","Solo en revisiones anuales"],correct:2,expl:"Análisis de aceite cada ~500h de uso o según fabricante. Revela: desgaste de metales (hierro, cobre, aluminio), contaminación (agua, combustible), viscosidad. Detecta averías antes de que sean catastróficas."},
+  {q:"¿Qué es el índice de viscosidad SAE de un aceite de motor?",opts:["El color del aceite","Densidad del aceite respecto al agua","Clasificación de la viscosidad del aceite según la temperatura","Contenido de azufre del aceite"],correct:2,expl:"SAE clasifica la viscosidad. SAE 30 = más fluido. SAE 40 = más viscoso. Marino: SAE 30 o SAE 40 para motores principales. Demasiado fino → mala lubricación. Demasiado espeso → difícil de bombear al arranque."},
+  {q:"¿Qué es un 'intercambiador de calor' en el sistema de refrigeración?",opts:["Un radiador como en los coches","Un aparato que transfiere el calor del agua dulce caliente al agua de mar fría sin mezclar los dos fluidos","Un aparato que calienta el agua de mar para hacerla potable","Un filtro para el agua de mar"],correct:1,expl:"Intercambiador = transferencia térmica entre dos fluidos sin contacto directo. Agua dulce caliente (80°C) cede calor al agua de mar fría (~28°C Golfo de Guinea). Agua dulce enfriada → vuelve al motor. Agua de mar calentada → al mar."},
+  {q:"¿Cuál es la diferencia entre MDO y HFO?",opts:["Son dos nombres del mismo combustible","MDO = diesel marino destilado (más limpio, más caro) · HFO = fueloil residual (más barato, más contaminante)","MDO = combustible solo para auxiliares","HFO = combustible solo para motores 4T"],correct:1,expl:"MDO = destilado, limpio, menos viscoso, usado en zonas ECA y auxiliares. HFO = residual, muy viscoso, más barato, usado en alta mar. LSFO = HFO con bajo contenido de azufre (<0,5%) desde MARPOL 2020."},
+  {q:"¿Qué cubre MARPOL Anexo VI sobre los motores marinos?",opts:["Reglamento sobre residuos sólidos","Límites de emisiones NOx, SOx y PM para motores marinos","Reglamento sobre aguas de lastre","Normas de ruido de motores"],correct:1,expl:"MARPOL Anexo VI: prevención de la contaminación atmosférica. Limita NOx por Tier (I/II/III), SOx (límite mundial 0,5% desde 2020, 0,1% en ECA), y PM. Motores Tier III necesitan SCR o EGR para reducir NOx un 80%."},
+  {q:"¿Qué es un 'blackout' a bordo de un buque?",opts:["Solo fallo de iluminación","Pérdida total de electricidad que afecta a propulsión y todos los sistemas vitales","Solo fallo del motor principal","Fallo del sistema de navegación"],correct:1,expl:"Blackout = pérdida total de alimentación eléctrica. Impacto: pérdida de propulsión (motores eléctricos), navegación (ECDIS, radar, AIS), comunicaciones, bombas. Procedimiento: grupo electrógeno de emergencia debe arrancar en < 30 s (SOLAS)."},
+  {q:"¿Cuál es la secuencia correcta de arranque del motor principal?",opts:["Arranque directo a plena potencia","Verificar parámetros → precalentamiento → arranque por aire → cambio a combustible → subida progresiva de potencia","Arranque con combustible → verificar después","Arranque eléctrico directo"],correct:1,expl:"Secuencia: 1) Verificar niveles aceite, agua, combustible. 2) Precalentar motor. 3) Arranque por aire comprimido (25-30 bar). 4) Pasar de MDO a HFO al calentarse. 5) Subida progresiva de potencia. 6) Vigilancia de parámetros. Pasar directo a plena potencia = avería segura."},
+  {q:"¿Por qué los motores marinos principales funcionan con HFO calentado y no directamente?",opts:["Para ahorrar electricidad","El HFO es muy viscoso a temperatura ambiente (como alquitrán) → debe calentarse a 120-150°C para ser inyectable","Para reducir emisiones","Para mejorar la combustión en frío"],correct:1,expl:"El HFO tiene viscosidad muy alta a temperatura ambiente (como alquitrán). Debe calentarse a 120-150°C para fluir por los inyectores. Circuito de calentamiento (serpentines de vapor o eléctricos) obligatorio. Si falla → imposible alimentar el motor."},
+];
+
+const BANK_PT = [
+  {q:"Qual é a diferença fundamental entre um motor diesel e um motor a gasolina?",opts:["O diesel usa eletricidade para a ignição","O diesel inflama o combustível pelo calor da compressão (sem vela)","O diesel não tem pistões","O diesel é mais pequeno que o de gasolina"],correct:1,expl:"Diesel = ignição por compressão. O ar é comprimido até 500-700°C, depois o combustível é injetado e inflama espontaneamente. Sem vela. Relação de compressão (14:1 a 25:1) mais alta que a gasolina (8:1 a 12:1)."},
+  {q:"A que velocidade rodam os motores marítimos de 2 tempos dos grandes navios (MAN B&W, Wärtsilä)?",opts:["500-3000 RPM como os carros","200-400 RPM","80-130 RPM — muito lento para acionar a hélice diretamente","20-50 RPM"],correct:2,expl:"Motores 2T lentos: 80-130 RPM. Velocidade muito baixa para acionar diretamente a hélice sem redutor. Motores 4T medium speed: 400-1200 RPM com redutor. Auxiliares até 1500 RPM."},
+  {q:"O que é o HFO (Heavy Fuel Oil) usado pelos grandes navios?",opts:["Diesel comum como os carros","Fuelóleo pesado residual muito viscoso, mais barato mas muito poluente (MARPOL Anexo VI)","Gás natural liquefeito","Combustível de aviação"],correct:1,expl:"HFO = fuelóleo pesado residual. Alta viscosidade → deve ser aquecido a 120-150°C antes da injeção. Muito económico mas rico em enxofre (MARPOL Anexo VI). Zonas ECA: obrigação MDO/MGO. HFO ~60% mais barato que MDO."},
+  {q:"O que é uma 'paragem de emergência' do motor principal?",opts:["Redução voluntária de velocidade","Paragem automática ativada quando um parâmetro crítico ultrapassa os limites (temperatura, pressão óleo, sobrevelocidade)","Paragem programada para manutenção","Apenas sinal sonoro de alarme"],correct:1,expl:"Paragem de emergência = ativada pelos sistemas de proteção: baixa pressão óleo, alta temperatura água, sobrevelocidade, etc. Irreversível sem intervenção manual. Crítica: o navio perde propulsão."},
+  {q:"Porque é que a água do mar não circula diretamente no motor para arrefecê-lo?",opts:["A água do mar é demasiado fria","A água do mar provoca corrosão e depósitos de sal nas condutas do motor","A água do mar é demasiado salgada para as bombas","Contém plâncton perigoso"],correct:1,expl:"A água do mar (corrosiva, calcária, biológica) não circula no motor. Arrefece a água doce através de um permutador. Circuito fechado de água doce (com aditivos anticorrosão) no motor. Tomadas de mar a manter (biofouling)."},
+  {q:"O que é o 'slow steaming' praticado desde 2008?",opts:["Navegação com mau tempo","Redução voluntária de velocidade para poupar combustível e reduzir emissões","Navegação entre gelos","Manobra lenta de atracação"],correct:1,expl:"Slow steaming = reduzir velocidade para 12-15 nós em vez de 18-25. Poupança de combustível: 50% a 12 vs 25 nós (potência ∝ velocidade³). Iniciado em 2008. Problema: motores concebidos para plena potência → desgaste a carga parcial."},
+  {q:"Qual é o papel da 'lavagem' (scavenging) num motor 2T marítimo?",opts:["Purificar a água de arrefecimento","Evacuar os gases queimados e encher o cilindro com ar fresco entre o escape e a combustão","Filtrar o HFO","Lubrificar os pistões"],correct:1,expl:"Num motor 2T, o ar sob pressão (turbocompressor + soprador) expulsa os gases de escape e enche o cilindro com ar fresco. É a lavagem. Crucial para o rendimento — se falhar: falta de ar → fumo preto → potência reduzida."},
+  {q:"Com que frequência se analisa normalmente o óleo do motor?",opts:["Todos os dias","Todas as semanas","Cada ~500h de uso","Apenas nas revisões anuais"],correct:2,expl:"Análise de óleo cada ~500h de uso ou conforme fabricante. Revela: desgaste de metais (ferro, cobre, alumínio), contaminação (água, combustível), viscosidade. Deteta avarias antes que se tornem catastróficas."},
+  {q:"O que é o índice de viscosidade SAE de um óleo de motor?",opts:["A cor do óleo","Densidade do óleo em relação à água","Classificação da viscosidade do óleo conforme a temperatura","Teor de enxofre do óleo"],correct:2,expl:"SAE classifica a viscosidade. SAE 30 = mais fluido. SAE 40 = mais viscoso. Marítimo: SAE 30 ou SAE 40 para motores principais. Demasiado fino → má lubrificação. Demasiado espesso → difícil de bombear no arranque."},
+  {q:"O que é um 'permutador de calor' no sistema de arrefecimento?",opts:["Um radiador como nos carros","Um aparelho que transfere o calor da água doce quente para a água do mar fria sem misturar os dois fluidos","Um aparelho que aquece a água do mar para a tornar potável","Um filtro para a água do mar"],correct:1,expl:"Permutador = transferência térmica entre dois fluidos sem contacto direto. Água doce quente (80°C) cede calor à água do mar fria (~28°C Golfo da Guiné). Água doce arrefecida → volta ao motor. Água do mar aquecida → ao mar."},
+  {q:"Qual é a diferença entre MDO e HFO?",opts:["São dois nomes do mesmo combustível","MDO = diesel marítimo destilado (mais limpo, mais caro) · HFO = fuelóleo residual (mais barato, mais poluente)","MDO = combustível só para auxiliares","HFO = combustível só para motores 4T"],correct:1,expl:"MDO = destilado, limpo, menos viscoso, usado em zonas ECA e auxiliares. HFO = residual, muito viscoso, mais barato, usado em alto mar. LSFO = HFO com baixo teor de enxofre (<0,5%) desde MARPOL 2020."},
+  {q:"O que cobre o MARPOL Anexo VI sobre os motores marítimos?",opts:["Regulamento sobre resíduos sólidos","Limites de emissões NOx, SOx e PM para motores marítimos","Regulamento sobre águas de lastro","Normas de ruído dos motores"],correct:1,expl:"MARPOL Anexo VI: prevenção da poluição atmosférica. Limita NOx por Tier (I/II/III), SOx (limite mundial 0,5% desde 2020, 0,1% em ECA), e PM. Motores Tier III precisam SCR ou EGR para reduzir NOx em 80%."},
+  {q:"O que é um 'blackout' a bordo de um navio?",opts:["Apenas falha de iluminação","Perda total de eletricidade que afeta propulsão e todos os sistemas vitais","Apenas falha do motor principal","Falha do sistema de navegação"],correct:1,expl:"Blackout = perda total de alimentação elétrica. Impacto: perda de propulsão (motores elétricos), navegação (ECDIS, radar, AIS), comunicações, bombas. Procedimento: grupo gerador de emergência deve arrancar em < 30 s (SOLAS)."},
+  {q:"Qual é a sequência correta de arranque do motor principal?",opts:["Arranque direto a plena potência","Verificar parâmetros → pré-aquecimento → arranque por ar → mudar para combustível → subida progressiva de potência","Arranque com combustível → verificar depois","Arranque elétrico direto"],correct:1,expl:"Sequência: 1) Verificar níveis óleo, água, combustível. 2) Pré-aquecer o motor. 3) Arranque por ar comprimido (25-30 bar). 4) Passar de MDO a HFO depois de aquecer. 5) Subida progressiva de potência. 6) Vigilância de parâmetros. Ir diretamente a plena potência = avaria garantida."},
+  {q:"Porque é que os motores marítimos principais funcionam com HFO aquecido e não diretamente?",opts:["Para poupar eletricidade","O HFO é muito viscoso à temperatura ambiente (como alcatrão) → deve ser aquecido a 120-150°C para ser injetável","Para reduzir emissões","Para melhorar a combustão a frio"],correct:1,expl:"O HFO tem viscosidade muito alta à temperatura ambiente (como alcatrão). Deve ser aquecido a 120-150°C para fluir nos injetores. Circuito de aquecimento (serpentinas de vapor ou elétricas) obrigatório. Se falhar → impossível alimentar o motor."},
+];
+
+const BANKS = { fr: BANK_FR, en: BANK_EN, es: BANK_ES, pt: BANK_PT };
+
 // ══════════════════════════════════════
 // BANK COMPONENT
 // ══════════════════════════════════════
 function QuestionBank({ lang }) {
+  const BANK = BANKS[lang]||BANKS.fr;
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [done,setDone]=useState(false);
   const q=BANK[cur];const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
@@ -598,7 +658,7 @@ function QuestionBank({ lang }) {
         {q.opts.map((opt,i)=>{let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)";if(answered){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;}else if(i===sel){bg="rgba(192,57,43,0.2)";bd=C.red;}}return <button key={i} onClick={()=>pick(i)} style={{padding:"10px 12px",borderRadius:12,background:bg,border:`1.5px solid ${bd}`,color:C.muted,fontSize:12,textAlign:"left",cursor:answered?"default":"pointer",fontFamily:"'Nunito',sans-serif",lineHeight:1.4}}>{opt}</button>;})}
       </div>
       {answered&&<><div style={{padding:"10px 12px",borderRadius:10,marginBottom:10,background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",border:`1px solid ${isOk?C.green:C.red}44`,fontSize:11,color:C.white,lineHeight:1.6}}>{q.expl}</div>
-      <button onClick={next} style={{width:"100%",padding:"11px 0",border:"none",borderRadius:12,background:`linear-gradient(135deg,${C.rust},${C.orange})`,fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer"}}>{cur<BANK.length-1?(lang==="fr"?"SUIVANT →":"NEXT →"):(lang==="fr"?"TERMINER":"FINISH")}</button></>}
+      <button onClick={next} style={{width:"100%",padding:"11px 0",border:"none",borderRadius:12,background:`linear-gradient(135deg,${C.rust},${C.orange})`,fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer"}}>{cur<BANK.length-1?(({fr:"SUIVANT →",en:"NEXT →",es:"SIGUIENTE →",pt:"PRÓXIMO →"})[lang]||"SUIVANT →"):(({fr:"TERMINER",en:"FINISH",es:"TERMINAR",pt:"TERMINAR"})[lang]||"TERMINER")}</button></>}
     </div>
   );
 }
@@ -662,9 +722,12 @@ function Exercise1({ lang, t }) {
         </div>
       ))}
       {showC&&<div style={{padding:"12px",borderRadius:12,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:11,color:C.white,lineHeight:1.6,marginBottom:10}}>
-        {lang==="fr"?"✅ Q1: 3 (combustion = seul temps producteur)\n✅ Q2: 70°C (normal : 70-85°C · alarme >90°C)\n✅ Q3: OUI — 2 bars < 2,5 bars → arrêt immédiat obligatoire":
-         lang==="en"?"✅ Q1: 3 (combustion = only power-producing stroke)\n✅ Q2: 70°C (normal: 70-85°C · alarm >90°C)\n✅ Q3: YES — 2 bar < 2.5 bar → immediate stop mandatory":
-         "✅ Q1: 3 · Q2: 70°C · Q3: SÍ/SIM — parada inmediata/imediata"}
+        {({
+          fr:"✅ Q1: 3 (combustion = seul temps producteur)\n✅ Q2: 70°C (normal : 70-85°C · alarme >90°C)\n✅ Q3: OUI — 2 bars < 2,5 bars → arrêt immédiat obligatoire",
+          en:"✅ Q1: 3 (combustion = only power-producing stroke)\n✅ Q2: 70°C (normal: 70-85°C · alarm >90°C)\n✅ Q3: YES — 2 bar < 2.5 bar → immediate stop mandatory",
+          es:"✅ Q1: 3 (combustión = único tiempo productor)\n✅ Q2: 70°C (normal: 70-85°C · alarma >90°C)\n✅ Q3: SÍ — 2 bar < 2,5 bar → parada inmediata obligatoria",
+          pt:"✅ Q1: 3 (combustão = único tempo produtor)\n✅ Q2: 70°C (normal: 70-85°C · alarme >90°C)\n✅ Q3: SIM — 2 bar < 2,5 bar → paragem imediata obrigatória",
+        })[lang]||""}
       </div>}
       <button onClick={()=>setShowC(v=>!v)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:showC?"rgba(30,138,74,0.2)":"rgba(201,146,42,0.15)",border:`1px solid ${showC?C.green:C.gold}44`,color:showC?C.green:C.gold2,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
         {showC?t.hideCorr:t.showCorr}
@@ -788,7 +851,7 @@ export default function LessonMoteur({ lang="fr", onBack=()=>{}, onComplete=()=>
           <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
           <div style={{flex:1}}>
             <div style={{fontSize:10,color:C.orange,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>⚙️ {t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>Leçon 1/8</div>
+            <div style={{fontSize:11,color:C.muted}}>{t.lessonNum}</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(30,138,74,0.2)",border:`1px solid ${C.green}44`,color:C.green,fontWeight:700}}>🆓 FREE</div>
@@ -812,23 +875,23 @@ export default function LessonMoteur({ lang="fr", onBack=()=>{}, onComplete=()=>
 
             <SL icon="🔄" text={lc.p1} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>🔄</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s1t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
-            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔄 {lang==="fr"?"CYCLE DIESEL — ANIMÉ":lang==="en"?"DIESEL CYCLE — ANIMATED":lang==="es"?"CICLO DIESEL — ANIMADO":"CICLO DIESEL — ANIMADO"}</div><DieselCycleSVG lang={lang}/></Card>
+            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔄 {t.cycleAnim}</div><DieselCycleSVG lang={lang}/></Card>
 
             <SL icon="⚙️" text={lc.p2} color={C.steel}/>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>⚙️</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s2t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
-            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.steel,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚙️ {lang==="fr"?"COUPE MOTEUR — INTERACTIF":lang==="en"?"ENGINE CROSS-SECTION — INTERACTIVE":lang==="es"?"SECCIÓN MOTOR — INTERACTIVO":"SECÇÃO MOTOR — INTERATIVO"}</div><EngineCrossSectionSVG lang={lang}/></Card>
+            <Card style={{marginBottom:14}}><div style={{fontSize:11,color:C.steel,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚙️ {t.crossInter}</div><EngineCrossSectionSVG lang={lang}/></Card>
 
             <SL icon="💧" text={lc.p3} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>💧</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s3t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`,background:"linear-gradient(135deg,rgba(26,111,212,0.06),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💧 {lang==="fr"?"CIRCUITS DE REFROIDISSEMENT — INTERACTIF":lang==="en"?"COOLING CIRCUITS — INTERACTIVE":lang==="es"?"CIRCUITOS DE REFRIGERACIÓN — INTERACTIVO":"CIRCUITOS DE ARREFECIMENTO — INTERATIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💧 {t.coolInter}</div>
               <CoolingCircuitSVG lang={lang}/>
             </Card>
 
             <SL icon="📊" text={lc.p4} color={C.green}/>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>📊</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s4t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}33`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>📊 {lang==="fr"?"SIMULATEUR PARAMÈTRES MOTEUR":lang==="en"?"ENGINE PARAMETER SIMULATOR":lang==="es"?"SIMULADOR PARÁMETROS MOTOR":"SIMULADOR PARÂMETROS MOTOR"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>📊 {t.simParam}</div>
               <EngineMonitorSVG lang={lang}/>
             </Card>
 
@@ -853,9 +916,9 @@ export default function LessonMoteur({ lang="fr", onBack=()=>{}, onComplete=()=>
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
-                {lang==="fr"?"Quiz — Moteur Diesel & Refroidissement":lang==="en"?"Quiz — Diesel Engine & Cooling":lang==="es"?"Quiz — Motor Diesel y Refrigeración":"Quiz — Motor Diesel e Arrefecimento"}
+                {t.quizTitle}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions · Leçon 1 Machine":"questions · Engine Lesson 1"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 {t.quizSub}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
@@ -871,7 +934,7 @@ export default function LessonMoteur({ lang="fr", onBack=()=>{}, onComplete=()=>
               {lc.learnedP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<lc.learnedP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.green,fontWeight:700}}>✓</span>{pt}</div>)}
             </Card>
             <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.orange},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(230,126,34,0.4)",marginBottom:10}}>
-              {lang==="fr"?"LEÇON 2 — AUXILIAIRES & GÉNÉRATEURS →":lang==="en"?"LESSON 2 — AUXILIARIES & GENERATORS →":lang==="es"?"LECCIÓN 2 — AUXILIARES Y GENERADORES →":"LIÇÃO 2 — AUXILIARES E GERADORES →"}
+              {t.lesson2Btn}
             </button>
             <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>
           </div>}
