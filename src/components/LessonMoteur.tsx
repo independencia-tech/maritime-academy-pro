@@ -293,7 +293,7 @@ function CoolingCircuitSVG({ lang }) {
         {/* ENGINE block */}
         <rect x="95" y="60" width="100" height="80" rx="8" fill="#0d1f3c" stroke={C.steel} strokeWidth="2"/>
         <text x="145" y="95" textAnchor="middle" fontSize="9" fill={C.steel} fontWeight="700">
-          {lang==="fr"?"MOTEUR":lang==="en"?"ENGINE":lang==="es"?"MOTOR":"MOTOR"}
+          {({fr:"MOTEUR",en:"ENGINE",es:"MOTOR",pt:"MOTOR"})[lang]||"MOTEUR"}
         </text>
         <text x="145" y="108" textAnchor="middle" fontSize="8" fill={C.muted}>🔥 80-90°C</text>
         {/* Heat waves */}
@@ -317,14 +317,14 @@ function CoolingCircuitSVG({ lang }) {
           {highlight==="fw"&&<>
             <rect x="5" y="55" width="40" height="22" rx="5" fill="rgba(26,111,212,0.15)" stroke={C.blue2} strokeWidth="0.8"/>
             <text x="25" y="65" textAnchor="middle" fontSize="7" fill={C.blue2}>70°C</text>
-            <text x="25" y="74" textAnchor="middle" fontSize="6" fill={C.muted}>vers moteur</text>
+            <text x="25" y="74" textAnchor="middle" fontSize="6" fill={C.muted}>{({fr:"vers moteur",en:"to engine",es:"al motor",pt:"ao motor"})[lang]||"vers moteur"}</text>
           </>}
         </>}
 
         {/* HEAT EXCHANGER */}
         <rect x="210" y="70" width="65" height="50" rx="6" fill="rgba(10,138,108,0.15)" stroke={C.teal} strokeWidth="1.5"/>
         <text x="242" y="91" textAnchor="middle" fontSize="7" fill={C.teal} fontWeight="700">
-          {lang==="fr"?"Échangeur":lang==="en"?"Heat Exch.":lang==="es"?"Intercamb.":"Permutador"}
+          {({fr:"Échangeur",en:"Heat Exch.",es:"Intercamb.",pt:"Permutador"})[lang]||"Échangeur"}
         </text>
         <text x="242" y="103" textAnchor="middle" fontSize="6" fill={C.muted}>FW ↔ SW</text>
         <text x="242" y="113" textAnchor="middle" fontSize="6" fill={C.teal}>-15°C</text>
@@ -350,12 +350,12 @@ function CoolingCircuitSVG({ lang }) {
           {/* Sea inlet */}
           <rect x="215" y="172" width="54" height="14" rx="4" fill="rgba(10,138,108,0.1)" stroke={C.teal} strokeWidth="0.8"/>
           <text x="242" y="182" textAnchor="middle" fontSize="7" fill={C.teal}>
-            {lang==="fr"?"Prise de mer":lang==="en"?"Sea chest":lang==="es"?"Toma de mar":"Tomada de mar"}
+            {({fr:"Prise de mer",en:"Sea chest",es:"Toma de mar",pt:"Tomada de mar"})[lang]||"Prise de mer"}
           </text>
           {/* Temp labels */}
           <rect x="158" y="150" width="46" height="22" rx="5" fill="rgba(10,138,108,0.15)" stroke={C.teal} strokeWidth="0.8"/>
           <text x="181" y="160" textAnchor="middle" fontSize="7" fill={C.teal}>~28°C</text>
-          <text x="181" y="169" textAnchor="middle" fontSize="6" fill={C.muted}>{lang==="fr"?"Golfe Guinée":"Gulf Guinea"}</text>
+          <text x="181" y="169" textAnchor="middle" fontSize="6" fill={C.muted}>{({fr:"Golfe Guinée",en:"Gulf of Guinea",es:"Golfo Guinea",pt:"Golfo Guiné"})[lang]||"Golfe Guinée"}</text>
         </>}
 
         {/* OIL circuit */}
@@ -369,12 +369,12 @@ function CoolingCircuitSVG({ lang }) {
           <line x1="95" y1="140" x2="68" y2="158" stroke={C.rust} strokeWidth="2" opacity="0.5"/>
           <rect x="5" y="172" width="86" height="14" rx="4" fill="rgba(141,59,43,0.1)" stroke={C.rust} strokeWidth="0.8"/>
           <text x="48" y="182" textAnchor="middle" fontSize="7" fill={C.rust}>
-            {lang==="fr"?"Carter huile (sump)":lang==="en"?"Oil sump":"Cárter aceite"}
+            {({fr:"Carter huile (sump)",en:"Oil sump",es:"Cárter aceite",pt:"Cárter óleo"})[lang]||"Carter huile (sump)"}
           </text>
           <rect x="5" y="30" width="86" height="20" rx="5" fill="rgba(141,59,43,0.15)" stroke={C.rust} strokeWidth="0.8"/>
           <text x="48" y="40" textAnchor="middle" fontSize="7" fill={C.rust}>SAE 30 · 3-5 bar</text>
           <text x="48" y="48" textAnchor="middle" fontSize="6" fill={C.muted}>
-            {lang==="fr"?"⚠️ Pression critique":lang==="en"?"⚠️ Critical pressure":"⚠️ Presión crítica"}
+            {({fr:"⚠️ Pression critique",en:"⚠️ Critical pressure",es:"⚠️ Presión crítica",pt:"⚠️ Pressão crítica"})[lang]||"⚠️ Pression critique"}
           </text>
         </>}
 
