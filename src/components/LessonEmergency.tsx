@@ -133,7 +133,7 @@ function DeadShipSVG({ lang }) {
         color:allDone?C.green:C.red,fontWeight:700,textAlign:"center"}}>
         {allDone
           ?(lang==="fr"?"✅ PROPULSION RÉTABLIE — Notifier la passerelle !":lang==="en"?"✅ PROPULSION RESTORED — Notify bridge!":"✅ PROPULSIÓN RESTABLECIDA — ¡Notificar al puente!")
-          :(lang==="fr"`⚠️ DEAD SHIP — ${completed.length}/${steps.length} étapes`:lang==="en"`⚠️ DEAD SHIP — ${completed.length}/${steps.length} steps`:`⚠️ DEAD SHIP — ${completed.length}/${steps.length} pasos`)}
+          :(lang==="fr"?`⚠️ DEAD SHIP — ${completed.length}/${steps.length} étapes`:lang==="en"?`⚠️ DEAD SHIP — ${completed.length}/${steps.length} steps`:`⚠️ DEAD SHIP — ${completed.length}/${steps.length} pasos`)}
       </div>
 
       {steps.map((s,i)=>(
