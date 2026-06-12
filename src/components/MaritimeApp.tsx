@@ -1402,6 +1402,18 @@ function AppInner() {
           }}
         />
       )}
+      {page === "engine_lessons" && (
+        <EngineLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_moteur");
+            else if (lid === "l2") setPage("lesson_auxiliaires");
+            else if (lid === "l3") setPage("lesson_stabilite");
+          }}
+        />
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
