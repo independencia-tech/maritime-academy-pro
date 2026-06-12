@@ -1080,7 +1080,7 @@ function EngineLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
