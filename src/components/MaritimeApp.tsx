@@ -1082,7 +1082,7 @@ function EngineLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1224,7 +1224,7 @@ function AppInner() {
   useEffect(() => { pageRef.current = page; }, [page]);
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
-  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping"];
+  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping","lesson_emergency"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1468,6 +1468,7 @@ function AppInner() {
             else if (lid === "l5") setPage("lesson_sauvetage");
             else if (lid === "l6") setPage("lesson_maintenance");
             else if (lid === "l7") setPage("lesson_watchkeeping");
+            else if (lid === "l8") setPage("lesson_emergency");
           }}
         />
       )}
@@ -1591,6 +1592,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l6"); setPage("engine_lessons"); }}
+        />
+      )}
+      {page === "lesson_emergency" && (
+        <LessonEmergency
+          lang={lang}
+          onBack={() => setPage("engine_lessons")}
+          onComplete={() => { markLessonCompleted("e1-l8"); setPage("engine_lessons"); }}
         />
       )}
       {showExitConfirm && (
