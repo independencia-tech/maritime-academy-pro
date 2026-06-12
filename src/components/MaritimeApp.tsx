@@ -1165,6 +1165,53 @@ function MarpolLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
   );
 }
 
+function IMLLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d2");
+  const title = mod?.title?.[lang] || mod?.title?.fr || "International Maritime Law";
+  const labels:any = {
+    fr:{header:"Leçons", available:"Disponible", soon:"Bientôt", done:"Terminé ✓"},
+    en:{header:"Lessons", available:"Available", soon:"Coming soon", done:"Completed ✓"},
+    es:{header:"Lecciones", available:"Disponible", soon:"Próximamente", done:"Completado ✓"},
+    pt:{header:"Lições", available:"Disponível", soon:"Em breve", done:"Concluído ✓"},
+  };
+  const L = labels[lang] || labels.fr;
+  const lessons = mod?.lessons || [];
+  const playable = new Set(["l1"]);
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {lessons.map((l:any, idx:number)=>{
+            const isPlayable = playable.has(l.id);
+            const isDone = completedLessons.includes(`d2-${l.id}`);
+            const tag = l.access==="free" ? "FREE" : l.access==="premium_plus" ? "P+" : "PRO";
+            const tagColor = l.access==="free" ? "#1e8a4a" : l.access==="premium_plus" ? "#9b59b6" : "#c9922a";
+            return (
+              <button key={l.id} disabled={!isPlayable} onClick={()=>onPick(l.id)} style={{
+                display:"flex",alignItems:"center",gap:12,padding:"14px",
+                background:isPlayable?"rgba(13,31,60,0.85)":"rgba(13,31,60,0.4)",
+                border:`1px solid ${isPlayable?"#c9922a44":"rgba(255,255,255,0.08)"}`,
+                borderRadius:14,cursor:isPlayable?"pointer":"not-allowed",
+                color:"#f0f4ff",textAlign:"left",opacity:isPlayable?1:0.6,
+              }}>
+                <div style={{width:38,height:38,borderRadius:10,background:"rgba(201,146,42,0.18)",border:"1px solid #c9922a44",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,flexShrink:0,color:"#c9922a"}}>{idx+1}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{l.title?.[lang] || l.title?.fr}</div>
+                  <div style={{fontSize:10,color:"rgba(240,244,255,0.5)"}}>{isDone ? L.done : (isPlayable ? L.available : L.soon)}</div>
+                </div>
+                <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
   return (
