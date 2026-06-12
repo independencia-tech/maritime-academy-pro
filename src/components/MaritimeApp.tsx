@@ -1415,8 +1415,7 @@ function AppInner() {
             else if (lid === "l3") setPage("lesson_stabilite");
             else if (lid === "l4") setPage("lesson_incendie");
             else if (lid === "l5") setPage("lesson_sauvetage");
-            else if (lid === "l6") setPage("lesson_marpol");
-            else if (lid === "l7") setPage("lesson_watchkeeping");
+            else if (lid === "l6") setPage("lesson_watchkeeping");
           }}
         />
       )}
