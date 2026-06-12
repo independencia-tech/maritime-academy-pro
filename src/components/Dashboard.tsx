@@ -241,7 +241,7 @@ export const MODULES = {
       freeLessons:0, totalLessons:7,
       title:{fr:"Production Électrique",en:"Electrical Generation",es:"Producción Eléctrica",pt:"Produção Elétrica"},
       desc:{fr:"Générateurs, tableau principal, charges",en:"Generators, main switchboard, loads",es:"Generadores, cuadro principal, cargas",pt:"Geradores, painel principal, cargas"},
-      xp:350, status:"locked", progress:0 },
+      xp:350, status:"available", progress:0 },
     { id:"e4", icon:"🌊", color:C.teal, access:"premium",
       freeLessons:0, totalLessons:6,
       title:{fr:"MARPOL Machine",en:"MARPOL Engine Room",es:"MARPOL Sala de Máquinas",pt:"MARPOL Sala de Máquinas"},
