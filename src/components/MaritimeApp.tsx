@@ -1174,6 +1174,7 @@ export default function App() {
   );
 }
 
+
 function AppInner() {
   const { enable, disable } = useMusic();
   const [page, setPage] = useState<string>("splash");
