@@ -1459,6 +1459,7 @@ function AppInner() {
               if (m?.id === "d1") setPage("nav_lessons");
               else if (m?.id === "e1") setPage("engine_lessons");
               else if (m?.id === "e4") setPage("marpol_lessons");
+              else if (m?.id === "d2") setPage("iml_lessons");
             }}
             activeNav="home"
             onNavHome={() => setPage("dashboard")}
@@ -1480,6 +1481,7 @@ function AppInner() {
             if (m?.id === "d1") setPage("nav_lessons");
             else if (m?.id === "e1") setPage("engine_lessons");
             else if (m?.id === "e4") setPage("marpol_lessons");
+            else if (m?.id === "d2") setPage("iml_lessons");
             else setPage("dashboard");
           }}
         />
