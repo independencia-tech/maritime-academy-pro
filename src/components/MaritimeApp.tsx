@@ -1408,6 +1408,7 @@ function AppInner() {
             onStartModule={(m:any) => {
               if (m?.id === "d1") setPage("nav_lessons");
               else if (m?.id === "e1") setPage("engine_lessons");
+              else if (m?.id === "e4") setPage("marpol_lessons");
             }}
             activeNav="home"
             onNavHome={() => setPage("dashboard")}
@@ -1428,6 +1429,7 @@ function AppInner() {
           onStart={(m:any) => {
             if (m?.id === "d1") setPage("nav_lessons");
             else if (m?.id === "e1") setPage("engine_lessons");
+            else if (m?.id === "e4") setPage("marpol_lessons");
             else setPage("dashboard");
           }}
         />
@@ -1465,6 +1467,16 @@ function AppInner() {
             else if (lid === "l5") setPage("lesson_sauvetage");
             else if (lid === "l6") setPage("lesson_maintenance");
             else if (lid === "l7") setPage("lesson_watchkeeping");
+          }}
+        />
+      )}
+      {page === "marpol_lessons" && (
+        <MarpolLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_marpol");
           }}
         />
       )}
@@ -1562,8 +1574,8 @@ function AppInner() {
       {page === "lesson_marpol" && (
         <LessonMARPOL
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l6"); setPage("engine_lessons"); }}
+          onBack={() => setPage("marpol_lessons")}
+          onComplete={() => { markLessonCompleted("e4-l1"); setPage("marpol_lessons"); }}
         />
       )}
       {page === "lesson_watchkeeping" && (
