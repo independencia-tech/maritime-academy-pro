@@ -209,7 +209,11 @@ export const MODULES = {
       freeLessons:0, totalLessons:10,
       title:{fr:"Droit Maritime International",en:"International Maritime Law",es:"Derecho Marítimo Internacional",pt:"Direito Marítimo Internacional"},
       desc:{fr:"SOLAS, MARPOL, MLC 2006, STCW",en:"SOLAS, MARPOL, MLC 2006, STCW",es:"SOLAS, MARPOL, MLC 2006, STCW",pt:"SOLAS, MARPOL, MLC 2006, STCW"},
-      xp:500, status:"locked", progress:0 },
+      xp:500, status:"available", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"SOLAS",en:"SOLAS",es:"SOLAS",pt:"SOLAS"},access:"premium",status:"available"},
+      ]
+    },
     { id:"d3", icon:"🗺️", color:C.teal, access:"premium",
       freeLessons:0, totalLessons:7,
       title:{fr:"Signalisation & Balisage",en:"Signaling & Buoyage",es:"Señalización & Balizamiento",pt:"Sinalização & Balizamento"},
