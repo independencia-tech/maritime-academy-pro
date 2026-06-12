@@ -95,7 +95,7 @@ function StabilitySVG({ lang }) {
         <text x={bPoint.x+5} y={bPoint.y+4} fontSize="7" fill={C.blue2}>B</text>
         {/* Heel indicator */}
         <text x="145" y="20" textAnchor="middle" fontSize="8" fill={sc} fontWeight="700">
-          {lang==="fr"?"Gîte":lang==="en"?"Heel":lang==="es"?"Escora":"Escora"}: {Math.abs(heel).toFixed(1)}°{heel > 0 ? (lang==="fr"?" TB":" STB":" ER":" EB") : (lang==="fr"?" BB":" PORT":" BB":" BB")}
+          {lang==="fr"?"Gîte":lang==="en"?"Heel":lang==="es"?"Escora":"Escora"}: {Math.abs(heel).toFixed(1)}°{heel > 0 ? (lang==="fr"?" TB":lang==="en"?" STB":lang==="es"?" ER":" EB") : (lang==="fr"?" BB":lang==="en"?" PORT":lang==="es"?" BB":" BB")}
         </text>
         {/* GM display */}
         <rect x="200" y="8" width="82" height="28" rx="5" fill="rgba(0,0,0,0.6)" stroke={sc} strokeWidth="0.8"/>
@@ -103,7 +103,7 @@ function StabilitySVG({ lang }) {
           GM = {gm.toFixed(2)}m
         </text>
         <text x="241" y="30" textAnchor="middle" fontSize="6.5" fill={C.muted}>
-          {stability==="good"?(lang==="fr"?"✅ Stable":lang==="en"?"✅ Stable":"✅ Estable"):stability==="ok"?(lang==="fr"?"⚡ Limite":"⚡ Marginal":"⚡ Límite"):(lang==="fr"?"⚠️ DANGER":"⚠️ DANGER":"⚠️ PELIGRO")}
+          {stability==="good"?(lang==="fr"?"✅ Stable":lang==="en"?"✅ Stable":lang==="es"?"✅ Estable":"✅ Estável"):stability==="ok"?(lang==="fr"?"⚡ Limite":lang==="en"?"⚡ Marginal":lang==="es"?"⚡ Límite":"⚡ Limite"):(lang==="fr"?"⚠️ DANGER":lang==="en"?"⚠️ DANGER":lang==="es"?"⚠️ PELIGRO":"⚠️ PERIGO")}
         </text>
         {/* Ballast indicator */}
         {ballast > 30 && <rect x="120" y={122 + (100-ballast)*0.12} width="50" height={10+ballast*0.08} rx="2"
