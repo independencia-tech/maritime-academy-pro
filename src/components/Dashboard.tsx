@@ -228,7 +228,7 @@ export const MODULES = {
   ],
   engine:[
     { id:"e1", icon:"⚙️", color:C.orange, access:"free",
-      freeLessons:4, totalLessons:8,
+      freeLessons:4, totalLessons:9,
       title:{fr:"Moteur Principal & Propulsion",en:"Main Engine & Propulsion",es:"Motor Principal & Propulsión",pt:"Motor Principal & Propulsão"},
       desc:{fr:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",en:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",es:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",pt:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG"},
       xp:450, status:"available", progress:0,
@@ -241,6 +241,7 @@ export const MODULES = {
         {id:"l6",title:{fr:"MARPOL & Environnement",en:"MARPOL & Environment",es:"MARPOL & Medio Ambiente",pt:"MARPOL & Ambiente"},access:"free",status:"available"},
         {id:"l7",title:{fr:"Quart Machine",en:"Engine Watchkeeping",es:"Guardia de Máquinas",pt:"Quarto de Máquinas"},access:"free",status:"available"},
         {id:"l8",title:{fr:"Procédures d'Urgence",en:"Emergency Procedures",es:"Procedimientos de Emergencia",pt:"Procedimentos de Emergência"},access:"premium",status:"locked"},
+        {id:"l9",title:{fr:"Maintenance & Dépannage",en:"Maintenance & Troubleshooting",es:"Mantenimiento & Resolución de Problemas",pt:"Manutenção & Resolução de Problemas"},access:"free",status:"available"},
       ]
     },
     { id:"e4", icon:"🌊", color:C.teal, access:"premium",

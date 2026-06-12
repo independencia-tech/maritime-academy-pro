@@ -1359,7 +1359,6 @@ function AppInner() {
             onEditProfile={() => setPage("questionnaire")}
             onStartModule={(m:any) => {
               if (m?.id === "d1") setPage("nav_lessons");
-              else if (m?.id === "s1") setPage("lesson_colreg");
               else if (m?.id === "e1") setPage("engine_lessons");
             }}
             activeNav="home"
@@ -1380,7 +1379,6 @@ function AppInner() {
           onBack={() => setPage("dashboard")}
           onStart={(m:any) => {
             if (m?.id === "d1") setPage("nav_lessons");
-            else if (m?.id === "s1") setPage("lesson_colreg");
             else if (m?.id === "e1") setPage("engine_lessons");
             else setPage("dashboard");
           }}
