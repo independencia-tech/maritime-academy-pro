@@ -1533,6 +1533,23 @@ function AppInner() {
           }}
         />
       )}
+      {page === "iml_lessons" && (
+        <IMLLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_solas");
+          }}
+        />
+      )}
+      {page === "lesson_solas" && (
+        <LessonSOLAS
+          lang={lang}
+          onBack={() => setPage("iml_lessons")}
+          onComplete={() => { markLessonCompleted("d2-l1"); setPage("iml_lessons"); }}
+        />
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
