@@ -1541,6 +1541,7 @@ function AppInner() {
           completedLessons={completedLessons}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_solas");
+            else if (lid === "l2") setPage("lesson_marpol_legal");
           }}
         />
       )}
@@ -1549,6 +1550,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l1"); setPage("iml_lessons"); }}
+        />
+      )}
+      {page === "lesson_marpol_legal" && (
+        <LessonMARPOLLegal
+          lang={lang}
+          onBack={() => setPage("iml_lessons")}
+          onComplete={() => { markLessonCompleted("d2-l2"); setPage("iml_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
