@@ -1198,11 +1198,11 @@ function AppInner() {
         return;
       }
       if (ENGINE_LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
-        setPage("dashboard");
+        try { window.history.pushState({ map: "engine_lessons" }, ""); } catch {}
+        setPage("engine_lessons");
         return;
       }
-      if (["modules","ships","nav_lessons","admin","admin-login"].includes(cur)) {
+      if (["modules","ships","nav_lessons","engine_lessons","admin","admin-login"].includes(cur)) {
         try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
         setPage("dashboard");
         return;
@@ -1356,9 +1356,7 @@ function AppInner() {
             onStartModule={(m:any) => {
               if (m?.id === "d1") setPage("nav_lessons");
               else if (m?.id === "s1") setPage("lesson_colreg");
-              else if (m?.id === "e1") setPage("lesson_moteur");
-              else if (m?.id === "e2") setPage("lesson_auxiliaires");
-              else if (m?.id === "e3") setPage("lesson_stabilite");
+              else if (m?.id === "e1") setPage("engine_lessons");
             }}
             activeNav="home"
             onNavHome={() => setPage("dashboard")}
@@ -1379,9 +1377,7 @@ function AppInner() {
           onStart={(m:any) => {
             if (m?.id === "d1") setPage("nav_lessons");
             else if (m?.id === "s1") setPage("lesson_colreg");
-            else if (m?.id === "e1") setPage("lesson_moteur");
-            else if (m?.id === "e2") setPage("lesson_auxiliaires");
-            else if (m?.id === "e3") setPage("lesson_stabilite");
+            else if (m?.id === "e1") setPage("engine_lessons");
             else setPage("dashboard");
           }}
         />
@@ -1465,22 +1461,22 @@ function AppInner() {
       {page === "lesson_moteur" && (
         <LessonMoteur
           lang={lang}
-          onBack={() => setPage("dashboard")}
-          onComplete={() => { markLessonCompleted("e1-l1"); setPage("dashboard"); }}
+          onBack={() => setPage("engine_lessons")}
+          onComplete={() => { markLessonCompleted("e1-l1"); setPage("engine_lessons"); }}
         />
       )}
       {page === "lesson_auxiliaires" && (
         <LessonAuxiliaires
           lang={lang}
-          onBack={() => setPage("dashboard")}
-          onComplete={() => { markLessonCompleted("e2-l1"); setPage("dashboard"); }}
+          onBack={() => setPage("engine_lessons")}
+          onComplete={() => { markLessonCompleted("e1-l2"); setPage("engine_lessons"); }}
         />
       )}
       {page === "lesson_stabilite" && (
         <LessonStabilite
           lang={lang}
-          onBack={() => setPage("dashboard")}
-          onComplete={() => { markLessonCompleted("e3-l1"); setPage("dashboard"); }}
+          onBack={() => setPage("engine_lessons")}
+          onComplete={() => { markLessonCompleted("e1-l3"); setPage("engine_lessons"); }}
         />
       )}
       {showExitConfirm && (
