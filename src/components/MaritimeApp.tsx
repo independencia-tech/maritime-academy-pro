@@ -1167,9 +1167,6 @@ function MarpolLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
 
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
-  return _AppRoot();
-}
-function _AppRoot() {
   return (
     <MusicProvider>
       <AppInner />
