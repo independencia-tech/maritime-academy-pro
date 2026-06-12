@@ -228,7 +228,7 @@ export const MODULES = {
   ],
   engine:[
     { id:"e1", icon:"⚙️", color:C.orange, access:"free",
-      freeLessons:3, totalLessons:8,
+      freeLessons:4, totalLessons:8,
       title:{fr:"Moteur Principal & Propulsion",en:"Main Engine & Propulsion",es:"Motor Principal & Propulsión",pt:"Motor Principal & Propulsão"},
       desc:{fr:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",en:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",es:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",pt:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG"},
       xp:450, status:"available", progress:0,
