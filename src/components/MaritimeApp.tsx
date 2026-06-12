@@ -18,6 +18,7 @@ import LessonSauvetage from "./LessonSauvetage";
 import LessonMARPOL from "./LessonMARPOL";
 import LessonWatchkeeping from "./LessonWatchkeeping";
 import LessonMaintenance from "./LessonMaintenance";
+import LessonEmergency from "./LessonEmergency";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
