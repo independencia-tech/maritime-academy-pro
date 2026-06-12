@@ -1175,7 +1175,7 @@ function AppInner() {
   useEffect(() => { pageRef.current = page; }, [page]);
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
-  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_marpol","lesson_watchkeeping"];
+  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_watchkeeping"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
