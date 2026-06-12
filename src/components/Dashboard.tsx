@@ -240,7 +240,7 @@ export const MODULES = {
         {id:"l5",title:{fr:"Survie & EPIRB",en:"Survival & EPIRB",es:"Supervivencia & EPIRB",pt:"Sobrevivência & EPIRB"},access:"free",status:"available"},
         {id:"l6",title:{fr:"Maintenance & Dépannage",en:"Maintenance & Troubleshooting",es:"Mantenimiento & Resolución de Problemas",pt:"Manutenção & Resolução de Problemas"},access:"free",status:"available"},
         {id:"l7",title:{fr:"Quart Machine",en:"Engine Watchkeeping",es:"Guardia de Máquinas",pt:"Quarto de Máquinas"},access:"free",status:"available"},
-        {id:"l8",title:{fr:"Procédures d'Urgence",en:"Emergency Procedures",es:"Procedimientos de Emergencia",pt:"Procedimentos de Emergência"},access:"premium",status:"locked"},
+        {id:"l8",title:{fr:"Procédures d'Urgence",en:"Emergency Procedures",es:"Procedimientos de Emergencia",pt:"Procedimentos de Emergência"},access:"premium",status:"available"},
       ]
     },
     { id:"e4", icon:"🌊", color:C.teal, access:"premium",
