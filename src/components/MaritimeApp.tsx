@@ -17,6 +17,7 @@ import LessonIncendie from "./LessonIncendie";
 import LessonSauvetage from "./LessonSauvetage";
 import LessonMARPOL from "./LessonMARPOL";
 import LessonWatchkeeping from "./LessonWatchkeeping";
+import LessonMaintenance from "./LessonMaintenance";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1175,7 +1176,7 @@ function AppInner() {
   useEffect(() => { pageRef.current = page; }, [page]);
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
-  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_watchkeeping"];
+  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1415,7 +1416,8 @@ function AppInner() {
             else if (lid === "l3") setPage("lesson_stabilite");
             else if (lid === "l4") setPage("lesson_incendie");
             else if (lid === "l5") setPage("lesson_sauvetage");
-            else if (lid === "l6") setPage("lesson_watchkeeping");
+            else if (lid === "l6") setPage("lesson_maintenance");
+            else if (lid === "l7") setPage("lesson_watchkeeping");
           }}
         />
       )}
@@ -1522,6 +1524,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l7"); setPage("engine_lessons"); }}
+        />
+      )}
+      {page === "lesson_maintenance" && (
+        <LessonMaintenance
+          lang={lang}
+          onBack={() => setPage("engine_lessons")}
+          onComplete={() => { markLessonCompleted("e1-l6"); setPage("engine_lessons"); }}
         />
       )}
       {showExitConfirm && (
