@@ -1078,7 +1078,7 @@ function EngineLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4"]);
+  const playable = new Set(["l1","l2","l3","l4","l5"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1173,7 +1173,7 @@ function AppInner() {
   useEffect(() => { pageRef.current = page; }, [page]);
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
-  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie"];
+  const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1414,6 +1414,7 @@ function AppInner() {
             else if (lid === "l2") setPage("lesson_auxiliaires");
             else if (lid === "l3") setPage("lesson_stabilite");
             else if (lid === "l4") setPage("lesson_incendie");
+            else if (lid === "l5") setPage("lesson_sauvetage");
           }}
         />
       )}
@@ -1499,6 +1500,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l4"); setPage("engine_lessons"); }}
+        />
+      )}
+      {page === "lesson_sauvetage" && (
+        <LessonSauvetage
+          lang={lang}
+          onBack={() => setPage("engine_lessons")}
+          onComplete={() => { markLessonCompleted("e1-l5"); setPage("engine_lessons"); }}
         />
       )}
       {showExitConfirm && (
