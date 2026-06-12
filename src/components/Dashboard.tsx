@@ -228,7 +228,7 @@ export const MODULES = {
   ],
   engine:[
     { id:"e1", icon:"⚙️", color:C.orange, access:"free",
-      freeLessons:3, totalLessons:8,
+      freeLessons:4, totalLessons:8,
       title:{fr:"Moteur Principal & Propulsion",en:"Main Engine & Propulsion",es:"Motor Principal & Propulsión",pt:"Motor Principal & Propulsão"},
       desc:{fr:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",en:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",es:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG",pt:"Diesel 2T/4T, MAN, Wärtsilä, HFO/LNG"},
       xp:450, status:"available", progress:0,
@@ -236,7 +236,7 @@ export const MODULES = {
         {id:"l1",title:{fr:"Moteur Principal",en:"Main Engine",es:"Motor Principal",pt:"Motor Principal"},access:"free",status:"available"},
         {id:"l2",title:{fr:"Auxiliaires & Électricité",en:"Auxiliaries & Electricity",es:"Auxiliares & Electricidad",pt:"Auxiliares & Eletricidade"},access:"free",status:"available"},
         {id:"l3",title:{fr:"Stabilité & Chargement",en:"Stability & Loading",es:"Estabilidad & Carga",pt:"Estabilidade & Carga"},access:"free",status:"available"},
-        {id:"l4",title:{fr:"Systèmes de Refroidissement",en:"Cooling Systems",es:"Sistemas de Refrigeración",pt:"Sistemas de Refrigeração"},access:"premium",status:"locked"},
+        {id:"l4",title:{fr:"Lutte contre l'incendie",en:"Fire Safety",es:"Lucha contra incendios",pt:"Combate a incêndios"},access:"free",status:"available"},
         {id:"l5",title:{fr:"Combustibles & Lubrifiants",en:"Fuels & Lubricants",es:"Combustibles & Lubricantes",pt:"Combustíveis & Lubrificantes"},access:"premium",status:"locked"},
         {id:"l6",title:{fr:"Maintenance & Pannes",en:"Maintenance & Troubleshooting",es:"Mantenimiento & Averías",pt:"Manutenção & Avarias"},access:"premium",status:"locked"},
         {id:"l7",title:{fr:"Quart Machine",en:"Engine Watchkeeping",es:"Guardia de Máquinas",pt:"Quarto de Máquinas"},access:"premium",status:"locked"},
