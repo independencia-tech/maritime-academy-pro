@@ -247,7 +247,11 @@ export const MODULES = {
       freeLessons:0, totalLessons:6,
       title:{fr:"MARPOL Machine",en:"MARPOL Engine Room",es:"MARPOL Sala de Máquinas",pt:"MARPOL Sala de Máquinas"},
       desc:{fr:"Livre hydrocarbures, 15ppm, déchets",en:"Oil record book, 15ppm, waste management",es:"Libro de hidrocarburos, 15ppm, residuos",pt:"Livro de hidrocarbonetos, 15ppm, resíduos"},
-      xp:300, status:"locked", progress:0 },
+      xp:300, status:"available", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"MARPOL & Environnement",en:"MARPOL & Environment",es:"MARPOL & Medio Ambiente",pt:"MARPOL & Ambiente"},access:"premium",status:"available"},
+      ]
+    },
     { id:"e5", icon:"🍃", color:C.green, access:"premium_plus",
       freeLessons:0, totalLessons:5,
       title:{fr:"SEEMP & Efficacité Énergétique",en:"SEEMP & Energy Efficiency",es:"SEEMP & Eficiencia Energética",pt:"SEEMP & Eficiência Energética"},
