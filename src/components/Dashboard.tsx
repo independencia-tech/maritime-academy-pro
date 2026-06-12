@@ -239,7 +239,7 @@ export const MODULES = {
         {id:"l4",title:{fr:"Sécurité incendie & système CO2",en:"Fire Safety & CO2 System",es:"Seguridad contra incendios y sistema CO2",pt:"Segurança contra incêndio e sistema CO2"},access:"free",status:"available"},
         {id:"l5",title:{fr:"Survie & EPIRB",en:"Survival & EPIRB",es:"Supervivencia & EPIRB",pt:"Sobrevivência & EPIRB"},access:"free",status:"available"},
         {id:"l6",title:{fr:"MARPOL & Environnement",en:"MARPOL & Environment",es:"MARPOL & Medio Ambiente",pt:"MARPOL & Ambiente"},access:"free",status:"available"},
-        {id:"l7",title:{fr:"Quart Machine",en:"Engine Watchkeeping",es:"Guardia de Máquinas",pt:"Quarto de Máquinas"},access:"premium",status:"locked"},
+        {id:"l7",title:{fr:"Quart Machine",en:"Engine Watchkeeping",es:"Guardia de Máquinas",pt:"Quarto de Máquinas"},access:"free",status:"available"},
         {id:"l8",title:{fr:"Procédures d'Urgence",en:"Emergency Procedures",es:"Procedimientos de Emergencia",pt:"Procedimentos de Emergência"},access:"premium",status:"locked"},
       ]
     },
