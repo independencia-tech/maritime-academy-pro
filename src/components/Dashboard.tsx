@@ -237,7 +237,7 @@ export const MODULES = {
         {id:"l2",title:{fr:"Auxiliaires & Électricité",en:"Auxiliaries & Electricity",es:"Auxiliares & Electricidad",pt:"Auxiliares & Eletricidade"},access:"free",status:"available"},
         {id:"l3",title:{fr:"Stabilité & Chargement",en:"Stability & Loading",es:"Estabilidad & Carga",pt:"Estabilidade & Carga"},access:"free",status:"available"},
         {id:"l4",title:{fr:"Sécurité incendie & système CO2",en:"Fire Safety & CO2 System",es:"Seguridad contra incendios y sistema CO2",pt:"Segurança contra incêndio e sistema CO2"},access:"free",status:"available"},
-        {id:"l5",title:{fr:"Combustibles & Lubrifiants",en:"Fuels & Lubricants",es:"Combustibles & Lubricantes",pt:"Combustíveis & Lubrificantes"},access:"premium",status:"locked"},
+        {id:"l5",title:{fr:"Survie & EPIRB",en:"Survival & EPIRB",es:"Supervivencia & EPIRB",pt:"Sobrevivência & EPIRB"},access:"free",status:"available"},
         {id:"l6",title:{fr:"Maintenance & Pannes",en:"Maintenance & Troubleshooting",es:"Mantenimiento & Averías",pt:"Manutenção & Avarias"},access:"premium",status:"locked"},
         {id:"l7",title:{fr:"Quart Machine",en:"Engine Watchkeeping",es:"Guardia de Máquinas",pt:"Quarto de Máquinas"},access:"premium",status:"locked"},
         {id:"l8",title:{fr:"Procédures d'Urgence",en:"Emergency Procedures",es:"Procedimientos de Emergencia",pt:"Procedimentos de Emergência"},access:"premium",status:"locked"},
