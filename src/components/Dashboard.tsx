@@ -214,6 +214,7 @@ export const MODULES = {
         {id:"l1",title:{fr:"SOLAS",en:"SOLAS",es:"SOLAS",pt:"SOLAS"},access:"premium",status:"available"},
         {id:"l2",title:{fr:"MARPOL — Law & Sanctions",en:"MARPOL — Law & Sanctions",es:"MARPOL — Law & Sanctions",pt:"MARPOL — Law & Sanctions"},access:"premium",status:"available"},
         {id:"l3",title:{fr:"STCW",en:"STCW",es:"STCW",pt:"STCW"},access:"premium",status:"available"},
+        {id:"l4",title:{fr:"MLC 2006",en:"MLC 2006",es:"MLC 2006",pt:"MLC 2006"},access:"premium",status:"available"},
       ]
     },
     { id:"d3", icon:"🗺️", color:C.teal, access:"premium",
