@@ -23,6 +23,7 @@ import LessonSOLAS from "./LessonSOLAS";
 import LessonMARPOLLegal from "./LessonMARPOLLegal";
 import LessonSTCW from "./LessonSTCW";
 import LessonMLC from "./LessonMLC";
+import LessonCOLREGLegal from "./LessonCOLREGLegal";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1180,7 +1181,7 @@ function IMLLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4"]);
+  const playable = new Set(["l1","l2","l3","l4","l5"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1546,6 +1547,7 @@ function AppInner() {
             else if (lid === "l2") setPage("lesson_marpol_legal");
             else if (lid === "l3") setPage("lesson_stcw");
             else if (lid === "l4") setPage("lesson_mlc");
+            else if (lid === "l5") setPage("lesson_colreg_legal");
           }}
         />
       )}
@@ -1575,6 +1577,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l4"); setPage("iml_lessons"); }}
+        />
+      )}
+      {page === "lesson_colreg_legal" && (
+        <LessonCOLREGLegal
+          lang={lang}
+          onBack={() => setPage("iml_lessons")}
+          onComplete={() => { markLessonCompleted("d2-l5"); setPage("iml_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (

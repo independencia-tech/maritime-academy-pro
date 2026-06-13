@@ -206,7 +206,7 @@ export const MODULES = {
       ]
     },
     { id:"d2", icon:"⚖️", color:C.gold, access:"premium",
-      freeLessons:0, totalLessons:10,
+      freeLessons:0, totalLessons:14,
       title:{fr:"Droit Maritime International",en:"International Maritime Law",es:"Derecho Marítimo Internacional",pt:"Direito Marítimo Internacional"},
       desc:{fr:"SOLAS, MARPOL, MLC 2006, STCW",en:"SOLAS, MARPOL, MLC 2006, STCW",es:"SOLAS, MARPOL, MLC 2006, STCW",pt:"SOLAS, MARPOL, MLC 2006, STCW"},
       xp:500, status:"available", progress:0,
@@ -215,6 +215,7 @@ export const MODULES = {
         {id:"l2",title:{fr:"MARPOL — Law & Sanctions",en:"MARPOL — Law & Sanctions",es:"MARPOL — Law & Sanctions",pt:"MARPOL — Law & Sanctions"},access:"premium",status:"available"},
         {id:"l3",title:{fr:"STCW",en:"STCW",es:"STCW",pt:"STCW"},access:"premium",status:"available"},
         {id:"l4",title:{fr:"MLC 2006",en:"MLC 2006",es:"MLC 2006",pt:"MLC 2006"},access:"premium",status:"available"},
+        {id:"l5",title:{fr:"COLREG — Collision Law",en:"COLREG — Collision Law",es:"COLREG — Collision Law",pt:"COLREG — Collision Law"},access:"premium",status:"available"},
       ]
     },
     { id:"d3", icon:"🗺️", color:C.teal, access:"premium",
