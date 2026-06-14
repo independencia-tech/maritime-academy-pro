@@ -1235,7 +1235,7 @@ function SBLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1"]);
+  const playable = new Set(["l1","l2"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1332,7 +1332,7 @@ function AppInner() {
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
   const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping","lesson_emergency"];
-  const SB_LESSONS = ["lesson_iala"];
+  const SB_LESSONS = ["lesson_iala","lesson_lights_shapes"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1625,6 +1625,7 @@ function AppInner() {
           completedLessons={completedLessons}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_iala");
+            else if (lid === "l2") setPage("lesson_lights_shapes");
           }}
         />
       )}
@@ -1703,6 +1704,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l1"); setPage("sb_lessons"); }}
+        />
+      )}
+      {page === "lesson_lights_shapes" && (
+        <LessonLightsShapes
+          lang={lang}
+          onBack={() => setPage("sb_lessons")}
+          onComplete={() => { markLessonCompleted("d3-l2"); setPage("sb_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
