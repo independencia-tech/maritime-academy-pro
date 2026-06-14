@@ -1186,6 +1186,7 @@ function IMLLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      {/* l6 playable */}
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
