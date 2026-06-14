@@ -29,6 +29,7 @@ import LessonLiabilityInsurance from "./LessonLiabilityInsurance";
 import LessonPortsFlagStates from "./LessonPortsFlagStates";
 import LessonPiracy from "./LessonPiracy";
 import LessonArbitration from "./LessonArbitration";
+import LessonIALA from "./LessonIALA";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1283,6 +1284,7 @@ function AppInner() {
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
   const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping","lesson_emergency"];
+  const SB_LESSONS = ["lesson_iala"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1313,7 +1315,12 @@ function AppInner() {
         setPage("engine_lessons");
         return;
       }
-      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","iml_lessons","admin","admin-login"].includes(cur)) {
+      if (SB_LESSONS.includes(cur)) {
+        try { window.history.pushState({ map: "sb_lessons" }, ""); } catch {}
+        setPage("sb_lessons");
+        return;
+      }
+      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","iml_lessons","sb_lessons","admin","admin-login"].includes(cur)) {
         try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
         setPage("dashboard");
         return;
@@ -1469,6 +1476,7 @@ function AppInner() {
               else if (m?.id === "e1") setPage("engine_lessons");
               else if (m?.id === "e4") setPage("marpol_lessons");
               else if (m?.id === "d2") setPage("iml_lessons");
+              else if (m?.id === "d3") setPage("sb_lessons");
             }}
             activeNav="home"
             onNavHome={() => setPage("dashboard")}
@@ -1491,6 +1499,7 @@ function AppInner() {
             else if (m?.id === "e1") setPage("engine_lessons");
             else if (m?.id === "e4") setPage("marpol_lessons");
             else if (m?.id === "d2") setPage("iml_lessons");
+            else if (m?.id === "d3") setPage("sb_lessons");
             else setPage("dashboard");
           }}
         />
