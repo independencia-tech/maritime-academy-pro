@@ -1555,6 +1555,7 @@ function AppInner() {
             else if (lid === "l6") setPage("lesson_unclos");
             else if (lid === "l7") setPage("lesson_liability_insurance");
             else if (lid === "l8") setPage("lesson_ports_flag_states");
+            else if (lid === "l9") setPage("lesson_piracy");
           }}
         />
       )}
