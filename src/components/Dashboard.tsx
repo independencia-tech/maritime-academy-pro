@@ -206,7 +206,7 @@ export const MODULES = {
       ]
     },
     { id:"d2", icon:"⚖️", color:C.gold, access:"premium",
-      freeLessons:0, totalLessons:17,
+      freeLessons:0, totalLessons:18,
       title:{fr:"Droit Maritime International",en:"International Maritime Law",es:"Derecho Marítimo Internacional",pt:"Direito Marítimo Internacional"},
       desc:{fr:"SOLAS, MARPOL, MLC 2006, STCW",en:"SOLAS, MARPOL, MLC 2006, STCW",es:"SOLAS, MARPOL, MLC 2006, STCW",pt:"SOLAS, MARPOL, MLC 2006, STCW"},
       xp:500, status:"available", progress:0,
