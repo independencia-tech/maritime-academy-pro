@@ -24,6 +24,7 @@ import LessonMARPOLLegal from "./LessonMARPOLLegal";
 import LessonSTCW from "./LessonSTCW";
 import LessonMLC from "./LessonMLC";
 import LessonCOLREGLegal from "./LessonCOLREGLegal";
+import LessonUNCLOS from "./LessonUNCLOS";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
