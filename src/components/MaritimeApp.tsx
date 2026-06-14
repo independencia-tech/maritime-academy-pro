@@ -1615,6 +1615,13 @@ function AppInner() {
           onComplete={() => { markLessonCompleted("d2-l8"); setPage("iml_lessons"); }}
         />
       )}
+      {page === "lesson_piracy" && (
+        <LessonPiracy
+          lang={lang}
+          onBack={() => setPage("iml_lessons")}
+          onComplete={() => { markLessonCompleted("d2-l9"); setPage("iml_lessons"); }}
+        />
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
