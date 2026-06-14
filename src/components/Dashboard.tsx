@@ -224,10 +224,14 @@ export const MODULES = {
       ]
     },
     { id:"d3", icon:"🗺️", color:C.teal, access:"premium",
-      freeLessons:0, totalLessons:7,
+      freeLessons:0, totalLessons:8,
       title:{fr:"Signalisation & Balisage",en:"Signaling & Buoyage",es:"Señalización & Balizamiento",pt:"Sinalização & Balizamento"},
       desc:{fr:"AISM, pavillons, Morse, SMCP",en:"IALA, flags, Morse, SMCP",es:"IALA, banderas, Morse, SMCP",pt:"IALA, bandeiras, Morse, SMCP"},
-      xp:350, status:"locked", progress:0 },
+      xp:350, status:"available", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"IALA Buoyage System",en:"IALA Buoyage System",es:"IALA Buoyage System",pt:"IALA Buoyage System"},access:"premium",status:"available"},
+      ]
+    },
     { id:"d4", icon:"📡", color:"#9b59b6", access:"premium",
       freeLessons:0, totalLessons:6,
       title:{fr:"Anglais Maritime SMCP",en:"Maritime English SMCP",es:"Inglés Marítimo SMCP",pt:"Inglês Marítimo SMCP"},
