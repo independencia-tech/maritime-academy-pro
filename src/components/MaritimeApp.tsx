@@ -1715,6 +1715,13 @@ function AppInner() {
           onComplete={() => { markLessonCompleted("d3-l2"); setPage("sb_lessons"); }}
         />
       )}
+      {page === "lesson_sound_signals" && (
+        <LessonSoundSignals
+          lang={lang}
+          onBack={() => setPage("sb_lessons")}
+          onComplete={() => { markLessonCompleted("d3-l3"); setPage("sb_lessons"); }}
+        />
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
