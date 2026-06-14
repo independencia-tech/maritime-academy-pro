@@ -25,6 +25,7 @@ import LessonSTCW from "./LessonSTCW";
 import LessonMLC from "./LessonMLC";
 import LessonCOLREGLegal from "./LessonCOLREGLegal";
 import LessonUNCLOS from "./LessonUNCLOS";
+import LessonLiabilityInsurance from "./LessonLiabilityInsurance";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1182,7 +1183,7 @@ function IMLLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1550,6 +1551,7 @@ function AppInner() {
             else if (lid === "l4") setPage("lesson_mlc");
             else if (lid === "l5") setPage("lesson_colreg_legal");
             else if (lid === "l6") setPage("lesson_unclos");
+            else if (lid === "l7") setPage("lesson_liability_insurance");
           }}
         />
       )}
@@ -1593,6 +1595,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l6"); setPage("iml_lessons"); }}
+        />
+      )}
+      {page === "lesson_liability_insurance" && (
+        <LessonLiabilityInsurance
+          lang={lang}
+          onBack={() => setPage("iml_lessons")}
+          onComplete={() => { markLessonCompleted("d2-l7"); setPage("iml_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
