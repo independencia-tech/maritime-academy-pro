@@ -219,6 +219,7 @@ export const MODULES = {
         {id:"l6",title:{fr:"UNCLOS",en:"UNCLOS",es:"UNCLOS",pt:"UNCLOS"},access:"premium",status:"available"},
         {id:"l7",title:{fr:"Liability & Insurance",en:"Liability & Insurance",es:"Liability & Insurance",pt:"Liability & Insurance"},access:"premium",status:"available"},
         {id:"l8",title:{fr:"Ports & Flag States",en:"Ports & Flag States",es:"Ports & Flag States",pt:"Ports & Flag States"},access:"premium",status:"available"},
+        {id:"l9",title:{fr:"Piracy & Security",en:"Piracy & Security",es:"Piracy & Security",pt:"Piracy & Security"},access:"premium",status:"available"},
       ]
     },
     { id:"d3", icon:"🗺️", color:C.teal, access:"premium",
