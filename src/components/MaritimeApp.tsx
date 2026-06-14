@@ -1186,7 +1186,6 @@ function IMLLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
-      {/* l6 playable */}
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
@@ -1550,6 +1549,7 @@ function AppInner() {
             else if (lid === "l3") setPage("lesson_stcw");
             else if (lid === "l4") setPage("lesson_mlc");
             else if (lid === "l5") setPage("lesson_colreg_legal");
+            else if (lid === "l6") setPage("lesson_unclos");
           }}
         />
       )}
@@ -1586,6 +1586,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l5"); setPage("iml_lessons"); }}
+        />
+      )}
+      {page === "lesson_unclos" && (
+        <LessonUNCLOS
+          lang={lang}
+          onBack={() => setPage("iml_lessons")}
+          onComplete={() => { markLessonCompleted("d2-l6"); setPage("iml_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
