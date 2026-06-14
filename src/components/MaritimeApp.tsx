@@ -30,6 +30,7 @@ import LessonPortsFlagStates from "./LessonPortsFlagStates";
 import LessonPiracy from "./LessonPiracy";
 import LessonArbitration from "./LessonArbitration";
 import LessonIALA from "./LessonIALA";
+import LessonLightsShapes from "./LessonLightsShapes";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
