@@ -1617,6 +1617,16 @@ function AppInner() {
           }}
         />
       )}
+      {page === "sb_lessons" && (
+        <SBLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_iala");
+          }}
+        />
+      )}
       {page === "lesson_solas" && (
         <LessonSOLAS
           lang={lang}
@@ -1685,6 +1695,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l10"); setPage("iml_lessons"); }}
+        />
+      )}
+      {page === "lesson_iala" && (
+        <LessonIALA
+          lang={lang}
+          onBack={() => setPage("sb_lessons")}
+          onComplete={() => { markLessonCompleted("d3-l1"); setPage("sb_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
