@@ -1742,6 +1742,13 @@ function AppInner() {
           onComplete={() => { markLessonCompleted("d3-l5"); setPage("sb_lessons"); }}
         />
       )}
+      {page === "lesson_ais" && (
+        <LessonAIS
+          lang={lang}
+          onBack={() => setPage("sb_lessons")}
+          onComplete={() => { markLessonCompleted("d3-l6"); setPage("sb_lessons"); }}
+        />
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
