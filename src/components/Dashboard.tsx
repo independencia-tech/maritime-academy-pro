@@ -242,7 +242,11 @@ export const MODULES = {
       freeLessons:0, totalLessons:6,
       title:{fr:"Anglais Maritime SMCP",en:"Maritime English SMCP",es:"Inglés Marítimo SMCP",pt:"Inglês Marítimo SMCP"},
       desc:{fr:"VHF, GMDSS, logbook, communications",en:"VHF, GMDSS, logbook, communications",es:"VHF, GMDSS, cuaderno, comunicaciones",pt:"VHF, GMDSS, diário de bordo, comunicações"},
-      xp:300, status:"locked", progress:0 },
+      xp:300, status:"available", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"Bridge Watch & Reporting",en:"Bridge Watch & Reporting",es:"Bridge Watch & Reporting",pt:"Bridge Watch & Reporting"},access:"premium",status:"available"},
+      ]
+    },
     { id:"d5", icon:"⛵", color:C.blue, access:"premium_plus",
       freeLessons:0, totalLessons:5,
       title:{fr:"Ship Career Navigator™",en:"Ship Career Navigator™",es:"Ship Career Navigator™",pt:"Ship Career Navigator™"},
