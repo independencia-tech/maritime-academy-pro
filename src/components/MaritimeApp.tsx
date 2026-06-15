@@ -1733,6 +1733,13 @@ function AppInner() {
           onComplete={() => { markLessonCompleted("d3-l4"); setPage("sb_lessons"); }}
         />
       )}
+      {page === "lesson_vhf" && (
+        <LessonVHF
+          lang={lang}
+          onBack={() => setPage("sb_lessons")}
+          onComplete={() => { markLessonCompleted("d3-l5"); setPage("sb_lessons"); }}
+        />
+      )}
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
