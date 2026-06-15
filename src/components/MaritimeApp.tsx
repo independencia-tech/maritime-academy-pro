@@ -1707,6 +1707,7 @@ function AppInner() {
             if (lid === "l1") setPage("lesson_smcp_l1");
             else if (lid === "l2") setPage("lesson_smcp_l2");
             else if (lid === "l3") setPage("lesson_smcp_l3");
+            else if (lid === "l4") setPage("lesson_smcp_l4");
           }}
         />
       )}
