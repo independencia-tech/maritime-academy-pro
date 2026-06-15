@@ -1,0 +1,633 @@
+// @ts-nocheck
+import { useState, useEffect } from "react";
+
+const C = {
+  navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
+  gold:"#c9922a", gold2:"#e8b94f", blue:"#1a6fd4", blue2:"#4da6ff",
+  white:"#f0f4ff", muted:"rgba(240,244,255,0.45)", border:"rgba(201,146,42,0.22)",
+  green:"#1e8a4a", red:"#c0392b", orange:"#e67e22", teal:"#0a8a6c", purple:"#8e44ad",
+  cargo:"#f59e0b", bulk:"#10b981", tank:"#6366f1", dg:"#ef4444",
+};
+
+const T = {
+  fr:{ back:"◀ Retour", module:"Maritime English SMCP", xp:"XP gagnés", quiz:"QUIZ", question:"Question", ofQ:"sur", correct:"✓ Bonne réponse!", wrong:"✗ Mauvaise réponse", expl:"Explication:", next:"SUIVANT →", finish:"VOIR MON SCORE →", startQuiz:"✅ COMMENCER LE QUIZ", complete:"🏅 LEÇON TERMINÉE!", backDash:"← RETOUR AU DASHBOARD", youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz", showCorr:"Voir la correction", hideCorr:"Masquer" },
+  en:{ back:"◀ Back", module:"Maritime English SMCP", xp:"XP earned", quiz:"QUIZ", question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer", expl:"Explanation:", next:"NEXT →", finish:"SEE MY SCORE →", startQuiz:"✅ START QUIZ", complete:"🏅 LESSON COMPLETE!", backDash:"← BACK TO DASHBOARD", youLearned:"You learned:", readFirst:"Read the content then start the quiz", showCorr:"Show correction", hideCorr:"Hide" },
+  es:{ back:"◀ Volver", module:"Inglés Marítimo SMCP", xp:"XP ganados", quiz:"QUIZ", question:"Pregunta", ofQ:"de", correct:"✓ ¡Correcta!", wrong:"✗ Incorrecta", expl:"Explicación:", next:"SIGUIENTE →", finish:"VER PUNTUACIÓN →", startQuiz:"✅ EMPEZAR QUIZ", complete:"🏅 ¡COMPLETADA!", backDash:"← VOLVER AL PANEL", youLearned:"Has aprendido:", readFirst:"Lee y luego comienza", showCorr:"Ver corrección", hideCorr:"Ocultar" },
+  pt:{ back:"◀ Voltar", module:"Inglês Marítimo SMCP", xp:"XP ganhos", quiz:"QUIZ", question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada", expl:"Explicação:", next:"PRÓXIMO →", finish:"VER PONTUAÇÃO →", startQuiz:"✅ COMEÇAR QUIZ", complete:"🏅 CONCLUÍDA!", backDash:"← VOLTAR AO PAINEL", youLearned:"Você aprendeu:", readFirst:"Leia o conteúdo e depois comece", showCorr:"Ver correção", hideCorr:"Ocultar" },
+};
+
+// ══════════════════════════════════════
+// SVG 1 — CARGO OPERATIONS FLASHCARDS
+// ══════════════════════════════════════
+function CargoFlashcardsSVG({ lang }) {
+  const [cat, setCat] = useState("general");
+  const [idx, setIdx] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+
+  const categories = {
+    general:{ label:{fr:"Général cargo",en:"General cargo",es:"Carga general",pt:"Carga geral"}, icon:"📦", color:C.cargo, cards:[
+      { q:"How do you report cargo operations starting?", a:"Cargo operations have commenced. We are loading/discharging [cargo type] at hold/tank number [X]. Rate is [X] tonnes per hour.", fr:"Les opérations de cargaison ont commencé. Nous chargeons/déchargeons [type de cargaison] en cale/citerne numéro [X]. Cadence : [X] tonnes par heure." },
+      { q:"How do you report a cargo problem?", a:"I have a problem with cargo in hold [X]. [Cargo is shifting / damage is suspected / container has fallen]. I require assistance.", fr:"J'ai un problème avec la cargaison en cale [X]. [La cargaison se déplace / des dommages sont suspectés / un conteneur est tombé]. J'ai besoin d'assistance." },
+      { q:"How do you report cargo secured for sea?", a:"All cargo is secured for sea. All hatch covers are closed and secured. All lashings are checked and tightened. Vessel is ready to proceed.", fr:"Toute la cargaison est arrimée pour la mer. Tous les panneaux de cale sont fermés et sécurisés. Tous les arrimage sont vérifiés et resserrés. Le navire est prêt à appareiller." },
+      { q:"How do you request a cargo survey?", a:"I request a cargo survey in hold [X]. There is suspected water damage / cargo damage. Please send a surveyor to inspect.", fr:"Je demande une expertise de la cargaison en cale [X]. Des dommages par l'eau / des dommages à la cargaison sont suspectés. Veuillez envoyer un expert pour inspection." },
+    ]},
+    bulk:{ label:{fr:"Vrac",en:"Bulk cargo",es:"Carga a granel",pt:"Carga a granel"}, icon:"🏗️", color:C.bulk, cards:[
+      { q:"How do you report bulk cargo loading rate?", a:"We are loading bulk [cargo name] at a rate of [X] tonnes per hour. Total cargo to be loaded is [X] tonnes. Estimated completion time is [time] UTC.", fr:"Nous chargeons du vrac [nom de la cargaison] à une cadence de [X] tonnes par heure. Tonnage total à charger : [X] tonnes. Heure estimée de fin : [heure] UTC." },
+      { q:"How do you report a trim/stability issue during loading?", a:"I have a trim/stability problem. The vessel has [X] degrees list to [port/starboard]. I am requesting an immediate stop to cargo operations for re-calculation of stability.", fr:"J'ai un problème de assiette/stabilité. Le navire a [X] degrés de gîte sur [bâbord/tribord]. Je demande l'arrêt immédiat des opérations de cargaison pour recalcul de la stabilité." },
+      { q:"How do you report hold inspection?", a:"Hold [X] inspection is complete. The hold is [clean and dry / has residues of previous cargo / requires cleaning before loading].", fr:"L'inspection de la cale [X] est terminée. La cale est [propre et sèche / a des résidus de la cargaison précédente / nécessite un nettoyage avant chargement]." },
+      { q:"How do you report completion of bulk discharge?", a:"Discharge of bulk [cargo] from hold [X] is complete. Hold is swept clean. Total discharged: [X] tonnes. Survey figures are [X] tonnes.", fr:"Le déchargement du vrac [cargaison] de la cale [X] est terminé. La cale est balayée. Total déchargé : [X] tonnes. Chiffres d'expertise : [X] tonnes." },
+    ]},
+    tanker:{ label:{fr:"Pétrolier/Chimiquiers",en:"Tanker/Chemical",es:"Petrolero/Químico",pt:"Petroleiro/Químico"}, icon:"🛢️", color:C.tank, cards:[
+      { q:"How do you report tank loading operations?", a:"Tank loading operations are in progress. We are loading [product name] in tanks [X, Y, Z]. Loading rate is [X] cubic metres per hour. Estimated completion [time] UTC.", fr:"Les opérations de chargement des citernes sont en cours. Nous chargeons [nom du produit] dans les citernes [X, Y, Z]. Cadence de chargement : [X] mètres cubes par heure. Fin estimée [heure] UTC." },
+      { q:"How do you report a tank overflow/spill?", a:"URGENT. I have a tank overflow / oil spill. [X] litres/tonnes of [product] have spilled [on deck / into the sea]. I am stopping cargo operations. I require immediate assistance.", fr:"URGENT. J'ai un débordement de citerne / déversement. [X] litres/tonnes de [produit] se sont déversés [sur le pont / en mer]. J'arrête les opérations de cargaison. J'ai besoin d'assistance immédiate." },
+      { q:"How do you report inert gas system status?", a:"Inert gas system is [operational / not operational]. Oxygen content in cargo tanks is [X] percent. Tanks are [inerted / not inerted]. Over.", fr:"Le système de gaz inerte est [opérationnel / non opérationnel]. La teneur en oxygène des citernes de cargaison est de [X] pour cent. Les citernes sont [inertées / non inertées]. Terminé." },
+      { q:"How do you report ship-shore safety checklist?", a:"Ship-shore safety checklist is complete. All items are satisfactory. Loading/discharge arms are connected. Emergency shutdown system is tested and operational.", fr:"La liste de vérification de sécurité navire-terre est complète. Tous les éléments sont satisfaisants. Les bras de chargement/déchargement sont connectés. Le système d'arrêt d'urgence est testé et opérationnel." },
+    ]},
+    dg:{ label:{fr:"Marchandises dangereuses",en:"Dangerous goods",es:"Mercancías peligrosas",pt:"Mercadorias perigosas"}, icon:"⚠️", color:C.dg, cards:[
+      { q:"How do you declare dangerous goods?", a:"I have dangerous goods on board. IMDG Class [X], UN number [XXXX], [substance name], [X] tonnes/packages. Stowed in [hold/position]. Emergency contact: [name/number].", fr:"J'ai des marchandises dangereuses à bord. Classe IMDG [X], numéro ONU [XXXX], [nom de la substance], [X] tonnes/colis. Arrimées en [cale/position]. Contact d'urgence : [nom/numéro]." },
+      { q:"How do you report a dangerous goods incident?", a:"URGENT. I have a dangerous goods incident. [Leak / fire / package damaged] involving IMDG Class [X], UN [XXXX]. I require immediate assistance and specialist advice.", fr:"URGENT. J'ai un incident de marchandises dangereuses. [Fuite / incendie / emballage endommagé] impliquant la classe IMDG [X], ONU [XXXX]. J'ai besoin d'assistance immédiate et d'avis spécialisés." },
+      { q:"How do you report DG cargo requiring special stowage?", a:"I have dangerous goods requiring special stowage. Class [X], quantity [X]. The cargo must be stowed [away from heat sources / away from oxidizers / under deck / on deck only].", fr:"J'ai des marchandises dangereuses nécessitant un arrimage spécial. Classe [X], quantité [X]. La cargaison doit être arrimée [à l'écart des sources de chaleur / à l'écart des oxydants / sous le pont / sur le pont seulement]." },
+      { q:"How do you report fumigation of a cargo hold?", a:"Hold [X] is under fumigation. Fumigant used is [name]. Fumigation started at [time] UTC. Hold must not be entered until [time] UTC. Warning signs are displayed.", fr:"La cale [X] est en cours de fumigation. Fumigant utilisé : [nom]. Fumigation commencée à [heure] UTC. La cale ne doit pas être pénétrée avant [heure] UTC. Les panneaux d'avertissement sont affichés." },
+    ]},
+  };
+
+  const c = categories[cat];
+  const card = c.cards[idx];
+
+  return (
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:10}}>
+        {Object.entries(categories).map(([k,v])=>(
+          <button key={k} onClick={()=>{setCat(k);setIdx(0);setFlipped(false);}} style={{
+            padding:"7px 4px",borderRadius:10,cursor:"pointer",fontSize:9,fontWeight:700,
+            background:cat===k?`${v.color}22`:"rgba(255,255,255,0.04)",
+            border:`1.5px solid ${cat===k?v.color:"rgba(255,255,255,0.08)"}`,
+            color:cat===k?v.color:C.muted}}>
+            {v.icon} {v.label[lang]||v.label.en}
+          </button>
+        ))}
+      </div>
+      <div style={{display:"flex",gap:4,marginBottom:10}}>
+        {c.cards.map((_,i)=>(
+          <div key={i} onClick={()=>{setIdx(i);setFlipped(false);}} style={{
+            flex:1,height:4,borderRadius:4,cursor:"pointer",
+            background:i===idx?c.color:i<idx?`${c.color}55`:"rgba(255,255,255,0.1)"}}/>
+        ))}
+      </div>
+      <div onClick={()=>setFlipped(f=>!f)} style={{
+        padding:"16px",borderRadius:14,cursor:"pointer",minHeight:120,
+        background:flipped?`${c.color}18`:"rgba(0,0,0,0.4)",
+        border:`2px solid ${flipped?c.color:"rgba(255,255,255,0.08)"}`,
+        transition:"all 0.3s ease",animation:"fadeUp 0.3s ease",
+        display:"flex",flexDirection:"column",justifyContent:"center",marginBottom:10}}>
+        {!flipped?(
+          <div>
+            <div style={{fontSize:9,color:C.muted,letterSpacing:2,marginBottom:8}}>❓ {lang==="fr"?"Touche pour la réponse SMCP":lang==="en"?"Tap for SMCP answer":"Toca para respuesta SMCP"}</div>
+            <div style={{fontSize:13,color:C.white,fontWeight:700,lineHeight:1.5}}>{card.q}</div>
+          </div>
+        ):(
+          <div>
+            <div style={{fontSize:9,color:c.color,letterSpacing:2,marginBottom:8}}>✅ SMCP ANSWER</div>
+            <div style={{fontFamily:"'Courier New',monospace",fontSize:11,color:C.white,lineHeight:1.7,marginBottom:6,whiteSpace:"pre-line"}}>{card.a}</div>
+            {lang!=="en"&&<div style={{fontSize:10,color:C.muted,fontStyle:"italic",borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:6}}>{card.fr}</div>}
+          </div>
+        )}
+      </div>
+      <div style={{display:"flex",gap:8}}>
+        <button onClick={()=>{setIdx(i=>Math.max(0,i-1));setFlipped(false);}} disabled={idx===0}
+          style={{flex:1,padding:"9px",borderRadius:10,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:idx===0?C.muted:C.white,cursor:idx===0?"default":"pointer",fontSize:11}}>
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+        </button>
+        <button onClick={()=>{setIdx(i=>Math.min(c.cards.length-1,i+1));setFlipped(false);}} disabled={idx===c.cards.length-1}
+          style={{flex:1,padding:"9px",borderRadius:10,background:idx===c.cards.length-1?"rgba(255,255,255,0.05)":`${c.color}22`,border:`1px solid ${idx===c.cards.length-1?"rgba(255,255,255,0.08)":c.color}`,color:C.white,cursor:idx===c.cards.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
+          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// SVG 2 — CARGO DOCUMENTS SIMULATOR
+// ══════════════════════════════════════
+function CargoDocsSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+
+  const docs = [
+    { id:"bl", icon:"📄", color:C.cargo,
+      label:{fr:"Connaissement (B/L)",en:"Bill of Lading (B/L)",es:"Conocimiento de embarque",pt:"Conhecimento de embarque"},
+      desc:{fr:"CONNAISSEMENT (Bill of Lading)\n\nDOCUMENT CLÉS :\n→ Preuve du contrat de transport\n→ Reçu des marchandises\n→ Titre de propriété (document négociable)\n\nPHRASES SMCP :\n'The bill of lading for [cargo] has been signed.'\n'I require [X] original bills of lading.'\n'The cargo quantity as per bill of lading is [X] tonnes.'\n'There is a discrepancy between the bill of lading and the actual cargo.'\n\nCLEAN vs CLAUSED :\nClean B/L = cargaison reçue en bon état\nClaused B/L = dommages ou réserves notés",
+           en:"BILL OF LADING (B/L)\n\nKEY DOCUMENT:\n→ Proof of the transport contract\n→ Receipt of goods\n→ Title to goods (negotiable document)\n\nSMCP PHRASES:\n'The bill of lading for [cargo] has been signed.'\n'I require [X] original bills of lading.'\n'The cargo quantity as per bill of lading is [X] tonnes.'\n'There is a discrepancy between the bill of lading and the actual cargo.'\n\nCLEAN vs CLAUSED:\nClean B/L = cargo received in good condition\nClaused B/L = damage or reservations noted",
+           es:"CONOCIMIENTO DE EMBARQUE (B/L)\n\nDOCUMENTO CLAVE:\n→ Prueba del contrato de transporte\n→ Recibo de mercancías\n→ Título de propiedad (documento negociable)\n\nFRASES SMCP:\n'The bill of lading for [cargo] has been signed.'\n'I require [X] original bills of lading.'\n'The cargo quantity as per bill of lading is [X] tonnes.'",
+           pt:"CONHECIMENTO DE EMBARQUE (B/L)\n\nDOCUMENTO CHAVE:\n→ Prova do contrato de transporte\n→ Recibo de mercadorias\n→ Título de propriedade (documento negociável)\n\nFRASES SMCP:\n'The bill of lading for [cargo] has been signed.'\n'I require [X] original bills of lading.'\n'The cargo quantity as per bill of lading is [X] tonnes.'"} },
+    { id:"manifest", icon:"📋", color:C.bulk,
+      label:{fr:"Manifeste de cargaison",en:"Cargo manifest",es:"Manifiesto de carga",pt:"Manifesto de carga"},
+      desc:{fr:"MANIFESTE DE CARGAISON\n\nCONTENU :\n→ Liste complète des marchandises à bord\n→ Ports de chargement/déchargement\n→ Détails du chargeur et du destinataire\n→ Poids, mesures, marques\n\nPHRASES SMCP :\n'The cargo manifest is complete and accurate.'\n'The manifest shows [X] containers / [X] tonnes.'\n'There is an error in the manifest for [cargo description].'\n'I require a copy of the cargo manifest.'\n'The manifest has been submitted to customs.'",
+           en:"CARGO MANIFEST\n\nCONTENTS:\n→ Complete list of all goods on board\n→ Loading/discharge ports\n→ Shipper and consignee details\n→ Weights, dimensions, marks\n\nSMCP PHRASES:\n'The cargo manifest is complete and accurate.'\n'The manifest shows [X] containers / [X] tonnes.'\n'There is an error in the manifest for [cargo description].'\n'I require a copy of the cargo manifest.'\n'The manifest has been submitted to customs.'",
+           es:"MANIFIESTO DE CARGA\n\nCONTENIDO:\n→ Lista completa de todas las mercancías a bordo\n→ Puertos de carga/descarga\n→ Datos del cargador y del destinatario\n→ Pesos, dimensiones, marcas\n\nFRASES SMCP:\n'The cargo manifest is complete and accurate.'\n'The manifest shows [X] containers / [X] tonnes.'\n'There is an error in the manifest for [cargo description].'",
+           pt:"MANIFESTO DE CARGA\n\nCONTEÚDO:\n→ Lista completa de todas as mercadorias a bordo\n→ Portos de carga/descarga\n→ Dados do carregador e do destinatário\n→ Pesos, dimensões, marcas\n\nFRASES SMCP:\n'The cargo manifest is complete and accurate.'\n'The manifest shows [X] containers / [X] tonnes.'\n'There is an error in the manifest for [cargo description].'"} },
+    { id:"tally", icon:"🔢", color:C.tank,
+      label:{fr:"Pointage & Tally",en:"Tally & Count",es:"Recuento y tally",pt:"Contagem e tally"},
+      desc:{fr:"POINTAGE (TALLY)\n\nDÉFINITION :\nComptage et vérification des marchandises\nchargées ou déchargées\n\nPHRASES SMCP :\n'The tally shows [X] packages loaded / discharged.'\n'There is a shortage of [X] packages.'\n'There is an overage of [X] packages.'\n'The tally clerk confirms [X] units.'\n'Cargo count is [X] short of bill of lading figure.'\n'I am noting a reservation on the tally for [damage / shortage].'\n\nDIFFÉRENCE TALLY vs B/L :\nTally = comptage réel à bord\nB/L = déclaration du chargeur\nDivergence → réserves sur B/L ou protêt",
+           en:"TALLY & COUNT\n\nDEFINITION:\nCounting and verification of goods\nloaded or discharged\n\nSMCP PHRASES:\n'The tally shows [X] packages loaded / discharged.'\n'There is a shortage of [X] packages.'\n'There is an overage of [X] packages.'\n'The tally clerk confirms [X] units.'\n'Cargo count is [X] short of bill of lading figure.'\n'I am noting a reservation on the tally for [damage / shortage].'",
+           es:"RECUENTO (TALLY)\n\nDEFINICIÓN:\nConteo y verificación de mercancías\ncargadas o descargadas\n\nFRASES SMCP:\n'The tally shows [X] packages loaded / discharged.'\n'There is a shortage of [X] packages.'\n'The tally clerk confirms [X] units.'\n'Cargo count is [X] short of bill of lading figure.'",
+           pt:"CONTAGEM (TALLY)\n\nDEFINIÇÃO:\nContagem e verificação de mercadorias\ncarregadas ou descarregadas\n\nFRASES SMCP:\n'The tally shows [X] packages loaded / discharged.'\n'There is a shortage of [X] packages.'\n'The tally clerk confirms [X] units.'\n'Cargo count is [X] short of bill of lading figure.'"} },
+    { id:"damage", icon:"🔍", color:C.dg,
+      label:{fr:"Rapports de dommages",en:"Damage reports",es:"Informes de daños",pt:"Relatórios de danos"},
+      desc:{fr:"RAPPORTS DE DOMMAGES CARGAISON\n\nPHRASES SMCP :\n'I have found cargo damage in hold [X].'\n'The damage appears to be [water damage / impact damage / theft / contamination].'\n'I am issuing a letter of protest.'\n'A surveyor is required to assess the damage.'\n'The damaged cargo amounts to approximately [X] tonnes / [X] packages.'\n'I am noting a reservation on the bill of lading.'\n\nLETTRE DE PROTESTATION :\n'I am issuing a letter of protest against [stevedores/cargo handling/weather] for damage to cargo.'",
+           en:"CARGO DAMAGE REPORTS\n\nSMCP PHRASES:\n'I have found cargo damage in hold [X].'\n'The damage appears to be [water damage / impact damage / theft / contamination].'\n'I am issuing a letter of protest.'\n'A surveyor is required to assess the damage.'\n'The damaged cargo amounts to approximately [X] tonnes / [X] packages.'\n'I am noting a reservation on the bill of lading.'",
+           es:"INFORMES DE DAÑOS A LA CARGA\n\nFRASES SMCP:\n'I have found cargo damage in hold [X].'\n'The damage appears to be [water damage / impact damage / theft / contamination].'\n'I am issuing a letter of protest.'\n'A surveyor is required to assess the damage.'\n'The damaged cargo amounts to approximately [X] tonnes / [X] packages.'",
+           pt:"RELATÓRIOS DE DANOS À CARGA\n\nFRASES SMCP:\n'I have found cargo damage in hold [X].'\n'The damage appears to be [water damage / impact damage / theft / contamination].'\n'I am issuing a letter of protest.'\n'A surveyor is required to assess the damage.'\n'The damaged cargo amounts to approximately [X] tonnes / [X] packages.'"} },
+  ];
+
+  const sel_ = sel!==null ? docs[sel] : null;
+  return (
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:10}}>
+        {docs.map((d,i)=>(
+          <div key={i} onClick={()=>setSel(sel===i?null:i)} style={{
+            padding:"10px 6px",borderRadius:12,cursor:"pointer",textAlign:"center",
+            background:sel===i?`${d.color}22`:"rgba(255,255,255,0.04)",
+            border:`1.5px solid ${sel===i?d.color:"rgba(255,255,255,0.08)"}`}}>
+            <div style={{fontSize:18,marginBottom:3}}>{d.icon}</div>
+            <div style={{fontSize:9,color:sel===i?d.color:C.muted,fontWeight:700,lineHeight:1.2}}>{d.label[lang]||d.label.en}</div>
+          </div>
+        ))}
+      </div>
+      {sel_&&<div style={{padding:"12px",borderRadius:14,background:`${sel_.color}10`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
+        <div style={{fontSize:11,fontWeight:700,color:sel_.color,marginBottom:8}}>{sel_.icon} {sel_.label[lang]||sel_.label.en}</div>
+        <div style={{fontFamily:"'Courier New',monospace",fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.en}</div>
+      </div>}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// SVG 3 — CARGO STOWAGE PHRASES
+// ══════════════════════════════════════
+function StowagePhrasesSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+
+  const sections = [
+    { id:"hatch", icon:"🔩", color:C.cargo,
+      label:{fr:"Panneaux de cale",en:"Hatch covers",es:"Tapas de escotilla",pt:"Tampas de escotilha"},
+      phrases:[
+        { cmd:"Open/close hatch cover [X]", meaning:{fr:"Ouvrir/fermer le panneau de cale [X]",en:"Open/close hatch cover number [X]",es:"Abrir/cerrar tapa de escotilla [X]",pt:"Abrir/fechar tampa de escotilha [X]"} },
+        { cmd:"Hatch cover [X] is open/closed and secured", meaning:{fr:"Le panneau [X] est ouvert/fermé et sécurisé",en:"Hatch [X] is ready for cargo operations",es:"La escotilla [X] está abierta/cerrada y asegurada",pt:"A escotilha [X] está aberta/fechada e segura"} },
+        { cmd:"Hatch cover is leaking", meaning:{fr:"Le panneau de cale prend l'eau",en:"Water is entering through hatch cover",es:"La tapa de escotilla tiene una fuga",pt:"A tampa da escotilha está a vazar"} },
+        { cmd:"Hatch cover hose test required", meaning:{fr:"Test à l'eau du panneau de cale requis",en:"Water tightness test of hatch cover required",es:"Se requiere prueba de estanqueidad de tapa de escotilla",pt:"Teste de estanqueidade da tampa de escotilha necessário"} },
+      ]},
+    { id:"crane", icon:"🏗️", color:C.bulk,
+      label:{fr:"Grues & Engins",en:"Cranes & gear",es:"Grúas y equipos",pt:"Gruas e equipamentos"},
+      phrases:[
+        { cmd:"Crane [X] is ready/not ready for operations", meaning:{fr:"La grue [X] est prête/pas prête pour les opérations",en:"Crane ready/not ready",es:"Grúa [X] lista/no lista para operaciones",pt:"Grua [X] pronta/não pronta para operações"} },
+        { cmd:"Crane [X] is defective", meaning:{fr:"La grue [X] est en panne",en:"Crane [X] has a defect/malfunction",es:"La grúa [X] está averiada",pt:"A grua [X] está avariada"} },
+        { cmd:"Maximum safe working load is [X] tonnes", meaning:{fr:"La charge maximale de travail en sécurité est de [X] tonnes",en:"Do not exceed [X] tonnes",es:"La carga máxima de trabajo seguro es [X] toneladas",pt:"A carga máxima de trabalho segura é [X] toneladas"} },
+        { cmd:"Cargo gear certificate is valid until [date]", meaning:{fr:"Le certificat du matériel de levage est valable jusqu'au [date]",en:"Lifting equipment certification expires [date]",es:"El certificado del equipo de carga es válido hasta [fecha]",pt:"O certificado do equipamento de carga é válido até [data]"} },
+      ]},
+    { id:"lashing", icon:"🔗", color:C.tank,
+      label:{fr:"Arrimage & Saisissage",en:"Lashing & securing",es:"Trincado y sujeción",pt:"Amarração e fixação"},
+      phrases:[
+        { cmd:"All lashings are in place and tightened", meaning:{fr:"Tous les saisissages sont en place et resserrés",en:"Cargo is properly secured",es:"Todos los trincados están en su lugar y apretados",pt:"Todas as amarrações estão no lugar e apertadas"} },
+        { cmd:"Lashing [X] is broken/loose", meaning:{fr:"Le saisissage [X] est cassé/desserré",en:"Securing [X] has failed/is loose",es:"El trinco [X] está roto/suelto",pt:"A amarração [X] está partida/solta"} },
+        { cmd:"Container [X] has shifted", meaning:{fr:"Le conteneur [X] s'est déplacé",en:"Container [X] has moved from its position",es:"El contenedor [X] se ha desplazado",pt:"O contentor [X] deslocou-se"} },
+        { cmd:"Lashing plan is approved", meaning:{fr:"Le plan de saisissage est approuvé",en:"Cargo securing plan has been accepted",es:"El plan de trincado está aprobado",pt:"O plano de amarração está aprovado"} },
+      ]},
+  ];
+
+  const sel_ = sel!==null ? sections[sel] : null;
+  return (
+    <div>
+      <div style={{display:"flex",gap:8,marginBottom:10}}>
+        {sections.map((s,i)=>(
+          <div key={i} onClick={()=>setSel(sel===i?null:i)} style={{
+            flex:1,padding:"10px 4px",borderRadius:12,cursor:"pointer",textAlign:"center",
+            background:sel===i?`${s.color}22`:"rgba(255,255,255,0.04)",
+            border:`2px solid ${sel===i?s.color:"rgba(255,255,255,0.08)"}`}}>
+            <div style={{fontSize:18,marginBottom:3}}>{s.icon}</div>
+            <div style={{fontSize:9,color:sel===i?s.color:C.muted,fontWeight:700,lineHeight:1.2}}>{s.label[lang]||s.label.en}</div>
+          </div>
+        ))}
+      </div>
+      {sel_&&<div style={{padding:"12px",borderRadius:14,background:`${sel_.color}10`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
+        <div style={{fontSize:11,fontWeight:700,color:sel_.color,marginBottom:10}}>{sel_.icon} {sel_.label[lang]||sel_.label.en}</div>
+        {sel_.phrases.map((p,i)=>(
+          <div key={i} style={{marginBottom:8,paddingBottom:8,borderBottom:i<sel_.phrases.length-1?"1px solid rgba(255,255,255,0.05)":"none",display:"flex",gap:10,alignItems:"flex-start"}}>
+            <div style={{fontFamily:"'Courier New',monospace",fontSize:11,color:C.white,fontWeight:700,minWidth:160,flexShrink:0}}>{p.cmd}</div>
+            <div style={{fontSize:10,color:C.muted}}>→ {p.meaning[lang]||p.meaning.en}</div>
+          </div>
+        ))}
+      </div>}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// SVG 4 — CARGO QUIZ
+// ══════════════════════════════════════
+function CargoQuizSVG({ lang }) {
+  const [qIdx, setQIdx] = useState(0);
+  const [ans, setAns] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+
+  const qs = [
+    { q:"How do you report that cargo operations have started?", opts:["Loading started","Cargo operations have commenced. We are loading [cargo type] at hold number [X]. Rate is [X] tonnes per hour.","We are working","Cargo in progress"], correct:1 },
+    { q:"What is a 'clean' Bill of Lading?", opts:["A document without mistakes","A B/L signed without reservations — cargo received in apparent good order and condition","A new document","An original document"], correct:1 },
+    { q:"How do you report a container that has shifted?", opts:["Box moved","Container [number/ID] has shifted from its position. [Lashings have parted / cargo is unstable]. I require immediate inspection.","Container problem","Cargo shifted"], correct:1 },
+    { q:"How do you declare dangerous goods in SMCP?", opts:["I have chemicals","I have dangerous goods on board. IMDG Class [X], UN number [XXXX], [substance name], [X] tonnes. Stowed in [hold/position].","Hazmat on board","DG cargo"], correct:1 },
+    { q:"What does 'letter of protest' mean in cargo operations?", opts:["A complaint letter to the captain","A formal written document issued by the master reserving the vessel's rights regarding cargo damage, shortage, or delay","An insurance document","A customs form"], correct:1 },
+  ];
+
+  const q = qs[qIdx];
+  const pick=(i)=>{if(ans!==null)return;setAns(i);if(i===q.correct)setScore(s=>s+1);};
+  const next=()=>{if(qIdx<qs.length-1){setQIdx(q=>q+1);setAns(null);}else setDone(true);};
+
+  if(done) return (
+    <div style={{textAlign:"center",padding:"16px"}}>
+      <div style={{fontSize:40}}>{score>=4?"🏆":"📚"}</div>
+      <div style={{fontFamily:"'Cinzel',serif",fontSize:18,color:C.white,margin:"8px 0"}}>{score}/{qs.length}</div>
+      <button onClick={()=>{setDone(false);setQIdx(0);setAns(null);setScore(0);}} style={{padding:"8px 16px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer",fontSize:11}}>🔄 Retry</button>
+    </div>
+  );
+
+  return (
+    <div>
+      <div style={{display:"flex",gap:4,marginBottom:10}}>
+        {qs.map((_,i)=><div key={i} style={{flex:1,height:3,borderRadius:3,background:i<qIdx?C.cargo:i===qIdx?C.bulk:"rgba(255,255,255,0.1)"}}/>)}
+      </div>
+      <div style={{fontSize:12,fontWeight:700,color:C.white,marginBottom:12,lineHeight:1.5}}>{q.q}</div>
+      <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:10}}>
+        {q.opts.map((opt,i)=>{
+          let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)";
+          if(ans!==null){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;}else if(i===ans){bg="rgba(192,57,43,0.2)";bd=C.red;}}
+          return <button key={i} onClick={()=>pick(i)} style={{padding:"10px 12px",borderRadius:12,background:bg,border:`1.5px solid ${bd}`,color:C.muted,fontSize:11,textAlign:"left",cursor:ans!==null?"default":"pointer",fontFamily:"'Courier New',monospace"}}>{opt}</button>;
+        })}
+      </div>
+      {ans!==null&&<button onClick={next} style={{width:"100%",padding:"11px 0",border:"none",borderRadius:12,background:`linear-gradient(135deg,${C.cargo},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:C.navy,cursor:"pointer"}}>
+        {qIdx<qs.length-1?"NEXT →":"FINISH"}
+      </button>}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// EXERCISE
+// ══════════════════════════════════════
+function Exercise1({ lang, t }) {
+  const [ans,setAns]=useState({q1:"",q2:"",q3:""});
+  const [showC,setShowC]=useState(false);
+  const qs={
+    en:[
+      {id:"q1",q:"How do you say 'cargo loading has started' in SMCP?\n(Answer: first 3 words)",correct:"Cargo operations have"},
+      {id:"q2",q:"A B/L signed with damage noted = what type of B/L?\n(Answer: 1 word)",correct:"Claused"},
+      {id:"q3",q:"IMDG Class 3 = which type of dangerous goods?\n(Answer: 1 word)",correct:"Flammable"},
+    ],
+    fr:[
+      {id:"q1",q:"Comment dit-on 'le chargement de la cargaison a commencé' en SMCP ?\n(Répondre : 3 premiers mots)",correct:"Cargo operations have"},
+      {id:"q2",q:"Un B/L signé avec des dommages notés = quel type de B/L ?\n(Répondre : 1 mot en anglais)",correct:"Claused"},
+      {id:"q3",q:"Classe IMDG 3 = quel type de marchandises dangereuses ?\n(Répondre : 1 mot en anglais)",correct:"Flammable"},
+    ],
+    es:[
+      {id:"q1",q:"¿Cómo se dice 'ha comenzado la carga' en SMCP?\n(Responder: primeras 3 palabras)",correct:"Cargo operations have"},
+      {id:"q2",q:"Un B/L firmado con daños anotados = ¿qué tipo de B/L?\n(Responder: 1 palabra en inglés)",correct:"Claused"},
+      {id:"q3",q:"Clase IMDG 3 = ¿qué tipo de mercancías peligrosas?\n(Responder: 1 palabra en inglés)",correct:"Flammable"},
+    ],
+    pt:[
+      {id:"q1",q:"Como se diz 'as operações de carga começaram' em SMCP?\n(Responder: primeiras 3 palavras)",correct:"Cargo operations have"},
+      {id:"q2",q:"Um B/L assinado com danos anotados = que tipo de B/L?\n(Responder: 1 palavra em inglês)",correct:"Claused"},
+      {id:"q3",q:"Classe IMDG 3 = que tipo de mercadorias perigosas?\n(Responder: 1 palavra em inglês)",correct:"Flammable"},
+    ],
+  };
+  const list=qs[lang]||qs.en;
+  const chk=(q,val)=>{
+    const v=val.trim().toLowerCase();
+    if(q.id==="q1") return v.includes("cargo")&&v.includes("operations");
+    if(q.id==="q2") return v.includes("claused")||v.includes("clause");
+    if(q.id==="q3") return v.includes("flammable")||v.includes("inflammable");
+    return false;
+  };
+  return(
+    <div>
+      <div style={{background:"rgba(0,0,0,0.4)",borderRadius:12,padding:"10px 12px",marginBottom:12,border:`1px solid ${C.cargo}44`,fontSize:11,color:C.gold2,lineHeight:1.6}}>
+        {lang==="fr"?"💡 Rappels : 'Cargo operations have commenced' · Claused B/L = réserves · IMDG Classe 3 = inflammable":
+         lang==="en"?"💡 Reminders: 'Cargo operations have commenced' · Claused B/L = reservations noted · IMDG Class 3 = flammable":
+         lang==="es"?"💡 Recordatorios: 'Cargo operations have commenced' · Claused B/L = reservas · IMDG Clase 3 = inflamable":
+         "💡 Lembretes: 'Cargo operations have commenced' · Claused B/L = reservas · IMDG Classe 3 = inflamável"}
+      </div>
+      {list.map((q,i)=>(
+        <div key={q.id} style={{marginBottom:12}}>
+          <div style={{fontSize:12,color:C.white,marginBottom:6,lineHeight:1.5,whiteSpace:"pre-line",fontWeight:600}}>{i+1}. {q.q}</div>
+          <input type="text" value={ans[q.id]} onChange={e=>setAns(a=>({...a,[q.id]:e.target.value}))} placeholder="?"
+            style={{width:"100%",padding:"10px",borderRadius:10,background:"rgba(255,255,255,0.07)",border:`1px solid ${showC?(chk(q,ans[q.id])?C.green:C.red):C.border}`,color:C.white,fontSize:13,fontFamily:"'Courier New',monospace",fontWeight:700,textAlign:"center",boxSizing:"border-box"}}/>
+          {showC&&<div style={{fontSize:11,marginTop:4,fontWeight:600,color:chk(q,ans[q.id])?C.green:C.red}}>{chk(q,ans[q.id])?"✓":`✗ → ${q.correct}`}</div>}
+        </div>
+      ))}
+      {showC&&<div style={{padding:"12px",borderRadius:12,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:11,color:C.white,lineHeight:1.7,marginBottom:10,fontFamily:"'Courier New',monospace"}}>
+        Q1: CARGO OPERATIONS HAVE COMMENCED (standard opening phrase for all cargo ops)\nQ2: CLAUSED B/L (= connaissement avec réserves · 'clean' = no reservations)\nQ3: FLAMMABLE (IMDG Class 3 = liquides inflammables · ex: carburant, alcool, solvants)
+      </div>}
+      <button onClick={()=>setShowC(v=>!v)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:showC?"rgba(30,138,74,0.2)":`${C.cargo}12`,border:`1px solid ${showC?C.green:C.cargo}44`,color:showC?C.green:C.cargo,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
+        {showC?t.hideCorr:t.showCorr}
+      </button>
+    </div>
+  );
+}
+
+const QUIZ = {
+  en:[
+    {q:"How do you report a cargo shortage on discharge?",opts:["Cargo is missing","I have found a shortage of [X] tonnes/packages on discharge of [cargo description] from hold [X]. The bill of lading figure is [X]. The tally count is [X]. I am issuing a letter of protest.","Less cargo","Short delivery"],correct:1,expl:"Cargo shortage SMCP: 'I have found a shortage of [X] tonnes/packages on discharge from hold [X]. Bill of lading quantity: [X]. Actual tally count: [X]. Difference: [X] short. I am issuing a letter of protest to the stevedores/terminal. A surveyor is required to verify the shortage.' A letter of protest is a formal document protecting the shipowner's/charterer's legal interests. Always issued when tally count differs from B/L figures."},
+    {q:"How do you report that holds are ready for grain loading?",opts:["Holds are clean","All cargo holds have been inspected and are clean, dry and free from infestation. Holds are suitable for loading grain. NCBS inspection certificate is available.","Holds inspected","Ready to load"],correct:1,expl:"Grain loading readiness SMCP: 'All cargo holds have been inspected. Holds [X, Y, Z] are clean, dry, odour-free and free from infestation. Bilge pumps are operational. Bilge wells are clean. Holds are suitable for loading [grain/foodstuffs]. NCBS (National Cargo Bureau Surveyor) inspection certificate is available on request.' Grain loading requires especially clean holds due to contamination risks."},
+    {q:"How do you report a fumigation requirement?",opts:["Needs gas","I require fumigation of hold [X] before cargo operations. The previous cargo was [grain/timber/other]. I require a fumigation certificate before departure.","Gas treatment needed","Fumigation please"],correct:1,expl:"Fumigation SMCP: 'I require fumigation of hold [X]. The previous cargo contained [insects/pests]. I require a licensed fumigator. Hold must be sealed during fumigation. Entry is prohibited until clearance is given.' After fumigation: 'Fumigation of hold [X] is complete. Clearance certificate is available. Hold is safe for entry.' Warning: fumigants (methyl bromide, phosphine) are deadly. Strict safety protocol required."},
+    {q:"How do you report tanker cargo heating requirements?",opts:["Cargo needs warming","The cargo in tank [X] requires heating to maintain minimum temperature of [X] degrees Celsius. Heating coils are operational. Current cargo temperature is [X] degrees Celsius.","Heat the tanks","Tank temperature"],correct:1,expl:"Cargo heating SMCP: 'The cargo in tank [X] requires heating. The minimum temperature for [product name] is [X] degrees Celsius. Heating coils in tank [X] are [operational/not operational]. Current cargo temperature is [X] degrees. I expect to reach required temperature in [X] hours.' Critical for heavy fuel oils, bitumen, certain chemicals that congeal or become too viscous if temperature drops below minimum."},
+    {q:"What does 'FIO' mean in cargo operations?",opts:["Free In/Out — vessel pays no loading or discharging costs — these are for the shipper/consignee's account","A type of crane","A cargo document","A loading rate"],correct:0,expl:"FIO = Free In and Out. Cargo handling costs during loading and discharging are for the charterer's/shipper's account, NOT the shipowner. SMCP context: 'This voyage is on FIO terms. Cargo handling costs are for charterer's account.' Related terms: FI = Free In (loading only); FO = Free Out (discharging only); FIOS = Free In Out and Stowed (including stowage); FIOST = Free In Out Stowed and Trimmed. These terms define who pays for longshoremen and cargo equipment."},
+  ],
+  fr:[
+    {q:"Comment signaler une pénurie de cargaison lors du déchargement ?",opts:["Il manque de la cargaison","I have found a shortage of [X] tonnes/packages on discharge of [cargo description] from hold [X]. The bill of lading figure is [X]. The tally count is [X]. I am issuing a letter of protest.","Moins de cargaison","Livraison incomplète"],correct:1,expl:"Pénurie de cargaison SMCP : 'I have found a shortage of [X] tonnes/packages on discharge from hold [X]. Bill of lading quantity: [X]. Actual tally count: [X]. Difference: [X] short. I am issuing a letter of protest.' Une lettre de protestation est un document formel protégeant les intérêts juridiques de l'armateur/l'affréteur. Toujours émise quand le pointage diffère des chiffres du B/L."},
+    {q:"Comment signaler que les cales sont prêtes pour le chargement de céréales ?",opts:["Les cales sont propres","All cargo holds have been inspected and are clean, dry and free from infestation. Holds are suitable for loading grain. NCBS inspection certificate is available.","Cales inspectées","Prêt à charger"],correct:1,expl:"Disponibilité pour chargement de céréales SMCP : 'All cargo holds have been inspected. Holds [X, Y, Z] are clean, dry, odour-free and free from infestation. Bilge pumps are operational. Bilge wells are clean. Holds are suitable for loading [grain/foodstuffs]. NCBS inspection certificate is available on request.' Le chargement de céréales exige des cales particulièrement propres en raison des risques de contamination."},
+    {q:"Comment signaler une exigence de fumigation ?",opts:["Besoin de gaz","I require fumigation of hold [X] before cargo operations. The previous cargo was [grain/timber/other]. I require a fumigation certificate before departure.","Traitement gazeux nécessaire","Fumigation s'il vous plaît"],correct:1,expl:"Fumigation SMCP : 'I require fumigation of hold [X]. The previous cargo contained [insects/pests]. I require a licensed fumigator. Hold must be sealed during fumigation. Entry is prohibited until clearance is given.' Après fumigation : 'Fumigation of hold [X] is complete. Clearance certificate is available. Hold is safe for entry.' Attention : les fumigants (bromure de méthyle, phosphine) sont mortels. Protocole de sécurité strict requis."},
+    {q:"Comment signaler les exigences de chauffage de la cargaison sur un pétrolier ?",opts:["La cargaison a besoin de chaleur","The cargo in tank [X] requires heating to maintain minimum temperature of [X] degrees Celsius. Heating coils are operational. Current cargo temperature is [X] degrees Celsius.","Chauffer les citernes","Température des citernes"],correct:1,expl:"Chauffage de cargaison SMCP : 'The cargo in tank [X] requires heating. The minimum temperature for [nom du produit] is [X] degrees Celsius. Heating coils in tank [X] are [operational/not operational]. Current cargo temperature is [X] degrees.' Critique pour les fuels lourds, le bitume, certains produits chimiques qui se solidifient ou deviennent trop visqueux si la température descend en dessous du minimum."},
+    {q:"Que signifie 'FIO' dans les opérations de cargaison ?",opts:["Free In/Out — le navire ne paye pas les frais de chargement ni de déchargement — ces frais sont à la charge du chargeur/destinataire","Un type de grue","Un document de cargaison","Un taux de chargement"],correct:0,expl:"FIO = Free In and Out. Les frais de manutention de cargaison lors du chargement et du déchargement sont à la charge de l'affréteur/chargeur, PAS de l'armateur. Termes connexes : FI = Free In (chargement seulement) ; FO = Free Out (déchargement seulement) ; FIOS = Free In Out and Stowed (y compris l'arrimage) ; FIOST = Free In Out Stowed and Trimmed. Ces termes définissent qui paye les dockers et le matériel de cargaison."},
+  ],
+  es:[
+    {q:"¿Cómo se informa de una falta de carga en la descarga?",opts:["Falta carga","I have found a shortage of [X] tonnes/packages on discharge of [cargo description] from hold [X]. The bill of lading figure is [X]. The tally count is [X]. I am issuing a letter of protest.","Menos carga","Entrega incompleta"],correct:1,expl:"Falta de carga SMCP: 'I have found a shortage of [X] tonnes/packages on discharge from hold [X]. Bill of lading quantity: [X]. Actual tally count: [X]. Difference: [X] short. I am issuing a letter of protest.' Una carta de protesta es un documento formal que protege los intereses legales del armador/fletador. Siempre se emite cuando el recuento difiere de las cifras del B/L."},
+    {q:"¿Cómo se informa de que las bodegas están listas para cargar grano?",opts:["Las bodegas están limpias","All cargo holds have been inspected and are clean, dry and free from infestation. Holds are suitable for loading grain. NCBS inspection certificate is available.","Bodegas inspeccionadas","Listas para cargar"],correct:1,expl:"Disponibilidad para carga de grano SMCP: 'All cargo holds have been inspected. Holds [X, Y, Z] are clean, dry, odour-free and free from infestation. Bilge pumps are operational. Bilge wells are clean. Holds are suitable for loading [grain/foodstuffs]. NCBS inspection certificate is available on request.' La carga de grano requiere bodegas especialmente limpias debido a los riesgos de contaminación."},
+    {q:"¿Cómo se informa de un requisito de fumigación?",opts:["Necesita gas","I require fumigation of hold [X] before cargo operations. The previous cargo was [grain/timber/other]. I require a fumigation certificate before departure.","Tratamiento de gas necesario","Fumigación por favor"],correct:1,expl:"Fumigación SMCP: 'I require fumigation of hold [X]. The previous cargo contained [insects/pests]. I require a licensed fumigator. Hold must be sealed during fumigation. Entry is prohibited until clearance is given.' Después de la fumigación: 'Fumigation of hold [X] is complete. Clearance certificate is available. Hold is safe for entry.' Atención: los fumigantes (bromuro de metilo, fosfina) son letales. Se requiere un protocolo de seguridad estricto."},
+    {q:"¿Cómo se informan los requisitos de calefacción de la carga en un petrolero?",opts:["La carga necesita calor","The cargo in tank [X] requires heating to maintain minimum temperature of [X] degrees Celsius. Heating coils are operational. Current cargo temperature is [X] degrees Celsius.","Calentar los tanques","Temperatura de los tanques"],correct:1,expl:"Calefacción de carga SMCP: 'The cargo in tank [X] requires heating. The minimum temperature for [nombre del producto] is [X] degrees Celsius. Heating coils in tank [X] are [operational/not operational]. Current cargo temperature is [X] degrees.' Crítico para fuel oils pesados, betún, ciertos productos químicos que se solidifican o se vuelven demasiado viscosos si la temperatura cae por debajo del mínimo."},
+    {q:"¿Qué significa 'FIO' en las operaciones de carga?",opts:["Free In/Out — el buque no paga los costes de carga ni descarga — estos son por cuenta del cargador/destinatario","Un tipo de grúa","Un documento de carga","Una tasa de carga"],correct:0,expl:"FIO = Free In and Out. Los costes de manejo de carga durante la carga y descarga son por cuenta del fletador/cargador, NO del armador. Términos relacionados: FI = Free In (solo carga); FO = Free Out (solo descarga); FIOS = Free In Out and Stowed (incluyendo estiba); FIOST = Free In Out Stowed and Trimmed. Estos términos definen quién paga a los estibadores y el equipo de carga."},
+  ],
+  pt:[
+    {q:"Como se reporta uma falta de carga na descarga?",opts:["Falta carga","I have found a shortage of [X] tonnes/packages on discharge of [cargo description] from hold [X]. The bill of lading figure is [X]. The tally count is [X]. I am issuing a letter of protest.","Menos carga","Entrega incompleta"],correct:1,expl:"Falta de carga SMCP: 'I have found a shortage of [X] tonnes/packages on discharge from hold [X]. Bill of lading quantity: [X]. Actual tally count: [X]. Difference: [X] short. I am issuing a letter of protest.' Uma carta de protesto é um documento formal que protege os interesses legais do armador/fretador. Sempre emitida quando a contagem difere dos valores do B/L."},
+    {q:"Como se reporta que os porões estão prontos para carregar cereais?",opts:["Os porões estão limpos","All cargo holds have been inspected and are clean, dry and free from infestation. Holds are suitable for loading grain. NCBS inspection certificate is available.","Porões inspecionados","Prontos para carregar"],correct:1,expl:"Disponibilidade para carga de cereais SMCP: 'All cargo holds have been inspected. Holds [X, Y, Z] are clean, dry, odour-free and free from infestation. Bilge pumps are operational. Bilge wells are clean. Holds are suitable for loading [grain/foodstuffs]. NCBS inspection certificate is available on request.' A carga de cereais requer porões especialmente limpos devido a riscos de contaminação."},
+    {q:"Como se reporta um requisito de fumigação?",opts:["Precisa de gás","I require fumigation of hold [X] before cargo operations. The previous cargo was [grain/timber/other]. I require a fumigation certificate before departure.","Tratamento de gás necessário","Fumigação por favor"],correct:1,expl:"Fumigação SMCP: 'I require fumigation of hold [X]. The previous cargo contained [insects/pests]. I require a licensed fumigator. Hold must be sealed during fumigation. Entry is prohibited until clearance is given.' Após fumigação: 'Fumigation of hold [X] is complete. Clearance certificate is available. Hold is safe for entry.' Atenção: os fumigantes (brometo de metilo, fosfina) são letais. Protocolo de segurança estrito obrigatório."},
+    {q:"Como se reportam os requisitos de aquecimento da carga num petroleiro?",opts:["A carga precisa de calor","The cargo in tank [X] requires heating to maintain minimum temperature of [X] degrees Celsius. Heating coils are operational. Current cargo temperature is [X] degrees Celsius.","Aquecer os tanques","Temperatura dos tanques"],correct:1,expl:"Aquecimento de carga SMCP: 'The cargo in tank [X] requires heating. The minimum temperature for [nome do produto] is [X] degrees Celsius. Heating coils in tank [X] are [operational/not operational]. Current cargo temperature is [X] degrees.' Crítico para óleos combustíveis pesados, betume, certos produtos químicos que solidificam ou se tornam demasiado viscosos se a temperatura descer abaixo do mínimo."},
+    {q:"O que significa 'FIO' nas operações de carga?",opts:["Free In/Out — o navio não paga os custos de carga nem descarga — estes são por conta do carregador/destinatário","Um tipo de grua","Um documento de carga","Uma taxa de carregamento"],correct:0,expl:"FIO = Free In and Out. Os custos de manuseamento de carga durante o carregamento e descarga são por conta do fretador/carregador, NÃO do armador. Termos relacionados: FI = Free In (apenas carga); FO = Free Out (apenas descarga); FIOS = Free In Out and Stowed (incluindo arrumação); FIOST = Free In Out Stowed and Trimmed. Estes termos definem quem paga os estivadores e o equipamento de carga."},
+  ],
+};
+
+const BANK = {
+  en:[
+    {q:"What is a 'cargo receipt' and how is it used in SMCP?",opts:["A receipt for money","Formal document acknowledging receipt of cargo on board — precursor to Bill of Lading. SMCP: 'I confirm receipt of [cargo description], [X] packages/tonnes, in [apparent good / damaged] condition.'","A customs form","A survey document"],correct:1,expl:"Cargo receipt (Mate's Receipt) SMCP: 'I confirm receipt of [cargo description], [X] packages/tonnes, UN number [XXXX] if DG, shipped by [shipper name], in [apparent good order and condition / damaged condition as noted]. Issued at [port] on [date].' The Mate's Receipt is issued by the Chief Officer when cargo is loaded. It is then exchanged for the Bill of Lading issued by the Master. Any reservations must be noted at this stage."},
+    {q:"How do you report water ingress in a cargo hold?",opts:["Hold is wet","I have water ingress in hold [X]. Bilge pumps are [running / not coping]. Rate of ingress is [slow / moderate / fast]. Cargo is [affected / not yet affected]. I require immediate inspection.","Flooding in hold","Hold has water"],correct:1,expl:"Water ingress in hold SMCP: 'I have water ingress in hold [X]. The source appears to be [hatch cover leak / pipe failure / hull damage]. Bilge pumps are operating. Rate of ingress is [slow/moderate/fast]. [X] centimetres of water in bilge. Cargo has [not been affected / been partially affected / been seriously damaged]. I require immediate inspection and [pumping assistance / repair].' Log all actions with timestamps."},
+    {q:"How do you report spontaneous combustion in a cargo hold?",opts:["Hold on fire","I have suspected spontaneous combustion in hold [X]. Temperature in hold is [X] degrees Celsius and rising. I am [sealing the hold / applying CO2 / requesting fire brigade]. Cargo is [coal/grain/other susceptible cargo].","Hot cargo","Hold is heating"],correct:1,expl:"Spontaneous combustion SMCP: 'I have suspected spontaneous combustion in hold [X]. The temperature monitoring system shows [X]°C and rising. I am sealing hold [X] to restrict oxygen supply. I am preparing CO2 system. The cargo is [coal/grain/timber]. I may require fire-fighting assistance.' Spontaneous combustion is particularly common in coal cargoes — requires temperature monitoring, ventilation control, and sometimes flooding with CO2."},
+    {q:"How do you report cargo damage due to heavy weather?",opts:["Weather damaged cargo","I have cargo damage due to heavy weather. Hold [X] has [water damage / shifting cargo / broken packages]. Sea conditions were [force X / wave height X metres]. I am issuing a sea protest / letter of protest.","Storm damage","Bad weather cargo issue"],correct:1,expl:"Weather cargo damage SMCP: 'I have cargo damage due to heavy weather experienced on [date] at position [lat/long]. Wind force [X], sea state [description]. Hold [X] sustained [water ingress through hatch cover / cargo shifted / securing failed]. Estimated damage: [X] packages/tonnes affected. A sea protest has been noted at [port] before a notary/magistrate. Surveyor attendance is requested.'"},
+    {q:"What is 'ullage' and how is it measured/reported?",opts:["A type of cargo","Empty space above liquid in a tank — measured from the top of the tank. 'Ullage in tank [X] is [X] metres. Calculated cargo quantity is [X] cubic metres / tonnes.'","A tank defect","Cargo weight"],correct:1,expl:"Ullage SMCP: 'Ullage in tank [X] is [X.XX] metres.' Ullage = distance from the reference point (top of tank/manhole) to the surface of the liquid. The cargo quantity is then calculated using the tank calibration table (ullage table). Related: 'Innage' (or soundings) = depth of liquid FROM the bottom. On tankers: ullage is typically used. On bulk carriers with bilge: soundings used. SMCP phrase: 'I am taking ullages. Tank [X] ullage is [X.XX] metres at [temperature] degrees Celsius.'"},
+    {q:"How do you report a container seal discrepancy?",opts:["Seal broken","Container [ID number] seal number [XXXX] is [broken / missing / does not match shipping documents]. I am notifying customs and the consignee. A surveyor is required.","Container problem","Seal issue"],correct:1,expl:"Container seal SMCP: 'Container [ID] seal number [as manifested: XXXX] does not match. Actual seal found: [YYYY] / seal is missing / seal appears tampered with. I am placing a hold on this container pending customs inspection. I am notifying [port authority / customs / consignee / shipper]. A P&I surveyor is required to witness opening.' Seal discrepancy can indicate theft, substitution of cargo, or smuggling — always treat as serious until investigated."},
+    {q:"How do you report a Ro-Ro cargo securing failure?",opts:["Vehicle moved","I have a cargo securing failure on Ro-Ro deck [X]. Vehicle/unit [description/ID] has broken free from its lashings. The vehicle has [moved / fallen / hit another vehicle]. I require immediate inspection of all lashings.","Car shifted","Ro-Ro problem"],correct:1,expl:"Ro-Ro lashing failure SMCP: 'I have a cargo securing failure on Ro-Ro deck [X]. Vehicle [description] has broken loose from its lashings. The vehicle has [moved X metres / overturned / impacted adjacent vehicles]. I am securing the area. All vehicle lashings are being checked. The vessel is [altering course / reducing speed] to reduce motion. Estimated damage: [describe].' Ro-Ro securing failures at sea can cause list or capsizing — treat as emergency."},
+    {q:"What is 'cargo sweat' and how is it managed?",opts:["Hot cargo","Moisture condensation on cargo or hold surfaces due to temperature differential — prevented/reduced by ventilation. 'I am [ventilating / closing ventilators] to prevent cargo sweat.'","Wet cargo","Leaking cargo"],correct:1,expl:"Cargo sweat SMCP: 'I have suspected cargo sweat in hold [X]. There is moisture condensation on the [cargo surface / hold sides / deckheads]. I am [opening ventilators to ventilate / closing ventilators to prevent warm moist air entering]. Current dew point of outside air is [X] degrees. Dew point in hold is [X] degrees. Ship's sweat: condensation from hold structure. Cargo sweat: condensation from cargo itself.' Prevent: ventilate when outside dew point is below hold dew point."},
+    {q:"How do you report a crane defect affecting cargo operations?",opts:["Crane broken","Crane [X] is defective. [Wire parted / hook damaged / SWL indicator failed / hydraulic failure]. Cargo operations at hatch [X] have been suspended. I require maintenance/repair before continuing.","Crane problem","Lifting equipment issue"],correct:1,expl:"Crane defect SMCP: 'Crane number [X] is defective. The defect is [wire rope parted / block damaged / slewing gear failure / SWL exceeded and safety device activated]. Cargo operations at hatch [X] have been suspended pending repair. I require a shore crane / mobile crane / maintenance engineer. Estimated downtime: [X] hours.' Always report to port authority and charterer — delays have financial consequences (laytime, demurrage)."},
+    {q:"How do you report completion of cargo and readiness to sail?",opts:["Done loading","All cargo operations are complete. All holds are secured. Hatch covers are closed and secured. Lashing plan is complete. Stability calculation has been checked. Vessel is ready to sail upon receipt of clearance.","Ready to go","Loading finished"],correct:1,expl:"Cargo completion and departure readiness SMCP: 'All cargo operations are complete. Total cargo loaded/discharged: [X] tonnes / [X] containers. All holds/tanks are sealed. Hatch covers are closed, secured and hose-tested. All vehicles/cargo are lashed per approved plan. Draught: forward [X] metres, aft [X] metres. Stability: GM [X] metres (positive). Vessel is ready to sail. Awaiting port clearance / pilot / departure instructions.'"},
+    {q:"What is 'demurrage' and how does it relate to SMCP cargo communications?",opts:["A cargo type","Penalty payment by charterer to shipowner for exceeding agreed laytime (time allowed for cargo operations). SMCP: 'Laytime has expired. The vessel is now on demurrage. Demurrage rate is [X] per day.'","A port charge","A weather delay"],correct:1,expl:"Demurrage SMCP: 'Laytime commenced at [time] UTC when NOR was tendered and accepted. Allowed laytime is [X] days/hours. Laytime has now expired. The vessel is on demurrage at the rate of [X USD/GBP] per day. Demurrage accrued to date: [X amount].' Related: 'Dispatch' = bonus paid to shipowner if cargo operations completed FASTER than allowed. 'Detention' = delay not covered by demurrage clause. All times must be precisely logged for demurrage claims."},
+    {q:"How do you report a refrigerated cargo temperature problem?",opts:["Cold cargo issue","I have a temperature problem in reefer [hold/container] [X]. Required temperature is [minus/plus X] degrees Celsius. Actual temperature is [X] degrees Celsius. The refrigeration plant is [not functioning / running at reduced capacity]. I require urgent repair.","Reefer problem","Temperature alarm"],correct:1,expl:"Refrigerated cargo SMCP: 'I have a temperature deviation in reefer unit [X]. Set temperature: [X] degrees Celsius. Actual temperature: [X] degrees Celsius. Temperature has been [rising/falling] for [X] hours. The refrigeration compressor [X] is [not working / tripped]. I require an urgent refrigeration engineer. The cargo is [fresh produce / frozen / pharmaceuticals] and the integrity of the cold chain may be compromised.' Notify: shipper, consignee, insurance, port agent immediately."},
+    {q:"How do you report cargo over-carriage?",opts:["Wrong port delivery","I have cargo on board that should have been discharged at [port X]. The cargo was not discharged due to [error / documentation issue / time constraint]. I will [discharge at next port / return to port X / await instructions from agent/owner].","Missed discharge","Wrong cargo"],correct:1,expl:"Over-carriage SMCP: 'I have [X] packages/tonnes of cargo on board that were manifested for discharge at [port X] but were not discharged. The reason is [stevedore error / cargo not presented / documentation incomplete / hatch not opened]. I will [discharge at [next port] and arrange return / remain at anchorage if cost-effective / await charterer/agent instructions]. I am issuing a sea protest regarding the over-carriage.' Always notify P&I Club, charterer and cargo owners."},
+    {q:"What is 'cargo segregation' and why is it important in SMCP?",opts:["Separating cargo types","Mandatory physical separation of incompatible dangerous goods on board — prevents chemical reactions, fire, explosion. SMCP: 'I am segregating IMDG Class [X] from Class [Y] as required by the IMDG Code.'","Cargo documentation","Container labeling"],correct:1,expl:"Cargo segregation SMCP: 'I am complying with IMDG Code segregation requirements. Class [X] cargo (UN [XXXX]) is stowed [away from / separated from / isolated from] Class [Y] cargo (UN [YYYY]) as required by IMDG Code segregation table.' Segregation categories: AWAY FROM = minimum separation. SEPARATED FROM = physical barrier or different deck. SEPARATED BY A COMPLETE COMPARTMENT OR HOLD FROM = maximum separation. Failure to properly segregate DG cargo = serious safety risk + legal liability."},
+  ],
+  fr:[
+    {q:"Qu'est-ce qu'un 'reçu de cargaison' et comment est-il utilisé en SMCP ?",opts:["Un reçu d'argent","Document formel accusant réception de la cargaison à bord — précurseur du connaissement. SMCP : 'I confirm receipt of [cargo description], [X] packages/tonnes, in [apparent good / damaged] condition.'","Un formulaire de douane","Un document d'expertise"],correct:1,expl:"Reçu de cargaison (Reçu du second capitaine) SMCP : 'I confirm receipt of [description de la cargaison], [X] colis/tonnes, shipped by [nom du chargeur], in [apparent good order and condition / damaged condition as noted]. Issued at [port] on [date].' Le reçu du second est émis par le chef mécanicien/second lorsque la cargaison est chargée. Il est ensuite échangé contre le connaissement émis par le capitaine. Toute réserve doit être notée à ce stade."},
+    {q:"Comment signaler une entrée d'eau dans une cale de cargaison ?",opts:["La cale est mouillée","I have water ingress in hold [X]. Bilge pumps are [running / not coping]. Rate of ingress is [slow / moderate / fast]. Cargo is [affected / not yet affected]. I require immediate inspection.","Inondation en cale","La cale a de l'eau"],correct:1,expl:"Entrée d'eau en cale SMCP : 'I have water ingress in hold [X]. The source appears to be [hatch cover leak / pipe failure / hull damage]. Bilge pumps are operating. Rate of ingress is [slow/moderate/fast]. [X] centimetres of water in bilge. Cargo has [not been affected / been partially affected / been seriously damaged]. I require immediate inspection and [pumping assistance / repair].'"},
+    {q:"Comment signaler une combustion spontanée dans une cale de cargaison ?",opts:["La cale est en feu","I have suspected spontaneous combustion in hold [X]. Temperature in hold is [X] degrees Celsius and rising. I am [sealing the hold / applying CO2 / requesting fire brigade]. Cargo is [coal/grain/other susceptible cargo].","Cargaison chaude","La cale chauffe"],correct:1,expl:"Combustion spontanée SMCP : 'I have suspected spontaneous combustion in hold [X]. The temperature monitoring system shows [X]°C and rising. I am sealing hold [X] to restrict oxygen supply. I am preparing CO2 system. The cargo is [charbon/céréales/bois]. I may require fire-fighting assistance.' La combustion spontanée est particulièrement courante dans les cargaisons de charbon — nécessite surveillance de la température, contrôle de la ventilation et parfois inondation au CO2."},
+    {q:"Comment signaler des dommages à la cargaison dus à la mauvaise mer ?",opts:["La mer a abîmé la cargaison","I have cargo damage due to heavy weather. Hold [X] has [water damage / shifting cargo / broken packages]. Sea conditions were [force X / wave height X metres]. I am issuing a sea protest / letter of protest.","Dommages de tempête","Problème cargaison gros temps"],correct:1,expl:"Dommages cargaison mauvais temps SMCP : 'I have cargo damage due to heavy weather experienced on [date] at position [lat/long]. Wind force [X], sea state [description]. Hold [X] sustained [water ingress through hatch cover / cargo shifted / securing failed]. Estimated damage: [X] packages/tonnes affected. A sea protest has been noted at [port].'"},
+    {q:"Qu'est-ce que l'empoi et comment est-il mesuré/signalé ?",opts:["Un type de cargaison","Espace vide au-dessus du liquide dans une citerne — mesuré depuis le haut de la citerne. 'Ullage in tank [X] is [X] metres. Calculated cargo quantity is [X] cubic metres / tonnes.'","Un défaut de citerne","Poids de cargaison"],correct:0,expl:"Ullage SMCP : 'Ullage in tank [X] is [X.XX] metres.' Ullage = distance du point de référence (dessus de la citerne/trou d'homme) à la surface du liquide. La quantité de cargaison est ensuite calculée à l'aide du tableau de calibrage de la citerne (tableau d'ullage). Connexe : 'Sondage' = profondeur du liquide depuis le FOND. Sur les pétroliers : l'ullage est généralement utilisé."},
+    {q:"Comment signaler une divergence de scellés de conteneur ?",opts:["Scellé cassé","Container [ID number] seal number [XXXX] is [broken / missing / does not match shipping documents]. I am notifying customs and the consignee. A surveyor is required.","Problème de conteneur","Problème de scellé"],correct:1,expl:"Scellé de conteneur SMCP : 'Container [ID] seal number [as manifested: XXXX] does not match. Actual seal found: [YYYY] / seal is missing / seal appears tampered with. I am placing a hold on this container pending customs inspection. I am notifying [port authority / customs / consignee / shipper]. A P&I surveyor is required to witness opening.' Une divergence de scellé peut indiquer un vol, une substitution de cargaison ou de la contrebande."},
+    {q:"Comment signaler une défaillance de saisissage Ro-Ro ?",opts:["Le véhicule a bougé","I have a cargo securing failure on Ro-Ro deck [X]. Vehicle/unit [description/ID] has broken free from its lashings. The vehicle has [moved / fallen / hit another vehicle]. I require immediate inspection of all lashings.","Voiture déplacée","Problème Ro-Ro"],correct:1,expl:"Défaillance saisissage Ro-Ro SMCP : 'I have a cargo securing failure on Ro-Ro deck [X]. Vehicle [description] has broken loose from its lashings. The vehicle has [moved X metres / overturned / impacted adjacent vehicles]. I am securing the area. All vehicle lashings are being checked. The vessel is [altering course / reducing speed].' Les défaillances de saisissage Ro-Ro en mer peuvent provoquer une gîte ou un chavirement."},
+    {q:"Qu'est-ce que la 'sueur de cale' et comment est-elle gérée ?",opts:["Cargaison chaude","Condensation d'humidité sur la cargaison ou les surfaces de cale due à un différentiel de température — prévenue/réduite par la ventilation. 'I am [ventilating / closing ventilators] to prevent cargo sweat.'","Cargaison mouillée","Cargaison qui fuit"],correct:1,expl:"Sueur de cale SMCP : 'I have suspected cargo sweat in hold [X]. There is moisture condensation on the [cargo surface / hold sides / deckheads]. I am [opening ventilators to ventilate / closing ventilators to prevent warm moist air entering]. Current dew point of outside air is [X] degrees. Dew point in hold is [X] degrees.' Prévention : ventiler quand le point de rosée extérieur est inférieur au point de rosée de la cale."},
+    {q:"Comment signaler un défaut de grue affectant les opérations de cargaison ?",opts:["Grue en panne","Crane [X] is defective. [Wire parted / hook damaged / SWL indicator failed / hydraulic failure]. Cargo operations at hatch [X] have been suspended. I require maintenance/repair before continuing.","Problème de grue","Problème d'engin de levage"],correct:1,expl:"Défaut de grue SMCP : 'Crane number [X] is defective. The defect is [wire rope parted / block damaged / slewing gear failure / SWL exceeded]. Cargo operations at hatch [X] have been suspended pending repair. I require a shore crane / mobile crane / maintenance engineer. Estimated downtime: [X] hours.' Toujours signaler à l'autorité portuaire et à l'affréteur — les retards ont des conséquences financières."},
+    {q:"Comment signaler la fin des opérations de cargaison et l'état de disponibilité pour appareiller ?",opts:["Chargement terminé","All cargo operations are complete. All holds are secured. Hatch covers are closed and secured. Lashing plan is complete. Stability calculation has been checked. Vessel is ready to sail upon receipt of clearance.","Prêt à partir","Fin de chargement"],correct:1,expl:"Fin des opérations de cargaison SMCP : 'All cargo operations are complete. Total cargo loaded/discharged: [X] tonnes / [X] conteneurs. All holds/tanks are sealed. Hatch covers are closed, secured and hose-tested. All cargo is lashed per approved plan. Draught: forward [X] m, aft [X] m. Stability: GM [X] m (positive). Vessel is ready to sail. Awaiting port clearance / pilot / departure instructions.'"},
+    {q:"Qu'est-ce que la 'surestarie' et quel rapport a-t-elle avec les communications SMCP de cargaison ?",opts:["Un type de cargaison","Pénalité payée par l'affréteur à l'armateur pour avoir dépassé la planche autorisée (temps alloué aux opérations de cargaison). SMCP : 'Laytime has expired. The vessel is now on demurrage. Demurrage rate is [X] per day.'","Un frais portuaire","Un retard météo"],correct:1,expl:"Surestarie SMCP : 'Laytime commenced at [heure] UTC when NOR was tendered and accepted. Allowed laytime is [X] days/hours. Laytime has now expired. The vessel is on demurrage at the rate of [X USD/GBP] per day. Demurrage accrued to date: [X amount].' Connexe : 'Dispatch' = bonus payé à l'armateur si les opérations de cargaison sont terminées PLUS TÔT que prévu."},
+    {q:"Comment signaler un problème de température de cargaison réfrigérée ?",opts:["Problème cargaison froide","I have a temperature problem in reefer [hold/container] [X]. Required temperature is [minus/plus X] degrees Celsius. Actual temperature is [X] degrees Celsius. The refrigeration plant is [not functioning / running at reduced capacity]. I require urgent repair.","Problème reefer","Alarme de température"],correct:1,expl:"Cargaison réfrigérée SMCP : 'I have a temperature deviation in reefer unit [X]. Set temperature: [X] degrees Celsius. Actual temperature: [X] degrees Celsius. Temperature has been [rising/falling] for [X] hours. The refrigeration compressor [X] is [not working / tripped]. I require an urgent refrigeration engineer. The cargo is [fresh produce / frozen / pharmaceuticals].' Notifier immédiatement : chargeur, destinataire, assurance, agent portuaire."},
+    {q:"Comment signaler une surtransportation de cargaison ?",opts:["Livraison au mauvais port","I have cargo on board that should have been discharged at [port X]. The cargo was not discharged due to [error / documentation issue / time constraint]. I will [discharge at next port / return to port X / await instructions from agent/owner].","Déchargement manqué","Mauvaise cargaison"],correct:1,expl:"Surtransportation SMCP : 'I have [X] packages/tonnes of cargo on board that were manifested for discharge at [port X] but were not discharged. The reason is [erreur de docker / cargaison non présentée / documentation incomplète / cale non ouverte]. I will [discharge at [next port] and arrange return / remain at anchorage if cost-effective / await charterer/agent instructions]. I am issuing a sea protest.' Toujours notifier le P&I Club, l'affréteur et les propriétaires de cargaison."},
+    {q:"Qu'est-ce que la 'ségrégation de cargaison' et pourquoi est-elle importante en SMCP ?",opts:["Séparation des types de cargaison","Séparation physique obligatoire des marchandises dangereuses incompatibles à bord — prévient les réactions chimiques, incendies, explosions. SMCP : 'I am segregating IMDG Class [X] from Class [Y] as required by the IMDG Code.'","Documentation de cargaison","Étiquetage des conteneurs"],correct:1,expl:"Ségrégation de cargaison SMCP : 'I am complying with IMDG Code segregation requirements. Class [X] cargo (UN [XXXX]) is stowed [away from / separated from / isolated from] Class [Y] cargo (UN [YYYY]) as required by IMDG Code segregation table.' Catégories de ségrégation : AWAY FROM = séparation minimale. SEPARATED FROM = barrière physique ou pont différent. SEPARATED BY A COMPLETE COMPARTMENT OR HOLD FROM = séparation maximale."},
+  ],
+  es:[
+    {q:"¿Qué es un 'recibo de carga' y cómo se usa en SMCP?",opts:["Un recibo de dinero","Documento formal que acusa recibo de la carga a bordo — precursor del conocimiento de embarque. SMCP: 'I confirm receipt of [cargo description], [X] packages/tonnes, in [apparent good / damaged] condition.'","Un formulario de aduana","Un documento de peritaje"],correct:1,expl:"Recibo de carga (Recibo del oficial) SMCP: 'I confirm receipt of [descripción de la carga], [X] bultos/toneladas, shipped by [nombre del cargador], in [apparent good order and condition / damaged condition as noted]. Issued at [puerto] on [fecha].' El recibo del oficial de carga lo emite el primer oficial cuando se carga la mercancía. Luego se canjea por el conocimiento de embarque emitido por el capitán. Cualquier reserva debe anotarse en esta etapa."},
+    {q:"¿Cómo se informa de una entrada de agua en una bodega de carga?",opts:["La bodega está mojada","I have water ingress in hold [X]. Bilge pumps are [running / not coping]. Rate of ingress is [slow / moderate / fast]. Cargo is [affected / not yet affected]. I require immediate inspection.","Inundación en bodega","La bodega tiene agua"],correct:1,expl:"Entrada de agua en bodega SMCP: 'I have water ingress in hold [X]. The source appears to be [hatch cover leak / pipe failure / hull damage]. Bilge pumps are operating. Rate of ingress is [slow/moderate/fast]. [X] centimetres of water in bilge. Cargo has [not been affected / been partially affected / been seriously damaged]. I require immediate inspection and [pumping assistance / repair].'"},
+    {q:"¿Cómo se informa de combustión espontánea en una bodega de carga?",opts:["La bodega está en llamas","I have suspected spontaneous combustion in hold [X]. Temperature in hold is [X] degrees Celsius and rising. I am [sealing the hold / applying CO2 / requesting fire brigade]. Cargo is [coal/grain/other susceptible cargo].","Carga caliente","La bodega se está calentando"],correct:1,expl:"Combustión espontánea SMCP: 'I have suspected spontaneous combustion in hold [X]. The temperature monitoring system shows [X]°C and rising. I am sealing hold [X] to restrict oxygen supply. I am preparing CO2 system. The cargo is [carbón/grano/madera]. I may require fire-fighting assistance.' La combustión espontánea es especialmente común en cargas de carbón — requiere monitoreo de temperatura, control de ventilación y a veces inundación con CO2."},
+    {q:"¿Cómo se informan los daños a la carga debidos al mal tiempo?",opts:["El mar dañó la carga","I have cargo damage due to heavy weather. Hold [X] has [water damage / shifting cargo / broken packages]. Sea conditions were [force X / wave height X metres]. I am issuing a sea protest / letter of protest.","Daños de tormenta","Problema de carga por mal tiempo"],correct:1,expl:"Daños de carga por mal tiempo SMCP: 'I have cargo damage due to heavy weather experienced on [fecha] at position [lat/long]. Wind force [X], sea state [description]. Hold [X] sustained [water ingress through hatch cover / cargo shifted / securing failed]. Estimated damage: [X] packages/tonnes affected. A sea protest has been noted at [puerto].'"},
+    {q:"¿Qué es el 'empuje' (ullage) y cómo se mide/informa?",opts:["Un tipo de carga","Espacio vacío sobre el líquido en un tanque — medido desde la parte superior del tanque. 'Ullage in tank [X] is [X] metres. Calculated cargo quantity is [X] cubic metres / tonnes.'","Un defecto del tanque","Peso de la carga"],correct:0,expl:"Ullage SMCP: 'Ullage in tank [X] is [X.XX] metres.' Ullage = distancia desde el punto de referencia (parte superior del tanque/boca de hombre) hasta la superficie del líquido. La cantidad de carga se calcula usando la tabla de calibración del tanque. Relacionado: 'Sondeo' = profundidad del líquido desde el FONDO."},
+    {q:"¿Cómo se informa de una discrepancia en el precinto de un contenedor?",opts:["Precinto roto","Container [ID number] seal number [XXXX] is [broken / missing / does not match shipping documents]. I am notifying customs and the consignee. A surveyor is required.","Problema de contenedor","Problema de precinto"],correct:1,expl:"Precinto de contenedor SMCP: 'Container [ID] seal number [as manifested: XXXX] does not match. Actual seal found: [YYYY] / seal is missing / seal appears tampered with. I am placing a hold on this container pending customs inspection. I am notifying [port authority / customs / consignee / shipper]. A P&I surveyor is required to witness opening.' Una discrepancia en el precinto puede indicar robo, sustitución de carga o contrabando."},
+    {q:"¿Cómo se informa de un fallo de trincado Ro-Ro?",opts:["El vehículo se movió","I have a cargo securing failure on Ro-Ro deck [X]. Vehicle/unit [description/ID] has broken free from its lashings. The vehicle has [moved / fallen / hit another vehicle]. I require immediate inspection of all lashings.","Coche desplazado","Problema Ro-Ro"],correct:1,expl:"Fallo de trincado Ro-Ro SMCP: 'I have a cargo securing failure on Ro-Ro deck [X]. Vehicle [description] has broken loose from its lashings. The vehicle has [moved X metres / overturned / impacted adjacent vehicles]. I am securing the area. All vehicle lashings are being checked. The vessel is [altering course / reducing speed].' Los fallos de trincado Ro-Ro en el mar pueden causar escora o zozobra."},
+    {q:"¿Qué es el 'sudor de bodega' y cómo se gestiona?",opts:["Carga caliente","Condensación de humedad en la carga o en las superficies de la bodega debida a un diferencial de temperatura — se previene/reduce mediante ventilación. 'I am [ventilating / closing ventilators] to prevent cargo sweat.'","Carga mojada","Carga con fugas"],correct:1,expl:"Sudor de bodega SMCP: 'I have suspected cargo sweat in hold [X]. There is moisture condensation on the [cargo surface / hold sides / deckheads]. I am [opening ventilators to ventilate / closing ventilators to prevent warm moist air entering]. Current dew point of outside air is [X] degrees. Dew point in hold is [X] degrees.' Prevención: ventilar cuando el punto de rocío exterior sea inferior al punto de rocío de la bodega."},
+    {q:"¿Cómo se informa de un defecto de grúa que afecta a las operaciones de carga?",opts:["Grúa averiada","Crane [X] is defective. [Wire parted / hook damaged / SWL indicator failed / hydraulic failure]. Cargo operations at hatch [X] have been suspended. I require maintenance/repair before continuing.","Problema de grúa","Problema de equipo de elevación"],correct:1,expl:"Defecto de grúa SMCP: 'Crane number [X] is defective. The defect is [wire rope parted / block damaged / slewing gear failure / SWL exceeded]. Cargo operations at hatch [X] have been suspended pending repair. I require a shore crane / mobile crane / maintenance engineer. Estimated downtime: [X] hours.' Informar siempre a la autoridad portuaria y al fletador — los retrasos tienen consecuencias financieras."},
+    {q:"¿Cómo se informa de la finalización de las operaciones de carga y de la disponibilidad para zarpar?",opts:["Carga terminada","All cargo operations are complete. All holds are secured. Hatch covers are closed and secured. Lashing plan is complete. Stability calculation has been checked. Vessel is ready to sail upon receipt of clearance.","Listos para ir","Fin de la carga"],correct:1,expl:"Finalización operaciones de carga SMCP: 'All cargo operations are complete. Total cargo loaded/discharged: [X] tonnes / [X] contenedores. All holds/tanks are sealed. Hatch covers are closed, secured and hose-tested. All cargo is lashed per approved plan. Draught: forward [X] m, aft [X] m. Stability: GM [X] m (positive). Vessel is ready to sail. Awaiting port clearance / pilot / departure instructions.'"},
+    {q:"¿Qué es la 'sobreestadía' (demurrage) y qué relación tiene con las comunicaciones SMCP de carga?",opts:["Un tipo de carga","Pago de penalización del fletador al armador por exceder la plancha acordada (tiempo permitido para las operaciones de carga). SMCP: 'Laytime has expired. The vessel is now on demurrage. Demurrage rate is [X] per day.'","Un cargo portuario","Un retraso meteorológico"],correct:1,expl:"Sobreestadía SMCP: 'Laytime commenced at [hora] UTC when NOR was tendered and accepted. Allowed laytime is [X] days/hours. Laytime has now expired. The vessel is on demurrage at the rate of [X USD/GBP] per day. Demurrage accrued to date: [X amount].' Relacionado: 'Despacho' = bonificación pagada al armador si las operaciones de carga se completan ANTES de lo previsto."},
+    {q:"¿Cómo se informa de un problema de temperatura de carga refrigerada?",opts:["Problema de carga fría","I have a temperature problem in reefer [hold/container] [X]. Required temperature is [minus/plus X] degrees Celsius. Actual temperature is [X] degrees Celsius. The refrigeration plant is [not functioning / running at reduced capacity]. I require urgent repair.","Problema reefer","Alarma de temperatura"],correct:1,expl:"Carga refrigerada SMCP: 'I have a temperature deviation in reefer unit [X]. Set temperature: [X] degrees Celsius. Actual temperature: [X] degrees Celsius. Temperature has been [rising/falling] for [X] hours. The refrigeration compressor [X] is [not working / tripped]. I require an urgent refrigeration engineer. The cargo is [fresh produce / frozen / pharmaceuticals].' Notificar inmediatamente: cargador, destinatario, seguro, agente portuario."},
+    {q:"¿Cómo se informa de sobretransporte de carga?",opts:["Entrega en el puerto equivocado","I have cargo on board that should have been discharged at [port X]. The cargo was not discharged due to [error / documentation issue / time constraint]. I will [discharge at next port / return to port X / await instructions from agent/owner].","Descarga perdida","Carga incorrecta"],correct:1,expl:"Sobretransporte SMCP: 'I have [X] packages/tonnes of cargo on board that were manifested for discharge at [port X] but were not discharged. The reason is [error de estibador / carga no presentada / documentación incompleta / escotilla no abierta]. I will [discharge at [next port] and arrange return / remain at anchorage if cost-effective / await charterer/agent instructions]. I am issuing a sea protest.' Notificar siempre al P&I Club, fletador y propietarios de la carga."},
+    {q:"¿Qué es la 'segregación de carga' y por qué es importante en SMCP?",opts:["Separación de tipos de carga","Separación física obligatoria de mercancías peligrosas incompatibles a bordo — previene reacciones químicas, incendios, explosiones. SMCP: 'I am segregating IMDG Class [X] from Class [Y] as required by the IMDG Code.'","Documentación de carga","Etiquetado de contenedores"],correct:1,expl:"Segregación de carga SMCP: 'I am complying with IMDG Code segregation requirements. Class [X] cargo (UN [XXXX]) is stowed [away from / separated from / isolated from] Class [Y] cargo (UN [YYYY]) as required by IMDG Code segregation table.' Categorías de segregación: AWAY FROM = separación mínima. SEPARATED FROM = barrera física o cubierta diferente. SEPARATED BY A COMPLETE COMPARTMENT OR HOLD FROM = máxima separación."},
+  ],
+  pt:[
+    {q:"O que é um 'recibo de carga' e como é usado em SMCP?",opts:["Um recibo de dinheiro","Documento formal que acusa receção da carga a bordo — precursor do conhecimento de embarque. SMCP: 'I confirm receipt of [cargo description], [X] packages/tonnes, in [apparent good / damaged] condition.'","Um formulário alfandegário","Um documento de peritagem"],correct:1,expl:"Recibo de carga (Recibo do imediato) SMCP: 'I confirm receipt of [descrição da carga], [X] volumes/toneladas, shipped by [nome do carregador], in [apparent good order and condition / damaged condition as noted]. Issued at [porto] on [data].' O recibo do imediato é emitido pelo imediato quando a carga é carregada. É depois trocado pelo conhecimento de embarque emitido pelo capitão. Qualquer reserva deve ser anotada nesta fase."},
+    {q:"Como se reporta uma entrada de água num porão de carga?",opts:["O porão está molhado","I have water ingress in hold [X]. Bilge pumps are [running / not coping]. Rate of ingress is [slow / moderate / fast]. Cargo is [affected / not yet affected]. I require immediate inspection.","Inundação no porão","O porão tem água"],correct:1,expl:"Entrada de água no porão SMCP: 'I have water ingress in hold [X]. The source appears to be [hatch cover leak / pipe failure / hull damage]. Bilge pumps are operating. Rate of ingress is [slow/moderate/fast]. [X] centimetres of water in bilge. Cargo has [not been affected / been partially affected / been seriously damaged]. I require immediate inspection and [pumping assistance / repair].'"},
+    {q:"Como se reporta combustão espontânea num porão de carga?",opts:["O porão está em chamas","I have suspected spontaneous combustion in hold [X]. Temperature in hold is [X] degrees Celsius and rising. I am [sealing the hold / applying CO2 / requesting fire brigade]. Cargo is [coal/grain/other susceptible cargo].","Carga quente","O porão está a aquecer"],correct:1,expl:"Combustão espontânea SMCP: 'I have suspected spontaneous combustion in hold [X]. The temperature monitoring system shows [X]°C and rising. I am sealing hold [X] to restrict oxygen supply. I am preparing CO2 system. The cargo is [carvão/cereais/madeira]. I may require fire-fighting assistance.' A combustão espontânea é particularmente comum em cargas de carvão — requer monitorização de temperatura, controlo de ventilação e por vezes inundação com CO2."},
+    {q:"Como se reportam danos na carga devido a mau tempo?",opts:["O mar danificou a carga","I have cargo damage due to heavy weather. Hold [X] has [water damage / shifting cargo / broken packages]. Sea conditions were [force X / wave height X metres]. I am issuing a sea protest / letter of protest.","Danos de tempestade","Problema de carga por mau tempo"],correct:1,expl:"Danos de carga por mau tempo SMCP: 'I have cargo damage due to heavy weather experienced on [data] at position [lat/long]. Wind force [X], sea state [description]. Hold [X] sustained [water ingress through hatch cover / cargo shifted / securing failed]. Estimated damage: [X] packages/tonnes affected. A sea protest has been noted at [porto].'"},
+    {q:"O que é a 'vantagem' (ullage) e como é medida/reportada?",opts:["Um tipo de carga","Espaço vazio acima do líquido num tanque — medido a partir do topo do tanque. 'Ullage in tank [X] is [X] metres. Calculated cargo quantity is [X] cubic metres / tonnes.'","Um defeito do tanque","Peso da carga"],correct:0,expl:"Ullage SMCP: 'Ullage in tank [X] is [X.XX] metres.' Ullage = distância do ponto de referência (topo do tanque/boca de visita) à superfície do líquido. A quantidade de carga é depois calculada usando a tabela de calibração do tanque. Relacionado: 'Sondagem' = profundidade do líquido a partir do FUNDO."},
+    {q:"Como se reporta uma discrepância no selo de um contentor?",opts:["Selo partido","Container [ID number] seal number [XXXX] is [broken / missing / does not match shipping documents]. I am notifying customs and the consignee. A surveyor is required.","Problema de contentor","Problema de selo"],correct:1,expl:"Selo de contentor SMCP: 'Container [ID] seal number [as manifested: XXXX] does not match. Actual seal found: [YYYY] / seal is missing / seal appears tampered with. I am placing a hold on this container pending customs inspection. I am notifying [port authority / customs / consignee / shipper]. A P&I surveyor is required to witness opening.' Uma discrepância no selo pode indicar roubo, substituição de carga ou contrabando."},
+    {q:"Como se reporta uma falha de amarração Ro-Ro?",opts:["O veículo moveu-se","I have a cargo securing failure on Ro-Ro deck [X]. Vehicle/unit [description/ID] has broken free from its lashings. The vehicle has [moved / fallen / hit another vehicle]. I require immediate inspection of all lashings.","Carro deslocado","Problema Ro-Ro"],correct:1,expl:"Falha de amarração Ro-Ro SMCP: 'I have a cargo securing failure on Ro-Ro deck [X]. Vehicle [description] has broken loose from its lashings. The vehicle has [moved X metres / overturned / impacted adjacent vehicles]. I am securing the area. All vehicle lashings are being checked. The vessel is [altering course / reducing speed].' As falhas de amarração Ro-Ro no mar podem causar adornamento ou capotar."},
+    {q:"O que é o 'suor de porão' e como é gerido?",opts:["Carga quente","Condensação de humidade na carga ou nas superfícies do porão devido a um diferencial de temperatura — prevenida/reduzida pela ventilação. 'I am [ventilating / closing ventilators] to prevent cargo sweat.'","Carga molhada","Carga a vazar"],correct:1,expl:"Suor de porão SMCP: 'I have suspected cargo sweat in hold [X]. There is moisture condensation on the [cargo surface / hold sides / deckheads]. I am [opening ventilators to ventilate / closing ventilators to prevent warm moist air entering]. Current dew point of outside air is [X] degrees. Dew point in hold is [X] degrees.' Prevenção: ventilar quando o ponto de orvalho exterior for inferior ao ponto de orvalho do porão."},
+    {q:"Como se reporta um defeito de grua que afeta as operações de carga?",opts:["Grua avariada","Crane [X] is defective. [Wire parted / hook damaged / SWL indicator failed / hydraulic failure]. Cargo operations at hatch [X] have been suspended. I require maintenance/repair before continuing.","Problema de grua","Problema de equipamento de elevação"],correct:1,expl:"Defeito de grua SMCP: 'Crane number [X] is defective. The defect is [wire rope parted / block damaged / slewing gear failure / SWL exceeded]. Cargo operations at hatch [X] have been suspended pending repair. I require a shore crane / mobile crane / maintenance engineer. Estimated downtime: [X] hours.' Notificar sempre a autoridade portuária e o fretador — os atrasos têm consequências financeiras."},
+    {q:"Como se reporta a conclusão das operações de carga e a disponibilidade para zarpar?",opts:["Carga terminada","All cargo operations are complete. All holds are secured. Hatch covers are closed and secured. Lashing plan is complete. Stability calculation has been checked. Vessel is ready to sail upon receipt of clearance.","Prontos para ir","Fim do carregamento"],correct:1,expl:"Conclusão operações de carga SMCP: 'All cargo operations are complete. Total cargo loaded/discharged: [X] tonnes / [X] contentores. All holds/tanks are sealed. Hatch covers are closed, secured and hose-tested. All cargo is lashed per approved plan. Draught: forward [X] m, aft [X] m. Stability: GM [X] m (positive). Vessel is ready to sail. Awaiting port clearance / pilot / departure instructions.'"},
+    {q:"O que é a 'sobrestadia' (demurrage) e que relação tem com as comunicações SMCP de carga?",opts:["Um tipo de carga","Pagamento de penalização pelo fretador ao armador por exceder a plancha acordada (tempo permitido para as operações de carga). SMCP: 'Laytime has expired. The vessel is now on demurrage. Demurrage rate is [X] per day.'","Uma taxa portuária","Um atraso meteorológico"],correct:1,expl:"Sobrestadia SMCP: 'Laytime commenced at [hora] UTC when NOR was tendered and accepted. Allowed laytime is [X] days/hours. Laytime has now expired. The vessel is on demurrage at the rate of [X USD/GBP] per day. Demurrage accrued to date: [X amount].' Relacionado: 'Despacho' = bónus pago ao armador se as operações de carga forem concluídas ANTES do previsto."},
+    {q:"Como se reporta um problema de temperatura de carga refrigerada?",opts:["Problema de carga fria","I have a temperature problem in reefer [hold/container] [X]. Required temperature is [minus/plus X] degrees Celsius. Actual temperature is [X] degrees Celsius. The refrigeration plant is [not functioning / running at reduced capacity]. I require urgent repair.","Problema reefer","Alarme de temperatura"],correct:1,expl:"Carga refrigerada SMCP: 'I have a temperature deviation in reefer unit [X]. Set temperature: [X] degrees Celsius. Actual temperature: [X] degrees Celsius. Temperature has been [rising/falling] for [X] hours. The refrigeration compressor [X] is [not working / tripped]. I require an urgent refrigeration engineer. The cargo is [fresh produce / frozen / pharmaceuticals].' Notificar imediatamente: carregador, destinatário, seguro, agente portuário."},
+    {q:"Como se reporta sobretransporte de carga?",opts:["Entrega no porto errado","I have cargo on board that should have been discharged at [port X]. The cargo was not discharged due to [error / documentation issue / time constraint]. I will [discharge at next port / return to port X / await instructions from agent/owner].","Descarga falhada","Carga incorreta"],correct:1,expl:"Sobretransporte SMCP: 'I have [X] packages/tonnes of cargo on board that were manifested for discharge at [port X] but were not discharged. The reason is [erro de estivador / carga não apresentada / documentação incompleta / escotilha não aberta]. I will [discharge at [next port] and arrange return / remain at anchorage if cost-effective / await charterer/agent instructions]. I am issuing a sea protest.' Notificar sempre o P&I Club, fretador e proprietários da carga."},
+    {q:"O que é a 'segregação de carga' e porque é importante em SMCP?",opts:["Separação de tipos de carga","Separação física obrigatória de mercadorias perigosas incompatíveis a bordo — previne reações químicas, incêndios, explosões. SMCP: 'I am segregating IMDG Class [X] from Class [Y] as required by the IMDG Code.'","Documentação de carga","Etiquetagem de contentores"],correct:1,expl:"Segregação de carga SMCP: 'I am complying with IMDG Code segregation requirements. Class [X] cargo (UN [XXXX]) is stowed [away from / separated from / isolated from] Class [Y] cargo (UN [YYYY]) as required by IMDG Code segregation table.' Categorias de segregação: AWAY FROM = separação mínima. SEPARATED FROM = barreira física ou convés diferente. SEPARATED BY A COMPLETE COMPARTMENT OR HOLD FROM = separação máxima."},
+  ],
+};
+
+function QuestionBank({ lang }) {
+  const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [done,setDone]=useState(false);
+  const questions=BANK[lang]||BANK.en;const q=questions[cur];const isOk=sel===q.correct;
+  const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
+  const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
+  if(done)return(<div style={{textAlign:"center",padding:"20px 0"}}><div style={{fontSize:48}}>{score>=12?"🏆":score>=8?"🎖️":"📚"}</div><div style={{fontFamily:"'Cinzel',serif",fontSize:20,color:C.white,margin:"8px 0 4px"}}>{score}/{questions.length}</div><div style={{fontSize:14,color:C.gold2}}>{Math.round(score/questions.length*100)}%</div></div>);
+  return(<div>
+    <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}><div style={{fontSize:10,color:C.muted}}>{cur+1}/{questions.length}</div><div style={{fontSize:12,color:C.gold2,fontWeight:700}}>✓ {score}</div></div>
+    <div style={{height:3,background:"rgba(255,255,255,0.08)",borderRadius:3,marginBottom:12,overflow:"hidden"}}><div style={{height:"100%",width:`${(cur/questions.length)*100}%`,background:`linear-gradient(90deg,${C.cargo},${C.bulk})`}}/></div>
+    <div style={{fontSize:13,fontWeight:700,color:C.white,lineHeight:1.5,marginBottom:12}}>{q.q}</div>
+    <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:10}}>
+      {q.opts.map((opt,i)=>{let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)";if(answered){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;}else if(i===sel){bg="rgba(192,57,43,0.2)";bd=C.red;}}return<button key={i} onClick={()=>pick(i)} style={{padding:"10px 12px",borderRadius:12,background:bg,border:`1.5px solid ${bd}`,color:C.muted,fontSize:11,textAlign:"left",cursor:answered?"default":"pointer",lineHeight:1.4,fontFamily:"'Courier New',monospace"}}>{opt}</button>;})}
+    </div>
+    {answered&&<><div style={{padding:"10px 12px",borderRadius:10,marginBottom:10,background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",border:`1px solid ${isOk?C.green:C.red}44`,fontSize:11,color:C.white,lineHeight:1.6}}>{q.expl}</div>
+    <button onClick={next} style={{width:"100%",padding:"11px 0",border:"none",borderRadius:12,background:`linear-gradient(135deg,${C.cargo},${C.gold2})`,fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer"}}>{cur<questions.length-1?(lang==="fr"?"SUIVANT →":lang==="en"?"NEXT →":lang==="es"?"SIGUIENTE →":"PRÓXIMO →"):(lang==="fr"?"TERMINER":lang==="en"?"FINISH":lang==="es"?"TERMINAR":"TERMINAR")}</button></>}
+  </div>);
+}
+
+function Stars(){const s=Array.from({length:10},()=>({x:Math.random()*100,y:Math.random()*100,sz:Math.random()>0.7?2:1.5,dur:2+Math.random()*4,delay:Math.random()*6}));return(<><div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0}}>{s.map((st,i)=><div key={i} style={{position:"absolute",left:`${st.x}%`,top:`${st.y}%`,width:st.sz,height:st.sz,borderRadius:"50%",background:"white",opacity:0,animation:`tw ${st.dur}s ease-in-out ${st.delay}s infinite`}}/>)}</div><style>{`@keyframes tw{0%,100%{opacity:0}50%{opacity:0.3}}@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes correctPop{0%{transform:scale(0.85)}60%{transform:scale(1.1)}100%{transform:scale(1)}}@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}`}</style></>);}
+function Card({children,style={}}){return<div style={{background:"rgba(13,31,60,0.75)",border:`1px solid ${C.border}`,borderRadius:18,padding:"16px",...style}}>{children}</div>;}
+function GLine(){return<div style={{height:1,margin:"14px 0",background:`linear-gradient(90deg,transparent,${C.cargo}33,${C.bulk}33,transparent)`}}/>;}
+function SL({icon,text,color}){return<div style={{display:"flex",alignItems:"center",gap:10,margin:"20px 0 12px"}}><span style={{fontSize:20}}>{icon}</span><div style={{fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:color||C.gold,letterSpacing:2}}>{text}</div><div style={{flex:1,height:1,background:`linear-gradient(90deg,${color||C.gold}44,transparent)`}}/></div>;}
+
+function QuizComp({questions,t,onComplete}){
+  const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [answers,setAnswers]=useState([]);const [done,setDone]=useState(false);
+  const q=questions[cur];const isOk=sel===q.correct;
+  const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);setAnswers(a=>[...a,{i,ok:i===q.correct}]);};
+  const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else{setDone(true);onComplete(score+(isOk?1:0));}};
+  if(done){const fs=score;const pct=Math.round(fs/questions.length*100);const xp=fs>=4?200:fs===3?120:60;return(<Card style={{textAlign:"center"}}><div style={{fontSize:52,marginBottom:8}}>{pct===100?"🏆":pct>=80?"🎖️":"📚"}</div><div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,color:C.white,marginBottom:4}}>{fs}/{questions.length}</div><div style={{display:"inline-block",marginTop:8,padding:"6px 16px",borderRadius:20,background:`${C.cargo}15`,border:`1px solid ${C.cargo}44`,fontSize:14,color:C.cargo,fontWeight:700}}>+{xp} {t.xp} ⭐</div><GLine/><div style={{display:"flex",justifyContent:"center",gap:8,marginTop:8}}>{answers.map((a,i)=><div key={i} style={{width:32,height:32,borderRadius:"50%",background:a.ok?C.green:C.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:C.white}}>{a.ok?"✓":"✗"}</div>)}</div></Card>);}
+  return(<Card style={{border:`1px solid ${C.cargo}33`}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}><div style={{fontSize:11,letterSpacing:3,color:C.cargo,fontFamily:"'Cinzel',serif"}}>{t.quiz}</div><div style={{fontSize:12,color:C.muted}}>{t.question} {cur+1} {t.ofQ} {questions.length}</div></div><div style={{display:"flex",gap:6,marginBottom:16}}>{questions.map((_,i)=><div key={i} style={{flex:1,height:3,borderRadius:3,background:i<cur?(answers[i]?.ok?C.green:C.red):i===cur?C.cargo:"rgba(255,255,255,0.1)"}}/>)}</div><div style={{fontSize:14,fontWeight:700,color:C.white,lineHeight:1.5,marginBottom:16}}>{q.q}</div><div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:14}}>{q.opts.map((opt,i)=>{let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)",anim="none";if(answered){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;anim="correctPop 0.4s ease";}else if(i===sel){bg="rgba(192,57,43,0.2)";bd=C.red;anim="wrongShake 0.4s ease";}}return<button key={i} onClick={()=>pick(i)} style={{padding:"12px 14px",borderRadius:14,background:bg,border:`1.5px solid ${bd}`,color:answered&&(i===q.correct||i===sel)?C.white:C.muted,fontSize:12,textAlign:"left",cursor:answered?"default":"pointer",animation:anim,display:"flex",alignItems:"center",gap:10,lineHeight:1.4,fontFamily:"'Courier New',monospace"}}><div style={{width:26,height:26,borderRadius:"50%",flexShrink:0,background:answered&&i===q.correct?C.green:answered&&i===sel?C.red:"rgba(255,255,255,0.1)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,color:C.white,fontFamily:"'Nunito',sans-serif"}}>{answered&&i===q.correct?"✓":answered&&i===sel?"✗":String.fromCharCode(65+i)}</div><span>{opt}</span></button>;})} </div>{answered&&<div style={{padding:"12px 14px",borderRadius:12,marginBottom:14,background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",border:`1px solid ${isOk?C.green:C.red}44`,animation:"fadeUp 0.4s ease"}}><div style={{fontSize:12,fontWeight:700,marginBottom:4,color:isOk?C.green:C.red}}>{isOk?t.correct:t.wrong}</div><div style={{fontSize:11,color:C.muted,fontWeight:600,marginBottom:2}}>{t.expl}</div><div style={{fontSize:12,color:C.white,lineHeight:1.6}}>{q.expl}</div></div>}{answered&&<button onClick={next} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:`linear-gradient(135deg,${C.cargo},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer"}}>{cur<questions.length-1?t.next:t.finish}</button>}</Card>);
+}
+
+const getContent = lang => {
+  const d={
+    en:{
+      badge:"📦 Maritime English SMCP · Lesson 5/8 · ⭐ Premium · 200 XP",
+      title:"Cargo Operations SMCP",
+      intro:"From loading grain to discharging dangerous chemicals, cargo operations require precise SMCP communication at every stage. This lesson covers general cargo, bulk, tanker, dangerous goods, cargo documents, stowage and lashing.",
+      p1:"PART 1 — CARGO FLASHCARDS",s1t:"General · Bulk · Tanker · Dangerous goods",
+      s1:"KEY CARGO PHRASES:\n\nSTART:\n'Cargo operations have commenced. We are loading [cargo] at hold [X]. Rate [X] t/h.'\n\nPROBLEM:\n'I have a problem with cargo in hold [X]. [Shifting / damage / contamination].'\n\nCOMPLETE:\n'All cargo is secured for sea. Hatch covers closed. Vessel ready to proceed.'\n\nDANGEROUS GOODS:\n'I have DG on board. IMDG Class [X], UN [XXXX]. Stowed in hold [X].'",
+      p2:"PART 2 — CARGO DOCUMENTS",s1t:"B/L · Manifest · Tally · Damage report",
+      s2:"BILL OF LADING (B/L):\nClean B/L = good condition\nClaused B/L = damage/reservations noted\n\nMANIFEST:\n'The cargo manifest is complete and accurate.'\n\nTALLY:\n'The tally shows [X] packages. Shortage of [X].'\n\nDAMAGE:\n'I have found cargo damage in hold [X].'\n'I am issuing a letter of protest.'",
+      p3:"PART 3 — STOWAGE & LASHING",s1t:"Hatch covers · Cranes · Lashing",
+      s3:"HATCH COVERS:\n'Open/close hatch cover [X].'\n'Hatch cover [X] is closed and secured.'\n'Hatch cover is leaking.'\n\nCRANES:\n'Crane [X] is ready for operations.'\n'Maximum safe working load is [X] tonnes.'\n\nLASHING:\n'All lashings are in place and tightened.'\n'Container [X] has shifted.'\n'Lashing plan is approved.'",
+      p4:"PART 4 — CARGO OPERATIONS QUIZ",s1t:"5 practical cargo scenarios",
+      s4:"REMEMBER:\nCargo ops start = 'Cargo operations have commenced'\nClean B/L = no reservations\nClaused B/L = damage noted\nDG declaration = IMDG Class + UN number\nLetter of protest = formal legal document",
+      p5:"🎯 EXERCISES",p6:"📝 QUESTION BANK — 15 QUESTIONS",
+      sumT:"SUMMARY — CARGO OPERATIONS L5",
+      sumP:["Start: 'Cargo operations have commenced. Loading [cargo] at hold [X]. Rate [X] t/h.'","B/L: Clean = good condition · Claused = damage/reservations noted","Tally: 'The tally shows [X] packages. Shortage of [X].'","DG: IMDG Class + UN number + stowage position mandatory","Lashing: 'All lashings in place' → 'Vessel ready to proceed'","Cargo damage: 'Letter of protest' → formal legal document","FIO = Free In Out → charterer pays cargo handling costs","Demurrage: laytime expired → penalty payment by charterer"],
+      learnedP:["Cargo flashcards: general · bulk · tanker · dangerous goods","Cargo documents: B/L · manifest · tally · damage report","Stowage phrases: hatch covers · cranes · lashing","Cargo completion: 'All cargo secured for sea · hatch covers closed'","DG declaration: IMDG Class + UN number + stowage"],
+    },
+    fr:{
+      badge:"📦 Anglais Maritime SMCP · Leçon 5/8 · ⭐ Premium · 200 XP",
+      title:"Opérations de Cargaison SMCP",
+      intro:"Du chargement de céréales au déchargement de produits chimiques dangereux, les opérations de cargaison exigent une communication SMCP précise à chaque étape. Cette leçon couvre la cargaison générale, le vrac, les pétroliers, les marchandises dangereuses, les documents de cargaison, l'arrimage et le saisissage.",
+      p1:"PARTIE 1 — FICHES CARGAISON",s1t:"Général · Vrac · Pétrolier · Marchandises dangereuses",
+      s1:"PHRASES CLÉS CARGAISON :\n\nDÉBUT :\n'Cargo operations have commenced. We are loading [cargo] at hold [X]. Rate [X] t/h.'\n\nPROBLÈME :\n'I have a problem with cargo in hold [X]. [Shifting / damage / contamination].'\n\nFIN :\n'All cargo is secured for sea. Hatch covers closed. Vessel ready to proceed.'\n\nMARCHANDISES DANGEREUSES :\n'I have DG on board. IMDG Class [X], UN [XXXX]. Stowed in hold [X].'",
+      p2:"PARTIE 2 — DOCUMENTS DE CARGAISON",s1t:"B/L · Manifeste · Pointage · Rapport de dommages",
+      s2:"CONNAISSEMENT (B/L) :\nClean B/L = bon état\nClaused B/L = dommages/réserves notés\n\nMANIFESTE :\n'The cargo manifest is complete and accurate.'\n\nPOINTAGE :\n'The tally shows [X] packages. Shortage of [X].'\n\nDOMMAGES :\n'I have found cargo damage in hold [X].'\n'I am issuing a letter of protest.'",
+      p3:"PARTIE 3 — ARRIMAGE & SAISISSAGE",s1t:"Panneaux · Grues · Saisissage",
+      s3:"PANNEAUX DE CALE :\n'Open/close hatch cover [X].'\n'Hatch cover [X] is closed and secured.'\n'Hatch cover is leaking.'\n\nGRUES :\n'Crane [X] is ready for operations.'\n'Maximum safe working load is [X] tonnes.'\n\nSAISSISSAGE :\n'All lashings are in place and tightened.'\n'Container [X] has shifted.'\n'Lashing plan is approved.'",
+      p4:"PARTIE 4 — QUIZ OPÉRATIONS DE CARGAISON",s1t:"5 scénarios pratiques de cargaison",
+      s4:"RAPPELS :\nDébut ops cargaison = 'Cargo operations have commenced'\nClean B/L = pas de réserves\nClaused B/L = dommages notés\nDéclaration MD = Classe IMDG + numéro ONU\nLettre de protestation = document juridique formel",
+      p5:"🎯 EXERCICES",p6:"📝 BANQUE 15 QUESTIONS",
+      sumT:"RÉSUMÉ — OPÉRATIONS DE CARGAISON L5",
+      sumP:["Début : 'Cargo operations have commenced. Loading [cargo] at hold [X]. Rate [X] t/h.'","B/L : Clean = bon état · Claused = dommages/réserves notés","Pointage : 'The tally shows [X] packages. Shortage of [X].'","MD : Classe IMDG + numéro ONU + position d'arrimage obligatoire","Saisissage : 'All lashings in place' → 'Vessel ready to proceed'","Dommages cargaison : 'Letter of protest' → document juridique formel","FIO = Free In Out → l'affréteur paye les frais de manutention","Surestarie : planche expirée → pénalité payée par l'affréteur"],
+      learnedP:["Fiches cargaison : général · vrac · pétrolier · marchandises dangereuses","Documents cargaison : B/L · manifeste · pointage · rapport de dommages","Phrases arrimage : panneaux · grues · saisissage","Fin des opérations : 'All cargo secured for sea · hatch covers closed'","Déclaration MD : Classe IMDG + numéro ONU + position"],
+    },
+    es:{
+      badge:"📦 Inglés Marítimo SMCP · Lección 5/8 · ⭐ Premium · 200 XP",
+      title:"Operaciones de Carga SMCP",
+      intro:"Desde cargar grano hasta descargar productos químicos peligrosos, las operaciones de carga requieren comunicaciones SMCP precisas en cada etapa.",
+      p1:"PARTE 1 — FICHAS DE CARGA",s1t:"General · Granel · Petrolero · Mercancías peligrosas",
+      s1:"FRASES CLAVE DE CARGA:\nINICIO: 'Cargo operations have commenced. Loading [cargo] at hold [X].'\nPROBLEMA: 'I have a problem with cargo in hold [X].'\nFIN: 'All cargo is secured for sea. Hatch covers closed.'\nMM.PP.: 'I have DG on board. IMDG Class [X], UN [XXXX].'",
+      p2:"PARTE 2 — DOCUMENTOS DE CARGA",s1t:"B/L · Manifiesto · Tally · Informe de daños",
+      s2:"B/L: Clean = buen estado · Claused = daños/reservas\nMANIFIESTO: 'The cargo manifest is complete.'\nRECUENTO: 'The tally shows [X] packages. Shortage of [X].'\nDAÑOS: 'I am issuing a letter of protest.'",
+      p3:"PARTE 3 — ESTIBA Y TRINCADO",s1t:"Escotillas · Grúas · Trincado",
+      s3:"ESCOTILLAS: 'Open/close hatch cover [X].' · 'Hatch cover is leaking.'\nGRÚAS: 'Crane [X] is ready.' · 'SWL is [X] tonnes.'\nTRINCADO: 'All lashings in place.' · 'Container [X] has shifted.' · 'Lashing plan is approved.'",
+      p4:"PARTE 4 — QUIZ OPERACIONES DE CARGA",s1t:"5 escenarios prácticos de carga",
+      s4:"RECORDAR:\nInicio ops = 'Cargo operations have commenced'\nClean B/L = sin reservas · Claused B/L = daños notados\nMM.PP. = Clase IMDG + número ONU\nCarta de protesta = documento jurídico formal",
+      p5:"🎯 EJERCICIOS",p6:"📝 BANCO 15 PREGUNTAS",
+      sumT:"RESUMEN — OPERACIONES DE CARGA L5",
+      sumP:["Inicio: 'Cargo operations have commenced. Loading [cargo] at hold [X]. Rate [X] t/h.'","B/L: Clean = buen estado · Claused = daños/reservas anotados","Recuento: 'The tally shows [X] packages. Shortage of [X].'","MM.PP.: Clase IMDG + número ONU + posición de estiba obligatoria","Trincado: 'All lashings in place' → 'Vessel ready to proceed'","Daños carga: 'Letter of protest' → documento jurídico formal","FIO = Free In Out → el fletador paga los costes de manejo de carga","Sobreestadía: plancha expirada → pago de penalización del fletador"],
+      learnedP:["Fichas carga: general · granel · petrolero · mercancías peligrosas","Documentos carga: B/L · manifiesto · recuento · informe de daños","Frases estiba: escotillas · grúas · trincado","Fin operaciones: 'All cargo secured for sea · hatch covers closed'","Declaración MM.PP.: Clase IMDG + número ONU + posición"],
+    },
+    pt:{
+      badge:"📦 Inglês Marítimo SMCP · Lição 5/8 · ⭐ Premium · 200 XP",
+      title:"Operações de Carga SMCP",
+      intro:"Desde carregar cereais até descarregar produtos químicos perigosos, as operações de carga requerem comunicações SMCP precisas em cada etapa.",
+      p1:"PARTE 1 — FICHAS DE CARGA",s1t:"Geral · Granel · Petroleiro · Mercadorias perigosas",
+      s1:"FRASES CHAVE DE CARGA:\nINÍCIO: 'Cargo operations have commenced. Loading [cargo] at hold [X].'\nPROBLEMA: 'I have a problem with cargo in hold [X].'\nFIM: 'All cargo is secured for sea. Hatch covers closed.'\nMP: 'I have DG on board. IMDG Class [X], UN [XXXX].'",
+      p2:"PARTE 2 — DOCUMENTOS DE CARGA",s1t:"B/L · Manifesto · Tally · Relatório de danos",
+      s2:"B/L: Clean = bom estado · Claused = danos/reservas\nMANIFESTO: 'The cargo manifest is complete.'\nCONTAGEM: 'The tally shows [X] packages. Shortage of [X].'\nDANOS: 'I am issuing a letter of protest.'",
+      p3:"PARTE 3 — ESTIVA E AMARRAÇÃO",s1t:"Escotilhas · Gruas · Amarração",
+      s3:"ESCOTILHAS: 'Open/close hatch cover [X].' · 'Hatch cover is leaking.'\nGRUAS: 'Crane [X] is ready.' · 'SWL is [X] tonnes.'\nAMARRAÇÃO: 'All lashings in place.' · 'Container [X] has shifted.' · 'Lashing plan is approved.'",
+      p4:"PARTE 4 — QUIZ OPERAÇÕES DE CARGA",s1t:"5 cenários práticos de carga",
+      s4:"LEMBRAR:\nInício ops = 'Cargo operations have commenced'\nClean B/L = sem reservas · Claused B/L = danos anotados\nMP = Classe IMDG + número ONU\nCarta de protesto = documento jurídico formal",
+      p5:"🎯 EXERCÍCIOS",p6:"📝 BANCO 15 QUESTÕES",
+      sumT:"RESUMO — OPERAÇÕES DE CARGA L5",
+      sumP:["Início: 'Cargo operations have commenced. Loading [cargo] at hold [X]. Rate [X] t/h.'","B/L: Clean = bom estado · Claused = danos/reservas anotados","Contagem: 'The tally shows [X] packages. Shortage of [X].'","MP: Classe IMDG + número ONU + posição de estiva obrigatória","Amarração: 'All lashings in place' → 'Vessel ready to proceed'","Danos carga: 'Letter of protest' → documento jurídico formal","FIO = Free In Out → o fretador paga os custos de manuseamento de carga","Sobrestadia: plancha expirada → pagamento de penalização pelo fretador"],
+      learnedP:["Fichas carga: geral · granel · petroleiro · mercadorias perigosas","Documentos carga: B/L · manifesto · contagem · relatório de danos","Frases estiva: escotilhas · gruas · amarração","Fim operações: 'All cargo secured for sea · hatch covers closed'","Declaração MP: Classe IMDG + número ONU + posição"],
+    },
+  };
+  return d[lang]||d.en;
+};
+
+export default function LessonSMCP_L5({ lang="en", onBack=()=>{}, onComplete=()=>{} }) {
+  const t=T[lang]||T.en;const quiz=QUIZ[lang]||QUIZ.en;const lc=getContent(lang);
+  const [phase,setPhase]=useState("content");const [quizScore,setQuizScore]=useState(0);const [vis,setVis]=useState(false);
+  useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
+  const progress=phase==="content"?15:phase==="quiz"?70:100;
+  return(
+    <div style={{height:"100vh",display:"flex",flexDirection:"column",background:`linear-gradient(160deg,#0c0800 0%,${C.navy2} 50%,${C.navy} 100%)`,color:C.white,fontFamily:"'Nunito',sans-serif",overflow:"hidden",position:"relative"}}>
+      <Stars/>
+      <div style={{position:"relative",zIndex:100,background:"rgba(6,14,26,0.97)",backdropFilter:"blur(14px)",borderBottom:`1px solid ${C.cargo}22`}}>
+        <div style={{height:54,display:"flex",alignItems:"center",padding:"0 16px",gap:12}}>
+          <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer"}}>{t.back}</button>
+          <div style={{flex:1}}>
+            <div style={{fontSize:10,color:C.cargo,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>📦 {t.module}</div>
+            <div style={{fontSize:11,color:C.muted}}>{lang==="fr"?"Leçon 5/8":lang==="en"?"Lesson 5/8":lang==="es"?"Lección 5/8":"Lição 5/8"}</div>
+          </div>
+          <div style={{display:"flex",alignItems:"center",gap:6}}>
+            <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>
+            <div style={{fontSize:11,color:C.cargo,fontFamily:"'Cinzel',serif"}}>{progress}%</div>
+          </div>
+        </div>
+        <div style={{height:3,background:"rgba(255,255,255,0.07)",overflow:"hidden"}}>
+          <div style={{height:"100%",width:`${progress}%`,background:`linear-gradient(90deg,${C.cargo},${C.bulk},${C.gold2})`,transition:"width 0.5s ease"}}/>
+        </div>
+      </div>
+      <div style={{flex:1,overflowY:"auto",padding:"20px 16px 40px",position:"relative",zIndex:1,opacity:vis?1:0,transform:vis?"translateY(0)":"translateY(14px)",transition:"all 0.5s ease"}}>
+        <div style={{maxWidth:480,margin:"0 auto"}}>
+          {phase==="content"&&<>
+            <div style={{display:"inline-flex",alignItems:"center",padding:"5px 12px",borderRadius:20,marginBottom:10,background:`${C.cargo}15`,border:`1px solid ${C.cargo}44`,fontSize:11,color:C.cargo,fontWeight:700}}>{lc.badge}</div>
+            <h1 style={{fontFamily:"'Cinzel',serif",fontSize:20,fontWeight:700,color:C.white,lineHeight:1.3,margin:"0 0 16px"}}>{lc.title}</h1>
+            <Card style={{marginBottom:14,borderLeft:`3px solid ${C.cargo}`}}>
+              <div style={{fontSize:14,color:"rgba(240,244,255,0.85)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.intro}</div>
+            </Card>
+            <SL icon="📦" text={lc.p1} color={C.cargo}/>
+            <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
+            <Card style={{marginBottom:14,background:"rgba(12,8,0,0.7)",border:`1px solid ${C.cargo}22`}}>
+              <div style={{fontSize:11,color:C.cargo,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📦 {lang==="fr"?"FICHES CARGAISON SMCP":lang==="en"?"CARGO SMCP FLASHCARDS":"FICHAS CARGA SMCP"}</div>
+              <CargoFlashcardsSVG lang={lang}/>
+            </Card>
+            <SL icon="📄" text={lc.p2} color={C.bulk}/>
+            <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
+            <Card style={{marginBottom:14,border:`1px solid ${C.bulk}22`}}>
+              <div style={{fontSize:11,color:C.bulk,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📄 {lang==="fr"?"DOCUMENTS DE CARGAISON":lang==="en"?"CARGO DOCUMENTS":"DOCUMENTOS DE CARGA"}</div>
+              <CargoDocsSVG lang={lang}/>
+            </Card>
+            <SL icon="🔗" text={lc.p3} color={C.tank}/>
+            <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
+            <Card style={{marginBottom:14,border:`1px solid ${C.tank}22`}}>
+              <div style={{fontSize:11,color:C.tank,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"ARRIMAGE & SAISISSAGE":lang==="en"?"STOWAGE & LASHING":"ESTIBA Y TRINCADO"}</div>
+              <StowagePhrasesSVG lang={lang}/>
+            </Card>
+            <SL icon="🎯" text={lc.p4} color={C.gold2}/>
+            <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
+            <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ CARGAISON":lang==="en"?"CARGO QUIZ":"QUIZ CARGA"}</div>
+              <CargoQuizSVG lang={lang}/>
+            </Card>
+            <SL icon="📝" text={lc.p5} color={C.gold}/>
+            <Card style={{marginBottom:14,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><Exercise1 lang={lang} t={t}/></Card>
+            <SL icon="📚" text={lc.p6} color={C.purple}/>
+            <Card style={{marginBottom:14,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}><QuestionBank lang={lang}/></Card>
+            <Card style={{marginBottom:14,background:`${C.cargo}08`,border:`1px solid ${C.cargo}22`}}>
+              <div style={{fontSize:11,color:C.cargo,letterSpacing:3,fontFamily:"'Cinzel',serif",marginBottom:12}}>{lc.sumT}</div>
+              {lc.sumP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"5px 0",borderBottom:i<lc.sumP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:11,color:C.white}}><span style={{color:C.cargo,fontWeight:700,fontFamily:"'Courier New',monospace"}}>✓</span>{pt}</div>)}
+            </Card>
+            <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.cargo},${C.bulk},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 10px 36px ${C.cargo}33`,marginTop:8}}>{t.startQuiz}</button>
+            <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
+          </>}
+          {phase==="quiz"&&<>
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Cargo Operations SMCP</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 5":lang==="en"?"Lesson 5":"Lección 5"}</div>
+            </div>
+            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+          </>}
+          {phase==="done"&&<div style={{paddingTop:10}}>
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontSize:64,marginBottom:10}}>🏅</div>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:22,fontWeight:700,color:C.white,marginBottom:8}}>{t.complete}</div>
+              <div style={{display:"inline-flex",alignItems:"center",gap:8,padding:"8px 20px",borderRadius:20,background:`${C.cargo}15`,border:`1px solid ${C.cargo}55`,fontSize:14,color:C.cargo,fontWeight:700}}>+{quizScore>=4?200:quizScore===3?120:60} {t.xp} ⭐</div>
+            </div>
+            <Card style={{marginBottom:16}}>
+              <div style={{fontSize:11,color:C.muted,marginBottom:10,fontFamily:"'Cinzel',serif",letterSpacing:1}}>{t.youLearned}</div>
+              {lc.learnedP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<lc.learnedP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.cargo,fontWeight:700}}>✓</span>{pt}</div>)}
+            </Card>
+            <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.cargo},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 8px 28px ${C.cargo}33`,marginBottom:10}}>
+              {lang==="fr"?"LEÇON 6 — SALLE DES MACHINES →":lang==="en"?"LESSON 6 — ENGINE ROOM SMCP →":lang==="es"?"LECCIÓN 6 — SALA DE MÁQUINAS →":"LIÇÃO 6 — SALA DE MÁQUINAS →"}
+            </button>
+            <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>
+          </div>}
+        </div>
+      </div>
+    </div>
+  );
+}
