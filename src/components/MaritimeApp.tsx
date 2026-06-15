@@ -36,6 +36,7 @@ import LessonFlags from "./LessonFlags";
 import LessonVHF from "./LessonVHF";
 import LessonAIS from "./LessonAIS";
 import LessonGMDSS from "./LessonGMDSS";
+import LessonSMCP_L1 from "./LessonSMCP_L1";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
