@@ -39,6 +39,7 @@ import LessonGMDSS from "./LessonGMDSS";
 import LessonSMCP_L1 from "./LessonSMCP_L1";
 import LessonSMCP_L2 from "./LessonSMCP_L2";
 import LessonSMCP_L3 from "./LessonSMCP_L3";
+import LessonSMCP_L4 from "./LessonSMCP_L4";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1290,7 +1291,7 @@ function SMCPLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3"]);
+  const playable = new Set(["l1","l2","l3","l4"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1388,7 +1389,7 @@ function AppInner() {
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
   const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping","lesson_emergency"];
   const SB_LESSONS = ["lesson_iala","lesson_lights_shapes","lesson_sound_signals","lesson_flags","lesson_vhf","lesson_ais","lesson_gmdss"];
-  const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3"];
+  const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3","lesson_smcp_l4"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1706,6 +1707,7 @@ function AppInner() {
             if (lid === "l1") setPage("lesson_smcp_l1");
             else if (lid === "l2") setPage("lesson_smcp_l2");
             else if (lid === "l3") setPage("lesson_smcp_l3");
+            else if (lid === "l4") setPage("lesson_smcp_l4");
           }}
         />
       )}
@@ -1847,6 +1849,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l3"); setPage("smcp_lessons"); }}
+        />
+      )}
+      {page === "lesson_smcp_l4" && (
+        <LessonSMCP_L4
+          lang={lang}
+          onBack={() => setPage("smcp_lessons")}
+          onComplete={() => { markLessonCompleted("d4-l4"); setPage("smcp_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
