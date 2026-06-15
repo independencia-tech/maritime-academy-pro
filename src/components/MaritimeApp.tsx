@@ -33,6 +33,7 @@ import LessonIALA from "./LessonIALA";
 import LessonLightsShapes from "./LessonLightsShapes";
 import LessonSoundSignals from "./LessonSoundSignals";
 import LessonFlags from "./LessonFlags";
+import LessonVHF from "./LessonVHF";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1237,7 +1238,7 @@ function SBLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4"]);
+  const playable = new Set(["l1","l2","l3","l4","l5"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1334,7 +1335,7 @@ function AppInner() {
   const ONBOARDING = ["splash","lang","music","welcome","bridge","register","questionnaire","status"];
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
   const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping","lesson_emergency"];
-  const SB_LESSONS = ["lesson_iala","lesson_lights_shapes","lesson_sound_signals","lesson_flags"];
+  const SB_LESSONS = ["lesson_iala","lesson_lights_shapes","lesson_sound_signals","lesson_flags","lesson_vhf"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1630,6 +1631,7 @@ function AppInner() {
             else if (lid === "l2") setPage("lesson_lights_shapes");
             else if (lid === "l3") setPage("lesson_sound_signals");
             else if (lid === "l4") setPage("lesson_flags");
+            else if (lid === "l5") setPage("lesson_vhf");
           }}
         />
       )}
@@ -1729,6 +1731,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l4"); setPage("sb_lessons"); }}
+        />
+      )}
+      {page === "lesson_vhf" && (
+        <LessonVHF
+          lang={lang}
+          onBack={() => setPage("sb_lessons")}
+          onComplete={() => { markLessonCompleted("d3-l5"); setPage("sb_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
