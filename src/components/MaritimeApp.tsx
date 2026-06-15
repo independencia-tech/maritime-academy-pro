@@ -34,6 +34,7 @@ import LessonLightsShapes from "./LessonLightsShapes";
 import LessonSoundSignals from "./LessonSoundSignals";
 import LessonFlags from "./LessonFlags";
 import LessonVHF from "./LessonVHF";
+import LessonAIS from "./LessonAIS";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
