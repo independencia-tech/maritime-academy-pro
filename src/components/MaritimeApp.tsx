@@ -1635,6 +1635,7 @@ function AppInner() {
             else if (lid === "l4") setPage("lesson_flags");
             else if (lid === "l5") setPage("lesson_vhf");
             else if (lid === "l6") setPage("lesson_ais");
+            else if (lid === "l7") setPage("lesson_gmdss");
           }}
         />
       )}
@@ -1748,6 +1749,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l6"); setPage("sb_lessons"); }}
+        />
+      )}
+      {page === "lesson_gmdss" && (
+        <LessonGMDSS
+          lang={lang}
+          onBack={() => setPage("sb_lessons")}
+          onComplete={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
