@@ -224,7 +224,7 @@ export const MODULES = {
       ]
     },
     { id:"d3", icon:"🗺️", color:C.teal, access:"premium",
-      freeLessons:0, totalLessons:12,
+      freeLessons:0, totalLessons:13,
       title:{fr:"Signalisation & Balisage",en:"Signaling & Buoyage",es:"Señalización & Balizamiento",pt:"Sinalização & Balizamento"},
       desc:{fr:"AISM, pavillons, Morse, SMCP",en:"IALA, flags, Morse, SMCP",es:"IALA, banderas, Morse, SMCP",pt:"IALA, bandeiras, Morse, SMCP"},
       xp:350, status:"available", progress:0,
