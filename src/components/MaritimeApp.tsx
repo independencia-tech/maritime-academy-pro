@@ -1633,6 +1633,7 @@ function AppInner() {
             else if (lid === "l3") setPage("lesson_sound_signals");
             else if (lid === "l4") setPage("lesson_flags");
             else if (lid === "l5") setPage("lesson_vhf");
+            else if (lid === "l6") setPage("lesson_ais");
           }}
         />
       )}
