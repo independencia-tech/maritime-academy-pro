@@ -224,7 +224,7 @@ export const MODULES = {
       ]
     },
     { id:"d3", icon:"🗺️", color:C.teal, access:"premium",
-      freeLessons:0, totalLessons:13,
+      freeLessons:0, totalLessons:14,
       title:{fr:"Signalisation & Balisage",en:"Signaling & Buoyage",es:"Señalización & Balizamiento",pt:"Sinalização & Balizamento"},
       desc:{fr:"AISM, pavillons, Morse, SMCP",en:"IALA, flags, Morse, SMCP",es:"IALA, banderas, Morse, SMCP",pt:"IALA, bandeiras, Morse, SMCP"},
       xp:350, status:"available", progress:0,
@@ -235,6 +235,7 @@ export const MODULES = {
         {id:"l4",title:{fr:"Maritime Flags & Communication",en:"Maritime Flags & Communication",es:"Maritime Flags & Communication",pt:"Maritime Flags & Communication"},access:"premium",status:"available"},
         {id:"l5",title:{fr:"VHF Radio Procedures",en:"VHF Radio Procedures",es:"VHF Radio Procedures",pt:"VHF Radio Procedures"},access:"premium",status:"available"},
         {id:"l6",title:{fr:"AIS & Electronic Navigation",en:"AIS & Electronic Navigation",es:"AIS & Electronic Navigation",pt:"AIS & Electronic Navigation"},access:"premium",status:"available"},
+        {id:"l7",title:{fr:"GMDSS & Distress Signals",en:"GMDSS & Distress Signals",es:"GMDSS & Distress Signals",pt:"GMDSS & Distress Signals"},access:"premium",status:"available"},
       ]
     },
     { id:"d4", icon:"📡", color:"#9b59b6", access:"premium",
