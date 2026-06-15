@@ -30,7 +30,7 @@ function AISScreenSVG({ lang }) {
 
   const vessels = [
     { id:0, x:50, y:50, name:"MV DELTA", mmsi:"227456789", class:"A",
-      sog:12.4, cog:045, hdg:044, status:"Under way",
+      sog:12.4, cog:"045", hdg:"044", status:"Under way",
       type:{fr:"Cargo",en:"Cargo",es:"Carguero",pt:"Cargueiro"},
       color:C.ais, dx:0.3, dy:-0.2,
       info:{fr:"CLASSE A — Cargo commercial\n\nMMSI : 227456789\nNom : MV DELTA\nVitesse : 12,4 nœuds\nCap fond : 045°\nCap route : 044°\nStatut : En route sous machine\n\nTRANSMISSION CLASS A :\n→ Toutes les 2-10 secondes en route\n→ Toutes les 3 min à l'arrêt\n→ Portée : 20-40 milles\n\nINFOS STATIQUES :\n→ MMSI · Nom · Pavillon · IMO\n→ Type · Longueur · Largeur\n→ Tirant d'eau · Destination · ETA",
