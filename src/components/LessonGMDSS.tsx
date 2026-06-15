@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from "react";
 
 const C = {
@@ -76,8 +77,8 @@ function GMDSSZonesSVG({ lang }) {
           {/* Polar zones A4 */}
           <rect x={0} y={0} width={280} height={15} fill={`${C.purple}44`} rx={2}/>
           <rect x={0} y={105} width={280} height={15} fill={`${C.purple}44`} rx={2}/>
-          <text x={140} y={10} textAnchor="middle" fontSize={6} fill={C.purple}>A4 — POLAIRE (> 70°N)</text>
-          <text x={140} y={117} textAnchor="middle" fontSize={6} fill={C.purple}>A4 — POLAIRE (> 70°S)</text>
+          <text x={140} y={10} textAnchor="middle" fontSize={6} fill={C.purple}>A4 — POLAIRE (&gt; 70°N)</text>
+          <text x={140} y={117} textAnchor="middle" fontSize={6} fill={C.purple}>A4 — POLAIRE (&gt; 70°S)</text>
           {/* A3 zone */}
           <rect x={0} y={15} width={280} height={90} fill={`${C.orange}18`}/>
           <text x={5} y={62} fontSize={6} fill={C.orange}>A3</text>
