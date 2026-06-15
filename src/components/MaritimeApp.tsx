@@ -1695,6 +1695,16 @@ function AppInner() {
           }}
         />
       )}
+      {page === "smcp_lessons" && (
+        <SMCPLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_smcp_l1");
+          }}
+        />
+      )}
       {page === "lesson_solas" && (
         <LessonSOLAS
           lang={lang}
