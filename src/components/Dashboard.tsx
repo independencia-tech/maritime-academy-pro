@@ -234,6 +234,7 @@ export const MODULES = {
         {id:"l3",title:{fr:"Sound Signals & Fog",en:"Sound Signals & Fog",es:"Sound Signals & Fog",pt:"Sound Signals & Fog"},access:"premium",status:"available"},
         {id:"l4",title:{fr:"Maritime Flags & Communication",en:"Maritime Flags & Communication",es:"Maritime Flags & Communication",pt:"Maritime Flags & Communication"},access:"premium",status:"available"},
         {id:"l5",title:{fr:"VHF Radio Procedures",en:"VHF Radio Procedures",es:"VHF Radio Procedures",pt:"VHF Radio Procedures"},access:"premium",status:"available"},
+        {id:"l6",title:{fr:"AIS & Electronic Navigation",en:"AIS & Electronic Navigation",es:"AIS & Electronic Navigation",pt:"AIS & Electronic Navigation"},access:"premium",status:"available"},
       ]
     },
     { id:"d4", icon:"📡", color:"#9b59b6", access:"premium",
