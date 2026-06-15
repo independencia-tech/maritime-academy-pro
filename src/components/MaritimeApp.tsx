@@ -38,6 +38,7 @@ import LessonAIS from "./LessonAIS";
 import LessonGMDSS from "./LessonGMDSS";
 import LessonSMCP_L1 from "./LessonSMCP_L1";
 import LessonSMCP_L2 from "./LessonSMCP_L2";
+import LessonSMCP_L3 from "./LessonSMCP_L3";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";

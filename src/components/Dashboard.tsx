@@ -246,6 +246,7 @@ export const MODULES = {
       lessons:[
         {id:"l1",title:{fr:"Bridge Watch & Reporting",en:"Bridge Watch & Reporting",es:"Bridge Watch & Reporting",pt:"Bridge Watch & Reporting"},access:"premium",status:"available"},
         {id:"l2",title:{fr:"Port & VTS Communications",en:"Port & VTS Communications",es:"Port & VTS Communications",pt:"Port & VTS Communications"},access:"premium",status:"available"},
+        {id:"l3",title:{fr:"Safety & Emergency SMCP",en:"Safety & Emergency SMCP",es:"Safety & Emergency SMCP",pt:"Safety & Emergency SMCP"},access:"premium",status:"available"},
       ]
     },
     { id:"d5", icon:"⛵", color:C.blue, access:"premium_plus",
