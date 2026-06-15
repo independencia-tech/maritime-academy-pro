@@ -239,7 +239,7 @@ export const MODULES = {
       ]
     },
     { id:"d4", icon:"📡", color:"#9b59b6", access:"premium",
-      freeLessons:0, totalLessons:6,
+      freeLessons:0, totalLessons:7,
       title:{fr:"Anglais Maritime SMCP",en:"Maritime English SMCP",es:"Inglés Marítimo SMCP",pt:"Inglês Marítimo SMCP"},
       desc:{fr:"VHF, GMDSS, logbook, communications",en:"VHF, GMDSS, logbook, communications",es:"VHF, GMDSS, cuaderno, comunicaciones",pt:"VHF, GMDSS, diário de bordo, comunicações"},
       xp:300, status:"available", progress:0,
@@ -247,6 +247,7 @@ export const MODULES = {
         {id:"l1",title:{fr:"Bridge Watch & Reporting",en:"Bridge Watch & Reporting",es:"Bridge Watch & Reporting",pt:"Bridge Watch & Reporting"},access:"premium",status:"available"},
         {id:"l2",title:{fr:"Port & VTS Communications",en:"Port & VTS Communications",es:"Port & VTS Communications",pt:"Port & VTS Communications"},access:"premium",status:"available"},
         {id:"l3",title:{fr:"Safety & Emergency SMCP",en:"Safety & Emergency SMCP",es:"Safety & Emergency SMCP",pt:"Safety & Emergency SMCP"},access:"premium",status:"available"},
+        {id:"l4",title:{fr:"Navigation & Maneuvering",en:"Navigation & Maneuvering",es:"Navigation & Maneuvering",pt:"Navigation & Maneuvering"},access:"premium",status:"available"},
       ]
     },
     { id:"d5", icon:"⛵", color:C.blue, access:"premium_plus",
