@@ -1441,7 +1441,7 @@ function AppInner() {
         setPage("seamanship_lessons");
         return;
       }
-      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","iml_lessons","sb_lessons","smcp_lessons","admin","admin-login"].includes(cur)) {
+      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","admin","admin-login"].includes(cur)) {
         try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
         setPage("dashboard");
         return;
