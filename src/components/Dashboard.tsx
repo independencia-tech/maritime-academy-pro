@@ -256,7 +256,7 @@ export const MODULES = {
     },
     { id:"d5", icon:"⛵", color:C.blue, access:"premium_plus",
       freeLessons:0, totalLessons:5,
-      title:{fr:"Ship Career Navigator™",en:"Ship Career Navigator™",es:"Ship Career Navigator™",pt:"Ship Career Navigator™"},
+      title:{fr:"My Career Advisor™",en:"My Career Advisor™",es:"My Career Advisor™",pt:"My Career Advisor™"},
       desc:{fr:"Feuille de route personnalisée par poste",en:"Personalized career roadmap by position",es:"Hoja de ruta personalizada por puesto",pt:"Roteiro personalizado por cargo"},
       xp:250, status:"locked", progress:0 },
   ],
@@ -361,7 +361,7 @@ export const MODULES = {
       xp:0, status:"coming", progress:0 },
     { id:"t7", icon:"⛵", color:C.blue, access:"premium_plus",
       freeLessons:0, totalLessons:0,
-      title:{fr:"Ship Career Navigator™",en:"Ship Career Navigator™",es:"Ship Career Navigator™",pt:"Ship Career Navigator™"},
+      title:{fr:"My Career Advisor™",en:"My Career Advisor™",es:"My Career Advisor™",pt:"My Career Advisor™"},
       desc:{fr:"AB→Capitaine · Oiler→Chef Mécanicien · Yacht→Skipper",en:"AB→Captain · Oiler→Chief Engineer · Yacht→Skipper",es:"AB→Capitán · Oiler→Jefe Máqs · Yacht→Patrón",pt:"AB→Capitão · Oiler→Chefe Máqs · Iate→Skipper"},
       xp:0, status:"coming", progress:0 },
   ],
@@ -444,10 +444,10 @@ function UnlockModal({module,t,lang,onClose}) {
       pt:["✅ Todos os módulos Convés e Máquinas","✅ Quizzes completos 5 perguntas + explicações","✅ Fichas resumo PNG para download","✅ Certificados de módulo","✅ Banco 500+ questões STCW","✅ Exames simulados oficiais 20P/30min","✅ Casos reais de acidentes marítimos","✅ Acesso prioritário novos módulos","","💰 9$/mês · Cancelável a qualquer momento"],
     },
     premium_plus:{
-      fr:["👑 Tout Premium +","","🤖 Assistant IA Maritime 24h/24","🎯 Coaching personnalisé IA","💼 Simulation d'entretiens (Maersk, MSC, Offshore...)","📄 Génération de CV maritime + lettre de motivation","🚀 Conseils de carrière personnalisés par région","🔍 MarineVerify™ — vérification STCW","⛵ Ship Career Navigator™ avancé","","💰 25$/mois · Annulable à tout moment"],
-      en:["👑 Everything in Premium +","","🤖 Maritime AI Assistant 24/7","🎯 AI personal coaching","💼 Interview simulation (Maersk, MSC, Offshore...)","📄 Maritime CV generation + cover letter","🚀 Personalized career advice by region","🔍 MarineVerify™ — STCW verification","⛵ Advanced Ship Career Navigator™","","💰 $25/month · Cancel anytime"],
-      es:["👑 Todo Premium +","","🤖 Asistente IA Marítimo 24/7","🎯 Coaching personalizado IA","💼 Simulación entrevistas (Maersk, MSC, Offshore...)","📄 Generación CV marítimo + carta de motivación","🚀 Consejos de carrera personalizados por región","🔍 MarineVerify™ — verificación STCW","⛵ Ship Career Navigator™ avanzado","","💰 25$/mes · Cancelable en cualquier momento"],
-      pt:["👑 Tudo Premium +","","🤖 Assistente IA Marítimo 24/7","🎯 Coaching personalizado IA","💼 Simulação entrevistas (Maersk, MSC, Offshore...)","📄 Geração de CV marítimo + carta de motivação","🚀 Conselhos de carreira personalizados por região","🔍 MarineVerify™ — verificação STCW","⛵ Ship Career Navigator™ avançado","","💰 25$/mês · Cancelável a qualquer momento"],
+      fr:["👑 Tout Premium +","","🤖 Assistant IA Maritime 24h/24","🎯 Coaching personnalisé IA","💼 Simulation d'entretiens (Maersk, MSC, Offshore...)","📄 Génération de CV maritime + lettre de motivation","🚀 Conseils de carrière personnalisés par région","🔍 MarineVerify™ — vérification STCW","⛵ My Career Advisor™ avancé","","💰 25$/mois · Annulable à tout moment"],
+      en:["👑 Everything in Premium +","","🤖 Maritime AI Assistant 24/7","🎯 AI personal coaching","💼 Interview simulation (Maersk, MSC, Offshore...)","📄 Maritime CV generation + cover letter","🚀 Personalized career advice by region","🔍 MarineVerify™ — STCW verification","⛵ Advanced My Career Advisor™","","💰 $25/month · Cancel anytime"],
+      es:["👑 Todo Premium +","","🤖 Asistente IA Marítimo 24/7","🎯 Coaching personalizado IA","💼 Simulación entrevistas (Maersk, MSC, Offshore...)","📄 Generación CV marítimo + carta de motivación","🚀 Consejos de carrera personalizados por región","🔍 MarineVerify™ — verificación STCW","⛵ My Career Advisor™ avanzado","","💰 25$/mes · Cancelable en cualquier momento"],
+      pt:["👑 Tudo Premium +","","🤖 Assistente IA Marítimo 24/7","🎯 Coaching personalizado IA","💼 Simulação entrevistas (Maersk, MSC, Offshore...)","📄 Geração de CV marítimo + carta de motivação","🚀 Conselhos de carreira personalizados por região","🔍 MarineVerify™ — verificação STCW","⛵ My Career Advisor™ avançado","","💰 25$/mês · Cancelável a qualquer momento"],
     },
   };
 

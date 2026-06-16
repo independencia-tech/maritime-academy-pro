@@ -121,7 +121,7 @@ const T = {
       {icon:"🚩",title:"Signalisation & Balisage",desc:"AISM, pavillons CIS, code Morse et feux COLREG"},
       {icon:"🩺",title:"Secourisme STCW",desc:"EFA, MFA, MCC — du geste qui sauve au MEDEVAC"},
       {icon:"🔍",title:"MarineVerify™",desc:"Vérification d'authenticité des brevets en temps réel"},
-      {icon:"⚓",title:"Ship Career Navigator™",desc:"Feuille de route selon ton navire de rêve"},
+      {icon:"⚓",title:"My Career Advisor™",desc:"Feuille de route selon ton navire de rêve"},
     ],
   },
   en: {
@@ -168,7 +168,7 @@ const T = {
       {icon:"🚩",title:"Signaling & Buoyage",desc:"IALA, CIS flags, Morse code and COLREG lights"},
       {icon:"🩺",title:"STCW First Aid",desc:"EFA, MFA, MCC — from CPR to MEDEVAC"},
       {icon:"🔍",title:"MarineVerify™",desc:"Real-time certificate authenticity verification"},
-      {icon:"⚓",title:"Ship Career Navigator™",desc:"Personalized roadmap for your dream ship"},
+      {icon:"⚓",title:"My Career Advisor™",desc:"Personalized roadmap for your dream ship"},
     ],
   },
   es: {
@@ -215,7 +215,7 @@ const T = {
       {icon:"🚩",title:"Señalización & Balizamiento",desc:"IALA, banderas CIS, código Morse y luces COLREG"},
       {icon:"🩺",title:"Primeros Auxilios STCW",desc:"EFA, MFA, MCC — de RCP a MEDEVAC"},
       {icon:"🔍",title:"MarineVerify™",desc:"Verificación de autenticidad de certificados"},
-      {icon:"⚓",title:"Ship Career Navigator™",desc:"Hoja de ruta según tu barco ideal"},
+      {icon:"⚓",title:"My Career Advisor™",desc:"Hoja de ruta según tu barco ideal"},
     ],
   },
   pt: {
@@ -262,7 +262,7 @@ const T = {
       {icon:"🚩",title:"Sinalização & Balizamento",desc:"IALA, bandeiras CIS, código Morse e luzes COLREG"},
       {icon:"🩺",title:"Primeiros Socorros STCW",desc:"EFA, MFA, MCC — de RCP a MEDEVAC"},
       {icon:"🔍",title:"MarineVerify™",desc:"Verificação de autenticidade de certificados"},
-      {icon:"⚓",title:"Ship Career Navigator™",desc:"Roteiro personalizado para seu navio ideal"},
+      {icon:"⚓",title:"My Career Advisor™",desc:"Roteiro personalizado para seu navio ideal"},
     ],
   },
 };
