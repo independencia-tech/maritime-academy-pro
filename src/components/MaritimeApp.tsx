@@ -1723,6 +1723,16 @@ function AppInner() {
           }}
         />
       )}
+      {page === "seamanship_lessons" && (
+        <SeamanshipLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_sea_l1");
+          }}
+        />
+      )}
       {page === "iml_lessons" && (
         <IMLLessonsPage
           lang={lang}
