@@ -1,0 +1,665 @@
+// @ts-nocheck
+import { useState, useEffect } from "react";
+
+const C = {
+  navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
+  gold:"#c9922a", gold2:"#e8b94f", blue:"#1a6fd4", blue2:"#4da6ff",
+  white:"#f0f4ff", muted:"rgba(240,244,255,0.45)", border:"rgba(201,146,42,0.22)",
+  green:"#1e8a4a", red:"#c0392b", orange:"#e67e22", teal:"#0a8a6c", purple:"#8e44ad",
+  eng:"#f97316", alarm:"#ef4444", maint:"#22d3ee", fuel:"#a855f7",
+};
+
+const T = {
+  fr:{ back:"◀ Retour", module:"Maritime English SMCP", xp:"XP gagnés", quiz:"QUIZ", question:"Question", ofQ:"sur", correct:"✓ Bonne réponse!", wrong:"✗ Mauvaise réponse", expl:"Explication:", next:"SUIVANT →", finish:"VOIR MON SCORE →", startQuiz:"✅ COMMENCER LE QUIZ", complete:"🏅 LEÇON TERMINÉE!", backDash:"← RETOUR AU DASHBOARD", youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz", showCorr:"Voir la correction", hideCorr:"Masquer" },
+  en:{ back:"◀ Back", module:"Maritime English SMCP", xp:"XP earned", quiz:"QUIZ", question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer", expl:"Explanation:", next:"NEXT →", finish:"SEE MY SCORE →", startQuiz:"✅ START QUIZ", complete:"🏅 LESSON COMPLETE!", backDash:"← BACK TO DASHBOARD", youLearned:"You learned:", readFirst:"Read the content then start the quiz", showCorr:"Show correction", hideCorr:"Hide" },
+  es:{ back:"◀ Volver", module:"Inglés Marítimo SMCP", xp:"XP ganados", quiz:"QUIZ", question:"Pregunta", ofQ:"de", correct:"✓ ¡Correcta!", wrong:"✗ Incorrecta", expl:"Explicación:", next:"SIGUIENTE →", finish:"VER PUNTUACIÓN →", startQuiz:"✅ EMPEZAR QUIZ", complete:"🏅 ¡COMPLETADA!", backDash:"← VOLVER AL PANEL", youLearned:"Has aprendido:", readFirst:"Lee y luego comienza", showCorr:"Ver corrección", hideCorr:"Ocultar" },
+  pt:{ back:"◀ Voltar", module:"Inglês Marítimo SMCP", xp:"XP ganhos", quiz:"QUIZ", question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada", expl:"Explicação:", next:"PRÓXIMO →", finish:"VER PONTUAÇÃO →", startQuiz:"✅ COMEÇAR QUIZ", complete:"🏅 CONCLUÍDA!", backDash:"← VOLTAR AO PAINEL", youLearned:"Você aprendeu:", readFirst:"Leia o conteúdo e depois comece", showCorr:"Ver correção", hideCorr:"Ocultar" },
+};
+
+// ══════════════════════════════════════
+// SVG 1 — ENGINE ROOM COMMUNICATIONS
+// ══════════════════════════════════════
+function EngineRoomCommSVG({ lang }) {
+  const [step, setStep] = useState(0);
+
+  const exchanges = [
+    { from:"BRIDGE", color:C.blue2, icon:"🗺️",
+      smcp:"Engine room, this is the bridge. Stand by for manoeuvring. We are approaching the pilot boarding ground. ETA 20 minutes.",
+      fr:"Salle des machines, ici la passerelle. Prêt à manœuvrer. Nous approchons du lieu d'embarquement du pilote. ETA 20 minutes.",
+      note:{fr:"COMMUNICATION PASSERELLE → S.DES MACHINES\n\n'Stand by for manoeuvring' = se tenir prêt à manœuvrer\n\nPHRASES CLÉS :\n'Stand by main engine' = préparer le moteur principal\n'ETA [X] minutes' = heure d'arrivée estimée\n\nRÉPONSE ATTENDUE :\n'Bridge, engine room. Ready for manoeuvring.\nMain engine is on stand by. Over.'",
+            en:"BRIDGE → ENGINE ROOM COMMUNICATION\n\n'Stand by for manoeuvring' = be ready to manoeuvre\n\nKEY PHRASES:\n'Stand by main engine' = prepare main engine\n'ETA [X] minutes' = estimated arrival time\n\nEXPECTED RESPONSE:\n'Bridge, engine room. Ready for manoeuvring.\nMain engine is on stand by. Over.'",
+            es:"COMUNICACIÓN PUENTE → SALA DE MÁQUINAS\n\n'Stand by for manoeuvring' = estar listo para maniobrar\n\nRESPUESTA ESPERADA:\n'Bridge, engine room. Ready for manoeuvring.\nMain engine is on stand by. Over.'",
+            pt:"COMUNICAÇÃO PONTE → CASA DAS MÁQUINAS\n\n'Stand by for manoeuvring' = estar pronto para manobrar\n\nRESPOSTA ESPERADA:\n'Bridge, engine room. Ready for manoeuvring.\nMain engine is on stand by. Over.'"} },
+    { from:"ENGINE ROOM", color:C.eng, icon:"⚙️",
+      smcp:"Bridge, engine room. Main engine is ready. Fuel changeover to diesel is complete. Auxiliary blowers are running. Ready for manoeuvring. Over.",
+      fr:"Passerelle, salle des machines. Moteur principal prêt. Changement de combustible vers diesel terminé. Soufflantes auxiliaires en marche. Prêt à manœuvrer. Terminé.",
+      note:{fr:"RAPPORT PRÊT À MANŒUVRER\n\nÉLÉMENTS CLÉS DU RAPPORT :\n→ Main engine is ready (moteur principal prêt)\n→ Fuel changeover complete (dans les ports : diesel obligatoire)\n→ Auxiliary blowers running (ventilation cylindres)\n→ Ready for manoeuvring (disponible)\n\nFUEL CHANGEOVER (obligatoire dans les ECA) :\n'Fuel changeover from heavy fuel oil to marine gas oil is complete at position [lat/long].'\n\nECA = Emission Control Area\n(Manche, Mer du Nord, Mer Baltique, côtes US)",
+            en:"READY FOR MANOEUVRING REPORT\n\nKEY REPORT ELEMENTS:\n→ Main engine is ready\n→ Fuel changeover complete (diesel mandatory in ports)\n→ Auxiliary blowers running (cylinder ventilation)\n→ Ready for manoeuvring\n\nFUEL CHANGEOVER (mandatory in ECAs):\n'Fuel changeover from heavy fuel oil to marine gas oil is complete at position [lat/long].'\n\nECA = Emission Control Area\n(English Channel, North Sea, Baltic, US coasts)",
+            es:"INFORME LISTO PARA MANIOBRAR\n\nELEMENTOS CLAVE DEL INFORME:\n→ Main engine is ready\n→ Cambio de combustible completado\n→ Soplantes auxiliares en marcha\n→ Ready for manoeuvring\n\nCAMBIO DE COMBUSTIBLE (obligatorio en ECA):\n'Fuel changeover from HFO to MGO is complete at position [lat/long].'",
+            pt:"RELATÓRIO PRONTO PARA MANOBRAR\n\nELEMENTOS CHAVE DO RELATÓRIO:\n→ Main engine is ready\n→ Mudança de combustível completa\n→ Sopradores auxiliares em funcionamento\n→ Ready for manoeuvring\n\nMUDANÇA DE COMBUSTÍVEL (obrigatória em ECAs):\n'Fuel changeover from HFO to MGO is complete at position [lat/long].'"} },
+    { from:"BRIDGE", color:C.blue2, icon:"🗺️",
+      smcp:"Engine room, this is bridge. Dead slow ahead please.",
+      fr:"Salle des machines, ici passerelle. Très petite vitesse avant, s'il vous plaît.",
+      note:{fr:"ORDRES DE VITESSE (Bridge → Engine Room)\n\nSÉQUENCE COMPLÈTE :\nFull ahead · Half ahead · Slow ahead · Dead slow ahead\nStop · Dead slow astern · Slow astern · Half astern · Full astern\n\nCONFIRMATION OBLIGATOIRE :\nChaque ordre doit être confirmé par la S.D.M. :\n'Dead slow ahead — engine on dead slow ahead. RPM [X]. Over.'\n\nRPM (Revolutions Per Minute) :\nToujours indiquer les RPM en réponse aux ordres",
+            en:"SPEED ORDERS (Bridge → Engine Room)\n\nFULL SEQUENCE:\nFull ahead · Half ahead · Slow ahead · Dead slow ahead\nStop · Dead slow astern · Slow astern · Half astern · Full astern\n\nMANDATORY CONFIRMATION:\nEach order must be confirmed by ER:\n'Dead slow ahead — engine on dead slow ahead. RPM [X]. Over.'\n\nRPM (Revolutions Per Minute):\nAlways state RPM in response to orders",
+            es:"ÓRDENES DE VELOCIDAD (Puente → Sala de Máquinas)\n\nSECUENCIA COMPLETA:\nFull ahead · Half ahead · Slow ahead · Dead slow ahead\nStop · Dead slow astern · Slow astern · Half astern · Full astern\n\nCONFIRMACIÓN OBLIGATORIA:\nCada orden debe ser confirmada por la S.D.M.:\n'Dead slow ahead — engine on dead slow ahead. RPM [X]. Over.'",
+            pt:"ORDENS DE VELOCIDADE (Ponte → Sala de Máquinas)\n\nSEQUÊNCIA COMPLETA:\nFull ahead · Half ahead · Slow ahead · Dead slow ahead\nStop · Dead slow astern · Slow astern · Half astern · Full astern\n\nCONFIRMAÇÃO OBRIGATÓRIA:\nCada ordem deve ser confirmada pela S.M.:\n'Dead slow ahead — engine on dead slow ahead. RPM [X]. Over.'"} },
+    { from:"ENGINE ROOM", color:C.eng, icon:"⚙️",
+      smcp:"Bridge, engine room. I have an engine alarm. High temperature alarm on cylinder number 4. I am investigating. Speed may need to be reduced. Over.",
+      fr:"Passerelle, salle des machines. J'ai une alarme moteur. Alarme haute température sur le cylindre numéro 4. J'enquête. La vitesse devra peut-être être réduite. Terminé.",
+      note:{fr:"RAPPORT D'ALARME MOTEUR\n\nSTRUCTURE DU RAPPORT :\n1. Nature de l'alarme (high temp / low pressure / vibration)\n2. Composant affecté (cylinder / bearing / turbocharger)\n3. Action en cours (investigating / repairing)\n4. Impact probable sur la navigation\n\nALARMES COURANTES :\n→ High temperature alarm (alarme haute temp)\n→ Low oil pressure alarm (alarme basse pression huile)\n→ Turbocharger fault (défaut turbo)\n→ Overspeed alarm (alarme survitesse)\n→ Scavenge fire (incendie boite à balayage)",
+            en:"ENGINE ALARM REPORT\n\nREPORT STRUCTURE:\n1. Alarm type (high temp / low pressure / vibration)\n2. Affected component (cylinder / bearing / turbocharger)\n3. Action taken (investigating / repairing)\n4. Probable impact on navigation\n\nCOMMON ALARMS:\n→ High temperature alarm\n→ Low oil pressure alarm\n→ Turbocharger fault\n→ Overspeed alarm\n→ Scavenge fire",
+            es:"INFORME DE ALARMA DE MOTOR\n\nESTRUCTURA DEL INFORME:\n1. Tipo de alarma (alta temp / baja presión / vibración)\n2. Componente afectado (cilindro / cojinete / turbocompresor)\n3. Acción tomada (investigando / reparando)\n4. Impacto probable en la navegación\n\nALARMAS COMUNES:\n→ Alarma de alta temperatura\n→ Alarma de baja presión de aceite\n→ Fallo del turbocompresor",
+            pt:"RELATÓRIO DE ALARME DE MOTOR\n\nESTRUTURA DO RELATÓRIO:\n1. Tipo de alarme (alta temp / baixa pressão / vibração)\n2. Componente afetado (cilindro / rolamento / turbocompressor)\n3. Ação tomada (a investigar / a reparar)\n4. Impacto provável na navegação\n\nALARMES COMUNS:\n→ Alarme de alta temperatura\n→ Alarme de baixa pressão de óleo\n→ Falha do turbocompressor"} },
+    { from:"BRIDGE", color:C.blue2, icon:"🗺️",
+      smcp:"Engine room, bridge. Understood. Please keep me informed. Can you maintain present speed? Over.",
+      fr:"Salle des machines, passerelle. Bien reçu. Veuillez me tenir informé. Pouvez-vous maintenir la vitesse actuelle ? Terminé.",
+      note:{fr:"SUIVI D'ALARME — COMMUNICATION CONTINUE\n\nPHRASES UTILES :\n'Please keep me informed' = tenez-moi informé\n'Can you maintain speed?' = pouvez-vous maintenir la vitesse ?\n'How long will repairs take?' = combien de temps prendra la réparation ?\n'Do you need to stop the engine?' = faut-il arrêter le moteur ?\n\nRÉPONSES ER POSSIBLES :\n'We can maintain present speed for [X] hours.'\n'We need to reduce speed to [X] knots.'\n'We need to stop the engine for [X] minutes.'\n'Repairs are complete. Full power is available.'",
+            en:"ALARM FOLLOW-UP — CONTINUOUS COMMUNICATION\n\nUSEFUL PHRASES:\n'Please keep me informed' = update me regularly\n'Can you maintain speed?' = can current speed continue?\n'How long will repairs take?' = ETA for fix?\n'Do you need to stop the engine?' = full stop required?\n\nPOSSIBLE ER RESPONSES:\n'We can maintain present speed for [X] hours.'\n'We need to reduce speed to [X] knots.'\n'We need to stop the engine for [X] minutes.'\n'Repairs are complete. Full power is available.'",
+            es:"SEGUIMIENTO DE ALARMA — COMUNICACIÓN CONTINUA\n\nFRASES ÚTILES:\n'Please keep me informed' = manténgame informado\n'Can you maintain speed?' = ¿puede mantener la velocidad actual?\n'How long will repairs take?' = ¿cuánto tardarán las reparaciones?\n'Do you need to stop the engine?' = ¿necesita parar el motor?",
+            pt:"ACOMPANHAMENTO DE ALARME — COMUNICAÇÃO CONTÍNUA\n\nFRASES ÚTEIS:\n'Please keep me informed' = mantenha-me informado\n'Can you maintain speed?' = consegue manter a velocidade atual?\n'How long will repairs take?' = quanto tempo levarão as reparações?\n'Do you need to stop the engine?' = precisa de parar o motor?"} },
+  ];
+
+  const e = exchanges[step];
+  const isBridge = e.from === "BRIDGE";
+
+  return (
+    <div>
+      <div style={{display:"flex",gap:4,marginBottom:10}}>
+        {exchanges.map((_,i)=>(
+          <div key={i} onClick={()=>setStep(i)} style={{
+            flex:1,height:4,borderRadius:4,cursor:"pointer",
+            background:i<=step?(i===step?C.eng:`${C.eng}55`):"rgba(255,255,255,0.1)"}}/>
+        ))}
+      </div>
+      <div style={{fontSize:9,color:C.eng,letterSpacing:2,textAlign:"center",marginBottom:8,fontFamily:"'Cinzel',serif"}}>
+        BRIDGE ↔ ENGINE ROOM — {step+1}/{exchanges.length}
+      </div>
+      <div style={{padding:"12px",borderRadius:14,marginBottom:10,
+        background:isBridge?"rgba(77,166,255,0.08)":"rgba(249,115,22,0.08)",
+        border:`2px solid ${isBridge?C.blue2:C.eng}55`,animation:"fadeUp 0.3s ease"}}>
+        <div style={{fontSize:9,fontWeight:700,color:isBridge?C.blue2:C.eng,marginBottom:6,letterSpacing:1}}>
+          {e.icon} {e.from}
+        </div>
+        <div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:C.white,lineHeight:1.6,fontWeight:600,marginBottom:6}}>
+          "{e.smcp}"
+        </div>
+        {lang!=="en"&&<div style={{fontSize:10,color:C.muted,fontStyle:"italic"}}>{e.fr}</div>}
+      </div>
+      <div style={{padding:"10px 12px",borderRadius:12,background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.06)",marginBottom:10,fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
+        {e.note[lang]||e.note.en}
+      </div>
+      <div style={{display:"flex",gap:8}}>
+        <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
+          style={{flex:1,padding:"9px",borderRadius:10,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+        </button>
+        <button onClick={()=>setStep(s=>Math.min(exchanges.length-1,s+1))} disabled={step===exchanges.length-1}
+          style={{flex:1,padding:"9px",borderRadius:10,background:step===exchanges.length-1?"rgba(255,255,255,0.05)":`${C.eng}22`,border:`1px solid ${step===exchanges.length-1?"rgba(255,255,255,0.08)":C.eng}`,color:C.white,cursor:step===exchanges.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
+          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// SVG 2 — ENGINE DEFECTS FLASHCARDS
+// ══════════════════════════════════════
+function EngineDefectsFlashcardsSVG({ lang }) {
+  const [cat, setCat] = useState("main");
+  const [idx, setIdx] = useState(0);
+  const [flipped, setFlipped] = useState(false);
+
+  const categories = {
+    main:{ label:{fr:"Moteur principal",en:"Main engine",es:"Motor principal",pt:"Motor principal"}, icon:"⚙️", color:C.eng, cards:[
+      { q:"How do you report a main engine failure?", a:"I have a main engine failure. Engine has [stopped / reduced power]. Cause is [unknown / fuel / cooling / mechanical]. I am [investigating / unable to proceed]. I require [tug / assistance / time to repair].", fr:"J'ai une panne de moteur principal. Le moteur s'est [arrêté / réduit en puissance]. Cause [inconnue / carburant / refroidissement / mécanique]. Je [enquête / ne peux pas avancer]. J'ai besoin [d'un remorqueur / assistance / de temps pour réparer]." },
+      { q:"How do you report a turbocharger failure?", a:"I have a turbocharger failure on [port/starboard] turbocharger. Engine power is reduced to [X] percent. Maximum speed is now [X] knots. Repairs are [in progress / expected to take X hours].", fr:"J'ai une panne du turbocompresseur [bâbord/tribord]. La puissance du moteur est réduite à [X] pour cent. La vitesse maximale est maintenant de [X] nœuds. Les réparations sont [en cours / prévues pour durer X heures]." },
+      { q:"How do you report a main engine bearing failure?", a:"I have a bearing failure on main engine. Engine has been stopped to prevent further damage. I am unable to proceed under own power. I require tug assistance.", fr:"J'ai une panne de palier sur le moteur principal. Le moteur a été arrêté pour éviter d'autres dommages. Je ne peux pas avancer sous ma propre propulsion. J'ai besoin d'assistance de remorqueur." },
+      { q:"How do you report a main engine overspeed?", a:"Main engine overspeed alarm has activated. Engine has automatically shut down. I am investigating the cause. Navigation is affected. I am at anchor / drifting.", fr:"L'alarme de survitesse du moteur principal s'est déclenchée. Le moteur s'est arrêté automatiquement. J'enquête sur la cause. La navigation est affectée. Je suis au mouillage / à la dérive." },
+    ]},
+    aux:{ label:{fr:"Auxiliaires",en:"Auxiliaries",es:"Auxiliares",pt:"Auxiliares"}, icon:"🔋", color:C.maint, cards:[
+      { q:"How do you report a generator failure?", a:"I have a generator failure. Generator [X] has tripped/stopped. We are operating on [X] generators. Load shedding is in effect. Non-essential equipment has been switched off.", fr:"J'ai une panne de générateur. Le générateur [X] s'est déclenché/arrêté. Nous fonctionnons sur [X] générateurs. Le délestage est en vigueur. Les équipements non essentiels ont été éteints." },
+      { q:"How do you report a steering gear failure?", a:"I have a steering gear failure. I have [lost steering / reduced steering]. I am [switching to emergency steering / hand steering / requesting tug]. Vessel is [drifting / at anchor / proceeding at reduced speed].", fr:"J'ai une panne d'appareil à gouverner. J'ai [perdu la gouverne / gouverne réduite]. Je [passe à la gouverne d'urgence / gouverne manuelle / demande remorqueur]. Le navire est [à la dérive / au mouillage / avance à vitesse réduite]." },
+      { q:"How do you report a bilge pump failure?", a:"I have a bilge pump failure. Bilge pump [X] is not functioning. Water level in [hold/engine room/bilge] is [rising / stable]. I require [repair / portable pump / assistance].", fr:"J'ai une panne de pompe de cale. La pompe de cale [X] ne fonctionne pas. Le niveau d'eau dans [la cale/la salle des machines/le puisard] est [en hausse / stable]. J'ai besoin [de réparation / d'une pompe portable / d'assistance]." },
+      { q:"How do you report a boiler failure?", a:"I have a boiler failure. Boiler [X] has been shut down. Steam pressure is [X] bar and [rising/falling]. Heating of cargo/fuel oil is affected. Estimated repair time is [X] hours.", fr:"J'ai une panne de chaudière. La chaudière [X] a été arrêtée. La pression de vapeur est de [X] bars et [en hausse/en baisse]. Le chauffage de la cargaison/du fioul est affecté. Durée de réparation estimée : [X] heures." },
+    ]},
+    fuel:{ label:{fr:"Carburant & Huile",en:"Fuel & Oil",es:"Combustible y Aceite",pt:"Combustível e Óleo"}, icon:"🛢️", color:C.fuel, cards:[
+      { q:"How do you report a fuel oil leak?", a:"I have a fuel oil leak in the engine room. Estimated leak rate is [X] litres per hour. I have contained the leak with [drip trays / rags]. I am [repairing / stopping the fuel supply].", fr:"J'ai une fuite de fioul dans la salle des machines. Taux de fuite estimé : [X] litres par heure. J'ai contenu la fuite avec [bacs de rétention / chiffons]. Je suis en train [de réparer / de couper l'alimentation en carburant]." },
+      { q:"How do you report low lubricating oil pressure?", a:"I have low lubricating oil pressure alarm on main engine. Oil pressure is [X] bar. Normal pressure is [X] bar. I am investigating. Engine speed has been reduced as a precaution.", fr:"J'ai une alarme de basse pression d'huile de lubrification sur le moteur principal. La pression d'huile est de [X] bars. La pression normale est de [X] bars. J'enquête. La vitesse du moteur a été réduite par précaution." },
+      { q:"How do you report fuel changeover?", a:"Fuel changeover from [heavy fuel oil / diesel] to [diesel / heavy fuel oil] commenced at [time] UTC at position [lat/long]. Changeover is complete. Fuel oil viscosity is [X] centistokes.", fr:"Le changement de carburant du [fioul lourd / diesel] vers le [diesel / fioul lourd] a commencé à [heure] UTC en position [lat/long]. Le changement est terminé. La viscosité du fioul est de [X] centistokes." },
+      { q:"How do you report a fuel contamination?", a:"I have fuel contamination in tank [X]. The fuel is [contaminated with water / mixed with wrong grade]. I have isolated the affected tank. I require fuel analysis / alternative fuel supply.", fr:"J'ai une contamination de carburant dans la citerne [X]. Le carburant est [contaminé par de l'eau / mélangé avec une qualité incorrecte]. J'ai isolé la citerne affectée. J'ai besoin d'une analyse de carburant / d'une alimentation en carburant alternative." },
+    ]},
+    alarm:{ label:{fr:"Alarmes & Urgences",en:"Alarms & Emergencies",es:"Alarmas y Emergencias",pt:"Alarmes e Emergências"}, icon:"🚨", color:C.alarm, cards:[
+      { q:"How do you report a scavenge fire?", a:"I have a scavenge fire on cylinder [X]. Engine speed has been reduced. Scavenge drain cocks are open. I am monitoring the situation. [Fire is extinguished / Fire continues].", fr:"J'ai un incendie en boite à balayage sur le cylindre [X]. La vitesse du moteur a été réduite. Les robinets de vidange du balayage sont ouverts. Je surveille la situation. [L'incendie est éteint / L'incendie continue]." },
+      { q:"How do you report flooding in the engine room?", a:"I have flooding in the engine room. Water is entering from [bilge / sea valve / pipe failure]. Rate of flooding is [slow/fast]. Bilge pumps are [running / not sufficient]. I may require assistance.", fr:"J'ai un envahissement dans la salle des machines. L'eau entre par [le puisard / la vanne de mer / une rupture de tuyauterie]. Le taux d'envahissement est [lent/rapide]. Les pompes de cale sont [en marche / insuffisantes]. Je pourrais avoir besoin d'assistance." },
+      { q:"How do you report loss of electrical power?", a:"I have a blackout. All electrical power has been lost. Emergency generator has [started / failed to start]. Essential services are [restored / still not available]. I am investigating the cause.", fr:"J'ai un black-out. Toute l'alimentation électrique a été perdue. Le générateur de secours a [démarré / refusé de démarrer]. Les services essentiels sont [rétablis / toujours indisponibles]. J'enquête sur la cause." },
+      { q:"How do you report a CO2 system activation?", a:"CO2 system has been activated in engine room / cargo hold [X]. All personnel have evacuated. Engine room is sealed. I require immediate assistance and ventilation before re-entry.", fr:"Le système CO2 a été activé dans la salle des machines / la cale [X]. Tout le personnel a évacué. La salle des machines est étanche. J'ai besoin d'assistance immédiate et de ventilation avant la rentrée." },
+    ]},
+  };
+
+  const c = categories[cat];
+  const card = c.cards[idx];
+
+  return (
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:10}}>
+        {Object.entries(categories).map(([k,v])=>(
+          <button key={k} onClick={()=>{setCat(k);setIdx(0);setFlipped(false);}} style={{
+            padding:"7px 4px",borderRadius:10,cursor:"pointer",fontSize:9,fontWeight:700,
+            background:cat===k?`${v.color}22`:"rgba(255,255,255,0.04)",
+            border:`1.5px solid ${cat===k?v.color:"rgba(255,255,255,0.08)"}`,
+            color:cat===k?v.color:C.muted}}>
+            {v.icon} {v.label[lang]||v.label.en}
+          </button>
+        ))}
+      </div>
+      <div style={{display:"flex",gap:4,marginBottom:10}}>
+        {c.cards.map((_,i)=>(
+          <div key={i} onClick={()=>{setIdx(i);setFlipped(false);}} style={{
+            flex:1,height:4,borderRadius:4,cursor:"pointer",
+            background:i===idx?c.color:i<idx?`${c.color}55`:"rgba(255,255,255,0.1)"}}/>
+        ))}
+      </div>
+      <div onClick={()=>setFlipped(f=>!f)} style={{
+        padding:"16px",borderRadius:14,cursor:"pointer",minHeight:120,
+        background:flipped?`${c.color}18`:"rgba(0,0,0,0.4)",
+        border:`2px solid ${flipped?c.color:"rgba(255,255,255,0.08)"}`,
+        transition:"all 0.3s ease",animation:"fadeUp 0.3s ease",
+        display:"flex",flexDirection:"column",justifyContent:"center",marginBottom:10}}>
+        {!flipped?(
+          <div>
+            <div style={{fontSize:9,color:C.muted,letterSpacing:2,marginBottom:8}}>❓ {lang==="fr"?"Touche pour la réponse SMCP":lang==="en"?"Tap for SMCP answer":"Toca para respuesta SMCP"}</div>
+            <div style={{fontSize:13,color:C.white,fontWeight:700,lineHeight:1.5}}>{card.q}</div>
+          </div>
+        ):(
+          <div>
+            <div style={{fontSize:9,color:c.color,letterSpacing:2,marginBottom:8}}>✅ SMCP ANSWER</div>
+            <div style={{fontFamily:"'Courier New',monospace",fontSize:11,color:C.white,lineHeight:1.7,marginBottom:6,whiteSpace:"pre-line"}}>{card.a}</div>
+            {lang!=="en"&&<div style={{fontSize:10,color:C.muted,fontStyle:"italic",borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:6}}>{card.fr}</div>}
+          </div>
+        )}
+      </div>
+      <div style={{display:"flex",gap:8}}>
+        <button onClick={()=>{setIdx(i=>Math.max(0,i-1));setFlipped(false);}} disabled={idx===0}
+          style={{flex:1,padding:"9px",borderRadius:10,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:idx===0?C.muted:C.white,cursor:idx===0?"default":"pointer",fontSize:11}}>
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+        </button>
+        <button onClick={()=>{setIdx(i=>Math.min(c.cards.length-1,i+1));setFlipped(false);}} disabled={idx===c.cards.length-1}
+          style={{flex:1,padding:"9px",borderRadius:10,background:idx===c.cards.length-1?"rgba(255,255,255,0.05)":`${c.color}22`,border:`1px solid ${idx===c.cards.length-1?"rgba(255,255,255,0.08)":c.color}`,color:C.white,cursor:idx===c.cards.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
+          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// SVG 3 — MAINTENANCE PHRASES
+// ══════════════════════════════════════
+function MaintenancePhrasesSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+
+  const sections = [
+    { id:"routine", icon:"🔧", color:C.eng,
+      label:{fr:"Maintenance routine",en:"Routine maintenance",es:"Mantenimiento rutinario",pt:"Manutenção de rotina"},
+      phrases:[
+        { cmd:"Routine maintenance on [equipment] is scheduled for [time/date]", meaning:{fr:"Maintenance routine de [équipement] prévue pour [heure/date]",en:"Planned maintenance scheduled",es:"Mantenimiento rutinario de [equipo] programado para [hora/fecha]",pt:"Manutenção de rotina de [equipamento] programada para [hora/data]"} },
+        { cmd:"[Equipment] is taken out of service for maintenance", meaning:{fr:"[Équipement] mis hors service pour maintenance",en:"Equipment temporarily unavailable",es:"[Equipo] fuera de servicio para mantenimiento",pt:"[Equipamento] fora de serviço para manutenção"} },
+        { cmd:"Maintenance is complete. [Equipment] is back in service", meaning:{fr:"Maintenance terminée. [Équipement] remis en service",en:"Maintenance done, equipment available again",es:"Mantenimiento completo. [Equipo] de vuelta en servicio",pt:"Manutenção concluída. [Equipamento] de volta ao serviço"} },
+        { cmd:"I require a spare part for [equipment]. Part number [X]", meaning:{fr:"J'ai besoin d'une pièce de rechange pour [équipement]. Numéro de pièce [X]",en:"Spare part needed for repair",es:"Necesito un repuesto para [equipo]. Número de pieza [X]",pt:"Preciso de uma peça sobressalente para [equipamento]. Número da peça [X]"} },
+      ]},
+    { id:"inspection", icon:"🔍", color:C.maint,
+      label:{fr:"Inspections & Essais",en:"Inspections & Tests",es:"Inspecciones y Pruebas",pt:"Inspeções e Testes"},
+      phrases:[
+        { cmd:"Engine room inspection is scheduled", meaning:{fr:"Inspection de la salle des machines est prévue",en:"ER inspection planned",es:"Inspección de sala de máquinas programada",pt:"Inspeção da sala de máquinas programada"} },
+        { cmd:"Safety valve test has been completed. Valve is set at [X] bar", meaning:{fr:"Test de soupape de sécurité terminé. Soupape réglée à [X] bars",en:"Safety valve tested and set",es:"Prueba de válvula de seguridad completada. Válvula ajustada a [X] bar",pt:"Teste de válvula de segurança concluído. Válvula ajustada a [X] bar"} },
+        { cmd:"Emergency fire pump test is complete", meaning:{fr:"Test de la pompe incendie de secours terminé",en:"Emergency fire pump tested",es:"Prueba de bomba contra incendios de emergencia completada",pt:"Teste da bomba de incêndio de emergência concluído"} },
+        { cmd:"[Equipment] is due for class survey", meaning:{fr:"[Équipement] doit faire l'objet d'une visite de classe",en:"Classing survey due",es:"[Equipo] pendiente de revisión de clase",pt:"[Equipamento] com vistoria de classe pendente"} },
+      ]},
+    { id:"logbook", icon:"📋", color:C.fuel,
+      label:{fr:"Journal machine",en:"Engine log",es:"Diario de máquinas",pt:"Diário de máquinas"},
+      phrases:[
+        { cmd:"Engine log is up to date", meaning:{fr:"Le journal machine est à jour",en:"All engine parameters logged",es:"El diario de máquinas está al día",pt:"O diário de máquinas está atualizado"} },
+        { cmd:"Running hours for [equipment] are [X] hours", meaning:{fr:"Les heures de marche de [équipement] sont de [X] heures",en:"Equipment hours of operation",es:"Las horas de funcionamiento de [equipo] son [X] horas",pt:"As horas de funcionamento de [equipamento] são [X] horas"} },
+        { cmd:"Oil sample from [engine/system] has been taken", meaning:{fr:"Un échantillon d'huile du [moteur/système] a été prélevé",en:"Oil sample collected for analysis",es:"Se ha tomado una muestra de aceite del [motor/sistema]",pt:"Foi recolhida uma amostra de óleo do [motor/sistema]"} },
+        { cmd:"Fuel consumption for the voyage was [X] tonnes", meaning:{fr:"La consommation de carburant pour le voyage était de [X] tonnes",en:"Total fuel used on voyage",es:"El consumo de combustible para el viaje fue de [X] toneladas",pt:"O consumo de combustível para a viagem foi de [X] toneladas"} },
+      ]},
+  ];
+
+  const sel_ = sel!==null ? sections[sel] : null;
+  return (
+    <div>
+      <div style={{display:"flex",gap:8,marginBottom:10}}>
+        {sections.map((s,i)=>(
+          <div key={i} onClick={()=>setSel(sel===i?null:i)} style={{
+            flex:1,padding:"10px 4px",borderRadius:12,cursor:"pointer",textAlign:"center",
+            background:sel===i?`${s.color}22`:"rgba(255,255,255,0.04)",
+            border:`2px solid ${sel===i?s.color:"rgba(255,255,255,0.08)"}`}}>
+            <div style={{fontSize:18,marginBottom:3}}>{s.icon}</div>
+            <div style={{fontSize:9,color:sel===i?s.color:C.muted,fontWeight:700,lineHeight:1.2}}>{s.label[lang]||s.label.en}</div>
+          </div>
+        ))}
+      </div>
+      {sel_&&<div style={{padding:"12px",borderRadius:14,background:`${sel_.color}10`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
+        <div style={{fontSize:11,fontWeight:700,color:sel_.color,marginBottom:10}}>{sel_.icon} {sel_.label[lang]||sel_.label.en}</div>
+        {sel_.phrases.map((p,i)=>(
+          <div key={i} style={{marginBottom:8,paddingBottom:8,borderBottom:i<sel_.phrases.length-1?"1px solid rgba(255,255,255,0.05)":"none",display:"flex",gap:10,alignItems:"flex-start"}}>
+            <div style={{fontFamily:"'Courier New',monospace",fontSize:11,color:C.white,fontWeight:700,minWidth:180,flexShrink:0,lineHeight:1.4}}>{p.cmd}</div>
+            <div style={{fontSize:10,color:C.muted}}>→ {p.meaning[lang]||p.meaning.en}</div>
+          </div>
+        ))}
+      </div>}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// SVG 4 — ENGINE ROOM QUIZ
+// ══════════════════════════════════════
+function EngineQuizSVG({ lang }) {
+  const [qIdx, setQIdx] = useState(0);
+  const [ans, setAns] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+
+  const qs = [
+    { q:"Engine room confirms readiness for manoeuvring. What is the correct response?", opts:["OK ready","Bridge, engine room. Main engine is ready. Ready for manoeuvring. Over.","Engine ready","Yes we can manoeuvre"], correct:1 },
+    { q:"The bridge orders 'Stop engines'. What does the ER confirm?", opts:["Stopping","Stop engines — engines stopped. RPM zero. Over.","OK","Engines off"], correct:1 },
+    { q:"How do you report a generator trip (blackout)?", opts:["Lights off","I have a blackout. All electrical power has been lost. Emergency generator has [started/failed]. Essential services are [restored/not available]. Investigating cause.","Generator broken","Power gone"], correct:1 },
+    { q:"What does 'fuel changeover' mean?", opts:["Refuelling","Switching from one fuel type to another — typically heavy fuel oil to diesel/MGO when entering an ECA or port","Fuel tank change","New fuel delivery"], correct:1 },
+    { q:"How do you report a scavenge fire?", opts:["Engine on fire","I have a scavenge fire on cylinder [X]. Engine speed has been reduced. Scavenge drain cocks are open. I am monitoring.","Fire in ER","Combustion problem"], correct:1 },
+  ];
+
+  const q = qs[qIdx];
+  const pick=(i)=>{if(ans!==null)return;setAns(i);if(i===q.correct)setScore(s=>s+1);};
+  const next=()=>{if(qIdx<qs.length-1){setQIdx(q=>q+1);setAns(null);}else setDone(true);};
+
+  if(done) return (
+    <div style={{textAlign:"center",padding:"16px"}}>
+      <div style={{fontSize:40}}>{score>=4?"🏆":"📚"}</div>
+      <div style={{fontFamily:"'Cinzel',serif",fontSize:18,color:C.white,margin:"8px 0"}}>{score}/{qs.length}</div>
+      <button onClick={()=>{setDone(false);setQIdx(0);setAns(null);setScore(0);}} style={{padding:"8px 16px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer",fontSize:11}}>🔄 Retry</button>
+    </div>
+  );
+
+  return (
+    <div>
+      <div style={{display:"flex",gap:4,marginBottom:10}}>
+        {qs.map((_,i)=><div key={i} style={{flex:1,height:3,borderRadius:3,background:i<qIdx?C.eng:i===qIdx?C.alarm:"rgba(255,255,255,0.1)"}}/>)}
+      </div>
+      <div style={{fontSize:12,fontWeight:700,color:C.white,marginBottom:12,lineHeight:1.5}}>{q.q}</div>
+      <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:10}}>
+        {q.opts.map((opt,i)=>{
+          let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)";
+          if(ans!==null){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;}else if(i===ans){bg="rgba(192,57,43,0.2)";bd=C.red;}}
+          return <button key={i} onClick={()=>pick(i)} style={{padding:"10px 12px",borderRadius:12,background:bg,border:`1.5px solid ${bd}`,color:C.muted,fontSize:11,textAlign:"left",cursor:ans!==null?"default":"pointer",fontFamily:"'Courier New',monospace"}}>{opt}</button>;
+        })}
+      </div>
+      {ans!==null&&<button onClick={next} style={{width:"100%",padding:"11px 0",border:"none",borderRadius:12,background:`linear-gradient(135deg,${C.eng},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:C.navy,cursor:"pointer"}}>
+        {qIdx<qs.length-1?"NEXT →":"FINISH"}
+      </button>}
+    </div>
+  );
+}
+
+// ══════════════════════════════════════
+// EXERCISE
+// ══════════════════════════════════════
+function Exercise1({ lang, t }) {
+  const [ans,setAns]=useState({q1:"",q2:"",q3:""});
+  const [showC,setShowC]=useState(false);
+  const qs={
+    en:[
+      {id:"q1",q:"Engine room confirms readiness. First 4 words of response?\n(Answer in English)",correct:"Bridge engine room"},
+      {id:"q2",q:"'Stand by for manoeuvring' means what to the engine room?\n(Answer: 2-3 words)",correct:"Be ready"},
+      {id:"q3",q:"What is a 'blackout' in maritime context?\n(Answer: 2-3 words)",correct:"Loss of power"},
+    ],
+    fr:[
+      {id:"q1",q:"La salle des machines confirme sa disponibilité. Les 4 premiers mots de la réponse ?\n(Répondre en anglais)",correct:"Bridge engine room"},
+      {id:"q2",q:"'Stand by for manoeuvring' signifie quoi pour la salle des machines ?\n(Répondre : 2-3 mots)",correct:"Se tenir prêt"},
+      {id:"q3",q:"Qu'est-ce qu'un 'blackout' dans le contexte maritime ?\n(Répondre : 2-3 mots)",correct:"Perte d'alimentation"},
+    ],
+    es:[
+      {id:"q1",q:"La sala de máquinas confirma su disponibilidad. ¿Las primeras 4 palabras de la respuesta?\n(Responder en inglés)",correct:"Bridge engine room"},
+      {id:"q2",q:"¿Qué significa 'Stand by for manoeuvring' para la sala de máquinas?\n(Responder: 2-3 palabras)",correct:"Estar listo"},
+      {id:"q3",q:"¿Qué es un 'blackout' en el contexto marítimo?\n(Responder: 2-3 palabras)",correct:"Pérdida de energía"},
+    ],
+    pt:[
+      {id:"q1",q:"A sala de máquinas confirma a sua disponibilidade. As primeiras 4 palavras da resposta?\n(Responder em inglês)",correct:"Bridge engine room"},
+      {id:"q2",q:"O que significa 'Stand by for manoeuvring' para a sala de máquinas?\n(Responder: 2-3 palavras)",correct:"Estar pronto"},
+      {id:"q3",q:"O que é um 'blackout' no contexto marítimo?\n(Responder: 2-3 palavras)",correct:"Perda de energia"},
+    ],
+  };
+  const list=qs[lang]||qs.en;
+  const chk=(q,val)=>{
+    const v=val.trim().toLowerCase();
+    if(q.id==="q1") return v.includes("bridge")&&v.includes("engine");
+    if(q.id==="q2") return v.includes("ready")||v.includes("prêt")||v.includes("listo")||v.includes("pronto");
+    if(q.id==="q3") return v.includes("power")||v.includes("electric")||v.includes("current")||v.includes("alimentation")||v.includes("energía")||v.includes("energia");
+    return false;
+  };
+  return(
+    <div>
+      <div style={{background:"rgba(0,0,0,0.4)",borderRadius:12,padding:"10px 12px",marginBottom:12,border:`1px solid ${C.eng}44`,fontSize:11,color:C.gold2,lineHeight:1.6}}>
+        {lang==="fr"?"💡 Rappels : ER répond toujours 'Bridge, engine room' · Stand by = se tenir prêt · Blackout = perte d'alimentation électrique":
+         lang==="en"?"💡 Reminders: ER always responds 'Bridge, engine room' · Stand by = be ready · Blackout = total loss of electrical power":
+         lang==="es"?"💡 Recordatorios: S.M. siempre responde 'Bridge, engine room' · Stand by = estar listo · Blackout = pérdida total de energía eléctrica":
+         "💡 Lembretes: S.M. responde sempre 'Bridge, engine room' · Stand by = estar pronto · Blackout = perda total de energia elétrica"}
+      </div>
+      {list.map((q,i)=>(
+        <div key={q.id} style={{marginBottom:12}}>
+          <div style={{fontSize:12,color:C.white,marginBottom:6,lineHeight:1.5,whiteSpace:"pre-line",fontWeight:600}}>{i+1}. {q.q}</div>
+          <input type="text" value={ans[q.id]} onChange={e=>setAns(a=>({...a,[q.id]:e.target.value}))} placeholder="?"
+            style={{width:"100%",padding:"10px",borderRadius:10,background:"rgba(255,255,255,0.07)",border:`1px solid ${showC?(chk(q,ans[q.id])?C.green:C.red):C.border}`,color:C.white,fontSize:13,fontFamily:"'Courier New',monospace",fontWeight:700,textAlign:"center",boxSizing:"border-box"}}/>
+          {showC&&<div style={{fontSize:11,marginTop:4,fontWeight:600,color:chk(q,ans[q.id])?C.green:C.red}}>{chk(q,ans[q.id])?"✓":`✗ → ${q.correct}`}</div>}
+        </div>
+      ))}
+      {showC&&<div style={{padding:"12px",borderRadius:12,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:11,color:C.white,lineHeight:1.7,marginBottom:10,fontFamily:"'Courier New',monospace"}}>
+        Q1: 'BRIDGE, ENGINE ROOM' (standard opening · then add status · always confirm RPM)\nQ2: BE READY / STAND BY = prepare to execute engine orders at any moment\nQ3: BLACKOUT = total loss of electrical power on board · emergency generator should start automatically
+      </div>}
+      <button onClick={()=>setShowC(v=>!v)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:showC?"rgba(30,138,74,0.2)":`${C.eng}12`,border:`1px solid ${showC?C.green:C.eng}44`,color:showC?C.green:C.eng,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
+        {showC?t.hideCorr:t.showCorr}
+      </button>
+    </div>
+  );
+}
+
+const QUIZ = {
+  en:[
+    {q:"How does the engine room confirm a 'Full ahead' order?",opts:["Full ahead OK","Full ahead — engine on full ahead. RPM [X]. Over.","Going full speed","Engine running"],correct:1,expl:"Engine order confirmation SMCP: mandatory closed-loop communication. When bridge orders 'Full ahead': ER immediately responds 'Full ahead — engine is on full ahead. RPM [X]. Over.' This confirms: order heard, order executed, current RPM. Never just say 'OK' or nod. If unable to comply: 'Bridge, engine room. Unable to comply with full ahead. Maximum power available is [X] knots / [X] RPM due to [reason]. Over.'"},
+    {q:"What should the engine room report immediately after a main engine failure?",opts:["Engine broken","Bridge, engine room. Main engine failure. Engine has [stopped/reduced power]. I am [investigating/unable to proceed]. Navigation is affected. Over.","Engine stopped","Problem with engine"],correct:1,expl:"Main engine failure SMCP: 'Bridge, engine room. I have a main engine failure. Engine has [stopped / lost power / reduced to X%]. Cause appears to be [fuel / cooling / mechanical / unknown]. I am [investigating / attempting restart]. Estimated repair time: [X minutes / unknown]. I recommend [anchoring / requesting tug / reducing speed]. Over.' Bridge must be informed immediately — they need to take action to prevent collision/grounding."},
+    {q:"How do you report completion of a fuel changeover?",opts:["Changed fuel","Fuel changeover from [HFO/diesel] to [diesel/HFO] is complete. Changeover position: Latitude [X], Longitude [X]. Time: [UTC]. Fuel viscosity is now [X] centistokes.","Fuel OK","New fuel in use"],correct:1,expl:"Fuel changeover SMCP: 'Fuel changeover from [heavy fuel oil] to [marine gas oil / diesel] is complete. Changeover commenced at [time] UTC. Changeover completed at [time] UTC. Position at completion: Latitude [X], Longitude [X]. Fuel viscosity: [X] centistokes. All fuel parameters are normal. Over.' The position and time of changeover must be logged — regulators check this to verify ECA compliance. Required when entering ECAs and before entering ports."},
+    {q:"The engine room reports a bilge level rising. What information is critical?",opts:["Bilge is wet","Rate of ingress [slow/fast], source if known [sea valve/pipe], bilge pump status [running/coping], location [engine room/hold], and whether the situation is worsening.","Bilge has water","Water in engine room"],correct:1,expl:"Bilge level rising SMCP: 'Bridge, engine room. I have rising water level in [engine room bilge / bilge of hold X]. Rate of ingress is [slow/fast]. Source appears to be [unknown / sea water valve leak / pipe failure]. Bilge pump [X] is running [and coping / and not coping]. Water level is [X cm / X metres]. I [am / am not] requesting assistance. Over.' Critical: rate of rise determines urgency (PAN-PAN vs MAYDAY). 30cm/hour = serious, 1m/hour = abandon."},
+    {q:"How does the engine room report that the emergency generator has started after a blackout?",opts:["Lights back on","Bridge, engine room. Emergency generator has started. Essential services are being restored. Investigating cause of blackout. Main power restoration is [estimated at X minutes / under investigation]. Over.","Generator started","Power back"],correct:1,expl:"Blackout recovery SMCP: 'Bridge, engine room. Emergency generator has started. Emergency lighting is on. Essential navigation equipment is [powered / being restored]. Main switchboard fault is [identified as X / under investigation]. Estimated time to restore main power: [X minutes]. Action taken: [describe]. Over.' Critical for bridge to know: which navigation instruments are available, whether propulsion will be restored, whether an emergency anchor should be dropped."},
+  ],
+  fr:[
+    {q:"Comment la salle des machines confirme-t-elle un ordre 'Full ahead' ?",opts:["Full ahead OK","Full ahead — engine on full ahead. RPM [X]. Over.","Pleine vitesse","Moteur en marche"],correct:1,expl:"Confirmation d'ordre moteur SMCP : communication en 'boucle fermée' obligatoire. À l'ordre 'Full ahead' de la passerelle : la S.D.M. répond immédiatement 'Full ahead — engine is on full ahead. RPM [X]. Over.' Cela confirme : ordre entendu, ordre exécuté, RPM actuel. Ne jamais dire simplement 'OK'. Si impossible : 'Bridge, engine room. Unable to comply with full ahead. Maximum power available is [X] knots / [X] RPM due to [reason]. Over.'"},
+    {q:"Que doit signaler immédiatement la salle des machines après une panne du moteur principal ?",opts:["Moteur en panne","Bridge, engine room. Main engine failure. Engine has [stopped/reduced power]. I am [investigating/unable to proceed]. Navigation is affected. Over.","Moteur arrêté","Problème avec le moteur"],correct:1,expl:"Panne de moteur principal SMCP : 'Bridge, engine room. I have a main engine failure. Engine has [stopped / lost power / reduced to X%]. Cause appears to be [fuel / cooling / mechanical / unknown]. I am [investigating / attempting restart]. Estimated repair time: [X minutes / unknown]. I recommend [anchoring / requesting tug / reducing speed]. Over.' La passerelle doit être informée immédiatement — elle doit agir pour éviter une collision/échouage."},
+    {q:"Comment signaler la fin d'un changement de carburant ?",opts:["Carburant changé","Fuel changeover from [HFO/diesel] to [diesel/HFO] is complete. Changeover position: Latitude [X], Longitude [X]. Time: [UTC]. Fuel viscosity is now [X] centistokes.","Carburant OK","Nouveau carburant en usage"],correct:1,expl:"Changement de carburant SMCP : 'Fuel changeover from [heavy fuel oil] to [marine gas oil / diesel] is complete. Changeover commenced at [heure] UTC. Changeover completed at [heure] UTC. Position at completion: Latitude [X], Longitude [X]. Fuel viscosity: [X] centistokes. All fuel parameters are normal. Over.' La position et l'heure du changement doivent être consignées — les régulateurs vérifient cela pour confirmer la conformité aux ECA."},
+    {q:"La salle des machines signale une montée du niveau de cale. Quelles informations sont critiques ?",opts:["La cale est mouillée","Taux d'afflux [lent/rapide], source si connue [vanne de mer/tuyauterie], état de la pompe de cale [en marche/suffisante], emplacement [salle des machines/cale], et si la situation s'aggrave.","La cale a de l'eau","Eau en salle des machines"],correct:1,expl:"Montée du niveau de cale SMCP : 'Bridge, engine room. I have rising water level in [engine room bilge / bilge of hold X]. Rate of ingress is [slow/fast]. Source appears to be [unknown / sea water valve leak / pipe failure]. Bilge pump [X] is running [and coping / and not coping]. Water level is [X cm / X metres]. I [am / am not] requesting assistance. Over.' Critique : le taux de montée détermine l'urgence (PAN-PAN vs MAYDAY)."},
+    {q:"Comment la salle des machines signale-t-elle que le générateur de secours a démarré après un black-out ?",opts:["Les lumières sont revenues","Bridge, engine room. Emergency generator has started. Essential services are being restored. Investigating cause of blackout. Main power restoration is [estimated at X minutes / under investigation]. Over.","Générateur démarré","L'alimentation est revenue"],correct:1,expl:"Rétablissement après black-out SMCP : 'Bridge, engine room. Emergency generator has started. Emergency lighting is on. Essential navigation equipment is [powered / being restored]. Main switchboard fault is [identified as X / under investigation]. Estimated time to restore main power: [X minutes]. Action taken: [describe]. Over.' Critique pour la passerelle : quels instruments de navigation sont disponibles, si la propulsion sera rétablie, si une ancre d'urgence doit être mouillée."},
+  ],
+  es:[
+    {q:"¿Cómo confirma la sala de máquinas una orden de 'Full ahead'?",opts:["Full ahead OK","Full ahead — engine on full ahead. RPM [X]. Over.","A toda velocidad","Motor en marcha"],correct:1,expl:"Confirmación de orden de motor SMCP: comunicación en 'bucle cerrado' obligatoria. A la orden 'Full ahead' del puente: la S.M. responde inmediatamente 'Full ahead — engine is on full ahead. RPM [X]. Over.' Esto confirma: orden oída, orden ejecutada, RPM actual. Nunca decir simplemente 'OK'. Si no es posible: 'Bridge, engine room. Unable to comply with full ahead. Maximum power available is [X] knots / [X] RPM due to [reason]. Over.'"},
+    {q:"¿Qué debe informar inmediatamente la sala de máquinas tras una avería del motor principal?",opts:["Motor averiado","Bridge, engine room. Main engine failure. Engine has [stopped/reduced power]. I am [investigating/unable to proceed]. Navigation is affected. Over.","Motor parado","Problema con el motor"],correct:1,expl:"Avería del motor principal SMCP: 'Bridge, engine room. I have a main engine failure. Engine has [stopped / lost power / reduced to X%]. Cause appears to be [fuel / cooling / mechanical / unknown]. I am [investigating / attempting restart]. Estimated repair time: [X minutes / unknown]. I recommend [anchoring / requesting tug / reducing speed]. Over.' El puente debe ser informado inmediatamente — necesita actuar para prevenir colisión/varada."},
+    {q:"¿Cómo se informa de la finalización de un cambio de combustible?",opts:["Combustible cambiado","Fuel changeover from [HFO/diesel] to [diesel/HFO] is complete. Changeover position: Latitude [X], Longitude [X]. Time: [UTC]. Fuel viscosity is now [X] centistokes.","Combustible OK","Nuevo combustible en uso"],correct:1,expl:"Cambio de combustible SMCP: 'Fuel changeover from [heavy fuel oil] to [marine gas oil / diesel] is complete. Changeover commenced at [hora] UTC. Changeover completed at [hora] UTC. Position at completion: Latitude [X], Longitude [X]. Fuel viscosity: [X] centistokes. All fuel parameters are normal. Over.' La posición y hora del cambio deben registrarse — los reguladores lo comprueban para verificar el cumplimiento de la ECA."},
+    {q:"La sala de máquinas informa de que sube el nivel de sentina. ¿Qué información es crítica?",opts:["La sentina está mojada","Tasa de entrada [lenta/rápida], origen si se conoce [válvula de mar/tubería], estado de la bomba de sentinas [funcionando/suficiente], ubicación [sala de máquinas/bodega], y si la situación empeora.","La sentina tiene agua","Agua en la sala de máquinas"],correct:1,expl:"Subida del nivel de sentina SMCP: 'Bridge, engine room. I have rising water level in [engine room bilge / bilge of hold X]. Rate of ingress is [slow/fast]. Source appears to be [unknown / sea water valve leak / pipe failure]. Bilge pump [X] is running [and coping / and not coping]. Water level is [X cm / X metres]. I [am / am not] requesting assistance. Over.' Crítico: la tasa de subida determina la urgencia (PAN-PAN vs MAYDAY)."},
+    {q:"¿Cómo informa la sala de máquinas de que el generador de emergencia ha arrancado tras un apagón?",opts:["Las luces volvieron","Bridge, engine room. Emergency generator has started. Essential services are being restored. Investigating cause of blackout. Main power restoration is [estimated at X minutes / under investigation]. Over.","Generador arrancado","Volvió la corriente"],correct:1,expl:"Recuperación tras apagón SMCP: 'Bridge, engine room. Emergency generator has started. Emergency lighting is on. Essential navigation equipment is [powered / being restored]. Main switchboard fault is [identified as X / under investigation]. Estimated time to restore main power: [X minutes]. Action taken: [describe]. Over.' Crítico para el puente: qué instrumentos de navegación están disponibles, si se restaurará la propulsión, si se debe fondear de emergencia."},
+  ],
+  pt:[
+    {q:"Como confirma a sala de máquinas uma ordem de 'Full ahead'?",opts:["Full ahead OK","Full ahead — engine on full ahead. RPM [X]. Over.","A toda a velocidade","Motor em funcionamento"],correct:1,expl:"Confirmação de ordem de motor SMCP: comunicação em 'circuito fechado' obrigatória. À ordem 'Full ahead' da ponte: a S.M. responde imediatamente 'Full ahead — engine is on full ahead. RPM [X]. Over.' Isto confirma: ordem ouvida, ordem executada, RPM atual. Nunca dizer simplesmente 'OK'. Se impossível: 'Bridge, engine room. Unable to comply with full ahead. Maximum power available is [X] knots / [X] RPM due to [reason]. Over.'"},
+    {q:"O que deve a sala de máquinas reportar imediatamente após uma avaria do motor principal?",opts:["Motor avariado","Bridge, engine room. Main engine failure. Engine has [stopped/reduced power]. I am [investigating/unable to proceed]. Navigation is affected. Over.","Motor parado","Problema com o motor"],correct:1,expl:"Avaria do motor principal SMCP: 'Bridge, engine room. I have a main engine failure. Engine has [stopped / lost power / reduced to X%]. Cause appears to be [fuel / cooling / mechanical / unknown]. I am [investigating / attempting restart]. Estimated repair time: [X minutes / unknown]. I recommend [anchoring / requesting tug / reducing speed]. Over.' A ponte deve ser informada imediatamente — precisa de agir para evitar abalroamento/encalhe."},
+    {q:"Como se reporta a conclusão de uma mudança de combustível?",opts:["Combustível mudado","Fuel changeover from [HFO/diesel] to [diesel/HFO] is complete. Changeover position: Latitude [X], Longitude [X]. Time: [UTC]. Fuel viscosity is now [X] centistokes.","Combustível OK","Novo combustível em uso"],correct:1,expl:"Mudança de combustível SMCP: 'Fuel changeover from [heavy fuel oil] to [marine gas oil / diesel] is complete. Changeover commenced at [hora] UTC. Changeover completed at [hora] UTC. Position at completion: Latitude [X], Longitude [X]. Fuel viscosity: [X] centistokes. All fuel parameters are normal. Over.' A posição e hora da mudança devem ser registadas — os reguladores verificam isto para confirmar a conformidade com a ECA."},
+    {q:"A sala de máquinas reporta que o nível de paiol está a subir. Que informação é crítica?",opts:["O paiol está molhado","Taxa de entrada [lenta/rápida], origem se conhecida [válvula de mar/tubagem], estado da bomba de paiol [em funcionamento/suficiente], localização [sala de máquinas/porão], e se a situação está a piorar.","O paiol tem água","Água na sala de máquinas"],correct:1,expl:"Subida do nível de paiol SMCP: 'Bridge, engine room. I have rising water level in [engine room bilge / bilge of hold X]. Rate of ingress is [slow/fast]. Source appears to be [unknown / sea water valve leak / pipe failure]. Bilge pump [X] is running [and coping / and not coping]. Water level is [X cm / X metres]. I [am / am not] requesting assistance. Over.' Crítico: a taxa de subida determina a urgência (PAN-PAN vs MAYDAY)."},
+    {q:"Como reporta a sala de máquinas que o gerador de emergência arrancou após um apagão?",opts:["As luzes voltaram","Bridge, engine room. Emergency generator has started. Essential services are being restored. Investigating cause of blackout. Main power restoration is [estimated at X minutes / under investigation]. Over.","Gerador arrancou","A energia voltou"],correct:1,expl:"Recuperação após apagão SMCP: 'Bridge, engine room. Emergency generator has started. Emergency lighting is on. Essential navigation equipment is [powered / being restored]. Main switchboard fault is [identified as X / under investigation]. Estimated time to restore main power: [X minutes]. Action taken: [describe]. Over.' Crítico para a ponte: quais os instrumentos de navegação disponíveis, se a propulsão será restaurada, se deve ser fundeada âncora de emergência."},
+  ],
+};
+
+const BANK = {
+  en:[
+    {q:"How do you report a propeller or shaft problem?",opts:["Propeller broken","I have a propeller/shaft problem. [Vibration / cavitation / shaft seal leaking / propeller blade damaged]. Engine speed has been reduced to [X] RPM to minimise further damage. Inspection required at next port.","Prop issue","Shaft fault"],correct:1,expl:"Propeller/shaft SMCP: 'I have a propeller/shaft problem. Abnormal vibration is felt at speeds above [X] RPM. Propeller cavitation is suspected / shaft seal is leaking [X] litres per hour / propeller blade appears damaged. Engine speed has been reduced to [X] RPM as a precaution. An underwater inspection is required at the next port. I am proceeding with caution at reduced speed.' Report also affects trim/ETA reports to agents."},
+    {q:"How do you report a main engine starting failure?",opts:["Can't start engine","Main engine is not starting. Starting air pressure is [X] bar. [Cause: fuel rack / injector / air start valve / unknown]. I am attempting to start on backup system. ETA for restart: [X] minutes.","Engine won't start","Start problem"],correct:1,expl:"Starting failure SMCP: 'Main engine is not starting. Starting air pressure is [X] bar (normal: [X] bar). I have [attempted X starts]. Fault appears to be [fuel rack stuck / starting air valve blocked / injectors / unknown]. I am [refilling air bottles / checking fuel system / contacting maker's engineer]. I estimate engine available in [X] minutes / hours. Bridge should [maintain current speed / anchor / request tug standby].'"},
+    {q:"How do you report a cooling water system failure?",opts:["Engine overheating","I have a cooling water system failure. Jacket water temperature is [X] degrees Celsius (normal: [X]). Cooling pump [X] has [failed/tripped]. I have started standby pump. Engine speed has been reduced. Please advise if speed reduction affects your plans.","Temperature alarm","Cooling problem"],correct:1,expl:"Cooling water failure SMCP: 'I have a cooling water system failure. Main jacket water temperature is [X]°C and rising (normal: [X]°C). Cooling water pump [X] has [failed / tripped on overload]. Standby pump has been started. Engine load has been reduced to 50%. If temperature continues to rise, I will need to stop the engine. Please prepare for possible speed reduction / anchor.' An unchecked cooling failure leads to engine seizure."},
+    {q:"How do you report an air compressor failure?",opts:["Compressor broken","I have an air compressor failure. Starting air pressure is [X] bar and falling. I have [X] start attempts remaining. If pressure falls below [X] bar, main engine cannot be started.","Air problem","Compressor fault"],correct:1,expl:"Air compressor failure SMCP: 'I have an air compressor failure. Air compressor [X] has stopped. Starting air pressure is currently [X] bar. Minimum pressure for engine starting is [X] bar. With current consumption, I have approximately [X] start attempts remaining. I am [repairing compressor / conserving air / requesting portable compressor]. Main engine must not be stopped until compressor is repaired.' Critical in port approaches — loss of starting air = loss of main engine starting ability."},
+    {q:"How do you report a hydraulic system failure affecting steering?",opts:["Steering problem","I have a hydraulic system failure affecting steering gear. Steering has [changed to emergency steering / been transferred to hand steering]. Vessel is [proceeding / has stopped / is anchoring]. Repair is [in progress / expected to take X hours].","Helm broken","Can't steer"],correct:1,expl:"Hydraulic steering failure SMCP: 'I have a hydraulic failure in the steering gear. Main steering pump has [failed/lost pressure]. I have transferred to [secondary hydraulic pump / emergency electric steering / hand steering]. I am [proceeding at reduced speed / have stopped / am anchoring]. Steering response is [normal on secondary / limited on hand steering]. I require [repair / tug escort / port pilot for assistance].' Report to VTS: 'I have a steering limitation. I request [escort / traffic separation / early pilot boarding].'"},
+    {q:"How do you report an engine room fire?",opts:["ER on fire","MAYDAY/PAN-PAN. Bridge, engine room. I have a fire in the engine room. Fire is in [location: bilge / fuel line / generator]. I am activating CO2/[firefighting]. All personnel have evacuated. ER is sealed. Over.","Fire below","Engine fire"],correct:1,expl:"Engine room fire SMCP: 'MAYDAY MAYDAY MAYDAY. Bridge — engine room. Fire in engine room. Location: [fuel line / bilge / generator area]. Fire is [under control / not under control]. I have activated [fixed CO2 / portable extinguisher]. All engine room personnel have evacuated. Engine room is sealed and ventilation is shut off. Engine is stopped. Over.' Bridge must immediately: sound general alarm, broadcast MAYDAY on VHF, activate EPIRB, prepare to abandon. Engine room fire = most dangerous shipboard emergency."},
+    {q:"How do you report shaft bearing temperature alarm?",opts:["Bearing hot","I have a bearing temperature alarm. [Intermediate / stern / main] shaft bearing temperature is [X] degrees Celsius. Normal temperature is [X] degrees. Engine speed has been reduced. I am investigating and monitoring.","Hot bearing","Temperature alarm on bearing"],correct:1,expl:"Bearing temperature alarm SMCP: 'I have a bearing temperature alarm on [intermediate / stern tube / main] bearing. Temperature is [X]°C and [stable/rising]. Normal operating temperature is [X]°C. Engine speed has been reduced to [X] RPM. I am [checking lubricating oil supply / checking bearing clearance / monitoring]. If temperature reaches [X]°C, I will need to stop the engine.' Rising bearing temperature = potential seizure = catastrophic failure if not acted upon."},
+    {q:"How do you request permission to stop the main engine for maintenance?",opts:["Can we stop?","Bridge, engine room. I request permission to stop the main engine for [X] minutes/hours for [maintenance/repair]. I recommend [anchoring / drifting with caution / tug standby] during the stop.","Stop engine request","Maintenance stop"],correct:1,expl:"Maintenance engine stop request SMCP: 'Bridge, engine room. I request permission to stop the main engine. Reason: [maintenance / repair of X / routine inspection]. Estimated duration: [X] minutes/hours. I recommend the vessel [anchor at position X / heave to / drift in clear water / request tug standby]. I am ready to stop when you confirm safe conditions. Over.' Bridge responds: 'Engine room, bridge. You have permission to stop the engine. We will [anchor / heave to / advise]. Over.'"},
+    {q:"How do you report an engine room flooding emergency?",opts:["ER flooding","MAYDAY. Bridge — engine room. I have flooding in the engine room. Water is entering from [sea suction valve / pipe failure / collision damage]. Rate is [fast / severe]. Bilge pumps are running but not coping. I require immediate assistance.","Water in ER","Engine room water"],correct:1,expl:"Engine room flooding SMCP: 'MAYDAY MAYDAY MAYDAY. Bridge — engine room. I have flooding in engine room. Water ingress rate is [X cm / X tonnes] per hour. Source: [unidentified / sea valve failed / pipe rupture]. Bilge pumps are [running / running but not coping]. Water level is [X cm] above floor plates. Main engine is [running / being stopped to prevent damage]. I require [immediate pumping assistance / salvage pumps / divers].' Flooding in ER = highest-priority emergency."},
+    {q:"What is 'dead ship condition' and how is it reported?",opts:["Slow ship","Vessel is in dead ship condition — no propulsion, no steering, no electrical power. Position [lat/long]. I require immediate tug assistance. I am drifting towards [danger/open sea].","Ship not working","No power vessel"],correct:1,expl:"Dead ship condition SMCP: 'Bridge, this is engine room. The vessel is in DEAD SHIP condition. Main engine: stopped. Steering gear: not available. Electrical power: emergency generator only. We have no propulsion. Current position is [lat/long]. Vessel is drifting [direction] at [X] knots towards [danger / open sea]. I require IMMEDIATE tug assistance and salvage support. Over.' Broadcast MAYDAY on VHF 16. Activate EPIRB. Drop anchor if in shallow water. Dead ship in shipping lane = extreme danger."},
+    {q:"How do you report engine performance after a repair?",opts:["Fixed","Bridge, engine room. Engine repair is complete. Main engine is running normally. All parameters are within normal limits. Full power is available. RPM [X]. Ready for full manoeuvring. Over.","Engine OK","Repair done"],correct:1,expl:"Post-repair engine status SMCP: 'Bridge, engine room. Repair to [describe what was repaired] is complete. Main engine has been restarted and tested. All parameters are normal: temperature [X]°C, pressure [X] bar, RPM [X], vibration [normal]. Full power is available. No further restrictions. Ready for full manoeuvring as required. Over.' Always state what was repaired, that tests have been done, and what power is now available. If power is limited: 'Maximum available speed is now [X] knots.'"},
+    {q:"How do you report a scavenge fire extinguishment?",opts:["Fire out","Bridge, engine room. The scavenge fire in cylinder [X] has been extinguished. Engine speed has been reduced. Scavenge drains will be opened for inspection. Engine performance will be monitored. Over.","Scavenge OK","Fire stopped"],correct:1,expl:"Scavenge fire extinguishment SMCP: 'Bridge, engine room. The scavenge fire on cylinder [X] has been extinguished. Engine speed is reduced to [X] RPM. Scavenge drains are open and being inspected. Temperature in affected area is [falling/normal]. No structural damage is apparent. I am monitoring closely. Speed can be [restored gradually / maintained at reduced level until port inspection]. Over.' A scavenge fire is not a MAYDAY but requires immediate action and speed reduction."},
+    {q:"How do you report an engine parameter that is 'out of limits'?",opts:["Parameter wrong","Engine room to bridge. [Parameter name] on [equipment] is out of limits. Current reading is [X]. Normal limit is [X]. I am [investigating / taking corrective action / requesting permission to reduce speed].","Alarm active","Parameter alarm"],correct:1,expl:"Out of limits parameter SMCP: 'Bridge, engine room. [Exhaust temperature / oil pressure / cooling temperature / vibration] on [main engine / generator X / auxiliary] is out of limits. Current reading: [X] [units]. Normal operating range: [X] to [X] [units]. Trend: [stable/rising/falling rapidly]. I am [investigating cause / reducing load / preparing to shut down]. Estimated impact: [no impact / speed reduction to X knots / possible engine shutdown].' Never ignore an out-of-limits parameter."},
+    {q:"How do you communicate during bridge manoeuvring with engine room?",opts:["Just use the telegraph","Each engine order from bridge must be acknowledged by engine room with RPM. Bridge states order → ER repeats order + confirms RPM. Example: 'Slow ahead' → 'Slow ahead, engine on slow ahead, RPM [X]. Over.'","Just call out","Use hand signals"],correct:1,expl:"Bridge-ER manoeuvring communication SMCP: strict closed-loop protocol. Bridge: 'Engine room — slow ahead please.' ER: 'Slow ahead — engine is on slow ahead. RPM [X]. Over.' Bridge: 'Engine room — stop engines.' ER: 'Stop engines — engine is stopped. RPM zero. Over.' During critical manoeuvres (berthing, anchoring, pilotage): continuous communication. If ER cannot comply: 'Bridge, engine room. Unable to comply. Maximum available is [X]. Over.' This prevents accidents from miscommunication."},
+  ],
+  fr:[
+    {q:"Comment signaler un problème de propulseur ou d'arbre ?",opts:["Hélice cassée","I have a propeller/shaft problem. [Vibration / cavitation / shaft seal leaking / propeller blade damaged]. Engine speed has been reduced to [X] RPM to minimise further damage. Inspection required at next port.","Problème d'hélice","Défaut d'arbre"],correct:1,expl:"Hélice/arbre SMCP : 'I have a propeller/shaft problem. Abnormal vibration is felt at speeds above [X] RPM. Propeller cavitation is suspected / shaft seal is leaking [X] litres per hour / propeller blade appears damaged. Engine speed has been reduced to [X] RPM as a precaution. An underwater inspection is required at the next port. I am proceeding with caution at reduced speed.'"},
+    {q:"Comment signaler une défaillance de démarrage du moteur principal ?",opts:["Impossible de démarrer le moteur","Main engine is not starting. Starting air pressure is [X] bar. [Cause: fuel rack / injector / air start valve / unknown]. I am attempting to start on backup system. ETA for restart: [X] minutes.","Le moteur ne démarre pas","Problème de démarrage"],correct:1,expl:"Défaillance de démarrage SMCP : 'Main engine is not starting. Starting air pressure is [X] bar (normal: [X] bar). I have [attempted X starts]. Fault appears to be [fuel rack stuck / starting air valve blocked / injectors / unknown]. I am [refilling air bottles / checking fuel system / contacting maker's engineer]. I estimate engine available in [X] minutes / hours.'"},
+    {q:"Comment signaler une panne du système d'eau de refroidissement ?",opts:["Moteur en surchauffe","I have a cooling water system failure. Jacket water temperature is [X] degrees Celsius (normal: [X]). Cooling pump [X] has [failed/tripped]. I have started standby pump. Engine speed has been reduced.","Alarme de température","Problème de refroidissement"],correct:1,expl:"Panne d'eau de refroidissement SMCP : 'I have a cooling water system failure. Main jacket water temperature is [X]°C and rising (normal: [X]°C). Cooling water pump [X] has [failed / tripped on overload]. Standby pump has been started. Engine load has been reduced to 50%. If temperature continues to rise, I will need to stop the engine.'"},
+    {q:"Comment signaler une panne du compresseur d'air ?",opts:["Compresseur en panne","I have an air compressor failure. Starting air pressure is [X] bar and falling. I have [X] start attempts remaining. If pressure falls below [X] bar, main engine cannot be started.","Problème d'air","Défaut de compresseur"],correct:1,expl:"Panne de compresseur d'air SMCP : 'I have an air compressor failure. Air compressor [X] has stopped. Starting air pressure is currently [X] bar. Minimum pressure for engine starting is [X] bar. With current consumption, I have approximately [X] start attempts remaining. I am [repairing compressor / conserving air / requesting portable compressor]. Main engine must not be stopped until compressor is repaired.'"},
+    {q:"Comment signaler une panne du système hydraulique affectant la gouverne ?",opts:["Problème de gouverne","I have a hydraulic system failure affecting steering gear. Steering has [changed to emergency steering / been transferred to hand steering]. Vessel is [proceeding / has stopped / is anchoring]. Repair is [in progress / expected to take X hours].","Barre cassée","Impossible de gouverner"],correct:1,expl:"Panne hydraulique de gouverne SMCP : 'I have a hydraulic failure in the steering gear. Main steering pump has [failed/lost pressure]. I have transferred to [secondary hydraulic pump / emergency electric steering / hand steering]. I am [proceeding at reduced speed / have stopped / am anchoring]. Steering response is [normal on secondary / limited on hand steering].'"},
+    {q:"Comment signaler un incendie en salle des machines ?",opts:["Feu en S.D.M.","MAYDAY/PAN-PAN. Bridge, engine room. I have a fire in the engine room. Fire is in [location]. I am activating CO2/[firefighting]. All personnel have evacuated. ER is sealed. Over.","Feu en bas","Incendie moteur"],correct:1,expl:"Incendie en S.D.M. SMCP : 'MAYDAY MAYDAY MAYDAY. Bridge — engine room. Fire in engine room. Location: [fuel line / bilge / generator area]. Fire is [under control / not under control]. I have activated [fixed CO2 / portable extinguisher]. All engine room personnel have evacuated. Engine room is sealed and ventilation is shut off. Engine is stopped. Over.' La passerelle doit immédiatement déclencher l'alarme générale, diffuser le MAYDAY sur VHF, activer l'EPIRB, préparer l'abandon."},
+    {q:"Comment signaler une alarme de température de palier d'arbre ?",opts:["Palier chaud","I have a bearing temperature alarm. [Intermediate / stern / main] shaft bearing temperature is [X] degrees Celsius. Normal temperature is [X] degrees. Engine speed has been reduced. I am investigating and monitoring.","Palier chaud","Alarme de température sur palier"],correct:1,expl:"Alarme de température de palier SMCP : 'I have a bearing temperature alarm on [intermediate / stern tube / main] bearing. Temperature is [X]°C and [stable/rising]. Normal operating temperature is [X]°C. Engine speed has been reduced to [X] RPM. I am [checking lubricating oil supply / checking bearing clearance / monitoring]. If temperature reaches [X]°C, I will need to stop the engine.'"},
+    {q:"Comment demander l'autorisation d'arrêter le moteur principal pour maintenance ?",opts:["Peut-on s'arrêter ?","Bridge, engine room. I request permission to stop the main engine for [X] minutes/hours for [maintenance/repair]. I recommend [anchoring / drifting with caution / tug standby] during the stop.","Demande d'arrêt moteur","Arrêt maintenance"],correct:1,expl:"Demande d'arrêt moteur pour maintenance SMCP : 'Bridge, engine room. I request permission to stop the main engine. Reason: [maintenance / repair of X / routine inspection]. Estimated duration: [X] minutes/hours. I recommend the vessel [anchor at position X / heave to / drift in clear water / request tug standby]. I am ready to stop when you confirm safe conditions. Over.'"},
+    {q:"Comment signaler une urgence d'inondation en salle des machines ?",opts:["La S.D.M. est inondée","MAYDAY. Bridge — engine room. I have flooding in the engine room. Water is entering from [sea suction valve / pipe failure / collision damage]. Rate is [fast / severe]. Bilge pumps are running but not coping. I require immediate assistance.","Eau en S.D.M.","Salle des machines inondée"],correct:1,expl:"Inondation S.D.M. SMCP : 'MAYDAY MAYDAY MAYDAY. Bridge — engine room. I have flooding in engine room. Water ingress rate is [X cm / X tonnes] per hour. Source: [unidentified / sea valve failed / pipe rupture]. Bilge pumps are [running / running but not coping]. Water level is [X cm] above floor plates. Main engine is [running / being stopped to prevent damage]. I require [immediate pumping assistance / salvage pumps / divers].'"},
+    {q:"Qu'est-ce qu'un 'état de navire mort' et comment est-il signalé ?",opts:["Navire lent","Le navire est en état de navire mort — pas de propulsion, pas de gouverne, pas d'alimentation électrique. Position [lat/long]. J'ai besoin d'une assistance de remorqueur immédiate. Je dérive vers [danger/mer ouverte].","Navire qui ne fonctionne pas","Navire sans énergie"],correct:1,expl:"État de navire mort SMCP : 'Bridge, this is engine room. The vessel is in DEAD SHIP condition. Main engine: stopped. Steering gear: not available. Electrical power: emergency generator only. We have no propulsion. Current position is [lat/long]. Vessel is drifting [direction] at [X] knots towards [danger / open sea]. I require IMMEDIATE tug assistance and salvage support. Over.'"},
+    {q:"Comment signaler l'état du moteur après une réparation ?",opts:["Réparé","Bridge, engine room. Engine repair is complete. Main engine is running normally. All parameters are within normal limits. Full power is available. RPM [X]. Ready for full manoeuvring. Over.","Moteur OK","Réparation terminée"],correct:1,expl:"État du moteur post-réparation SMCP : 'Bridge, engine room. Repair to [décrire ce qui a été réparé] is complete. Main engine has been restarted and tested. All parameters are normal: temperature [X]°C, pressure [X] bar, RPM [X], vibration [normal]. Full power is available. No further restrictions. Ready for full manoeuvring as required. Over.'"},
+    {q:"Comment signaler l'extinction d'un incendie en boite à balayage ?",opts:["Feu éteint","Bridge, engine room. The scavenge fire in cylinder [X] has been extinguished. Engine speed has been reduced. Scavenge drains will be opened for inspection. Engine performance will be monitored. Over.","Balayage OK","Incendie éteint"],correct:1,expl:"Extinction incendie balayage SMCP : 'Bridge, engine room. The scavenge fire on cylinder [X] has been extinguished. Engine speed is reduced to [X] RPM. Scavenge drains are open and being inspected. Temperature in affected area is [falling/normal]. No structural damage is apparent. I am monitoring closely. Speed can be [restored gradually / maintained at reduced level until port inspection]. Over.'"},
+    {q:"Comment signaler un paramètre moteur 'hors limites' ?",opts:["Paramètre faux","Engine room to bridge. [Parameter name] on [equipment] is out of limits. Current reading is [X]. Normal limit is [X]. I am [investigating / taking corrective action / requesting permission to reduce speed].","Alarme active","Alarme paramètre"],correct:1,expl:"Paramètre hors limites SMCP : 'Bridge, engine room. [Température d'échappement / pression d'huile / température de refroidissement / vibration] on [main engine / generator X / auxiliary] is out of limits. Current reading: [X] [units]. Normal operating range: [X] to [X] [units]. Trend: [stable/rising/falling rapidly]. I am [investigating cause / reducing load / preparing to shut down].'"},
+    {q:"Comment communiquer pendant les manœuvres à la passerelle avec la salle des machines ?",opts:["Utiliser le télégraphe","Chaque ordre moteur de la passerelle doit être accusé de réception par la S.D.M. avec les RPM. La passerelle donne l'ordre → la S.D.M. répète l'ordre + confirme les RPM.","Appeler seulement","Utiliser des signaux manuels"],correct:1,expl:"Communication manœuvre passerelle-S.D.M. SMCP : protocole strict en 'boucle fermée'. Passerelle : 'Engine room — slow ahead please.' S.D.M. : 'Slow ahead — engine is on slow ahead. RPM [X]. Over.' Passerelle : 'Engine room — stop engines.' S.D.M. : 'Stop engines — engine is stopped. RPM zero. Over.' Pendant les manœuvres critiques : communication continue. Si la S.D.M. ne peut pas se conformer : 'Bridge, engine room. Unable to comply. Maximum available is [X]. Over.'"},
+  ],
+  es:[
+    {q:"¿Cómo se informa de un problema en el propulsor o el eje?",opts:["Hélice rota","I have a propeller/shaft problem. [Vibration / cavitation / shaft seal leaking / propeller blade damaged]. Engine speed has been reduced to [X] RPM to minimise further damage. Inspection required at next port.","Problema de hélice","Fallo del eje"],correct:1,expl:"Hélice/eje SMCP: 'I have a propeller/shaft problem. Abnormal vibration is felt at speeds above [X] RPM. Propeller cavitation is suspected / shaft seal is leaking [X] litres per hour / propeller blade appears damaged. Engine speed has been reduced to [X] RPM as a precaution. An underwater inspection is required at the next port.'"},
+    {q:"¿Cómo se informa de un fallo de arranque del motor principal?",opts:["No se puede arrancar el motor","Main engine is not starting. Starting air pressure is [X] bar. [Cause: fuel rack / injector / air start valve / unknown]. I am attempting to start on backup system. ETA for restart: [X] minutes.","El motor no arranca","Problema de arranque"],correct:1,expl:"Fallo de arranque SMCP: 'Main engine is not starting. Starting air pressure is [X] bar (normal: [X] bar). I have [attempted X starts]. Fault appears to be [fuel rack stuck / starting air valve blocked / injectors / unknown]. I am [refilling air bottles / checking fuel system / contacting maker's engineer]. I estimate engine available in [X] minutes / hours.'"},
+    {q:"¿Cómo se informa de un fallo del sistema de agua de refrigeración?",opts:["Motor sobrecalentado","I have a cooling water system failure. Jacket water temperature is [X] degrees Celsius (normal: [X]). Cooling pump [X] has [failed/tripped]. I have started standby pump. Engine speed has been reduced.","Alarma de temperatura","Problema de refrigeración"],correct:1,expl:"Fallo del sistema de agua de refrigeración SMCP: 'I have a cooling water system failure. Main jacket water temperature is [X]°C and rising (normal: [X]°C). Cooling water pump [X] has [failed / tripped on overload]. Standby pump has been started. Engine load has been reduced to 50%. If temperature continues to rise, I will need to stop the engine.'"},
+    {q:"¿Cómo se informa de un fallo del compresor de aire?",opts:["Compresor roto","I have an air compressor failure. Starting air pressure is [X] bar and falling. I have [X] start attempts remaining. If pressure falls below [X] bar, main engine cannot be started.","Problema de aire","Fallo del compresor"],correct:1,expl:"Fallo del compresor de aire SMCP: 'I have an air compressor failure. Air compressor [X] has stopped. Starting air pressure is currently [X] bar. Minimum pressure for engine starting is [X] bar. With current consumption, I have approximately [X] start attempts remaining. I am [repairing compressor / conserving air / requesting portable compressor].'"},
+    {q:"¿Cómo se informa de un fallo del sistema hidráulico que afecta al timón?",opts:["Problema de timón","I have a hydraulic system failure affecting steering gear. Steering has [changed to emergency steering / been transferred to hand steering]. Vessel is [proceeding / has stopped / is anchoring]. Repair is [in progress / expected to take X hours].","Timón roto","No puedo gobernar"],correct:1,expl:"Fallo hidráulico del timón SMCP: 'I have a hydraulic failure in the steering gear. Main steering pump has [failed/lost pressure]. I have transferred to [secondary hydraulic pump / emergency electric steering / hand steering]. I am [proceeding at reduced speed / have stopped / am anchoring].'"},
+    {q:"¿Cómo se informa de un incendio en la sala de máquinas?",opts:["S.M. en llamas","MAYDAY/PAN-PAN. Bridge, engine room. I have a fire in the engine room. Fire is in [location]. I am activating CO2/[firefighting]. All personnel have evacuated. ER is sealed. Over.","Fuego abajo","Incendio del motor"],correct:1,expl:"Incendio en S.M. SMCP: 'MAYDAY MAYDAY MAYDAY. Bridge — engine room. Fire in engine room. Location: [fuel line / bilge / generator area]. Fire is [under control / not under control]. I have activated [fixed CO2 / portable extinguisher]. All engine room personnel have evacuated. Engine room is sealed and ventilation is shut off. Engine is stopped. Over.'"},
+    {q:"¿Cómo se informa de una alarma de temperatura de cojinete de eje?",opts:["Cojinete caliente","I have a bearing temperature alarm. [Intermediate / stern / main] shaft bearing temperature is [X] degrees Celsius. Normal temperature is [X] degrees. Engine speed has been reduced. I am investigating and monitoring.","Cojinete caliente","Alarma de temperatura en cojinete"],correct:1,expl:"Alarma de temperatura de cojinete SMCP: 'I have a bearing temperature alarm on [intermediate / stern tube / main] bearing. Temperature is [X]°C and [stable/rising]. Normal operating temperature is [X]°C. Engine speed has been reduced to [X] RPM. I am [checking lubricating oil supply / checking bearing clearance / monitoring].'"},
+    {q:"¿Cómo se solicita permiso para parar el motor principal por mantenimiento?",opts:["¿Podemos parar?","Bridge, engine room. I request permission to stop the main engine for [X] minutes/hours for [maintenance/repair]. I recommend [anchoring / drifting with caution / tug standby] during the stop.","Solicitud de parada del motor","Parada de mantenimiento"],correct:1,expl:"Solicitud de parada del motor para mantenimiento SMCP: 'Bridge, engine room. I request permission to stop the main engine. Reason: [maintenance / repair of X / routine inspection]. Estimated duration: [X] minutes/hours. I recommend the vessel [anchor at position X / heave to / drift in clear water / request tug standby]. I am ready to stop when you confirm safe conditions. Over.'"},
+    {q:"¿Cómo se informa de una emergencia de inundación en la sala de máquinas?",opts:["La S.M. está inundada","MAYDAY. Bridge — engine room. I have flooding in the engine room. Water is entering from [sea suction valve / pipe failure / collision damage]. Rate is [fast / severe]. Bilge pumps are running but not coping. I require immediate assistance.","Agua en S.M.","Sala de máquinas inundada"],correct:1,expl:"Inundación S.M. SMCP: 'MAYDAY MAYDAY MAYDAY. Bridge — engine room. I have flooding in engine room. Water ingress rate is [X cm / X tonnes] per hour. Source: [unidentified / sea valve failed / pipe rupture]. Bilge pumps are [running / running but not coping]. Water level is [X cm] above floor plates. I require [immediate pumping assistance / salvage pumps / divers].'"},
+    {q:"¿Qué es el 'estado de barco muerto' y cómo se informa?",opts:["Buque lento","El buque está en estado de barco muerto — sin propulsión, sin timón, sin energía eléctrica. Posición [lat/long]. Necesito asistencia inmediata de remolcador. Estoy a la deriva hacia [peligro/mar abierto].","Buque que no funciona","Buque sin energía"],correct:1,expl:"Estado de barco muerto SMCP: 'Bridge, this is engine room. The vessel is in DEAD SHIP condition. Main engine: stopped. Steering gear: not available. Electrical power: emergency generator only. We have no propulsion. Current position is [lat/long]. Vessel is drifting [direction] at [X] knots towards [danger / open sea]. I require IMMEDIATE tug assistance and salvage support. Over.'"},
+    {q:"¿Cómo se informa del estado del motor tras una reparación?",opts:["Reparado","Bridge, engine room. Engine repair is complete. Main engine is running normally. All parameters are within normal limits. Full power is available. RPM [X]. Ready for full manoeuvring. Over.","Motor OK","Reparación completada"],correct:1,expl:"Estado del motor post-reparación SMCP: 'Bridge, engine room. Repair to [describir lo reparado] is complete. Main engine has been restarted and tested. All parameters are normal: temperature [X]°C, pressure [X] bar, RPM [X], vibration [normal]. Full power is available. No further restrictions. Ready for full manoeuvring as required. Over.'"},
+    {q:"¿Cómo se informa de la extinción de un incendio en la caja de barrido?",opts:["Fuego extinguido","Bridge, engine room. The scavenge fire in cylinder [X] has been extinguished. Engine speed has been reduced. Scavenge drains will be opened for inspection. Engine performance will be monitored. Over.","Barrido OK","Incendio extinguido"],correct:1,expl:"Extinción incendio de barrido SMCP: 'Bridge, engine room. The scavenge fire on cylinder [X] has been extinguished. Engine speed is reduced to [X] RPM. Scavenge drains are open and being inspected. Temperature in affected area is [falling/normal]. No structural damage is apparent. I am monitoring closely. Over.'"},
+    {q:"¿Cómo se informa de un parámetro de motor 'fuera de límites'?",opts:["Parámetro incorrecto","Engine room to bridge. [Parameter name] on [equipment] is out of limits. Current reading is [X]. Normal limit is [X]. I am [investigating / taking corrective action / requesting permission to reduce speed].","Alarma activa","Alarma de parámetro"],correct:1,expl:"Parámetro fuera de límites SMCP: 'Bridge, engine room. [Temperatura de escape / presión de aceite / temperatura de refrigeración / vibración] on [main engine / generator X / auxiliary] is out of limits. Current reading: [X] [units]. Normal operating range: [X] to [X] [units]. Trend: [stable/rising/falling rapidly]. I am [investigating cause / reducing load / preparing to shut down].'"},
+    {q:"¿Cómo se comunica durante las maniobras en el puente con la sala de máquinas?",opts:["Usar el telégrafo","Cada orden de motor del puente debe ser acusada de recibo por la S.M. con los RPM. El puente da la orden → la S.M. repite la orden + confirma los RPM.","Solo llamar","Usar señales manuales"],correct:1,expl:"Comunicación maniobra puente-S.M. SMCP: protocolo estricto en 'bucle cerrado'. Puente: 'Engine room — slow ahead please.' S.M.: 'Slow ahead — engine is on slow ahead. RPM [X]. Over.' Durante las maniobras críticas: comunicación continua. Si la S.M. no puede cumplir: 'Bridge, engine room. Unable to comply. Maximum available is [X]. Over.'"},
+  ],
+  pt:[
+    {q:"Como se reporta um problema no propulsor ou no veio?",opts:["Hélice partida","I have a propeller/shaft problem. [Vibration / cavitation / shaft seal leaking / propeller blade damaged]. Engine speed has been reduced to [X] RPM to minimise further damage. Inspection required at next port.","Problema na hélice","Falha no veio"],correct:1,expl:"Hélice/veio SMCP: 'I have a propeller/shaft problem. Abnormal vibration is felt at speeds above [X] RPM. Propeller cavitation is suspected / shaft seal is leaking [X] litres per hour / propeller blade appears damaged. Engine speed has been reduced to [X] RPM as a precaution. An underwater inspection is required at the next port.'"},
+    {q:"Como se reporta uma falha de arranque do motor principal?",opts:["Não consegue arrancar o motor","Main engine is not starting. Starting air pressure is [X] bar. [Cause: fuel rack / injector / air start valve / unknown]. I am attempting to start on backup system. ETA for restart: [X] minutes.","O motor não arranca","Problema de arranque"],correct:1,expl:"Falha de arranque SMCP: 'Main engine is not starting. Starting air pressure is [X] bar (normal: [X] bar). I have [attempted X starts]. Fault appears to be [fuel rack stuck / starting air valve blocked / injectors / unknown]. I am [refilling air bottles / checking fuel system / contacting maker's engineer]. I estimate engine available in [X] minutes / hours.'"},
+    {q:"Como se reporta uma falha do sistema de água de arrefecimento?",opts:["Motor com sobreaquecimento","I have a cooling water system failure. Jacket water temperature is [X] degrees Celsius (normal: [X]). Cooling pump [X] has [failed/tripped]. I have started standby pump. Engine speed has been reduced.","Alarme de temperatura","Problema de arrefecimento"],correct:1,expl:"Falha do sistema de água de arrefecimento SMCP: 'I have a cooling water system failure. Main jacket water temperature is [X]°C and rising (normal: [X]°C). Cooling water pump [X] has [failed / tripped on overload]. Standby pump has been started. Engine load has been reduced to 50%. If temperature continues to rise, I will need to stop the engine.'"},
+    {q:"Como se reporta uma falha do compressor de ar?",opts:["Compressor partido","I have an air compressor failure. Starting air pressure is [X] bar and falling. I have [X] start attempts remaining. If pressure falls below [X] bar, main engine cannot be started.","Problema de ar","Falha do compressor"],correct:1,expl:"Falha do compressor de ar SMCP: 'I have an air compressor failure. Air compressor [X] has stopped. Starting air pressure is currently [X] bar. Minimum pressure for engine starting is [X] bar. With current consumption, I have approximately [X] start attempts remaining. I am [repairing compressor / conserving air / requesting portable compressor].'"},
+    {q:"Como se reporta uma falha do sistema hidráulico que afeta o leme?",opts:["Problema no leme","I have a hydraulic system failure affecting steering gear. Steering has [changed to emergency steering / been transferred to hand steering]. Vessel is [proceeding / has stopped / is anchoring]. Repair is [in progress / expected to take X hours].","Leme partido","Não consigo governar"],correct:1,expl:"Falha hidráulica do leme SMCP: 'I have a hydraulic failure in the steering gear. Main steering pump has [failed/lost pressure]. I have transferred to [secondary hydraulic pump / emergency electric steering / hand steering]. I am [proceeding at reduced speed / have stopped / am anchoring].'"},
+    {q:"Como se reporta um incêndio na sala de máquinas?",opts:["S.M. em chamas","MAYDAY/PAN-PAN. Bridge, engine room. I have a fire in the engine room. Fire is in [location]. I am activating CO2/[firefighting]. All personnel have evacuated. ER is sealed. Over.","Fogo em baixo","Incêndio do motor"],correct:1,expl:"Incêndio na S.M. SMCP: 'MAYDAY MAYDAY MAYDAY. Bridge — engine room. Fire in engine room. Location: [fuel line / bilge / generator area]. Fire is [under control / not under control]. I have activated [fixed CO2 / portable extinguisher]. All engine room personnel have evacuated. Engine room is sealed and ventilation is shut off. Engine is stopped. Over.'"},
+    {q:"Como se reporta um alarme de temperatura de rolamento de veio?",opts:["Rolamento quente","I have a bearing temperature alarm. [Intermediate / stern / main] shaft bearing temperature is [X] degrees Celsius. Normal temperature is [X] degrees. Engine speed has been reduced. I am investigating and monitoring.","Rolamento quente","Alarme de temperatura em rolamento"],correct:1,expl:"Alarme de temperatura de rolamento SMCP: 'I have a bearing temperature alarm on [intermediate / stern tube / main] bearing. Temperature is [X]°C and [stable/rising]. Normal operating temperature is [X]°C. Engine speed has been reduced to [X] RPM. I am [checking lubricating oil supply / checking bearing clearance / monitoring].'"},
+    {q:"Como se solicita autorização para parar o motor principal para manutenção?",opts:["Podemos parar?","Bridge, engine room. I request permission to stop the main engine for [X] minutes/hours for [maintenance/repair]. I recommend [anchoring / drifting with caution / tug standby] during the stop.","Pedido de paragem do motor","Paragem de manutenção"],correct:1,expl:"Pedido de paragem do motor para manutenção SMCP: 'Bridge, engine room. I request permission to stop the main engine. Reason: [maintenance / repair of X / routine inspection]. Estimated duration: [X] minutes/hours. I recommend the vessel [anchor at position X / heave to / drift in clear water / request tug standby]. I am ready to stop when you confirm safe conditions. Over.'"},
+    {q:"Como se reporta uma emergência de inundação na sala de máquinas?",opts:["A S.M. está inundada","MAYDAY. Bridge — engine room. I have flooding in the engine room. Water is entering from [sea suction valve / pipe failure / collision damage]. Rate is [fast / severe]. Bilge pumps are running but not coping. I require immediate assistance.","Água na S.M.","Sala de máquinas inundada"],correct:1,expl:"Inundação S.M. SMCP: 'MAYDAY MAYDAY MAYDAY. Bridge — engine room. I have flooding in engine room. Water ingress rate is [X cm / X tonnes] per hour. Source: [unidentified / sea valve failed / pipe rupture]. Bilge pumps are [running / running but not coping]. Water level is [X cm] above floor plates. I require [immediate pumping assistance / salvage pumps / divers].'"},
+    {q:"O que é o 'estado de navio morto' e como se reporta?",opts:["Navio lento","O navio está em estado de navio morto — sem propulsão, sem leme, sem energia elétrica. Posição [lat/long]. Preciso de assistência imediata de rebocador. Estou à deriva para [perigo/mar aberto].","Navio que não funciona","Navio sem energia"],correct:1,expl:"Estado de navio morto SMCP: 'Bridge, this is engine room. The vessel is in DEAD SHIP condition. Main engine: stopped. Steering gear: not available. Electrical power: emergency generator only. We have no propulsion. Current position is [lat/long]. Vessel is drifting [direction] at [X] knots towards [danger / open sea]. I require IMMEDIATE tug assistance and salvage support. Over.'"},
+    {q:"Como se reporta o estado do motor após uma reparação?",opts:["Reparado","Bridge, engine room. Engine repair is complete. Main engine is running normally. All parameters are within normal limits. Full power is available. RPM [X]. Ready for full manoeuvring. Over.","Motor OK","Reparação concluída"],correct:1,expl:"Estado do motor pós-reparação SMCP: 'Bridge, engine room. Repair to [descrever o que foi reparado] is complete. Main engine has been restarted and tested. All parameters are normal: temperature [X]°C, pressure [X] bar, RPM [X], vibration [normal]. Full power is available. No further restrictions. Ready for full manoeuvring as required. Over.'"},
+    {q:"Como se reporta a extinção de um incêndio na caixa de varrimento?",opts:["Fogo extinto","Bridge, engine room. The scavenge fire in cylinder [X] has been extinguished. Engine speed has been reduced. Scavenge drains will be opened for inspection. Engine performance will be monitored. Over.","Varrimento OK","Incêndio extinto"],correct:1,expl:"Extinção de incêndio de varrimento SMCP: 'Bridge, engine room. The scavenge fire on cylinder [X] has been extinguished. Engine speed is reduced to [X] RPM. Scavenge drains are open and being inspected. Temperature in affected area is [falling/normal]. No structural damage is apparent. I am monitoring closely. Over.'"},
+    {q:"Como se reporta um parâmetro de motor 'fora dos limites'?",opts:["Parâmetro errado","Engine room to bridge. [Parameter name] on [equipment] is out of limits. Current reading is [X]. Normal limit is [X]. I am [investigating / taking corrective action / requesting permission to reduce speed].","Alarme ativo","Alarme de parâmetro"],correct:1,expl:"Parâmetro fora dos limites SMCP: 'Bridge, engine room. [Temperatura de escape / pressão de óleo / temperatura de arrefecimento / vibração] on [main engine / generator X / auxiliary] is out of limits. Current reading: [X] [units]. Normal operating range: [X] to [X] [units]. Trend: [stable/rising/falling rapidly]. I am [investigating cause / reducing load / preparing to shut down].'"},
+    {q:"Como se comunica durante as manobras na ponte com a sala de máquinas?",opts:["Usar o telégrafo","Cada ordem de motor da ponte deve ser acusada de receção pela S.M. com as RPM. A ponte dá a ordem → a S.M. repete a ordem + confirma as RPM.","Apenas ligar","Usar sinais manuais"],correct:1,expl:"Comunicação manobra ponte-S.M. SMCP: protocolo estrito em 'circuito fechado'. Ponte: 'Engine room — slow ahead please.' S.M.: 'Slow ahead — engine is on slow ahead. RPM [X]. Over.' Durante as manobras críticas: comunicação contínua. Se a S.M. não consegue cumprir: 'Bridge, engine room. Unable to comply. Maximum available is [X]. Over.'"},
+  ],
+};
+
+function QuestionBank({ lang }) {
+  const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [done,setDone]=useState(false);
+  const questions=BANK[lang]||BANK.en;const q=questions[cur];const isOk=sel===q.correct;
+  const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
+  const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
+  if(done)return(<div style={{textAlign:"center",padding:"20px 0"}}><div style={{fontSize:48}}>{score>=12?"🏆":score>=8?"🎖️":"📚"}</div><div style={{fontFamily:"'Cinzel',serif",fontSize:20,color:C.white,margin:"8px 0 4px"}}>{score}/{questions.length}</div><div style={{fontSize:14,color:C.gold2}}>{Math.round(score/questions.length*100)}%</div></div>);
+  return(<div>
+    <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}><div style={{fontSize:10,color:C.muted}}>{cur+1}/{questions.length}</div><div style={{fontSize:12,color:C.gold2,fontWeight:700}}>✓ {score}</div></div>
+    <div style={{height:3,background:"rgba(255,255,255,0.08)",borderRadius:3,marginBottom:12,overflow:"hidden"}}><div style={{height:"100%",width:`${(cur/questions.length)*100}%`,background:`linear-gradient(90deg,${C.eng},${C.maint})`}}/></div>
+    <div style={{fontSize:13,fontWeight:700,color:C.white,lineHeight:1.5,marginBottom:12}}>{q.q}</div>
+    <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:10}}>
+      {q.opts.map((opt,i)=>{let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)";if(answered){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;}else if(i===sel){bg="rgba(192,57,43,0.2)";bd=C.red;}}return<button key={i} onClick={()=>pick(i)} style={{padding:"10px 12px",borderRadius:12,background:bg,border:`1.5px solid ${bd}`,color:C.muted,fontSize:11,textAlign:"left",cursor:answered?"default":"pointer",lineHeight:1.4,fontFamily:"'Courier New',monospace"}}>{opt}</button>;})}
+    </div>
+    {answered&&<><div style={{padding:"10px 12px",borderRadius:10,marginBottom:10,background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",border:`1px solid ${isOk?C.green:C.red}44`,fontSize:11,color:C.white,lineHeight:1.6}}>{q.expl}</div>
+    <button onClick={next} style={{width:"100%",padding:"11px 0",border:"none",borderRadius:12,background:`linear-gradient(135deg,${C.eng},${C.gold2})`,fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer"}}>{cur<questions.length-1?(lang==="fr"?"SUIVANT →":lang==="en"?"NEXT →":lang==="es"?"SIGUIENTE →":"PRÓXIMO →"):(lang==="fr"?"TERMINER":lang==="en"?"FINISH":lang==="es"?"TERMINAR":"TERMINAR")}</button></>}
+  </div>);
+}
+
+function Stars(){const s=Array.from({length:10},()=>({x:Math.random()*100,y:Math.random()*100,sz:Math.random()>0.7?2:1.5,dur:2+Math.random()*4,delay:Math.random()*6}));return(<><div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0}}>{s.map((st,i)=><div key={i} style={{position:"absolute",left:`${st.x}%`,top:`${st.y}%`,width:st.sz,height:st.sz,borderRadius:"50%",background:"white",opacity:0,animation:`tw ${st.dur}s ease-in-out ${st.delay}s infinite`}}/>)}</div><style>{`@keyframes tw{0%,100%{opacity:0}50%{opacity:0.3}}@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes correctPop{0%{transform:scale(0.85)}60%{transform:scale(1.1)}100%{transform:scale(1)}}@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}`}</style></>);}
+function Card({children,style={}}){return<div style={{background:"rgba(13,31,60,0.75)",border:`1px solid ${C.border}`,borderRadius:18,padding:"16px",...style}}>{children}</div>;}
+function GLine(){return<div style={{height:1,margin:"14px 0",background:`linear-gradient(90deg,transparent,${C.eng}33,${C.maint}33,transparent)`}}/>;}
+function SL({icon,text,color}){return<div style={{display:"flex",alignItems:"center",gap:10,margin:"20px 0 12px"}}><span style={{fontSize:20}}>{icon}</span><div style={{fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:color||C.gold,letterSpacing:2}}>{text}</div><div style={{flex:1,height:1,background:`linear-gradient(90deg,${color||C.gold}44,transparent)`}}/></div>;}
+
+function QuizComp({questions,t,onComplete}){
+  const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [answers,setAnswers]=useState([]);const [done,setDone]=useState(false);
+  const q=questions[cur];const isOk=sel===q.correct;
+  const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);setAnswers(a=>[...a,{i,ok:i===q.correct}]);};
+  const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else{setDone(true);onComplete(score+(isOk?1:0));}};
+  if(done){const fs=score;const pct=Math.round(fs/questions.length*100);const xp=fs>=4?200:fs===3?120:60;return(<Card style={{textAlign:"center"}}><div style={{fontSize:52,marginBottom:8}}>{pct===100?"🏆":pct>=80?"🎖️":"📚"}</div><div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,color:C.white,marginBottom:4}}>{fs}/{questions.length}</div><div style={{display:"inline-block",marginTop:8,padding:"6px 16px",borderRadius:20,background:`${C.eng}15`,border:`1px solid ${C.eng}44`,fontSize:14,color:C.eng,fontWeight:700}}>+{xp} {t.xp} ⭐</div><GLine/><div style={{display:"flex",justifyContent:"center",gap:8,marginTop:8}}>{answers.map((a,i)=><div key={i} style={{width:32,height:32,borderRadius:"50%",background:a.ok?C.green:C.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:C.white}}>{a.ok?"✓":"✗"}</div>)}</div></Card>);}
+  return(<Card style={{border:`1px solid ${C.eng}33`}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}><div style={{fontSize:11,letterSpacing:3,color:C.eng,fontFamily:"'Cinzel',serif"}}>{t.quiz}</div><div style={{fontSize:12,color:C.muted}}>{t.question} {cur+1} {t.ofQ} {questions.length}</div></div><div style={{display:"flex",gap:6,marginBottom:16}}>{questions.map((_,i)=><div key={i} style={{flex:1,height:3,borderRadius:3,background:i<cur?(answers[i]?.ok?C.green:C.red):i===cur?C.eng:"rgba(255,255,255,0.1)"}}/>)}</div><div style={{fontSize:14,fontWeight:700,color:C.white,lineHeight:1.5,marginBottom:16}}>{q.q}</div><div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:14}}>{q.opts.map((opt,i)=>{let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)",anim="none";if(answered){if(i===q.correct){bg="rgba(30,138,74,0.2)";bd=C.green;anim="correctPop 0.4s ease";}else if(i===sel){bg="rgba(192,57,43,0.2)";bd=C.red;anim="wrongShake 0.4s ease";}}return<button key={i} onClick={()=>pick(i)} style={{padding:"12px 14px",borderRadius:14,background:bg,border:`1.5px solid ${bd}`,color:answered&&(i===q.correct||i===sel)?C.white:C.muted,fontSize:12,textAlign:"left",cursor:answered?"default":"pointer",animation:anim,display:"flex",alignItems:"center",gap:10,lineHeight:1.4,fontFamily:"'Courier New',monospace"}}><div style={{width:26,height:26,borderRadius:"50%",flexShrink:0,background:answered&&i===q.correct?C.green:answered&&i===sel?C.red:"rgba(255,255,255,0.1)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,color:C.white,fontFamily:"'Nunito',sans-serif"}}>{answered&&i===q.correct?"✓":answered&&i===sel?"✗":String.fromCharCode(65+i)}</div><span>{opt}</span></button>;})} </div>{answered&&<div style={{padding:"12px 14px",borderRadius:12,marginBottom:14,background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",border:`1px solid ${isOk?C.green:C.red}44`,animation:"fadeUp 0.4s ease"}}><div style={{fontSize:12,fontWeight:700,marginBottom:4,color:isOk?C.green:C.red}}>{isOk?t.correct:t.wrong}</div><div style={{fontSize:11,color:C.muted,fontWeight:600,marginBottom:2}}>{t.expl}</div><div style={{fontSize:12,color:C.white,lineHeight:1.6}}>{q.expl}</div></div>}{answered&&<button onClick={next} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:`linear-gradient(135deg,${C.eng},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer"}}>{cur<questions.length-1?t.next:t.finish}</button>}</Card>);
+}
+
+const getContent = lang => {
+  const d={
+    en:{
+      badge:"⚙️ Maritime English SMCP · Lesson 6/8 · ⭐ Premium · 200 XP",
+      title:"Engine Room SMCP",
+      intro:"The engine room is the heartbeat of the ship. Clear, precise SMCP communication between bridge and engine room prevents accidents, ensures safe manoeuvring, and coordinates emergency responses. This lesson covers bridge-ER communications, engine defect reporting, fuel systems and maintenance phrases.",
+      p1:"PART 1 — BRIDGE ↔ ENGINE ROOM",s1t:"Stand by · Speed orders · Alarm reports",
+      s1:"BRIDGE → ER STANDARD PHRASES:\n'Stand by for manoeuvring'\n'[Full/Half/Slow/Dead slow] ahead/astern'\n'Stop engines'\n'Please keep me informed'\n\nER → BRIDGE RESPONSES:\n'Main engine is ready. Ready for manoeuvring.'\n'[Order] — engine on [order]. RPM [X]. Over.'\n'I have an engine alarm. [Description].'\n'I require permission to stop engine.'",
+      p2:"PART 2 — ENGINE DEFECT FLASHCARDS",s1t:"Main engine · Auxiliaries · Fuel · Alarms",
+      s2:"KEY DEFECT PHRASES:\n\nMAIN ENGINE FAILURE:\n'I have a main engine failure. Engine has stopped. Cause unknown. Unable to proceed. Require tug.'\n\nGENERATOR FAILURE:\n'Generator [X] has tripped. Operating on [X] generators. Load shedding in effect.'\n\nBLACKOUT:\n'I have a blackout. All electrical power lost. Emergency generator [started/failed].'\n\nFUEL CHANGEOVER:\n'Fuel changeover from HFO to MGO complete. Position [lat/long]. Time [UTC].'",
+      p3:"PART 3 — MAINTENANCE PHRASES",s1t:"Routine · Inspections · Engine log",
+      s3:"MAINTENANCE SMCP:\n\nROUTINE:\n'[Equipment] is taken out of service for maintenance.'\n'Maintenance is complete. [Equipment] is back in service.'\n\nINSPECTION:\n'Safety valve test is complete.'\n'Emergency fire pump test is complete.'\n\nLOGBOOK:\n'Engine log is up to date.'\n'Fuel consumption for the voyage was [X] tonnes.'\n'Running hours for [equipment] are [X] hours.'",
+      p4:"PART 4 — ENGINE ROOM QUIZ",s1t:"5 practical ER scenarios",
+      s4:"REMEMBER:\nER always responds: 'Bridge, engine room.'\nEvery order confirmed with RPM\nBlackout = total power loss\nFuel changeover = HFO ↔ MGO (mandatory in ECA)\nDead ship = no propulsion + no steering + no power",
+      p5:"🎯 EXERCISES",p6:"📝 QUESTION BANK — 15 QUESTIONS",
+      sumT:"SUMMARY — ENGINE ROOM SMCP L6",
+      sumP:["ER response always starts: 'Bridge, engine room.'","Every engine order confirmed with RPM: 'Full ahead — RPM [X]. Over.'","Stand by = be ready to execute orders immediately","Fuel changeover: HFO→MGO mandatory in ECAs · log position+time","Blackout: emergency generator should auto-start · report status","Dead ship = no propulsion + no steering + no power → MAYDAY","Scavenge fire: reduce speed + open drain cocks + monitor","ER flooding: rate of ingress + bilge pump status + source if known"],
+      learnedP:["Bridge-ER communication: stand by · speed orders · alarm reports","Engine defect flashcards: main engine · auxiliaries · fuel · alarms","Maintenance phrases: routine · inspections · engine log","Fuel changeover SMCP: position + time + viscosity","Dead ship condition: definition and emergency response"],
+    },
+    fr:{
+      badge:"⚙️ Anglais Maritime SMCP · Leçon 6/8 · ⭐ Premium · 200 XP",
+      title:"SMCP Salle des Machines",
+      intro:"La salle des machines est le cœur du navire. Une communication SMCP claire entre la passerelle et la salle des machines prévient les accidents, assure la sécurité des manœuvres et coordonne les réponses aux urgences.",
+      p1:"PARTIE 1 — PASSERELLE ↔ S.D.M.",s1t:"Stand by · Ordres de vitesse · Rapports d'alarmes",
+      s1:"PASSERELLE → S.D.M. :\n'Stand by for manoeuvring'\n'[Full/Half/Slow/Dead slow] ahead/astern'\n'Stop engines'\n'Please keep me informed'\n\nS.D.M. → PASSERELLE :\n'Main engine is ready. Ready for manoeuvring.'\n'[Ordre] — engine on [ordre]. RPM [X]. Over.'\n'I have an engine alarm. [Description].'\n'I require permission to stop engine.'",
+      p2:"PARTIE 2 — FICHES PANNES MOTEUR",s1t:"Moteur principal · Auxiliaires · Carburant · Alarmes",
+      s2:"PHRASES CLÉS DE PANNE :\n\nPANNE MOTEUR PRINCIPAL :\n'I have a main engine failure. Engine has stopped. Cause unknown. Unable to proceed. Require tug.'\n\nPANNE GÉNÉRATEUR :\n'Generator [X] has tripped. Operating on [X] generators. Load shedding in effect.'\n\nBLACKOUT :\n'I have a blackout. All electrical power lost. Emergency generator [started/failed].'\n\nCHANGEMENT DE CARBURANT :\n'Fuel changeover from HFO to MGO complete. Position [lat/long]. Time [UTC].'",
+      p3:"PARTIE 3 — PHRASES DE MAINTENANCE",s1t:"Routine · Inspections · Journal machine",
+      s3:"MAINTENANCE SMCP :\n\nROUTINE :\n'[Équipement] is taken out of service for maintenance.'\n'Maintenance is complete. [Équipement] is back in service.'\n\nINSPECTION :\n'Safety valve test is complete.'\n'Emergency fire pump test is complete.'\n\nJOURNAL MACHINE :\n'Engine log is up to date.'\n'Fuel consumption for the voyage was [X] tonnes.'",
+      p4:"PARTIE 4 — QUIZ SALLE DES MACHINES",s1t:"5 scénarios pratiques S.D.M.",
+      s4:"RAPPELS :\nS.D.M. répond toujours : 'Bridge, engine room.'\nChaque ordre confirmé avec les RPM\nBlackout = perte totale d'alimentation\nChangement carburant = HFO ↔ MGO (obligatoire ECA)\nNavire mort = pas de propulsion + pas de gouverne + pas d'énergie",
+      p5:"🎯 EXERCICES",p6:"📝 BANQUE 15 QUESTIONS",
+      sumT:"RÉSUMÉ — SMCP SALLE DES MACHINES L6",
+      sumP:["La réponse S.D.M. commence toujours par : 'Bridge, engine room.'","Chaque ordre moteur confirmé avec RPM : 'Full ahead — RPM [X]. Over.'","Stand by = se tenir prêt à exécuter les ordres immédiatement","Changement carburant : HFO→MGO obligatoire en ECA · consigner position+heure","Blackout : le générateur de secours doit démarrer automatiquement · signaler l'état","Navire mort = pas de propulsion + pas de gouverne + pas d'énergie → MAYDAY","Incendie balayage : réduire vitesse + ouvrir robinets de vidange + surveiller","Inondation S.D.M. : taux d'afflux + état pompes de cale + source si connue"],
+      learnedP:["Communication passerelle-S.D.M. : stand by · ordres de vitesse · rapports d'alarmes","Fiches pannes moteur : moteur principal · auxiliaires · carburant · alarmes","Phrases de maintenance : routine · inspections · journal machine","Changement carburant SMCP : position + heure + viscosité","État de navire mort : définition et réponse d'urgence"],
+    },
+    es:{
+      badge:"⚙️ Inglés Marítimo SMCP · Lección 6/8 · ⭐ Premium · 200 XP",
+      title:"SMCP Sala de Máquinas",
+      intro:"La sala de máquinas es el corazón del buque. Una comunicación SMCP clara entre el puente y la sala de máquinas previene accidentes, asegura maniobras seguras y coordina las respuestas de emergencia.",
+      p1:"PARTE 1 — PUENTE ↔ S.M.",s1t:"Stand by · Órdenes de velocidad · Informes de alarmas",
+      s1:"PUENTE → S.M.:\n'Stand by for manoeuvring'\n'[Full/Half/Slow/Dead slow] ahead/astern'\n'Stop engines' · 'Please keep me informed'\n\nS.M. → PUENTE:\n'Main engine is ready. Ready for manoeuvring.'\n'[Orden] — engine on [orden]. RPM [X]. Over.'\n'I have an engine alarm. [Descripción].'\n'I require permission to stop engine.'",
+      p2:"PARTE 2 — FICHAS DE AVERÍAS DE MOTOR",s1t:"Motor principal · Auxiliares · Combustible · Alarmas",
+      s2:"FRASES CLAVE DE AVERÍA:\nAVERÍA MOTOR PRINCIPAL: 'I have a main engine failure. Engine has stopped. Require tug.'\nAVERÍA GENERADOR: 'Generator [X] has tripped. Load shedding in effect.'\nAPAGÓN: 'I have a blackout. All electrical power lost. Emergency generator [started/failed].'\nCAMBIO COMBUSTIBLE: 'Fuel changeover from HFO to MGO complete. Position [lat/long]. Time [UTC].'",
+      p3:"PARTE 3 — FRASES DE MANTENIMIENTO",s1t:"Rutinario · Inspecciones · Diario de máquinas",
+      s3:"MANTENIMIENTO SMCP:\nRUTINARIO: '[Equipo] is taken out of service for maintenance.' / 'Maintenance is complete.'\nINSPECCIÓN: 'Safety valve test is complete.' / 'Emergency fire pump test is complete.'\nDIARIO: 'Engine log is up to date.' / 'Fuel consumption for the voyage was [X] tonnes.'",
+      p4:"PARTE 4 — QUIZ SALA DE MÁQUINAS",s1t:"5 escenarios prácticos S.M.",
+      s4:"RECORDAR:\nS.M. responde siempre: 'Bridge, engine room.'\nCada orden confirmada con RPM\nApagón = pérdida total de energía\nCambio combustible = HFO ↔ MGO (obligatorio ECA)\nBarco muerto = sin propulsión + sin timón + sin energía",
+      p5:"🎯 EJERCICIOS",p6:"📝 BANCO 15 PREGUNTAS",
+      sumT:"RESUMEN — SMCP SALA DE MÁQUINAS L6",
+      sumP:["La respuesta S.M. siempre comienza: 'Bridge, engine room.'","Cada orden de motor confirmada con RPM: 'Full ahead — RPM [X]. Over.'","Stand by = estar listo para ejecutar órdenes inmediatamente","Cambio de combustible: HFO→MGO obligatorio en ECA · registrar posición+hora","Apagón: el generador de emergencia debe arrancar automáticamente · informar del estado","Barco muerto = sin propulsión + sin timón + sin energía → MAYDAY","Incendio de barrido: reducir velocidad + abrir grifos de drenaje + vigilar","Inundación S.M.: tasa de entrada + estado bombas de sentina + origen si se conoce"],
+      learnedP:["Comunicación puente-S.M.: stand by · órdenes de velocidad · informes de alarmas","Fichas de averías de motor: motor principal · auxiliares · combustible · alarmas","Frases de mantenimiento: rutinario · inspecciones · diario de máquinas","Cambio de combustible SMCP: posición + hora + viscosidad","Estado de barco muerto: definición y respuesta de emergencia"],
+    },
+    pt:{
+      badge:"⚙️ Inglês Marítimo SMCP · Lição 6/8 · ⭐ Premium · 200 XP",
+      title:"SMCP Sala de Máquinas",
+      intro:"A sala de máquinas é o coração do navio. Uma comunicação SMCP clara entre a ponte e a sala de máquinas previne acidentes, garante manobras seguras e coordena as respostas de emergência.",
+      p1:"PARTE 1 — PONTE ↔ S.M.",s1t:"Stand by · Ordens de velocidade · Relatórios de alarmes",
+      s1:"PONTE → S.M.:\n'Stand by for manoeuvring'\n'[Full/Half/Slow/Dead slow] ahead/astern'\n'Stop engines' · 'Please keep me informed'\n\nS.M. → PONTE:\n'Main engine is ready. Ready for manoeuvring.'\n'[Ordem] — engine on [ordem]. RPM [X]. Over.'\n'I have an engine alarm. [Descrição].'\n'I require permission to stop engine.'",
+      p2:"PARTE 2 — FICHAS DE AVARIAS DE MOTOR",s1t:"Motor principal · Auxiliares · Combustível · Alarmes",
+      s2:"FRASES CHAVE DE AVARIA:\nAVARIA MOTOR PRINCIPAL: 'I have a main engine failure. Engine has stopped. Require tug.'\nAVARIA GERADOR: 'Generator [X] has tripped. Load shedding in effect.'\nAPAGÃO: 'I have a blackout. All electrical power lost. Emergency generator [started/failed].'\nMUDANÇA COMBUSTÍVEL: 'Fuel changeover from HFO to MGO complete. Position [lat/long]. Time [UTC].'",
+      p3:"PARTE 3 — FRASES DE MANUTENÇÃO",s1t:"Rotina · Inspeções · Diário de máquinas",
+      s3:"MANUTENÇÃO SMCP:\nROTINA: '[Equipamento] is taken out of service for maintenance.' / 'Maintenance is complete.'\nINSPEÇÃO: 'Safety valve test is complete.' / 'Emergency fire pump test is complete.'\nDIÁRIO: 'Engine log is up to date.' / 'Fuel consumption for the voyage was [X] tonnes.'",
+      p4:"PARTE 4 — QUIZ SALA DE MÁQUINAS",s1t:"5 cenários práticos S.M.",
+      s4:"LEMBRAR:\nS.M. responde sempre: 'Bridge, engine room.'\nCada ordem confirmada com RPM\nApagão = perda total de energia\nMudança combustível = HFO ↔ MGO (obrigatório ECA)\nNavio morto = sem propulsão + sem leme + sem energia",
+      p5:"🎯 EXERCÍCIOS",p6:"📝 BANCO 15 QUESTÕES",
+      sumT:"RESUMO — SMCP SALA DE MÁQUINAS L6",
+      sumP:["A resposta S.M. começa sempre: 'Bridge, engine room.'","Cada ordem de motor confirmada com RPM: 'Full ahead — RPM [X]. Over.'","Stand by = estar pronto para executar ordens imediatamente","Mudança de combustível: HFO→MGO obrigatório em ECAs · registar posição+hora","Apagão: gerador de emergência deve arrancar automaticamente · reportar estado","Navio morto = sem propulsão + sem leme + sem energia → MAYDAY","Incêndio de varrimento: reduzir velocidade + abrir válvulas de drenagem + monitorizar","Inundação S.M.: taxa de entrada + estado bombas de paiol + fonte se conhecida"],
+      learnedP:["Comunicação ponte-S.M.: stand by · ordens de velocidade · relatórios de alarmes","Fichas de avarias de motor: motor principal · auxiliares · combustível · alarmes","Frases de manutenção: rotina · inspeções · diário de máquinas","Mudança de combustível SMCP: posição + hora + viscosidade","Estado de navio morto: definição e resposta de emergência"],
+    },
+  };
+  return d[lang]||d.en;
+};
+
+export default function LessonSMCP_L6({ lang="en", onBack=()=>{}, onComplete=()=>{} }) {
+  const t=T[lang]||T.en;const quiz=QUIZ[lang]||QUIZ.en;const lc=getContent(lang);
+  const [phase,setPhase]=useState("content");const [quizScore,setQuizScore]=useState(0);const [vis,setVis]=useState(false);
+  useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
+  const progress=phase==="content"?15:phase==="quiz"?70:100;
+  return(
+    <div style={{height:"100vh",display:"flex",flexDirection:"column",background:`linear-gradient(160deg,#0c0500 0%,${C.navy2} 50%,${C.navy} 100%)`,color:C.white,fontFamily:"'Nunito',sans-serif",overflow:"hidden",position:"relative"}}>
+      <Stars/>
+      <div style={{position:"relative",zIndex:100,background:"rgba(6,14,26,0.97)",backdropFilter:"blur(14px)",borderBottom:`1px solid ${C.eng}22`}}>
+        <div style={{height:54,display:"flex",alignItems:"center",padding:"0 16px",gap:12}}>
+          <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer"}}>{t.back}</button>
+          <div style={{flex:1}}>
+            <div style={{fontSize:10,color:C.eng,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>⚙️ {t.module}</div>
+            <div style={{fontSize:11,color:C.muted}}>{lang==="fr"?"Leçon 6/8":lang==="en"?"Lesson 6/8":lang==="es"?"Lección 6/8":"Lição 6/8"}</div>
+          </div>
+          <div style={{display:"flex",alignItems:"center",gap:6}}>
+            <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>
+            <div style={{fontSize:11,color:C.eng,fontFamily:"'Cinzel',serif"}}>{progress}%</div>
+          </div>
+        </div>
+        <div style={{height:3,background:"rgba(255,255,255,0.07)",overflow:"hidden"}}>
+          <div style={{height:"100%",width:`${progress}%`,background:`linear-gradient(90deg,${C.eng},${C.maint},${C.gold2})`,transition:"width 0.5s ease"}}/>
+        </div>
+      </div>
+      <div style={{flex:1,overflowY:"auto",padding:"20px 16px 40px",position:"relative",zIndex:1,opacity:vis?1:0,transform:vis?"translateY(0)":"translateY(14px)",transition:"all 0.5s ease"}}>
+        <div style={{maxWidth:480,margin:"0 auto"}}>
+          {phase==="content"&&<>
+            <div style={{display:"inline-flex",alignItems:"center",padding:"5px 12px",borderRadius:20,marginBottom:10,background:`${C.eng}15`,border:`1px solid ${C.eng}44`,fontSize:11,color:C.eng,fontWeight:700}}>{lc.badge}</div>
+            <h1 style={{fontFamily:"'Cinzel',serif",fontSize:20,fontWeight:700,color:C.white,lineHeight:1.3,margin:"0 0 16px"}}>{lc.title}</h1>
+            <Card style={{marginBottom:14,borderLeft:`3px solid ${C.eng}`}}>
+              <div style={{fontSize:14,color:"rgba(240,244,255,0.85)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.intro}</div>
+            </Card>
+            <SL icon="📡" text={lc.p1} color={C.eng}/>
+            <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
+            <Card style={{marginBottom:14,background:"rgba(12,5,0,0.7)",border:`1px solid ${C.eng}22`}}>
+              <div style={{fontSize:11,color:C.eng,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SIMULATEUR PASSERELLE ↔ S.D.M.":lang==="en"?"BRIDGE ↔ ENGINE ROOM SIMULATOR":"SIMULADOR PUENTE ↔ S.M."}</div>
+              <EngineRoomCommSVG lang={lang}/>
+            </Card>
+            <SL icon="🔧" text={lc.p2} color={C.alarm}/>
+            <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
+            <Card style={{marginBottom:14,border:`1px solid ${C.alarm}22`}}>
+              <div style={{fontSize:11,color:C.alarm,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔧 {lang==="fr"?"FICHES PANNES MOTEUR":lang==="en"?"ENGINE DEFECT FLASHCARDS":"FICHAS AVERÍAS MOTOR"}</div>
+              <EngineDefectsFlashcardsSVG lang={lang}/>
+            </Card>
+            <SL icon="🔍" text={lc.p3} color={C.maint}/>
+            <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
+            <Card style={{marginBottom:14,border:`1px solid ${C.maint}22`}}>
+              <div style={{fontSize:11,color:C.maint,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"PHRASES DE MAINTENANCE":lang==="en"?"MAINTENANCE PHRASES":"FRASES DE MANTENIMIENTO"}</div>
+              <MaintenancePhrasesSVG lang={lang}/>
+            </Card>
+            <SL icon="🎯" text={lc.p4} color={C.gold2}/>
+            <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
+            <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ SALLE DES MACHINES":lang==="en"?"ENGINE ROOM QUIZ":"QUIZ SALA DE MÁQUINAS"}</div>
+              <EngineQuizSVG lang={lang}/>
+            </Card>
+            <SL icon="📝" text={lc.p5} color={C.gold}/>
+            <Card style={{marginBottom:14,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><Exercise1 lang={lang} t={t}/></Card>
+            <SL icon="📚" text={lc.p6} color={C.purple}/>
+            <Card style={{marginBottom:14,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}><QuestionBank lang={lang}/></Card>
+            <Card style={{marginBottom:14,background:`${C.eng}08`,border:`1px solid ${C.eng}22`}}>
+              <div style={{fontSize:11,color:C.eng,letterSpacing:3,fontFamily:"'Cinzel',serif",marginBottom:12}}>{lc.sumT}</div>
+              {lc.sumP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"5px 0",borderBottom:i<lc.sumP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:11,color:C.white}}><span style={{color:C.eng,fontWeight:700,fontFamily:"'Courier New',monospace"}}>✓</span>{pt}</div>)}
+            </Card>
+            <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.eng},${C.maint},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 10px 36px ${C.eng}33`,marginTop:8}}>{t.startQuiz}</button>
+            <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
+          </>}
+          {phase==="quiz"&&<>
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Engine Room SMCP</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 6":lang==="en"?"Lesson 6":"Lección 6"}</div>
+            </div>
+            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+          </>}
+          {phase==="done"&&<div style={{paddingTop:10}}>
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontSize:64,marginBottom:10}}>🏅</div>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:22,fontWeight:700,color:C.white,marginBottom:8}}>{t.complete}</div>
+              <div style={{display:"inline-flex",alignItems:"center",gap:8,padding:"8px 20px",borderRadius:20,background:`${C.eng}15`,border:`1px solid ${C.eng}55`,fontSize:14,color:C.eng,fontWeight:700}}>+{quizScore>=4?200:quizScore===3?120:60} {t.xp} ⭐</div>
+            </div>
+            <Card style={{marginBottom:16}}>
+              <div style={{fontSize:11,color:C.muted,marginBottom:10,fontFamily:"'Cinzel',serif",letterSpacing:1}}>{t.youLearned}</div>
+              {lc.learnedP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<lc.learnedP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.eng,fontWeight:700}}>✓</span>{pt}</div>)}
+            </Card>
+            <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.eng},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 8px 28px ${C.eng}33`,marginBottom:10}}>
+              {lang==="fr"?"LEÇON 7 — SMCP MÉDICAL →":lang==="en"?"LESSON 7 — MEDICAL SMCP →":lang==="es"?"LECCIÓN 7 — SMCP MÉDICO →":"LIÇÃO 7 — SMCP MÉDICO →"}
+            </button>
+            <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>
+          </div>}
+        </div>
+      </div>
+    </div>
+  );
+}
