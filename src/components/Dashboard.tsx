@@ -259,6 +259,19 @@ export const MODULES = {
       title:{fr:"My Career Advisor™",en:"My Career Advisor™",es:"My Career Advisor™",pt:"My Career Advisor™"},
       desc:{fr:"Feuille de route personnalisée par poste",en:"Personalized career roadmap by position",es:"Hoja de ruta personalizada por puesto",pt:"Roteiro personalizado por cargo"},
       xp:250, status:"locked", progress:0 },
+    { id:"d6", icon:"⚓", color:C.teal, access:"premium",
+      freeLessons:0, totalLessons:5,
+      title:{fr:"Seamanship",en:"Seamanship",es:"Seamanship",pt:"Seamanship"},
+      desc:{fr:"Cordages, nœuds, mouillage, amarrage, stabilité",en:"Ropes, knots, anchoring, mooring, stability",es:"Cabos, nudos, fondeo, amarre, estabilidad",pt:"Cabos, nós, fundeio, amarração, estabilidade"},
+      xp:250, status:"coming_soon", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"Ropes & Fibres",en:"Ropes & Fibres",es:"Ropes & Fibres",pt:"Ropes & Fibres"},access:"premium",status:"locked"},
+        {id:"l2",title:{fr:"Knots & Splices",en:"Knots & Splices",es:"Knots & Splices",pt:"Knots & Splices"},access:"premium",status:"locked"},
+        {id:"l3",title:{fr:"Anchoring & Anchor Types",en:"Anchoring & Anchor Types",es:"Anchoring & Anchor Types",pt:"Anchoring & Anchor Types"},access:"premium",status:"locked"},
+        {id:"l4",title:{fr:"Mooring Operations",en:"Mooring Operations",es:"Mooring Operations",pt:"Mooring Operations"},access:"premium",status:"locked"},
+        {id:"l5",title:{fr:"Stability & Buoyancy",en:"Stability & Buoyancy",es:"Stability & Buoyancy",pt:"Stability & Buoyancy"},access:"premium",status:"locked"},
+      ]
+    },
   ],
   engine:[
     { id:"e1", icon:"⚙️", color:C.orange, access:"free",
