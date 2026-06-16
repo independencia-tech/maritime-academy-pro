@@ -1731,6 +1731,7 @@ function AppInner() {
           completedLessons={completedLessons}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_sea_l1");
+            else if (lid === "l2") setPage("lesson_sea_l2");
           }}
         />
       )}
@@ -1910,6 +1911,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("seamanship_lessons")}
           onComplete={() => { markLessonCompleted("d6-l1"); setPage("seamanship_lessons"); }}
+        />
+      )}
+      {page === "lesson_sea_l2" && (
+        <LessonSEA_L2
+          lang={lang}
+          onBack={() => setPage("seamanship_lessons")}
+          onComplete={() => { markLessonCompleted("d6-l2"); setPage("seamanship_lessons"); }}
         />
       )}
       {page === "lesson_smcp_l1" && (
