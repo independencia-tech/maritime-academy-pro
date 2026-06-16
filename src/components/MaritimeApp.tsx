@@ -1599,6 +1599,7 @@ function AppInner() {
               else if (m?.id === "d2") setPage("iml_lessons");
               else if (m?.id === "d3") setPage("sb_lessons");
               else if (m?.id === "d4") setPage("smcp_lessons");
+              else if (m?.id === "d6") setPage("seamanship_lessons");
             }}
             activeNav="home"
             onNavHome={() => setPage("dashboard")}
