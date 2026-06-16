@@ -379,7 +379,7 @@ function FinalExamComp({questions,t,lang,onComplete}){
       <div style={{fontFamily:"'Cinzel',serif",fontSize:32,fontWeight:900,color:C.white,marginBottom:4}}>{answers.filter(a=>a.ok).length}/{questions.length}</div>
       <div style={{fontSize:16,color:C.exam,marginBottom:8}}>{pct}%</div>
       <div style={{display:"inline-flex",alignItems:"center",gap:8,padding:"8px 20px",borderRadius:20,background:`${C.exam}20`,border:`2px solid ${C.exam}88`,fontSize:15,color:C.exam,fontWeight:900,marginBottom:16}}>{badge}</div>
-      <div style={{display:"inline-flex",alignItems:"center",gap:8,padding:"6px 16px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}44`,fontSize:14,color:C.gold2,fontWeight:700,display:"block",marginBottom:16}}>+{xp} XP ⭐</div>
+      <div style={{alignItems:"center",gap:8,padding:"6px 16px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}44`,fontSize:14,color:C.gold2,fontWeight:700,display:"block",marginBottom:16}}>+{xp} XP ⭐</div>
       <GLine/>
       <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:6,marginTop:10}}>
         {answers.map((a,i)=><div key={i} style={{width:34,height:34,borderRadius:8,background:a.ok?C.green:C.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,color:C.white,fontWeight:700}}>{a.ok?"✓":"✗"}</div>)}
