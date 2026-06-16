@@ -502,7 +502,7 @@ export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=
               <div style={{fontSize:11,color:C.exam,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📚 {lang==="fr"?"RÉCAPITULATIF L1–L7":lang==="en"?"MODULE RECAP L1–L7":"RESUMEN L1–L7"}</div>
               <ModuleRecapSVG lang={lang}/>
             </Card>
-            <SL icon="📖" text={lc.p2} color:C.gold2/>
+            <SL icon="📖" text={lc.p2} color={C.gold2}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}22`}}>
               <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📖 {lang==="fr"?"GLOSSAIRE SMCP":lang==="en"?"SMCP GLOSSARY":"GLOSARIO SMCP"}</div>
               <GlossarySVG lang={lang}/>
