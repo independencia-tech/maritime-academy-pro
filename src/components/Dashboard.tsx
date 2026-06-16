@@ -239,7 +239,7 @@ export const MODULES = {
       ]
     },
     { id:"d4", icon:"📡", color:"#9b59b6", access:"premium",
-      freeLessons:0, totalLessons:10,
+      freeLessons:0, totalLessons:11,
       title:{fr:"Anglais Maritime SMCP",en:"Maritime English SMCP",es:"Inglés Marítimo SMCP",pt:"Inglês Marítimo SMCP"},
       desc:{fr:"VHF, GMDSS, logbook, communications",en:"VHF, GMDSS, logbook, communications",es:"VHF, GMDSS, cuaderno, comunicaciones",pt:"VHF, GMDSS, diário de bordo, comunicações"},
       xp:300, status:"available", progress:0,
@@ -251,6 +251,7 @@ export const MODULES = {
         {id:"l5",title:{fr:"Cargo Operations",en:"Cargo Operations",es:"Cargo Operations",pt:"Cargo Operations"},access:"premium",status:"available"},
         {id:"l6",title:{fr:"Engine Room SMCP",en:"Engine Room SMCP",es:"Engine Room SMCP",pt:"Engine Room SMCP"},access:"premium",status:"available"},
         {id:"l7",title:{fr:"Medical SMCP",en:"Medical SMCP",es:"Medical SMCP",pt:"Medical SMCP"},access:"premium",status:"available"},
+        {id:"l8",title:{fr:"Exam Prep & Final Review",en:"Exam Prep & Final Review",es:"Exam Prep & Final Review",pt:"Exam Prep & Final Review"},access:"premium",status:"available"},
       ]
     },
     { id:"d5", icon:"⛵", color:C.blue, access:"premium_plus",
