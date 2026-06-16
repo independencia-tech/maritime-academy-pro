@@ -44,6 +44,7 @@ import LessonSMCP_L5 from "./LessonSMCP_L5";
 import LessonSMCP_L6 from "./LessonSMCP_L6";
 import LessonSMCP_L7 from "./LessonSMCP_L7";
 import LessonSMCP_L8 from "./LessonSMCP_L8";
+import LessonSEA_L1 from "./LessonSEA_L1";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
