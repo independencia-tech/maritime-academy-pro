@@ -1904,6 +1904,13 @@ function AppInner() {
           onComplete={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
         />
       )}
+      {page === "lesson_sea_l1" && (
+        <LessonSEA_L1
+          lang={lang}
+          onBack={() => setPage("seamanship_lessons")}
+          onComplete={() => { markLessonCompleted("d6-l1"); setPage("seamanship_lessons"); }}
+        />
+      )}
       {page === "lesson_smcp_l1" && (
         <LessonSMCP_L1
           lang={lang}
