@@ -1395,6 +1395,7 @@ function AppInner() {
   const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping","lesson_emergency"];
   const SB_LESSONS = ["lesson_iala","lesson_lights_shapes","lesson_sound_signals","lesson_flags","lesson_vhf","lesson_ais","lesson_gmdss"];
   const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3","lesson_smcp_l4","lesson_smcp_l5","lesson_smcp_l6","lesson_smcp_l7","lesson_smcp_l8"];
+  const SEAMANSHIP_LESSONS = ["lesson_sea_l1"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
