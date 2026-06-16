@@ -391,7 +391,7 @@ function Exercise1({ lang, t }) {
         </div>
       ))}
       {showC&&<div style={{padding:"12px",borderRadius:12,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:11,color:C.white,lineHeight:1.7,marginBottom:10,fontFamily:"'Courier New',monospace"}}>
-        Q1: 6×19 = 6 STRANDS × 19 WIRES EACH (total = 114 wires per rope + core)\nQ2: POLYPROPYLENE is the only common rope material that floats (density < 1)\nQ3: 5 tonnes × 5 (safety factor) = 25 TONNES breaking load
+        {"Q1: 6×19 = 6 STRANDS × 19 WIRES EACH (total = 114 wires per rope + core)\\nQ2: POLYPROPYLENE is the only common rope material that floats (density < 1)\\nQ3: 5 tonnes × 5 (safety factor) = 25 TONNES breaking load"}
       </div>}
       <button onClick={()=>setShowC(v=>!v)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:showC?"rgba(30,138,74,0.2)":`${C.rope}22`,border:`1px solid ${showC?C.green:C.rope}44`,color:showC?C.green:C.rope,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
         {showC?t.hideCorr:t.showCorr}
