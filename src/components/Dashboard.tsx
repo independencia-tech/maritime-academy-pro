@@ -265,7 +265,7 @@ export const MODULES = {
       desc:{fr:"Cordages, nœuds, mouillage, amarrage, stabilité",en:"Ropes, knots, anchoring, mooring, stability",es:"Cabos, nudos, fondeo, amarre, estabilidad",pt:"Cabos, nós, fundeio, amarração, estabilidade"},
       xp:250, status:"coming_soon", progress:0,
       lessons:[
-        {id:"l1",title:{fr:"Ropes & Fibres",en:"Ropes & Fibres",es:"Ropes & Fibres",pt:"Ropes & Fibres"},access:"premium",status:"locked"},
+        {id:"l1",title:{fr:"Ropes & Fibres",en:"Ropes & Fibres",es:"Ropes & Fibres",pt:"Ropes & Fibres"},access:"premium",status:"available"},
         {id:"l2",title:{fr:"Knots & Splices",en:"Knots & Splices",es:"Knots & Splices",pt:"Knots & Splices"},access:"premium",status:"locked"},
         {id:"l3",title:{fr:"Anchoring & Anchor Types",en:"Anchoring & Anchor Types",es:"Anchoring & Anchor Types",pt:"Anchoring & Anchor Types"},access:"premium",status:"locked"},
         {id:"l4",title:{fr:"Mooring Operations",en:"Mooring Operations",es:"Mooring Operations",pt:"Mooring Operations"},access:"premium",status:"locked"},
