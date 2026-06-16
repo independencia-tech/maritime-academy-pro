@@ -42,6 +42,7 @@ import LessonSMCP_L3 from "./LessonSMCP_L3";
 import LessonSMCP_L4 from "./LessonSMCP_L4";
 import LessonSMCP_L5 from "./LessonSMCP_L5";
 import LessonSMCP_L6 from "./LessonSMCP_L6";
+import LessonSMCP_L7 from "./LessonSMCP_L7";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1293,7 +1294,7 @@ function SMCPLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1391,7 +1392,7 @@ function AppInner() {
   const LESSONS = ["lesson_navigation","lesson_navire","lesson_coord","lesson_carte","lesson_compas","lesson_navpratique","lesson_marees","lesson_colreg"];
   const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping","lesson_emergency"];
   const SB_LESSONS = ["lesson_iala","lesson_lights_shapes","lesson_sound_signals","lesson_flags","lesson_vhf","lesson_ais","lesson_gmdss"];
-  const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3","lesson_smcp_l4","lesson_smcp_l5","lesson_smcp_l6"];
+  const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3","lesson_smcp_l4","lesson_smcp_l5","lesson_smcp_l6","lesson_smcp_l7"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
@@ -1712,6 +1713,7 @@ function AppInner() {
             else if (lid === "l4") setPage("lesson_smcp_l4");
             else if (lid === "l5") setPage("lesson_smcp_l5");
             else if (lid === "l6") setPage("lesson_smcp_l6");
+            else if (lid === "l7") setPage("lesson_smcp_l7");
           }}
         />
       )}
@@ -1874,6 +1876,13 @@ function AppInner() {
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l6"); setPage("smcp_lessons"); }}
+        />
+      )}
+      {page === "lesson_smcp_l7" && (
+        <LessonSMCP_L7
+          lang={lang}
+          onBack={() => setPage("smcp_lessons")}
+          onComplete={() => { markLessonCompleted("d4-l7"); setPage("smcp_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
