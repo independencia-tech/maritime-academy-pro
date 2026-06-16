@@ -45,6 +45,7 @@ import LessonSMCP_L6 from "./LessonSMCP_L6";
 import LessonSMCP_L7 from "./LessonSMCP_L7";
 import LessonSMCP_L8 from "./LessonSMCP_L8";
 import LessonSEA_L1 from "./LessonSEA_L1";
+import LessonSEA_L2 from "./LessonSEA_L2";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1343,7 +1344,7 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1"]);
+  const playable = new Set(["l1","l2"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1442,7 +1443,7 @@ function AppInner() {
   const ENGINE_LESSONS = ["lesson_moteur","lesson_auxiliaires","lesson_stabilite","lesson_incendie","lesson_sauvetage","lesson_maintenance","lesson_watchkeeping","lesson_emergency"];
   const SB_LESSONS = ["lesson_iala","lesson_lights_shapes","lesson_sound_signals","lesson_flags","lesson_vhf","lesson_ais","lesson_gmdss"];
   const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3","lesson_smcp_l4","lesson_smcp_l5","lesson_smcp_l6","lesson_smcp_l7","lesson_smcp_l8"];
-  const SEAMANSHIP_LESSONS = ["lesson_sea_l1"];
+  const SEAMANSHIP_LESSONS = ["lesson_sea_l1","lesson_sea_l2"];
 
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
