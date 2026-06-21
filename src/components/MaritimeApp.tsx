@@ -1430,6 +1430,7 @@ function AppInner() {
 
   const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
     if (event === "PASSWORD_RECOVERY") {
+    if (session) syncLocalProfile(session.user);
       setPage("reset_password");
     }
     if (event === "SIGNED_IN" && session) {
