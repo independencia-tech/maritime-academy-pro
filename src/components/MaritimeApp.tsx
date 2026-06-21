@@ -1445,6 +1445,34 @@ function AppInner() {
 
   return () => listener.subscription.unsubscribe();
 }, []);
+  const [lang, setLang] = useState("fr");
+const [profile, setProfile] = useState({});
+const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
+  if (typeof window === "undefined") return [];
+  try { return JSON.parse(localStorage.getItem("map_completed_lessons") || "[]"); }
+  catch { return []; }
+});
+const markLessonCompleted = (id: string) => {
+  setCompletedLessons((prev) => {
+    if (prev.includes(id)) return prev;
+    const next = [...prev, id];
+    try { localStorage.setItem("map_completed_lessons", JSON.stringify(next)); } catch {}
+    return next;
+  });
+};
+useEffect(() => {
+  if (typeof window === "undefined") return;
+  try {
+    const raw = localStorage.getItem("map_status_card");
+    if (raw) {
+      const saved = JSON.parse(raw);
+      if (saved && typeof saved === "object") {
+        setProfile(saved);
+        if (saved.lang) setLang(saved.lang);
+      }
+    }
+  } catch {}
+}, []);
   const persistProfile = (p:any) => {
     setProfile(p);
     try {
