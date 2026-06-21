@@ -1406,6 +1406,9 @@ function AppInner() {
   });
 
   const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    if (event === "PASSWORD_RECOVERY") {
+      setPage("reset_password");
+    }
     if (event === "SIGNED_IN" && session) {
       setPage(hasProfile() ? "dashboard" : "questionnaire");
     }
