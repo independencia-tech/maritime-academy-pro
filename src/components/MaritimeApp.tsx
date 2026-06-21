@@ -1434,23 +1434,39 @@ function AppInner() {
       return next;
     });
   };
- useEffect(() => {
+useEffect(() => {
   if (typeof window === "undefined") return;
 
   const hasProfile = () => {
     try { return !!localStorage.getItem("map_status_card"); } catch { return false; }
   };
 
- const isRecoveryLink =
+  const syncLocalProfile = (user: any) => {
+    try {
+      const existing = localStorage.getItem("map_last_reg");
+      if (!existing && user) {
+        const name = user.user_metadata?.name || (user.email ? user.email.split("@")[0] : "Marin");
+        localStorage.setItem("map_last_reg", JSON.stringify({
+          name,
+          email: user.email,
+          date: new Date().toLocaleString(),
+        }));
+      }
+    } catch {}
+  };
+
+  const isRecoveryLink =
     new URLSearchParams(window.location.search).get("reset_password") === "1" ||
     window.location.hash.includes("type=recovery");
-    new URLSearchParams(window.location.search).get("type") === "recovery";
 
   if (isRecoveryLink) {
     setPage("reset_password");
   } else {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) setPage(hasProfile() ? "dashboard" : "questionnaire");
+      if (session) {
+        syncLocalProfile(session.user);
+        setPage(hasProfile() ? "dashboard" : "questionnaire");
+      }
     });
   }
 
@@ -1459,12 +1475,16 @@ function AppInner() {
       setPage("reset_password");
     }
     if (event === "SIGNED_IN" && session) {
+      syncLocalProfile(session.user);
       setPage(hasProfile() ? "dashboard" : "questionnaire");
     }
     if (event === "SIGNED_OUT") {
       setPage("lang");
     }
   });
+
+  return () => listener.subscription.unsubscribe();
+}, []);
 
   return () => listener.subscription.unsubscribe();
 }, []);
