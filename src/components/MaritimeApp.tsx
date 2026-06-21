@@ -1394,47 +1394,7 @@ export default function App() {
 function AppInner() {
   const { enable, disable } = useMusic();
   const [page, setPage] = useState<string>("splash");
- useEffect(() => {
-  if (typeof window === "undefined") return;
-
-  const hasProfile = () => {
-    try { return !!localStorage.getItem("map_status_card"); } catch { return false; }
-  };
-
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    if (session) setPage(hasProfile() ? "dashboard" : "questionnaire");
-  });
-
-  const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-    if (event === "PASSWORD_RECOVERY") {
-      setPage("reset_password");
-    }
-    if (event === "SIGNED_IN" && session) {
-      setPage(hasProfile() ? "dashboard" : "questionnaire");
-    }
-    if (event === "SIGNED_OUT") {
-      setPage("lang");
-    }
-  });
-
-  return () => listener.subscription.unsubscribe();
-}, []);
-  const [lang, setLang] = useState("fr");
-  const [profile, setProfile] = useState({});
-  const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try { return JSON.parse(localStorage.getItem("map_completed_lessons") || "[]"); }
-    catch { return []; }
-  });
-  const markLessonCompleted = (id: string) => {
-    setCompletedLessons((prev) => {
-      if (prev.includes(id)) return prev;
-      const next = [...prev, id];
-      try { localStorage.setItem("map_completed_lessons", JSON.stringify(next)); } catch {}
-      return next;
-    });
-  };
-useEffect(() => {
+   useEffect(() => {
   if (typeof window === "undefined") return;
 
   const hasProfile = () => {
@@ -1482,9 +1442,6 @@ useEffect(() => {
       setPage("lang");
     }
   });
-
-  return () => listener.subscription.unsubscribe();
-}, []);
 
   return () => listener.subscription.unsubscribe();
 }, []);
