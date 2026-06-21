@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -44,6 +45,15 @@ const T: any = {
     hintEmail:"✓ Email valide",
     hintPass:"✓ Mot de passe fort",
     hintConfirm:"✓ Mots de passe identiques",
+    errEmailTaken:"Cet email est déjà utilisé. Essaie de te connecter.",
+    errSignup:"Une erreur est survenue. Réessaie.",
+    errGoogle:"Erreur de connexion avec Google. Réessaie.",
+    resetSendBtn:"Envoyer le lien",
+    resetSending:"Envoi...",
+    resetSent:"✓ Email envoyé ! Vérifie ta boîte de réception.",
+    resetPh:"Ton adresse email",
+    resetErrEmpty:"Indique ton email",
+    cancel:"Annuler",
   },
   en:{
     back:"◀ Back",
@@ -79,6 +89,15 @@ const T: any = {
     hintEmail:"✓ Valid email",
     hintPass:"✓ Strong password",
     hintConfirm:"✓ Passwords match",
+    errEmailTaken:"This email is already in use. Try signing in.",
+    errSignup:"Something went wrong. Please try again.",
+    errGoogle:"Google sign-in error. Please try again.",
+    resetSendBtn:"Send reset link",
+    resetSending:"Sending...",
+    resetSent:"✓ Email sent! Check your inbox.",
+    resetPh:"Your email address",
+    resetErrEmpty:"Enter your email",
+    cancel:"Cancel",
   },
   es:{
     back:"◀ Volver",
@@ -114,6 +133,15 @@ const T: any = {
     hintEmail:"✓ Correo válido",
     hintPass:"✓ Contraseña fuerte",
     hintConfirm:"✓ Contraseñas iguales",
+    errEmailTaken:"Este correo ya está en uso. Intenta iniciar sesión.",
+    errSignup:"Ocurrió un error. Inténtalo de nuevo.",
+    errGoogle:"Error al conectar con Google. Inténtalo de nuevo.",
+    resetSendBtn:"Enviar enlace",
+    resetSending:"Enviando...",
+    resetSent:"✓ ¡Email enviado! Revisa tu bandeja de entrada.",
+    resetPh:"Tu correo electrónico",
+    resetErrEmpty:"Indica tu correo",
+    cancel:"Cancelar",
   },
   pt:{
     back:"◀ Voltar",
@@ -149,6 +177,15 @@ const T: any = {
     hintEmail:"✓ Email válido",
     hintPass:"✓ Senha forte",
     hintConfirm:"✓ Senhas iguais",
+    errEmailTaken:"Este email já está em uso. Tente entrar.",
+    errSignup:"Ocorreu um erro. Tente novamente.",
+    errGoogle:"Erro ao conectar com o Google. Tente novamente.",
+    resetSendBtn:"Enviar link",
+    resetSending:"Enviando...",
+    resetSent:"✓ Email enviado! Verifique sua caixa de entrada.",
+    resetPh:"Seu endereço de email",
+    resetErrEmpty:"Informe seu email",
+    cancel:"Cancelar",
   },
 };
 
@@ -367,6 +404,14 @@ export default function RegisterS6({
   const [cgu,setCgu]=useState(false);
   const [cguError,setCguError]=useState(false);
   const [loading,setLoading]=useState(false);
+  const [googleLoading,setGoogleLoading]=useState(false);
+
+  // ── Forgot password (inline) ──────────────────────────
+  const [showForgot,setShowForgot]=useState(false);
+  const [resetEmail,setResetEmail]=useState("");
+  const [resetError,setResetError]=useState("");
+  const [resetSent,setResetSent]=useState(false);
+  const [resetLoading,setResetLoading]=useState(false);
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
@@ -402,7 +447,7 @@ export default function RegisterS6({
     }
   };
 
-  const handleSubmit=()=>{
+  const handleSubmit=async ()=>{
     const e=validate();
     if(!cgu){setCguError(true);}
     if(Object.keys(e).length>0||!cgu){
@@ -411,26 +456,68 @@ export default function RegisterS6({
       return;
     }
     setLoading(true);
-    setTimeout(()=>{
-      const name=form.name.trim();
-      setUsername(name);
-      try {
-        const reg={
-          id:Date.now(),
-          name,
-          email:form.email.trim().toLowerCase(),
-          lang,
-          date:new Date().toLocaleString(),
-        };
-        localStorage.setItem("map_last_reg", JSON.stringify(reg));
-        const raw=localStorage.getItem("map_regs");
-        const list=raw?JSON.parse(raw):[];
-        list.push(reg);
-        localStorage.setItem("map_regs", JSON.stringify(list));
-      } catch {}
-      setLoading(false);
-      onNext();
-    },700);
+    const email=form.email.trim().toLowerCase();
+    const name=form.name.trim();
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password: form.pass,
+      options: {
+        data: { name, lang },
+      },
+    });
+
+    setLoading(false);
+
+    if (error) {
+      if (/already registered|already exists/i.test(error.message)) {
+        setErrors((p:any)=>({...p,email:t.errEmailTaken}));
+      } else {
+        setErrors((p:any)=>({...p,email:t.errSignup}));
+      }
+      return;
+    }
+
+    setUsername(name);
+    try {
+      localStorage.setItem("map_last_reg", JSON.stringify({
+        name, email, lang, date:new Date().toLocaleString(),
+      }));
+    } catch {}
+
+    // Project setting: email confirmation is disabled, so signUp()
+    // returns an active session immediately (data.session is set).
+    // MaritimeApp's onAuthStateChange listener will also pick this up.
+    onNext();
+  };
+
+  const handleGoogle=async ()=>{
+    setGoogleLoading(true);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin },
+    });
+    if (error) {
+      setGoogleLoading(false);
+      setErrors((p:any)=>({...p,email:t.errGoogle}));
+    }
+    // On success, the browser redirects to Google — no further code runs here.
+  };
+
+  const handleResetPassword=async ()=>{
+    const email=resetEmail.trim().toLowerCase();
+    if(!email){ setResetError(t.resetErrEmpty); return; }
+    setResetError("");
+    setResetLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin,
+    });
+    setResetLoading(false);
+    if (error) {
+      setResetError(t.errSignup);
+      return;
+    }
+    setResetSent(true);
   };
 
   const allValid=
@@ -507,10 +594,61 @@ export default function RegisterS6({
                 error={errors.confirm} hint={hints.confirm}
               />
               <div style={{textAlign:"right",marginTop:6}}>
-                <span style={{fontSize:11,color:C.blue2,cursor:"pointer"}}>
+                <span
+                  onClick={()=>{ setShowForgot(v=>!v); setResetSent(false); setResetError(""); }}
+                  style={{fontSize:11,color:C.blue2,cursor:"pointer"}}>
                   {t.forgotPass}
                 </span>
               </div>
+
+              {showForgot && (
+                <div style={{
+                  marginTop:10,padding:"14px",borderRadius:14,
+                  background:"rgba(255,255,255,0.04)",
+                  border:`1px solid ${C.border}`,
+                }}>
+                  {resetSent ? (
+                    <div style={{fontSize:12,color:C.green,textAlign:"center"}}>
+                      {t.resetSent}
+                    </div>
+                  ) : (
+                    <>
+                      <input
+                        type="email"
+                        placeholder={t.resetPh}
+                        value={resetEmail}
+                        onChange={(e)=>{ setResetEmail(e.target.value); setResetError(""); }}
+                        style={{
+                          width:"100%",padding:"12px 14px",borderRadius:12,
+                          background:"rgba(255,255,255,0.07)",
+                          border:`1.5px solid ${resetError?C.red:C.border}`,
+                          color:C.white,fontSize:13,outline:"none",
+                          fontFamily:"'Nunito',sans-serif",marginBottom:8,
+                        }}
+                      />
+                      {resetError && (
+                        <div style={{fontSize:11,color:C.red,marginBottom:8}}>{resetError}</div>
+                      )}
+                      <div style={{display:"flex",gap:8}}>
+                        <button onClick={handleResetPassword} disabled={resetLoading} style={{
+                          flex:1,padding:"10px 0",borderRadius:10,border:"none",
+                          background:`linear-gradient(135deg,${C.blue},${C.gold})`,
+                          color:"#fff",fontSize:12,fontWeight:700,
+                          cursor:resetLoading?"default":"pointer",
+                          fontFamily:"'Nunito',sans-serif",
+                        }}>{resetLoading?t.resetSending:t.resetSendBtn}</button>
+                        <button onClick={()=>setShowForgot(false)} style={{
+                          padding:"10px 14px",borderRadius:10,
+                          background:"rgba(255,255,255,0.06)",
+                          border:"1px solid rgba(255,255,255,0.15)",
+                          color:C.muted,fontSize:12,cursor:"pointer",
+                          fontFamily:"'Nunito',sans-serif",
+                        }}>{t.cancel}</button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
 
             <div style={{
@@ -596,23 +734,21 @@ export default function RegisterS6({
               <div style={{flex:1,height:1,background:"rgba(255,255,255,0.1)"}}/>
             </div>
 
-            <button onClick={()=>{
-              setUsername("Explorer");
-              try { localStorage.setItem("map_last_reg", JSON.stringify({ name:"Explorer", lang, date:new Date().toLocaleString() })); } catch {}
-              onNext();
-            }} style={{
+            <button onClick={handleGoogle} disabled={googleLoading} style={{
               width:"100%",padding:"14px",borderRadius:14,
               background:"rgba(255,255,255,0.06)",
               border:"1px solid rgba(255,255,255,0.16)",
               display:"flex",alignItems:"center",
               justifyContent:"center",gap:12,
-              cursor:"pointer",color:C.white,
+              cursor:googleLoading?"default":"pointer",color:C.white,
               fontFamily:"'Nunito',sans-serif",
               fontSize:14,fontWeight:600,
               transition:"all 0.2s",
             }}>
               <span style={{fontSize:20}}>🔵</span>
-              {t.googleBtn}
+              {googleLoading
+                ? (lang==="fr"?"Connexion...":lang==="es"?"Conectando...":lang==="pt"?"Conectando...":"Connecting...")
+                : t.googleBtn}
             </button>
 
             <div style={{
