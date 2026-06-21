@@ -1393,13 +1393,28 @@ export default function App() {
 function AppInner() {
   const { enable, disable } = useMusic();
   const [page, setPage] = useState<string>("splash");
-  useEffect(() => {
-    try {
-      if (typeof window !== "undefined" && localStorage.getItem("map_status_card")) {
-        setPage("dashboard");
-      }
-    } catch {}
-  }, []);
+ useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const hasProfile = () => {
+    try { return !!localStorage.getItem("map_status_card"); } catch { return false; }
+  };
+
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) setPage(hasProfile() ? "dashboard" : "questionnaire");
+  });
+
+  const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    if (event === "SIGNED_IN" && session) {
+      setPage(hasProfile() ? "dashboard" : "questionnaire");
+    }
+    if (event === "SIGNED_OUT") {
+      setPage("lang");
+    }
+  });
+
+  return () => listener.subscription.unsubscribe();
+}, []);
   const [lang, setLang] = useState("fr");
   const [profile, setProfile] = useState({});
   const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
