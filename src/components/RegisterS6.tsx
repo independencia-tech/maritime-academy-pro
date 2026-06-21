@@ -509,9 +509,9 @@ export default function RegisterS6({
     if(!email){ setResetError(t.resetErrEmpty); return; }
     setResetError("");
     setResetLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin,
-    });
+   const { error } = await supabase.auth.resetPasswordForEmail(email, {
+  redirectTo: window.location.origin + "/?reset_password=1",
+});
     setResetLoading(false);
     if (error) {
       setResetError(t.errSignup);
