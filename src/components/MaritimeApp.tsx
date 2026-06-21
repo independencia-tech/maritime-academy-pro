@@ -1579,6 +1579,12 @@ function AppInner() {
         />
       )}
       {page==="landing"     && <LandingPage setPage={setPage} lang={lang} setLang={setLang}/>}
+   {page==="reset_password" && (
+  <ResetPassword
+    lang={lang}
+    onDone={() => setPage("dashboard")}
+  />
+)} 
       {page==="register"    && (
         <RegisterS6
           lang={lang}
