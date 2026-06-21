@@ -1441,8 +1441,9 @@ function AppInner() {
     try { return !!localStorage.getItem("map_status_card"); } catch { return false; }
   };
 
-  const isRecoveryLink =
-    window.location.hash.includes("type=recovery") ||
+ const isRecoveryLink =
+    new URLSearchParams(window.location.search).get("reset_password") === "1" ||
+    window.location.hash.includes("type=recovery");
     new URLSearchParams(window.location.search).get("type") === "recovery";
 
   if (isRecoveryLink) {
