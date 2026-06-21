@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { supabase } from "@/integrations/supabase/client";
+import ResetPassword from "./ResetPassword";
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
 import Dashboard, { MODULES as ALL_MODULES } from "./Dashboard";
