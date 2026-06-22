@@ -1415,28 +1415,14 @@ function AppInner() {
     } catch {}
   };
 
-  const isRecoveryLink =
-    new URLSearchParams(window.location.search).get("reset_password") === "1" ||
-    window.location.hash.includes("type=recovery") ||
-    window.location.hash === "#";
-
-  if (isRecoveryLink) {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        syncLocalProfile(session.user);
-        setPage("reset_password");
-      } else {
-        setPage("splash");
-      }
-    });
-  } else {
+  
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         syncLocalProfile(session.user);
         setPage(hasProfile() ? "dashboard" : "questionnaire");
       }
     });
-  }
+
 
   const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
     if (event === "PASSWORD_RECOVERY") {
