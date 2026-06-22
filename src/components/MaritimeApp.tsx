@@ -1615,8 +1615,7 @@ useEffect(() => {
 }}  
   />
 )}
-      {page==="signin" && (
-{page==="terms" && (
+      {page==="terms" && (
   <TermsOfService
     lang={lang}
     onBack={() => setPage("register")}
@@ -1627,7 +1626,8 @@ useEffect(() => {
     lang={lang}
     onBack={() => setPage("register")}
   />
-)} 
+)}
+{page==="signin" && (
       <SignIn
     lang={lang}
     onBack={() => setPage("register")}
