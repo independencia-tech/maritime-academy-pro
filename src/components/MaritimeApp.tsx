@@ -1395,7 +1395,8 @@ export default function App() {
 function AppInner() {
   const { enable, disable } = useMusic();
   const [page, setPage] = useState<string>("splash");
-   useEffect(() => {
+   
+  useEffect(() => {
   if (typeof window === "undefined") return;
 
   const hasProfile = () => {
@@ -1403,21 +1404,23 @@ function AppInner() {
   };
 
   const syncLocalProfile = (user: any) => {
-  try {
-    if (!user) return;
-    const name = user.user_metadata?.name || (user.email ? user.email.split("@")[0] : "Marin");
-    localStorage.setItem("map_last_reg", JSON.stringify({
-      name,
-      email: user.email,
-      date: new Date().toLocaleString(),
-    }));
-  } catch {}
-};
-    const isRecoveryLink =
+    try {
+      if (!user) return;
+      const name = user.user_metadata?.name || (user.email ? user.email.split("@")[0] : "Marin");
+      localStorage.setItem("map_last_reg", JSON.stringify({
+        name,
+        email: user.email,
+        date: new Date().toLocaleString(),
+      }));
+    } catch {}
+  };
+
+  const isRecoveryLink =
     new URLSearchParams(window.location.search).get("reset_password") === "1" ||
     window.location.hash.includes("type=recovery") ||
     window.location.hash === "#";
-    if (isRecoveryLink) {
+
+  if (isRecoveryLink) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         syncLocalProfile(session.user);
@@ -1426,10 +1429,18 @@ function AppInner() {
         setPage("splash");
       }
     });
+  } else {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        syncLocalProfile(session.user);
+        setPage(hasProfile() ? "dashboard" : "questionnaire");
+      }
+    });
+  }
 
   const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
     if (event === "PASSWORD_RECOVERY") {
-    if (session) syncLocalProfile(session.user);
+      if (session) syncLocalProfile(session.user);
       setPage("reset_password");
     }
     if (event === "SIGNED_IN" && session) {
