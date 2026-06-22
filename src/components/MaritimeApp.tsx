@@ -1604,7 +1604,13 @@ useEffect(() => {
         />
       )}
       {page==="landing"     && <LandingPage setPage={setPage} lang={lang} setLang={setLang}/>}
-  {page==="signin" && (
+ {page==="reset_password" && (
+  <ResetPassword
+    lang={lang}
+    onDone={() => setPage("dashboard")}
+  />
+)}
+      {page==="signin" && (
   <SignIn
     lang={lang}
     onBack={() => setPage("register")}
