@@ -391,6 +391,8 @@ export default function RegisterS6({
   onBack?:()=>void;
   setUsername?:(name:string)=>void;
   onSignIn?:()=>void;
+  onTerms?:()=>void;
+onPrivacy?:()=>void;
 }) {
   const t=T[lang]||T.fr;
   const [vis,setVis]=useState(false);
@@ -682,11 +684,9 @@ redirectTo: "https://maritime-academy-pro.vercel.app",
                 </div>
                 <div style={{fontSize:13,color:C.muted,lineHeight:1.6}}>
                   {t.cguText}{" "}
-                  <span style={{color:C.blue2,textDecoration:"underline",
-                    cursor:"pointer"}}>{t.cguLink}</span>
+                 <span onClick={()=>onTerms?.()} style={{color:C.blue2,textDecoration:"underline",cursor:"pointer"}}>{t.cguLink}</span>
                   {" "}{t.cguAnd}{" "}
-                  <span style={{color:C.blue2,textDecoration:"underline",
-                    cursor:"pointer"}}>{t.cguPrivacy}</span>
+                 <span onClick={()=>onPrivacy?.()} style={{color:C.blue2,textDecoration:"underline",cursor:"pointer"}}>{t.cguPrivacy}</span>
                   {" "}de Maritime Academy Pro.
                 </div>
               </div>
