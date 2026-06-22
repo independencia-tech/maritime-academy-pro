@@ -239,7 +239,7 @@ export default function SignIn({
     setResetError("");
     setResetLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(em, {
-      redirectTo: window.location.origin + "/?reset_password=1",
+    redirectTo: "https://maritime-academy-pro.vercel.app/reset",
     });
     setResetLoading(false);
     if(error){ setResetError(t.errGeneric); return; }
