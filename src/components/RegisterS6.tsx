@@ -510,7 +510,7 @@ export default function RegisterS6({
     setResetError("");
     setResetLoading(true);
    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-  redirectTo: window.location.origin + "/?reset_password=1",
+  redirectTo: "https://maritime-academy-pro.vercel.app/reset",
 });
     setResetLoading(false);
     if (error) {
