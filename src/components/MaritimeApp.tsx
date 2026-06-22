@@ -1413,13 +1413,19 @@ function AppInner() {
     }));
   } catch {}
 };
-
-  const isRecoveryLink =
+    const isRecoveryLink =
     new URLSearchParams(window.location.search).get("reset_password") === "1" ||
-    window.location.hash.includes("type=recovery");
-
-  if (isRecoveryLink) {
-    setPage("reset_password");
+    window.location.hash.includes("type=recovery") ||
+    window.location.hash === "#";
+    if (isRecoveryLink) {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        syncLocalProfile(session.user);
+        setPage("reset_password");
+      } else {
+        setPage("splash");
+      }
+    });
   } else {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
