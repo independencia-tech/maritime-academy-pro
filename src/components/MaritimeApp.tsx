@@ -1426,14 +1426,6 @@ function AppInner() {
         setPage("splash");
       }
     });
-  } else {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        syncLocalProfile(session.user);
-        setPage(hasProfile() ? "dashboard" : "questionnaire");
-      }
-    });
-  }
 
   const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
     if (event === "PASSWORD_RECOVERY") {
