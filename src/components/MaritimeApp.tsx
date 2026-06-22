@@ -1616,7 +1616,19 @@ useEffect(() => {
   />
 )}
       {page==="signin" && (
-  <SignIn
+{page==="terms" && (
+  <TermsOfService
+    lang={lang}
+    onBack={() => setPage("register")}
+  />
+)}
+{page==="privacy" && (
+  <PrivacyPolicy
+    lang={lang}
+    onBack={() => setPage("register")}
+  />
+)} 
+      <SignIn
     lang={lang}
     onBack={() => setPage("register")}
     onSuccess={() => {
