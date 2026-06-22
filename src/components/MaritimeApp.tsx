@@ -1453,11 +1453,18 @@ const [completedLessons, setCompletedLessons] = useState<string[]>(() => {
   try { return JSON.parse(localStorage.getItem("map_completed_lessons") || "[]"); }
   catch { return []; }
 });
-const markLessonCompleted = (id: string) => {
+const markLessonCompleted = async (id: string) => {
   setCompletedLessons((prev) => {
     if (prev.includes(id)) return prev;
     const next = [...prev, id];
     try { localStorage.setItem("map_completed_lessons", JSON.stringify(next)); } catch {}
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+      supabase
+        .from("user_progress")
+        .upsert({ user_id: user.id, completed_lessons: next, updated_at: new Date().toISOString() }, { onConflict: "user_id" })
+        .then(() => {});
+    });
     return next;
   });
 };
