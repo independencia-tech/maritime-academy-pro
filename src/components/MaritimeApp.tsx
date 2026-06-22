@@ -1607,7 +1607,10 @@ useEffect(() => {
  {page==="reset_password" && (
   <ResetPassword
     lang={lang}
-    onDone={() => setPage("dashboard")}
+  onDone={() => {
+  const hp = !!localStorage.getItem("map_status_card");
+  setPage(hp ? "dashboard" : "questionnaire");
+}}  
   />
 )}
       {page==="signin" && (
