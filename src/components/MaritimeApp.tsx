@@ -1416,12 +1416,16 @@ function AppInner() {
   };
 
   
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        syncLocalProfile(session.user);
-        setPage(hasProfile() ? "dashboard" : "questionnaire");
-      }
-    });
+    if (window.location.hash.includes("access_token")) {
+  setPage("reset_password");
+} else {
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) {
+      syncLocalProfile(session.user);
+      setPage(hasProfile() ? "dashboard" : "questionnaire");
+    }
+  });
+}
 
 
   const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
