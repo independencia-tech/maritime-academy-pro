@@ -1637,15 +1637,17 @@ useEffect(() => {
     }}
   />
 )}
-      {page==="register"    && (
-        <RegisterS6
-          lang={lang}
-          onBack={() => setPage("bridge")}
-          onNext={() => setPage("questionnaire")}
-          setUsername={(name) => setProfile((p) => ({ ...p, name }))}
-          onSignIn={() => setPage("signin")}
-        />
-      )}
+     {page==="register" && (
+  <RegisterS6
+    lang={lang}
+    onBack={() => setPage("bridge")}
+    onNext={() => setPage("questionnaire")}
+    setUsername={(name) => setProfile((p) => ({ ...p, name }))}
+    onSignIn={() => setPage("signin")}
+    onTerms={() => setPage("terms")}
+    onPrivacy={() => setPage("privacy")}
+  />
+)}
       {page==="admin-login" && <AdminLogin setPage={setPage}/>}
       {page==="admin"       && <AdminPage setPage={setPage}/>}
       {page==="welcome"     && (
