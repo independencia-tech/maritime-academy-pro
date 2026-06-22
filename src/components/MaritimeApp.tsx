@@ -1481,6 +1481,22 @@ useEffect(() => {
     }
   } catch {}
 }, []);
+  useEffect(() => {
+  supabase.auth.getUser().then(({ data: { user } }) => {
+    if (!user) return;
+    supabase
+      .from("user_progress")
+      .select("completed_lessons")
+      .eq("user_id", user.id)
+      .single()
+      .then(({ data }) => {
+        if (data?.completed_lessons?.length) {
+          setCompletedLessons(data.completed_lessons);
+          try { localStorage.setItem("map_completed_lessons", JSON.stringify(data.completed_lessons)); } catch {}
+        }
+      });
+  });
+}, []);
   const persistProfile = (p:any) => {
     setProfile(p);
     try {
