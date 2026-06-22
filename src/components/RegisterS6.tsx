@@ -385,6 +385,8 @@ export default function RegisterS6({
   onBack=()=>{},
   setUsername=(_:string)=>{},
   onSignIn,
+  onTerms,
+onPrivacy,
 }:{
   lang?:string;
   onNext?:()=>void;
