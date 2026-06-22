@@ -1621,7 +1621,7 @@ useEffect(() => {
           onBack={() => setPage("bridge")}
           onNext={() => setPage("questionnaire")}
           setUsername={(name) => setProfile((p) => ({ ...p, name }))}
-          onSignIn={() => setPage("status")}
+          onSignIn={() => setPage("signin")}
         />
       )}
       {page==="admin-login" && <AdminLogin setPage={setPage}/>}
