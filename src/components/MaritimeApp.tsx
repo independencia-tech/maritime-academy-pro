@@ -1605,12 +1605,16 @@ useEffect(() => {
         />
       )}
       {page==="landing"     && <LandingPage setPage={setPage} lang={lang} setLang={setLang}/>}
-   {page==="reset_password" && (
-  <ResetPassword
+  {page==="signin" && (
+  <SignIn
     lang={lang}
-    onDone={() => setPage("dashboard")}
+    onBack={() => setPage("register")}
+    onSuccess={() => {
+      const hp = !!localStorage.getItem("map_status_card");
+      setPage(hp ? "dashboard" : "questionnaire");
+    }}
   />
-)} 
+)}
       {page==="register"    && (
         <RegisterS6
           lang={lang}
