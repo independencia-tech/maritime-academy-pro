@@ -362,6 +362,11 @@ export const MODULES = {
       xp:200, status:"locked", progress:0 },
   ],
   tools:[
+   { id:"t0", icon:"📖", color:C.blue2, access:"free",
+  freeLessons:0, totalLessons:0,
+  title:{fr:"Lexique Maritime",en:"Maritime Lexicon",es:"Léxico Marítimo",pt:"Léxico Marítimo"},
+  desc:{fr:"80+ termes FR/EN/ES/PT · Dictionnaire · Flashcards · Quiz",en:"80+ terms FR/EN/ES/PT · Dictionary · Flashcards · Quiz",es:"80+ términos FR/EN/ES/PT · Diccionario · Flashcards · Quiz",pt:"80+ termos FR/EN/ES/PT · Dicionário · Flashcards · Quiz"},
+  xp:100, status:"available", progress:0 },
     { id:"t1", icon:"🤖", color:C.purple, access:"premium_plus",
       freeLessons:0, totalLessons:0, isAI:true,
       title:{fr:"Assistant IA Maritime",en:"Maritime AI Assistant",es:"Asistente IA Marítimo",pt:"Assistente IA Marítimo"},
