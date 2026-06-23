@@ -254,12 +254,16 @@ export const MODULES = {
         {id:"l8",title:{fr:"Exam Prep & Final Review",en:"Exam Prep & Final Review",es:"Exam Prep & Final Review",pt:"Exam Prep & Final Review"},access:"premium",status:"available"},
       ]
     },
-    
+    { id:"d5", icon:"🧭", color:C.blue, access:"premium_plus",
+  freeLessons:0, totalLessons:5,
+  title:{fr:"Ship Career Navigator™",en:"Ship Career Navigator™",es:"Ship Career Navigator™",pt:"Ship Career Navigator™"},
+  desc:{fr:"Feuille de route personnalisée par poste et navire",en:"Personalized roadmap by position and vessel type",es:"Hoja de ruta personalizada por puesto y buque",pt:"Roteiro personalizado por cargo e tipo de navio"},
+  xp:250, status:"locked", progress:0 },
     { id:"d6", icon:"⚓", color:C.teal, access:"premium",
       freeLessons:0, totalLessons:5,
       title:{fr:"Seamanship",en:"Seamanship",es:"Seamanship",pt:"Seamanship"},
       desc:{fr:"Cordages, nœuds, mouillage, amarrage, stabilité",en:"Ropes, knots, anchoring, mooring, stability",es:"Cabos, nudos, fondeo, amarre, estabilidad",pt:"Cabos, nós, fundeio, amarração, estabilidade"},
-      xp:250, status:"coming_soon", progress:0,
+      xp:250, status:"available", progress:0,
       lessons:[
         {id:"l1",title:{fr:"Ropes & Fibres",en:"Ropes & Fibres",es:"Ropes & Fibres",pt:"Ropes & Fibres"},access:"premium",status:"available"},
         {id:"l2",title:{fr:"Knots & Splices",en:"Knots & Splices",es:"Knots & Splices",pt:"Knots & Splices"},access:"premium",status:"available"},
