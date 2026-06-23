@@ -1501,26 +1501,29 @@ useEffect(() => {
       });
   });
 }, []);
-  const persistProfile = async (p:any) => {
+  
+const persistProfile = async (p: any) => {
   setProfile(p);
   try {
     const last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
     const updatedCard = { ...p, name: p?.name || last?.name };
     localStorage.setItem("map_status_card", JSON.stringify(updatedCard));
-    
+
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
-      await supabase.from("user_profiles").upsert({
+      const { error } = await supabase.from("user_profiles").upsert({
         user_id: user.id,
-        name: updatedCard.name || last?.name,
-        lang: updatedCard.lang || lang,
-        dept: updatedCard.dept || "deck",
+        name: updatedCard.name || last?.name || "",
+        lang: updatedCard.lang || p?.lang || "fr",
+        dept: updatedCard.dept || p?.dept || "deck",
         updated_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
+      if (error) console.error("user_profiles upsert error:", error);
     }
-  } catch {}
+  } catch (e) {
+    console.error("persistProfile error:", e);
+  }
 };
-
   // ── HARDWARE BACK BUTTON HANDLING ──────────────────────
   const pageRef = useRef(page);
   useEffect(() => { pageRef.current = page; }, [page]);
