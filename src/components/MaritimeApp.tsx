@@ -51,6 +51,9 @@ import LessonSMCP_L7 from "./LessonSMCP_L7";
 import LessonSMCP_L8 from "./LessonSMCP_L8";
 import LessonSEA_L1 from "./LessonSEA_L1";
 import LessonSEA_L2 from "./LessonSEA_L2";
+import LessonSEA_L3 from "./LessonSEA_L3";
+import LessonSEA_L4 from "./LessonSEA_L4";
+import LessonSEA_L5 from "./LessonSEA_L5";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -1349,7 +1352,7 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2"]);
+  const playable = new Set(["l1","l2","l3","l4","l5"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1872,9 +1875,12 @@ const persistProfile = async (p: any) => {
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
           onPick={(lid:string) => {
-            if (lid === "l1") setPage("lesson_sea_l1");
-            else if (lid === "l2") setPage("lesson_sea_l2");
-          }}
+  if (lid === "l1") setPage("lesson_sea_l1");
+  else if (lid === "l2") setPage("lesson_sea_l2");
+  else if (lid === "l3") setPage("lesson_sea_l3");
+  else if (lid === "l4") setPage("lesson_sea_l4");
+  else if (lid === "l5") setPage("lesson_sea_l5");
+}}
         />
       )}
       {page === "iml_lessons" && (
@@ -2061,7 +2067,28 @@ const persistProfile = async (p: any) => {
           onBack={() => setPage("seamanship_lessons")}
           onComplete={() => { markLessonCompleted("d6-l2"); setPage("seamanship_lessons"); }}
         />
-      )}
+      )} 
+      {page === "lesson_sea_l3" && (
+  <LessonSEA_L3
+    lang={lang}
+    onBack={() => setPage("seamanship_lessons")}
+    onComplete={() => { markLessonCompleted("d6-l3"); setPage("seamanship_lessons"); }}
+  />
+)}
+{page === "lesson_sea_l4" && (
+  <LessonSEA_L4
+    lang={lang}
+    onBack={() => setPage("seamanship_lessons")}
+    onComplete={() => { markLessonCompleted("d6-l4"); setPage("seamanship_lessons"); }}
+  />
+)}
+{page === "lesson_sea_l5" && (
+  <LessonSEA_L5
+    lang={lang}
+    onBack={() => setPage("seamanship_lessons")}
+    onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
+  />
+)}
       {page === "lesson_smcp_l1" && (
         <LessonSMCP_L1
           lang={lang}
