@@ -1501,13 +1501,25 @@ useEffect(() => {
       });
   });
 }, []);
-  const persistProfile = (p:any) => {
-    setProfile(p);
-    try {
-      const last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
-      localStorage.setItem("map_status_card", JSON.stringify({ ...p, name: p?.name || last?.name }));
-    } catch {}
-  };
+  const persistProfile = async (p:any) => {
+  setProfile(p);
+  try {
+    const last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
+    const updatedCard = { ...p, name: p?.name || last?.name };
+    localStorage.setItem("map_status_card", JSON.stringify(updatedCard));
+    
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase.from("user_profiles").upsert({
+        user_id: user.id,
+        name: updatedCard.name || last?.name,
+        lang: updatedCard.lang || lang,
+        dept: updatedCard.dept || "deck",
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "user_id" });
+    }
+  } catch {}
+};
 
   // ── HARDWARE BACK BUTTON HANDLING ──────────────────────
   const pageRef = useRef(page);
