@@ -254,11 +254,7 @@ export const MODULES = {
         {id:"l8",title:{fr:"Exam Prep & Final Review",en:"Exam Prep & Final Review",es:"Exam Prep & Final Review",pt:"Exam Prep & Final Review"},access:"premium",status:"available"},
       ]
     },
-    { id:"d5", icon:"⛵", color:C.blue, access:"premium_plus",
-      freeLessons:0, totalLessons:5,
-      title:{fr:"My Career Advisor™",en:"My Career Advisor™",es:"My Career Advisor™",pt:"My Career Advisor™"},
-      desc:{fr:"Feuille de route personnalisée par poste",en:"Personalized career roadmap by position",es:"Hoja de ruta personalizada por puesto",pt:"Roteiro personalizado por cargo"},
-      xp:250, status:"locked", progress:0 },
+    
     { id:"d6", icon:"⚓", color:C.teal, access:"premium",
       freeLessons:0, totalLessons:5,
       title:{fr:"Seamanship",en:"Seamanship",es:"Seamanship",pt:"Seamanship"},
