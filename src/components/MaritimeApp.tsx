@@ -1499,6 +1499,22 @@ useEffect(() => {
           try { localStorage.setItem("map_completed_lessons", JSON.stringify(data.completed_lessons)); } catch {}
         }
       });
+    supabase
+      .from("user_profiles")
+      .select("name, lang, dept")
+      .eq("user_id", user.id)
+      .single()
+      .then(({ data }) => {
+        if (data) {
+          setProfile((p: any) => ({ ...p, ...data }));
+          if (data.lang) setLang(data.lang);
+          try {
+            const raw = localStorage.getItem("map_status_card");
+            const saved = raw ? JSON.parse(raw) : {};
+            localStorage.setItem("map_status_card", JSON.stringify({ ...saved, ...data }));
+          } catch {}
+        }
+      });
   });
 }, []);
   
