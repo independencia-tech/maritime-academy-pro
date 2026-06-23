@@ -1500,15 +1500,17 @@ useEffect(() => {
           try { localStorage.setItem("map_completed_lessons", JSON.stringify(data.completed_lessons)); } catch {}
         }
       });
-    supabase
+
+      supabase
       .from("user_profiles")
-      .select("name, lang, dept")
+      .select("name, lang, dept, tier")
       .eq("user_id", user.id)
       .single()
       .then(({ data }) => {
         if (data) {
           setProfile((p: any) => ({ ...p, ...data }));
           if (data.lang) setLang(data.lang);
+          if (data.tier) setUserPlan(data.tier);
           try {
             const raw = localStorage.getItem("map_status_card");
             const saved = raw ? JSON.parse(raw) : {};
