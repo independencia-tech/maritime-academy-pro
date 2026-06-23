@@ -537,12 +537,18 @@ export default function AdminPanel({ onClose=()=>{} }) {
                     {hasPrem?"⭐ PREMIUM":"FREE"}
                   </div>
                 </div>
-                <div style={{display:"flex",gap:6}}>
-                  {!hasPrem
-                    ?<button onClick={()=>grantPremium(u.id||"current")} style={{flex:1,padding:"7px 0",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold2,fontSize:11,fontWeight:700,cursor:"pointer"}}>⭐ Activer Premium</button>
-                    :<button onClick={revokePremium} style={{flex:1,padding:"7px 0",borderRadius:8,background:"rgba(192,57,43,0.15)",border:`1px solid ${C.red}44`,color:C.red,fontSize:11,fontWeight:700,cursor:"pointer"}}>✕ Révoquer Premium</button>
+                <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                  {u.tier === "free" && <>
+                    <button onClick={()=>grantPremium(u.id, "premium")} style={{flex:1,padding:"7px 0",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold2,fontSize:11,fontWeight:700,cursor:"pointer"}}>⭐ Premium</button>
+                    <button onClick={()=>grantPremium(u.id, "premium_plus")} style={{flex:1,padding:"7px 0",borderRadius:8,background:"rgba(142,68,173,0.2)",border:"1px solid #8e44ad44",color:"#c084fc",fontSize:11,fontWeight:700,cursor:"pointer"}}>👑 Premium+</button>
+                  </>}
+                  {u.tier === "premium" && <>
+                    <button onClick={()=>grantPremium(u.id, "premium_plus")} style={{flex:1,padding:"7px 0",borderRadius:8,background:"rgba(142,68,173,0.2)",border:"1px solid #8e44ad44",color:"#c084fc",fontSize:11,fontWeight:700,cursor:"pointer"}}>👑 Upgrade Premium+</button>
+                    <button onClick={()=>revokePremium(u.id)} style={{flex:1,padding:"7px 0",borderRadius:8,background:"rgba(192,57,43,0.15)",border:`1px solid ${C.red}44`,color:C.red,fontSize:11,fontWeight:700,cursor:"pointer"}}>✕ Révoquer</button>
+                  </>}
+                  {u.tier === "premium_plus" && 
+                    <button onClick={()=>revokePremium(u.id)} style={{flex:1,padding:"7px 0",borderRadius:8,background:"rgba(192,57,43,0.15)",border:`1px solid ${C.red}44`,color:C.red,fontSize:11,fontWeight:700,cursor:"pointer"}}>✕ Révoquer Premium+</button>
                   }
-                  <button onClick={()=>{PremiumManager.startTrial(u.id||"current");PremiumManager.markTrialUsed();alert("✅ Essai 7j activé !");}} style={{flex:1,padding:"7px 0",borderRadius:8,background:"rgba(30,138,74,0.15)",border:`1px solid ${C.green}44`,color:C.green,fontSize:11,fontWeight:700,cursor:"pointer"}}>🎁 Essai 7j</button>
                 </div>
               </div>
             ))}
