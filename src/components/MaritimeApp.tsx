@@ -1406,16 +1406,20 @@ function AppInner() {
   };
 
   const syncLocalProfile = (user: any) => {
-    try {
-      if (!user) return;
-      const name = user.user_metadata?.name || (user.email ? user.email.split("@")[0] : "Marin");
-      localStorage.setItem("map_last_reg", JSON.stringify({
-        name,
-        email: user.email,
-        date: new Date().toLocaleString(),
-      }));
-    } catch {}
-  };
+  try {
+    if (!user) return;
+    const name = user.user_metadata?.name || (user.email ? user.email.split("@")[0] : "Marin");
+    const existing = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
+    localStorage.setItem("map_last_reg", JSON.stringify({
+      ...existing,
+      name,
+      email: user.email,
+      date: new Date().toLocaleString(),
+    }));
+    const savedCard = JSON.parse(localStorage.getItem("map_status_card") || "{}");
+    if (savedCard?.lang) setLang(savedCard.lang);
+  } catch {}
+};
 
   
     if (window.location.hash.includes("access_token")) {
