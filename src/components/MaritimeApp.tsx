@@ -1518,7 +1518,7 @@ const persistProfile = async (p: any) => {
         dept: updatedCard.dept || p?.dept || "deck",
         updated_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
-      if (error) alert("ERREUR: " + JSON.stringify(error));
+       if (error) console.error("user_profiles upsert error:", error);
     }
   } catch (e) {
     console.error("persistProfile error:", e);
