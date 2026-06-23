@@ -398,13 +398,21 @@ export default function AdminPanel({ onClose=()=>{} }) {
     }
   };
 
-  const grantPremium = (userId) => {
-    PremiumManager.adminGrant(userId);
-    alert("✅ Premium activé !");
+  const grantPremium = async (userId, tier = "premium") => {
+    await supabase
+      .from("user_profiles")
+      .update({ tier })
+      .eq("user_id", userId);
+    setUsers(prev => prev.map(u => u.id === userId ? { ...u, tier } : u));
+    alert(`✅ ${tier === "premium_plus" ? "Premium+" : "Premium"} activé !`);
   };
 
-  const revokePremium = () => {
-    PremiumManager.adminRevoke();
+  const revokePremium = async (userId) => {
+    await supabase
+      .from("user_profiles")
+      .update({ tier: "free" })
+      .eq("user_id", userId);
+    setUsers(prev => prev.map(u => u.id === userId ? { ...u, tier: "free" } : u));
     alert("✅ Premium révoqué !");
   };
 
