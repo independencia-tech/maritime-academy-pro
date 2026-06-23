@@ -1764,7 +1764,7 @@ useEffect(() => {
             onSignOut={async () => {
   await supabase.auth.signOut();
   try {
-    ["map_status_card","map_last_reg","map_user_photo","map_completed_lessons"].forEach(k => localStorage.removeItem(k));
+    ["map_last_reg","map_user_photo"].forEach(k => localStorage.removeItem(k));
   } catch {}
   setPage("lang");
 }}
