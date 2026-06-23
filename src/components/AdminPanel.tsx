@@ -371,29 +371,20 @@ export default function AdminPanel({ onClose=()=>{} }) {
 
   useEffect(()=>{
     if(authed){
-      // Load users from localStorage
-      const allKeys = Object.keys(localStorage);
-      const userList = [];
-      allKeys.forEach(k=>{
-        if(k.startsWith("map_user_")){
-          try{ userList.push(JSON.parse(localStorage.getItem(k))); }catch(e){}
-        }
-      });
-      // Also get current user
-      const current = localStorage.getItem("map_status_card");
-      if(current){
-        try{
-          const u = JSON.parse(current);
-          if(!userList.find(x=>x.name===u.name)){
-            userList.push({...u, id:"current", isCurrent:true});
+      supabase
+        .from("user_profiles")
+        .select("user_id, name, lang, dept, tier")
+        .then(({ data }) => {
+          if (data && data.length > 0) {
+            setUsers(data.map(u => ({
+              id: u.user_id,
+              name: u.name || "Marin",
+              lang: u.lang || "fr",
+              dept: u.dept || "deck",
+              tier: u.tier || "free",
+            })));
           }
-        }catch(e){}
-      }
-      setUsers(userList.length > 0 ? userList : [{
-        id:"current", name:"Utilisateur actuel", isCurrent:true,
-        dept: localStorage.getItem("map_dept")||"pont",
-        lang: localStorage.getItem("map_lang")||"fr",
-      }]);
+        });
       setPromos(JSON.parse(localStorage.getItem("map_promo_codes")||"[]"));
       setWaitlist(JSON.parse(localStorage.getItem("map_waitlist")||"[]"));
     }
