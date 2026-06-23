@@ -1485,6 +1485,7 @@ useEffect(() => {
     }
   } catch {}
 }, []);
+  const [userPlan, setUserPlan] = useState<"free"|"premium"|"premium_plus">("free");
   useEffect(() => {
   supabase.auth.getUser().then(({ data: { user } }) => {
     if (!user) return;
