@@ -1166,12 +1166,12 @@ export default function Dashboard({
 // ══════════════════════════════════════════════
 //  SETTINGS MENU
 // ══════════════════════════════════════════════
-function SettingsMenu({ lang, view, setView, currentDept, onClose, onChangeLanguage, onChangeDepartment, onResetProfile }) {
+function SettingsMenu({ lang, view, setView, currentDept, onClose, onChangeLanguage, onChangeDepartment, onResetProfile, onSignOut }) {
   const L = {
-    fr:{ title:"Paramètres", lang:"Changer de langue", dept:"Changer de département", reset:"Réinitialiser le profil", about:"À propos", close:"Fermer", back:"◀ Retour", deck:"🧭 Pont", engine:"⚙️ Machine", confirmReset:"Cela effacera ton profil et ta progression. Continuer ?", aboutTxt:"Maritime Academy Pro — Formation maritime IMO/STCW. © Independencia." },
-    en:{ title:"Settings", lang:"Change language", dept:"Change department", reset:"Reset profile", about:"About", close:"Close", back:"◀ Back", deck:"🧭 Deck", engine:"⚙️ Engine", confirmReset:"This will erase your profile and progress. Continue?", aboutTxt:"Maritime Academy Pro — IMO/STCW maritime training. © Independencia." },
-    es:{ title:"Ajustes", lang:"Cambiar idioma", dept:"Cambiar departamento", reset:"Restablecer perfil", about:"Acerca de", close:"Cerrar", back:"◀ Volver", deck:"🧭 Puente", engine:"⚙️ Máquinas", confirmReset:"Esto borrará tu perfil y progreso. ¿Continuar?", aboutTxt:"Maritime Academy Pro — Formación marítima IMO/STCW. © Independencia." },
-    pt:{ title:"Configurações", lang:"Mudar idioma", dept:"Mudar departamento", reset:"Redefinir perfil", about:"Sobre", close:"Fechar", back:"◀ Voltar", deck:"🧭 Convés", engine:"⚙️ Máquinas", confirmReset:"Isso apagará seu perfil e progresso. Continuar?", aboutTxt:"Maritime Academy Pro — Formação marítima IMO/STCW. © Independencia." },
+    fr:{ title:"Paramètres", lang:"Changer de langue", dept:"Changer de département", reset:"Réinitialiser le profil", about:"À propos", close:"Fermer", back:"◀ Retour", deck:"🧭 Pont", engine:"⚙️ Machine", confirmReset:"Cela effacera ton profil et ta progression. Continuer ?", aboutTxt:"Maritime Academy Pro — Formation maritime IMO/STCW. © Independencia.", signOut:"Se déconnecter", confirmSignOut:"Tu vas être déconnecté(e). Continuer ?" },
+    en:{ title:"Settings", lang:"Change language", dept:"Change department", reset:"Reset profile", about:"About", close:"Close", back:"◀ Back", deck:"🧭 Deck", engine:"⚙️ Engine", confirmReset:"This will erase your profile and progress. Continue?", aboutTxt:"Maritime Academy Pro — IMO/STCW maritime training. © Independencia.", signOut:"Sign out",confirmSignOut:"You will be signed out. Continue?"  },
+    es:{ title:"Ajustes", lang:"Cambiar idioma", dept:"Cambiar departamento", reset:"Restablecer perfil", about:"Acerca de", close:"Cerrar", back:"◀ Volver", deck:"🧭 Puente", engine:"⚙️ Máquinas", confirmReset:"Esto borrará tu perfil y progreso. ¿Continuar?", aboutTxt:"Maritime Academy Pro — Formación marítima IMO/STCW. © Independencia.", signOut:"Cerrar sesión",confirmSignOut:"Se cerrará tu sesión. ¿Continuar?" },
+    pt:{ title:"Configurações", lang:"Mudar idioma", dept:"Mudar departamento", reset:"Redefinir perfil", about:"Sobre", close:"Fechar", back:"◀ Voltar", deck:"🧭 Convés", engine:"⚙️ Máquinas", confirmReset:"Isso apagará seu perfil e progresso. Continuar?", aboutTxt:"Maritime Academy Pro — Formação marítima IMO/STCW. © Independencia.", signOut:"Sair",confirmSignOut:"Você será desconectado. Continuar?" },
   }[lang] || null;
   const t = L || { title:"Settings", lang:"Change language", dept:"Change department", reset:"Reset profile", about:"About", close:"Close", back:"◀ Back", deck:"🧭 Deck", engine:"⚙️ Engine", confirmReset:"Erase profile?", aboutTxt:"Maritime Academy Pro" };
   const langs = [
@@ -1217,8 +1217,8 @@ function SettingsMenu({ lang, view, setView, currentDept, onClose, onChangeLangu
             <button style={item} onClick={()=>setView("dept")}>🚢 <span>{t.dept}</span></button>
             <button style={item} onClick={()=>setView("about")}>ℹ️ <span>{t.about}</span></button>
             <button style={{...item, borderColor:`${C.red}55`, color:"#ff8a7a"}} onClick={()=>{
-              if (typeof window !== "undefined" && window.confirm(t.confirmReset)) onResetProfile();
-            }}>🗑️ <span>{t.reset}</span></button>
+  if (typeof window !== "undefined" && window.confirm(t.confirmSignOut)) onSignOut();
+}}>🚪 <span>{t.signOut}</span></button>
           </div>
         )}
         {view==="lang" && (
