@@ -1760,7 +1760,14 @@ useEffect(() => {
             onAdmin={() => setPage("admin-login")}
             onChangeLanguage={handleChangeLanguage}
             onChangeDepartment={handleChangeDepartment}
-            onResetProfile={handleResetProfile}
+            onResetProfile={handleResetProfile} 
+            onSignOut={async () => {
+  await supabase.auth.signOut();
+  try {
+    ["map_status_card","map_last_reg","map_user_photo","map_completed_lessons"].forEach(k => localStorage.removeItem(k));
+  } catch {}
+  setPage("lang");
+}}
           />
         );
       })()}
