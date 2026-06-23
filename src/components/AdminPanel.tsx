@@ -413,7 +413,7 @@ export default function AdminPanel({ onClose=()=>{} }) {
       .update({ tier: "free" })
       .eq("user_id", userId);
     setUsers(prev => prev.map(u => u.id === userId ? { ...u, tier: "free" } : u));
-    alert("✅ Premium révoqué !");
+    alert("✅ Premium révoqué ! L'utilisateur verra le changement à sa prochaine connexion.");
   };
 
   const addPromo = () => {
