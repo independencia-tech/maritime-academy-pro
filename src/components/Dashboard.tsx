@@ -837,6 +837,7 @@ export default function Dashboard({
   onChangeLanguage=()=>{},
   onChangeDepartment=()=>{},
   onResetProfile=()=>{},
+  onSignOut=()=>{},
 }) {
   const t=T[lang]||T.fr;
   const [activeTab,setActiveTab]=useState(
@@ -1157,7 +1158,8 @@ export default function Dashboard({
           onChangeLanguage={(code)=>{ onChangeLanguage(code); setShowSettings(false); }}
           onChangeDepartment={(d)=>{ onChangeDepartment(d); setActiveTab(d); setShowSettings(false); }}
           onResetProfile={()=>{ setShowSettings(false); onResetProfile(); }}
-        />
+      onSignOut={()=>{ setShowSettings(false); onSignOut?.(); }} 
+          />
       )}
     </div>
   );
@@ -1166,8 +1168,8 @@ export default function Dashboard({
 // ══════════════════════════════════════════════
 //  SETTINGS MENU
 // ══════════════════════════════════════════════
-function SettingsMenu({ lang, view, setView, currentDept, onClose, onChangeLanguage, onChangeDepartment, onResetProfile, onSignOut }) {
-  const L = {
+ SettingsMenu({ lang, view, setView, currentDept, onClose, onChangeLanguage, onChangeDepartment, onResetProfile, onSignOut }) {
+  const L = {function
     fr:{ title:"Paramètres", lang:"Changer de langue", dept:"Changer de département", reset:"Réinitialiser le profil", about:"À propos", close:"Fermer", back:"◀ Retour", deck:"🧭 Pont", engine:"⚙️ Machine", confirmReset:"Cela effacera ton profil et ta progression. Continuer ?", aboutTxt:"Maritime Academy Pro — Formation maritime IMO/STCW. © Independencia.", signOut:"Se déconnecter", confirmSignOut:"Tu vas être déconnecté(e). Continuer ?" },
     en:{ title:"Settings", lang:"Change language", dept:"Change department", reset:"Reset profile", about:"About", close:"Close", back:"◀ Back", deck:"🧭 Deck", engine:"⚙️ Engine", confirmReset:"This will erase your profile and progress. Continue?", aboutTxt:"Maritime Academy Pro — IMO/STCW maritime training. © Independencia.", signOut:"Sign out",confirmSignOut:"You will be signed out. Continue?"  },
     es:{ title:"Ajustes", lang:"Cambiar idioma", dept:"Cambiar departamento", reset:"Restablecer perfil", about:"Acerca de", close:"Cerrar", back:"◀ Volver", deck:"🧭 Puente", engine:"⚙️ Máquinas", confirmReset:"Esto borrará tu perfil y progreso. ¿Continuar?", aboutTxt:"Maritime Academy Pro — Formación marítima IMO/STCW. © Independencia.", signOut:"Cerrar sesión",confirmSignOut:"Se cerrará tu sesión. ¿Continuar?" },
