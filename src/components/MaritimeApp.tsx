@@ -1469,9 +1469,27 @@ const markLessonCompleted = async (id: string) => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) return;
       supabase
-        .from("user_progress")
-        .upsert({ user_id: user.id, completed_lessons: next, updated_at: new Date().toISOString() }, { onConflict: "user_id" })
-        .then(() => {});
+        const today = new Date().toISOString().split("T")[0];
+
+  .from("user_progress")
+  .select("xp, streak, last_login_date")
+  .eq("user_id", user.id)
+  .single()
+  .then(({ data: prog }) => {
+    const lastDate = prog?.last_login_date || "";
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+    const newStreak = lastDate === today ? (prog?.streak || 1) : lastDate === yesterday ? (prog?.streak || 1) + 1 : 1;
+    const lessonXP = 100;
+    const newXP = (prog?.xp || 0) + lessonXP;
+    supabase.from("user_progress").upsert({
+      user_id: user.id,
+      completed_lessons: next,
+      xp: newXP,
+      streak: newStreak,
+      last_login_date: today,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: "user_id" }).then(() => {});
+  });
     });
     return next;
   });
@@ -1490,6 +1508,8 @@ useEffect(() => {
   } catch {}
 }, []);
   const [userPlan, setUserPlan] = useState<"free"|"premium"|"premium_plus">("free");
+const [userXP, setUserXP] = useState(0);
+const [userStreak, setUserStreak] = useState(1);
   useEffect(() => {
   supabase.auth.getUser().then(({ data: { user } }) => {
     if (!user) return;
@@ -1515,6 +1535,20 @@ useEffect(() => {
           setProfile((p: any) => ({ ...p, ...data }));
           if (data.lang) setLang(data.lang);
           if (data.tier) setUserPlan(data.tier);
+          useEffect(() => {
+  supabase.auth.getUser().then(({ data: { user } }) => {
+    if (!user) return;
+    supabase
+      .from("user_progress")
+      .select("xp, streak")
+      .eq("user_id", user.id)
+      .single()
+      .then(({ data }) => {
+        if (data?.xp) setUserXP(data.xp);
+        if (data?.streak) setUserStreak(data.streak);
+      });
+  });
+}, []);
           try {
             const raw = localStorage.getItem("map_status_card");
             const saved = raw ? JSON.parse(raw) : {};
@@ -1776,6 +1810,8 @@ const persistProfile = async (p: any) => {
             profile={profile || {}}
             userLevel="cadet"
             userPlan={userPlan}
+            userXP={userXP}
+            userStreak={userStreak}
             completedLessons={completedLessons}
             onViewStatus={() => setPage("status")}
             onEditProfile={() => setPage("questionnaire")}
