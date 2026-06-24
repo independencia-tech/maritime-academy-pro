@@ -1468,9 +1468,9 @@ const markLessonCompleted = async (id: string) => {
     try { localStorage.setItem("map_completed_lessons", JSON.stringify(next)); } catch {}
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) return;
-      supabase
+      
         const today = new Date().toISOString().split("T")[0];
-
+supabase
   .from("user_progress")
   .select("xp, streak, last_login_date")
   .eq("user_id", user.id)
