@@ -825,7 +825,7 @@ export default function LexiqueMaritime({ lang="fr", onBack, onComplete }: {
       {/* Free badge */}
       <div style={{padding:"10px 14px 0"}}>
         <div style={{display:"inline-flex",alignItems:"center",gap:6,padding:"4px 10px",borderRadius:8,background:"rgba(30,138,74,0.15)",border:"1px solid rgba(30,138,74,0.4)"}}>
-          <span style={{fontFamily:"'Cinzel',serif",fontSize:9,color:"#6dbf8a",letterSpacing:1}}>🆓 {t.subtitle} · 10 CATÉGORIES</span>
+          <span style={{fontFamily:"'Cinzel',serif",fontSize:9,color:"#6dbf8a",letterSpacing:1}}>🆓 {t.subtitle} · {t.subtitle} · {SORTED_LEXICON.length}+ {t.terms}</span>
         </div>
       </div>
 
