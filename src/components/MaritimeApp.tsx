@@ -1517,10 +1517,8 @@ const [userStreak, setUserStreak] = useState(1);
       .eq("user_id", user.id)
       .single()
       .then(({ data }) => {
-        if (data?.completed_lessons !== undefined && data?.completed_lessons !== null) {
-  setCompletedLessons(data.completed_lessons);
-  try { localStorage.setItem("map_completed_lessons", JSON.stringify(data.completed_lessons)); } catch {}
-}
+        setCompletedLessons(data?.completed_lessons || []);
+try { localStorage.setItem("map_completed_lessons", JSON.stringify(data?.completed_lessons || [])); } catch {}
 if (data?.xp !== undefined) setUserXP(data.xp || 0);
 if (data?.streak !== undefined) setUserStreak(data.streak || 1);
       });
