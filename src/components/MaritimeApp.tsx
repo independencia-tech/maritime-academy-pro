@@ -1513,7 +1513,7 @@ const [userStreak, setUserStreak] = useState(1);
     if (!user) return;
     supabase
       .from("user_progress")
-      .select("completed_lessons")
+      .select("completed_lessons, xp, streak")
       .eq("user_id", user.id)
       .single()
       .then(({ data }) => {
@@ -1521,6 +1521,8 @@ const [userStreak, setUserStreak] = useState(1);
   setCompletedLessons(data.completed_lessons);
   try { localStorage.setItem("map_completed_lessons", JSON.stringify(data.completed_lessons)); } catch {}
 }
+if (data?.xp !== undefined) setUserXP(data.xp || 0);
+if (data?.streak !== undefined) setUserStreak(data.streak || 1);
       });
 
       supabase
@@ -1533,20 +1535,7 @@ const [userStreak, setUserStreak] = useState(1);
           setProfile((p: any) => ({ ...p, ...data }));
           if (data.lang) setLang(data.lang);
           if (data.tier) setUserPlan(data.tier);
-          useEffect(() => {
-  supabase.auth.getUser().then(({ data: { user } }) => {
-    if (!user) return;
-    supabase
-      .from("user_progress")
-      .select("xp, streak")
-      .eq("user_id", user.id)
-      .single()
-      .then(({ data }) => {
-        if (data?.xp) setUserXP(data.xp);
-        if (data?.streak) setUserStreak(data.streak);
-      });
-  });
-}, []);
+  
           try {
             const raw = localStorage.getItem("map_status_card");
             const saved = raw ? JSON.parse(raw) : {};
