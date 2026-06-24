@@ -847,6 +847,8 @@ export default function Dashboard({
   photo=null,
   profile={},
   userPlan="free",
+  userXP=0,
+userStreak=1,
   userLevel="cadet",
   completedLessons=[],
   onViewStatus=()=>{},
@@ -870,7 +872,7 @@ export default function Dashboard({
   );
   const [vis,setVis]=useState(false);
   const [unlockModal,setUnlockModal]=useState(null);
-  const [stats]=useState({lessons:0,certs:0,points:0,streak:1});
+  const [stats]=useState({lessons:0,certs:0});
   const [showAdmin,setShowAdmin]=useState(false);
   const [showUpgrade,setShowUpgrade]=useState(false);
   const [premiumTick,setPremiumTick]=useState(0);
@@ -1037,10 +1039,10 @@ export default function Dashboard({
             <div style={{fontSize:10,letterSpacing:3,color:C.muted,marginBottom:8,fontFamily:"'Cinzel',serif"}}>{t.quickStats}</div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8}}>
               {[
-                {val:stats.lessons,label:t.statLessons,color:C.blue2},
-                {val:stats.certs,label:t.statCerts,color:C.gold2},
-                {val:stats.points,label:t.statPoints,color:C.orange},
-                {val:`🔥${stats.streak}`,label:t.statStreak,color:C.red},
+                {val:completedLessons.length,label:t.statLessons,color:C.blue2},
+{val:stats.certs,label:t.statCerts,color:C.gold2},
+{val:userXP,label:t.statPoints,color:C.orange},
+{val:`🔥${userStreak}`,label:t.statStreak,color:C.red},
               ].map(s=>(
                 <div key={s.label} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:14,padding:"10px 6px",textAlign:"center"}}>
                   <div style={{fontFamily:"'Cinzel',serif",fontSize:16,fontWeight:800,color:s.color}}>{s.val}</div>
