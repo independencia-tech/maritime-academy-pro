@@ -1408,7 +1408,7 @@ function AppInner() {
   const hasProfile = () => {
     try { return !!localStorage.getItem("map_status_card"); } catch { return false; }
   };
-
+try { localStorage.removeItem("map_completed_lessons"); } catch {}
   const syncLocalProfile = (user: any) => {
   try {
     if (!user) return;
