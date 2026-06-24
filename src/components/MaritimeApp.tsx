@@ -19,6 +19,7 @@ import LessonMoteur from "./LessonMoteur";
 import LessonAuxiliaires from "./LessonAuxiliaires";
 import LessonStabilite from "./LessonStabilite";
 import LessonE2_L1 from "./LessonE2_L1";
+import LessonE2_L2 from "./LessonE2_L2";
 import LessonIncendie from "./LessonIncendie";
 import LessonSauvetage from "./LessonSauvetage";
 import LessonMARPOL from "./LessonMARPOL";
@@ -2103,6 +2104,13 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l1"); setPage("e2_lessons"); }}
+  />
+)}
+      {page === "lesson_e2_l2" && (
+  <LessonE2_L2
+    lang={lang}
+    onBack={() => setPage("e2_lessons")}
+    onComplete={() => { markLessonCompleted("e2-l2"); setPage("e2_lessons"); }}
   />
 )}
 {page === "e3_lessons" && (
