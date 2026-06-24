@@ -1481,6 +1481,8 @@ supabase
     const newStreak = lastDate === today ? (prog?.streak || 1) : lastDate === yesterday ? (prog?.streak || 1) + 1 : 1;
     const lessonXP = 100;
     const newXP = (prog?.xp || 0) + lessonXP;
+    setUserXP(newXP);
+setUserStreak(newStreak);
     supabase.from("user_progress").upsert({
       user_id: user.id,
       completed_lessons: next,
