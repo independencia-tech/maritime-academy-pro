@@ -1682,8 +1682,10 @@ const persistProfile = async (p: any) => {
       ].forEach(k => localStorage.removeItem(k));
     } catch {}
     setProfile({});
-    setCompletedLessons([]);
-    setPage("lang");
+  setCompletedLessons([]);
+  setUserXP(0);
+  setUserStreak(1);
+  setPage("lang");
   };
 
   return (
