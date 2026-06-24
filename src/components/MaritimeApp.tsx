@@ -2078,6 +2078,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
   else if (lid === "l4") setPage("lesson_sea_l4");
   else if (lid === "l5") setPage("lesson_sea_l5");
 }}
+          />
+)}
           {page === "e2_lessons" && (
   <E2LessonsPage
     lang={lang}
