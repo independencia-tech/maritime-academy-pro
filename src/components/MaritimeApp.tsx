@@ -2140,8 +2140,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     }}
   />
 )}
-        />
-      )}
+        
       {page === "iml_lessons" && (
         <IMLLessonsPage
           lang={lang}
