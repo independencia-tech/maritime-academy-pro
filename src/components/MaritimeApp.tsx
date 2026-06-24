@@ -2082,13 +2082,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           />
 )}
           {page === "e2_lessons" && (
-{page === "lesson_e2_l1" && (
-  <LessonE2_L1
-    lang={lang}
-    onBack={() => setPage("e2_lessons")}
-    onComplete={() => { markLessonCompleted("e2-l1"); setPage("e2_lessons"); }}
-  />
-)}
+
   <E2LessonsPage
     lang={lang}
     onBack={() => setPage("dashboard")}
@@ -2102,6 +2096,13 @@ else if (m?.id === "e7") setPage("e7_lessons");
       else if (lid === "l6") setPage("lesson_e2_l6");
       else if (lid === "l7") setPage("lesson_e2_l7");
     }}
+  />
+)}
+      {page === "lesson_e2_l1" && (
+  <LessonE2_L1
+    lang={lang}
+    onBack={() => setPage("e2_lessons")}
+    onComplete={() => { markLessonCompleted("e2-l1"); setPage("e2_lessons"); }}
   />
 )}
 {page === "e3_lessons" && (
