@@ -18,6 +18,7 @@ import LessonNavire from "./LessonNavire";
 import LessonMoteur from "./LessonMoteur";
 import LessonAuxiliaires from "./LessonAuxiliaires";
 import LessonStabilite from "./LessonStabilite";
+import LessonE2_L1 from "./LessonE2_L1";
 import LessonIncendie from "./LessonIncendie";
 import LessonSauvetage from "./LessonSauvetage";
 import LessonMARPOL from "./LessonMARPOL";
@@ -2081,6 +2082,13 @@ else if (m?.id === "e7") setPage("e7_lessons");
           />
 )}
           {page === "e2_lessons" && (
+{page === "lesson_e2_l1" && (
+  <LessonE2_L1
+    lang={lang}
+    onBack={() => setPage("e2_lessons")}
+    onComplete={() => { markLessonCompleted("e2-l1"); setPage("e2_lessons"); }}
+  />
+)}
   <E2LessonsPage
     lang={lang}
     onBack={() => setPage("dashboard")}
