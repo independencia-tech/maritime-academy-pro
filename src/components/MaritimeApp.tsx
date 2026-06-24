@@ -51,6 +51,7 @@ import LessonSMCP_L7 from "./LessonSMCP_L7";
 import LessonSMCP_L8 from "./LessonSMCP_L8";
 import LessonSEA_L1 from "./LessonSEA_L1";
 import LessonSEA_L2 from "./LessonSEA_L2";
+import LexiqueMaritime from "./LexiqueMaritime";
 import LessonSEA_L3 from "./LessonSEA_L3";
 import LessonSEA_L4 from "./LessonSEA_L4";
 import LessonSEA_L5 from "./LessonSEA_L5";
@@ -1786,6 +1787,7 @@ const persistProfile = async (p: any) => {
               else if (m?.id === "d3") setPage("sb_lessons");
               else if (m?.id === "d4") setPage("smcp_lessons");
               else if (m?.id === "d6") setPage("seamanship_lessons");
+              else if (m?.id === "t0") setPage("lexique");
             }}
             activeNav="home"
             onNavHome={() => setPage("dashboard")}
@@ -2068,6 +2070,13 @@ const persistProfile = async (p: any) => {
           onComplete={() => { markLessonCompleted("d6-l2"); setPage("seamanship_lessons"); }}
         />
       )} 
+     {page === "lexique" && (
+  <LexiqueMaritime
+    lang={lang}
+    onBack={() => setPage("dashboard")}
+    onComplete={() => setPage("dashboard")}
+  />
+)} 
       {page === "lesson_sea_l3" && (
   <LessonSEA_L3
     lang={lang}
