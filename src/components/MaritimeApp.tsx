@@ -28,6 +28,7 @@ import LessonE2_L7 from "./LessonE2_L7";
 import LessonE3_L1 from "./LessonE3_L1";
 import LessonE3_L2 from "./LessonE3_L2";
 import LessonE3_L3 from "./LessonE3_L3";
+import LessonE3_L4 from "./LessonE3_L4";
 import LessonIncendie from "./LessonIncendie";
 import LessonSauvetage from "./LessonSauvetage";
 import LessonMARPOL from "./LessonMARPOL";
@@ -2190,6 +2191,13 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e3_lessons")}
     onComplete={() => { markLessonCompleted("e3-l3"); setPage("e3_lessons"); }}
+  />
+)}
+      {page === "lesson_e3_l4" && (
+  <LessonE3_L4
+    lang={lang}
+    onBack={() => setPage("e3_lessons")}
+    onComplete={() => { markLessonCompleted("e3-l4"); setPage("e3_lessons"); }}
   />
 )}
 {page === "e6_lessons" && (
