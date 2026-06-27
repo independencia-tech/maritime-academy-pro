@@ -337,7 +337,7 @@ export const MODULES = {
   freeLessons:0, totalLessons:5,
   title:{fr:"Automatisation & Contrôle UMS",en:"Automation & UMS Control",es:"Automatización & Control UMS",pt:"Automatização & Controlo UMS"},
   desc:{fr:"UMS, PLC, alarmes, SCADA — salle machine sans surveillance",en:"UMS, PLC, alarms, SCADA — unattended machinery space",es:"UMS, PLC, alarmas, SCADA — sala de máquinas sin vigilancia",pt:"UMS, PLC, alarmes, SCADA — sala de máquinas sem vigilância"},
-  xp:250, status:"locked", progress:0,
+  xp:250, status:"available", progress:0,
   lessons:[
     {id:"l1",title:{fr:"UMS — Salle machine sans surveillance",en:"UMS — Unattended Machinery Space",es:"UMS — Sala de máquinas sin vigilancia",pt:"UMS — Sala de máquinas sem vigilância"},access:"premium_plus",status:"available"},
     {id:"l2",title:{fr:"Systèmes d'alarme & Monitoring",en:"Alarm Systems & Monitoring",es:"Sistemas de alarma & Monitorización",pt:"Sistemas de alarme & Monitorização"},access:"premium_plus",status:"available"},
