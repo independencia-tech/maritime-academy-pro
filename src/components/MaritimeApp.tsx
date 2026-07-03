@@ -7,83 +7,86 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
 import Dashboard, { MODULES as ALL_MODULES } from "./Dashboard";
-import LessonNavigation from "./LessonNavigation";
-import LessonCOLREG from "./LessonCOLREG";
-import LessonCoord from "./LessonCoord";
-import LessonCarteMarine from "./LessonCarteMarine";
-import LessonCompas from "./LessonCompas";
-import LessonNavPratique from "./LessonNavPratique";
-import LessonMarees from "./LessonMarees";
-import LessonNavire from "./LessonNavire";
-import LessonMoteur from "./LessonMoteur";
-import LessonAuxiliaires from "./LessonAuxiliaires";
-import LessonStabilite from "./LessonStabilite";
-import LessonE2_L1 from "./LessonE2_L1";
-import LessonE2_L2 from "./LessonE2_L2";
-import LessonE2_L3 from "./LessonE2_L3";
-import LessonE2_L4 from "./LessonE2_L4";
-import LessonE2_L5 from "./LessonE2_L5";
-import LessonE2_L6 from "./LessonE2_L6";
-import LessonE2_L7 from "./LessonE2_L7";
-import LessonE3_L1 from "./LessonE3_L1";
-import LessonE3_L2 from "./LessonE3_L2";
-import LessonE3_L3 from "./LessonE3_L3";
-import LessonE3_L4 from "./LessonE3_L4";
-import LessonE3_L5 from "./LessonE3_L5";
-import LessonE3_L6 from "./LessonE3_L6";
-import LessonE6_L1 from "./LessonE6_L1";
-import LessonE6_L2 from "./LessonE6_L2";
-import LessonE6_L3 from "./LessonE6_L3";
-import LessonE6_L4 from "./LessonE6_L4";
-import LessonE6_L5 from "./LessonE6_L5";
-import LessonE6_L6 from "./LessonE6_L6";
-import LessonE7_L1 from "./LessonE7_L1";
-import LessonE7_L2 from "./LessonE7_L2";
-import LessonE7_L3 from "./LessonE7_L3";
-import LessonE7_L4 from "./LessonE7_L4";
-import LessonE7_L5 from "./LessonE7_L5";
-import LessonIncendie from "./LessonIncendie";
-import LessonSauvetage from "./LessonSauvetage";
-import LessonMARPOL from "./LessonMARPOL";
-import LessonWatchkeeping from "./LessonWatchkeeping";
-import LessonMaintenance from "./LessonMaintenance";
-import LessonEmergency from "./LessonEmergency";
-import LessonSOLAS from "./LessonSOLAS";
-import LessonMARPOLLegal from "./LessonMARPOLLegal";
-import LessonSTCW from "./LessonSTCW";
-import LessonMLC from "./LessonMLC";
-import LessonCOLREGLegal from "./LessonCOLREGLegal";
-import LessonUNCLOS from "./LessonUNCLOS";
-import LessonLiabilityInsurance from "./LessonLiabilityInsurance";
-import LessonPortsFlagStates from "./LessonPortsFlagStates";
-import LessonPiracy from "./LessonPiracy";
-import LessonArbitration from "./LessonArbitration";
-import LessonIALA from "./LessonIALA";
-import LessonLightsShapes from "./LessonLightsShapes";
-import LessonSoundSignals from "./LessonSoundSignals";
-import LessonFlags from "./LessonFlags";
-import LessonVHF from "./LessonVHF";
-import LessonAIS from "./LessonAIS";
-import LessonGMDSS from "./LessonGMDSS";
-import LessonSMCP_L1 from "./LessonSMCP_L1";
-import LessonSMCP_L2 from "./LessonSMCP_L2";
-import LessonSMCP_L3 from "./LessonSMCP_L3";
-import LessonSMCP_L4 from "./LessonSMCP_L4";
-import LessonSMCP_L5 from "./LessonSMCP_L5";
-import LessonSMCP_L6 from "./LessonSMCP_L6";
-import LessonSMCP_L7 from "./LessonSMCP_L7";
-import LessonSMCP_L8 from "./LessonSMCP_L8";
-import LessonSEA_L1 from "./LessonSEA_L1";
-import LessonSEA_L2 from "./LessonSEA_L2";
-import LexiqueMaritime from "./LexiqueMaritime";
-import LessonSEA_L3 from "./LessonSEA_L3";
-import LessonSEA_L4 from "./LessonSEA_L4";
-import LessonSEA_L5 from "./LessonSEA_L5";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
+
+
+// ── LAZY-LOADED LESSON COMPONENTS (code-split, only downloaded when opened) ──
+const LessonNavigation = lazy(() => import("./LessonNavigation"));
+const LessonCOLREG = lazy(() => import("./LessonCOLREG"));
+const LessonCoord = lazy(() => import("./LessonCoord"));
+const LessonCarteMarine = lazy(() => import("./LessonCarteMarine"));
+const LessonCompas = lazy(() => import("./LessonCompas"));
+const LessonNavPratique = lazy(() => import("./LessonNavPratique"));
+const LessonMarees = lazy(() => import("./LessonMarees"));
+const LessonNavire = lazy(() => import("./LessonNavire"));
+const LessonMoteur = lazy(() => import("./LessonMoteur"));
+const LessonAuxiliaires = lazy(() => import("./LessonAuxiliaires"));
+const LessonStabilite = lazy(() => import("./LessonStabilite"));
+const LessonE2_L1 = lazy(() => import("./LessonE2_L1"));
+const LessonE2_L2 = lazy(() => import("./LessonE2_L2"));
+const LessonE2_L3 = lazy(() => import("./LessonE2_L3"));
+const LessonE2_L4 = lazy(() => import("./LessonE2_L4"));
+const LessonE2_L5 = lazy(() => import("./LessonE2_L5"));
+const LessonE2_L6 = lazy(() => import("./LessonE2_L6"));
+const LessonE2_L7 = lazy(() => import("./LessonE2_L7"));
+const LessonE3_L1 = lazy(() => import("./LessonE3_L1"));
+const LessonE3_L2 = lazy(() => import("./LessonE3_L2"));
+const LessonE3_L3 = lazy(() => import("./LessonE3_L3"));
+const LessonE3_L4 = lazy(() => import("./LessonE3_L4"));
+const LessonE3_L5 = lazy(() => import("./LessonE3_L5"));
+const LessonE3_L6 = lazy(() => import("./LessonE3_L6"));
+const LessonE6_L1 = lazy(() => import("./LessonE6_L1"));
+const LessonE6_L2 = lazy(() => import("./LessonE6_L2"));
+const LessonE6_L3 = lazy(() => import("./LessonE6_L3"));
+const LessonE6_L4 = lazy(() => import("./LessonE6_L4"));
+const LessonE6_L5 = lazy(() => import("./LessonE6_L5"));
+const LessonE6_L6 = lazy(() => import("./LessonE6_L6"));
+const LessonE7_L1 = lazy(() => import("./LessonE7_L1"));
+const LessonE7_L2 = lazy(() => import("./LessonE7_L2"));
+const LessonE7_L3 = lazy(() => import("./LessonE7_L3"));
+const LessonE7_L4 = lazy(() => import("./LessonE7_L4"));
+const LessonE7_L5 = lazy(() => import("./LessonE7_L5"));
+const LessonIncendie = lazy(() => import("./LessonIncendie"));
+const LessonSauvetage = lazy(() => import("./LessonSauvetage"));
+const LessonMARPOL = lazy(() => import("./LessonMARPOL"));
+const LessonWatchkeeping = lazy(() => import("./LessonWatchkeeping"));
+const LessonMaintenance = lazy(() => import("./LessonMaintenance"));
+const LessonEmergency = lazy(() => import("./LessonEmergency"));
+const LessonSOLAS = lazy(() => import("./LessonSOLAS"));
+const LessonMARPOLLegal = lazy(() => import("./LessonMARPOLLegal"));
+const LessonSTCW = lazy(() => import("./LessonSTCW"));
+const LessonMLC = lazy(() => import("./LessonMLC"));
+const LessonCOLREGLegal = lazy(() => import("./LessonCOLREGLegal"));
+const LessonUNCLOS = lazy(() => import("./LessonUNCLOS"));
+const LessonLiabilityInsurance = lazy(() => import("./LessonLiabilityInsurance"));
+const LessonPortsFlagStates = lazy(() => import("./LessonPortsFlagStates"));
+const LessonPiracy = lazy(() => import("./LessonPiracy"));
+const LessonArbitration = lazy(() => import("./LessonArbitration"));
+const LessonIALA = lazy(() => import("./LessonIALA"));
+const LessonLightsShapes = lazy(() => import("./LessonLightsShapes"));
+const LessonSoundSignals = lazy(() => import("./LessonSoundSignals"));
+const LessonFlags = lazy(() => import("./LessonFlags"));
+const LessonVHF = lazy(() => import("./LessonVHF"));
+const LessonAIS = lazy(() => import("./LessonAIS"));
+const LessonGMDSS = lazy(() => import("./LessonGMDSS"));
+const LessonSMCP_L1 = lazy(() => import("./LessonSMCP_L1"));
+const LessonSMCP_L2 = lazy(() => import("./LessonSMCP_L2"));
+const LessonSMCP_L3 = lazy(() => import("./LessonSMCP_L3"));
+const LessonSMCP_L4 = lazy(() => import("./LessonSMCP_L4"));
+const LessonSMCP_L5 = lazy(() => import("./LessonSMCP_L5"));
+const LessonSMCP_L6 = lazy(() => import("./LessonSMCP_L6"));
+const LessonSMCP_L7 = lazy(() => import("./LessonSMCP_L7"));
+const LessonSMCP_L8 = lazy(() => import("./LessonSMCP_L8"));
+const LessonSEA_L1 = lazy(() => import("./LessonSEA_L1"));
+const LessonSEA_L2 = lazy(() => import("./LessonSEA_L2"));
+const LessonSEA_L3 = lazy(() => import("./LessonSEA_L3"));
+const LessonSEA_L4 = lazy(() => import("./LessonSEA_L4"));
+const LessonSEA_L5 = lazy(() => import("./LessonSEA_L5"));
+const LexiqueMaritime = lazy(() => import("./LexiqueMaritime"));
 
 const LS_KEY = "map_registrations";
 const ADMIN_CODE_DEFAULT = "MAP2024admin";
@@ -1859,8 +1862,20 @@ const persistProfile = async (p: any) => {
   setPage("lang");
   };
 
+  const loadingFallback = (
+    <div style={{
+      minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",
+      background:"linear-gradient(160deg,#0d1f3c,#060e1a)",
+    }}>
+      <div style={{width:40,height:40,borderRadius:"50%",
+        border:"3px solid rgba(201,146,42,0.2)",borderTopColor:"#c9922a",
+        animation:"map-spin 0.8s linear infinite"}}/>
+      <style>{`@keyframes map-spin{to{transform:rotate(360deg)}}`}</style>
+    </div>
+  );
+
   return (
-    <>
+    <Suspense fallback={loadingFallback}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Nunito:wght@400;600;700;800&display=swap');
         *,*::before,*::after{box-sizing:border-box;}
@@ -1916,864 +1931,4 @@ const persistProfile = async (p: any) => {
     lang={lang}
     onBack={() => setPage("bridge")}
     onNext={() => setPage("questionnaire")}
-    setUsername={(name) => setProfile((p) => ({ ...p, name }))}
-    onSignIn={() => setPage("signin")}
-    onTerms={() => setPage("terms")}
-    onPrivacy={() => setPage("privacy")}
-  />
-)}
-      {page==="admin-login" && <AdminLogin setPage={setPage}/>}
-      {page==="admin"       && <AdminPage setPage={setPage}/>}
-      {page==="welcome"     && (
-        <WelcomeS4
-          lang={lang}
-          onBack={() => setPage("music")}
-          onNext={() => setPage("bridge")}
-        />
-      )}
-      {page==="bridge"      && (
-        <BridgeS5
-          lang={lang}
-          onBack={() => setPage("welcome")}
-          onNext={() => setPage("register")}
-        />
-      )}
-      {page==="questionnaire" && (
-        <QuestionnaireS7
-          lang={lang}
-          onBack={() => setPage("register")}
-          onNext={() => setPage("status")}
-          setProfile={persistProfile}
-        />
-      )}
-      {page==="status"      && (() => {
-        let last:any = {};
-        let storedPhoto: string | null = null;
-        try {
-          if (typeof window !== "undefined") {
-            last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
-            storedPhoto = localStorage.getItem("map_user_photo");
-          }
-        } catch {}
-        return (
-          <StatusCardS8
-            lang={lang}
-            username={last.name || "Marin"}
-            photo={storedPhoto || profile.photo || null}
-            profile={profile}
-            onBack={() => setPage("questionnaire")}
-            onEdit={() => setPage("questionnaire")}
-            onStart={() => setPage("dashboard")}
-          />
-        );
-      })()}
-      {page === "dashboard" && (() => {
-        let last:any = {};
-        let storedPhoto: string | null = null;
-        try {
-          if (typeof window !== "undefined") {
-            last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
-            storedPhoto = localStorage.getItem("map_user_photo");
-          }
-        } catch {}
-        
-        return (
-          <Dashboard
-            lang={lang}
-            username={last.name || profile?.name || "Marin"}
-            photo={storedPhoto || profile?.photo || null}
-            profile={profile || {}}
-            userLevel="cadet"
-            userPlan={userPlan}
-            userXP={userXP}
-            userStreak={userStreak}
-            completedLessons={completedLessons}
-            onViewStatus={() => setPage("status")}
-            onEditProfile={() => setPage("questionnaire")}
-            onStartModule={(m:any) => {
-              if (m?.id === "d1") setPage("nav_lessons");
-              else if (m?.id === "e1") setPage("engine_lessons");
-              else if (m?.id === "e4") setPage("marpol_lessons");
-              else if (m?.id === "d2") setPage("iml_lessons");
-              else if (m?.id === "d3") setPage("sb_lessons");
-              else if (m?.id === "d4") setPage("smcp_lessons");
-              else if (m?.id === "d6") setPage("seamanship_lessons");
-              else if (m?.id === "t0") setPage("lexique");
-        else if (m?.id === "e2") setPage("e2_lessons");
-else if (m?.id === "e3") setPage("e3_lessons");
-else if (m?.id === "e6") setPage("e6_lessons");
-else if (m?.id === "e7") setPage("e7_lessons");
-            }}
-            activeNav="home"
-            onNavHome={() => setPage("dashboard")}
-            onNavModules={() => setPage("modules")}
-            onNavShips={() => setPage("ships")}
-            onNavProfile={() => setPage("status")}
-            onAdmin={() => setPage("admin-login")}
-            onChangeLanguage={handleChangeLanguage}
-            onChangeDepartment={handleChangeDepartment}
-            onResetProfile={handleResetProfile} 
-            onSignOut={async () => {
-  await supabase.auth.signOut();
-  try {
-    ["map_last_reg","map_user_photo"].forEach(k => localStorage.removeItem(k));
-  } catch {}
-  setPage("lang");
-}}
-          />
-        );
-      })()}
-      {page === "modules" && (
-        <ModulesListPage
-          lang={lang}
-          onBack={() => setPage("dashboard")}
-          onStart={(m:any) => {
-            if (m?.id === "d1") setPage("nav_lessons");
-            else if (m?.id === "e1") setPage("engine_lessons");
-            else if (m?.id === "e4") setPage("marpol_lessons");
-            else if (m?.id === "d2") setPage("iml_lessons");
-            else if (m?.id === "d3") setPage("sb_lessons");
-            else if (m?.id === "d4") setPage("smcp_lessons");
-            else if (m?.id === "d6") setPage("seamanship_lessons");
-            else if (m?.id === "e2") setPage("e2_lessons");
-else if (m?.id === "e3") setPage("e3_lessons");
-else if (m?.id === "e6") setPage("e6_lessons");
-else if (m?.id === "e7") setPage("e7_lessons");
-            else setPage("dashboard");
-          }}
-        />
-      )}
-      {page === "ships" && (
-        <ShipsPage lang={lang} onBack={() => setPage("dashboard")}/>
-      )}
-      {page === "nav_lessons" && (
-        <NavigationLessonsPage
-          lang={lang}
-          onBack={() => setPage("dashboard")}
-          completedLessons={completedLessons}
-          onPick={(lid:string) => {
-            if (lid === "l1") setPage("lesson_navigation");
-            else if (lid === "l2") setPage("lesson_navire");
-            else if (lid === "l3") setPage("lesson_coord");
-            else if (lid === "l4") setPage("lesson_carte");
-            else if (lid === "l5") setPage("lesson_compas");
-            else if (lid === "l6") setPage("lesson_navpratique");
-            else if (lid === "l7") setPage("lesson_marees");
-            else if (lid === "l8") setPage("lesson_colreg");
-          }}
-        />
-      )}
-      {page === "engine_lessons" && (
-        <EngineLessonsPage
-          lang={lang}
-          onBack={() => setPage("dashboard")}
-          completedLessons={completedLessons}
-          onPick={(lid:string) => {
-            if (lid === "l1") setPage("lesson_moteur");
-            else if (lid === "l2") setPage("lesson_auxiliaires");
-            else if (lid === "l3") setPage("lesson_stabilite");
-            else if (lid === "l4") setPage("lesson_incendie");
-            else if (lid === "l5") setPage("lesson_sauvetage");
-            else if (lid === "l6") setPage("lesson_maintenance");
-            else if (lid === "l7") setPage("lesson_watchkeeping");
-            else if (lid === "l8") setPage("lesson_emergency");
-          }}
-        />
-      )}
-      {page === "marpol_lessons" && (
-        <MarpolLessonsPage
-          lang={lang}
-          onBack={() => setPage("dashboard")}
-          completedLessons={completedLessons}
-          onPick={(lid:string) => {
-            if (lid === "l1") setPage("lesson_marpol");
-          }}
-        />
-      )}
-      {page === "seamanship_lessons" && (
-        <SeamanshipLessonsPage
-          lang={lang}
-          onBack={() => setPage("dashboard")}
-          completedLessons={completedLessons}
-          onPick={(lid:string) => {
-  if (lid === "l1") setPage("lesson_sea_l1");
-  else if (lid === "l2") setPage("lesson_sea_l2");
-  else if (lid === "l3") setPage("lesson_sea_l3");
-  else if (lid === "l4") setPage("lesson_sea_l4");
-  else if (lid === "l5") setPage("lesson_sea_l5");
-}}
-          />
-)}
-          {page === "e2_lessons" && (
-
-  <E2LessonsPage
-    lang={lang}
-    onBack={() => setPage("dashboard")}
-    completedLessons={completedLessons}
-    onPick={(lid:string) => {
-      if (lid === "l1") setPage("lesson_e2_l1");
-      else if (lid === "l2") setPage("lesson_e2_l2");
-      else if (lid === "l3") setPage("lesson_e2_l3");
-      else if (lid === "l4") setPage("lesson_e2_l4");
-      else if (lid === "l5") setPage("lesson_e2_l5");
-      else if (lid === "l6") setPage("lesson_e2_l6");
-      else if (lid === "l7") setPage("lesson_e2_l7");
-    }}
-  />
-)}
-      {page === "lesson_e2_l1" && (
-  <LessonE2_L1
-    lang={lang}
-    onBack={() => setPage("e2_lessons")}
-    onComplete={() => { markLessonCompleted("e2-l1"); setPage("e2_lessons"); }}
-  />
-)}
-      {page === "lesson_e2_l2" && (
-  <LessonE2_L2
-    lang={lang}
-    onBack={() => setPage("e2_lessons")}
-    onComplete={() => { markLessonCompleted("e2-l2"); setPage("e2_lessons"); }}
-  />
-)}
-      {page === "lesson_e2_l3" && (
-  <LessonE2_L3
-    lang={lang}
-    onBack={() => setPage("e2_lessons")}
-    onComplete={() => { markLessonCompleted("e2-l3"); setPage("e2_lessons"); }}
-  />
-)}
-   {page === "lesson_e2_l4" && (
-  <LessonE2_L4
-    lang={lang}
-    onBack={() => setPage("e2_lessons")}
-    onComplete={() => { markLessonCompleted("e2-l4"); setPage("e2_lessons"); }}
-  />
-)}  
-      {page === "lesson_e2_l5" && (
-  <LessonE2_L5
-    lang={lang}
-    onBack={() => setPage("e2_lessons")}
-    onComplete={() => { markLessonCompleted("e2-l5"); setPage("e2_lessons"); }}
-  />
-)}
-      {page === "lesson_e2_l6" && (
-  <LessonE2_L6
-    lang={lang}
-    onBack={() => setPage("e2_lessons")}
-    onComplete={() => { markLessonCompleted("e2-l6"); setPage("e2_lessons"); }}
-  />
-)}
-      {page === "lesson_e2_l7" && (
-  <LessonE2_L7
-    lang={lang}
-    onBack={() => setPage("e2_lessons")}
-    onComplete={() => { markLessonCompleted("e2-l7"); setPage("e2_lessons"); }}
-  />
-)}
-{page === "e3_lessons" && (
-  <E3LessonsPage
-    lang={lang}
-    onBack={() => setPage("dashboard")}
-    completedLessons={completedLessons}
-    onPick={(lid:string) => {
-      if (lid === "l1") setPage("lesson_e3_l1");
-      else if (lid === "l2") setPage("lesson_e3_l2");
-      else if (lid === "l3") setPage("lesson_e3_l3");
-      else if (lid === "l4") setPage("lesson_e3_l4");
-      else if (lid === "l5") setPage("lesson_e3_l5");
-      else if (lid === "l6") setPage("lesson_e3_l6");
-    }}
-  />
-)}
-      {page === "lesson_e3_l1" && (
-  <LessonE3_L1
-    lang={lang}
-    onBack={() => setPage("e3_lessons")}
-    onComplete={() => { markLessonCompleted("e3-l1"); setPage("e3_lessons"); }}
-  />
-)}
-      {page === "lesson_e3_l2" && (
-  <LessonE3_L2
-    lang={lang}
-    onBack={() => setPage("e3_lessons")}
-    onComplete={() => { markLessonCompleted("e3-l2"); setPage("e3_lessons"); }}
-  />
-)}
-      {page === "lesson_e3_l3" && (
-  <LessonE3_L3
-    lang={lang}
-    onBack={() => setPage("e3_lessons")}
-    onComplete={() => { markLessonCompleted("e3-l3"); setPage("e3_lessons"); }}
-  />
-)}
-      {page === "lesson_e3_l4" && (
-  <LessonE3_L4
-    lang={lang}
-    onBack={() => setPage("e3_lessons")}
-    onComplete={() => { markLessonCompleted("e3-l4"); setPage("e3_lessons"); }}
-  />
-)}
-      {page === "lesson_e3_l5" && (
-  <LessonE3_L5
-    lang={lang}
-    onBack={() => setPage("e3_lessons")}
-    onComplete={() => { markLessonCompleted("e3-l5"); setPage("e3_lessons"); }}
-  />
-)}
-      {page === "lesson_e6_l1" && (
-  <LessonE6_L1
-    lang={lang}
-    onBack={() => setPage("e6_lessons")}
-    onComplete={() => { markLessonCompleted("e6-l1"); setPage("e6_lessons"); }}
-  />
-)}
-      {page === "lesson_e3_l6" && (
-  <LessonE3_L6
-    lang={lang}
-    onBack={() => setPage("e3_lessons")}
-    onComplete={() => { markLessonCompleted("e3-l6"); setPage("e3_lessons"); }}
-  />
-)}
-      {page === "lesson_e6_l2" && (
-  <LessonE6_L2
-    lang={lang}
-    onBack={() => setPage("e6_lessons")}
-    onComplete={() => { markLessonCompleted("e6-l2"); setPage("e6_lessons"); }}
-  />
-)}
-      {page === "lesson_e6_l3" && (
-  <LessonE6_L3
-    lang={lang}
-    onBack={() => setPage("e6_lessons")}
-    onComplete={() => { markLessonCompleted("e6-l3"); setPage("e6_lessons"); }}
-  />
-)}
-      {page === "lesson_e6_l4" && (
-  <LessonE6_L4
-    lang={lang}
-    onBack={() => setPage("e6_lessons")}
-    onComplete={() => { markLessonCompleted("e6-l4"); setPage("e6_lessons"); }}
-  />
-)}
-      {page === "lesson_e6_l5" && (
-  <LessonE6_L5
-    lang={lang}
-    onBack={() => setPage("e6_lessons")}
-    onComplete={() => { markLessonCompleted("e6-l5"); setPage("e6_lessons"); }}
-  />
-)}
-      {page === "lesson_e6_l6" && (
-  <LessonE6_L6
-    lang={lang}
-    onBack={() => setPage("e6_lessons")}
-    onComplete={() => { markLessonCompleted("e6-l6"); setPage("e6_lessons"); }}
-  />
-)}
-{page === "e6_lessons" && (
-  <E6LessonsPage
-    lang={lang}
-    onBack={() => setPage("dashboard")}
-    completedLessons={completedLessons}
-    onPick={(lid:string) => {
-      if (lid === "l1") setPage("lesson_e6_l1");
-      else if (lid === "l2") setPage("lesson_e6_l2");
-      else if (lid === "l3") setPage("lesson_e6_l3");
-      else if (lid === "l4") setPage("lesson_e6_l4");
-      else if (lid === "l5") setPage("lesson_e6_l5");
-      else if (lid === "l6") setPage("lesson_e6_l6");
-    }}
-  />
-)}
-      {page === "lesson_e7_l1" && (
-  <LessonE7_L1
-    lang={lang}
-    onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l1"); setPage("e7_lessons"); }}
-  />
-)}
-      {page === "lesson_e7_l2" && (
-  <LessonE7_L2 lang={lang} onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l2"); setPage("e7_lessons"); }}/>
-)}
-      {page === "lesson_e7_l3" && (
-  <LessonE7_L3 lang={lang} onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l3"); setPage("e7_lessons"); }}/>
-)}
-      {page === "lesson_e7_l4" && (
-  <LessonE7_L4 lang={lang} onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l4"); setPage("e7_lessons"); }}/>
-)}
-      {page === "lesson_e7_l5" && (
-  <LessonE7_L5 lang={lang} onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l5"); setPage("e7_lessons"); }}/>
-)}
-{page === "e7_lessons" && (
-  <E7LessonsPage
-    lang={lang}
-    onBack={() => setPage("dashboard")}
-    completedLessons={completedLessons}
-    onPick={(lid:string) => {
-      if (lid === "l1") setPage("lesson_e7_l1");
-      else if (lid === "l2") setPage("lesson_e7_l2");
-      else if (lid === "l3") setPage("lesson_e7_l3");
-      else if (lid === "l4") setPage("lesson_e7_l4");
-      else if (lid === "l5") setPage("lesson_e7_l5");
-    }}
-  />
-)}
-        
-      {page === "iml_lessons" && (
-        <IMLLessonsPage
-          lang={lang}
-          onBack={() => setPage("dashboard")}
-          completedLessons={completedLessons}
-          onPick={(lid:string) => {
-            if (lid === "l1") setPage("lesson_solas");
-            else if (lid === "l2") setPage("lesson_marpol_legal");
-            else if (lid === "l3") setPage("lesson_stcw");
-            else if (lid === "l4") setPage("lesson_mlc");
-            else if (lid === "l5") setPage("lesson_colreg_legal");
-            else if (lid === "l6") setPage("lesson_unclos");
-            else if (lid === "l7") setPage("lesson_liability_insurance");
-            else if (lid === "l8") setPage("lesson_ports_flag_states");
-            else if (lid === "l9") setPage("lesson_piracy");
-            else if (lid === "l10") setPage("lesson_arbitration");
-          }}
-        />
-      )}
-      {page === "sb_lessons" && (
-        <SBLessonsPage
-          lang={lang}
-          onBack={() => setPage("dashboard")}
-          completedLessons={completedLessons}
-          onPick={(lid:string) => {
-            if (lid === "l1") setPage("lesson_iala");
-            else if (lid === "l2") setPage("lesson_lights_shapes");
-            else if (lid === "l3") setPage("lesson_sound_signals");
-            else if (lid === "l4") setPage("lesson_flags");
-            else if (lid === "l5") setPage("lesson_vhf");
-            else if (lid === "l6") setPage("lesson_ais");
-            else if (lid === "l7") setPage("lesson_gmdss");
-          }}
-        />
-      )}
-      {page === "smcp_lessons" && (
-        <SMCPLessonsPage
-          lang={lang}
-          onBack={() => setPage("dashboard")}
-          completedLessons={completedLessons}
-          onPick={(lid:string) => {
-            if (lid === "l1") setPage("lesson_smcp_l1");
-            else if (lid === "l2") setPage("lesson_smcp_l2");
-            else if (lid === "l3") setPage("lesson_smcp_l3");
-            else if (lid === "l4") setPage("lesson_smcp_l4");
-            else if (lid === "l5") setPage("lesson_smcp_l5");
-            else if (lid === "l6") setPage("lesson_smcp_l6");
-            else if (lid === "l7") setPage("lesson_smcp_l7");
-            else if (lid === "l8") setPage("lesson_smcp_l8");
-          }}
-        />
-      )}
-      {page === "lesson_solas" && (
-        <LessonSOLAS
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l1"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_marpol_legal" && (
-        <LessonMARPOLLegal
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l2"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_stcw" && (
-        <LessonSTCW
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l3"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_mlc" && (
-        <LessonMLC
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l4"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_colreg_legal" && (
-        <LessonCOLREGLegal
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l5"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_unclos" && (
-        <LessonUNCLOS
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l6"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_liability_insurance" && (
-        <LessonLiabilityInsurance
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l7"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_ports_flag_states" && (
-        <LessonPortsFlagStates
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l8"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_piracy" && (
-        <LessonPiracy
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l9"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_arbitration" && (
-        <LessonArbitration
-          lang={lang}
-          onBack={() => setPage("iml_lessons")}
-          onComplete={() => { markLessonCompleted("d2-l10"); setPage("iml_lessons"); }}
-        />
-      )}
-      {page === "lesson_iala" && (
-        <LessonIALA
-          lang={lang}
-          onBack={() => setPage("sb_lessons")}
-          onComplete={() => { markLessonCompleted("d3-l1"); setPage("sb_lessons"); }}
-        />
-      )}
-      {page === "lesson_lights_shapes" && (
-        <LessonLightsShapes
-          lang={lang}
-          onBack={() => setPage("sb_lessons")}
-          onComplete={() => { markLessonCompleted("d3-l2"); setPage("sb_lessons"); }}
-        />
-      )}
-      {page === "lesson_sound_signals" && (
-        <LessonSoundSignals
-          lang={lang}
-          onBack={() => setPage("sb_lessons")}
-          onComplete={() => { markLessonCompleted("d3-l3"); setPage("sb_lessons"); }}
-        />
-      )}
-      {page === "lesson_flags" && (
-        <LessonFlags
-          lang={lang}
-          onBack={() => setPage("sb_lessons")}
-          onComplete={() => { markLessonCompleted("d3-l4"); setPage("sb_lessons"); }}
-        />
-      )}
-      {page === "lesson_vhf" && (
-        <LessonVHF
-          lang={lang}
-          onBack={() => setPage("sb_lessons")}
-          onComplete={() => { markLessonCompleted("d3-l5"); setPage("sb_lessons"); }}
-        />
-      )}
-      {page === "lesson_ais" && (
-        <LessonAIS
-          lang={lang}
-          onBack={() => setPage("sb_lessons")}
-          onComplete={() => { markLessonCompleted("d3-l6"); setPage("sb_lessons"); }}
-        />
-      )}
-      {page === "lesson_gmdss" && (
-        <LessonGMDSS
-          lang={lang}
-          onBack={() => setPage("sb_lessons")}
-          onComplete={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
-        />
-      )}
-      {page === "lesson_sea_l1" && (
-        <LessonSEA_L1
-          lang={lang}
-          onBack={() => setPage("seamanship_lessons")}
-          onComplete={() => { markLessonCompleted("d6-l1"); setPage("seamanship_lessons"); }}
-        />
-      )}
-      {page === "lesson_sea_l2" && (
-        <LessonSEA_L2
-          lang={lang}
-          onBack={() => setPage("seamanship_lessons")}
-          onComplete={() => { markLessonCompleted("d6-l2"); setPage("seamanship_lessons"); }}
-        />
-      )} 
-     {page === "lexique" && (
-  <LexiqueMaritime
-    lang={lang}
-    onBack={() => setPage("dashboard")}
-    onComplete={() => setPage("dashboard")}
-  />
-)} 
-      {page === "lesson_sea_l3" && (
-  <LessonSEA_L3
-    lang={lang}
-    onBack={() => setPage("seamanship_lessons")}
-    onComplete={() => { markLessonCompleted("d6-l3"); setPage("seamanship_lessons"); }}
-  />
-)}
-{page === "lesson_sea_l4" && (
-  <LessonSEA_L4
-    lang={lang}
-    onBack={() => setPage("seamanship_lessons")}
-    onComplete={() => { markLessonCompleted("d6-l4"); setPage("seamanship_lessons"); }}
-  />
-)}
-{page === "lesson_sea_l5" && (
-  <LessonSEA_L5
-    lang={lang}
-    onBack={() => setPage("seamanship_lessons")}
-    onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
-  />
-)}
-      {page === "lesson_smcp_l1" && (
-        <LessonSMCP_L1
-          lang={lang}
-          onBack={() => setPage("smcp_lessons")}
-          onComplete={() => { markLessonCompleted("d4-l1"); setPage("smcp_lessons"); }}
-        />
-      )}
-      {page === "lesson_smcp_l2" && (
-        <LessonSMCP_L2
-          lang={lang}
-          onBack={() => setPage("smcp_lessons")}
-          onComplete={() => { markLessonCompleted("d4-l2"); setPage("smcp_lessons"); }}
-        />
-      )}
-      {page === "lesson_smcp_l3" && (
-        <LessonSMCP_L3
-          lang={lang}
-          onBack={() => setPage("smcp_lessons")}
-          onComplete={() => { markLessonCompleted("d4-l3"); setPage("smcp_lessons"); }}
-        />
-      )}
-      {page === "lesson_smcp_l4" && (
-        <LessonSMCP_L4
-          lang={lang}
-          onBack={() => setPage("smcp_lessons")}
-          onComplete={() => { markLessonCompleted("d4-l4"); setPage("smcp_lessons"); }}
-        />
-      )}
-      {page === "lesson_smcp_l5" && (
-        <LessonSMCP_L5
-          lang={lang}
-          onBack={() => setPage("smcp_lessons")}
-          onComplete={() => { markLessonCompleted("d4-l5"); setPage("smcp_lessons"); }}
-        />
-      )}
-      {page === "lesson_smcp_l6" && (
-        <LessonSMCP_L6
-          lang={lang}
-          onBack={() => setPage("smcp_lessons")}
-          onComplete={() => { markLessonCompleted("d4-l6"); setPage("smcp_lessons"); }}
-        />
-      )}
-      {page === "lesson_smcp_l7" && (
-        <LessonSMCP_L7
-          lang={lang}
-          onBack={() => setPage("smcp_lessons")}
-          onComplete={() => { markLessonCompleted("d4-l7"); setPage("smcp_lessons"); }}
-        />
-      )}
-      {page === "lesson_smcp_l8" && (
-        <LessonSMCP_L8
-          lang={lang}
-          onBack={() => setPage("smcp_lessons")}
-          onComplete={() => { markLessonCompleted("d4-l8"); setPage("smcp_lessons"); }}
-        />
-      )}
-      {page === "lesson_navigation" && (
-        <LessonNavigation
-          lang={lang}
-          onBack={() => setPage("nav_lessons")}
-          onComplete={() => { markLessonCompleted("d1-l1"); setPage("dashboard"); }}
-        />
-      )}
-      {page === "lesson_navire" && (
-        <LessonNavire
-          lang={lang}
-          onBack={() => setPage("nav_lessons")}
-          onComplete={() => { markLessonCompleted("d1-l2"); setPage("dashboard"); }}
-        />
-      )}
-      {page === "lesson_coord" && (
-        <LessonCoord
-          lang={lang}
-          onBack={() => setPage("nav_lessons")}
-          onComplete={() => { markLessonCompleted("d1-l3"); setPage("dashboard"); }}
-        />
-      )}
-      {page === "lesson_carte" && (
-        <LessonCarteMarine
-          lang={lang}
-          onBack={() => setPage("nav_lessons")}
-          onComplete={() => { markLessonCompleted("d1-l4"); setPage("dashboard"); }}
-        />
-      )}
-      {page === "lesson_compas" && (
-        <LessonCompas
-          lang={lang}
-          onBack={() => setPage("nav_lessons")}
-          onComplete={() => { markLessonCompleted("d1-l5"); setPage("dashboard"); }}
-        />
-      )}
-      {page === "lesson_navpratique" && (
-        <LessonNavPratique
-          lang={lang}
-          onBack={() => setPage("nav_lessons")}
-          onComplete={() => { markLessonCompleted("d1-l6"); setPage("dashboard"); }}
-        />
-      )}
-      {page === "lesson_marees" && (
-        <LessonMarees
-          lang={lang}
-          onBack={() => setPage("nav_lessons")}
-          onComplete={() => { markLessonCompleted("d1-l7"); setPage("dashboard"); }}
-        />
-      )}
-      {page === "lesson_colreg" && (
-        <LessonCOLREG
-          lang={lang}
-          onBack={() => setPage("nav_lessons")}
-          onComplete={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
-        />
-      )}
-      {page === "lesson_moteur" && (
-        <LessonMoteur
-          lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l1"); setPage("engine_lessons"); }}
-        />
-      )}
-      {page === "lesson_auxiliaires" && (
-        <LessonAuxiliaires
-          lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l2"); setPage("engine_lessons"); }}
-        />
-      )}
-      {page === "lesson_stabilite" && (
-        <LessonStabilite
-          lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l3"); setPage("engine_lessons"); }}
-        />
-      )}
-      {page === "lesson_incendie" && (
-        <LessonIncendie
-          lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l4"); setPage("engine_lessons"); }}
-        />
-      )}
-      {page === "lesson_sauvetage" && (
-        <LessonSauvetage
-          lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l5"); setPage("engine_lessons"); }}
-        />
-      )}
-      {page === "lesson_marpol" && (
-        <LessonMARPOL
-          lang={lang}
-          onBack={() => setPage("marpol_lessons")}
-          onComplete={() => { markLessonCompleted("e4-l1"); setPage("marpol_lessons"); }}
-        />
-      )}
-      {page === "lesson_watchkeeping" && (
-        <LessonWatchkeeping
-          lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l7"); setPage("engine_lessons"); }}
-        />
-      )}
-      {page === "lesson_maintenance" && (
-        <LessonMaintenance
-          lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l6"); setPage("engine_lessons"); }}
-        />
-      )}
-      {page === "lesson_emergency" && (
-        <LessonEmergency
-          lang={lang}
-          onBack={() => setPage("engine_lessons")}
-          onComplete={() => { markLessonCompleted("e1-l8"); setPage("engine_lessons"); }}
-        />
-      )}
-      {showExitConfirm && (
-        <div
-          onClick={() => setShowExitConfirm(false)}
-          style={{
-            position:"fixed",inset:0,zIndex:9999,
-            background:"rgba(6,14,26,0.85)",backdropFilter:"blur(8px)",
-            display:"flex",alignItems:"center",justifyContent:"center",padding:24,
-            fontFamily:"'Nunito',sans-serif",
-          }}>
-          <div onClick={(e)=>e.stopPropagation()} style={{
-            width:"100%",maxWidth:360,
-            background:"linear-gradient(160deg,#112244,#0d1f3c)",
-            border:"1px solid rgba(201,146,42,0.35)",
-            borderRadius:20,padding:24,color:"#f0f4ff",
-            boxShadow:"0 20px 60px rgba(0,0,0,0.6)",
-          }}>
-            <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:900,marginBottom:8,textAlign:"center"}}>
-              {lang==="fr"?"Quitter MAP ?":lang==="es"?"¿Salir de MAP?":lang==="pt"?"Sair do MAP?":"Quit MAP?"}
-            </div>
-            <div style={{fontSize:13,color:"rgba(240,244,255,0.65)",textAlign:"center",marginBottom:20}}>
-              {lang==="fr"?"Vous êtes sur le tableau de bord.":lang==="es"?"Estás en el panel principal.":lang==="pt"?"Você está no painel principal.":"You are on the dashboard."}
-            </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-              <button
-                onClick={() => setShowExitConfirm(false)}
-                style={{
-                  padding:"12px",borderRadius:12,
-                  background:"rgba(255,255,255,0.08)",
-                  border:"1px solid rgba(255,255,255,0.2)",
-                  color:"#f0f4ff",fontWeight:700,fontSize:14,cursor:"pointer",
-                }}>
-                {lang==="fr"?"Non — Rester":lang==="es"?"No — Quedarme":lang==="pt"?"Não — Ficar":"No — Stay"}
-              </button>
-              <button
-                onClick={() => {
-                  setShowExitConfirm(false);
-                  // Attempt 1: jump past the entire history stack
-                  try { window.history.go(-(window.history.length)); } catch {}
-                  // Attempt 2: native exit (Cordova-style) or blank replace
-                  setTimeout(() => {
-                    try {
-                      const nav = navigator as Navigator & { app?: { exitApp?: () => void } };
-                      if (nav.app?.exitApp) { nav.app.exitApp(); return; }
-                    } catch {}
-                    try { window.location.replace("about:blank"); } catch {}
-                  }, 150);
-                  // Attempt 3: most reliable on Android PWA — blank then close
-                  setTimeout(() => {
-                    try { window.location.href = "about:blank"; } catch {}
-                    setTimeout(() => { try { window.close(); } catch {} }, 100);
-                  }, 300);
-                }}
-                style={{
-                  padding:"12px",borderRadius:12,
-                  background:"linear-gradient(135deg,#c0392b,#922b21)",
-                  border:"1px solid rgba(231,76,60,0.6)",
-                  color:"#fff",fontWeight:800,fontSize:14,cursor:"pointer",
-                }}>
-                {lang==="fr"?"Oui — Quitter":lang==="es"?"Sí — Salir":lang==="pt"?"Sim — Sair":"Yes — Quit"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
+    setUsername={(name) => setProfile((p) =>
