@@ -53,6 +53,11 @@ const LessonE7_L5 = lazy(() => import("./LessonE7_L5"));
 const LessonIncendie = lazy(() => import("./LessonIncendie"));
 const LessonSauvetage = lazy(() => import("./LessonSauvetage"));
 const LessonMARPOL = lazy(() => import("./LessonMARPOL"));
+const LessonMARPOL_L2 = lazy(() => import("./LessonMARPOL_L2"));
+const LessonMARPOL_L3 = lazy(() => import("./LessonMARPOL_L3"));
+const LessonMARPOL_L4 = lazy(() => import("./LessonMARPOL_L4"));
+const LessonMARPOL_L5 = lazy(() => import("./LessonMARPOL_L5"));
+const LessonMARPOL_L6 = lazy(() => import("./LessonMARPOL_L6"));
 const LessonWatchkeeping = lazy(() => import("./LessonWatchkeeping"));
 const LessonMaintenance = lazy(() => import("./LessonMaintenance"));
 const LessonEmergency = lazy(() => import("./LessonEmergency"));
@@ -1197,7 +1202,7 @@ function MarpolLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1817,6 +1822,7 @@ const persistProfile = async (p: any) => {
   const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3","lesson_smcp_l4","lesson_smcp_l5","lesson_smcp_l6","lesson_smcp_l7","lesson_smcp_l8"];
   const SEAMANSHIP_LESSONS = ["lesson_sea_l1","lesson_sea_l2"];
 const SHIPCAREER_LESSONS = ["lesson_shipcareer_l1","lesson_shipcareer_l2","lesson_shipcareer_l3","lesson_shipcareer_l4","lesson_shipcareer_l5"];
+ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","lesson_marpol_l4","lesson_marpol_l5","lesson_marpol_l6"];
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // Re-arm a history guard entry every time the active page changes, and
@@ -1862,9 +1868,15 @@ const SHIPCAREER_LESSONS = ["lesson_shipcareer_l1","lesson_shipcareer_l2","lesso
         setPage("seamanship_lessons");
         return;
       }
-      if (SHIPCAREER_LESSONS.includes(cur)) {
+      
+          if (SHIPCAREER_LESSONS.includes(cur)) {
         try { window.history.pushState({ map: "shipcareer_lessons" }, ""); } catch {}
         setPage("shipcareer_lessons");
+        return;
+      }
+      if (MARPOL_LESSONS.includes(cur)) {
+        try { window.history.pushState({ map: "marpol_lessons" }, ""); } catch {}
+        setPage("marpol_lessons");
         return;
       }
       if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","shipcareer_lessons","admin","admin-login"].includes(cur)) {
@@ -2153,13 +2165,19 @@ else if (m?.id === "e7") setPage("e7_lessons");
           }}
         />
       )}
-      {page === "marpol_lessons" && (
+      
+        {page === "marpol_lessons" && (
         <MarpolLessonsPage
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_marpol");
+            else if (lid === "l2") setPage("lesson_marpol_l2");
+            else if (lid === "l3") setPage("lesson_marpol_l3");
+            else if (lid === "l4") setPage("lesson_marpol_l4");
+            else if (lid === "l5") setPage("lesson_marpol_l5");
+            else if (lid === "l6") setPage("lesson_marpol_l6");
           }}
         />
       )}
@@ -2809,6 +2827,41 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l1"); setPage("marpol_lessons"); }}
+        />
+      )}
+      {page === "lesson_marpol_l2" && (
+        <LessonMARPOL_L2
+          lang={lang}
+          onBack={() => setPage("marpol_lessons")}
+          onComplete={() => { markLessonCompleted("e4-l2"); setPage("marpol_lessons"); }}
+        />
+      )}
+      {page === "lesson_marpol_l3" && (
+        <LessonMARPOL_L3
+          lang={lang}
+          onBack={() => setPage("marpol_lessons")}
+          onComplete={() => { markLessonCompleted("e4-l3"); setPage("marpol_lessons"); }}
+        />
+      )}
+      {page === "lesson_marpol_l4" && (
+        <LessonMARPOL_L4
+          lang={lang}
+          onBack={() => setPage("marpol_lessons")}
+          onComplete={() => { markLessonCompleted("e4-l4"); setPage("marpol_lessons"); }}
+        />
+      )}
+      {page === "lesson_marpol_l5" && (
+        <LessonMARPOL_L5
+          lang={lang}
+          onBack={() => setPage("marpol_lessons")}
+          onComplete={() => { markLessonCompleted("e4-l5"); setPage("marpol_lessons"); }}
+        />
+      )}
+      {page === "lesson_marpol_l6" && (
+        <LessonMARPOL_L6
+          lang={lang}
+          onBack={() => setPage("marpol_lessons")}
+          onComplete={() => { markLessonCompleted("e4-l6"); setPage("marpol_lessons"); }}
         />
       )}
       {page === "lesson_watchkeeping" && (
