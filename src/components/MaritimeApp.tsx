@@ -86,6 +86,11 @@ const LessonSEA_L2 = lazy(() => import("./LessonSEA_L2"));
 const LessonSEA_L3 = lazy(() => import("./LessonSEA_L3"));
 const LessonSEA_L4 = lazy(() => import("./LessonSEA_L4"));
 const LessonSEA_L5 = lazy(() => import("./LessonSEA_L5"));
+const LessonShipCareer_L1 = lazy(() => import("./LessonShipCareer_L1"));
+const LessonShipCareer_L2 = lazy(() => import("./LessonShipCareer_L2"));
+const LessonShipCareer_L3 = lazy(() => import("./LessonShipCareer_L3"));
+const LessonShipCareer_L4 = lazy(() => import("./LessonShipCareer_L4"));
+const LessonShipCareer_L5 = lazy(() => import("./LessonShipCareer_L5"));
 const LexiqueMaritime = lazy(() => import("./LexiqueMaritime"));
 
 const LS_KEY = "map_registrations";
@@ -1414,7 +1419,52 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
     </div>
   );
 }
-
+function ShipCareerLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d5");
+  const title = mod?.title?.[lang] || mod?.title?.fr || "Ship Career Navigator";
+  const labels:any = {
+    fr:{header:"Leçons", available:"Disponible", soon:"Bientôt", done:"Terminé ✓"},
+    en:{header:"Lessons", available:"Available", soon:"Coming soon", done:"Completed ✓"},
+    es:{header:"Lecciones", available:"Disponible", soon:"Próximamente", done:"Completado ✓"},
+    pt:{header:"Lições", available:"Disponível", soon:"Em breve", done:"Concluído ✓"},
+  };
+  const L = labels[lang] || labels.fr;
+  const lessons = mod?.lessons || [];
+  const playable = new Set(["l1","l2","l3","l4","l5"]);
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {lessons.map((l:any, idx:number)=>{
+            const isPlayable = playable.has(l.id);
+            const isDone = completedLessons.includes(`d5-${l.id}`);
+            const tag = l.access==="free" ? "FREE" : l.access==="premium_plus" ? "P+" : "PRO";
+            const tagColor = l.access==="free" ? "#1e8a4a" : l.access==="premium_plus" ? "#9b59b6" : "#c9922a";
+            return (
+              <button key={l.id} disabled={!isPlayable} onClick={()=>onPick(l.id)} style={{
+                display:"flex",alignItems:"center",gap:12,padding:"14px",
+                background:isPlayable?"rgba(13,31,60,0.85)":"rgba(13,31,60,0.4)",
+                border:`1px solid ${isPlayable?"#8b5cf644":"rgba(255,255,255,0.08)"}`,
+                borderRadius:14,cursor:isPlayable?"pointer":"not-allowed",
+                color:"#f0f4ff",textAlign:"left",opacity:isPlayable?1:0.6,
+              }}>
+                <div style={{width:38,height:38,borderRadius:10,background:"rgba(139,92,246,0.18)",border:"1px solid #8b5cf644",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,flexShrink:0,color:"#a78bfa"}}>{idx+1}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{l.title?.[lang] || l.title?.fr}</div>
+                  <div style={{fontSize:10,color:"rgba(240,244,255,0.5)"}}>{isDone ? L.done : (isPlayable ? L.available : L.soon)}</div>
+                </div>
+                <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 function E2LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e2");
@@ -1766,7 +1816,7 @@ const persistProfile = async (p: any) => {
   const SB_LESSONS = ["lesson_iala","lesson_lights_shapes","lesson_sound_signals","lesson_flags","lesson_vhf","lesson_ais","lesson_gmdss"];
   const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3","lesson_smcp_l4","lesson_smcp_l5","lesson_smcp_l6","lesson_smcp_l7","lesson_smcp_l8"];
   const SEAMANSHIP_LESSONS = ["lesson_sea_l1","lesson_sea_l2"];
-
+const SHIPCAREER_LESSONS = ["lesson_shipcareer_l1","lesson_shipcareer_l2","lesson_shipcareer_l3","lesson_shipcareer_l4","lesson_shipcareer_l5"];
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // Re-arm a history guard entry every time the active page changes, and
@@ -1806,12 +1856,18 @@ const persistProfile = async (p: any) => {
         setPage("smcp_lessons");
         return;
       }
-      if (SEAMANSHIP_LESSONS.includes(cur)) {
+      
+          if (SEAMANSHIP_LESSONS.includes(cur)) {
         try { window.history.pushState({ map: "seamanship_lessons" }, ""); } catch {}
         setPage("seamanship_lessons");
         return;
       }
-      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","admin","admin-login"].includes(cur)) {
+      if (SHIPCAREER_LESSONS.includes(cur)) {
+        try { window.history.pushState({ map: "shipcareer_lessons" }, ""); } catch {}
+        setPage("shipcareer_lessons");
+        return;
+      }
+      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","shipcareer_lessons","admin","admin-login"].includes(cur)) {
         try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
         setPage("dashboard");
         return;
@@ -2013,6 +2069,7 @@ const persistProfile = async (p: any) => {
               else if (m?.id === "d3") setPage("sb_lessons");
               else if (m?.id === "d4") setPage("smcp_lessons");
               else if (m?.id === "d6") setPage("seamanship_lessons");
+            else if (m?.id === "d5") setPage("shipcareer_lessons");
               else if (m?.id === "t0") setPage("lexique");
         else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
@@ -2050,6 +2107,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
             else if (m?.id === "d3") setPage("sb_lessons");
             else if (m?.id === "d4") setPage("smcp_lessons");
             else if (m?.id === "d6") setPage("seamanship_lessons");
+          else if (m?.id === "d5") setPage("shipcareer_lessons");
             else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
 else if (m?.id === "e6") setPage("e6_lessons");
@@ -2119,7 +2177,21 @@ else if (m?.id === "e7") setPage("e7_lessons");
 }}
           />
 )}
-          {page === "e2_lessons" && (
+   {page === "shipcareer_lessons" && (
+  <ShipCareerLessonsPage
+    lang={lang}
+    onBack={() => setPage("dashboard")}
+    completedLessons={completedLessons}
+    onPick={(lid:string) => {
+      if (lid === "l1") setPage("lesson_shipcareer_l1");
+      else if (lid === "l2") setPage("lesson_shipcareer_l2");
+      else if (lid === "l3") setPage("lesson_shipcareer_l3");
+      else if (lid === "l4") setPage("lesson_shipcareer_l4");
+      else if (lid === "l5") setPage("lesson_shipcareer_l5");
+    }}
+  />
+)}     
+      {page === "e2_lessons" && (
 
   <E2LessonsPage
     lang={lang}
@@ -2550,6 +2622,41 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
   />
 )}
+   {page === "lesson_shipcareer_l1" && (
+  <LessonShipCareer_L1
+    lang={lang}
+    onBack={() => setPage("shipcareer_lessons")}
+    onComplete={() => { markLessonCompleted("d5-l1"); setPage("shipcareer_lessons"); }}
+  />
+)}
+{page === "lesson_shipcareer_l2" && (
+  <LessonShipCareer_L2
+    lang={lang}
+    onBack={() => setPage("shipcareer_lessons")}
+    onComplete={() => { markLessonCompleted("d5-l2"); setPage("shipcareer_lessons"); }}
+  />
+)}
+{page === "lesson_shipcareer_l3" && (
+  <LessonShipCareer_L3
+    lang={lang}
+    onBack={() => setPage("shipcareer_lessons")}
+    onComplete={() => { markLessonCompleted("d5-l3"); setPage("shipcareer_lessons"); }}
+  />
+)}
+{page === "lesson_shipcareer_l4" && (
+  <LessonShipCareer_L4
+    lang={lang}
+    onBack={() => setPage("shipcareer_lessons")}
+    onComplete={() => { markLessonCompleted("d5-l4"); setPage("shipcareer_lessons"); }}
+  />
+)}
+{page === "lesson_shipcareer_l5" && (
+  <LessonShipCareer_L5
+    lang={lang}
+    onBack={() => setPage("shipcareer_lessons")}
+    onComplete={() => { markLessonCompleted("d5-l5"); setPage("shipcareer_lessons"); }}
+  />
+)} 
       {page === "lesson_smcp_l1" && (
         <LessonSMCP_L1
           lang={lang}
