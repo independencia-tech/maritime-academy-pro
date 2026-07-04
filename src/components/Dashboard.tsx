@@ -354,13 +354,19 @@ export const MODULES = {
     {id:"l5",title:{fr:"Cybersécurité des systèmes embarqués",en:"Embedded Systems Cybersecurity",es:"Ciberseguridad de sistemas embarcados",pt:"Cibersegurança de sistemas embarcados"},access:"premium_plus",status:"available"},
   ]
 },
-    { id:"e4", icon:"🌊", color:C.teal, access:"premium",
+    
+      { id:"e4", icon:"🌊", color:C.teal, access:"premium",
       freeLessons:0, totalLessons:6,
       title:{fr:"MARPOL Machine",en:"MARPOL Engine Room",es:"MARPOL Sala de Máquinas",pt:"MARPOL Sala de Máquinas"},
       desc:{fr:"Livre hydrocarbures, 15ppm, déchets",en:"Oil record book, 15ppm, waste management",es:"Libro de hidrocarburos, 15ppm, residuos",pt:"Livro de hidrocarbonetos, 15ppm, resíduos"},
       xp:300, status:"available", progress:0,
       lessons:[
         {id:"l1",title:{fr:"MARPOL & Environnement",en:"MARPOL & Environment",es:"MARPOL & Medio Ambiente",pt:"MARPOL & Ambiente"},access:"premium",status:"available"},
+        {id:"l2",title:{fr:"Annexe I - Hydrocarbures",en:"Annex I - Oil Pollution",es:"Anexo I - Hidrocarburos",pt:"Anexo I - Hidrocarbonetos"},access:"premium",status:"available"},
+        {id:"l3",title:{fr:"Annexe V - Gestion des déchets",en:"Annex V - Garbage Management",es:"Anexo V - Gestión de residuos",pt:"Anexo V - Gestão de resíduos"},access:"premium",status:"available"},
+        {id:"l4",title:{fr:"Annexe VI - Pollution atmosphérique",en:"Annex VI - Air Pollution",es:"Anexo VI - Contaminación atmosférica",pt:"Anexo VI - Poluição atmosférica"},access:"premium",status:"available"},
+        {id:"l5",title:{fr:"Conformité environnementale",en:"Environmental Compliance",es:"Cumplimiento ambiental",pt:"Conformidade ambiental"},access:"premium",status:"available"},
+        {id:"l6",title:{fr:"Leadership environnemental",en:"Environmental Leadership",es:"Liderazgo ambiental",pt:"Liderança ambiental"},access:"premium",status:"available"},
       ]
     },
     { id:"e5", icon:"🍃", color:C.green, access:"premium_plus",
