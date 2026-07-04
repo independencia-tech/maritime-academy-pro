@@ -665,7 +665,7 @@ function QuizComp({questions,t,onComplete}){
 const getContent = lang => {
   const d = {
     fr:{
-      badge:"🌊 Module Machine · Leçon 6/8 · ⭐ Premium · 200 XP",
+      badge:"🌊 Module Machine · Leçon 1/6 · ⭐ Premium · 200 XP",
       title:"MARPOL, Zones ECA & Protection de l'Environnement",
       intro:"Les océans couvrent 71% de la Terre. Chaque année, des millions de tonnes de polluants y sont déversés. MARPOL est la réponse internationale : la convention qui protège les mers du monde entier.\n\nCette leçon couvre les 6 annexes MARPOL, les zones ECA, l'Oil Record Book et la gestion des déchets.",
       p1:"PARTIE 1 — MARPOL : LES 6 ANNEXES",s1t:"I·II·III·IV·V·VI — types de pollution et règles",
@@ -682,7 +682,7 @@ const getContent = lang => {
       learnedP:["MARPOL 6 annexes I à VI","ECA SOx 0,1% · 5 zones mondiales","ORB 3 ans · 15 ppm · magic pipe = prison","Plastiques INTERDITS en mer · GMP + GRB","IMO 2020 : 0,5% SOx mondial depuis 2020"],
     },
     en:{
-      badge:"🌊 Engine Module · Lesson 6/8 · ⭐ Premium · 200 XP",
+      badge:"🌊 Engine Module · Lesson 1/6 · ⭐ Premium · 200 XP",
       title:"MARPOL, ECA Zones & Environmental Protection",
       intro:"The oceans cover 71% of the Earth. Each year, millions of tonnes of pollutants are dumped. MARPOL is the international response: the convention that protects the world's seas.\n\nThis lesson covers the 6 MARPOL annexes, ECA zones, Oil Record Book and waste management.",
       p1:"PART 1 — MARPOL: 6 ANNEXES",s1t:"I·II·III·IV·V·VI — pollution types and rules",
@@ -699,7 +699,7 @@ const getContent = lang => {
       learnedP:["MARPOL 6 annexes I to VI","ECA SOx 0.1% · 5 global zones","ORB 3 years · 15 ppm · magic pipe = prison","Plastics PROHIBITED at sea · GMP + GRB","IMO 2020: 0.5% SOx global since 2020"],
     },
     es:{
-      badge:"🌊 Módulo Máquinas · Lección 6/8 · ⭐ Premium · 200 XP",
+      badge:"🌊 Módulo Máquinas · Lección 1/6 · ⭐ Premium · 200 XP",
       title:"MARPOL, Zonas ECA & Protección del Medio Ambiente",
       intro:"Los océanos cubren el 71% de la Tierra. Cada año se vierten millones de toneladas de contaminantes. MARPOL es la respuesta internacional: el convenio que protege los mares del mundo.",
       p1:"PARTE 1 — MARPOL: LOS 6 ANEXOS",s1t:"I·II·III·IV·V·VI — tipos de contaminación y reglas",
@@ -716,7 +716,7 @@ const getContent = lang => {
       learnedP:["MARPOL 6 anexos I a VI","ECA SOx 0,1% · 5 zonas mundiales","ORB 3 años · 15 ppm · magic pipe = prisión","Plásticos PROHIBIDOS · GMP + GRB","IMO 2020: 0,5% SOx mundial desde 2020"],
     },
     pt:{
-      badge:"🌊 Módulo Máquinas · Lição 6/8 · ⭐ Premium · 200 XP",
+      badge:"🌊 Módulo Máquinas · Lição 1/6 · ⭐ Premium · 200 XP",
       title:"MARPOL, Zonas ECA & Proteção do Ambiente",
       intro:"Os oceanos cobrem 71% da Terra. Cada ano são despejados milhões de toneladas de poluentes. O MARPOL é a resposta internacional: a convenção que protege os mares do mundo.",
       p1:"PARTE 1 — MARPOL: OS 6 ANEXOS",s1t:"I·II·III·IV·V·VI — tipos de poluição e regras",
