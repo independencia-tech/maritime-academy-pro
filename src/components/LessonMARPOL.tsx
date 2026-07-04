@@ -749,7 +749,7 @@ export default function LessonMARPOL({ lang="fr", onBack=()=>{}, onComplete=()=>
           <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer"}}>{t.back}</button>
           <div style={{flex:1}}>
             <div style={{fontSize:10,color:C.green,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>🌊 {t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>{lang==="fr"?"Leçon 6/8":lang==="en"?"Lesson 6/8":lang==="es"?"Lección 6/8":"Lição 6/8"}</div>
+            <div style={{fontSize:11,color:C.muted}}>{lang==="fr"?"Leçon 1/6":lang==="en"?"Lesson 1/6":lang==="es"?"Lección 1/6":"Lição 1/6"}</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>
@@ -810,7 +810,7 @@ export default function LessonMARPOL({ lang="fr", onBack=()=>{}, onComplete=()=>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
                 {lang==="fr"?"Quiz — MARPOL & ECA":lang==="en"?"Quiz — MARPOL & ECA":lang==="es"?"Quiz — MARPOL & ECA":"Quiz — MARPOL & ECA"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 6":lang==="en"?"Lesson 6":"Lección 6"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":"Lección 1"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
