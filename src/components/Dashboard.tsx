@@ -369,11 +369,20 @@ export const MODULES = {
         {id:"l6",title:{fr:"Leadership environnemental",en:"Environmental Leadership",es:"Liderazgo ambiental",pt:"Liderança ambiental"},access:"premium",status:"available"},
       ]
     },
-    { id:"e5", icon:"🍃", color:C.green, access:"premium_plus",
+  
+      { id:"e5", icon:"🍃", color:C.green, access:"premium_plus",
       freeLessons:0, totalLessons:5,
       title:{fr:"SEEMP & Efficacité Énergétique",en:"SEEMP & Energy Efficiency",es:"SEEMP & Eficiencia Energética",pt:"SEEMP & Eficiência Energética"},
       desc:{fr:"EEXI, CII, plan gestion énergie",en:"EEXI, CII, energy management plan",es:"EEXI, CII, plan de gestión energética",pt:"EEXI, CII, plano de gestão de energia"},
-      xp:250, status:"locked", progress:0 },
+      xp:250, status:"available", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"Pourquoi l'efficacité énergétique compte",en:"Why Energy Efficiency Matters",es:"Por qué importa la eficiencia energética",pt:"Por que a eficiência energética importa"},access:"premium_plus",status:"available"},
+        {id:"l2",title:{fr:"Le SEEMP",en:"The SEEMP",es:"El SEEMP",pt:"O SEEMP"},access:"premium_plus",status:"available"},
+        {id:"l3",title:{fr:"L'EEXI",en:"The EEXI",es:"El EEXI",pt:"O EEXI"},access:"premium_plus",status:"available"},
+        {id:"l4",title:{fr:"Le CII & les notations A-E",en:"The CII & A-E Ratings",es:"El CII y las calificaciones A-E",pt:"O CII e as classificações A-E"},access:"premium_plus",status:"available"},
+        {id:"l5",title:{fr:"Efficacité énergétique pratique",en:"Practical Energy Efficiency",es:"Eficiencia energética práctica",pt:"Eficiência energética prática"},access:"premium_plus",status:"available"},
+      ]
+    },
   ],
   safety:[
     { id:"s1", icon:"🛟", color:C.red, access:"free",
