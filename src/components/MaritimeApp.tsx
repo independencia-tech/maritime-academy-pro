@@ -58,6 +58,11 @@ const LessonMARPOL_L3 = lazy(() => import("./LessonMARPOL_L3"));
 const LessonMARPOL_L4 = lazy(() => import("./LessonMARPOL_L4"));
 const LessonMARPOL_L5 = lazy(() => import("./LessonMARPOL_L5"));
 const LessonMARPOL_L6 = lazy(() => import("./LessonMARPOL_L6"));
+const LessonSEEMP_L1 = lazy(() => import("./LessonSEEMP_L1"));
+const LessonSEEMP_L2 = lazy(() => import("./LessonSEEMP_L2"));
+const LessonSEEMP_L3 = lazy(() => import("./LessonSEEMP_L3"));
+const LessonSEEMP_L4 = lazy(() => import("./LessonSEEMP_L4"));
+const LessonSEEMP_L5 = lazy(() => import("./LessonSEEMP_L5"));
 const LessonWatchkeeping = lazy(() => import("./LessonWatchkeeping"));
 const LessonMaintenance = lazy(() => import("./LessonMaintenance"));
 const LessonEmergency = lazy(() => import("./LessonEmergency"));
@@ -1237,6 +1242,52 @@ function MarpolLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
   );
 }
 
+function SeempLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e5");
+  const title = mod?.title?.[lang] || mod?.title?.fr || "SEEMP & Energy Efficiency";
+  const labels:any = {
+    fr:{header:"Leçons", available:"Disponible", soon:"Bientôt", done:"Terminé ✓"},
+    en:{header:"Lessons", available:"Available", soon:"Coming soon", done:"Completed ✓"},
+    es:{header:"Lecciones", available:"Disponible", soon:"Próximamente", done:"Completado ✓"},
+    pt:{header:"Lições", available:"Disponível", soon:"Em breve", done:"Concluído ✓"},
+  };
+  const L = labels[lang] || labels.fr;
+  const lessons = mod?.lessons || [];
+  const playable = new Set(["l1","l2","l3","l4","l5"]);
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {lessons.map((l:any, idx:number)=>{
+            const isPlayable = playable.has(l.id);
+            const isDone = completedLessons.includes(`e5-${l.id}`);
+            const tag = l.access==="free" ? "FREE" : l.access==="premium_plus" ? "P+" : "PRO";
+            const tagColor = l.access==="free" ? "#1e8a4a" : l.access==="premium_plus" ? "#9b59b6" : "#c9922a";
+            return (
+              <button key={l.id} disabled={!isPlayable} onClick={()=>onPick(l.id)} style={{
+                display:"flex",alignItems:"center",gap:12,padding:"14px",
+                background:isPlayable?"rgba(13,31,60,0.85)":"rgba(13,31,60,0.4)",
+                border:`1px solid ${isPlayable?"#1e8a4a44":"rgba(255,255,255,0.08)"}`,
+                borderRadius:14,cursor:isPlayable?"pointer":"not-allowed",
+                color:"#f0f4ff",textAlign:"left",opacity:isPlayable?1:0.6,
+              }}>
+                <div style={{width:38,height:38,borderRadius:10,background:"rgba(30,138,74,0.18)",border:"1px solid #1e8a4a44",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,flexShrink:0,color:"#1e8a4a"}}>{idx+1}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{l.title?.[lang] || l.title?.fr}</div>
+                  <div style={{fontSize:10,color:"rgba(240,244,255,0.5)"}}>{isDone ? L.done : (isPlayable ? L.available : L.soon)}</div>
+                </div>
+                <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 function IMLLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d2");
@@ -1822,7 +1873,8 @@ const persistProfile = async (p: any) => {
   const SMCP_LESSONS = ["lesson_smcp_l1","lesson_smcp_l2","lesson_smcp_l3","lesson_smcp_l4","lesson_smcp_l5","lesson_smcp_l6","lesson_smcp_l7","lesson_smcp_l8"];
   const SEAMANSHIP_LESSONS = ["lesson_sea_l1","lesson_sea_l2"];
 const SHIPCAREER_LESSONS = ["lesson_shipcareer_l1","lesson_shipcareer_l2","lesson_shipcareer_l3","lesson_shipcareer_l4","lesson_shipcareer_l5"];
- const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","lesson_marpol_l4","lesson_marpol_l5","lesson_marpol_l6"];
+const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","lesson_marpol_l4","lesson_marpol_l5","lesson_marpol_l6"];
+  const SEEMP_LESSONS = ["lesson_seemp_l1","lesson_seemp_l2","lesson_seemp_l3","lesson_seemp_l4","lesson_seemp_l5"];
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   // Re-arm a history guard entry every time the active page changes, and
@@ -1874,12 +1926,18 @@ const SHIPCAREER_LESSONS = ["lesson_shipcareer_l1","lesson_shipcareer_l2","lesso
         setPage("shipcareer_lessons");
         return;
       }
-      if (MARPOL_LESSONS.includes(cur)) {
+    
+          if (MARPOL_LESSONS.includes(cur)) {
         try { window.history.pushState({ map: "marpol_lessons" }, ""); } catch {}
         setPage("marpol_lessons");
         return;
       }
-      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","shipcareer_lessons","admin","admin-login"].includes(cur)) {
+      if (SEEMP_LESSONS.includes(cur)) {
+        try { window.history.pushState({ map: "seemp_lessons" }, ""); } catch {}
+        setPage("seemp_lessons");
+        return;
+      }
+      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","seemp_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","shipcareer_lessons","admin","admin-login"].includes(cur)) {
         try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
         setPage("dashboard");
         return;
@@ -2076,7 +2134,9 @@ const SHIPCAREER_LESSONS = ["lesson_shipcareer_l1","lesson_shipcareer_l2","lesso
             onStartModule={(m:any) => {
               if (m?.id === "d1") setPage("nav_lessons");
               else if (m?.id === "e1") setPage("engine_lessons");
-              else if (m?.id === "e4") setPage("marpol_lessons");
+          
+                       else if (m?.id === "e4") setPage("marpol_lessons");
+              else if (m?.id === "e5") setPage("seemp_lessons");
               else if (m?.id === "d2") setPage("iml_lessons");
               else if (m?.id === "d3") setPage("sb_lessons");
               else if (m?.id === "d4") setPage("smcp_lessons");
@@ -2114,7 +2174,9 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onStart={(m:any) => {
             if (m?.id === "d1") setPage("nav_lessons");
             else if (m?.id === "e1") setPage("engine_lessons");
-            else if (m?.id === "e4") setPage("marpol_lessons");
+          
+              else if (m?.id === "e4") setPage("marpol_lessons");
+            else if (m?.id === "e5") setPage("seemp_lessons");
             else if (m?.id === "d2") setPage("iml_lessons");
             else if (m?.id === "d3") setPage("sb_lessons");
             else if (m?.id === "d4") setPage("smcp_lessons");
@@ -2178,6 +2240,20 @@ else if (m?.id === "e7") setPage("e7_lessons");
             else if (lid === "l4") setPage("lesson_marpol_l4");
             else if (lid === "l5") setPage("lesson_marpol_l5");
             else if (lid === "l6") setPage("lesson_marpol_l6");
+          }}
+        />
+      )}
+      {page === "seemp_lessons" && (
+        <SeempLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_seemp_l1");
+            else if (lid === "l2") setPage("lesson_seemp_l2");
+            else if (lid === "l3") setPage("lesson_seemp_l3");
+            else if (lid === "l4") setPage("lesson_seemp_l4");
+            else if (lid === "l5") setPage("lesson_seemp_l5");
           }}
         />
       )}
@@ -2862,6 +2938,43 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l6"); setPage("marpol_lessons"); }}
+        />
+      )}
+    {page === "lesson_seemp_l1" && (
+        <LessonSEEMP_L1
+          lang={lang}
+          onBack={() => setPage("seemp_lessons")}
+          onComplete={() => { markLessonCompleted("e5-l1"); setPage("seemp_lessons"); }}
+        />
+      )}
+      {page === "lesson_seemp_l2" && (
+        <LessonSEEMP_L2
+          lang={lang}
+          onBack={() => setPage("seemp_lessons")}
+          onComplete={() => { markLessonCompleted("e5-l2"); setPage("seemp_lessons"); }}
+        />
+      )}
+      {page === "lesson_seemp_l3" && (
+        <LessonSEEMP_L3
+          lang={lang}
+          onBack={() => setPage("seemp_lessons")}
+          onComplete={() => { markLessonCompleted("e5-l3"); setPage("seemp_lessons"); }}
+        />
+      )}
+      {page === "lesson_seemp_l4" && (
+        <LessonSEEMP_L4
+          lang={lang}
+          onBack={() => setPage("seemp_lessons")}
+          onComplete={() => { markLessonCompleted("e5-l4"); setPage("seemp_lessons"); }}
+        />
+      )}
+      {page === "lesson_seemp_l5" && (
+        <LessonSEEMP_L5
+          lang={lang}
+          onBack={() => setPage("seemp_lessons")}
+          completedLessons={completedLessons}
+          userXP={userXP}
+          onComplete={() => { markLessonCompleted("e5-l5"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_watchkeeping" && (
