@@ -385,18 +385,19 @@ export const MODULES = {
     },
   ],
   safety:[
-    { id:"s1", icon:"🛟", color:C.red, access:"free",
+  
+      { id:"s1", icon:"🛟", color:C.red, access:"free",
       freeLessons:1, totalLessons:6,
-      title:{fr:"COLREG — Règles de collision",en:"COLREG — Collision Regulations",es:"COLREG — Reglamento de abordajes",pt:"COLREG — Regulamento de abalroamentos"},
-      desc:{fr:"Rules 5,8,13,14,15,16,17 + schémas",en:"Rules 5,8,13,14,15,16,17 + diagrams",es:"Reglas 5,8,13,14,15,16,17 + esquemas",pt:"Regras 5,8,13,14,15,16,17 + esquemas"},
+      title:{fr:"COLREG Safety — Collision Prevention & Response",en:"COLREG Safety — Collision Prevention & Response",es:"COLREG Safety — Prevención y Respuesta ante Abordajes",pt:"COLREG Safety — Prevenção e Resposta a Abalroamentos"},
+      desc:{fr:"Facteur humain, coordination, décision sous pression",en:"Human factor, coordination, decision-making",es:"Factor humano, coordinación, toma de decisiones",pt:"Fator humano, coordenação, tomada de decisão"},
       xp:300, status:"available", progress:0,
       lessons:[
-        {id:"l1",title:{fr:"COLREG Introduction + Rules 14-17",en:"COLREG Intro + Rules 14-17",es:"COLREG Intro + Reglas 14-17",pt:"COLREG Intro + Regras 14-17"},access:"free",status:"available"},
-        {id:"l2",title:{fr:"Les 38 règles — texte officiel",en:"The 38 rules — official text",es:"Las 38 reglas — texto oficial",pt:"As 38 regras — texto oficial"},access:"premium",status:"locked"},
-        {id:"l3",title:{fr:"Feux et marques — tous les types",en:"Lights and shapes — all types",es:"Luces y marcas — todos los tipos",pt:"Luzes e marcas — todos os tipos"},access:"premium",status:"locked"},
-        {id:"l4",title:{fr:"Signaux sonores et lumineux",en:"Sound and light signals",es:"Señales sonoras y luminosas",pt:"Sinais sonoros e luminosos"},access:"premium",status:"locked"},
-        {id:"l5",title:{fr:"Exercices avancés — 50 scénarios",en:"Advanced exercises — 50 scenarios",es:"Ejercicios avanzados — 50 escenarios",pt:"Exercícios avançados — 50 cenários"},access:"premium",status:"locked"},
-        {id:"l6",title:{fr:"Cas réels — Costa Concordia, Erika",en:"Real cases — Costa Concordia, Erika",es:"Casos reales — Costa Concordia, Erika",pt:"Casos reais — Costa Concordia, Erika"},access:"premium",status:"locked"},
+        {id:"l1",title:{fr:"Facteurs Humains : Pourquoi les Collisions Arrivent Vraiment",en:"Human Factors: Why Collisions Really Happen",es:"Factores Humanos: Por Qué Ocurren Realmente las Colisiones",pt:"Fatores Humanos: Por Que as Colisões Realmente Acontecem"},access:"free",status:"available"},
+        {id:"l2",title:{fr:"Coordination d'Équipe Passerelle Pendant un Risque de Collision",en:"Bridge Team Coordination During Collision Risk",es:"Coordinación del Equipo de Puente Durante un Riesgo de Colisión",pt:"Coordenação da Equipa de Ponte Durante um Risco de Colisão"},access:"premium",status:"locked"},
+        {id:"l3",title:{fr:"Emergency Actions Before Impact",en:"Emergency Actions Before Impact",es:"Emergency Actions Before Impact",pt:"Emergency Actions Before Impact"},access:"premium",status:"locked"},
+        {id:"l4",title:{fr:"The Critical First Minutes After a Collision",en:"The Critical First Minutes After a Collision",es:"The Critical First Minutes After a Collision",pt:"The Critical First Minutes After a Collision"},access:"premium",status:"locked"},
+        {id:"l5",title:{fr:"Decision-Making Under Pressure",en:"Decision-Making Under Pressure",es:"Decision-Making Under Pressure",pt:"Decision-Making Under Pressure"},access:"premium",status:"locked"},
+        {id:"l6",title:{fr:"Lessons Learned from Maritime Collisions",en:"Lessons Learned from Maritime Collisions",es:"Lessons Learned from Maritime Collisions",pt:"Lessons Learned from Maritime Collisions"},access:"premium",status:"locked"},
       ]
     },
     { id:"s2", icon:"📡", color:C.blue2, access:"premium",
