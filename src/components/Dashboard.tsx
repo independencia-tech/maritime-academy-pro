@@ -431,11 +431,22 @@ export const MODULES = {
     {id:"l8",title:{fr:"MEDEVAC — Preparing the Casualty & Handover",en:"MEDEVAC — Preparing the Casualty & Handover",es:"MEDEVAC — Preparing the Casualty & Handover",pt:"MEDEVAC — Preparing the Casualty & Handover"},access:"premium",status:"locked"},
   ]
 },
-    { id:"s4", icon:"🔥", color:C.orange, access:"premium",
-      freeLessons:0, totalLessons:7,
-      title:{fr:"Lutte contre l'incendie",en:"Firefighting",es:"Lucha contra incendios",pt:"Combate a incêndios"},
-      desc:{fr:"BST, extincteurs, équipes urgence",en:"BST, extinguishers, emergency teams",es:"BST, extintores, equipos de emergencia",pt:"BST, extintores, equipes de emergência"},
-      xp:350, status:"locked", progress:0 },
+    
+      { id:"s4", icon:"🔥", color:"#e67e22", access:"premium",
+  freeLessons:0, totalLessons:7,
+  title:{fr:"Firefighting",en:"Firefighting",es:"Firefighting",pt:"Firefighting"},
+  desc:{fr:"BST, extincteurs, équipes d'urgence",en:"BST, extinguishers, emergency teams",es:"BST, extintores, equipos de emergencia",pt:"BST, extintores, equipas de emergência"},
+  xp:350, status:"available", progress:0,
+  lessons:[
+    {id:"l1",title:{fr:"Fire Behaviour & Early Fire Recognition",en:"Fire Behaviour & Early Fire Recognition",es:"Fire Behaviour & Early Fire Recognition",pt:"Fire Behaviour & Early Fire Recognition"},access:"premium",status:"available"},
+    {id:"l2",title:{fr:"Fire Classification & Extinguishing Strategy",en:"Fire Classification & Extinguishing Strategy",es:"Fire Classification & Extinguishing Strategy",pt:"Fire Classification & Extinguishing Strategy"},access:"premium",status:"locked"},
+    {id:"l3",title:{fr:"Portable Firefighting",en:"Portable Firefighting",es:"Portable Firefighting",pt:"Portable Firefighting"},access:"premium",status:"locked"},
+    {id:"l4",title:{fr:"Fixed Fire-Fighting Systems",en:"Fixed Fire-Fighting Systems",es:"Fixed Fire-Fighting Systems",pt:"Fixed Fire-Fighting Systems"},access:"premium",status:"locked"},
+    {id:"l5",title:{fr:"Fire Detection & Initial Response",en:"Fire Detection & Initial Response",es:"Fire Detection & Initial Response",pt:"Fire Detection & Initial Response"},access:"premium",status:"locked"},
+    {id:"l6",title:{fr:"Breathing Apparatus & PPE",en:"Breathing Apparatus & PPE",es:"Breathing Apparatus & PPE",pt:"Breathing Apparatus & PPE"},access:"premium",status:"locked"},
+    {id:"l7",title:{fr:"Fire Command, Teams & Damage Control",en:"Fire Command, Teams & Damage Control",es:"Fire Command, Teams & Damage Control",pt:"Fire Command, Teams & Damage Control"},access:"premium",status:"locked"},
+  ]
+},
     { id:"s5", icon:"👥", color:"#9b59b6", access:"premium",
       freeLessons:0, totalLessons:4,
       title:{fr:"Lifeboats, Liferafts & HRU",en:"Lifeboats, Liferafts & HRU",es:"Botes, Balsas & HRU",pt:"Botes, Balsas & HRU"},
