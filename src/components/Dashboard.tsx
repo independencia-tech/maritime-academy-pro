@@ -400,11 +400,20 @@ export const MODULES = {
         {id:"l6",title:{fr:"Lessons Learned from Maritime Collisions",en:"Lessons Learned from Maritime Collisions",es:"Lessons Learned from Maritime Collisions",pt:"Lessons Learned from Maritime Collisions"},access:"premium",status:"locked"},
       ]
     },
-    { id:"s2", icon:"📡", color:C.blue2, access:"premium",
-      freeLessons:0, totalLessons:5,
+     
+     { id:"s2", icon:"📡", color:C.blue2, access:"premium",
+      freeLessons:1, totalLessons:5,
       title:{fr:"EPIRB, SART & GMDSS",en:"EPIRB, SART & GMDSS",es:"EPIRB, SART & GMDSS",pt:"EPIRB, SART & GMDSS"},
-      desc:{fr:"Float-free, COSPAS-SARSAT, AIS-SART",en:"Float-free, COSPAS-SARSAT, AIS-SART",es:"Float-free, COSPAS-SARSAT, AIS-SART",pt:"Float-free, COSPAS-SARSAT, AIS-SART"},
-      xp:250, status:"locked", progress:0 },
+      desc:{fr:"Recognize, Choose, Prepare, Activate, Learn",en:"Recognize, Choose, Prepare, Activate, Learn",es:"Recognize, Choose, Prepare, Activate, Learn",pt:"Recognize, Choose, Prepare, Activate, Learn"},
+      xp:250, status:"available", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"Every Maritime Emergency Begins with One Decision",en:"Every Maritime Emergency Begins with One Decision",es:"Every Maritime Emergency Begins with One Decision",pt:"Every Maritime Emergency Begins with One Decision"},access:"free",status:"available"},
+        {id:"l2",title:{fr:"Selecting the Right Distress Equipment",en:"Selecting the Right Distress Equipment",es:"Selecting the Right Distress Equipment",pt:"Selecting the Right Distress Equipment"},access:"premium",status:"locked"},
+        {id:"l3",title:{fr:"Activation Errors That Cost Lives",en:"Activation Errors That Cost Lives",es:"Activation Errors That Cost Lives",pt:"Activation Errors That Cost Lives"},access:"premium",status:"locked"},
+        {id:"l4",title:{fr:"Activate — Executing the Right Actions Under Pressure",en:"Activate — Executing the Right Actions Under Pressure",es:"Activate — Executing the Right Actions Under Pressure",pt:"Activate — Executing the Right Actions Under Pressure"},access:"premium",status:"locked"},
+        {id:"l5",title:{fr:"Real Search & Rescue Operations — Lessons Learned",en:"Real Search & Rescue Operations — Lessons Learned",es:"Real Search & Rescue Operations — Lessons Learned",pt:"Real Search & Rescue Operations — Lessons Learned"},access:"premium",status:"locked"},
+      ]
+    },
   
       { id:"s3", icon:"🩺", color:"#e74c3c", access:"premium",
   freeLessons:0, totalLessons:8,
