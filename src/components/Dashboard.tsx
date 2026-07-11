@@ -410,7 +410,7 @@ export const MODULES = {
   freeLessons:0, totalLessons:8,
   title:{fr:"Secourisme STCW",en:"STCW First Aid",es:"Primeros Auxilios STCW",pt:"Primeiros Socorros STCW"},
   desc:{fr:"EFA, MFA, MCC — RCP, MEDEVAC",en:"EFA, MFA, MCC — CPR, MEDEVAC",es:"EFA, MFA, MCC — RCP, MEDEVAC",pt:"EFA, MFA, MCC — RCP, MEDEVAC"},
-  xp:400, status:"locked", progress:0,
+  xp:400, status:"available", progress:0,
   lessons:[
     {id:"l1",title:{fr:"Scene Safety & Primary Survey (DRABC)",en:"Scene Safety & Primary Survey (DRABC)",es:"Scene Safety & Primary Survey (DRABC)",pt:"Scene Safety & Primary Survey (DRABC)"},access:"premium",status:"available"},
     {id:"l2",title:{fr:"CPR & AED — Cardiac Arrest Response",en:"CPR & AED — Cardiac Arrest Response",es:"CPR & AED — Cardiac Arrest Response",pt:"CPR & AED — Cardiac Arrest Response"},access:"premium",status:"locked"},
