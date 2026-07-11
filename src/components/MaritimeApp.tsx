@@ -107,6 +107,14 @@ const LessonSafetyS1_L3 = lazy(() => import("./LessonSafetyS1_L3"));
 const LessonSafetyS1_L4 = lazy(() => import("./LessonSafetyS1_L4"));
 const LessonSafetyS1_L5 = lazy(() => import("./LessonSafetyS1_L5"));
 const LessonSafetyS1_L6 = lazy(() => import("./LessonSafetyS1_L6"));
+const LessonSafetyS3_L1 = lazy(() => import("./LessonSafetyS3_L1"));
+const LessonSafetyS3_L2 = lazy(() => import("./LessonSafetyS3_L2"));
+const LessonSafetyS3_L3 = lazy(() => import("./LessonSafetyS3_L3"));
+const LessonSafetyS3_L4 = lazy(() => import("./LessonSafetyS3_L4"));
+const LessonSafetyS3_L5 = lazy(() => import("./LessonSafetyS3_L5"));
+const LessonSafetyS3_L6 = lazy(() => import("./LessonSafetyS3_L6"));
+const LessonSafetyS3_L7 = lazy(() => import("./LessonSafetyS3_L7"));
+const LessonSafetyS3_L8 = lazy(() => import("./LessonSafetyS3_L8"));
 const LexiqueMaritime = lazy(() => import("./LexiqueMaritime"));
 
 const LS_KEY = "map_registrations";
@@ -2188,7 +2196,8 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
               else if (m?.id === "d6") setPage("seamanship_lessons");
             else if (m?.id === "d5") setPage("shipcareer_lessons");
               else if (m?.id === "s1") setPage("s1_lessons");
-            else if (m?.id === "t0") setPage("lexique");
+          else if (m?.id === "s3") setPage("s3_lessons");
+              else if (m?.id === "t0") setPage("lexique");
         else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
 else if (m?.id === "e6") setPage("e6_lessons");
@@ -2389,6 +2398,79 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onComplete={() => { markLessonCompleted("s1-l6"); setPage("s1_lessons"); }}
         />
       )} 
+    {page === "s3_lessons" && (
+  <S3LessonsPage
+    lang={lang}
+    onBack={() => setPage("dashboard")}
+    completedLessons={completedLessons}
+    onPick={(lid:string) => {
+      if (lid === "l1") setPage("lesson_safety_s3_l1");
+      else if (lid === "l2") setPage("lesson_safety_s3_l2");
+      else if (lid === "l3") setPage("lesson_safety_s3_l3");
+      else if (lid === "l4") setPage("lesson_safety_s3_l4");
+      else if (lid === "l5") setPage("lesson_safety_s3_l5");
+      else if (lid === "l6") setPage("lesson_safety_s3_l6");
+      else if (lid === "l7") setPage("lesson_safety_s3_l7");
+      else if (lid === "l8") setPage("lesson_safety_s3_l8");
+    }}
+  />
+)}
+{page === "lesson_safety_s3_l1" && (
+  <LessonSafetyS3_L1
+    lang={lang}
+    onBack={() => setPage("s3_lessons")}
+    onComplete={() => { markLessonCompleted("s3-l1"); setPage("s3_lessons"); }}
+  />
+)}
+{page === "lesson_safety_s3_l2" && (
+  <LessonSafetyS3_L2
+    lang={lang}
+    onBack={() => setPage("s3_lessons")}
+    onComplete={() => { markLessonCompleted("s3-l2"); setPage("s3_lessons"); }}
+  />
+)}
+{page === "lesson_safety_s3_l3" && (
+  <LessonSafetyS3_L3
+    lang={lang}
+    onBack={() => setPage("s3_lessons")}
+    onComplete={() => { markLessonCompleted("s3-l3"); setPage("s3_lessons"); }}
+  />
+)}
+{page === "lesson_safety_s3_l4" && (
+  <LessonSafetyS3_L4
+    lang={lang}
+    onBack={() => setPage("s3_lessons")}
+    onComplete={() => { markLessonCompleted("s3-l4"); setPage("s3_lessons"); }}
+  />
+)}
+{page === "lesson_safety_s3_l5" && (
+  <LessonSafetyS3_L5
+    lang={lang}
+    onBack={() => setPage("s3_lessons")}
+    onComplete={() => { markLessonCompleted("s3-l5"); setPage("s3_lessons"); }}
+  />
+)}
+{page === "lesson_safety_s3_l6" && (
+  <LessonSafetyS3_L6
+    lang={lang}
+    onBack={() => setPage("s3_lessons")}
+    onComplete={() => { markLessonCompleted("s3-l6"); setPage("s3_lessons"); }}
+  />
+)}
+{page === "lesson_safety_s3_l7" && (
+  <LessonSafetyS3_L7
+    lang={lang}
+    onBack={() => setPage("s3_lessons")}
+    onComplete={() => { markLessonCompleted("s3-l7"); setPage("s3_lessons"); }}
+  />
+)}
+{page === "lesson_safety_s3_l8" && (
+  <LessonSafetyS3_L8
+    lang={lang}
+    onBack={() => setPage("s3_lessons")}
+    onComplete={() => { markLessonCompleted("s3-l8"); setPage("dashboard"); }}
+  />
+)}
       {page === "e2_lessons" && (
 
   <E2LessonsPage
