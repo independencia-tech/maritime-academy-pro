@@ -127,6 +127,10 @@ const LessonSafetyS4_L4 = lazy(() => import("./LessonSafetyS4_L4"));
 const LessonSafetyS4_L5 = lazy(() => import("./LessonSafetyS4_L5"));
 const LessonSafetyS4_L6 = lazy(() => import("./LessonSafetyS4_L6"));
 const LessonSafetyS4_L7 = lazy(() => import("./LessonSafetyS4_L7"));
+const LessonSafetyS5_L1 = lazy(() => import("./LessonSafetyS5_L1"));
+const LessonSafetyS5_L2 = lazy(() => import("./LessonSafetyS5_L2"));
+const LessonSafetyS5_L3 = lazy(() => import("./LessonSafetyS5_L3"));
+const LessonSafetyS5_L4 = lazy(() => import("./LessonSafetyS5_L4"));
 const LexiqueMaritime = lazy(() => import("./LexiqueMaritime"));
 
 const LS_KEY = "map_registrations";
@@ -1869,7 +1873,47 @@ function S4LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
       </div>
     </div>
   );
-                       }
+}
+function S5LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s5");
+  const title = mod?.title?.[lang] || mod?.title?.fr || "Lifeboats, Liferafts & HRU";
+  const labels:any = {
+    fr:{header:"Leçons",available:"Disponible",soon:"Bientôt",done:"Terminé ✓"},
+    en:{header:"Lessons",available:"Available",soon:"Coming soon",done:"Completed ✓"},
+    es:{header:"Lecciones",available:"Disponible",soon:"Próximamente",done:"Completado ✓"},
+    pt:{header:"Lições",available:"Disponível",soon:"Em breve",done:"Concluído ✓"},
+  };
+  const L = labels[lang] || labels.fr;
+  const lessons = mod?.lessons || [];
+  const playable = new Set(["l1","l2","l3","l4"]);
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {lessons.map((l:any,idx:number)=>{
+            const isPlayable=playable.has(l.id);
+            const isDone=completedLessons.includes(`s5-${l.id}`);
+            const tag="PRO";
+            const tagColor="#c9922a";
+            return(
+              <button key={l.id} disabled={!isPlayable} onClick={()=>onPick(l.id)} style={{display:"flex",alignItems:"center",gap:12,padding:"14px",background:isPlayable?"rgba(13,31,60,0.85)":"rgba(13,31,60,0.4)",border:`1px solid ${isPlayable?"#4da6ff44":"rgba(255,255,255,0.08)"}`,borderRadius:14,cursor:isPlayable?"pointer":"not-allowed",color:"#f0f4ff",textAlign:"left",opacity:isPlayable?1:0.6}}>
+                <div style={{width:38,height:38,borderRadius:10,background:"rgba(77,166,255,0.18)",border:"1px solid #4da6ff44",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,flexShrink:0,color:"#4da6ff"}}>{idx+1}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{l.title?.[lang]||l.title?.fr}</div>
+                  <div style={{fontSize:10,color:"rgba(240,244,255,0.5)"}}>{isDone?L.done:(isPlayable?L.available:L.soon)}</div>
+                </div>
+                <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
   return (
@@ -2331,6 +2375,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
          else if (m?.id === "s2") setPage("s2_lessons");
               else if (m?.id === "s3") setPage("s3_lessons");
               else if (m?.id === "s4") setPage("s4_lessons");
+            else if (m?.id === "s5") setPage("s5_lessons");
               else if (m?.id === "t0") setPage("lexique");
         else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
@@ -2375,6 +2420,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
         else if (m?.id === "s2") setPage("s2_lessons");
           else if (m?.id === "s3") setPage("s3_lessons");
           else if (m?.id === "s4") setPage("s4_lessons");
+         else if (m?.id === "s5") setPage("s5_lessons");
           else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
 else if (m?.id === "e6") setPage("e6_lessons");
@@ -2700,6 +2746,35 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s4_l7" && (
   <LessonSafetyS4_L7 lang={lang} onBack={() => setPage("s4_lessons")}
     onComplete={() => { markLessonCompleted("s4-l7"); setPage("dashboard"); }}/>
+)}
+{page === "s5_lessons" && (
+  <S5LessonsPage
+    lang={lang}
+    onBack={() => setPage("dashboard")}
+    completedLessons={completedLessons}
+    onPick={(lid:string) => {
+      if (lid === "l1") setPage("lesson_safety_s5_l1");
+      else if (lid === "l2") setPage("lesson_safety_s5_l2");
+      else if (lid === "l3") setPage("lesson_safety_s5_l3");
+      else if (lid === "l4") setPage("lesson_safety_s5_l4");
+    }}
+  />
+)}
+{page === "lesson_safety_s5_l1" && (
+  <LessonSafetyS5_L1 lang={lang} onBack={() => setPage("s5_lessons")}
+    onComplete={() => { markLessonCompleted("s5-l1"); setPage("s5_lessons"); }}/>
+)}
+{page === "lesson_safety_s5_l2" && (
+  <LessonSafetyS5_L2 lang={lang} onBack={() => setPage("s5_lessons")}
+    onComplete={() => { markLessonCompleted("s5-l2"); setPage("s5_lessons"); }}/>
+)}
+{page === "lesson_safety_s5_l3" && (
+  <LessonSafetyS5_L3 lang={lang} onBack={() => setPage("s5_lessons")}
+    onComplete={() => { markLessonCompleted("s5-l3"); setPage("s5_lessons"); }}/>
+)}
+{page === "lesson_safety_s5_l4" && (
+  <LessonSafetyS5_L4 lang={lang} onBack={() => setPage("s5_lessons")}
+    onComplete={() => { markLessonCompleted("s5-l4"); setPage("dashboard"); }}/>
 )}
       {page === "e2_lessons" && (
 
