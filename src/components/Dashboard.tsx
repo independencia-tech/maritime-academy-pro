@@ -447,12 +447,19 @@ export const MODULES = {
     {id:"l7",title:{fr:"Fire Command, Teams & Damage Control",en:"Fire Command, Teams & Damage Control",es:"Fire Command, Teams & Damage Control",pt:"Fire Command, Teams & Damage Control"},access:"premium",status:"locked"},
   ]
 },
-    { id:"s5", icon:"👥", color:"#9b59b6", access:"premium",
-      freeLessons:0, totalLessons:4,
-      title:{fr:"Lifeboats, Liferafts & HRU",en:"Lifeboats, Liferafts & HRU",es:"Botes, Balsas & HRU",pt:"Botes, Balsas & HRU"},
-      desc:{fr:"SOLAS, HRU, abandon navire, muster",en:"SOLAS, HRU, abandon ship, muster",es:"SOLAS, HRU, abandono, rol de abandono",pt:"SOLAS, HRU, abandono, lista de chamada"},
-      xp:200, status:"locked", progress:0 },
-  ],
+    
+     { id:"s5", icon:"🛟", color:"#4da6ff", access:"premium",
+  freeLessons:0, totalLessons:4,
+  title:{fr:"Lifeboats, Liferafts & HRU",en:"Lifeboats, Liferafts & HRU",es:"Lifeboats, Liferafts & HRU",pt:"Lifeboats, Liferafts & HRU"},
+  desc:{fr:"SOLAS, HRU, abandon ship, muster",en:"SOLAS, HRU, abandon ship, muster",es:"SOLAS, HRU, abandon ship, muster",pt:"SOLAS, HRU, abandon ship, muster"},
+  xp:200, status:"available", progress:0,
+  lessons:[
+    {id:"l1",title:{fr:"Lifeboats: Launching & Handling",en:"Lifeboats: Launching & Handling",es:"Lifeboats: Launching & Handling",pt:"Lifeboats: Launching & Handling"},access:"premium",status:"available"},
+    {id:"l2",title:{fr:"Liferafts: Deployment & Boarding",en:"Liferafts: Deployment & Boarding",es:"Liferafts: Deployment & Boarding",pt:"Liferafts: Deployment & Boarding"},access:"premium",status:"available"},
+    {id:"l3",title:{fr:"HRU & Survival Equipment",en:"HRU & Survival Equipment",es:"HRU & Survival Equipment",pt:"HRU & Survival Equipment"},access:"premium",status:"available"},
+    {id:"l4",title:{fr:"Abandon Ship & Survival Leadership",en:"Abandon Ship & Survival Leadership",es:"Abandon Ship & Survival Leadership",pt:"Abandon Ship & Survival Leadership"},access:"premium",status:"available"},
+  ]
+},
   tools:[
    { id:"t0", icon:"📖", color:C.blue2, access:"free",
   freeLessons:0, totalLessons:0,
