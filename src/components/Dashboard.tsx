@@ -460,6 +460,7 @@ export const MODULES = {
     {id:"l4",title:{fr:"Abandon Ship & Survival Leadership",en:"Abandon Ship & Survival Leadership",es:"Abandon Ship & Survival Leadership",pt:"Abandon Ship & Survival Leadership"},access:"premium",status:"available"},
   ]
 },
+    ],
   tools:[
    { id:"t0", icon:"📖", color:C.blue2, access:"free",
   freeLessons:0, totalLessons:0,
