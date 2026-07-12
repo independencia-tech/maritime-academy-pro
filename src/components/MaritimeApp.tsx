@@ -120,6 +120,13 @@ const LessonSafetyS3_L5 = lazy(() => import("./LessonSafetyS3_L5"));
 const LessonSafetyS3_L6 = lazy(() => import("./LessonSafetyS3_L6"));
 const LessonSafetyS3_L7 = lazy(() => import("./LessonSafetyS3_L7"));
 const LessonSafetyS3_L8 = lazy(() => import("./LessonSafetyS3_L8"));
+const LessonSafetyS4_L1 = lazy(() => import("./LessonSafetyS4_L1"));
+const LessonSafetyS4_L2 = lazy(() => import("./LessonSafetyS4_L2"));
+const LessonSafetyS4_L3 = lazy(() => import("./LessonSafetyS4_L3"));
+const LessonSafetyS4_L4 = lazy(() => import("./LessonSafetyS4_L4"));
+const LessonSafetyS4_L5 = lazy(() => import("./LessonSafetyS4_L5"));
+const LessonSafetyS4_L6 = lazy(() => import("./LessonSafetyS4_L6"));
+const LessonSafetyS4_L7 = lazy(() => import("./LessonSafetyS4_L7"));
 const LexiqueMaritime = lazy(() => import("./LexiqueMaritime"));
 
 const LS_KEY = "map_registrations";
@@ -2283,6 +2290,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
               else if (m?.id === "s1") setPage("s1_lessons");
          else if (m?.id === "s2") setPage("s2_lessons");
               else if (m?.id === "s3") setPage("s3_lessons");
+              else if (m?.id === "s4") setPage("s4_lessons");
               else if (m?.id === "t0") setPage("lexique");
         else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
@@ -2326,6 +2334,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           else if (m?.id === "s1") setPage("s1_lessons");
         else if (m?.id === "s2") setPage("s2_lessons");
           else if (m?.id === "s3") setPage("s3_lessons");
+          else if (m?.id === "s4") setPage("s4_lessons");
           else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
 else if (m?.id === "e6") setPage("e6_lessons");
@@ -2607,6 +2616,50 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l8"); setPage("dashboard"); }}
   />
+)}
+    {page === "s4_lessons" && (
+  <S4LessonsPage
+    lang={lang}
+    onBack={() => setPage("dashboard")}
+    completedLessons={completedLessons}
+    onPick={(lid:string) => {
+      if (lid === "l1") setPage("lesson_safety_s4_l1");
+      else if (lid === "l2") setPage("lesson_safety_s4_l2");
+      else if (lid === "l3") setPage("lesson_safety_s4_l3");
+      else if (lid === "l4") setPage("lesson_safety_s4_l4");
+      else if (lid === "l5") setPage("lesson_safety_s4_l5");
+      else if (lid === "l6") setPage("lesson_safety_s4_l6");
+      else if (lid === "l7") setPage("lesson_safety_s4_l7");
+    }}
+  />
+)}
+{page === "lesson_safety_s4_l1" && (
+  <LessonSafetyS4_L1 lang={lang} onBack={() => setPage("s4_lessons")}
+    onComplete={() => { markLessonCompleted("s4-l1"); setPage("s4_lessons"); }}/>
+)}
+{page === "lesson_safety_s4_l2" && (
+  <LessonSafetyS4_L2 lang={lang} onBack={() => setPage("s4_lessons")}
+    onComplete={() => { markLessonCompleted("s4-l2"); setPage("s4_lessons"); }}/>
+)}
+{page === "lesson_safety_s4_l3" && (
+  <LessonSafetyS4_L3 lang={lang} onBack={() => setPage("s4_lessons")}
+    onComplete={() => { markLessonCompleted("s4-l3"); setPage("s4_lessons"); }}/>
+)}
+{page === "lesson_safety_s4_l4" && (
+  <LessonSafetyS4_L4 lang={lang} onBack={() => setPage("s4_lessons")}
+    onComplete={() => { markLessonCompleted("s4-l4"); setPage("s4_lessons"); }}/>
+)}
+{page === "lesson_safety_s4_l5" && (
+  <LessonSafetyS4_L5 lang={lang} onBack={() => setPage("s4_lessons")}
+    onComplete={() => { markLessonCompleted("s4-l5"); setPage("s4_lessons"); }}/>
+)}
+{page === "lesson_safety_s4_l6" && (
+  <LessonSafetyS4_L6 lang={lang} onBack={() => setPage("s4_lessons")}
+    onComplete={() => { markLessonCompleted("s4-l6"); setPage("s4_lessons"); }}/>
+)}
+{page === "lesson_safety_s4_l7" && (
+  <LessonSafetyS4_L7 lang={lang} onBack={() => setPage("s4_lessons")}
+    onComplete={() => { markLessonCompleted("s4-l7"); setPage("dashboard"); }}/>
 )}
       {page === "e2_lessons" && (
 
