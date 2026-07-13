@@ -460,7 +460,22 @@ export const MODULES = {
     {id:"l4",title:{fr:"Abandon Ship & Survival Leadership",en:"Abandon Ship & Survival Leadership",es:"Abandon Ship & Survival Leadership",pt:"Abandon Ship & Survival Leadership"},access:"premium",status:"available"},
   ]
 },
-    ],
+    
+ { id:"s6", icon:"🛡️", color:"#e67e22", access:"premium",
+  freeLessons:0, totalLessons:6,
+  title:{fr:"Ship Safety Operations & Emergency Readiness",en:"Ship Safety Operations & Emergency Readiness",es:"Ship Safety Operations & Emergency Readiness",pt:"Ship Safety Operations & Emergency Readiness"},
+  desc:{fr:"Vigilance, urgences, EPI, communication, prévention, culture",en:"Vigilance, emergencies, PPE, communication, prevention, culture",es:"Vigilancia, emergencias, EPP, comunicación, prevención, cultura",pt:"Vigilância, emergências, EPI, comunicação, prevenção, cultura"},
+  xp:300, status:"available", progress:0,
+  lessons:[
+    {id:"l1",title:{fr:"Safety Patrol & Hazard Recognition",en:"Safety Patrol & Hazard Recognition",es:"Safety Patrol & Hazard Recognition",pt:"Safety Patrol & Hazard Recognition"},access:"premium",status:"available"},
+    {id:"l2",title:{fr:"Common Ship Emergencies & Immediate Actions",en:"Common Ship Emergencies & Immediate Actions",es:"Common Ship Emergencies & Immediate Actions",pt:"Common Ship Emergencies & Immediate Actions"},access:"premium",status:"available"},
+    {id:"l3",title:{fr:"PPE, Safe Behaviour & Human Factors",en:"PPE, Safe Behaviour & Human Factors",es:"PPE, Safe Behaviour & Human Factors",pt:"PPE, Safe Behaviour & Human Factors"},access:"premium",status:"available"},
+    {id:"l4",title:{fr:"Emergency Reporting & Initial Response",en:"Emergency Reporting & Initial Response",es:"Emergency Reporting & Initial Response",pt:"Emergency Reporting & Initial Response"},access:"premium",status:"available"},
+    {id:"l5",title:{fr:"Permit to Work & Risk Assessment",en:"Permit to Work & Risk Assessment",es:"Permit to Work & Risk Assessment",pt:"Permit to Work & Risk Assessment"},access:"premium",status:"available"},
+    {id:"l6",title:{fr:"Safety Culture & Professional Responsibility",en:"Safety Culture & Professional Responsibility",es:"Safety Culture & Professional Responsibility",pt:"Safety Culture & Professional Responsibility"},access:"premium",status:"available"},
+  ]
+},
+],
   tools:[
    { id:"t0", icon:"📖", color:C.blue2, access:"free",
   freeLessons:0, totalLessons:0,
