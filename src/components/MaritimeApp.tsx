@@ -131,6 +131,12 @@ const LessonSafetyS5_L1 = lazy(() => import("./LessonSafetyS5_L1"));
 const LessonSafetyS5_L2 = lazy(() => import("./LessonSafetyS5_L2"));
 const LessonSafetyS5_L3 = lazy(() => import("./LessonSafetyS5_L3"));
 const LessonSafetyS5_L4 = lazy(() => import("./LessonSafetyS5_L4"));
+const LessonSafetyS6_L1 = lazy(() => import("./LessonSafetyS6_L1"));
+const LessonSafetyS6_L2 = lazy(() => import("./LessonSafetyS6_L2"));
+const LessonSafetyS6_L3 = lazy(() => import("./LessonSafetyS6_L3"));
+const LessonSafetyS6_L4 = lazy(() => import("./LessonSafetyS6_L4"));
+const LessonSafetyS6_L5 = lazy(() => import("./LessonSafetyS6_L5"));
+const LessonSafetyS6_L6 = lazy(() => import("./LessonSafetyS6_L6"));
 const LexiqueMaritime = lazy(() => import("./LexiqueMaritime"));
 
 const LS_KEY = "map_registrations";
@@ -2376,7 +2382,8 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
               else if (m?.id === "s3") setPage("s3_lessons");
               else if (m?.id === "s4") setPage("s4_lessons");
             else if (m?.id === "s5") setPage("s5_lessons");
-              else if (m?.id === "t0") setPage("lexique");
+             else if (m?.id === "s6") setPage("s6_lessons");
+            else if (m?.id === "t0") setPage("lexique");
         else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
 else if (m?.id === "e6") setPage("e6_lessons");
@@ -2421,7 +2428,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           else if (m?.id === "s3") setPage("s3_lessons");
           else if (m?.id === "s4") setPage("s4_lessons");
          else if (m?.id === "s5") setPage("s5_lessons");
-          else if (m?.id === "e2") setPage("e2_lessons");
+         else if (m?.id === "s6") setPage("s6_lessons");
+         else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
 else if (m?.id === "e6") setPage("e6_lessons");
 else if (m?.id === "e7") setPage("e7_lessons");
@@ -2776,6 +2784,45 @@ else if (m?.id === "e7") setPage("e7_lessons");
   <LessonSafetyS5_L4 lang={lang} onBack={() => setPage("s5_lessons")}
     onComplete={() => { markLessonCompleted("s5-l4"); setPage("dashboard"); }}/>
 )}
+    {page === "s6_lessons" && (
+  <S6LessonsPage
+    lang={lang}
+    onBack={() => setPage("dashboard")}
+    completedLessons={completedLessons}
+    onPick={(lid:string) => {
+      if (lid === "l1") setPage("lesson_safety_s6_l1");
+      else if (lid === "l2") setPage("lesson_safety_s6_l2");
+      else if (lid === "l3") setPage("lesson_safety_s6_l3");
+      else if (lid === "l4") setPage("lesson_safety_s6_l4");
+      else if (lid === "l5") setPage("lesson_safety_s6_l5");
+      else if (lid === "l6") setPage("lesson_safety_s6_l6");
+    }}
+  />
+)}
+{page === "lesson_safety_s6_l1" && (
+  <LessonSafetyS6_L1 lang={lang} onBack={() => setPage("s6_lessons")}
+    onComplete={() => { markLessonCompleted("s6-l1"); setPage("s6_lessons"); }}/>
+)}
+{page === "lesson_safety_s6_l2" && (
+  <LessonSafetyS6_L2 lang={lang} onBack={() => setPage("s6_lessons")}
+    onComplete={() => { markLessonCompleted("s6-l2"); setPage("s6_lessons"); }}/>
+)}
+{page === "lesson_safety_s6_l3" && (
+  <LessonSafetyS6_L3 lang={lang} onBack={() => setPage("s6_lessons")}
+    onComplete={() => { markLessonCompleted("s6-l3"); setPage("s6_lessons"); }}/>
+)}
+{page === "lesson_safety_s6_l4" && (
+  <LessonSafetyS6_L4 lang={lang} onBack={() => setPage("s6_lessons")}
+    onComplete={() => { markLessonCompleted("s6-l4"); setPage("s6_lessons"); }}/>
+)}
+{page === "lesson_safety_s6_l5" && (
+  <LessonSafetyS6_L5 lang={lang} onBack={() => setPage("s6_lessons")}
+    onComplete={() => { markLessonCompleted("s6-l5"); setPage("s6_lessons"); }}/>
+)}
+{page === "lesson_safety_s6_l6" && (
+  <LessonSafetyS6_L6 lang={lang} onBack={() => setPage("s6_lessons")}
+    onComplete={() => { markLessonCompleted("s6-l6"); setPage("dashboard"); }}/>
+)} 
       {page === "e2_lessons" && (
 
   <E2LessonsPage
