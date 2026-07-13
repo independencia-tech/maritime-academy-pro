@@ -1920,6 +1920,47 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
     </div>
   );
 }
+  function S6LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s6");
+  const title = mod?.title?.[lang] || mod?.title?.fr || "Ship Safety Operations & Emergency Readiness";
+  const labels:any = {
+    fr:{header:"Leçons",available:"Disponible",soon:"Bientôt",done:"Terminé ✓"},
+    en:{header:"Lessons",available:"Available",soon:"Coming soon",done:"Completed ✓"},
+    es:{header:"Lecciones",available:"Disponible",soon:"Próximamente",done:"Completado ✓"},
+    pt:{header:"Lições",available:"Disponível",soon:"Em breve",done:"Concluído ✓"},
+  };
+  const L = labels[lang] || labels.fr;
+  const lessons = mod?.lessons || [];
+  const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {lessons.map((l:any,idx:number)=>{
+            const isPlayable=playable.has(l.id);
+            const isDone=completedLessons.includes(`s6-${l.id}`);
+            const tag="PRO";
+            const tagColor="#c9922a";
+            return(
+              <button key={l.id} disabled={!isPlayable} onClick={()=>onPick(l.id)} style={{display:"flex",alignItems:"center",gap:12,padding:"14px",background:isPlayable?"rgba(13,31,60,0.85)":"rgba(13,31,60,0.4)",border:`1px solid ${isPlayable?"#e67e2244":"rgba(255,255,255,0.08)"}`,borderRadius:14,cursor:isPlayable?"pointer":"not-allowed",color:"#f0f4ff",textAlign:"left",opacity:isPlayable?1:0.6}}>
+                <div style={{width:38,height:38,borderRadius:10,background:"rgba(230,126,34,0.18)",border:"1px solid #e67e2244",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,flexShrink:0,color:"#e67e22"}}>{idx+1}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{l.title?.[lang]||l.title?.fr}</div>
+                  <div style={{fontSize:10,color:"rgba(240,244,255,0.5)"}}>{isDone?L.done:(isPlayable?L.available:L.soon)}</div>
+                </div>
+                <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+  }
+
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
   return (
