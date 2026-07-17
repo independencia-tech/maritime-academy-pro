@@ -82,7 +82,7 @@ function LandingZoneSVG({ lang }) {
 function HandoverSheetSVG({ lang }) {
   const [sel, setSel] = useState(null);
   const items = [
-    { id:1, icon:"🪪", label:{fr:"Patient",en:"Patient",es:"Patient",pt:"Patient"}, desc:{fr:"Identification claire de la victime.",en:"Clear identification of the casualty.",es:"Identificación clara de la víctima.",pt:"Identificação clara da vítima."} },
+    { id:1, icon:"🪪", label:{fr:"Patient",en:"Patient",es:"Paciente",pt:"Paciente"}, desc:{fr:"Identification claire de la victime.",en:"Clear identification of the casualty.",es:"Identificación clara de la víctima.",pt:"Identificação clara da vítima."} },
     { id:2, icon:"💥", label:{fr:"Mécanisme de la blessure",en:"Mechanism of injury",es:"Mecanismo de la lesión",pt:"Mecanismo da lesão"}, desc:{fr:"Ce qui s'est passé, comment, et dans quel contexte.",en:"What happened, how, and in what context.",es:"Qué pasó, cómo, y en qué contexto.",pt:"O que aconteceu, como, e em que contexto."} },
     { id:3, icon:"📋", label:{fr:"SAMPLE",en:"SAMPLE",es:"SAMPLE",pt:"SAMPLE"}, desc:{fr:"L'historique complet vu en Leçon 5.",en:"The full history seen in Lesson 5.",es:"El historial completo visto en la Lección 5.",pt:"O historial completo visto na Lição 5."} },
     { id:4, icon:"📈", label:{fr:"Évolution des constantes",en:"Vital signs trend",es:"Evolución de las constantes",pt:"Evolução das constantes"}, desc:{fr:"Toutes les mesures horodatées, jamais une seule valeur isolée.",en:"All time-stamped measurements, never a single isolated value.",es:"Todas las mediciones con hora, nunca un valor único aislado.",pt:"Todas as medições com hora, nunca um único valor isolado."} },

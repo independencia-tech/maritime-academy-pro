@@ -140,7 +140,7 @@ function CaseRetrospective({ lang }) {
     { id:"faro", lesson:"L1", name:"El Faro (2015)", color:C.blue2, lesson_text:{fr:"Reconnaître la détresse tôt coûte moins cher que d'hésiter.",en:"Recognizing distress early costs less than hesitating.",es:"Reconocer la emergencia pronto cuesta menos que dudar.",pt:"Reconhecer a emergência cedo custa menos do que hesitar."} },
     { id:"nina", lesson:"L2", name:"SV Nina (2013)", color:C.orange, lesson_text:{fr:"La vraie redondance combine des faiblesses différentes.",en:"Real redundancy combines different weaknesses.",es:"La verdadera redundancia combina debilidades diferentes.",pt:"A verdadeira redundância combina fraquezas diferentes."} },
     { id:"ladymary", lesson:"L3", name:"Lady Mary (2009)", color:C.purple, lesson_text:{fr:"La préparation se fait avant l'urgence, jamais pendant.",en:"Preparation happens before the emergency, never during.",es:"La preparación se hace antes de la emergencia, nunca durante.",pt:"A preparação faz-se antes da emergência, nunca durante."} },
-    { id:"trinity", lesson:"L4", name:"Trinity II (2011)", color:C.red, lesson_text:{fr:"Train the way you expect to perform.",en:"Train the way you expect to perform.",es:"Train the way you expect to perform.",pt:"Train the way you expect to perform."} },
+    { id:"trinity", lesson:"L4", name:"Trinity II (2011)", color:C.red, lesson_text:{fr:"S'entraîner comme on devra agir, pas autrement.",en:"Train the way you expect to perform.",es:"Entrenar como se deberá actuar, no de otra forma.",pt:"Treinar como se deverá atuar, e não de outra forma."} },
   ];
   return (
     <div style={{display:"flex",flexDirection:"column",gap:8}}>

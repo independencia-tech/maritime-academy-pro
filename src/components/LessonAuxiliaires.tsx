@@ -32,7 +32,7 @@ function ElectricalSVG({ lang }) {
       label:{fr:"GEN 2\n440V·60Hz",en:"GEN 2\n440V·60Hz",es:"GEN 2\n440V·60Hz",pt:"GEN 2\n440V·60Hz"},
       desc:{fr:"Génératrice auxiliaire diesel n°2\nCouplage parallèle avec GEN1\nSi l'une tombe → l'autre prend tout\nToujours 2+ génératrices à bord",en:"Auxiliary diesel generator n°2\nParallel coupling with GEN1\nIf one fails → other takes all\nAlways 2+ generators on board",es:"Generador diesel auxiliar n°2\nAcoplamiento paralelo con GEN1\nSi uno falla → el otro toma todo",pt:"Gerador diesel auxiliar n°2\nAcoplamento paralelo com GEN1\nSe um falha → o outro toma tudo"}},
     { id:"msb", x:60, y:88, w:88, h:42, color:C.blue2,
-      label:{fr:"QUADRO PRINCIPAL\nMSB 440V",en:"MAIN SWITCHBOARD\nMSB 440V",es:"CUADRO PRINCIPAL\nMSB 440V",pt:"QUADRO PRINCIPAL\nMSB 440V"},
+      label:{fr:"TABLEAU PRINCIPAL\nMSB 440V",en:"MAIN SWITCHBOARD\nMSB 440V",es:"CUADRO PRINCIPAL\nMSB 440V",pt:"QUADRO PRINCIPAL\nMSB 440V"},
       desc:{fr:"Main Switchboard = cerveau électrique\nDistribue 440V à tout le navire\nTransformateurs → 220V et 24V DC\nDisjoncteurs protection par circuit\nPMS (Power Management System) intégré",en:"Main Switchboard = electrical brain\nDistributes 440V to entire vessel\nTransformers → 220V and 24V DC\nCircuit breakers per circuit\nIntegrated PMS (Power Management System)",es:"Cuadro eléctrico principal = cerebro eléctrico\nDistribuye 440V a todo el buque\nTransformadores → 220V y 24V DC",pt:"Quadro elétrico principal = cérebro elétrico\nDistribui 440V a todo o navio\nTransformadores → 220V e 24V DC"}},
     { id:"emg", x:207, y:18, w:68, h:112, color:C.red,
       label:{fr:"GROUPE\nSECOURS\n⚡SOLAS",en:"EMERGENCY\nGENERATOR\n⚡SOLAS",es:"GRUPO\nEMERGENCIA\n⚡SOLAS",pt:"GRUPO\nEMERGÊNCIA\n⚡SOLAS"},
