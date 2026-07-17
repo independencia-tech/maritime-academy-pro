@@ -394,10 +394,10 @@ export const MODULES = {
       lessons:[
         {id:"l1",title:{fr:"Facteurs Humains : Pourquoi les Collisions Arrivent Vraiment",en:"Human Factors: Why Collisions Really Happen",es:"Factores Humanos: Por Qué Ocurren Realmente las Colisiones",pt:"Fatores Humanos: Por Que as Colisões Realmente Acontecem"},access:"free",status:"available"},
         {id:"l2",title:{fr:"Coordination d'Équipe Passerelle Pendant un Risque de Collision",en:"Bridge Team Coordination During Collision Risk",es:"Coordinación del Equipo de Puente Durante un Riesgo de Colisión",pt:"Coordenação da Equipa de Ponte Durante um Risco de Colisão"},access:"premium",status:"locked"},
-        {id:"l3",title:{fr:"Emergency Actions Before Impact",en:"Emergency Actions Before Impact",es:"Emergency Actions Before Impact",pt:"Emergency Actions Before Impact"},access:"premium",status:"locked"},
-        {id:"l4",title:{fr:"The Critical First Minutes After a Collision",en:"The Critical First Minutes After a Collision",es:"The Critical First Minutes After a Collision",pt:"The Critical First Minutes After a Collision"},access:"premium",status:"locked"},
-        {id:"l5",title:{fr:"Decision-Making Under Pressure",en:"Decision-Making Under Pressure",es:"Decision-Making Under Pressure",pt:"Decision-Making Under Pressure"},access:"premium",status:"locked"},
-        {id:"l6",title:{fr:"Lessons Learned from Maritime Collisions",en:"Lessons Learned from Maritime Collisions",es:"Lessons Learned from Maritime Collisions",pt:"Lessons Learned from Maritime Collisions"},access:"premium",status:"locked"},
+        {id:"l3",title:{fr:"Actions d'Urgence Avant l'Impact",en:"Emergency Actions Before Impact",es:"Acciones de Emergencia Antes del Impacto",pt:"Ações de Emergência Antes do Impacto"},access:"premium",status:"locked"},
+        {id:"l4",title:{fr:"Les Minutes Critiques Après une Collision",en:"The Critical First Minutes After a Collision",es:"Los Minutos Críticos Después de una Colisión",pt:"Os Minutos Críticos Após uma Colisão"},access:"premium",status:"locked"},
+        {id:"l5",title:{fr:"Prise de Décision Sous Pression",en:"Decision-Making Under Pressure",es:"Toma de Decisiones Bajo Presión",pt:"Tomada de Decisão Sob Pressão"},access:"premium",status:"locked"},
+        {id:"l6",title:{fr:"Leçons Tirées des Collisions Maritimes",en:"Lessons Learned from Maritime Collisions",es:"Lecciones Aprendidas de Colisiones Marítimas",pt:"Lições Aprendidas de Colisões Marítimas"},access:"premium",status:"locked"},
       ]
     },
      
@@ -407,11 +407,11 @@ export const MODULES = {
       desc:{fr:"Recognize, Choose, Prepare, Activate, Learn",en:"Recognize, Choose, Prepare, Activate, Learn",es:"Recognize, Choose, Prepare, Activate, Learn",pt:"Recognize, Choose, Prepare, Activate, Learn"},
       xp:250, status:"available", progress:0,
       lessons:[
-        {id:"l1",title:{fr:"Every Maritime Emergency Begins with One Decision",en:"Every Maritime Emergency Begins with One Decision",es:"Every Maritime Emergency Begins with One Decision",pt:"Every Maritime Emergency Begins with One Decision"},access:"free",status:"available"},
-        {id:"l2",title:{fr:"Selecting the Right Distress Equipment",en:"Selecting the Right Distress Equipment",es:"Selecting the Right Distress Equipment",pt:"Selecting the Right Distress Equipment"},access:"premium",status:"locked"},
-        {id:"l3",title:{fr:"Activation Errors That Cost Lives",en:"Activation Errors That Cost Lives",es:"Activation Errors That Cost Lives",pt:"Activation Errors That Cost Lives"},access:"premium",status:"locked"},
-        {id:"l4",title:{fr:"Activate — Executing the Right Actions Under Pressure",en:"Activate — Executing the Right Actions Under Pressure",es:"Activate — Executing the Right Actions Under Pressure",pt:"Activate — Executing the Right Actions Under Pressure"},access:"premium",status:"locked"},
-        {id:"l5",title:{fr:"Real Search & Rescue Operations — Lessons Learned",en:"Real Search & Rescue Operations — Lessons Learned",es:"Real Search & Rescue Operations — Lessons Learned",pt:"Real Search & Rescue Operations — Lessons Learned"},access:"premium",status:"locked"},
+        {id:"l1",title:{fr:"Chaque Urgence Maritime Commence par une Décision",en:"Every Maritime Emergency Begins with One Decision",es:"Toda Emergencia Marítima Comienza con una Decisión",pt:"Toda Emergência Marítima Começa com uma Decisão"},access:"free",status:"available"},
+        {id:"l2",title:{fr:"Choisir le Bon Équipement de Détresse",en:"Selecting the Right Distress Equipment",es:"Seleccionar el Equipo de Emergencia Adecuado",pt:"Selecionar o Equipamento de Emergência Adequado"},access:"premium",status:"locked"},
+        {id:"l3",title:{fr:"Erreurs d'Activation qui Coûtent des Vies",en:"Activation Errors That Cost Lives",es:"Errores de Activación que Cuestan Vidas",pt:"Erros de Ativação que Custam Vidas"},access:"premium",status:"locked"},
+        {id:"l4",title:{fr:"Activer — Exécuter les Bonnes Actions Sous Pression",en:"Activate — Executing the Right Actions Under Pressure",es:"Activar — Ejecutar las Acciones Correctas Bajo Presión",pt:"Ativar — Executar as Ações Corretas Sob Pressão"},access:"premium",status:"locked"},
+        {id:"l5",title:{fr:"Opérations Réelles de Recherche et Sauvetage — Leçons Apprises",en:"Real Search & Rescue Operations — Lessons Learned",es:"Operaciones Reales de Búsqueda y Rescate — Lecciones Aprendidas",pt:"Operações Reais de Busca e Salvamento — Lições Aprendidas"},access:"premium",status:"locked"},
       ]
     },
   
@@ -421,14 +421,14 @@ export const MODULES = {
   desc:{fr:"EFA, MFA, MCC — RCP, MEDEVAC",en:"EFA, MFA, MCC — CPR, MEDEVAC",es:"EFA, MFA, MCC — RCP, MEDEVAC",pt:"EFA, MFA, MCC — RCP, MEDEVAC"},
   xp:400, status:"available", progress:0,
   lessons:[
-    {id:"l1",title:{fr:"Scene Safety & Primary Survey (DRABC)",en:"Scene Safety & Primary Survey (DRABC)",es:"Scene Safety & Primary Survey (DRABC)",pt:"Scene Safety & Primary Survey (DRABC)"},access:"premium",status:"available"},
-    {id:"l2",title:{fr:"CPR & AED — Cardiac Arrest Response",en:"CPR & AED — Cardiac Arrest Response",es:"CPR & AED — Cardiac Arrest Response",pt:"CPR & AED — Cardiac Arrest Response"},access:"premium",status:"locked"},
-    {id:"l3",title:{fr:"Bleeding Control & Shock Management",en:"Bleeding Control & Shock Management",es:"Bleeding Control & Shock Management",pt:"Bleeding Control & Shock Management"},access:"premium",status:"locked"},
-    {id:"l4",title:{fr:"Burns, Fractures & Trauma Immobilization",en:"Burns, Fractures & Trauma Immobilization",es:"Burns, Fractures & Trauma Immobilization",pt:"Burns, Fractures & Trauma Immobilization"},access:"premium",status:"locked"},
-    {id:"l5",title:{fr:"Secondary Assessment & Patient Monitoring",en:"Secondary Assessment & Patient Monitoring",es:"Secondary Assessment & Patient Monitoring",pt:"Secondary Assessment & Patient Monitoring"},access:"premium",status:"locked"},
-    {id:"l6",title:{fr:"Medical Emergencies at Sea",en:"Medical Emergencies at Sea",es:"Medical Emergencies at Sea",pt:"Medical Emergencies at Sea"},access:"premium",status:"locked"},
-    {id:"l7",title:{fr:"Ship's Medicine Chest & Radio Medical Advice",en:"Ship's Medicine Chest & Radio Medical Advice",es:"Ship's Medicine Chest & Radio Medical Advice",pt:"Ship's Medicine Chest & Radio Medical Advice"},access:"premium",status:"locked"},
-    {id:"l8",title:{fr:"MEDEVAC — Preparing the Casualty & Handover",en:"MEDEVAC — Preparing the Casualty & Handover",es:"MEDEVAC — Preparing the Casualty & Handover",pt:"MEDEVAC — Preparing the Casualty & Handover"},access:"premium",status:"locked"},
+    {id:"l1",title:{fr:"Sécurité des Lieux & Évaluation Primaire (DRABC)",en:"Scene Safety & Primary Survey (DRABC)",es:"Seguridad del Lugar y Evaluación Primaria (DRABC)",pt:"Segurança do Local e Avaliação Primária (DRABC)"},access:"premium",status:"available"},
+    {id:"l2",title:{fr:"RCP & DAE — Réponse à l'Arrêt Cardiaque",en:"CPR & AED — Cardiac Arrest Response",es:"RCP y DEA — Respuesta al Paro Cardíaco",pt:"RCP e DEA — Resposta à Paragem Cardíaca"},access:"premium",status:"locked"},
+    {id:"l3",title:{fr:"Contrôle des Hémorragies & Gestion du Choc",en:"Bleeding Control & Shock Management",es:"Control de Hemorragias y Manejo del Shock",pt:"Controlo de Hemorragias e Gestão do Choque"},access:"premium",status:"locked"},
+    {id:"l4",title:{fr:"Brûlures, Fractures & Immobilisation des Traumatismes",en:"Burns, Fractures & Trauma Immobilization",es:"Quemaduras, Fracturas e Inmovilización de Traumatismos",pt:"Queimaduras, Fraturas e Imobilização de Traumatismos"},access:"premium",status:"locked"},
+    {id:"l5",title:{fr:"Évaluation Secondaire & Surveillance du Patient",en:"Secondary Assessment & Patient Monitoring",es:"Evaluación Secundaria y Monitoreo del Paciente",pt:"Avaliação Secundária e Monitorização do Paciente"},access:"premium",status:"locked"},
+    {id:"l6",title:{fr:"Urgences Médicales en Mer",en:"Medical Emergencies at Sea",es:"Emergencias Médicas en el Mar",pt:"Emergências Médicas no Mar"},access:"premium",status:"locked"},
+    {id:"l7",title:{fr:"Pharmacie de Bord & Conseil Médical Radio",en:"Ship's Medicine Chest & Radio Medical Advice",es:"Botiquín del Buque y Asesoramiento Médico por Radio",pt:"Farmácia de Bordo e Aconselhamento Médico por Rádio"},access:"premium",status:"locked"},
+    {id:"l8",title:{fr:"MEDEVAC — Préparation du Blessé & Transfert",en:"MEDEVAC — Preparing the Casualty & Handover",es:"MEDEVAC — Preparación del Herido y Entrega",pt:"MEDEVAC — Preparação do Ferido e Transferência"},access:"premium",status:"locked"},
   ]
 },
     
@@ -438,13 +438,13 @@ export const MODULES = {
   desc:{fr:"BST, extincteurs, équipes d'urgence",en:"BST, extinguishers, emergency teams",es:"BST, extintores, equipos de emergencia",pt:"BST, extintores, equipas de emergência"},
   xp:350, status:"available", progress:0,
   lessons:[
-    {id:"l1",title:{fr:"Fire Behaviour & Early Fire Recognition",en:"Fire Behaviour & Early Fire Recognition",es:"Fire Behaviour & Early Fire Recognition",pt:"Fire Behaviour & Early Fire Recognition"},access:"premium",status:"available"},
-    {id:"l2",title:{fr:"Fire Classification & Extinguishing Strategy",en:"Fire Classification & Extinguishing Strategy",es:"Fire Classification & Extinguishing Strategy",pt:"Fire Classification & Extinguishing Strategy"},access:"premium",status:"locked"},
-    {id:"l3",title:{fr:"Portable Firefighting",en:"Portable Firefighting",es:"Portable Firefighting",pt:"Portable Firefighting"},access:"premium",status:"locked"},
-    {id:"l4",title:{fr:"Fixed Fire-Fighting Systems",en:"Fixed Fire-Fighting Systems",es:"Fixed Fire-Fighting Systems",pt:"Fixed Fire-Fighting Systems"},access:"premium",status:"locked"},
-    {id:"l5",title:{fr:"Fire Detection & Initial Response",en:"Fire Detection & Initial Response",es:"Fire Detection & Initial Response",pt:"Fire Detection & Initial Response"},access:"premium",status:"locked"},
-    {id:"l6",title:{fr:"Breathing Apparatus & PPE",en:"Breathing Apparatus & PPE",es:"Breathing Apparatus & PPE",pt:"Breathing Apparatus & PPE"},access:"premium",status:"locked"},
-    {id:"l7",title:{fr:"Fire Command, Teams & Damage Control",en:"Fire Command, Teams & Damage Control",es:"Fire Command, Teams & Damage Control",pt:"Fire Command, Teams & Damage Control"},access:"premium",status:"locked"},
+    {id:"l1",title:{fr:"Comportement du Feu & Détection Précoce",en:"Fire Behaviour & Early Fire Recognition",es:"Comportamiento del Fuego y Detección Temprana",pt:"Comportamento do Fogo e Deteção Precoce"},access:"premium",status:"available"},
+    {id:"l2",title:{fr:"Classification des Feux & Stratégie d'Extinction",en:"Fire Classification & Extinguishing Strategy",es:"Clasificación de Incendios y Estrategia de Extinción",pt:"Classificação de Incêndios e Estratégia de Extinção"},access:"premium",status:"locked"},
+    {id:"l3",title:{fr:"Lutte Contre l'Incendie Portable",en:"Portable Firefighting",es:"Lucha Contra Incendios Portátil",pt:"Combate a Incêndios Portátil"},access:"premium",status:"locked"},
+    {id:"l4",title:{fr:"Systèmes Fixes de Lutte Contre l'Incendie",en:"Fixed Fire-Fighting Systems",es:"Sistemas Fijos de Lucha Contra Incendios",pt:"Sistemas Fixos de Combate a Incêndios"},access:"premium",status:"locked"},
+    {id:"l5",title:{fr:"Détection Incendie & Réponse Initiale",en:"Fire Detection & Initial Response",es:"Detección de Incendios y Respuesta Inicial",pt:"Deteção de Incêndios e Resposta Inicial"},access:"premium",status:"locked"},
+    {id:"l6",title:{fr:"Appareil Respiratoire & EPI",en:"Breathing Apparatus & PPE",es:"Equipo de Respiración y EPP",pt:"Aparelho Respiratório e EPI"},access:"premium",status:"locked"},
+    {id:"l7",title:{fr:"Commandement Incendie, Équipes & Contrôle des Avaries",en:"Fire Command, Teams & Damage Control",es:"Mando de Incendios, Equipos y Control de Averías",pt:"Comando de Incêndio, Equipas e Controlo de Avarias"},access:"premium",status:"locked"},
   ]
 },
     
@@ -454,10 +454,10 @@ export const MODULES = {
   desc:{fr:"SOLAS, HRU, abandon ship, muster",en:"SOLAS, HRU, abandon ship, muster",es:"SOLAS, HRU, abandon ship, muster",pt:"SOLAS, HRU, abandon ship, muster"},
   xp:200, status:"available", progress:0,
   lessons:[
-    {id:"l1",title:{fr:"Lifeboats: Launching & Handling",en:"Lifeboats: Launching & Handling",es:"Lifeboats: Launching & Handling",pt:"Lifeboats: Launching & Handling"},access:"premium",status:"available"},
-    {id:"l2",title:{fr:"Liferafts: Deployment & Boarding",en:"Liferafts: Deployment & Boarding",es:"Liferafts: Deployment & Boarding",pt:"Liferafts: Deployment & Boarding"},access:"premium",status:"available"},
-    {id:"l3",title:{fr:"HRU & Survival Equipment",en:"HRU & Survival Equipment",es:"HRU & Survival Equipment",pt:"HRU & Survival Equipment"},access:"premium",status:"available"},
-    {id:"l4",title:{fr:"Abandon Ship & Survival Leadership",en:"Abandon Ship & Survival Leadership",es:"Abandon Ship & Survival Leadership",pt:"Abandon Ship & Survival Leadership"},access:"premium",status:"available"},
+    {id:"l1",title:{fr:"Embarcations de Sauvetage : Mise à l'Eau & Manœuvre",en:"Lifeboats: Launching & Handling",es:"Botes Salvavidas: Botadura y Maniobra",pt:"Baleeiras: Lançamento e Manobra"},access:"premium",status:"available"},
+    {id:"l2",title:{fr:"Radeaux de Sauvetage : Déploiement & Embarquement",en:"Liferafts: Deployment & Boarding",es:"Balsas Salvavidas: Despliegue y Embarque",pt:"Jangadas Salva-vidas: Lançamento e Embarque"},access:"premium",status:"available"},
+    {id:"l3",title:{fr:"HRU & Équipement de Survie",en:"HRU & Survival Equipment",es:"HRU y Equipo de Supervivencia",pt:"HRU e Equipamento de Sobrevivência"},access:"premium",status:"available"},
+    {id:"l4",title:{fr:"Abandon du Navire & Leadership de Survie",en:"Abandon Ship & Survival Leadership",es:"Abandono del Buque y Liderazgo de Supervivencia",pt:"Abandono do Navio e Liderança de Sobrevivência"},access:"premium",status:"available"},
   ]
 },
     
@@ -467,12 +467,12 @@ export const MODULES = {
   desc:{fr:"Vigilance, urgences, EPI, communication, prévention, culture",en:"Vigilance, emergencies, PPE, communication, prevention, culture",es:"Vigilancia, emergencias, EPP, comunicación, prevención, cultura",pt:"Vigilância, emergências, EPI, comunicação, prevenção, cultura"},
   xp:300, status:"available", progress:0,
   lessons:[
-    {id:"l1",title:{fr:"Safety Patrol & Hazard Recognition",en:"Safety Patrol & Hazard Recognition",es:"Safety Patrol & Hazard Recognition",pt:"Safety Patrol & Hazard Recognition"},access:"premium",status:"available"},
-    {id:"l2",title:{fr:"Common Ship Emergencies & Immediate Actions",en:"Common Ship Emergencies & Immediate Actions",es:"Common Ship Emergencies & Immediate Actions",pt:"Common Ship Emergencies & Immediate Actions"},access:"premium",status:"available"},
-    {id:"l3",title:{fr:"PPE, Safe Behaviour & Human Factors",en:"PPE, Safe Behaviour & Human Factors",es:"PPE, Safe Behaviour & Human Factors",pt:"PPE, Safe Behaviour & Human Factors"},access:"premium",status:"available"},
-    {id:"l4",title:{fr:"Emergency Reporting & Initial Response",en:"Emergency Reporting & Initial Response",es:"Emergency Reporting & Initial Response",pt:"Emergency Reporting & Initial Response"},access:"premium",status:"available"},
-    {id:"l5",title:{fr:"Permit to Work & Risk Assessment",en:"Permit to Work & Risk Assessment",es:"Permit to Work & Risk Assessment",pt:"Permit to Work & Risk Assessment"},access:"premium",status:"available"},
-    {id:"l6",title:{fr:"Safety Culture & Professional Responsibility",en:"Safety Culture & Professional Responsibility",es:"Safety Culture & Professional Responsibility",pt:"Safety Culture & Professional Responsibility"},access:"premium",status:"available"},
+    {id:"l1",title:{fr:"Ronde de Sécurité & Reconnaissance des Dangers",en:"Safety Patrol & Hazard Recognition",es:"Ronda de Seguridad y Reconocimiento de Peligros",pt:"Ronda de Segurança e Reconhecimento de Perigos"},access:"premium",status:"available"},
+    {id:"l2",title:{fr:"Urgences Courantes à Bord & Actions Immédiates",en:"Common Ship Emergencies & Immediate Actions",es:"Emergencias Comunes a Bordo y Acciones Inmediatas",pt:"Emergências Comuns a Bordo e Ações Imediatas"},access:"premium",status:"available"},
+    {id:"l3",title:{fr:"EPI, Comportement Sécuritaire & Facteurs Humains",en:"PPE, Safe Behaviour & Human Factors",es:"EPP, Comportamiento Seguro y Factores Humanos",pt:"EPI, Comportamento Seguro e Fatores Humanos"},access:"premium",status:"available"},
+    {id:"l4",title:{fr:"Signalement d'Urgence & Réponse Initiale",en:"Emergency Reporting & Initial Response",es:"Reporte de Emergencias y Respuesta Inicial",pt:"Comunicação de Emergência e Resposta Inicial"},access:"premium",status:"available"},
+    {id:"l5",title:{fr:"Permis de Travail & Évaluation des Risques",en:"Permit to Work & Risk Assessment",es:"Permiso de Trabajo y Evaluación de Riesgos",pt:"Permissão de Trabalho e Avaliação de Riscos"},access:"premium",status:"available"},
+    {id:"l6",title:{fr:"Culture de Sécurité & Responsabilité Professionnelle",en:"Safety Culture & Professional Responsibility",es:"Cultura de Seguridad y Responsabilidad Profesional",pt:"Cultura de Segurança e Responsabilidade Profissional"},access:"premium",status:"available"},
   ]
 },
 ],

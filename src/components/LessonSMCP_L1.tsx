@@ -26,27 +26,27 @@ function WatchHandoverSVG({ lang }) {
   const dialogues = [
     { speaker:"OOW (outgoing)", role:{fr:"OOW sortant",en:"Outgoing OOW",es:"OOW saliente",pt:"OOW saindo"},
       smcp:"Good evening. I am ready to hand over the watch.",
-      fr:"Bonsoir. Je suis prêt à transmettre le quart.",
+      tr:{fr:"Bonsoir. Je suis prêt à transmettre le quart.",es:"Buenas noches. Estoy listo para entregar la guardia.",pt:"Boa noite. Estou pronto para entregar o quarto."},
       context:{fr:"PHRASE D'OUVERTURE du relève de quart\n→ Toujours initier avec cette phrase\n→ Confirmer que le quart est PRÊT à être transmis\n→ Pas de transmission si conditions dangereuses",en:"OPENING PHRASE of watch handover\n→ Always initiate with this phrase\n→ Confirm the watch is READY to be handed over\n→ No handover in dangerous conditions",es:"FRASE DE APERTURA del cambio de guardia\n→ Siempre iniciar con esta frase\n→ Confirmar que la guardia está LISTA para transmitirse\n→ Sin transmisión en condiciones peligrosas",pt:"FRASE DE ABERTURA da rendição de quarto\n→ Sempre iniciar com esta frase\n→ Confirmar que o quarto está PRONTO para ser transmitido\n→ Sem transmissão em condições perigosas"} },
     { speaker:"OOW (incoming)", role:{fr:"OOW entrant",en:"Incoming OOW",es:"OOW entrante",pt:"OOW entrando"},
       smcp:"What is the position of the vessel?",
-      fr:"Quelle est la position du navire ?",
+      tr:{fr:"Quelle est la position du navire ?",es:"¿Cuál es la posición del buque?",pt:"Qual é a posição do navio?"},
       context:{fr:"PREMIÈRE QUESTION obligatoire\n→ Position du navire (lat/long ou relèvement)\n→ Méthode de positionnement utilisée (GPS/radar/visuel)\n→ Heure de la dernière vérification de position",en:"FIRST MANDATORY QUESTION\n→ Vessel position (lat/long or bearing)\n→ Positioning method used (GPS/radar/visual)\n→ Time of last position fix",es:"PRIMERA PREGUNTA obligatoria\n→ Posición del buque (lat/long o marcación)\n→ Método de posicionamiento utilizado\n→ Hora de la última verificación de posición",pt:"PRIMEIRA PERGUNTA obrigatória\n→ Posição do navio (lat/long ou marcação)\n→ Método de posicionamento utilizado\n→ Hora da última verificação de posição"} },
     { speaker:"OOW (outgoing)", role:{fr:"OOW sortant",en:"Outgoing OOW",es:"OOW saliente",pt:"OOW saindo"},
       smcp:"Our position is Latitude 43°12.5'N, Longitude 007°05.3'E. Last fix was at 0345 UTC by GPS.",
-      fr:"Notre position est Latitude 43°12,5'N, Longitude 007°05,3'E. Dernier point à 0345 UTC par GPS.",
+      tr:{fr:"Notre position est Latitude 43°12,5'N, Longitude 007°05,3'E. Dernier point à 0345 UTC par GPS.",es:"Nuestra posición es Latitud 43°12,5'N, Longitud 007°05,3'E. Última posición a las 0345 UTC por GPS.",pt:"A nossa posição é Latitude 43°12,5'N, Longitude 007°05,3'E. Último ponto às 0345 UTC por GPS."},
       context:{fr:"FORMAT STANDARD de position SMCP\n→ Toujours : Latitude d'abord, puis Longitude\n→ Format : degrés + minutes décimales\n→ Toujours préciser N/S et E/W\n→ Toujours indiquer la méthode et l'heure\n\nSMCP RÈGLE : toujours indiquer le mode de positionnement\n(GPS · radar · visuel · ECDIS)",en:"STANDARD SMCP position format\n→ Always: Latitude first, then Longitude\n→ Format: degrees + decimal minutes\n→ Always specify N/S and E/W\n→ Always state method and time\n\nSMCP RULE: always state positioning method\n(GPS · radar · visual · ECDIS)",es:"FORMATO ESTÁNDAR de posición SMCP\n→ Siempre: Latitud primero, luego Longitud\n→ Formato: grados + minutos decimales\n→ Siempre especificar N/S y E/W\n→ Siempre indicar el método y la hora",pt:"FORMATO PADRÃO de posição SMCP\n→ Sempre: Latitude primeiro, depois Longitude\n→ Formato: graus + minutos decimais\n→ Sempre especificar N/S e E/W\n→ Sempre indicar o método e a hora"} },
     { speaker:"OOW (incoming)", role:{fr:"OOW entrant",en:"Incoming OOW",es:"OOW entrante",pt:"OOW entrando"},
       smcp:"What is the course and speed?",
-      fr:"Quel est le cap et la vitesse ?",
+      tr:{fr:"Quel est le cap et la vitesse ?",es:"¿Cuál es el rumbo y la velocidad?",pt:"Qual é o rumo e a velocidade?"},
       context:{fr:"DEUXIÈME QUESTION standard du relève\n→ Course = cap magnétique ou vrai (préciser !)\n→ Speed = vitesse fond (SOG) ou eau (STW)\n→ Toujours préciser la référence\n\nSMCP DISTINCTION :\nMagnetic course vs True course\nSpeed Over Ground (SOG) vs Speed Through Water (STW)",en:"SECOND STANDARD QUESTION in handover\n→ Course = magnetic or true (specify!)\n→ Speed = SOG or STW\n→ Always specify the reference\n\nSMCP DISTINCTION:\nMagnetic course vs True course\nSpeed Over Ground (SOG) vs Speed Through Water (STW)",es:"SEGUNDA PREGUNTA estándar del cambio\n→ Rumbo = magnético o verdadero (¡especificar!)\n→ Velocidad = SOG o STW\n→ Siempre especificar la referencia",pt:"SEGUNDA PERGUNTA padrão na rendição\n→ Rumo = magnético ou verdadeiro (especificar!)\n→ Velocidade = SOG ou STW\n→ Sempre especificar a referência"} },
     { speaker:"OOW (outgoing)", role:{fr:"OOW sortant",en:"Outgoing OOW",es:"OOW saliente",pt:"OOW saindo"},
       smcp:"Course is 275 degrees true. Speed is 14.5 knots. Engine is on full ahead.",
-      fr:"Le cap est 275 degrés vrai. La vitesse est 14,5 nœuds. Machines en avant toute.",
+      tr:{fr:"Le cap est 275 degrés vrai. La vitesse est 14,5 nœuds. Machines en avant toute.",es:"El rumbo es 275 grados verdadero. La velocidad es 14,5 nudos. Máquinas avante toda.",pt:"O rumo é 275 graus verdadeiro. A velocidade é 14,5 nós. Máquinas a toda a força avante."},
       context:{fr:"FORMAT CAP ET VITESSE SMCP\n→ Cap : toujours 3 chiffres (ex: 275, pas 75)\n→ Toujours préciser 'true' ou 'magnetic'\n→ Vitesse : toujours en nœuds\n→ État des machines = info obligatoire\n\nORDRES DE MACHINE (SMCP) :\nFull ahead · Half ahead · Slow ahead\nStop · Slow astern · Half astern · Full astern",en:"SMCP COURSE AND SPEED FORMAT\n→ Course: always 3 digits (e.g. 275, not 75)\n→ Always specify 'true' or 'magnetic'\n→ Speed: always in knots\n→ Engine status = mandatory information\n\nENGINE ORDERS (SMCP):\nFull ahead · Half ahead · Slow ahead\nStop · Slow astern · Half astern · Full astern",es:"FORMATO RUMBO Y VELOCIDAD SMCP\n→ Rumbo: siempre 3 cifras (ej.: 275, no 75)\n→ Siempre especificar 'verdadero' o 'magnético'\n→ Velocidad: siempre en nudos\n→ Estado de las máquinas = información obligatoria",pt:"FORMATO RUMO E VELOCIDADE SMCP\n→ Rumo: sempre 3 dígitos (ex.: 275, não 75)\n→ Sempre especificar 'verdadeiro' ou 'magnético'\n→ Velocidade: sempre em nós\n→ Estado das máquinas = informação obrigatória"} },
     { speaker:"OOW (incoming)", role:{fr:"OOW entrant",en:"Incoming OOW",es:"OOW entrante",pt:"OOW entrando"},
       smcp:"I have now taken over the watch. I am the officer of the watch.",
-      fr:"Je prends maintenant le quart. Je suis l'officier de quart.",
+      tr:{fr:"Je prends maintenant le quart. Je suis l'officier de quart.",es:"Ahora asumo la guardia. Soy el oficial de guardia.",pt:"Assumo agora o quarto. Sou o oficial de quarto."},
       context:{fr:"PHRASE DE CLÔTURE — OBLIGATOIRE\n→ Cette phrase confirme officiellement la prise du quart\n→ L'OOW entrant est maintenant RESPONSABLE\n→ L'OOW sortant peut quitter la passerelle\n\nJURIDIQUE :\nAvant cette phrase = OOW sortant responsable\nAprès cette phrase = OOW entrant responsable\n\nLe capitaine DOIT être informé si conditions\ndangereuses ou incertitude sur la situation",en:"CLOSING PHRASE — MANDATORY\n→ This phrase officially confirms watch takeover\n→ Incoming OOW is now RESPONSIBLE\n→ Outgoing OOW may leave the bridge\n\nLEGAL:\nBefore this phrase = outgoing OOW responsible\nAfter this phrase = incoming OOW responsible",es:"FRASE DE CIERRE — OBLIGATORIA\n→ Esta frase confirma oficialmente la toma de guardia\n→ El OOW entrante es ahora RESPONSABLE\n→ El OOW saliente puede abandonar el puente",pt:"FRASE DE ENCERRAMENTO — OBRIGATÓRIA\n→ Esta frase confirma oficialmente a tomada de quarto\n→ O OOW entrante é agora RESPONSÁVEL\n→ O OOW saindo pode abandonar a ponte"} },
   ];
 
@@ -63,7 +63,7 @@ function WatchHandoverSVG({ lang }) {
         ))}
       </div>
       <div style={{fontSize:9,color:C.smcp,letterSpacing:2,textAlign:"center",marginBottom:8,fontFamily:"'Cinzel',serif"}}>
-        {lang==="fr"?"SIMULATEUR RELÈVE DE QUART":lang==="en"?"WATCH HANDOVER SIMULATOR":"SIMULADOR CAMBIO DE GUARDIA"} — {step+1}/{dialogues.length}
+        {lang==="fr"?"SIMULATEUR RELÈVE DE QUART":lang==="en"?"WATCH HANDOVER SIMULATOR":lang==="es"?"SIMULADOR CAMBIO DE GUARDIA":"SIMULADOR MUDANÇA DE QUARTO"} — {step+1}/{dialogues.length}
       </div>
       <div style={{padding:"12px",borderRadius:14,marginBottom:10,
         background:isIncoming?"rgba(0,229,255,0.08)":"rgba(123,237,159,0.08)",
@@ -74,10 +74,10 @@ function WatchHandoverSVG({ lang }) {
         <div style={{fontFamily:"'Courier New',monospace",fontSize:13,color:C.white,lineHeight:1.6,marginBottom:8,fontWeight:700}}>
           "{d.smcp}"
         </div>
-        <button onClick={()=>setShowFr(!showFr)} style={{fontSize:9,padding:"3px 8px",borderRadius:8,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer"}}>
-          {showFr?"▲ Hide":"▼ "}{lang==="fr"?"Traduction":lang==="en"?"Translation":"Traducción"}
-        </button>
-        {showFr&&<div style={{fontSize:11,color:C.muted,marginTop:6,fontStyle:"italic"}}>{d.fr}</div>}
+        {lang!=="en"&&<button onClick={()=>setShowFr(!showFr)} style={{fontSize:9,padding:"3px 8px",borderRadius:8,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer"}}>
+          {showFr?"▲ Hide":"▼ "}{lang==="fr"?"Traduction":lang==="es"?"Traducción":"Tradução"}
+        </button>}
+        {lang!=="en"&&showFr&&<div style={{fontSize:11,color:C.muted,marginTop:6,fontStyle:"italic"}}>{d.tr[lang]||d.tr.fr}</div>}
       </div>
       <div style={{padding:"10px 12px",borderRadius:12,background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.06)",marginBottom:10,fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
         {d.context[lang]||d.context.en}
@@ -85,11 +85,11 @@ function WatchHandoverSVG({ lang }) {
       <div style={{display:"flex",gap:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"9px",borderRadius:10,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":lang==="es"?"Anterior":"Anterior"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(dialogues.length-1,s+1))} disabled={step===dialogues.length-1}
           style={{flex:1,padding:"9px",borderRadius:10,background:step===dialogues.length-1?"rgba(255,255,255,0.05)":`${C.smcp}22`,border:`1px solid ${step===dialogues.length-1?"rgba(255,255,255,0.08)":C.smcp}`,color:C.white,cursor:step===dialogues.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+          {lang==="fr"?"Suivant":lang==="en"?"Next":lang==="es"?"Siguiente":"Seguinte"} ▶
         </button>
       </div>
     </div>
@@ -109,41 +109,41 @@ function SMCPFlashcardsSVG({ lang }) {
       label:{fr:"Position & Navigation",en:"Position & Navigation",es:"Posición y Navegación",pt:"Posição e Navegação"},
       color:C.blue2,
       cards:[
-        { q:"How do you report your position?", a:"Our position is Latitude [X]°[X]'N/S, Longitude [X]°[X]'E/W.\nLast fix at [time] UTC by [method].", fr:"Position : Latitude [X]°[X]'N/S, Longitude [X]°[X]'E/W.\nDernier point à [heure] UTC par [méthode]." },
-        { q:"How do you give a bearing?", a:"The bearing of [object] is [X] degrees true/magnetic.", fr:"Le relèvement de [objet] est [X] degrés vrai/magnétique." },
-        { q:"How do you report a waypoint?", a:"Next waypoint is [name]. ETA [time] UTC. Distance [X] miles.", fr:"Prochain point de passage : [nom]. ETA [heure] UTC. Distance [X] milles." },
-        { q:"How do you report a course alteration?", a:"Altering course to [X] degrees [true/magnetic]. New course [X] degrees.", fr:"Changement de cap vers [X] degrés [vrai/magnétique]. Nouveau cap [X] degrés." },
-        { q:"How do you report visibility?", a:"Visibility is [X] miles/metres. [Good/Moderate/Poor/Fog].", fr:"Visibilité : [X] milles/mètres. [Bonne/Modérée/Mauvaise/Brouillard]." },
+        { q:"How do you report your position?", a:"Our position is Latitude [X]°[X]'N/S, Longitude [X]°[X]'E/W.\nLast fix at [time] UTC by [method].", tr:{fr:"Position : Latitude [X]°[X]'N/S, Longitude [X]°[X]'E/W.\nDernier point à [heure] UTC par [méthode].",es:"Posición: Latitud [X]°[X]'N/S, Longitud [X]°[X]'E/W.\nÚltima posición a las [hora] UTC por [método].",pt:"Posição: Latitude [X]°[X]'N/S, Longitude [X]°[X]'E/W.\nÚltimo ponto às [hora] UTC por [método]."} },
+        { q:"How do you give a bearing?", a:"The bearing of [object] is [X] degrees true/magnetic.", tr:{fr:"Le relèvement de [objet] est [X] degrés vrai/magnétique.",es:"La marcación de [objeto] es [X] grados verdadero/magnético.",pt:"A marcação de [objeto] é [X] graus verdadeiro/magnético."} },
+        { q:"How do you report a waypoint?", a:"Next waypoint is [name]. ETA [time] UTC. Distance [X] miles.", tr:{fr:"Prochain point de passage : [nom]. ETA [heure] UTC. Distance [X] milles.",es:"Próximo punto de ruta: [nombre]. ETA [hora] UTC. Distancia [X] millas.",pt:"Próximo ponto de passagem: [nome]. ETA [hora] UTC. Distância [X] milhas."} },
+        { q:"How do you report a course alteration?", a:"Altering course to [X] degrees [true/magnetic]. New course [X] degrees.", tr:{fr:"Changement de cap vers [X] degrés [vrai/magnétique]. Nouveau cap [X] degrés.",es:"Cambio de rumbo a [X] grados [verdadero/magnético]. Nuevo rumbo [X] grados.",pt:"Alteração de rumo para [X] graus [verdadeiro/magnético]. Novo rumo [X] graus."} },
+        { q:"How do you report visibility?", a:"Visibility is [X] miles/metres. [Good/Moderate/Poor/Fog].", tr:{fr:"Visibilité : [X] milles/mètres. [Bonne/Modérée/Mauvaise/Brouillard].",es:"Visibilidad: [X] millas/metros. [Buena/Moderada/Mala/Niebla].",pt:"Visibilidade: [X] milhas/metros. [Boa/Moderada/Má/Nevoeiro]."} },
       ]},
     traffic:{
       label:{fr:"Trafic & Abordage",en:"Traffic & Collision",es:"Tráfico y Colisión",pt:"Tráfego e Colisão"},
       color:C.orange,
       cards:[
-        { q:"How do you report a vessel on radar?", a:"I have a vessel on radar. Bearing [X] degrees. Range [X] miles. CPA [X] miles in [X] minutes.", fr:"J'ai un navire sur radar. Relèvement [X] degrés. Distance [X] milles. CPA [X] milles dans [X] minutes." },
-        { q:"How do you warn another vessel of collision risk?", a:"Warning! You are standing into danger. Alter course immediately to [port/starboard].", fr:"Attention ! Vous vous dirigez vers un danger. Changez immédiatement de cap sur [bâbord/tribord]." },
-        { q:"How do you report an alteration to avoid collision?", a:"I am altering course to [starboard/port] to avoid collision.", fr:"Je vire sur [tribord/bâbord] pour éviter une collision." },
-        { q:"How do you confirm passing agreement?", a:"I agree to pass on [port/starboard] side. Please acknowledge.", fr:"J'accepte de passer sur [bâbord/tribord]. Veuillez confirmer." },
-        { q:"How do you report overtaking?", a:"I intend to overtake you on your [port/starboard] side. Do you agree?", fr:"J'ai l'intention de vous dépasser par votre [bâbord/tribord]. Êtes-vous d'accord ?" },
+        { q:"How do you report a vessel on radar?", a:"I have a vessel on radar. Bearing [X] degrees. Range [X] miles. CPA [X] miles in [X] minutes.", tr:{fr:"J'ai un navire sur radar. Relèvement [X] degrés. Distance [X] milles. CPA [X] milles dans [X] minutes.",es:"Tengo un buque en el radar. Marcación [X] grados. Distancia [X] millas. CPA [X] millas en [X] minutos.",pt:"Tenho um navio no radar. Marcação [X] graus. Distância [X] milhas. CPA [X] milhas em [X] minutos."} },
+        { q:"How do you warn another vessel of collision risk?", a:"Warning! You are standing into danger. Alter course immediately to [port/starboard].", tr:{fr:"Attention ! Vous vous dirigez vers un danger. Changez immédiatement de cap sur [bâbord/tribord].",es:"¡Atención! Se dirige hacia un peligro. Cambie inmediatamente de rumbo a [babor/estribor].",pt:"Atenção! Está a dirigir-se para um perigo. Altere imediatamente o rumo para [bombordo/estibordo]."} },
+        { q:"How do you report an alteration to avoid collision?", a:"I am altering course to [starboard/port] to avoid collision.", tr:{fr:"Je vire sur [tribord/bâbord] pour éviter une collision.",es:"Viro a [estribor/babor] para evitar una colisión.",pt:"Viro para [estibordo/bombordo] para evitar uma colisão."} },
+        { q:"How do you confirm passing agreement?", a:"I agree to pass on [port/starboard] side. Please acknowledge.", tr:{fr:"J'accepte de passer sur [bâbord/tribord]. Veuillez confirmer.",es:"Acepto pasar por [babor/estribor]. Por favor confirme.",pt:"Aceito passar por [bombordo/estibordo]. Por favor confirme."} },
+        { q:"How do you report overtaking?", a:"I intend to overtake you on your [port/starboard] side. Do you agree?", tr:{fr:"J'ai l'intention de vous dépasser par votre [bâbord/tribord]. Êtes-vous d'accord ?",es:"Tengo la intención de adelantarle por su [babor/estribor]. ¿Está de acuerdo?",pt:"Tenho a intenção de ultrapassá-lo pelo seu [bombordo/estibordo]. Concorda?"} },
       ]},
     weather:{
       label:{fr:"Météo & Conditions",en:"Weather & Conditions",es:"Meteorología y Condiciones",pt:"Meteorologia e Condições"},
       color:C.purple,
       cards:[
-        { q:"How do you report wind?", a:"Wind direction [X] degrees, force [Beaufort scale / X knots]. [Gusting to X knots].", fr:"Direction du vent [X] degrés, force [Beaufort / X nœuds]. [Rafales à X nœuds]." },
-        { q:"How do you report sea state?", a:"Sea state [calm/slight/moderate/rough/very rough/high/phenomenal]. Wave height [X] metres.", fr:"État de la mer [calme/faible/modéré/agité/très agité/grosse mer/mer énorme]. Hauteur des vagues [X] mètres." },
-        { q:"How do you report current?", a:"Current is setting [X] degrees, drifting [X] knots.", fr:"Courant portant vers [X] degrés, dérive [X] nœuds." },
-        { q:"How do you request weather report from coast station?", a:"[Station name], this is [vessel name]. Please send the weather forecast for area [X].", fr:"[Nom de la station], ici [nom du navire]. Veuillez envoyer les prévisions météo pour la zone [X]." },
-        { q:"How do you report restricted visibility?", a:"Visibility is restricted. I am proceeding at reduced speed. I am sounding fog signals.", fr:"Visibilité réduite. Je navigue à vitesse réduite. J'émets les signaux de brouillard." },
+        { q:"How do you report wind?", a:"Wind direction [X] degrees, force [Beaufort scale / X knots]. [Gusting to X knots].", tr:{fr:"Direction du vent [X] degrés, force [Beaufort / X nœuds]. [Rafales à X nœuds].",es:"Dirección del viento [X] grados, fuerza [Beaufort / X nudos]. [Rachas de X nudos].",pt:"Direção do vento [X] graus, força [Beaufort / X nós]. [Rajadas de X nós]."} },
+        { q:"How do you report sea state?", a:"Sea state [calm/slight/moderate/rough/very rough/high/phenomenal]. Wave height [X] metres.", tr:{fr:"État de la mer [calme/faible/modéré/agité/très agité/grosse mer/mer énorme]. Hauteur des vagues [X] mètres.",es:"Estado de la mar [calma/rizada/marejadilla/marejada/fuerte marejada/gruesa/muy gruesa]. Altura de olas [X] metros.",pt:"Estado do mar [calmo/pouco encapelado/encapelado/muito encapelado/agitado/muito agitado/enorme]. Altura das ondas [X] metros."} },
+        { q:"How do you report current?", a:"Current is setting [X] degrees, drifting [X] knots.", tr:{fr:"Courant portant vers [X] degrés, dérive [X] nœuds.",es:"Corriente hacia [X] grados, deriva [X] nudos.",pt:"Corrente para [X] graus, deriva [X] nós."} },
+        { q:"How do you request weather report from coast station?", a:"[Station name], this is [vessel name]. Please send the weather forecast for area [X].", tr:{fr:"[Nom de la station], ici [nom du navire]. Veuillez envoyer les prévisions météo pour la zone [X].",es:"[Nombre de la estación], aquí [nombre del buque]. Por favor envíe el pronóstico meteorológico para la zona [X].",pt:"[Nome da estação], aqui [nome do navio]. Por favor envie a previsão meteorológica para a zona [X]."} },
+        { q:"How do you report restricted visibility?", a:"Visibility is restricted. I am proceeding at reduced speed. I am sounding fog signals.", tr:{fr:"Visibilité réduite. Je navigue à vitesse réduite. J'émets les signaux de brouillard.",es:"Visibilidad reducida. Navego a velocidad reducida. Emito señales de niebla.",pt:"Visibilidade reduzida. Navego a velocidade reduzida. Emito sinais de nevoeiro."} },
       ]},
     reporting:{
       label:{fr:"Rapports & Consignes",en:"Reports & Orders",es:"Informes y Órdenes",pt:"Relatórios e Ordens"},
       color:C.green,
       cards:[
-        { q:"How do you call the captain to the bridge?", a:"Captain, please come to the bridge. [Reason: traffic/weather/position uncertainty].", fr:"Capitaine, veuillez vous rendre à la passerelle. [Raison : trafic/météo/incertitude de position]." },
-        { q:"How do you report engine status?", a:"Engine is on [full/half/slow/dead slow] ahead/astern. RPM is [X].", fr:"Machine en avant [toute/mi/lente/très lente]/arrière. RPM : [X]." },
-        { q:"How do you report anchoring?", a:"Anchor is let go in [X] metres of water. [X] shackles on deck. Holding well/dragging.", fr:"L'ancre est mouillée par [X] mètres de fond. [X] manilles filées. Tient bien/chasse." },
-        { q:"How do you report to pilot station?", a:"[Pilot station], this is [vessel name]. I require a pilot. My ETA is [time] UTC. Draught [X] metres.", fr:"[Station pilotage], ici [nom du navire]. Je demande un pilote. Mon ETA est [heure] UTC. Tirant d'eau [X] m." },
-        { q:"How do you hand over standing orders?", a:"Standing orders are as follows: Call me if [condition]. Maintain course [X]. Reduce speed if visibility drops below [X] miles.", fr:"Consignes permanentes : Appelez-moi si [condition]. Maintenez le cap [X]. Réduisez la vitesse si visibilité < [X] milles." },
+        { q:"How do you call the captain to the bridge?", a:"Captain, please come to the bridge. [Reason: traffic/weather/position uncertainty].", tr:{fr:"Capitaine, veuillez vous rendre à la passerelle. [Raison : trafic/météo/incertitude de position].",es:"Capitán, por favor diríjase al puente. [Motivo: tráfico/meteorología/incertidumbre de posición].",pt:"Capitão, por favor dirija-se à ponte. [Motivo: tráfego/meteorologia/incerteza de posição]."} },
+        { q:"How do you report engine status?", a:"Engine is on [full/half/slow/dead slow] ahead/astern. RPM is [X].", tr:{fr:"Machine en avant [toute/mi/lente/très lente]/arrière. RPM : [X].",es:"Máquina avante [toda/media/lenta/muy lenta]/atrás. RPM: [X].",pt:"Máquina avante [toda/meia/lenta/muito lenta]/à ré. RPM: [X]."} },
+        { q:"How do you report anchoring?", a:"Anchor is let go in [X] metres of water. [X] shackles on deck. Holding well/dragging.", tr:{fr:"L'ancre est mouillée par [X] mètres de fond. [X] manilles filées. Tient bien/chasse.",es:"El ancla está fondeada en [X] metros de agua. [X] grilletes largados. Aguanta bien/garrea.",pt:"A âncora está fundeada em [X] metros de água. [X] quartéis filados. Está a segurar bem/a garrar."} },
+        { q:"How do you report to pilot station?", a:"[Pilot station], this is [vessel name]. I require a pilot. My ETA is [time] UTC. Draught [X] metres.", tr:{fr:"[Station pilotage], ici [nom du navire]. Je demande un pilote. Mon ETA est [heure] UTC. Tirant d'eau [X] m.",es:"[Estación de practicaje], aquí [nombre del buque]. Solicito un práctico. Mi ETA es [hora] UTC. Calado [X] m.",pt:"[Estação de pilotagem], aqui [nome do navio]. Solicito um piloto. O meu ETA é [hora] UTC. Calado [X] m."} },
+        { q:"How do you hand over standing orders?", a:"Standing orders are as follows: Call me if [condition]. Maintain course [X]. Reduce speed if visibility drops below [X] miles.", tr:{fr:"Consignes permanentes : Appelez-moi si [condition]. Maintenez le cap [X]. Réduisez la vitesse si visibilité < [X] milles.",es:"Consignas permanentes: Llámenme si [condición]. Mantengan el rumbo [X]. Reduzcan la velocidad si la visibilidad < [X] millas.",pt:"Ordens permanentes: Chamem-me se [condição]. Mantenham o rumo [X]. Reduzam a velocidade se a visibilidade < [X] milhas."} },
       ]},
   };
 
@@ -181,14 +181,14 @@ function SMCPFlashcardsSVG({ lang }) {
         display:"flex",flexDirection:"column",justifyContent:"center",marginBottom:10}}>
         {!flipped ? (
           <div>
-            <div style={{fontSize:9,color:C.muted,letterSpacing:2,marginBottom:8}}>❓ QUESTION — {lang==="fr"?"Touche pour la réponse":lang==="en"?"Tap for answer":"Toca para respuesta"}</div>
+            <div style={{fontSize:9,color:C.muted,letterSpacing:2,marginBottom:8}}>❓ QUESTION — {lang==="fr"?"Touche pour la réponse":lang==="en"?"Tap for answer":lang==="es"?"Toca para respuesta":"Toque para resposta"}</div>
             <div style={{fontSize:14,color:C.white,fontWeight:700,lineHeight:1.5}}>{card.q}</div>
           </div>
         ) : (
           <div>
             <div style={{fontSize:9,color:cat.color,letterSpacing:2,marginBottom:8}}>✅ SMCP ANSWER</div>
             <div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:C.white,lineHeight:1.7,marginBottom:8,whiteSpace:"pre-line"}}>{card.a}</div>
-            {(lang==="fr"||lang==="es"||lang==="pt")&&<div style={{fontSize:10,color:C.muted,fontStyle:"italic",lineHeight:1.5,borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:6}}>{card.fr}</div>}
+            {(lang==="fr"||lang==="es"||lang==="pt")&&<div style={{fontSize:10,color:C.muted,fontStyle:"italic",lineHeight:1.5,borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:6}}>{card.tr[lang]||card.tr.fr}</div>}
           </div>
         )}
       </div>
@@ -196,11 +196,11 @@ function SMCPFlashcardsSVG({ lang }) {
       <div style={{display:"flex",gap:8}}>
         <button onClick={()=>{setIdx(i=>Math.max(0,i-1));setFlipped(false);}} disabled={idx===0}
           style={{flex:1,padding:"9px",borderRadius:10,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:idx===0?C.muted:C.white,cursor:idx===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":lang==="es"?"Anterior":"Anterior"}
         </button>
         <button onClick={()=>{setIdx(i=>Math.min(cat.cards.length-1,i+1));setFlipped(false);}} disabled={idx===cat.cards.length-1}
           style={{flex:1,padding:"9px",borderRadius:10,background:idx===cat.cards.length-1?"rgba(255,255,255,0.05)":`${cat.color}22`,border:`1px solid ${idx===cat.cards.length-1?"rgba(255,255,255,0.08)":cat.color}`,color:C.white,cursor:idx===cat.cards.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+          {lang==="fr"?"Suivant":lang==="en"?"Next":lang==="es"?"Siguiente":"Seguinte"} ▶
         </button>
       </div>
     </div>
@@ -621,25 +621,25 @@ export default function LessonSMCP_L1({ lang="en", onBack=()=>{}, onComplete=()=
             <SL icon="🔄" text={lc.p1} color={C.watch}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,background:"rgba(0,5,20,0.7)",border:`1px solid ${C.watch}22`}}>
-              <div style={{fontSize:11,color:C.watch,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔄 {lang==="fr"?"SIMULATEUR RELÈVE DE QUART":lang==="en"?"WATCH HANDOVER SIMULATOR":"SIMULADOR CAMBIO DE GUARDIA"}</div>
+              <div style={{fontSize:11,color:C.watch,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔄 {lang==="fr"?"SIMULATEUR RELÈVE DE QUART":lang==="en"?"WATCH HANDOVER SIMULATOR":lang==="es"?"SIMULADOR CAMBIO DE GUARDIA":"SIMULADOR MUDANÇA DE QUARTO"}</div>
               <WatchHandoverSVG lang={lang}/>
             </Card>
             <SL icon="🃏" text={lc.p2} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}22`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🃏 {lang==="fr"?"FICHES SMCP INTERACTIVES":lang==="en"?"SMCP INTERACTIVE FLASHCARDS":"FICHAS SMCP INTERACTIVAS"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🃏 {lang==="fr"?"FICHES SMCP INTERACTIVES":lang==="en"?"SMCP INTERACTIVE FLASHCARDS":lang==="es"?"FICHAS SMCP INTERACTIVAS":"FICHAS SMCP INTERATIVAS"}</div>
               <SMCPFlashcardsSVG lang={lang}/>
             </Card>
             <SL icon="📐" text={lc.p3} color={C.smcp}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.smcp}22`}}>
-              <div style={{fontSize:11,color:C.smcp,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📐 {lang==="fr"?"FORMATS & MOTS CLÉS SMCP":lang==="en"?"SMCP FORMATS & KEYWORDS":"FORMATOS Y PALABRAS CLAVE SMCP"}</div>
+              <div style={{fontSize:11,color:C.smcp,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📐 {lang==="fr"?"FORMATS & MOTS CLÉS SMCP":lang==="en"?"SMCP FORMATS & KEYWORDS":lang==="es"?"FORMATOS Y PALABRAS CLAVE SMCP":"FORMATOS E PALAVRAS-CHAVE SMCP"}</div>
               <SMCPFormatsSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p4} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ VOCABULAIRE SMCP":lang==="en"?"SMCP VOCABULARY QUIZ":"QUIZ VOCABULARIO SMCP"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ VOCABULAIRE SMCP":lang==="en"?"SMCP VOCABULARY QUIZ":lang==="es"?"QUIZ VOCABULARIO SMCP":"QUIZ VOCABULÁRIO SMCP"}</div>
               <SMCPVocabQuiz lang={lang}/>
             </Card>
             <SL icon="📝" text={lc.p5} color={C.gold}/>
@@ -656,7 +656,7 @@ export default function LessonSMCP_L1({ lang="en", onBack=()=>{}, onComplete=()=
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Bridge Watch & SMCP</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":"Lección 1"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":lang==="es"?"Lección 1":"Lição 1"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

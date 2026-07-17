@@ -26,35 +26,35 @@ function VTSApproachSVG({ lang }) {
   const dialogues = [
     { speaker:"VESSEL", ch:"16",
       smcp:"Marseille VTS, Marseille VTS, this is MV Atlantic Pioneer, MV Atlantic Pioneer. Over.",
-      fr:"Marseille VTS, Marseille VTS, ici MV Atlantic Pioneer, MV Atlantic Pioneer. Terminé.",
+      tr:{fr:"Marseille VTS, Marseille VTS, ici MV Atlantic Pioneer, MV Atlantic Pioneer. Terminé.",es:"Marseille VTS, Marseille VTS, aquí MV Atlantic Pioneer, MV Atlantic Pioneer. Cambio.",pt:"Marseille VTS, Marseille VTS, aqui MV Atlantic Pioneer, MV Atlantic Pioneer. Câmbio."},
       note:{fr:"PREMIER APPEL VTS (CH 16)\n→ Répéter le nom de la station 2 fois\n→ Répéter le nom du navire 2 fois\n→ Toujours sur CH 16 pour l'appel initial\n→ Attendre la réponse avant de continuer",
             en:"FIRST VTS CALL (CH 16)\n→ Repeat station name twice\n→ Repeat vessel name twice\n→ Always CH 16 for initial call\n→ Wait for response before continuing",
             es:"PRIMERA LLAMADA VTS (CH 16)\n→ Repetir el nombre de la estación 2 veces\n→ Repetir el nombre del buque 2 veces\n→ Siempre CH 16 para la llamada inicial",
             pt:"PRIMEIRA CHAMADA VTS (CH 16)\n→ Repetir o nome da estação 2 vezes\n→ Repetir o nome do navio 2 vezes\n→ Sempre CH 16 para a chamada inicial"} },
     { speaker:"VTS", ch:"16",
       smcp:"MV Atlantic Pioneer, this is Marseille VTS. Switch to channel 12. Over.",
-      fr:"MV Atlantic Pioneer, ici Marseille VTS. Passez sur le canal 12. Terminé.",
+      tr:{fr:"MV Atlantic Pioneer, ici Marseille VTS. Passez sur le canal 12. Terminé.",es:"MV Atlantic Pioneer, aquí Marseille VTS. Cambie al canal 12. Cambio.",pt:"MV Atlantic Pioneer, aqui Marseille VTS. Mude para o canal 12. Câmbio."},
       note:{fr:"RÉPONSE VTS\n→ Le VTS répond sur CH 16\n→ Demande de basculer sur canal de travail\n→ Canal 12 = canal trafic Marseille\n→ Les canaux VTS varient selon les ports !\n→ Toujours vérifier les Instructions Nautiques",
             en:"VTS RESPONSE\n→ VTS replies on CH 16\n→ Requests switch to working channel\n→ CH 12 = Marseille traffic channel\n→ VTS channels vary by port!\n→ Always check Sailing Directions",
             es:"RESPUESTA VTS\n→ El VTS responde en CH 16\n→ Solicita cambiar al canal de trabajo\n→ CH 12 = canal de tráfico de Marsella\n→ Los canales VTS varían según los puertos",
             pt:"RESPOSTA VTS\n→ O VTS responde no CH 16\n→ Solicita mudança para canal de trabalho\n→ CH 12 = canal de tráfego de Marselha\n→ Os canais VTS variam por porto"} },
     { speaker:"VESSEL", ch:"12",
       smcp:"Marseille VTS, this is MV Atlantic Pioneer on channel 12. Position: 4 miles south-west of the entrance. ETA entrance 0830 UTC. Draught 9.5 metres. Request port entry. Over.",
-      fr:"Marseille VTS, ici MV Atlantic Pioneer sur canal 12. Position : 4 milles au sud-ouest de l'entrée. ETA entrée 0830 UTC. Tirant d'eau 9,5 mètres. Demande d'entrée au port. Terminé.",
+      tr:{fr:"Marseille VTS, ici MV Atlantic Pioneer sur canal 12. Position : 4 milles au sud-ouest de l'entrée. ETA entrée 0830 UTC. Tirant d'eau 9,5 mètres. Demande d'entrée au port. Terminé.",es:"Marseille VTS, aquí MV Atlantic Pioneer en el canal 12. Posición: 4 millas al suroeste de la entrada. ETA entrada 0830 UTC. Calado 9,5 metros. Solicito entrada al puerto. Cambio.",pt:"Marseille VTS, aqui MV Atlantic Pioneer no canal 12. Posição: 4 milhas a sudoeste da entrada. ETA entrada 0830 UTC. Calado 9,5 metros. Pedido de entrada no porto. Câmbio."},
       note:{fr:"MESSAGE D'ARRIVÉE COMPLET\nInformations OBLIGATOIRES :\n1. Confirmation du canal\n2. Position (distance + relèvement)\n3. ETA à l'entrée du port (UTC)\n4. Tirant d'eau (draught)\n5. Demande d'entrée / pilote\n\nFORMAT DRAUGHT SMCP :\n'Draught [X] metres forward\nand [X] metres aft'\n(ou simplement '[X] metres' si uniforme)",
             en:"COMPLETE ARRIVAL MESSAGE\nMANDATORY information:\n1. Channel confirmation\n2. Position (distance + bearing)\n3. ETA at port entrance (UTC)\n4. Draught\n5. Entry request / pilot\n\nSMCP DRAUGHT FORMAT:\n'Draught [X] metres forward\nand [X] metres aft'\n(or simply '[X] metres' if uniform)",
             es:"MENSAJE DE LLEGADA COMPLETO\nInformación OBLIGATORIA:\n1. Confirmación del canal\n2. Posición (distancia + marcación)\n3. ETA a la entrada del puerto (UTC)\n4. Calado\n5. Solicitud de entrada / práctico",
             pt:"MENSAGEM DE CHEGADA COMPLETA\nInformação OBRIGATÓRIA:\n1. Confirmação do canal\n2. Posição (distância + marcação)\n3. ETA na entrada do porto (UTC)\n4. Calado\n5. Pedido de entrada / prático"} },
     { speaker:"VTS", ch:"12",
       smcp:"MV Atlantic Pioneer, Marseille VTS. Entry is approved. Proceed to anchorage Bravo. Pilot will board at 0845 UTC. Stand by on channel 12. Over.",
-      fr:"MV Atlantic Pioneer, Marseille VTS. Entrée autorisée. Gagnez le mouillage Bravo. Le pilote embarquera à 0845 UTC. Restez sur le canal 12. Terminé.",
+      tr:{fr:"MV Atlantic Pioneer, Marseille VTS. Entrée autorisée. Gagnez le mouillage Bravo. Le pilote embarquera à 0845 UTC. Restez sur le canal 12. Terminé.",es:"MV Atlantic Pioneer, Marseille VTS. Entrada autorizada. Diríjase al fondeadero Bravo. El práctico embarcará a las 0845 UTC. Permanezca en el canal 12. Cambio.",pt:"MV Atlantic Pioneer, Marseille VTS. Entrada autorizada. Dirija-se ao fundeadouro Bravo. O prático embarcará às 0845 UTC. Permaneça no canal 12. Câmbio."},
       note:{fr:"AUTORISATION D'ENTRÉE VTS\n→ 'Entry is approved' = autorisé à entrer\n→ Instructions de mouillage ou de quai\n→ Heure d'embarquement du pilote\n→ 'Stand by on channel [X]' = rester à l'écoute\n\nSI REFUS :\n'Entry is not approved at this time.'\n'Remain at anchorage [X].'\n'Report when ready to proceed.'",
             en:"VTS ENTRY CLEARANCE\n→ 'Entry is approved' = authorized to enter\n→ Anchorage or berth instructions\n→ Pilot boarding time\n→ 'Stand by on channel [X]' = remain listening\n\nIF REFUSED:\n'Entry is not approved at this time.'\n'Remain at anchorage [X].'\n'Report when ready to proceed.'",
             es:"AUTORIZACIÓN DE ENTRADA VTS\n→ 'Entry is approved' = autorizado para entrar\n→ Instrucciones de fondeadero o muelle\n→ Hora de embarco del práctico\n→ 'Stand by on channel [X]' = permanecer a la escucha",
             pt:"AUTORIZAÇÃO DE ENTRADA VTS\n→ 'Entry is approved' = autorizado a entrar\n→ Instruções de fundeadouro ou cais\n→ Hora de embarque do prático\n→ 'Stand by on channel [X]' = permanecer à escuta"} },
     { speaker:"VESSEL", ch:"12",
       smcp:"Marseille VTS, MV Atlantic Pioneer. Understood. Proceeding to anchorage Bravo. Standing by on channel 12. Over.",
-      fr:"Marseille VTS, MV Atlantic Pioneer. Bien reçu. Nous nous rendons au mouillage Bravo. En écoute sur canal 12. Terminé.",
+      tr:{fr:"Marseille VTS, MV Atlantic Pioneer. Bien reçu. Nous nous rendons au mouillage Bravo. En écoute sur canal 12. Terminé.",es:"Marseille VTS, MV Atlantic Pioneer. Recibido. Nos dirigimos al fondeadero Bravo. A la escucha en el canal 12. Cambio.",pt:"Marseille VTS, MV Atlantic Pioneer. Bem recebido. Dirigimo-nos ao fundeadouro Bravo. À escuta no canal 12. Câmbio."},
       note:{fr:"ACCUSÉ DE RÉCEPTION\n→ Toujours confirmer les instructions reçues\n→ Répéter les points clés (mouillage, canal)\n→ 'Understood' ou 'Roger' sont acceptés\n→ 'Standing by on channel [X]' = confirmation\n\nEXPRESSION SMCP CLÉS :\n'Proceeding to [destination]'\n'Standing by on channel [X]'\n'Request further instructions'\n'What are my berthing instructions?'",
             en:"ACKNOWLEDGMENT\n→ Always confirm received instructions\n→ Repeat key points (anchorage, channel)\n→ 'Understood' or 'Roger' are accepted\n→ 'Standing by on channel [X]' = confirmation\n\nKEY SMCP EXPRESSIONS:\n'Proceeding to [destination]'\n'Standing by on channel [X]'\n'Request further instructions'\n'What are my berthing instructions?'",
             es:"ACUSE DE RECIBO\n→ Siempre confirmar las instrucciones recibidas\n→ Repetir los puntos clave (fondeadero, canal)\n→ 'Understood' o 'Roger' son aceptados\n→ 'Standing by on channel [X]' = confirmación",
@@ -90,10 +90,10 @@ function VTSApproachSVG({ lang }) {
         <div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:C.white,lineHeight:1.6,marginBottom:8,fontWeight:600}}>
           "{d.smcp}"
         </div>
-        <button onClick={()=>setShowTr(!showTr)} style={{fontSize:9,padding:"3px 8px",borderRadius:8,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer"}}>
-          {showTr?"▲":"▼"} {lang==="fr"?"Traduction":lang==="en"?"Translation":"Traducción"}
-        </button>
-        {showTr&&<div style={{fontSize:11,color:C.muted,marginTop:6,fontStyle:"italic"}}>{d.fr}</div>}
+        {lang!=="en"&&<button onClick={()=>setShowTr(!showTr)} style={{fontSize:9,padding:"3px 8px",borderRadius:8,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer"}}>
+          {showTr?"▲":"▼"} {lang==="fr"?"Traduction":lang==="es"?"Traducción":"Tradução"}
+        </button>}
+        {lang!=="en"&&showTr&&<div style={{fontSize:11,color:C.muted,marginTop:6,fontStyle:"italic"}}>{d.tr[lang]||d.tr.fr}</div>}
       </div>
       <div style={{padding:"10px 12px",borderRadius:12,background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.06)",marginBottom:10,fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
         {d.note[lang]||d.note.en}
@@ -101,11 +101,11 @@ function VTSApproachSVG({ lang }) {
       <div style={{display:"flex",gap:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"9px",borderRadius:10,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":lang==="es"?"Anterior":"Anterior"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(dialogues.length-1,s+1))} disabled={step===dialogues.length-1}
           style={{flex:1,padding:"9px",borderRadius:10,background:step===dialogues.length-1?"rgba(255,255,255,0.05)":`${C.vts}22`,border:`1px solid ${step===dialogues.length-1?"rgba(255,255,255,0.08)":C.vts}`,color:C.white,cursor:step===dialogues.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+          {lang==="fr"?"Suivant":lang==="en"?"Next":lang==="es"?"Siguiente":"Seguinte"} ▶
         </button>
       </div>
     </div>
@@ -174,11 +174,11 @@ function PilotBoardingSVG({ lang }) {
       <div style={{display:"flex",gap:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"9px",borderRadius:10,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":lang==="es"?"Anterior":"Anterior"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(exchanges.length-1,s+1))} disabled={step===exchanges.length-1}
           style={{flex:1,padding:"9px",borderRadius:10,background:step===exchanges.length-1?"rgba(255,255,255,0.05)":`${C.pilot}22`,border:`1px solid ${step===exchanges.length-1?"rgba(255,255,255,0.08)":C.pilot}`,color:C.white,cursor:step===exchanges.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+          {lang==="fr"?"Suivant":lang==="en"?"Next":lang==="es"?"Siguiente":"Seguinte"} ▶
         </button>
       </div>
     </div>
@@ -195,38 +195,38 @@ function BerthingPhrasesSVG({ lang }) {
     { id:"approach", icon:"⚓", color:C.vts,
       label:{fr:"Approche & Mouillage",en:"Approach & Anchorage",es:"Aproximación y Fondeo",pt:"Aproximação e Fundeamento"},
       phrases:[
-        { smcp:"I am proceeding to anchorage [name/letter].", fr:"Je me rends au mouillage [nom/lettre]." },
-        { smcp:"I am anchoring in position Latitude [X]°[X]'N, Longitude [X]°[X]'E. Depth [X] metres. [X] shackles of cable.", fr:"Mouillage en position Lat [X]°[X]'N, Long [X]°[X]'E. Fond [X] m. [X] manilles." },
-        { smcp:"Anchor is let go. Anchor is holding well.", fr:"Ancre mouillée. Ancre tient bien." },
-        { smcp:"My anchor is dragging. I require assistance.", fr:"Mon ancre chasse. J'ai besoin d'assistance." },
-        { smcp:"I require a tug. Please arrange.", fr:"Je demande un remorqueur. Veuillez organiser." },
+        { smcp:"I am proceeding to anchorage [name/letter].", tr:{fr:"Je me rends au mouillage [nom/lettre].",es:"Me dirijo al fondeadero [nombre/letra].",pt:"Dirijo-me ao fundeadouro [nome/letra]."} },
+        { smcp:"I am anchoring in position Latitude [X]°[X]'N, Longitude [X]°[X]'E. Depth [X] metres. [X] shackles of cable.", tr:{fr:"Mouillage en position Lat [X]°[X]'N, Long [X]°[X]'E. Fond [X] m. [X] manilles.",es:"Fondeo en posición Lat [X]°[X]'N, Long [X]°[X]'E. Fondo [X] m. [X] grilletes.",pt:"Fundeio em posição Lat [X]°[X]'N, Long [X]°[X]'E. Fundo [X] m. [X] quartéis."} },
+        { smcp:"Anchor is let go. Anchor is holding well.", tr:{fr:"Ancre mouillée. Ancre tient bien.",es:"Ancla fondeada. El ancla aguanta bien.",pt:"Âncora fundeada. A âncora está a segurar bem."} },
+        { smcp:"My anchor is dragging. I require assistance.", tr:{fr:"Mon ancre chasse. J'ai besoin d'assistance.",es:"Mi ancla garrea. Necesito asistencia.",pt:"A minha âncora está a garrar. Preciso de assistência."} },
+        { smcp:"I require a tug. Please arrange.", tr:{fr:"Je demande un remorqueur. Veuillez organiser.",es:"Solicito un remolcador. Por favor organice.",pt:"Solicito um rebocador. Por favor providencie."} },
       ]},
     { id:"berthing", icon:"🚢", color:C.port,
       label:{fr:"Amarrage & Quai",en:"Berthing & Quay",es:"Atraque y Muelle",pt:"Atracação e Cais"},
       phrases:[
-        { smcp:"What is my berth number / berth assignment?", fr:"Quel est mon numéro / affectation de poste d'amarrage ?" },
-        { smcp:"I am approaching berth [X] on [port/starboard] side.", fr:"J'approche du poste [X] par [bâbord/tribord]." },
-        { smcp:"Please send lines. I am ready to receive mooring lines.", fr:"Envoyez les amarres. Je suis prêt à recevoir les amarres." },
-        { smcp:"Make fast [forward / aft / spring lines].", fr:"Raidissez [les amarres avant / arrière / les gardes]." },
-        { smcp:"Vessel is all fast. Gangway is being rigged.", fr:"Le navire est amarré. La passerelle est en cours de mise en place." },
+        { smcp:"What is my berth number / berth assignment?", tr:{fr:"Quel est mon numéro / affectation de poste d'amarrage ?",es:"¿Cuál es mi número / asignación de atraque?",pt:"Qual é o meu número / atribuição de cais?"} },
+        { smcp:"I am approaching berth [X] on [port/starboard] side.", tr:{fr:"J'approche du poste [X] par [bâbord/tribord].",es:"Me aproximo al atraque [X] por [babor/estribor].",pt:"Aproximo-me do cais [X] por [bombordo/estibordo]."} },
+        { smcp:"Please send lines. I am ready to receive mooring lines.", tr:{fr:"Envoyez les amarres. Je suis prêt à recevoir les amarres.",es:"Envíen los cabos. Estoy listo para recibir las amarras.",pt:"Enviem os cabos. Estou pronto para receber as amarras."} },
+        { smcp:"Make fast [forward / aft / spring lines].", tr:{fr:"Raidissez [les amarres avant / arrière / les gardes].",es:"Tensen [las amarras de proa / popa / los springs].",pt:"Tesem [as amarras de vante / de ré / as espias]."} },
+        { smcp:"Vessel is all fast. Gangway is being rigged.", tr:{fr:"Le navire est amarré. La passerelle est en cours de mise en place.",es:"El buque está amarrado. La pasarela está siendo instalada.",pt:"O navio está atracado. A prancha está a ser colocada."} },
       ]},
     { id:"tugs", icon:"🏭", color:C.orange,
       label:{fr:"Remorqueurs",en:"Tugs",es:"Remolcadores",pt:"Rebocadores"},
       phrases:[
-        { smcp:"Tug [name], make fast forward / aft.", fr:"Remorqueur [nom], acostez à l'avant / à l'arrière." },
-        { smcp:"Push on [port/starboard] bow / quarter.", fr:"Poussez sur [bâbord/tribord] à l'étrave / à la hanche." },
-        { smcp:"Pull on [port/starboard] side.", fr:"Tirez sur [bâbord/tribord]." },
-        { smcp:"Let go tug. Stand clear.", fr:"Larguez le remorqueur. Dégagez." },
-        { smcp:"Tug assistance is required. Tug to come alongside [port/starboard].", fr:"Assistance remorqueur requise. Remorqueur par [bâbord/tribord]." },
+        { smcp:"Tug [name], make fast forward / aft.", tr:{fr:"Remorqueur [nom], acostez à l'avant / à l'arrière.",es:"Remolcador [nombre], amárrese a proa / a popa.",pt:"Rebocador [nome], atraque à vante / à ré."} },
+        { smcp:"Push on [port/starboard] bow / quarter.", tr:{fr:"Poussez sur [bâbord/tribord] à l'étrave / à la hanche.",es:"Empuje por [babor/estribor] en la proa / en la aleta.",pt:"Empurre por [bombordo/estibordo] na proa / na alheta."} },
+        { smcp:"Pull on [port/starboard] side.", tr:{fr:"Tirez sur [bâbord/tribord].",es:"Tire por [babor/estribor].",pt:"Puxe por [bombordo/estibordo]."} },
+        { smcp:"Let go tug. Stand clear.", tr:{fr:"Larguez le remorqueur. Dégagez.",es:"Suelte el remolcador. Despéjese.",pt:"Largue o rebocador. Afaste-se."} },
+        { smcp:"Tug assistance is required. Tug to come alongside [port/starboard].", tr:{fr:"Assistance remorqueur requise. Remorqueur par [bâbord/tribord].",es:"Se requiere asistencia de remolcador. Remolcador por [babor/estribor].",pt:"Assistência de rebocador necessária. Rebocador por [bombordo/estibordo]."} },
       ]},
     { id:"mooring", icon:"🔗", color:C.moor,
       label:{fr:"Manœuvres d'amarrage",en:"Mooring operations",es:"Operaciones de amarre",pt:"Operações de amarração"},
       phrases:[
-        { smcp:"Let go [forward lines / aft lines / spring lines / all lines].", fr:"Largez [les amarres avant / arrière / les gardes / toutes les amarres]." },
-        { smcp:"Heave in [slowly / together / on the forward spring].", fr:"Amenez [doucement / ensemble / la garde avant]." },
-        { smcp:"Ease out / slack away [forward lines].", fr:"Filez [les amarres avant]." },
-        { smcp:"Make secure. Vessel is at rest.", fr:"Amarrez solidement. Le navire est à l'arrêt." },
-        { smcp:"All lines ashore. Gangway in position.", fr:"Toutes les amarres à quai. Passerelle en position." },
+        { smcp:"Let go [forward lines / aft lines / spring lines / all lines].", tr:{fr:"Largez [les amarres avant / arrière / les gardes / toutes les amarres].",es:"Larguen [las amarras de proa / popa / los springs / todas las amarras].",pt:"Larguem [as amarras de vante / de ré / as espias / todas as amarras]."} },
+        { smcp:"Heave in [slowly / together / on the forward spring].", tr:{fr:"Amenez [doucement / ensemble / la garde avant].",es:"Cobren [despacio / juntos / el spring de proa].",pt:"Colham [devagar / juntos / a espia de vante]."} },
+        { smcp:"Ease out / slack away [forward lines].", tr:{fr:"Filez [les amarres avant].",es:"Larguen [las amarras de proa].",pt:"Filem [as amarras de vante]."} },
+        { smcp:"Make secure. Vessel is at rest.", tr:{fr:"Amarrez solidement. Le navire est à l'arrêt.",es:"Amarren firmemente. El buque está detenido.",pt:"Amarrem firmemente. O navio está parado."} },
+        { smcp:"All lines ashore. Gangway in position.", tr:{fr:"Toutes les amarres à quai. Passerelle en position.",es:"Todas las amarras a tierra. Pasarela en posición.",pt:"Todas as amarras em terra. Prancha em posição."} },
       ]},
   ];
 
@@ -250,7 +250,7 @@ function BerthingPhrasesSVG({ lang }) {
         {sel_.phrases.map((ph,i)=>(
           <div key={i} style={{marginBottom:10,paddingBottom:10,borderBottom:i<sel_.phrases.length-1?"1px solid rgba(255,255,255,0.05)":"none"}}>
             <div style={{fontFamily:"'Courier New',monospace",fontSize:11,color:C.white,lineHeight:1.5,marginBottom:3}}>"{ph.smcp}"</div>
-            {(lang!=="en")&&<div style={{fontSize:10,color:C.muted,fontStyle:"italic"}}>{ph.fr}</div>}
+            {(lang!=="en")&&<div style={{fontSize:10,color:C.muted,fontStyle:"italic"}}>{ph.tr[lang]||ph.tr.fr}</div>}
           </div>
         ))}
       </div>}
@@ -614,25 +614,25 @@ export default function LessonSMCP_L2({ lang="en", onBack=()=>{}, onComplete=()=
             <SL icon="📡" text={lc.p1} color={C.vts}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,background:"rgba(0,5,20,0.7)",border:`1px solid ${C.vts}22`}}>
-              <div style={{fontSize:11,color:C.vts,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SIMULATEUR APPROCHE VTS":lang==="en"?"VTS PORT APPROACH SIMULATOR":"SIMULADOR APROXIMACIÓN VTS"}</div>
+              <div style={{fontSize:11,color:C.vts,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SIMULATEUR APPROCHE VTS":lang==="en"?"VTS PORT APPROACH SIMULATOR":lang==="es"?"SIMULADOR APROXIMACIÓN VTS":"SIMULADOR APROXIMAÇÃO VTS"}</div>
               <VTSApproachSVG lang={lang}/>
             </Card>
             <SL icon="⚓" text={lc.p2} color={C.pilot}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.pilot}22`}}>
-              <div style={{fontSize:11,color:C.pilot,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚓ {lang==="fr"?"SIMULATEUR EMBARQUEMENT PILOTE":lang==="en"?"PILOT BOARDING SIMULATOR":"SIMULADOR EMBARCO PRÁCTICO"}</div>
+              <div style={{fontSize:11,color:C.pilot,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚓ {lang==="fr"?"SIMULATEUR EMBARQUEMENT PILOTE":lang==="en"?"PILOT BOARDING SIMULATOR":lang==="es"?"SIMULADOR EMBARCO PRÁCTICO":"SIMULADOR EMBARQUE PRÁTICO"}</div>
               <PilotBoardingSVG lang={lang}/>
             </Card>
             <SL icon="🔗" text={lc.p3} color={C.moor}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.moor}22`}}>
-              <div style={{fontSize:11,color:C.moor,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"PHRASES ACCOSTAGE & AMARRAGE":lang==="en"?"BERTHING & MOORING PHRASES":"FRASES ATRAQUE Y AMARRE"}</div>
+              <div style={{fontSize:11,color:C.moor,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"PHRASES ACCOSTAGE & AMARRAGE":lang==="en"?"BERTHING & MOORING PHRASES":lang==="es"?"FRASES ATRAQUE Y AMARRE":"FRASES ATRACAÇÃO & AMARRAÇÃO"}</div>
               <BerthingPhrasesSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p4} color={C.port}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.port}33`}}>
-              <div style={{fontSize:11,color:C.port,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ PHRASES VTS":lang==="en"?"VTS PHRASE QUIZ":"QUIZ FRASES VTS"}</div>
+              <div style={{fontSize:11,color:C.port,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ PHRASES VTS":lang==="en"?"VTS PHRASE QUIZ":lang==="es"?"QUIZ FRASES VTS":"QUIZ FRASES VTS"}</div>
               <VTSQuizSVG lang={lang}/>
             </Card>
             <SL icon="📝" text={lc.p5} color={C.gold}/>
@@ -649,7 +649,7 @@ export default function LessonSMCP_L2({ lang="en", onBack=()=>{}, onComplete=()=
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Port & VTS SMCP</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":"Lección 2"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":lang==="es"?"Lección 2":"Lição 2"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
