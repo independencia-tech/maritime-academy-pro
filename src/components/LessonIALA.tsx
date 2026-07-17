@@ -117,7 +117,7 @@ function IALAZonesSVG({ lang }) {
         <div style={{fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line"}}>{sel_.rule[lang]||sel_.rule.fr}</div>
       </div>}
       {!sel_&&<div style={{padding:"10px",borderRadius:10,background:"rgba(255,255,255,0.04)",textAlign:"center",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche une région pour les détails":lang==="en"?"Tap a region for details":"Toca una región para los detalles"}
+        {lang==="fr"?"Touche une région pour les détails":lang==="en"?"Tap a region for details":lang==="es"?"Toca una región para los detalles":"Toque numa região para detalhes"}
       </div>}
     </div>
   );
@@ -169,7 +169,7 @@ function LateralMarksSVG({ lang }) {
       {/* Port approach visualization */}
       <div style={{background:"rgba(30,80,130,0.15)",borderRadius:14,padding:"14px",marginBottom:12,border:"1px solid rgba(74,144,226,0.2)"}}>
         <div style={{fontSize:10,color:C.muted,textAlign:"center",marginBottom:10,fontWeight:700,letterSpacing:1}}>
-          🚢 {lang==="fr"?"→ ENTRÉE AU PORT →":lang==="en"?"→ ENTERING PORT →":"→ ENTRADA AL PUERTO →"}
+          🚢 {lang==="fr"?"→ ENTRÉE AU PORT →":lang==="en"?"→ ENTERING PORT →":lang==="es"?"→ ENTRADA AL PUERTO →":"→ ENTRADA NO PORTO →"}
         </div>
         <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-around"}}>
           <div onClick={()=>setSide(side==="port"?null:"port")} style={{cursor:"pointer",textAlign:"center",opacity:side&&side!=="port"?0.4:1,transition:"opacity 0.2s"}}>
@@ -180,7 +180,7 @@ function LateralMarksSVG({ lang }) {
           <div style={{textAlign:"center",flex:1}}>
             <div style={{fontSize:24}}>🚢</div>
             <div style={{fontSize:9,color:C.muted,marginTop:2}}>
-              {lang==="fr"?"Chenal sûr":lang==="en"?"Safe channel":"Canal seguro"}
+              {lang==="fr"?"Chenal sûr":lang==="en"?"Safe channel":lang==="es"?"Canal seguro":"Canal seguro"}
             </div>
           </div>
           <div onClick={()=>setSide(side==="stbd"?null:"stbd")} style={{cursor:"pointer",textAlign:"center",opacity:side&&side!=="stbd"?0.4:1,transition:"opacity 0.2s"}}>
@@ -193,7 +193,7 @@ function LateralMarksSVG({ lang }) {
         <div style={{fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line"}}>{details[side][lang]||details[side].fr}</div>
       </div>}
       {!side&&<div style={{textAlign:"center",fontSize:11,color:C.muted,padding:"8px"}}>
-        {lang==="fr"?"Touche une bouée pour ses détails":lang==="en"?"Tap a buoy for details":"Toca una baliza para sus detalles"}
+        {lang==="fr"?"Touche une bouée pour ses détails":lang==="en"?"Tap a buoy for details":lang==="es"?"Toca una baliza para sus detalles":"Toque numa boia para os seus detalhes"}
       </div>}
     </div>
   );
@@ -239,7 +239,7 @@ function CardinalMarksSVG({ lang }) {
         {/* Center danger */}
         <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",textAlign:"center"}}>
           <div style={{width:50,height:50,borderRadius:"50%",background:C.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,border:`2px solid ${C.red}`,margin:"0 auto"}}>⚠️</div>
-          <div style={{fontSize:8,color:C.red,marginTop:2,fontWeight:700}}>{lang==="fr"?"DANGER":lang==="en"?"DANGER":"PELIGRO"}</div>
+          <div style={{fontSize:8,color:C.red,marginTop:2,fontWeight:700}}>{lang==="fr"?"DANGER":lang==="en"?"DANGER":lang==="es"?"PELIGRO":"PERIGO"}</div>
         </div>
         {/* Cardinal buoys */}
         {[
@@ -263,12 +263,12 @@ function CardinalMarksSVG({ lang }) {
       {sel_&&(
         <div style={{padding:"12px",borderRadius:14,background:"rgba(201,146,42,0.1)",border:`1.5px solid ${C.gold}44`,animation:"fadeUp 0.3s ease"}}>
           <div style={{fontSize:13,fontWeight:700,color:C.gold2,marginBottom:4}}>{sel_.icon} {lang==="fr"?"Cardinale":lang==="en"?"Cardinal":lang==="es"?"Cardinal":"Cardinal"} {sel_.label[lang]||sel_.label.fr}</div>
-          <div style={{fontSize:10,color:C.gold2,marginBottom:6}}>💡 {lang==="fr"?"Feu:":lang==="en"?"Light:":"Luz:"} {sel_.light[lang]||sel_.light.fr}</div>
+          <div style={{fontSize:10,color:C.gold2,marginBottom:6}}>💡 {lang==="fr"?"Feu:":lang==="en"?"Light:":lang==="es"?"Luz:":"Luz:"} {sel_.light[lang]||sel_.light.fr}</div>
           <div style={{fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line"}}>{sel_.rule[lang]||sel_.rule.fr}</div>
         </div>
       )}
       {!sel_&&<div style={{textAlign:"center",padding:"8px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche une bouée cardinale":lang==="en"?"Tap a cardinal buoy":"Toca una baliza cardinal"}
+        {lang==="fr"?"Touche une bouée cardinale":lang==="en"?"Tap a cardinal buoy":lang==="es"?"Toca una baliza cardinal":"Toque numa boia cardeal"}
       </div>}
     </div>
   );
@@ -661,25 +661,25 @@ export default function LessonIALA({ lang="fr", onBack=()=>{}, onComplete=()=>{}
             <SL icon="🌍" text={lc.p1} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"RÉGIONS IALA — INTERACTIF":lang==="en"?"IALA REGIONS — INTERACTIVE":"REGIONES IALA — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"RÉGIONS IALA — INTERACTIF":lang==="en"?"IALA REGIONS — INTERACTIVE":lang==="es"?"REGIONES IALA — INTERACTIVO":"REGIÕES IALA — INTERATIVO"}</div>
               <IALAZonesSVG lang={lang}/>
             </Card>
             <SL icon="🔴🟢" text={lc.p2} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔴🟢 {lang==="fr"?"MARQUES LATÉRALES — SIMULATEUR":lang==="en"?"LATERAL MARKS — SIMULATOR":"MARCAS LATERALES — SIMULADOR"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔴🟢 {lang==="fr"?"MARQUES LATÉRALES — SIMULATEUR":lang==="en"?"LATERAL MARKS — SIMULATOR":lang==="es"?"MARCAS LATERALES — SIMULADOR":"MARCAS LATERAIS — SIMULADOR"}</div>
               <LateralMarksSVG lang={lang}/>
             </Card>
             <SL icon="🧭" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🧭 {lang==="fr"?"MARQUES CARDINALES — INTERACTIF":lang==="en"?"CARDINAL MARKS — INTERACTIVE":"MARCAS CARDINALES — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🧭 {lang==="fr"?"MARQUES CARDINALES — INTERACTIF":lang==="en"?"CARDINAL MARKS — INTERACTIVE":lang==="es"?"MARCAS CARDINALES — INTERACTIVO":"MARCAS CARDEAIS — INTERATIVO"}</div>
               <CardinalMarksSVG lang={lang}/>
             </Card>
             <SL icon="⚓" text={lc.p4} color={C.purple}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.purple}33`}}>
-              <div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚓ {lang==="fr"?"MARQUES SPÉCIALES — IDENTIFICATION":lang==="en"?"SPECIAL MARKS — IDENTIFICATION":"MARCAS ESPECIALES — IDENTIFICACIÓN"}</div>
+              <div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚓ {lang==="fr"?"MARQUES SPÉCIALES — IDENTIFICATION":lang==="en"?"SPECIAL MARKS — IDENTIFICATION":lang==="es"?"MARCAS ESPECIALES — IDENTIFICACIÓN":"MARCAS ESPECIAIS — IDENTIFICAÇÃO"}</div>
               <SpecialMarksSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -698,7 +698,7 @@ export default function LessonIALA({ lang="fr", onBack=()=>{}, onComplete=()=>{}
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Système IALA</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":"Lección 1"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":lang==="es"?"Lección 1":"Lição 1"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

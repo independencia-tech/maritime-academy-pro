@@ -83,7 +83,7 @@ function DieselCycleSVG({ lang }) {
           fill={s.valveIn?"rgba(77,166,255,0.6)":"rgba(255,255,255,0.1)"}
           stroke={s.valveIn?C.blue2:"rgba(255,255,255,0.2)"} strokeWidth="1.5"/>
         <text x="117" y="14" textAnchor="middle" fontSize="6" fill={s.valveIn?C.blue2:C.muted}>
-          {lang==="fr"?"Adm.":lang==="en"?"In.":"Adm."}
+          {lang==="fr"?"Adm.":lang==="en"?"In.":lang==="es"?"Adm.":"Adm."}
         </text>
 
         {/* Exhaust valve */}
@@ -91,7 +91,7 @@ function DieselCycleSVG({ lang }) {
           fill={s.valveEx?"rgba(100,100,100,0.6)":"rgba(255,255,255,0.1)"}
           stroke={s.valveEx?C.steel:"rgba(255,255,255,0.2)"} strokeWidth="1.5"/>
         <text x="173" y="14" textAnchor="middle" fontSize="6" fill={s.valveEx?C.white:C.muted}>
-          {lang==="fr"?"Éch.":lang==="en"?"Ex.":"Esc."}
+          {lang==="fr"?"Éch.":lang==="en"?"Ex.":lang==="es"?"Esc.":"Esc."}
         </text>
 
         {/* Combustion chamber top */}
@@ -148,10 +148,10 @@ function DieselCycleSVG({ lang }) {
 
         {/* Labels */}
         <text x="60" y="40" textAnchor="middle" fontSize="7" fill={C.muted}>
-          {lang==="fr"?"Air":lang==="en"?"Air":"Aire"}
+          {lang==="fr"?"Air":lang==="en"?"Air":lang==="es"?"Aire":"Ar"}
         </text>
         <text x="230" y="40" textAnchor="middle" fontSize="7" fill={C.muted}>
-          {lang==="fr"?"Gaz":lang==="en"?"Gas":"Gas"}
+          {lang==="fr"?"Gaz":lang==="en"?"Gas":lang==="es"?"Gas":"Gás"}
         </text>
         <text x="145" y="186" textAnchor="middle" fontSize="7" fill={C.gold}>
           {lang==="fr"?"Vilebrequin":lang==="en"?"Crankshaft":lang==="es"?"Cigüeñal":"Virabrequim"}
@@ -369,12 +369,12 @@ function CoolingCircuitSVG({ lang }) {
           <line x1="95" y1="140" x2="68" y2="158" stroke={C.rust} strokeWidth="2" opacity="0.5"/>
           <rect x="5" y="172" width="86" height="14" rx="4" fill="rgba(141,59,43,0.1)" stroke={C.rust} strokeWidth="0.8"/>
           <text x="48" y="182" textAnchor="middle" fontSize="7" fill={C.rust}>
-            {lang==="fr"?"Carter huile (sump)":lang==="en"?"Oil sump":"Cárter aceite"}
+            {lang==="fr"?"Carter huile (sump)":lang==="en"?"Oil sump":lang==="es"?"Cárter aceite":"Cárter óleo"}
           </text>
           <rect x="5" y="30" width="86" height="20" rx="5" fill="rgba(141,59,43,0.15)" stroke={C.rust} strokeWidth="0.8"/>
           <text x="48" y="40" textAnchor="middle" fontSize="7" fill={C.rust}>SAE 30 · 3-5 bar</text>
           <text x="48" y="48" textAnchor="middle" fontSize="6" fill={C.muted}>
-            {lang==="fr"?"⚠️ Pression critique":lang==="en"?"⚠️ Critical pressure":"⚠️ Presión crítica"}
+            {lang==="fr"?"⚠️ Pression critique":lang==="en"?"⚠️ Critical pressure":lang==="es"?"⚠️ Presión crítica":"⚠️ Pressão crítica"}
           </text>
         </>}
 
@@ -447,10 +447,10 @@ function EngineMonitorSVG({ lang }) {
         <div>
           <div style={{fontSize:12,fontWeight:700,color:statusColor(overallStatus)}}>
             {overallStatus==="danger"
-              ?(lang==="fr"?"⚠️ ALARME — ACTION REQUISE":lang==="en"?"⚠️ ALARM — ACTION REQUIRED":"⚠️ ALARMA — ACCIÓN REQUERIDA")
+              ?(lang==="fr"?"⚠️ ALARME — ACTION REQUISE":lang==="en"?"⚠️ ALARM — ACTION REQUIRED":lang==="es"?"⚠️ ALARMA — ACCIÓN REQUERIDA":"⚠️ ALARME — AÇÃO NECESSÁRIA")
               :overallStatus==="warning"
-              ?(lang==="fr"?"⚡ ATTENTION — Surveiller":lang==="en"?"⚡ CAUTION — Monitor":"⚡ ATENCIÓN — Vigilar")
-              :(lang==="fr"?"✅ Moteur nominal":lang==="en"?"✅ Engine nominal":"✅ Motor nominal")}
+              ?(lang==="fr"?"⚡ ATTENTION — Surveiller":lang==="en"?"⚡ CAUTION — Monitor":lang==="es"?"⚡ ATENCIÓN — Vigilar":"⚡ ATENÇÃO — Vigiar")
+              :(lang==="fr"?"✅ Moteur nominal":lang==="en"?"✅ Engine nominal":lang==="es"?"✅ Motor nominal":"✅ Motor nominal")}
           </div>
           <div style={{fontSize:10,color:C.muted}}>
             {lang==="fr"?"Ajuste les curseurs pour simuler des pannes":lang==="en"?"Adjust sliders to simulate failures":lang==="es"?"Ajusta los controles para simular averías":"Ajuste os controles para simular avarias"}
@@ -483,8 +483,8 @@ function EngineMonitorSVG({ lang }) {
             onChange={e=>p.set(Number(e.target.value))}
             style={{width:"100%",accentColor:statusColor(p.status),margin:"0 0 2px"}}/>
           <div style={{display:"flex",justifyContent:"space-between",fontSize:9,color:C.muted}}>
-            <span>{lang==="fr"?"Normal:":lang==="en"?"Normal:":"Normal:"} {p.normal}</span>
-            <span style={{color:C.red}}>{lang==="fr"?"Alarme:":lang==="en"?"Alarm:":"Alarma:"} {p.danger}</span>
+            <span>{lang==="fr"?"Normal:":lang==="en"?"Normal:":lang==="es"?"Normal:":"Normal:"} {p.normal}</span>
+            <span style={{color:C.red}}>{lang==="fr"?"Alarme:":lang==="en"?"Alarm:":lang==="es"?"Alarma:":"Alarme:"} {p.danger}</span>
           </div>
         </div>
       ))}

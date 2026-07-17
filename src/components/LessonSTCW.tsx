@@ -131,7 +131,7 @@ function RestHoursSVG({ lang }) {
       {/* 24h grid */}
       <div style={{marginBottom:10}}>
         <div style={{fontSize:9,color:C.muted,marginBottom:4,fontWeight:700}}>
-          {lang==="fr"?"GRILLE 24H — RÉPARTITION TRAVAIL/REPOS":lang==="en"?"24H GRID — WORK/REST DISTRIBUTION":"CUADRÍCULA 24H — DISTRIBUCIÓN TRABAJO/DESCANSO"}
+          {lang==="fr"?"GRILLE 24H — RÉPARTITION TRAVAIL/REPOS":lang==="en"?"24H GRID — WORK/REST DISTRIBUTION":lang==="es"?"CUADRÍCULA 24H — DISTRIBUCIÓN TRABAJO/DESCANSO":"GRELHA 24H — DISTRIBUIÇÃO TRABALHO/DESCANSO"}
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(24,1fr)",gap:2}}>
           {blocks.map((b,i)=>(
@@ -151,11 +151,11 @@ function RestHoursSVG({ lang }) {
         <div style={{display:"flex",gap:10,marginTop:6}}>
           <div style={{display:"flex",alignItems:"center",gap:4}}>
             <div style={{width:10,height:10,borderRadius:2,background:C.orange}}/>
-            <span style={{fontSize:9,color:C.muted}}>{lang==="fr"?"Travail":lang==="en"?"Work":"Trabajo"}</span>
+            <span style={{fontSize:9,color:C.muted}}>{lang==="fr"?"Travail":lang==="en"?"Work":lang==="es"?"Trabajo":"Trabalho"}</span>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:4}}>
             <div style={{width:10,height:10,borderRadius:2,background:C.green}}/>
-            <span style={{fontSize:9,color:C.muted}}>{lang==="fr"?"Repos":lang==="en"?"Rest":"Descanso"}</span>
+            <span style={{fontSize:9,color:C.muted}}>{lang==="fr"?"Repos":lang==="en"?"Rest":lang==="es"?"Descanso":"Descanso"}</span>
           </div>
         </div>
       </div>
@@ -163,8 +163,8 @@ function RestHoursSVG({ lang }) {
       {/* Slider */}
       <div style={{marginBottom:12}}>
         <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:C.muted,marginBottom:4}}>
-          <span>{lang==="fr"?"Heures de travail:":lang==="en"?"Work hours:":"Horas trabajo:"} <b style={{color:isCompliant?C.orange:C.red}}>{workHours}h</b></span>
-          <span>{lang==="fr"?"Repos:":lang==="en"?"Rest:":"Descanso:"} <b style={{color:isCompliant?C.green:C.red}}>{restHours}h</b></span>
+          <span>{lang==="fr"?"Heures de travail:":lang==="en"?"Work hours:":lang==="es"?"Horas trabajo:":"Horas trabalho:"} <b style={{color:isCompliant?C.orange:C.red}}>{workHours}h</b></span>
+          <span>{lang==="fr"?"Repos:":lang==="en"?"Rest:":lang==="es"?"Descanso:":"Descanso:"} <b style={{color:isCompliant?C.green:C.red}}>{restHours}h</b></span>
         </div>
         <input type="range" min={1} max={24} value={workHours}
           onChange={e=>setWorkHours(Number(e.target.value))}
@@ -176,17 +176,19 @@ function RestHoursSVG({ lang }) {
         background:isCompliant?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.12)",
         border:`1px solid ${isCompliant?C.green:C.red}44`}}>
         <div style={{fontSize:12,fontWeight:700,color:isCompliant?C.green:C.red,marginBottom:4}}>
-          {isCompliant?"✅":"🔴"} {lang==="fr"?`${isCompliant?"CONFORME":"NON CONFORME"} STCW/MLC 2006`:lang==="en"?`${isCompliant?"COMPLIANT":"NON-COMPLIANT"} STCW/MLC 2006`:`${isCompliant?"CONFORME":"NO CONFORME"} STCW/MLC 2006`}
+          {isCompliant?"✅":"🔴"} {lang==="fr"?`${isCompliant?"CONFORME":"NON CONFORME"} STCW/MLC 2006`:lang==="en"?`${isCompliant?"COMPLIANT":"NON-COMPLIANT"} STCW/MLC 2006`:lang==="es"?`${isCompliant?"CONFORME":"NO CONFORME"} STCW/MLC 2006`:`${isCompliant?"CONFORME":"NÃO CONFORME"} STCW/MLC 2006`}
         </div>
         <div style={{fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
           {lang==="fr"
             ?`Travail : ${workHours}h/24h (max 14h) ${workHours>14?"❌ DÉPASSÉ":"✓"}\nRepos : ${restHours}h/24h (min 10h) ${restHours<10?"❌ INSUFFISANT":"✓"}\nTravail/semaine : max 72h · Repos/semaine : min 77h`
             :lang==="en"
             ?`Work: ${workHours}h/24h (max 14h) ${workHours>14?"❌ EXCEEDED":"✓"}\nRest: ${restHours}h/24h (min 10h) ${restHours<10?"❌ INSUFFICIENT":"✓"}\nWork/week: max 72h · Rest/week: min 77h`
-            :`Trabajo: ${workHours}h/24h (máx 14h) ${workHours>14?"❌ SUPERADO":"✓"}\nDescanso: ${restHours}h/24h (mín 10h) ${restHours<10?"❌ INSUFICIENTE":"✓"}`}
+            :lang==="es"
+            ?`Trabajo: ${workHours}h/24h (máx 14h) ${workHours>14?"❌ SUPERADO":"✓"}\nDescanso: ${restHours}h/24h (mín 10h) ${restHours<10?"❌ INSUFICIENTE":"✓"}`
+            :`Trabalho: ${workHours}h/24h (máx 14h) ${workHours>14?"❌ ULTRAPASSADO":"✓"}\nDescanso: ${restHours}h/24h (mín 10h) ${restHours<10?"❌ INSUFICIENTE":"✓"}\nTrabalho/semana: máx 72h · Descanso/semana: mín 77h`}
         </div>
         {!isCompliant&&<div style={{marginTop:6,fontSize:10,color:C.red,fontWeight:700}}>
-          ⚠️ {lang==="fr"?"Non-conformité = infraction PSC · amende · détention navire":lang==="en"?"Non-compliance = PSC violation · fine · vessel detention":"Incumplimiento = infracción PSC · multa · retención buque"}
+          ⚠️ {lang==="fr"?"Non-conformité = infraction PSC · amende · détention navire":lang==="en"?"Non-compliance = PSC violation · fine · vessel detention":lang==="es"?"Incumplimiento = infracción PSC · multa · retención buque":"Não conformidade = infração PSC · multa · detenção do navio"}
         </div>}
       </div>
     </div>
@@ -248,10 +250,10 @@ function PSCCertInspectorSVG({ lang }) {
         <div style={{textAlign:"center",padding:"16px 0"}}>
           <div style={{fontSize:40,marginBottom:8}}>🔍</div>
           <div style={{fontSize:12,color:C.muted,marginBottom:12,lineHeight:1.5}}>
-            {lang==="fr"?"Inspection PSC des certificats STCW\nNavire pétrolier · Port de Rotterdam":lang==="en"?"PSC inspection of STCW certificates\nOil tanker · Port of Rotterdam":"Inspección PSC de certificados STCW\nBuque petrolero · Puerto de Rotterdam"}
+            {lang==="fr"?"Inspection PSC des certificats STCW\nNavire pétrolier · Port de Rotterdam":lang==="en"?"PSC inspection of STCW certificates\nOil tanker · Port of Rotterdam":lang==="es"?"Inspección PSC de certificados STCW\nBuque petrolero · Puerto de Rotterdam":"Inspeção PSC de certificados STCW\nPetroleiro · Porto de Roterdão"}
           </div>
           <button onClick={()=>setPhase("inspecting")} style={{padding:"12px 24px",borderRadius:12,background:`linear-gradient(135deg,${C.blue},${C.blue2})`,border:"none",color:C.white,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
-            🔍 {lang==="fr"?"INSPECTER LES CERTIFICATS":lang==="en"?"INSPECT CERTIFICATES":"INSPECCIONAR CERTIFICADOS"}
+            🔍 {lang==="fr"?"INSPECTER LES CERTIFICATS":lang==="en"?"INSPECT CERTIFICATES":lang==="es"?"INSPECCIONAR CERTIFICADOS":"INSPECIONAR CERTIFICADOS"}
           </button>
         </div>
       )}
@@ -262,10 +264,10 @@ function PSCCertInspectorSVG({ lang }) {
             border:`1px solid ${phase==="done"?(isDetained?C.red:issues.length>0?C.orange:C.green):C.blue2}33`,
             fontSize:10,fontWeight:700,color:phase==="done"?(isDetained?C.red:issues.length>0?C.orange:C.green):C.blue2,textAlign:"center"}}>
             {phase==="inspecting"
-              ?(lang==="fr"?"🔍 Vérification en cours...":lang==="en"?"🔍 Checking...":"🔍 Verificando...")
+              ?(lang==="fr"?"🔍 Vérification en cours...":lang==="en"?"🔍 Checking...":lang==="es"?"🔍 Verificando...":"🔍 A verificar...")
               :isDetained
-                ?(lang==="fr"?"🔴 NAVIRE IMMOBILISÉ — Certification tanker insuffisante":lang==="en"?"🔴 VESSEL DETAINED — Insufficient tanker certification":"🔴 BUQUE RETENIDO — Certificación tanque insuficiente")
-                :(lang==="fr"?"⚠️ DÉFICIENCES — Corrections requises avant départ":lang==="en"?"⚠️ DEFICIENCIES — Corrections required before departure":"⚠️ DEFICIENCIAS — Correcciones requeridas")}
+                ?(lang==="fr"?"🔴 NAVIRE IMMOBILISÉ — Certification tanker insuffisante":lang==="en"?"🔴 VESSEL DETAINED — Insufficient tanker certification":lang==="es"?"🔴 BUQUE RETENIDO — Certificación tanque insuficiente":"🔴 NAVIO RETIDO — Certificação de petroleiro insuficiente")
+                :(lang==="fr"?"⚠️ DÉFICIENCES — Corrections requises avant départ":lang==="en"?"⚠️ DEFICIENCIES — Corrections required before departure":lang==="es"?"⚠️ DEFICIENCIAS — Correcciones requeridas":"⚠️ DEFICIÊNCIAS — Correções necessárias antes da partida")}
           </div>
           {checks.slice(0,step+1).map((c,i)=>(
             <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"7px 10px",borderRadius:8,marginBottom:5,
@@ -628,25 +630,25 @@ export default function LessonSTCW({ lang="fr", onBack=()=>{}, onComplete=()=>{}
             <SL icon="📅" text={lc.p1} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📅 {lang==="fr"?"TIMELINE STCW — INTERACTIF":lang==="en"?"STCW TIMELINE — INTERACTIVE":"CRONOLOGÍA STCW — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📅 {lang==="fr"?"TIMELINE STCW — INTERACTIF":lang==="en"?"STCW TIMELINE — INTERACTIVE":lang==="es"?"CRONOLOGÍA STCW — INTERACTIVO":"CRONOLOGIA STCW — INTERATIVO"}</div>
               <STCWTimelineSVG lang={lang}/>
             </Card>
             <SL icon="🎓" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎓 {lang==="fr"?"CERTIFICATIONS STCW — INTERACTIF":lang==="en"?"STCW CERTIFICATIONS — INTERACTIVE":"CERTIFICACIONES STCW — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎓 {lang==="fr"?"CERTIFICATIONS STCW — INTERACTIF":lang==="en"?"STCW CERTIFICATIONS — INTERACTIVE":lang==="es"?"CERTIFICACIONES STCW — INTERACTIVO":"CERTIFICAÇÕES STCW — INTERATIVO"}</div>
               <CertTreeSVG lang={lang}/>
             </Card>
             <SL icon="⏰" text={lc.p3||"PARTIE 3 — HEURES TRAVAIL/REPOS"} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⏰ {lang==="fr"?"SIMULATEUR HEURES STCW/MLC":lang==="en"?"STCW/MLC HOURS SIMULATOR":"SIMULADOR HORAS STCW/MLC"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⏰ {lang==="fr"?"SIMULATEUR HEURES STCW/MLC":lang==="en"?"STCW/MLC HOURS SIMULATOR":lang==="es"?"SIMULADOR HORAS STCW/MLC":"SIMULADOR HORAS STCW/MLC"}</div>
               <RestHoursSVG lang={lang}/>
             </Card>
             <SL icon="⚖️" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}33`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"SIMULATEUR INSPECTION PSC CERTIFICATS":lang==="en"?"PSC CERTIFICATE INSPECTION SIMULATOR":"SIMULADOR INSPECCIÓN PSC CERTIFICADOS"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"SIMULATEUR INSPECTION PSC CERTIFICATS":lang==="en"?"PSC CERTIFICATE INSPECTION SIMULATOR":lang==="es"?"SIMULADOR INSPECCIÓN PSC CERTIFICADOS":"SIMULADOR INSPEÇÃO PSC CERTIFICADOS"}</div>
               <PSCCertInspectorSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -665,7 +667,7 @@ export default function LessonSTCW({ lang="fr", onBack=()=>{}, onComplete=()=>{}
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — STCW</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 3":lang==="en"?"Lesson 3":"Lección 3"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 3":lang==="en"?"Lesson 3":lang==="es"?"Lección 3":"Lição 3"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

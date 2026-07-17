@@ -59,15 +59,15 @@ function LiabilityPyramidSVG({ lang }) {
           );
         })}
         <div style={{fontSize:9,color:C.muted,marginTop:4,textAlign:"center"}}>
-          {lang==="fr"?"▲ Responsabilité croissante":lang==="en"?"▲ Increasing liability":"▲ Responsabilidad creciente"}
+          {lang==="fr"?"▲ Responsabilité croissante":lang==="en"?"▲ Increasing liability":lang==="es"?"▲ Responsabilidad creciente":"▲ Responsabilidade crescente"}
         </div>
       </div>
       {sel_&&(
         <div style={{padding:"12px",borderRadius:14,background:`${sel_.color}12`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
           <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:8}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
-          <div style={{fontSize:10,color:C.blue2,fontWeight:700,marginBottom:4}}>⚖️ {lang==="fr"?"RESPONSABILITÉ CIVILE":lang==="en"?"CIVIL LIABILITY":"RESPONSABILIDAD CIVIL"}</div>
+          <div style={{fontSize:10,color:C.blue2,fontWeight:700,marginBottom:4}}>⚖️ {lang==="fr"?"RESPONSABILITÉ CIVILE":lang==="en"?"CIVIL LIABILITY":lang==="es"?"RESPONSABILIDAD CIVIL":"RESPONSABILIDADE CIVIL"}</div>
           <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line",marginBottom:8}}>{sel_.civil[lang]||sel_.civil.fr}</div>
-          <div style={{fontSize:10,color:C.red,fontWeight:700,marginBottom:4}}>🔴 {lang==="fr"?"RESPONSABILITÉ PÉNALE":lang==="en"?"CRIMINAL LIABILITY":"RESPONSABILIDAD PENAL"}</div>
+          <div style={{fontSize:10,color:C.red,fontWeight:700,marginBottom:4}}>🔴 {lang==="fr"?"RESPONSABILITÉ PÉNALE":lang==="en"?"CRIMINAL LIABILITY":lang==="es"?"RESPONSABILIDAD PENAL":"RESPONSABILIDADE PENAL"}</div>
           <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.penal[lang]||sel_.penal.fr}</div>
         </div>
       )}
@@ -113,7 +113,7 @@ function InsuranceTypesSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {(sel_.label[lang]||sel_.label.fr).replace('\n',' ')}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche un type d'assurance pour les détails":lang==="en"?"Tap an insurance type for details":"Toca un tipo de seguro para detalles"}
+        {lang==="fr"?"Touche un type d'assurance pour les détails":lang==="en"?"Tap an insurance type for details":lang==="es"?"Toca un tipo de seguro para detalles":"Toque num tipo de seguro para detalhes"}
       </div>}
     </div>
   );
@@ -154,7 +154,7 @@ function LLMCCalculatorSVG({ lang }) {
     <div>
       <div style={{marginBottom:12}}>
         <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:C.muted,marginBottom:4}}>
-          <span>{lang==="fr"?"Tonnage brut (GT):":lang==="en"?"Gross Tonnage (GT):":"Arqueo Bruto (GT):"} <b style={{color:C.gold2}}>{gt.toLocaleString()} GT</b></span>
+          <span>{lang==="fr"?"Tonnage brut (GT):":lang==="en"?"Gross Tonnage (GT):":lang==="es"?"Arqueo Bruto (GT):":"Arqueação Bruta (GT):"} <b style={{color:C.gold2}}>{gt.toLocaleString()} GT</b></span>
         </div>
         <input type="range" min={500} max={200000} step={500} value={gt}
           onChange={e=>setGt(Number(e.target.value))}
@@ -171,14 +171,14 @@ function LLMCCalculatorSVG({ lang }) {
             border:`1.5px solid ${type===tp?(tp==="property"?C.orange:C.red):"rgba(255,255,255,0.08)"}`,
             fontSize:10,color:type===tp?(tp==="property"?C.orange:C.red):C.muted,fontWeight:700}}>
             {tp==="property"
-              ?(lang==="fr"?"🏗️ Dommages\nmatériels":lang==="en"?"🏗️ Property\ndamage":"🏗️ Daños\nmateriales")
-              :(lang==="fr"?"👤 Préjudice\ncorporel":lang==="en"?"👤 Personal\ninjury":"👤 Daños\ncorporales")}
+              ?(lang==="fr"?"🏗️ Dommages\nmatériels":lang==="en"?"🏗️ Property\ndamage":lang==="es"?"🏗️ Daños\nmateriales":"🏗️ Danos\nmateriais")
+              :(lang==="fr"?"👤 Préjudice\ncorporel":lang==="en"?"👤 Personal\ninjury":lang==="es"?"👤 Daños\ncorporales":"👤 Danos\ncorporais")}
           </button>
         ))}
       </div>
       <div style={{padding:"14px",borderRadius:14,background:"rgba(201,146,42,0.1)",border:`1px solid ${C.gold}44`,textAlign:"center"}}>
         <div style={{fontSize:10,color:C.muted,marginBottom:6}}>
-          {lang==="fr"?"LIMITE DE RESPONSABILITÉ LLMC 1996":lang==="en"?"LLMC 1996 LIABILITY LIMIT":"LÍMITE DE RESPONSABILIDAD LLMC 1996"}
+          {lang==="fr"?"LIMITE DE RESPONSABILITÉ LLMC 1996":lang==="en"?"LLMC 1996 LIABILITY LIMIT":lang==="es"?"LÍMITE DE RESPONSABILIDAD LLMC 1996":"LIMITE DE RESPONSABILIDADE LLMC 1996"}
         </div>
         <div style={{fontSize:24,fontWeight:700,color:C.gold2,fontFamily:"'Cinzel',serif"}}>{limitM}M SDR</div>
         <div style={{fontSize:14,color:C.muted,marginTop:4}}>≈ ${limitUSD}M USD</div>
@@ -191,12 +191,12 @@ function LLMCCalculatorSVG({ lang }) {
         </div>
         {limit > 50_000_000 && (
           <div style={{marginTop:8,padding:"6px",borderRadius:8,background:"rgba(192,57,43,0.1)",border:`1px solid ${C.red}33`,fontSize:9,color:C.red}}>
-            ⚠️ {lang==="fr"?"Grands navires : limite peut être dépassée en cas de catastrophe majeure":lang==="en"?"Large vessels: limit may be exceeded in major disaster":"Buques grandes: el límite puede superarse en catástrofe importante"}
+            ⚠️ {lang==="fr"?"Grands navires : limite peut être dépassée en cas de catastrophe majeure":lang==="en"?"Large vessels: limit may be exceeded in major disaster":lang==="es"?"Buques grandes: el límite puede superarse en catástrofe importante":"Navios grandes: o limite pode ser ultrapassado em caso de catástrofe grave"}
           </div>
         )}
       </div>
       <div style={{marginTop:8,padding:"8px 10px",borderRadius:10,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",fontSize:9,color:C.muted,lineHeight:1.5}}>
-        <b style={{color:C.white}}>⚠️ {lang==="fr"?"EXCEPTION:":lang==="en"?"EXCEPTION:":"EXCEPCIÓN:"}</b>{" "}
+        <b style={{color:C.white}}>⚠️ {lang==="fr"?"EXCEPTION:":lang==="en"?"EXCEPTION:":lang==="es"?"EXCEPCIÓN:":"EXCEÇÃO:"}</b>{" "}
         {lang==="fr"?"La limitation ne s'applique PAS si l'armateur a commis une faute personnelle intentionnelle ou téméraire (LLMC Art.4)"
         :lang==="en"?"Limitation does NOT apply if the shipowner committed a personal intentional or reckless fault (LLMC Art.4)"
         :"La limitación NO se aplica si el armador cometió una falta personal intencional o temeraria (LLMC Art.4)"}
@@ -242,10 +242,10 @@ function ShipArrestSVG({ lang }) {
         <div style={{textAlign:"center",padding:"16px 0"}}>
           <div style={{fontSize:40,marginBottom:8}}>⚓</div>
           <div style={{fontSize:12,color:C.muted,marginBottom:12,lineHeight:1.5}}>
-            {lang==="fr"?"Simulation : Arrêt d'un navire pour réclamation cargo":lang==="en"?"Simulation: Vessel arrest for cargo claim":"Simulación: Arresto de buque por reclamación de carga"}
+            {lang==="fr"?"Simulation : Arrêt d'un navire pour réclamation cargo":lang==="en"?"Simulation: Vessel arrest for cargo claim":lang==="es"?"Simulación: Arresto de buque por reclamación de carga":"Simulação: Arresto de navio por reclamação de carga"}
           </div>
           <button onClick={()=>setPhase("running")} style={{padding:"12px 24px",borderRadius:12,background:`linear-gradient(135deg,${C.orange},${C.gold2})`,border:"none",color:C.white,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
-            ⚓ {lang==="fr"?"LANCER LA SIMULATION":lang==="en"?"START SIMULATION":"INICIAR SIMULACIÓN"}
+            ⚓ {lang==="fr"?"LANCER LA SIMULATION":lang==="en"?"START SIMULATION":lang==="es"?"INICIAR SIMULACIÓN":"INICIAR SIMULAÇÃO"}
           </button>
         </div>
       )}
@@ -264,7 +264,7 @@ function ShipArrestSVG({ lang }) {
           ))}
           {phase==="done"&&(
             <div style={{padding:"10px",borderRadius:10,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:10,color:C.green,textAlign:"center",marginTop:4}}>
-              ✅ {lang==="fr"?"Navire libéré · Litige en cours · P&I Club gère le dossier":lang==="en"?"Vessel released · Dispute ongoing · P&I Club manages case":"Buque liberado · Litigio en curso · Club P&I gestiona el expediente"}
+              ✅ {lang==="fr"?"Navire libéré · Litige en cours · P&I Club gère le dossier":lang==="en"?"Vessel released · Dispute ongoing · P&I Club manages case":lang==="es"?"Buque liberado · Litigio en curso · Club P&I gestiona el expediente":"Navio libertado · Litígio em curso · P&I Club gere o processo"}
             </div>
           )}
           {phase==="done"&&(
@@ -618,25 +618,25 @@ export default function LessonLiabilityInsurance({ lang="fr", onBack=()=>{}, onC
             <SL icon="⚖️" text={lc.p1} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"PYRAMIDE DES RESPONSABILITÉS":lang==="en"?"LIABILITY PYRAMID":"PIRÁMIDE DE RESPONSABILIDADES"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"PYRAMIDE DES RESPONSABILITÉS":lang==="en"?"LIABILITY PYRAMID":lang==="es"?"PIRÁMIDE DE RESPONSABILIDADES":"PIRÂMIDE DE RESPONSABILIDADES"}</div>
               <LiabilityPyramidSVG lang={lang}/>
             </Card>
             <SL icon="🛡️" text={lc.p2} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛡️ {lang==="fr"?"TYPES D'ASSURANCES MARITIMES":lang==="en"?"MARITIME INSURANCE TYPES":"TIPOS DE SEGUROS MARÍTIMOS"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛡️ {lang==="fr"?"TYPES D'ASSURANCES MARITIMES":lang==="en"?"MARITIME INSURANCE TYPES":lang==="es"?"TIPOS DE SEGUROS MARÍTIMOS":"TIPOS DE SEGUROS MARÍTIMOS"}</div>
               <InsuranceTypesSVG lang={lang}/>
             </Card>
             <SL icon="📊" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📊 {lang==="fr"?"CALCULATEUR LIMITATION LLMC":lang==="en"?"LLMC LIMITATION CALCULATOR":"CALCULADORA LIMITACIÓN LLMC"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📊 {lang==="fr"?"CALCULATEUR LIMITATION LLMC":lang==="en"?"LLMC LIMITATION CALCULATOR":lang==="es"?"CALCULADORA LIMITACIÓN LLMC":"CALCULADORA LIMITAÇÃO LLMC"}</div>
               <LLMCCalculatorSVG lang={lang}/>
             </Card>
             <SL icon="⚓" text={lc.p4} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚓ {lang==="fr"?"SIMULATION SAISIE DE NAVIRE":lang==="en"?"VESSEL ARREST SIMULATION":"SIMULACIÓN RETENCIÓN DE BUQUE"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚓ {lang==="fr"?"SIMULATION SAISIE DE NAVIRE":lang==="en"?"VESSEL ARREST SIMULATION":lang==="es"?"SIMULACIÓN RETENCIÓN DE BUQUE":"SIMULAÇÃO DE ARRESTO DE NAVIO"}</div>
               <ShipArrestSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -655,7 +655,7 @@ export default function LessonLiabilityInsurance({ lang="fr", onBack=()=>{}, onC
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Responsabilité & Assurances</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 7":lang==="en"?"Lesson 7":"Lección 7"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 7":lang==="en"?"Lesson 7":lang==="es"?"Lección 7":"Lição 7"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

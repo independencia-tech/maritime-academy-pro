@@ -645,28 +645,28 @@ export default function LessonMARPOL_L3({ lang="fr", onBack=()=>{}, onComplete=(
             <SL icon="🗑️" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗑️ {lang==="fr"?"CATÉGORIES DE DÉCHETS - INTERACTIF":lang==="en"?"WASTE CATEGORIES - INTERACTIVE":"CATEGORÍAS DE RESIDUOS - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗑️ {lang==="fr"?"CATÉGORIES DE DÉCHETS - INTERACTIF":lang==="en"?"WASTE CATEGORIES - INTERACTIVE":lang==="es"?"CATEGORÍAS DE RESIDUOS - INTERACTIVO":"CATEGORIAS DE RESÍDUOS - INTERATIVO"}</div>
               <WasteCategoriesSVG lang={lang}/>
             </Card>
 
             <SL icon="📝" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📝 {lang==="fr"?"GMP - INTERACTIF":lang==="en"?"GMP - INTERACTIVE":"GMP - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📝 {lang==="fr"?"GMP - INTERACTIF":lang==="en"?"GMP - INTERACTIVE":lang==="es"?"GMP - INTERACTIVO":"GMP - INTERATIVO"}</div>
               <GMPSVG lang={lang}/>
             </Card>
 
             <SL icon="📋" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"GRB - INTERACTIF":lang==="en"?"GRB - INTERACTIVE":"GRB - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"GRB - INTERACTIF":lang==="en"?"GRB - INTERACTIVE":lang==="es"?"GRB - INTERACTIVO":"GRB - INTERATIVO"}</div>
               <GRBSVG lang={lang}/>
             </Card>
 
             <SL icon="🗺️" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"ZONES SPÉCIALES & INCINÉRATEUR":lang==="en"?"SPECIAL AREAS & INCINERATOR":"ZONAS ESPECIALES E INCINERADOR"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"ZONES SPÉCIALES & INCINÉRATEUR":lang==="en"?"SPECIAL AREAS & INCINERATOR":lang==="es"?"ZONAS ESPECIALES E INCINERADOR":"ZONAS ESPECIAIS E INCINERADOR"}</div>
               <SpecialAreasSVG lang={lang}/>
             </Card>
 

@@ -274,11 +274,11 @@ function AbandonShipSVG({ lang }) {
       <div style={{display:"flex",gap:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"9px",borderRadius:10,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":lang==="es"?"Anterior":"Anterior"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(list.length-1,s+1))} disabled={step===list.length-1}
           style={{flex:1,padding:"9px",borderRadius:10,background:step===list.length-1?"rgba(255,255,255,0.05)":`${list[Math.min(list.length-1,step+1)].color}22`,border:`1px solid ${step===list.length-1?"rgba(255,255,255,0.08)":list[Math.min(list.length-1,step+1)].color}`,color:C.white,cursor:step===list.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+          {lang==="fr"?"Suivant":lang==="en"?"Next":lang==="es"?"Siguiente":"Seguinte"} ▶
         </button>
       </div>
     </div>
@@ -705,25 +705,25 @@ export default function LessonGMDSS({ lang="fr", onBack=()=>{}, onComplete=()=>{
             <SL icon="🌍" text={lc.p1} color={C.green}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}22`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"ZONES GMDSS INTERACTIVES":lang==="en"?"INTERACTIVE GMDSS ZONES":"ZONAS GMDSS INTERACTIVAS"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"ZONES GMDSS INTERACTIVES":lang==="en"?"INTERACTIVE GMDSS ZONES":lang==="es"?"ZONAS GMDSS INTERACTIVAS":"ZONAS GMDSS INTERATIVAS"}</div>
               <GMDSSZonesSVG lang={lang}/>
             </Card>
             <SL icon="🆘" text={lc.p2} color={C.sar}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.sar}22`}}>
-              <div style={{fontSize:11,color:C.sar,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🆘 {lang==="fr"?"SIGNAUX DE DÉTRESSE — INTERACTIF":lang==="en"?"DISTRESS SIGNALS — INTERACTIVE":"SEÑALES DE SOCORRO — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.sar,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🆘 {lang==="fr"?"SIGNAUX DE DÉTRESSE — INTERACTIF":lang==="en"?"DISTRESS SIGNALS — INTERACTIVE":lang==="es"?"SEÑALES DE SOCORRO — INTERACTIVO":"SINAIS DE SOCORRO — INTERATIVO"}</div>
               <DistressSignalsSVG lang={lang}/>
             </Card>
             <SL icon="🛟" text={lc.p3} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}22`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛟 {lang==="fr"?"PROCÉDURE D'ABANDON — 4 ÉTAPES":lang==="en"?"ABANDON SHIP — 4 STEPS":"ABANDONO — 4 ETAPAS"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛟 {lang==="fr"?"PROCÉDURE D'ABANDON — 4 ÉTAPES":lang==="en"?"ABANDON SHIP — 4 STEPS":lang==="es"?"ABANDONO — 4 ETAPAS":"ABANDONO — 4 ETAPAS"}</div>
               <AbandonShipSVG lang={lang}/>
             </Card>
             <SL icon="🚁" text={lc.p4} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}22`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚁 {lang==="fr"?"COORDINATION SAR — 4 PHASES":lang==="en"?"SAR COORDINATION — 4 PHASES":"COORDINACIÓN SAR — 4 FASES"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚁 {lang==="fr"?"COORDINATION SAR — 4 PHASES":lang==="en"?"SAR COORDINATION — 4 PHASES":lang==="es"?"COORDINACIÓN SAR — 4 FASES":"COORDENAÇÃO SAR — 4 FASES"}</div>
               <SARCoordinationSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -742,7 +742,7 @@ export default function LessonGMDSS({ lang="fr", onBack=()=>{}, onComplete=()=>{
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz Final — GMDSS & Détresse</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 7 — FINALE":lang==="en"?"Lesson 7 — FINAL":"Lección 7 — FINAL"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 7 — FINALE":lang==="en"?"Lesson 7 — FINAL":lang==="es"?"Lección 7 — FINAL":"Lição 7 — FINAL"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

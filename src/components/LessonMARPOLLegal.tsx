@@ -61,16 +61,16 @@ function MarpolAnnexesLegalSVG({ lang }) {
       </div>
       {sel_?(
         <div style={{padding:"12px",borderRadius:14,background:`${sel_.color}12`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
-          <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:8}}>{sel_.icon} {lang==="fr"?"Annexe":lang==="en"?"Annex":"Anexo"} {sel_.num} — {sel_.label[lang]||sel_.label.fr}</div>
-          <div style={{fontSize:10,color:C.red,fontWeight:700,marginBottom:4}}>⚖️ {lang==="fr"?"ASPECTS JURIDIQUES":lang==="en"?"LEGAL ASPECTS":"ASPECTOS JURÍDICOS"}</div>
+          <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:8}}>{sel_.icon} {lang==="fr"?"Annexe":lang==="en"?"Annex":lang==="es"?"Anexo":"Anexo"} {sel_.num} — {sel_.label[lang]||sel_.label.fr}</div>
+          <div style={{fontSize:10,color:C.red,fontWeight:700,marginBottom:4}}>⚖️ {lang==="fr"?"ASPECTS JURIDIQUES":lang==="en"?"LEGAL ASPECTS":lang==="es"?"ASPECTOS JURÍDICOS":"ASPETOS JURÍDICOS"}</div>
           <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line",marginBottom:8}}>{sel_.legal[lang]||sel_.legal.fr}</div>
           <div style={{padding:"7px 10px",borderRadius:8,background:"rgba(192,57,43,0.1)",border:`1px solid ${C.red}33`,fontSize:10,color:C.red,lineHeight:1.5,whiteSpace:"pre-line"}}>
-            🔴 {lang==="fr"?"SANCTIONS:":lang==="en"?"SANCTIONS:":"SANCIONES:"} {sel_.sanction[lang]||sel_.sanction.fr}
+            🔴 {lang==="fr"?"SANCTIONS:":lang==="en"?"SANCTIONS:":lang==="es"?"SANCIONES:":"SANÇÕES:"} {sel_.sanction[lang]||sel_.sanction.fr}
           </div>
         </div>
       ):(
         <div style={{textAlign:"center",padding:"12px",fontSize:11,color:C.muted}}>
-          {lang==="fr"?"Touche une annexe pour les aspects juridiques":lang==="en"?"Tap an annex for legal aspects":"Toca un anexo para los aspectos jurídicos"}
+          {lang==="fr"?"Touche une annexe pour les aspects juridiques":lang==="en"?"Tap an annex for legal aspects":lang==="es"?"Toca un anexo para los aspectos jurídicos":"Toque num anexo para os aspetos jurídicos"}
         </div>
       )}
     </div>
@@ -110,7 +110,7 @@ function SanctionsSVG({ lang }) {
             <span style={{fontSize:22}}>{s.icon}</span>
             <div>
               <div style={{fontSize:11,fontWeight:700,color:scenario===i?s.color:C.muted}}>{s.label[lang]||s.label.fr}</div>
-              <div style={{fontSize:9,color:C.muted,marginTop:2}}>{lang==="fr"?"Cliquer pour voir les sanctions":lang==="en"?"Click to see sanctions":"Clic para ver sanciones"}</div>
+              <div style={{fontSize:9,color:C.muted,marginTop:2}}>{lang==="fr"?"Cliquer pour voir les sanctions":lang==="en"?"Click to see sanctions":lang==="es"?"Clic para ver sanciones":"Clique para ver as sanções"}</div>
             </div>
             <span style={{marginLeft:"auto",fontSize:12,color:C.muted}}>{scenario===i?"▲":"▼"}</span>
           </button>
@@ -118,9 +118,9 @@ function SanctionsSVG({ lang }) {
       </div>
       {sc&&(
         <div style={{padding:"12px",borderRadius:14,background:`${sc.color}10`,border:`1.5px solid ${sc.color}44`,animation:"fadeUp 0.3s ease"}}>
-          <div style={{fontSize:11,fontWeight:700,color:sc.color,marginBottom:6}}>📁 {lang==="fr"?"DOSSIER:":lang==="en"?"CASE FILE:":"EXPEDIENTE:"}</div>
+          <div style={{fontSize:11,fontWeight:700,color:sc.color,marginBottom:6}}>📁 {lang==="fr"?"DOSSIER:":lang==="en"?"CASE FILE:":lang==="es"?"EXPEDIENTE:":"PROCESSO:"}</div>
           <div style={{fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line",marginBottom:10,padding:"8px",borderRadius:8,background:"rgba(0,0,0,0.3)"}}>{sc.facts[lang]||sc.facts.fr}</div>
-          <div style={{fontSize:11,fontWeight:700,color:C.red,marginBottom:6}}>⚖️ {lang==="fr"?"VERDICT & SANCTIONS:":lang==="en"?"VERDICT & SANCTIONS:":"VEREDICTO & SANCIONES:"}</div>
+          <div style={{fontSize:11,fontWeight:700,color:C.red,marginBottom:6}}>⚖️ {lang==="fr"?"VERDICT & SANCTIONS:":lang==="en"?"VERDICT & SANCTIONS:":lang==="es"?"VEREDICTO & SANCIONES:":"VEREDICTO & SANÇÕES:"}</div>
           <div style={{fontSize:11,color:C.white,lineHeight:1.8,whiteSpace:"pre-line"}}>{sc.result[lang]||sc.result.fr}</div>
         </div>
       )}
@@ -168,7 +168,7 @@ function EnforcementSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.role[lang]||sel_.role.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche un acteur pour son rôle juridique":lang==="en"?"Tap an actor for their legal role":"Toca un actor para su función jurídica"}
+        {lang==="fr"?"Touche un acteur pour son rôle juridique":lang==="en"?"Tap an actor for their legal role":lang==="es"?"Toca un actor para su función jurídica":"Toque num ator para o seu papel jurídico"}
       </div>}
     </div>
   );
@@ -569,25 +569,25 @@ export default function LessonMARPOLLegal({ lang="fr", onBack=()=>{}, onComplete
             <SL icon="⚖️" text={lc.p1} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"ANNEXES MARPOL — JURIDIQUE":lang==="en"?"MARPOL ANNEXES — LEGAL":"ANEXOS MARPOL — JURÍDICO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"ANNEXES MARPOL — JURIDIQUE":lang==="en"?"MARPOL ANNEXES — LEGAL":lang==="es"?"ANEXOS MARPOL — JURÍDICO":"ANEXOS MARPOL — JURÍDICO"}</div>
               <MarpolAnnexesLegalSVG lang={lang}/>
             </Card>
             <SL icon="🔴" text={lc.p2} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔴 {lang==="fr"?"SIMULATEUR DE SANCTIONS":lang==="en"?"SANCTIONS SIMULATOR":"SIMULADOR DE SANCIONES"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔴 {lang==="fr"?"SIMULATEUR DE SANCTIONS":lang==="en"?"SANCTIONS SIMULATOR":lang==="es"?"SIMULADOR DE SANCIONES":"SIMULADOR DE SANÇÕES"}</div>
               <SanctionsSVG lang={lang}/>
             </Card>
             <SL icon="🌍" text={lc.p3} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"ACTEURS JURIDIQUES":lang==="en"?"LEGAL ACTORS":"ACTORES JURÍDICOS"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"ACTEURS JURIDIQUES":lang==="en"?"LEGAL ACTORS":lang==="es"?"ACTORES JURÍDICOS":"ATORES JURÍDICOS"}</div>
               <EnforcementSVG lang={lang}/>
             </Card>
             <SL icon="💰" text={lc.p4} color={C.green}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}33`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💰 {lang==="fr"?"PROGRAMME WHISTLEBLOWER":lang==="en"?"WHISTLEBLOWER PROGRAM":"PROGRAMA WHISTLEBLOWER"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💰 {lang==="fr"?"PROGRAMME WHISTLEBLOWER":lang==="en"?"WHISTLEBLOWER PROGRAM":lang==="es"?"PROGRAMA WHISTLEBLOWER":"PROGRAMA WHISTLEBLOWER"}</div>
               <WhistleblowerSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -606,7 +606,7 @@ export default function LessonMARPOLLegal({ lang="fr", onBack=()=>{}, onComplete
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — MARPOL Juridique</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":"Lección 2"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":lang==="es"?"Lección 2":"Lição 2"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

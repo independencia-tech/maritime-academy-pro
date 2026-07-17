@@ -61,7 +61,7 @@ function MLC5TitlesSVG({ lang }) {
         </div>
       ):(
         <div style={{textAlign:"center",padding:"12px",fontSize:11,color:C.muted}}>
-          {lang==="fr"?"Touche un titre pour les détails":lang==="en"?"Tap a title for details":"Toca un título para detalles"}
+          {lang==="fr"?"Touche un titre pour les détails":lang==="en"?"Tap a title for details":lang==="es"?"Toca un título para detalles":"Toque num título para detalhes"}
         </div>
       )}
     </div>
@@ -106,11 +106,11 @@ function RightsCheckerSVG({ lang }) {
         border:`1px solid ${vCount===0?C.green:vCount>=3?C.red:C.orange}33`,
         fontSize:10,color:vCount===0?C.green:vCount>=3?C.red:C.orange,fontWeight:700,textAlign:"center"}}>
         {vCount===0
-          ?(lang==="fr"?"✅ Navire conforme MLC 2006":lang==="en"?"✅ MLC 2006 compliant vessel":"✅ Buque conforme MLC 2006")
+          ?(lang==="fr"?"✅ Navire conforme MLC 2006":lang==="en"?"✅ MLC 2006 compliant vessel":lang==="es"?"✅ Buque conforme MLC 2006":"✅ Navio conforme MLC 2006")
           :(lang==="fr"?`⚠️ ${vCount} violation(s) MLC détectée(s)`:lang==="en"?`⚠️ ${vCount} MLC violation(s) detected`:`⚠️ ${vCount} infracción(es) MLC detectada(s)`)}
       </div>
       <div style={{fontSize:10,color:C.muted,marginBottom:8,textAlign:"center"}}>
-        {lang==="fr"?"Touche pour marquer une violation":lang==="en"?"Tap to mark a violation":"Toca para marcar una infracción"}
+        {lang==="fr"?"Touche pour marquer une violation":lang==="en"?"Tap to mark a violation":lang==="es"?"Toca para marcar una infracción":"Toque para marcar uma violação"}
       </div>
       {rights.map((r,i)=>{
         const isViolated = violations.includes(r.id);
@@ -146,7 +146,7 @@ function RightsCheckerSVG({ lang }) {
         <div style={{marginTop:8,padding:"10px 12px",borderRadius:10,
           background:"rgba(192,57,43,0.12)",border:`1px solid ${C.red}44`,
           fontSize:11,color:C.red,fontWeight:700,textAlign:"center"}}>
-          🔴 {lang==="fr"?"PSC peut immobiliser le navire immédiatement":lang==="en"?"PSC can immediately detain the vessel":"PSC puede inmovilizar el buque inmediatamente"}
+          🔴 {lang==="fr"?"PSC peut immobiliser le navire immédiatement":lang==="en"?"PSC can immediately detain the vessel":lang==="es"?"PSC puede inmovilizar el buque inmediatamente":"PSC pode imobilizar o navio imediatamente"}
         </div>
       )}
     </div>
@@ -190,7 +190,7 @@ function AccommodationSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.standard[lang]||sel_.standard.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche un élément pour les standards":lang==="en"?"Tap an element for standards":"Toca un elemento para los estándares"}
+        {lang==="fr"?"Touche un élément pour les standards":lang==="en"?"Tap an element for standards":lang==="es"?"Toca un elemento para los estándares":"Toque num elemento para os padrões"}
       </div>}
     </div>
   );
@@ -245,10 +245,10 @@ function PSCMLCInspectionSVG({ lang }) {
         <div style={{textAlign:"center",padding:"16px 0"}}>
           <div style={{fontSize:40,marginBottom:8}}>👷</div>
           <div style={{fontSize:12,color:C.muted,marginBottom:12,lineHeight:1.5}}>
-            {lang==="fr"?"Inspection PSC — Volet MLC 2006\nNavire cargo · Port de Singapour":lang==="en"?"PSC Inspection — MLC 2006 section\nCargo vessel · Port of Singapore":"Inspección PSC — Sección MLC 2006\nBuque de carga · Puerto de Singapur"}
+            {lang==="fr"?"Inspection PSC — Volet MLC 2006\nNavire cargo · Port de Singapour":lang==="en"?"PSC Inspection — MLC 2006 section\nCargo vessel · Port of Singapore":lang==="es"?"Inspección PSC — Sección MLC 2006\nBuque de carga · Puerto de Singapur":"Inspeção PSC — Secção MLC 2006\nNavio de carga · Porto de Singapura"}
           </div>
           <button onClick={()=>setPhase("inspecting")} style={{padding:"12px 24px",borderRadius:12,background:`linear-gradient(135deg,${C.green},${C.teal})`,border:"none",color:C.white,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
-            👷 {lang==="fr"?"LANCER INSPECTION MLC":lang==="en"?"START MLC INSPECTION":"INICIAR INSPECCIÓN MLC"}
+            👷 {lang==="fr"?"LANCER INSPECTION MLC":lang==="en"?"START MLC INSPECTION":lang==="es"?"INICIAR INSPECCIÓN MLC":"INICIAR INSPEÇÃO MLC"}
           </button>
         </div>
       )}
@@ -260,10 +260,10 @@ function PSCMLCInspectionSVG({ lang }) {
             fontSize:10,fontWeight:700,
             color:phase==="done"?(isDetained?C.red:issues.length>0?C.orange:C.green):C.teal,textAlign:"center"}}>
             {phase==="inspecting"
-              ?(lang==="fr"?"👷 Inspection MLC en cours...":lang==="en"?"👷 MLC inspection in progress...":"👷 Inspección MLC en curso...")
+              ?(lang==="fr"?"👷 Inspection MLC en cours...":lang==="en"?"👷 MLC inspection in progress...":lang==="es"?"👷 Inspección MLC en curso...":"👷 Inspeção MLC em curso...")
               :isDetained
-                ?(lang==="fr"?"🔴 NAVIRE RETENU — 3 violations MLC graves":lang==="en"?"🔴 VESSEL DETAINED — 3 serious MLC violations":"🔴 BUQUE RETENIDO — 3 infracciones MLC graves")
-                :(lang==="fr"?"⚠️ VIOLATIONS MINEURES — Corriger avant prochain port":lang==="en"?"⚠️ MINOR VIOLATIONS — Correct before next port":"⚠️ INFRACCIONES MENORES — Corregir antes del próximo puerto")}
+                ?(lang==="fr"?"🔴 NAVIRE RETENU — 3 violations MLC graves":lang==="en"?"🔴 VESSEL DETAINED — 3 serious MLC violations":lang==="es"?"🔴 BUQUE RETENIDO — 3 infracciones MLC graves":"🔴 NAVIO RETIDO — 3 violações MLC graves")
+                :(lang==="fr"?"⚠️ VIOLATIONS MINEURES — Corriger avant prochain port":lang==="en"?"⚠️ MINOR VIOLATIONS — Correct before next port":lang==="es"?"⚠️ INFRACCIONES MENORES — Corregir antes del próximo puerto":"⚠️ VIOLAÇÕES MENORES — Corrigir antes do próximo porto")}
           </div>
           {checks.slice(0,step+1).map((c,i)=>(
             <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"7px 10px",borderRadius:8,marginBottom:5,
@@ -629,25 +629,25 @@ export default function LessonMLC({ lang="fr", onBack=()=>{}, onComplete=()=>{} 
             <SL icon="📋" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"5 TITRES MLC 2006 — INTERACTIF":lang==="en"?"MLC 2006 5 TITLES — INTERACTIVE":"5 TÍTULOS MLC 2006 — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"5 TITRES MLC 2006 — INTERACTIF":lang==="en"?"MLC 2006 5 TITLES — INTERACTIVE":lang==="es"?"5 TÍTULOS MLC 2006 — INTERACTIVO":"5 TÍTULOS MLC 2006 — INTERATIVO"}</div>
               <MLC5TitlesSVG lang={lang}/>
             </Card>
             <SL icon="⚖️" text={lc.p2} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"DROITS FONDAMENTAUX — SIMULATEUR VIOLATIONS":lang==="en"?"FUNDAMENTAL RIGHTS — VIOLATIONS SIMULATOR":"DERECHOS FUNDAMENTALES — SIMULADOR INFRACCIONES"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"DROITS FONDAMENTAUX — SIMULATEUR VIOLATIONS":lang==="en"?"FUNDAMENTAL RIGHTS — VIOLATIONS SIMULATOR":lang==="es"?"DERECHOS FUNDAMENTALES — SIMULADOR INFRACCIONES":"DIREITOS FUNDAMENTAIS — SIMULADOR DE VIOLAÇÕES"}</div>
               <RightsCheckerSVG lang={lang}/>
             </Card>
             <SL icon="🛏️" text={lc.p3} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛏️ {lang==="fr"?"CONDITIONS DE VIE — STANDARDS MLC":lang==="en"?"LIVING CONDITIONS — MLC STANDARDS":"CONDICIONES DE VIDA — ESTÁNDARES MLC"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛏️ {lang==="fr"?"CONDITIONS DE VIE — STANDARDS MLC":lang==="en"?"LIVING CONDITIONS — MLC STANDARDS":lang==="es"?"CONDICIONES DE VIDA — ESTÁNDARES MLC":"CONDIÇÕES DE VIDA — PADRÕES MLC"}</div>
               <AccommodationSVG lang={lang}/>
             </Card>
             <SL icon="👷" text={lc.p4} color={C.green}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}33`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>👷 {lang==="fr"?"INSPECTION PSC MLC — SIMULATEUR":lang==="en"?"PSC MLC INSPECTION — SIMULATOR":"INSPECCIÓN PSC MLC — SIMULADOR"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>👷 {lang==="fr"?"INSPECTION PSC MLC — SIMULATEUR":lang==="en"?"PSC MLC INSPECTION — SIMULATOR":lang==="es"?"INSPECCIÓN PSC MLC — SIMULADOR":"INSPEÇÃO PSC MLC — SIMULADOR"}</div>
               <PSCMLCInspectionSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -666,7 +666,7 @@ export default function LessonMLC({ lang="fr", onBack=()=>{}, onComplete=()=>{} 
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — MLC 2006</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 4":lang==="en"?"Lesson 4":"Lección 4"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 4":lang==="en"?"Lesson 4":lang==="es"?"Lección 4":"Lição 4"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

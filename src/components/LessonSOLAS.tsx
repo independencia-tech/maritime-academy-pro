@@ -129,11 +129,11 @@ function SOLASChaptersSVG({ lang }) {
       </div>
       {sel_?<div style={{padding:"12px",borderRadius:14,background:`${sel_.color}12`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>
-          {sel_.icon} {lang==="fr"?"Chapitre":lang==="en"?"Chapter":"Capítulo"} {sel_.num} — {sel_.label[lang]||sel_.label.fr}
+          {sel_.icon} {lang==="fr"?"Chapitre":lang==="en"?"Chapter":lang==="es"?"Capítulo":"Capítulo"} {sel_.num} — {sel_.label[lang]||sel_.label.fr}
         </div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche un chapitre pour les détails":lang==="en"?"Tap a chapter for details":"Toca un capítulo para detalles"}
+        {lang==="fr"?"Touche un chapitre pour les détails":lang==="en"?"Tap a chapter for details":lang==="es"?"Toca un capítulo para detalles":"Toque num capítulo para detalhes"}
       </div>}
     </div>
   );
@@ -196,7 +196,7 @@ function CertificatesSVG({ lang }) {
         </div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche un certificat pour les détails":lang==="en"?"Tap a certificate for details":"Toca un certificado para detalles"}
+        {lang==="fr"?"Touche un certificat pour les détails":lang==="en"?"Tap a certificate for details":lang==="es"?"Toca un certificado para detalles":"Toque num certificado para detalhes"}
       </div>}
     </div>
   );
@@ -267,10 +267,10 @@ function PSCSimulatorSVG({ lang }) {
         <div style={{textAlign:"center",padding:"16px 0"}}>
           <div style={{fontSize:40,marginBottom:8}}>🚢</div>
           <div style={{fontSize:12,color:C.muted,marginBottom:12,lineHeight:1.5}}>
-            {lang==="fr"?"Port State Control — Inspecteur à bord\nVérification des certificats et équipements":lang==="en"?"Port State Control — Inspector on board\nChecking certificates and equipment":"PSC — Inspector a bordo\nVerificando certificados y equipos"}
+            {lang==="fr"?"Port State Control — Inspecteur à bord\nVérification des certificats et équipements":lang==="en"?"Port State Control — Inspector on board\nChecking certificates and equipment":lang==="es"?"PSC — Inspector a bordo\nVerificando certificados y equipos":"PSC — Inspetor a bordo\nVerificação de certificados e equipamentos"}
           </div>
           <button onClick={startInspection} style={{padding:"12px 24px",borderRadius:12,background:`linear-gradient(135deg,${C.blue},${C.blue2})`,border:"none",color:C.white,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
-            🔍 {lang==="fr"?"LANCER L'INSPECTION PSC":lang==="en"?"START PSC INSPECTION":"INICIAR INSPECCIÓN PSC"}
+            🔍 {lang==="fr"?"LANCER L'INSPECTION PSC":lang==="en"?"START PSC INSPECTION":lang==="es"?"INICIAR INSPECCIÓN PSC":"INICIAR INSPEÇÃO PSC"}
           </button>
         </div>
       )}
@@ -282,10 +282,10 @@ function PSCSimulatorSVG({ lang }) {
             fontSize:10,fontWeight:700,
             color:phase==="done"?(isDetained?C.red:C.green):C.blue2,textAlign:"center"}}>
             {phase==="inspecting"
-              ?(lang==="fr"?"🔍 Inspection en cours...":lang==="en"?"🔍 Inspection in progress...":"🔍 Inspección en curso...")
+              ?(lang==="fr"?"🔍 Inspection en cours...":lang==="en"?"🔍 Inspection in progress...":lang==="es"?"🔍 Inspección en curso...":"🔍 Inspeção em curso...")
               :isDetained
-                ?(lang==="fr"?"🔴 NAVIRE IMMOBILISÉ — 2 déficiences graves":lang==="en"?"🔴 VESSEL DETAINED — 2 serious deficiencies":"🔴 BUQUE RETENIDO — 2 deficiencias graves")
-                :(lang==="fr"?"✅ NAVIRE AUTORISÉ — Déficiences mineures à corriger":lang==="en"?"✅ VESSEL CLEARED — Minor deficiencies to correct":"✅ BUQUE AUTORIZADO — Deficiencias menores a corregir")}
+                ?(lang==="fr"?"🔴 NAVIRE IMMOBILISÉ — 2 déficiences graves":lang==="en"?"🔴 VESSEL DETAINED — 2 serious deficiencies":lang==="es"?"🔴 BUQUE RETENIDO — 2 deficiencias graves":"🔴 NAVIO RETIDO — 2 deficiências graves")
+                :(lang==="fr"?"✅ NAVIRE AUTORISÉ — Déficiences mineures à corriger":lang==="en"?"✅ VESSEL CLEARED — Minor deficiencies to correct":lang==="es"?"✅ BUQUE AUTORIZADO — Deficiencias menores a corregir":"✅ NAVIO AUTORIZADO — Deficiências menores a corrigir")}
           </div>
           {inspectionItems.slice(0,step+1).map((item,i)=>(
             <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"7px 10px",borderRadius:8,marginBottom:5,
@@ -650,25 +650,25 @@ export default function LessonSOLAS({ lang="fr", onBack=()=>{}, onComplete=()=>{
             <SL icon="📅" text={lc.p1} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📅 {lang==="fr"?"TIMELINE SOLAS — INTERACTIF":lang==="en"?"SOLAS TIMELINE — INTERACTIVE":"CRONOLOGÍA SOLAS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📅 {lang==="fr"?"TIMELINE SOLAS — INTERACTIF":lang==="en"?"SOLAS TIMELINE — INTERACTIVE":lang==="es"?"CRONOLOGÍA SOLAS — INTERACTIVO":"CRONOLOGIA SOLAS — INTERATIVO"}</div>
               <SOLASTimelineSVG lang={lang}/>
             </Card>
             <SL icon="📋" text={lc.p2} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"CHAPITRES SOLAS — INTERACTIF":lang==="en"?"SOLAS CHAPTERS — INTERACTIVE":"CAPÍTULOS SOLAS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"CHAPITRES SOLAS — INTERACTIF":lang==="en"?"SOLAS CHAPTERS — INTERACTIVE":lang==="es"?"CAPÍTULOS SOLAS — INTERACTIVO":"CAPÍTULOS SOLAS — INTERATIVO"}</div>
               <SOLASChaptersSVG lang={lang}/>
             </Card>
             <SL icon="📜" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📜 {lang==="fr"?"CERTIFICATS SOLAS — INTERACTIF":lang==="en"?"SOLAS CERTIFICATES — INTERACTIVE":"CERTIFICADOS SOLAS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📜 {lang==="fr"?"CERTIFICATS SOLAS — INTERACTIF":lang==="en"?"SOLAS CERTIFICATES — INTERACTIVE":lang==="es"?"CERTIFICADOS SOLAS — INTERACTIVO":"CERTIFICADOS SOLAS — INTERATIVO"}</div>
               <CertificatesSVG lang={lang}/>
             </Card>
             <SL icon="🔍" text={lc.p4} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"SIMULATION INSPECTION PSC":lang==="en"?"PSC INSPECTION SIMULATION":"SIMULACIÓN INSPECCIÓN PSC"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"SIMULATION INSPECTION PSC":lang==="en"?"PSC INSPECTION SIMULATION":lang==="es"?"SIMULACIÓN INSPECCIÓN PSC":"SIMULAÇÃO INSPEÇÃO PSC"}</div>
               <PSCSimulatorSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -687,7 +687,7 @@ export default function LessonSOLAS({ lang="fr", onBack=()=>{}, onComplete=()=>{
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — SOLAS</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":"Lección 1"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":lang==="es"?"Lección 1":"Lição 1"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

@@ -798,25 +798,25 @@ export default function LessonAIS({ lang="fr", onBack=()=>{}, onComplete=()=>{} 
             <SL icon="📡" text={lc.p1} color={C.ais}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,background:"rgba(0,10,5,0.7)",border:`1px solid ${C.ais}22`}}>
-              <div style={{fontSize:11,color:C.ais,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"ÉCRAN AIS INTERACTIF":lang==="en"?"INTERACTIVE AIS SCREEN":"PANTALLA AIS INTERACTIVA"}</div>
+              <div style={{fontSize:11,color:C.ais,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"ÉCRAN AIS INTERACTIF":lang==="en"?"INTERACTIVE AIS SCREEN":lang==="es"?"PANTALLA AIS INTERACTIVA":"ECRÃ AIS INTERATIVO"}</div>
               <AISScreenSVG lang={lang}/>
             </Card>
             <SL icon="🗺️" text={lc.p2} color={C.ecdis}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.ecdis}22`}}>
-              <div style={{fontSize:11,color:C.ecdis,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"ECDIS vs CARTE PAPIER":lang==="en"?"ECDIS vs PAPER CHART":"SEEC vs CARTA PAPEL"}</div>
+              <div style={{fontSize:11,color:C.ecdis,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"ECDIS vs CARTE PAPIER":lang==="en"?"ECDIS vs PAPER CHART":lang==="es"?"SEEC vs CARTA PAPEL":"ECDIS vs CARTA EM PAPEL"}</div>
               <ECDISComparisonSVG lang={lang}/>
             </Card>
             <SL icon="📻" text={lc.p3} color={C.radar}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,background:"rgba(0,8,0,0.7)",border:`1px solid ${C.radar}22`}}>
-              <div style={{fontSize:11,color:C.radar,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📻 {lang==="fr"?"ÉCRAN RADAR ARPA SIMULÉ":lang==="en"?"SIMULATED ARPA RADAR SCREEN":"PANTALLA RADAR ARPA SIMULADA"}</div>
+              <div style={{fontSize:11,color:C.radar,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📻 {lang==="fr"?"ÉCRAN RADAR ARPA SIMULÉ":lang==="en"?"SIMULATED ARPA RADAR SCREEN":lang==="es"?"PANTALLA RADAR ARPA SIMULADA":"ECRÃ RADAR ARPA SIMULADO"}</div>
               <RadarScreenSVG lang={lang}/>
             </Card>
             <SL icon="🔗" text={lc.p4} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"QUIZ INTÉGRATION SYSTÈMES":lang==="en"?"SYSTEMS INTEGRATION QUIZ":"QUIZ INTEGRACIÓN SISTEMAS"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"QUIZ INTÉGRATION SYSTÈMES":lang==="en"?"SYSTEMS INTEGRATION QUIZ":lang==="es"?"QUIZ INTEGRACIÓN SISTEMAS":"QUIZ INTEGRAÇÃO DE SISTEMAS"}</div>
               <SystemsQuizSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -835,7 +835,7 @@ export default function LessonAIS({ lang="fr", onBack=()=>{}, onComplete=()=>{} 
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — AIS & Navigation Électronique</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 6":lang==="en"?"Lesson 6":"Lección 6"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 6":lang==="en"?"Lesson 6":lang==="es"?"Lección 6":"Lição 6"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

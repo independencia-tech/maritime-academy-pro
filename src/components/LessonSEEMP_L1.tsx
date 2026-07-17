@@ -592,28 +592,28 @@ export default function LessonSEEMP_L1({ lang="fr", onBack=()=>{}, onComplete=()
             <SL icon="📈" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📈 {lang==="fr"?"CHRONOLOGIE - INTERACTIF":lang==="en"?"TIMELINE - INTERACTIVE":"CRONOLOGÍA - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📈 {lang==="fr"?"CHRONOLOGIE - INTERACTIF":lang==="en"?"TIMELINE - INTERACTIVE":lang==="es"?"CRONOLOGÍA - INTERACTIVO":"CRONOLOGIA - INTERATIVO"}</div>
               <TimelineSVG lang={lang}/>
             </Card>
 
             <SL icon="🎯" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"NET ZERO - INTERACTIF":lang==="en"?"NET ZERO - INTERACTIVE":"NET ZERO - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"NET ZERO - INTERACTIF":lang==="en"?"NET ZERO - INTERACTIVE":lang==="es"?"NET ZERO - INTERACTIVO":"NET ZERO - INTERATIVO"}</div>
               <NetZeroSVG lang={lang}/>
             </Card>
 
             <SL icon="📊" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📊 {lang==="fr"?"EEXI vs CII":lang==="en"?"EEXI vs CII":"EEXI vs CII"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📊 {lang==="fr"?"EEXI vs CII":lang==="en"?"EEXI vs CII":lang==="es"?"EEXI vs CII":"EEXI vs CII"}</div>
               <EEXICIISVG lang={lang}/>
             </Card>
 
             <SL icon="⚙️" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚙️ {lang==="fr"?"CHAQUE DÉCISION COMPTE - INTERACTIF":lang==="en"?"EVERY DECISION MATTERS - INTERACTIVE":"CADA DECISIÓN CUENTA - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚙️ {lang==="fr"?"CHAQUE DÉCISION COMPTE - INTERACTIF":lang==="en"?"EVERY DECISION MATTERS - INTERACTIVE":lang==="es"?"CADA DECISIÓN CUENTA - INTERACTIVO":"CADA DECISÃO CONTA - INTERATIVO"}</div>
               <EveryDecisionSVG lang={lang}/>
             </Card>
 

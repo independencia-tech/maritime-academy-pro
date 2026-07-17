@@ -642,28 +642,28 @@ export default function LessonMARPOL_L4({ lang="fr", onBack=()=>{}, onComplete=(
             <SL icon="⏱️" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⏱️ {lang==="fr"?"FUEL CHANGEOVER - INTERACTIF":lang==="en"?"FUEL CHANGEOVER - INTERACTIVE":"FUEL CHANGEOVER - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⏱️ {lang==="fr"?"FUEL CHANGEOVER - INTERACTIF":lang==="en"?"FUEL CHANGEOVER - INTERACTIVE":lang==="es"?"FUEL CHANGEOVER - INTERACTIVO":"FUEL CHANGEOVER - INTERATIVO"}</div>
               <FuelChangeoverSVG lang={lang}/>
             </Card>
 
             <SL icon="📄" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📄 {lang==="fr"?"BDN - INTERACTIF":lang==="en"?"BDN - INTERACTIVE":"BDN - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📄 {lang==="fr"?"BDN - INTERACTIF":lang==="en"?"BDN - INTERACTIVE":lang==="es"?"BDN - INTERACTIVO":"BDN - INTERATIVO"}</div>
               <BDNSVG lang={lang}/>
             </Card>
 
             <SL icon="🧪" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🧪 {lang==="fr"?"ÉCHANTILLONNAGE - INTERACTIF":lang==="en"?"FUEL SAMPLING - INTERACTIVE":"MUESTREO - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🧪 {lang==="fr"?"ÉCHANTILLONNAGE - INTERACTIF":lang==="en"?"FUEL SAMPLING - INTERACTIVE":lang==="es"?"MUESTREO - INTERACTIVO":"AMOSTRAGEM - INTERATIVO"}</div>
               <FuelSamplingSVG lang={lang}/>
             </Card>
 
             <SL icon="🌫️" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌫️ {lang==="fr"?"SCRUBBER - RÉGLEMENTAIRE":lang==="en"?"SCRUBBER - REGULATORY":"SCRUBBER - REGLAMENTARIO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌫️ {lang==="fr"?"SCRUBBER - RÉGLEMENTAIRE":lang==="en"?"SCRUBBER - REGULATORY":lang==="es"?"SCRUBBER - REGLAMENTARIO":"SCRUBBER - REGULAMENTAR"}</div>
               <ScrubberSVG lang={lang}/>
             </Card>
 

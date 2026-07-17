@@ -127,7 +127,7 @@ function ManeuverSignalsSVG({ lang }) {
         <div style={{fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line"}}>{act.meaning[lang]||act.meaning.fr}</div>
       </div>}
       {!act&&<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche un signal pour le détail":lang==="en"?"Tap a signal for details":"Toca una señal para los detalles"}
+        {lang==="fr"?"Touche un signal pour le détail":lang==="en"?"Tap a signal for details":lang==="es"?"Toca una señal para los detalles":"Toque num sinal para detalhes"}
       </div>}
     </div>
   );
@@ -203,10 +203,10 @@ function FogSignalsSVG({ lang }) {
       {/* Fog effect header */}
       <div style={{background:"linear-gradient(180deg,rgba(180,200,220,0.15) 0%,transparent 100%)",borderRadius:12,padding:"10px 12px",marginBottom:10,border:"1px solid rgba(180,200,220,0.2)",textAlign:"center"}}>
         <div style={{fontSize:12,color:"rgba(180,200,220,0.8)",fontWeight:700}}>
-          🌫️ {lang==="fr"?"BROUILLARD — Règle 35 COLREG":lang==="en"?"FOG — COLREG Rule 35":"NIEBLA — Regla 35 COLREG"}
+          🌫️ {lang==="fr"?"BROUILLARD — Règle 35 COLREG":lang==="en"?"FOG — COLREG Rule 35":lang==="es"?"NIEBLA — Regla 35 COLREG":"NEVOEIRO — Regra 35 COLREG"}
         </div>
         <div style={{fontSize:9,color:C.muted,marginTop:4}}>
-          {lang==="fr"?"Visibilité < 1 mille marin — Signaux obligatoires":lang==="en"?"Visibility < 1 nautical mile — Mandatory signals":"Visibilidad < 1 milla náutica — Señales obligatorias"}
+          {lang==="fr"?"Visibilité < 1 mille marin — Signaux obligatoires":lang==="en"?"Visibility < 1 nautical mile — Mandatory signals":lang==="es"?"Visibilidad < 1 milla náutica — Señales obligatorias":"Visibilidade < 1 milha náutica — Sinais obrigatórios"}
         </div>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:10}}>
@@ -362,7 +362,7 @@ function SoundQuizSVG({ lang }) {
         })}
       </div>
       {ans!==null&&<button onClick={next} style={{width:"100%",padding:"11px 0",border:"none",borderRadius:12,background:`linear-gradient(135deg,${C.orange},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:C.white,cursor:"pointer"}}>
-        {qIdx<list.length-1?(lang==="fr"?"SUIVANT →":lang==="en"?"NEXT →":"SIGUIENTE →"):(lang==="fr"?"RÉSULTAT":"RESULT")}
+        {qIdx<list.length-1?(lang==="fr"?"SUIVANT →":lang==="en"?"NEXT →":lang==="es"?"SIGUIENTE →":"SEGUINTE →"):(lang==="fr"?"RÉSULTAT":lang==="en"?"RESULT":lang==="es"?"RESULTADO":"RESULTADO")}
       </button>}
     </div>
   );
@@ -708,28 +708,28 @@ export default function LessonSoundSignals({ lang="fr", onBack=()=>{}, onComplet
             <SL icon="📯" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📯 {lang==="fr"?"SIGNAUX DE MANŒUVRE — CLAVIER INTERACTIF":lang==="en"?"MANEUVERING SIGNALS — INTERACTIVE KEYBOARD":"SEÑALES DE MANIOBRA — TECLADO INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📯 {lang==="fr"?"SIGNAUX DE MANŒUVRE — CLAVIER INTERACTIF":lang==="en"?"MANEUVERING SIGNALS — INTERACTIVE KEYBOARD":lang==="es"?"SEÑALES DE MANIOBRA — TECLADO INTERACTIVO":"SINAIS DE MANOBRA — TECLADO INTERATIVO"}</div>
               <ManeuverSignalsSVG lang={lang}/>
             </Card>
             <SL icon="🌫️" text={lc.p2} color={C.steel}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid rgba(180,200,220,0.2)`}}>
-              <div style={{fontSize:11,color:"rgba(180,200,220,0.8)",letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌫️ {lang==="fr"?"SIGNAUX DE BROUILLARD (Règle 35)":lang==="en"?"FOG SIGNALS (Rule 35)":"SEÑALES DE NIEBLA (Regla 35)"}</div>
+              <div style={{fontSize:11,color:"rgba(180,200,220,0.8)",letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌫️ {lang==="fr"?"SIGNAUX DE BROUILLARD (Règle 35)":lang==="en"?"FOG SIGNALS (Rule 35)":lang==="es"?"SEÑALES DE NIEBLA (Regla 35)":"SINAIS DE NEVOEIRO (Regra 35)"}</div>
               <FogSignalsSVG lang={lang}/>
             </Card>
             <SL icon="🔔" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔔 {lang==="fr"?"ÉQUIPEMENTS SONORES — INTERACTIF":lang==="en"?"SOUND EQUIPMENT — INTERACTIVE":"EQUIPOS SONOROS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔔 {lang==="fr"?"ÉQUIPEMENTS SONORES — INTERACTIF":lang==="en"?"SOUND EQUIPMENT — INTERACTIVE":lang==="es"?"EQUIPOS SONOROS — INTERACTIVO":"EQUIPAMENTOS SONOROS — INTERATIVO"}</div>
               <SoundEquipmentSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p4} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ SONORE — IDENTIFIER LES SIGNAUX":lang==="en"?"SOUND QUIZ — IDENTIFY THE SIGNALS":"QUIZ SONORO — IDENTIFICAR LAS SEÑALES"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ SONORE — IDENTIFIER LES SIGNAUX":lang==="en"?"SOUND QUIZ — IDENTIFY THE SIGNALS":lang==="es"?"QUIZ SONORO — IDENTIFICAR LAS SEÑALES":"QUIZ SONORO — IDENTIFICAR OS SINAIS"}</div>
               <SoundQuizSVG lang={lang}/>
             </Card>
-            <SL icon="📝" text={lang==="fr"?"EXERCICES AVANCÉS":lang==="en"?"ADVANCED EXERCISES":"EJERCICIOS AVANZADOS"} color={C.gold}/>
+            <SL icon="📝" text={lang==="fr"?"EXERCICES AVANCÉS":lang==="en"?"ADVANCED EXERCISES":lang==="es"?"EJERCICIOS AVANZADOS":"EXERCÍCIOS AVANÇADOS"} color={C.gold}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><Exercise1 lang={lang} t={t}/></Card>
             <SL icon="🌫️" text={lc.p6} color={C.red}/>
             <div style={{marginBottom:14}}><AccidentCase lang={lang}/></div>
@@ -745,7 +745,7 @@ export default function LessonSoundSignals({ lang="fr", onBack=()=>{}, onComplet
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Signaux Sonores & Brouillard</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 3":lang==="en"?"Lesson 3":"Lección 3"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 3":lang==="en"?"Lesson 3":lang==="es"?"Lección 3":"Lição 3"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

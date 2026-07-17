@@ -115,7 +115,7 @@ function AlphabetFlagsSVG({ lang }) {
         <div style={{fontSize:12,color:C.white,lineHeight:1.6,fontWeight:600}}>{sel_.meaning[lang]||sel_.meaning.fr}</div>
       </div>}
       {!sel&&<div style={{textAlign:"center",fontSize:11,color:C.muted,padding:"8px"}}>
-        {lang==="fr"?"Touche une lettre pour voir son pavillon et sa signification":lang==="en"?"Tap a letter to see its flag and meaning":"Toca una letra para ver su bandera y significado"}
+        {lang==="fr"?"Touche une lettre pour voir son pavillon et sa signification":lang==="en"?"Tap a letter to see its flag and meaning":lang==="es"?"Toca una letra para ver su bandera y significado":"Toque numa letra para ver a sua bandeira e significado"}
       </div>}
     </div>
   );
@@ -655,28 +655,28 @@ export default function LessonFlags({ lang="fr", onBack=()=>{}, onComplete=()=>{
             <SL icon="🔤" text={lc.p1} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔤 {lang==="fr"?"ALPHABET A-Z — PAVILLONS INTERACTIFS":lang==="en"?"ALPHABET A-Z — INTERACTIVE FLAGS":"ALFABETO A-Z — BANDERAS INTERACTIVAS"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔤 {lang==="fr"?"ALPHABET A-Z — PAVILLONS INTERACTIFS":lang==="en"?"ALPHABET A-Z — INTERACTIVE FLAGS":lang==="es"?"ALFABETO A-Z — BANDERAS INTERACTIVAS":"ALFABETO A-Z — BANDEIRAS INTERATIVAS"}</div>
               <AlphabetFlagsSVG lang={lang}/>
             </Card>
             <SL icon="🚨" text={lc.p2} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚨 {lang==="fr"?"PAVILLONS D'URGENCE — INTERACTIF":lang==="en"?"URGENCY FLAGS — INTERACTIVE":"BANDERAS DE URGENCIA — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚨 {lang==="fr"?"PAVILLONS D'URGENCE — INTERACTIF":lang==="en"?"URGENCY FLAGS — INTERACTIVE":lang==="es"?"BANDERAS DE URGENCIA — INTERACTIVO":"BANDEIRAS DE URGÊNCIA — INTERATIVO"}</div>
               <UrgencyFlagsSVG lang={lang}/>
             </Card>
             <SL icon="🔗" text={lc.p3} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"COMBINAISONS CRITIQUES":lang==="en"?"CRITICAL COMBINATIONS":"COMBINACIONES CRÍTICAS"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"COMBINAISONS CRITIQUES":lang==="en"?"CRITICAL COMBINATIONS":lang==="es"?"COMBINACIONES CRÍTICAS":"COMBINAÇÕES CRÍTICAS"}</div>
               <TwoFlagCombinationsSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p4} color={C.purple}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.purple}33`}}>
-              <div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ IDENTIFICATION PAVILLONS":lang==="en"?"FLAG IDENTIFICATION QUIZ":"QUIZ IDENTIFICACIÓN BANDERAS"}</div>
+              <div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"QUIZ IDENTIFICATION PAVILLONS":lang==="en"?"FLAG IDENTIFICATION QUIZ":lang==="es"?"QUIZ IDENTIFICACIÓN BANDERAS":"QUIZ IDENTIFICAÇÃO BANDEIRAS"}</div>
               <FlagQuizSVG lang={lang}/>
             </Card>
-            <SL icon="📝" text={lang==="fr"?"EXERCICES AVANCÉS":lang==="en"?"ADVANCED EXERCISES":"EJERCICIOS AVANZADOS"} color={C.gold}/>
+            <SL icon="📝" text={lang==="fr"?"EXERCICES AVANCÉS":lang==="en"?"ADVANCED EXERCISES":lang==="es"?"EJERCICIOS AVANZADOS":"EXERCÍCIOS AVANÇADOS"} color={C.gold}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><Exercise1 lang={lang} t={t}/></Card>
             <SL icon="🤿" text={lc.p6} color={C.blue2}/>
             <div style={{marginBottom:14}}><AccidentCase lang={lang}/></div>
@@ -692,7 +692,7 @@ export default function LessonFlags({ lang="fr", onBack=()=>{}, onComplete=()=>{
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Pavillons & Communication</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 4":lang==="en"?"Lesson 4":"Lección 4"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 4":lang==="en"?"Lesson 4":lang==="es"?"Lección 4":"Lição 4"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

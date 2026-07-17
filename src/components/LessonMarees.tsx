@@ -87,7 +87,7 @@ function TidalForcesSVG({ lang }) {
         {/* Coefficient badge */}
         <rect x="200" y="8" width="84" height="28" rx="6" fill="rgba(0,0,0,0.6)" stroke={p.color} strokeWidth="0.8"/>
         <text x="242" y="20" textAnchor="middle" fontSize="7" fill={p.color} fontWeight="700">{p.marnage[lang]||p.marnage.fr}</text>
-        <text x="242" y="30" textAnchor="middle" fontSize="7" fill={C.muted}>{lang==="fr"?"Coeff:":lang==="en"?"Coeff:":"Coef:"} {p.coeff}</text>
+        <text x="242" y="30" textAnchor="middle" fontSize="7" fill={C.muted}>{lang==="fr"?"Coeff:":lang==="en"?"Coeff:":lang==="es"?"Coef:":"Coef:"} {p.coeff}</text>
       </svg>
 
       {/* Phase label */}
@@ -106,9 +106,9 @@ function TidalForcesSVG({ lang }) {
             border:`1.5px solid ${phase===i?ph.color:"rgba(255,255,255,0.1)"}`,
             color:phase===i?ph.color:C.muted, fontWeight:phase===i?700:400,
           }}>
-            {i===0?(lang==="fr"?"Vive-eau ①":lang==="en"?"Spring ①":"Viva ①")
+            {i===0?(lang==="fr"?"Vive-eau ①":lang==="en"?"Spring ①":lang==="es"?"Viva ①":"Viva ①")
             :i===1?(lang==="fr"?"Morte-eau":lang==="en"?"Neap tide":lang==="es"?"Muerta":"Morta")
-            :(lang==="fr"?"Vive-eau ②":lang==="en"?"Spring ②":"Viva ②")}
+            :(lang==="fr"?"Vive-eau ②":lang==="en"?"Spring ②":lang==="es"?"Viva ②":"Viva ②")}
           </button>
         ))}
       </div>
@@ -163,7 +163,7 @@ function TideVocabSVG({ lang }) {
         </g>
         {/* Height of water label */}
         <line x1="135" y1="148" x2="135" y2="158" stroke={C.green} strokeWidth="1.5"/>
-        <text x="145" y="154" fontSize="6" fill={C.green}>{lang==="fr"?"Hd":lang==="en"?"Hd":"Hd"}</text>
+        <text x="145" y="154" fontSize="6" fill={C.green}>{lang==="fr"?"Hd":lang==="en"?"Hd":lang==="es"?"Hd":"Hd"}</text>
 
         {/* Clickable labels */}
         {items.map(item=>(

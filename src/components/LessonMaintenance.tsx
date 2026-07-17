@@ -74,7 +74,7 @@ function TroubleshootingSVG({ lang }) {
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
             <div>
               <div style={{fontSize:10,color:C.red,fontWeight:700,marginBottom:4}}>
-                {lang==="fr"?"CAUSES PROBABLES:":lang==="en"?"PROBABLE CAUSES:":"CAUSAS PROBABLES:"}
+                {lang==="fr"?"CAUSES PROBABLES:":lang==="en"?"PROBABLE CAUSES:":lang==="es"?"CAUSAS PROBABLES:":"CAUSAS PROVÁVEIS:"}
               </div>
               <div style={{fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
                 {sel_.causes[lang]||sel_.causes.fr}
@@ -82,7 +82,7 @@ function TroubleshootingSVG({ lang }) {
             </div>
             <div>
               <div style={{fontSize:10,color:C.green,fontWeight:700,marginBottom:4}}>
-                {lang==="fr"?"ACTIONS:":lang==="en"?"ACTIONS:":"ACCIONES:"}
+                {lang==="fr"?"ACTIONS:":lang==="en"?"ACTIONS:":lang==="es"?"ACCIONES:":"AÇÕES:"}
               </div>
               <div style={{fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
                 {sel_.actions[lang]||sel_.actions.fr}
@@ -92,7 +92,7 @@ function TroubleshootingSVG({ lang }) {
         </div>
       ) : (
         <div style={{textAlign:"center",padding:"12px",fontSize:11,color:C.muted}}>
-          {lang==="fr"?"Touche une panne pour voir les causes et actions":lang==="en"?"Tap a fault to see causes and actions":"Toca una avería para ver causas y acciones"}
+          {lang==="fr"?"Touche une panne pour voir les causes et actions":lang==="en"?"Tap a fault to see causes and actions":lang==="es"?"Toca una avería para ver causas y acciones":"Toque numa avaria para ver causas e ações"}
         </div>
       )}
     </div>
@@ -141,7 +141,7 @@ function MaintenancePlannerSVG({ lang }) {
     <div>
       {/* Progress */}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-        <div style={{fontSize:11,color:C.muted}}>{lang==="fr"?"Tâches complétées:":lang==="en"?"Tasks completed:":"Tareas completadas:"} {doneCount}/{total}</div>
+        <div style={{fontSize:11,color:C.muted}}>{lang==="fr"?"Tâches complétées:":lang==="en"?"Tasks completed:":lang==="es"?"Tareas completadas:":"Tarefas concluídas:"} {doneCount}/{total}</div>
         <div style={{fontSize:10,color:C.gold2,fontWeight:700}}>{Math.round(doneCount/total*100)}%</div>
       </div>
       <div style={{height:4,borderRadius:2,background:"rgba(255,255,255,0.08)",marginBottom:12,overflow:"hidden"}}>
@@ -190,7 +190,7 @@ function MaintenancePlannerSVG({ lang }) {
 
       {!sel && (
         <div style={{textAlign:"center",padding:"12px",fontSize:11,color:C.muted}}>
-          {lang==="fr"?"Sélectionne une période pour voir les tâches":lang==="en"?"Select a period to see tasks":"Selecciona un período para ver las tareas"}
+          {lang==="fr"?"Sélectionne une période pour voir les tâches":lang==="en"?"Select a period to see tasks":lang==="es"?"Selecciona un período para ver las tareas":"Selecione um período para ver as tarefas"}
         </div>
       )}
     </div>
@@ -237,7 +237,7 @@ function SparePartsSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche une catégorie pour les détails":lang==="en"?"Tap a category for details":"Toca una categoría para detalles"}
+        {lang==="fr"?"Touche une catégorie pour les détails":lang==="en"?"Tap a category for details":lang==="es"?"Toca una categoría para detalles":"Toque numa categoria para detalhes"}
       </div>}
     </div>
   );
@@ -364,7 +364,7 @@ function DiagnosisSVG({ lang }) {
       {!isResult ? (
         <div>
           <div style={{fontSize:13,fontWeight:700,color:C.white,lineHeight:1.5,marginBottom:12,padding:"10px 12px",borderRadius:10,background:"rgba(255,255,255,0.05)"}}>
-            {lang==="fr"?"❓":lang==="en"?"❓":"❓"} {currentStep.q}
+            {lang==="fr"?"❓":lang==="en"?"❓":lang==="es"?"❓":"❓"} {currentStep.q}
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:8}}>
             {currentStep.opts.map((opt,i)=>(
@@ -390,10 +390,10 @@ function DiagnosisSVG({ lang }) {
             </div>
           </div>
           <div style={{padding:"8px 12px",borderRadius:10,background:"rgba(201,146,42,0.08)",border:`1px solid ${C.gold}33`,fontSize:10,color:C.gold2,marginBottom:12}}>
-            📋 {lang==="fr"?"Toujours consigner l'anomalie et les actions dans le journal machine":lang==="en"?"Always log the anomaly and actions in the engine log":"Siempre registrar la anomalía y las acciones en el diario de máquinas"}
+            📋 {lang==="fr"?"Toujours consigner l'anomalie et les actions dans le journal machine":lang==="en"?"Always log the anomaly and actions in the engine log":lang==="es"?"Siempre registrar la anomalía y las acciones en el diario de máquinas":"Registar sempre a anomalia e as ações no diário de máquinas"}
           </div>
           <button onClick={reset} style={{width:"100%",padding:"10px",borderRadius:12,background:`linear-gradient(135deg,${C.blue},${C.blue2})`,border:"none",color:C.white,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
-            🔄 {lang==="fr"?"RECOMMENCER":lang==="en"?"RESTART":"REINICIAR"}
+            🔄 {lang==="fr"?"RECOMMENCER":lang==="en"?"RESTART":lang==="es"?"REINICIAR":"RECOMEÇAR"}
           </button>
         </div>
       )}
@@ -743,25 +743,25 @@ export default function LessonMaintenance({ lang="fr", onBack=()=>{}, onComplete
             <SL icon="🔍" text={lc.p1} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"DIAGNOSTIC PANNES — INTERACTIF":lang==="en"?"FAULT DIAGNOSIS — INTERACTIVE":"DIAGNÓSTICO AVERÍAS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"DIAGNOSTIC PANNES — INTERACTIF":lang==="en"?"FAULT DIAGNOSIS — INTERACTIVE":lang==="es"?"DIAGNÓSTICO AVERÍAS — INTERACTIVO":"DIAGNÓSTICO DE AVARIAS — INTERATIVO"}</div>
               <TroubleshootingSVG lang={lang}/>
             </Card>
             <SL icon="📅" text={lc.p2} color={C.green}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}33`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📅 {lang==="fr"?"PLAN DE MAINTENANCE (PMS)":lang==="en"?"MAINTENANCE PLAN (PMS)":"PLAN DE MANTENIMIENTO (PMS)"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📅 {lang==="fr"?"PLAN DE MAINTENANCE (PMS)":lang==="en"?"MAINTENANCE PLAN (PMS)":lang==="es"?"PLAN DE MANTENIMIENTO (PMS)":"PLANO DE MANUTENÇÃO (PMS)"}</div>
               <MaintenancePlannerSVG lang={lang}/>
             </Card>
             <SL icon="🛠️" text={lc.p3} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛠️ {lang==="fr"?"PIÈCES & OUTILLAGE — INTERACTIF":lang==="en"?"PARTS & TOOLS — INTERACTIVE":"REPUESTOS Y HERRAMIENTAS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛠️ {lang==="fr"?"PIÈCES & OUTILLAGE — INTERACTIF":lang==="en"?"PARTS & TOOLS — INTERACTIVE":lang==="es"?"REPUESTOS Y HERRAMIENTAS — INTERACTIVO":"PEÇAS E FERRAMENTAS — INTERATIVO"}</div>
               <SparePartsSVG lang={lang}/>
             </Card>
             <SL icon="🎮" text={lc.p4} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎮 {lang==="fr"?"SIMULATEUR DÉPANNAGE":lang==="en"?"TROUBLESHOOTING SIMULATOR":"SIMULADOR RESOLUCIÓN"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎮 {lang==="fr"?"SIMULATEUR DÉPANNAGE":lang==="en"?"TROUBLESHOOTING SIMULATOR":lang==="es"?"SIMULADOR RESOLUCIÓN":"SIMULADOR DE RESOLUÇÃO"}</div>
               <DiagnosisSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -780,9 +780,9 @@ export default function LessonMaintenance({ lang="fr", onBack=()=>{}, onComplete
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
-                {lang==="fr"?"Quiz — Maintenance & Troubleshooting":lang==="en"?"Quiz — Maintenance & Troubleshooting":"Quiz — Mantenimiento & Averías"}
+                {lang==="fr"?"Quiz — Maintenance & Troubleshooting":lang==="en"?"Quiz — Maintenance & Troubleshooting":lang==="es"?"Quiz — Mantenimiento & Averías":"Quiz — Manutenção & Avarias"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 6":lang==="en"?"Lesson 6":"Lección 6"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 6":lang==="en"?"Lesson 6":lang==="es"?"Lección 6":"Lição 6"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

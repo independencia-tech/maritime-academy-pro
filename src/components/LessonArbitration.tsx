@@ -98,11 +98,11 @@ function ArbitrationProcedureSVG({ lang }) {
       <div style={{display:"flex",gap:8,marginTop:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"8px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":lang==="es"?"Anterior":"Anterior"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(3,s+1))} disabled={step===3}
           style={{flex:1,padding:"8px",borderRadius:10,background:step===3?"rgba(255,255,255,0.06)":`${steps[Math.min(3,step+1)].color}22`,border:`1px solid ${step===3?"rgba(255,255,255,0.1)":steps[Math.min(3,step+1)].color}`,color:C.white,cursor:step===3?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+          {lang==="fr"?"Suivant":lang==="en"?"Next":lang==="es"?"Siguiente":"Seguinte"} ▶
         </button>
       </div>
     </div>
@@ -203,7 +203,7 @@ function ForumSelectorSVG({ lang }) {
   return (
     <div>
       <div style={{fontSize:10,color:C.muted,marginBottom:10,textAlign:"center"}}>
-        {lang==="fr"?"Réponds aux questions → Recommandation de forum":lang==="en"?"Answer the questions → Forum recommendation":"Responde las preguntas → Recomendación de foro"}
+        {lang==="fr"?"Réponds aux questions → Recommandation de forum":lang==="en"?"Answer the questions → Forum recommendation":lang==="es"?"Responde las preguntas → Recomendación de foro":"Responde às perguntas → Recomendação de fórum"}
       </div>
       {[
         { key:"q1", q:{fr:"Qui sont les parties au litige ?",en:"Who are the parties to the dispute?",es:"¿Quiénes son las partes en el litigio?",pt:"Quem são as partes no litígio?"}, opts:q1opts },
@@ -573,25 +573,25 @@ export default function LessonArbitration({ lang="fr", onBack=()=>{}, onComplete
             <SL icon="📋" text={lc.p1} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"TYPES DE LITIGES — INTERACTIF":lang==="en"?"DISPUTE TYPES — INTERACTIVE":"TIPOS DE LITIGIOS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"TYPES DE LITIGES — INTERACTIF":lang==="en"?"DISPUTE TYPES — INTERACTIVE":lang==="es"?"TIPOS DE LITIGIOS — INTERACTIVO":"TIPOS DE LITÍGIOS — INTERATIVO"}</div>
               <DisputeTypesSVG lang={lang}/>
             </Card>
             <SL icon="⚖️" text={lc.p2} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"PROCÉDURE D'ARBITRAGE MARITIME":lang==="en"?"MARITIME ARBITRATION PROCEDURE":"PROCEDIMIENTO DE ARBITRAJE MARÍTIMO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"PROCÉDURE D'ARBITRAGE MARITIME":lang==="en"?"MARITIME ARBITRATION PROCEDURE":lang==="es"?"PROCEDIMIENTO DE ARBITRAJE MARÍTIMO":"PROCEDIMENTO DE ARBITRAGEM MARÍTIMA"}</div>
               <ArbitrationProcedureSVG lang={lang}/>
             </Card>
             <SL icon="🔍" text={lc.p3} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"COMPARAISON DES MÉCANISMES ADR":lang==="en"?"ADR MECHANISMS COMPARISON":"COMPARACIÓN DE MECANISMOS ADR"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"COMPARAISON DES MÉCANISMES ADR":lang==="en"?"ADR MECHANISMS COMPARISON":lang==="es"?"COMPARACIÓN DE MECANISMOS ADR":"COMPARAÇÃO DOS MECANISMOS ADR"}</div>
               <ADRComparisonSVG lang={lang}/>
             </Card>
             <SL icon="🏛️" text={lc.p4} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}44`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🏛️ {lang==="fr"?"CHOISIR SON FORUM — GUIDE INTERACTIF":lang==="en"?"CHOOSING YOUR FORUM — INTERACTIVE GUIDE":"ELEGIR TU FORO — GUÍA INTERACTIVA"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🏛️ {lang==="fr"?"CHOISIR SON FORUM — GUIDE INTERACTIF":lang==="en"?"CHOOSING YOUR FORUM — INTERACTIVE GUIDE":lang==="es"?"ELEGIR TU FORO — GUÍA INTERACTIVA":"ESCOLHER O TEU FÓRUM — GUIA INTERATIVO"}</div>
               <ForumSelectorSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -610,7 +610,7 @@ export default function LessonArbitration({ lang="fr", onBack=()=>{}, onComplete
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz Final — Arbitrage & Litiges</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 10 — FINALE":lang==="en"?"Lesson 10 — FINAL":"Lección 10 — FINAL"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 10 — FINALE":lang==="en"?"Lesson 10 — FINAL":lang==="es"?"Lección 10 — FINAL":"Lição 10 — FINAL"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

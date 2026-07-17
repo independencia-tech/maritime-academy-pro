@@ -639,28 +639,28 @@ export default function LessonMARPOL_L5({ lang="fr", onBack=()=>{}, onComplete=(
             <SL icon="⚓" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚓ {lang==="fr"?"PSC vs FLAG STATE - INTERACTIF":lang==="en"?"PSC vs FLAG STATE - INTERACTIVE":"PSC vs FLAG STATE - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚓ {lang==="fr"?"PSC vs FLAG STATE - INTERACTIF":lang==="en"?"PSC vs FLAG STATE - INTERACTIVE":lang==="es"?"PSC vs FLAG STATE - INTERACTIVO":"PSC vs FLAG STATE - INTERATIVO"}</div>
               <PSCFlagSVG lang={lang}/>
             </Card>
 
             <SL icon="📘" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📘 {lang==="fr"?"ISM & DPA - INTERACTIF":lang==="en"?"ISM & DPA - INTERACTIVE":"ISM Y DPA - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📘 {lang==="fr"?"ISM & DPA - INTERACTIF":lang==="en"?"ISM & DPA - INTERACTIVE":lang==="es"?"ISM Y DPA - INTERACTIVO":"ISM & DPA - INTERATIVO"}</div>
               <ISMSVG lang={lang}/>
             </Card>
 
             <SL icon="🔎" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔎 {lang==="fr"?"CYCLE D'AUDIT - INTERACTIF":lang==="en"?"AUDIT CYCLE - INTERACTIVE":"CICLO DE AUDITORÍA - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔎 {lang==="fr"?"CYCLE D'AUDIT - INTERACTIF":lang==="en"?"AUDIT CYCLE - INTERACTIVE":lang==="es"?"CICLO DE AUDITORÍA - INTERACTIVO":"CICLO DE AUDITORIA - INTERATIVO"}</div>
               <AuditSVG lang={lang}/>
             </Card>
 
             <SL icon="💼" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💼 {lang==="fr"?"VETTING SIRE - INTERACTIF":lang==="en"?"SIRE VETTING - INTERACTIVE":"VETTING SIRE - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💼 {lang==="fr"?"VETTING SIRE - INTERACTIF":lang==="en"?"SIRE VETTING - INTERACTIVE":lang==="es"?"VETTING SIRE - INTERACTIVO":"VETTING SIRE - INTERATIVO"}</div>
               <VettingSVG lang={lang}/>
             </Card>
 

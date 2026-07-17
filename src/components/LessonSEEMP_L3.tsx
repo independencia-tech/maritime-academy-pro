@@ -296,7 +296,7 @@ function OperationalExample({ lang }) {
       </div>
       {exp&&<div style={{padding:"0 16px 16px"}}>
         <div style={{fontSize:12,color:C.white,lineHeight:1.7,marginBottom:12}}>{c.what}</div>
-        <div style={{fontSize:11,color:C.blue2,fontWeight:700,marginBottom:8,fontFamily:"'Cinzel',serif"}}>{lang==="fr"?"WHICH ACTIONS IMPROVE EEXI COMPLIANCE?":lang==="en"?"WHICH ACTIONS IMPROVE EEXI COMPLIANCE?":"WHICH ACTIONS IMPROVE EEXI COMPLIANCE?"}</div>
+        <div style={{fontSize:11,color:C.blue2,fontWeight:700,marginBottom:8,fontFamily:"'Cinzel',serif"}}>{lang==="fr"?"WHICH ACTIONS IMPROVE EEXI COMPLIANCE?":lang==="en"?"WHICH ACTIONS IMPROVE EEXI COMPLIANCE?":lang==="es"?"WHICH ACTIONS IMPROVE EEXI COMPLIANCE?":"WHICH ACTIONS IMPROVE EEXI COMPLIANCE?"}</div>
         <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:12}}>
           {c.options.map(o=>(
             <div key={o.id} onClick={()=>toggle(o.id)} style={{display:"flex",alignItems:"center",gap:10,padding:"9px 12px",borderRadius:10,cursor:"pointer",background:sel.includes(o.id)?"rgba(30,138,74,0.15)":"rgba(255,255,255,0.04)",border:`1px solid ${sel.includes(o.id)?C.green:"rgba(255,255,255,0.1)"}`}}>
@@ -617,20 +617,20 @@ export default function LessonSEEMP_L3({ lang="fr", onBack=()=>{}, onComplete=()
             <SL icon="🏗️" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🏗️ {lang==="fr"?"EEXI - INTERACTIF":lang==="en"?"EEXI - INTERACTIVE":"EEXI - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🏗️ {lang==="fr"?"EEXI - INTERACTIF":lang==="en"?"EEXI - INTERACTIVE":lang==="es"?"EEXI - INTERACTIVO":"EEXI - INTERATIVO"}</div>
               <EEXIMeasureSVG lang={lang}/>
             </Card>
 
             <SL icon="🔧" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔧 {lang==="fr"?"AVANT → APRÈS CONFORMITÉ":lang==="en"?"BEFORE → AFTER COMPLIANCE":"ANTES → DESPUÉS CONFORMIDAD"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔧 {lang==="fr"?"AVANT → APRÈS CONFORMITÉ":lang==="en"?"BEFORE → AFTER COMPLIANCE":lang==="es"?"ANTES → DESPUÉS CONFORMIDAD":"ANTES → DEPOIS CONFORMIDADE"}</div>
               <BeforeAfterSVG lang={lang}/>
             </Card>
             <div style={{marginBottom:14}}><WhyNotRemoveEPL lang={lang}/></div>
 
             <SL icon="📜" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📜 {lang==="fr"?"RESTER CONFORME - INTERACTIF":lang==="en"?"STAYING COMPLIANT - INTERACTIVE":"MANTENERSE CONFORME - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📜 {lang==="fr"?"RESTER CONFORME - INTERACTIF":lang==="en"?"STAYING COMPLIANT - INTERACTIVE":lang==="es"?"MANTENERSE CONFORME - INTERACTIVO":"MANTER-SE CONFORME - INTERATIVO"}</div>
               <StayCompliantSVG lang={lang}/>
             </Card>
 

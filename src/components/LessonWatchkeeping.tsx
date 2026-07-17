@@ -112,7 +112,7 @@ function DashboardSVG({ lang }) {
         ))}
       </div>
       <div style={{marginTop:6,fontSize:10,color:C.muted,textAlign:"center"}}>
-        {lang==="fr"?"Tableau de bord en temps réel — paramètres fluctuants":lang==="en"?"Real-time dashboard — fluctuating parameters":"Panel en tiempo real — parámetros fluctuantes"}
+        {lang==="fr"?"Tableau de bord en temps réel — paramètres fluctuants":lang==="en"?"Real-time dashboard — fluctuating parameters":lang==="es"?"Panel en tiempo real — parámetros fluctuantes":"Painel em tempo real — parâmetros flutuantes"}
       </div>
     </div>
   );
@@ -172,8 +172,8 @@ function WatchScheduleSVG({ lang }) {
                     <text x={x + width/2} y={headerH + ei*rowH + rowH/2 + 3}
                       textAnchor="middle" fontSize="7" fill={eng.color} fontWeight="600">
                       {isSupervision
-                        ?(lang==="fr"?"Supervision":lang==="en"?"Supervision":"Supervisión")
-                        :(lang==="fr"?"QUART":lang==="en"?"WATCH":"GUARDIA")}
+                        ?(lang==="fr"?"Supervision":lang==="en"?"Supervision":lang==="es"?"Supervisión":"Supervisão")
+                        :(lang==="fr"?"QUART":lang==="en"?"WATCH":lang==="es"?"GUARDIA":"QUARTO")}
                     </text>
                   )}
                 </g>
@@ -184,7 +184,7 @@ function WatchScheduleSVG({ lang }) {
 
         {/* Rest hours indicator */}
         <text x={nameW/2} y={headerH + engineers.length*rowH + 14} textAnchor="middle" fontSize="7" fill={C.muted}>
-          {lang==="fr"?"STCW : min 10h repos/24h":lang==="en"?"STCW: min 10h rest/24h":"STCW: mín 10h descanso/24h"}
+          {lang==="fr"?"STCW : min 10h repos/24h":lang==="en"?"STCW: min 10h rest/24h":lang==="es"?"STCW: mín 10h descanso/24h":"STCW: mín 10h descanso/24h"}
         </text>
       </svg>
 
@@ -228,10 +228,10 @@ function UMSAlarmSVG({ lang }) {
       {/* UMS Toggle */}
       <div style={{display:"flex",gap:8,marginBottom:10}}>
         <button onClick={()=>setUmsMode(false)} style={{flex:1,padding:"8px",borderRadius:10,fontSize:10,cursor:"pointer",fontWeight:700,background:!umsMode?"rgba(30,138,74,0.2)":"rgba(255,255,255,0.05)",border:`1.5px solid ${!umsMode?C.green:"rgba(255,255,255,0.1)"}`,color:!umsMode?C.green:C.muted}}>
-          👨‍🔧 {lang==="fr"?"Quart normal":lang==="en"?"Normal watch":"Guardia normal"}
+          👨‍🔧 {lang==="fr"?"Quart normal":lang==="en"?"Normal watch":lang==="es"?"Guardia normal":"Quarto normal"}
         </button>
         <button onClick={()=>setUmsMode(true)} style={{flex:1,padding:"8px",borderRadius:10,fontSize:10,cursor:"pointer",fontWeight:700,background:umsMode?"rgba(201,146,42,0.2)":"rgba(255,255,255,0.05)",border:`1.5px solid ${umsMode?C.gold:"rgba(255,255,255,0.1)"}`,color:umsMode?C.gold2:C.muted}}>
-          🤖 {lang==="fr"?"Mode UMS":lang==="en"?"UMS Mode":"Modo UMS"}
+          🤖 {lang==="fr"?"Mode UMS":lang==="en"?"UMS Mode":lang==="es"?"Modo UMS":"Modo UMS"}
         </button>
       </div>
 
@@ -246,8 +246,8 @@ function UMSAlarmSVG({ lang }) {
         {/* UMS label */}
         <text x="145" y="15" textAnchor="middle" fontSize="7" fill={umsMode?C.gold:C.green} fontWeight="700">
           {umsMode
-            ?(lang==="fr"?"🤖 UMS — Salle des machines sans surveillance":lang==="en"?"🤖 UMS — Unattended Machinery Space":"🤖 UMS — Sala de máquinas sin vigilancia")
-            :(lang==="fr"?"👨‍🔧 Quart normal — Officier présent":lang==="en"?"👨‍🔧 Normal watch — Officer present":"👨‍🔧 Guardia normal — Oficial presente")}
+            ?(lang==="fr"?"🤖 UMS — Salle des machines sans surveillance":lang==="en"?"🤖 UMS — Unattended Machinery Space":lang==="es"?"🤖 UMS — Sala de máquinas sin vigilancia":"🤖 UMS — Casa das máquinas sem vigilância")
+            :(lang==="fr"?"👨‍🔧 Quart normal — Officier présent":lang==="en"?"👨‍🔧 Normal watch — Officer present":lang==="es"?"👨‍🔧 Guardia normal — Oficial presente":"👨‍🔧 Quarto normal — Oficial presente")}
         </text>
 
         {/* Alarm points */}
@@ -276,7 +276,7 @@ function UMSAlarmSVG({ lang }) {
           {triggeredAlarm&&!responded&&<animate attributeName="stroke" values={`${C.red};${C.orange};${C.red}`} dur="0.5s" repeatCount="indefinite"/>}
         </rect>
         <text x="145" y="100" textAnchor="middle" fontSize="7" fill={triggeredAlarm&&!responded?C.red:C.muted} fontWeight="700">
-          {lang==="fr"?"PANNEAU ALARMES":lang==="en"?"ALARM PANEL":"PANEL ALARMAS"}
+          {lang==="fr"?"PANNEAU ALARMES":lang==="en"?"ALARM PANEL":lang==="es"?"PANEL ALARMAS":"PAINEL ALARMES"}
         </text>
         <text x="145" y="112" textAnchor="middle" fontSize="6" fill={triggeredAlarm&&!responded?C.red:C.steel}>
           {triggeredAlarm&&!responded?"⚠️ ALARM":responded?"✅ ACK":"● NORMAL"}
@@ -285,7 +285,7 @@ function UMSAlarmSVG({ lang }) {
         {/* Engineer icon in UMS off */}
         {!umsMode&&<text x="145" y="155" textAnchor="middle" fontSize="12">👨‍🔧</text>}
         {umsMode&&<text x="145" y="155" textAnchor="middle" fontSize="8" fill={C.gold}>
-          {lang==="fr"?"→ Alerte permanence":lang==="en"?"→ Duty alert":"→ Alerta guardia"}
+          {lang==="fr"?"→ Alerte permanence":lang==="en"?"→ Duty alert":lang==="es"?"→ Alerta guardia":"→ Alerta de serviço"}
         </text>}
       </svg>
 
@@ -301,17 +301,17 @@ function UMSAlarmSVG({ lang }) {
           {!responded&&(
             <div style={{fontSize:10,color:C.white,lineHeight:1.6,marginBottom:8}}>
               {umsMode
-                ?(lang==="fr"?"Mode UMS : alarme transmise à l'officier de permanence + passerelle\nOfficier de permanence doit répondre dans les 3 minutes\nSi pas de réponse → alarme de détresse passerelle":lang==="en"?"UMS mode: alarm transmitted to duty engineer + bridge\nDuty engineer must respond within 3 minutes\nIf no response → bridge distress alarm":"Modo UMS: alarma transmitida al oficial de guardia + puente\nOficial debe responder en 3 minutos")
-                :(lang==="fr"?"Quart normal : officier présent en salle des machines\nAction immédiate requise\nConsigner dans le journal machine":lang==="en"?"Normal watch: officer present in engine room\nImmediate action required\nLog in engine room journal":"Guardia normal: oficial presente en sala de máquinas\nAcción inmediata requerida")}
+                ?(lang==="fr"?"Mode UMS : alarme transmise à l'officier de permanence + passerelle\nOfficier de permanence doit répondre dans les 3 minutes\nSi pas de réponse → alarme de détresse passerelle":lang==="en"?"UMS mode: alarm transmitted to duty engineer + bridge\nDuty engineer must respond within 3 minutes\nIf no response → bridge distress alarm":lang==="es"?"Modo UMS: alarma transmitida al oficial de guardia + puente\nOficial debe responder en 3 minutos":"Modo UMS: alarme transmitido ao oficial de serviço + ponte\nOficial de serviço deve responder em 3 minutos")
+                :(lang==="fr"?"Quart normal : officier présent en salle des machines\nAction immédiate requise\nConsigner dans le journal machine":lang==="en"?"Normal watch: officer present in engine room\nImmediate action required\nLog in engine room journal":lang==="es"?"Guardia normal: oficial presente en sala de máquinas\nAcción inmediata requerida":"Quarto normal: oficial presente na casa das máquinas\nAção imediata necessária")}
             </div>
           )}
           <button onClick={()=>setResponded(true)} disabled={responded} style={{width:"100%",padding:"8px",borderRadius:10,background:responded?"rgba(30,138,74,0.2)":`linear-gradient(135deg,${C.orange},${C.red})`,border:`1px solid ${responded?C.green:C.red}`,color:C.white,fontSize:11,fontWeight:700,cursor:responded?"default":"pointer"}}>
-            {responded?"✅ "+(lang==="fr"?"Alarme acquittée":lang==="en"?"Alarm acknowledged":"Alarma reconocida"):"▶ "+(lang==="fr"?"ACQUITTER L'ALARME":lang==="en"?"ACKNOWLEDGE ALARM":"RECONOCER ALARMA")}
+            {responded?"✅ "+(lang==="fr"?"Alarme acquittée":lang==="en"?"Alarm acknowledged":lang==="es"?"Alarma reconocida":"Alarme reconhecido"):"▶ "+(lang==="fr"?"ACQUITTER L'ALARME":lang==="en"?"ACKNOWLEDGE ALARM":lang==="es"?"RECONOCER ALARMA":"RECONHECER ALARME")}
           </button>
         </div>
       )}
       {!a_&&<div style={{marginTop:6,textAlign:"center",fontSize:10,color:C.muted}}>
-        {lang==="fr"?"Touche un point d'alarme pour simuler":lang==="en"?"Tap an alarm point to simulate":"Toca un punto de alarma para simular"}
+        {lang==="fr"?"Touche un point d'alarme pour simuler":lang==="en"?"Tap an alarm point to simulate":lang==="es"?"Toca un punto de alarma para simular":"Toque num ponto de alarme para simular"}
       </div>}
     </div>
   );
@@ -342,13 +342,13 @@ function EngineLogSVG({ lang }) {
           📋 {lang==="fr"?"JOURNAL MACHINE (ENGINE LOG)":lang==="en"?"ENGINE LOG":lang==="es"?"DIARIO DE MÁQUINAS":"DIÁRIO DE MÁQUINAS"}
         </div>
         <div style={{fontSize:9,color:C.muted}}>
-          {lang==="fr"?"Entrée toutes les 4 heures minimum · Signé officier de quart + capitaine":lang==="en"?"Entry every 4 hours minimum · Signed by watch officer + captain":"Entrada cada 4 horas mínimo · Firmado oficial de guardia + capitán"}
+          {lang==="fr"?"Entrée toutes les 4 heures minimum · Signé officier de quart + capitaine":lang==="en"?"Entry every 4 hours minimum · Signed by watch officer + captain":lang==="es"?"Entrada cada 4 horas mínimo · Firmado oficial de guardia + capitán":"Entrada a cada 4 horas no mínimo · Assinado oficial de quarto + capitão"}
         </div>
       </div>
 
       {/* Log table header */}
       <div style={{display:"grid",gridTemplateColumns:"50px 40px 45px 45px 1fr 30px",gap:4,marginBottom:4,padding:"4px 8px",borderRadius:6,background:"rgba(255,255,255,0.05)"}}>
-        {[lang==="fr"?"Heure":lang==="en"?"Time":"Hora","RPM",lang==="fr"?"Temp":"Temp","Huile/Oil",lang==="fr"?"Note":"Note","✓"].map((h,i)=>(
+        {[lang==="fr"?"Heure":lang==="en"?"Time":lang==="es"?"Hora":"Hora","RPM",lang==="fr"?"Temp":"Temp","Huile/Oil",lang==="fr"?"Note":"Note","✓"].map((h,i)=>(
           <div key={i} style={{fontSize:8,color:C.muted,fontWeight:700}}>{h}</div>
         ))}
       </div>
@@ -382,9 +382,9 @@ function EngineLogSVG({ lang }) {
             ))}
           </div>
           <div style={{marginBottom:8}}>
-            <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Note:":lang==="en"?"Note:":"Nota:"}</div>
+            <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Note:":lang==="en"?"Note:":lang==="es"?"Nota:":"Nota:"}</div>
             <input value={form.note} onChange={e=>setForm(p=>({...p,note:e.target.value}))}
-              placeholder={lang==="fr"?"Observations...":lang==="en"?"Observations...":"Observaciones..."}
+              placeholder={lang==="fr"?"Observations...":lang==="en"?"Observations...":lang==="es"?"Observaciones...":"Observações..."}
               style={{width:"100%",padding:"6px",borderRadius:6,background:"rgba(255,255,255,0.08)",border:`1px solid ${C.border}`,color:C.white,fontSize:10,boxSizing:"border-box"}}/>
           </div>
           <div style={{display:"flex",gap:6}}>
@@ -392,7 +392,7 @@ function EngineLogSVG({ lang }) {
               {lang==="fr"?"Annuler":"Cancel"}
             </button>
             <button onClick={addEntry} style={{flex:2,padding:"7px",borderRadius:8,background:`linear-gradient(135deg,${C.blue},${C.blue2})`,border:"none",color:C.white,fontSize:10,fontWeight:700,cursor:"pointer"}}>
-              ✅ {lang==="fr"?"SIGNER & ENREGISTRER":lang==="en"?"SIGN & RECORD":"FIRMAR & REGISTRAR"}
+              ✅ {lang==="fr"?"SIGNER & ENREGISTRER":lang==="en"?"SIGN & RECORD":lang==="es"?"FIRMAR & REGISTRAR":"ASSINAR & REGISTAR"}
             </button>
           </div>
         </div>
@@ -400,7 +400,7 @@ function EngineLogSVG({ lang }) {
 
       {!showForm&&(
         <button onClick={()=>setShowForm(true)} style={{width:"100%",marginTop:8,padding:"9px",borderRadius:10,background:"rgba(26,111,212,0.15)",border:`1px solid ${C.blue2}44`,color:C.blue2,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
-          + {lang==="fr"?"Nouvelle entrée (4h)":lang==="en"?"New entry (4h)":"Nueva entrada (4h)"}
+          + {lang==="fr"?"Nouvelle entrée (4h)":lang==="en"?"New entry (4h)":lang==="es"?"Nueva entrada (4h)":"Nova entrada (4h)"}
         </button>
       )}
     </div>
@@ -480,7 +480,7 @@ function Exercise1({ lang, t }) {
   return(
     <div>
       <div style={{background:"rgba(0,0,0,0.4)",borderRadius:12,padding:"10px 12px",marginBottom:12,border:`1px solid ${C.blue2}44`,fontSize:11,color:C.gold2,lineHeight:1.6}}>
-        {lang==="fr"?"💡 Rappels : Journal machine = toutes les 4h · STCW min 10h repos/24h · UMS = sans surveillance":lang==="en"?"💡 Reminders: Engine log = every 4h · STCW min 10h rest/24h · UMS = unattended":"💡 Recordatorios: Diario máquinas = cada 4h · STCW mín 10h descanso/24h · UMS = sin vigilancia"}
+        {lang==="fr"?"💡 Rappels : Journal machine = toutes les 4h · STCW min 10h repos/24h · UMS = sans surveillance":lang==="en"?"💡 Reminders: Engine log = every 4h · STCW min 10h rest/24h · UMS = unattended":lang==="es"?"💡 Recordatorios: Diario máquinas = cada 4h · STCW mín 10h descanso/24h · UMS = sin vigilancia":"💡 Lembretes: Diário máquinas = a cada 4h · STCW mín 10h descanso/24h · UMS = sem vigilância"}
       </div>
       {list.map((q,i)=>(
         <div key={q.id} style={{marginBottom:12}}>
@@ -747,28 +747,28 @@ export default function LessonWatchkeeping({ lang="fr", onBack=()=>{}, onComplet
             <SL icon="📊" text={lc.p1} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📊 {lang==="fr"?"TABLEAU DE BORD — TEMPS RÉEL":lang==="en"?"DASHBOARD — REAL TIME":"CUADRO DE MANDO — TIEMPO REAL"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📊 {lang==="fr"?"TABLEAU DE BORD — TEMPS RÉEL":lang==="en"?"DASHBOARD — REAL TIME":lang==="es"?"CUADRO DE MANDO — TIEMPO REAL":"PAINEL — TEMPO REAL"}</div>
               <DashboardSVG lang={lang}/>
             </Card>
 
             <SL icon="🕐" text={lc.p2} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🕐 {lang==="fr"?"PLANNING QUART (STCW)":lang==="en"?"WATCH SCHEDULE (STCW)":"PLANIFICACIÓN GUARDIA (STCW)"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🕐 {lang==="fr"?"PLANNING QUART (STCW)":lang==="en"?"WATCH SCHEDULE (STCW)":lang==="es"?"PLANIFICACIÓN GUARDIA (STCW)":"PLANEAMENTO QUARTO (STCW)"}</div>
               <WatchScheduleSVG lang={lang}/>
             </Card>
 
             <SL icon="🤖" text={lc.p3} color={C.gold}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🤖 {lang==="fr"?"SIMULATEUR UMS":lang==="en"?"UMS SIMULATOR":"SIMULADOR UMS"}</div>
+              <div style={{fontSize:11,color:C.gold,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🤖 {lang==="fr"?"SIMULATEUR UMS":lang==="en"?"UMS SIMULATOR":lang==="es"?"SIMULADOR UMS":"SIMULADOR UMS"}</div>
               <UMSAlarmSVG lang={lang}/>
             </Card>
 
             <SL icon="📋" text={lc.p4} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"JOURNAL MACHINE — SIMULATEUR":lang==="en"?"ENGINE LOG — SIMULATOR":"DIARIO MÁQUINAS — SIMULADOR"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"JOURNAL MACHINE — SIMULATEUR":lang==="en"?"ENGINE LOG — SIMULATOR":lang==="es"?"DIARIO MÁQUINAS — SIMULADOR":"DIÁRIO MÁQUINAS — SIMULADOR"}</div>
               <EngineLogSVG lang={lang}/>
             </Card>
 
@@ -795,7 +795,7 @@ export default function LessonWatchkeeping({ lang="fr", onBack=()=>{}, onComplet
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
                 {lang==="fr"?"Quiz — Engine Watchkeeping":lang==="en"?"Quiz — Engine Watchkeeping":lang==="es"?"Quiz — Guardia de Máquinas":"Quiz — Quarto de Máquinas"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 7":lang==="en"?"Lesson 7":"Lección 7"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 7":lang==="en"?"Lesson 7":lang==="es"?"Lección 7":"Lição 7"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

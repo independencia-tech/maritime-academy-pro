@@ -87,7 +87,7 @@ function RopeConstructionSVG({ lang }) {
     <div>
       <RopeSchema/>
       <div style={{fontSize:9,color:C.muted,textAlign:"center",marginBottom:10,letterSpacing:1}}>
-        {lang==="fr"?"CONSTRUCTION D'UN CORDAGE — APPUYEZ POUR DÉTAILS":lang==="en"?"ROPE CONSTRUCTION — TAP FOR DETAILS":"CONSTRUCCIÓN DE UN CABO — PULSA PARA DETALLES"}
+        {lang==="fr"?"CONSTRUCTION D'UN CORDAGE — APPUYEZ POUR DÉTAILS":lang==="en"?"ROPE CONSTRUCTION — TAP FOR DETAILS":lang==="es"?"CONSTRUCCIÓN DE UN CABO — PULSA PARA DETALLES":"CONSTRUÇÃO DE UM CABO — TOQUE PARA DETALHES"}
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:10}}>
         {parts.map((p,i)=>(
@@ -218,19 +218,19 @@ function RopeMaterialsSVG({ lang }) {
         <div style={{marginBottom:10}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4}}>
             <div>
-              <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Résistance":lang==="en"?"Breaking strength":"Resistencia"}</div>
+              <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Résistance":lang==="en"?"Breaking strength":lang==="es"?"Resistencia":"Resistência"}</div>
               <Bar v={sel_.props.val} color={sel_.color}/>
             </div>
             <div>
-              <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Souplesse":lang==="en"?"Flexibility":"Flexibilidad"}</div>
+              <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Souplesse":lang==="en"?"Flexibility":lang==="es"?"Flexibilidad":"Flexibilidade"}</div>
               <Bar v={sel_.props.val2} color={sel_.color}/>
             </div>
             <div>
-              <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Flottabilité":lang==="en"?"Buoyancy":"Flotabilidad"}</div>
+              <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Flottabilité":lang==="en"?"Buoyancy":lang==="es"?"Flotabilidad":"Flutuabilidade"}</div>
               <Bar v={sel_.props.val3} color={sel_.color}/>
             </div>
             <div>
-              <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Durabilité":lang==="en"?"Durability":"Durabilidad"}</div>
+              <div style={{fontSize:8,color:C.muted,marginBottom:2}}>{lang==="fr"?"Durabilité":lang==="en"?"Durability":lang==="es"?"Durabilidad":"Durabilidade"}</div>
               <Bar v={sel_.props.val4} color={sel_.color}/>
             </div>
           </div>
@@ -637,25 +637,25 @@ export default function LessonSEA_L1({ lang="en", onBack=()=>{}, onComplete=()=>
             <SL icon="🔬" text={lc.p1} color={C.rope}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,background:"rgba(8,5,0,0.7)",border:`1px solid ${C.rope}22`}}>
-              <div style={{fontSize:11,color:C.rope,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔬 {lang==="fr"?"CONSTRUCTION DU CORDAGE":lang==="en"?"ROPE CONSTRUCTION":"CONSTRUCCIÓN DEL CABO"}</div>
+              <div style={{fontSize:11,color:C.rope,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔬 {lang==="fr"?"CONSTRUCTION DU CORDAGE":lang==="en"?"ROPE CONSTRUCTION":lang==="es"?"CONSTRUCCIÓN DEL CABO":"CONSTRUÇÃO DO CABO"}</div>
               <RopeConstructionSVG lang={lang}/>
             </Card>
             <SL icon="🧪" text={lc.p2} color={C.fiber}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.fiber}22`}}>
-              <div style={{fontSize:11,color:C.fiber,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🧪 {lang==="fr"?"COMPARAISON DES MATÉRIAUX":lang==="en"?"MATERIALS COMPARISON":"COMPARACIÓN DE MATERIALES"}</div>
+              <div style={{fontSize:11,color:C.fiber,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🧪 {lang==="fr"?"COMPARAISON DES MATÉRIAUX":lang==="en"?"MATERIALS COMPARISON":lang==="es"?"COMPARACIÓN DE MATERIALES":"COMPARAÇÃO DE MATERIAIS"}</div>
               <RopeMaterialsSVG lang={lang}/>
             </Card>
             <SL icon="🔗" text={lc.p3} color={C.steel}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.steel}22`}}>
-              <div style={{fontSize:11,color:C.steel,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"USAGES PAR APPLICATION":lang==="en"?"USES BY APPLICATION":"USOS POR APLICACIÓN"}</div>
+              <div style={{fontSize:11,color:C.steel,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔗 {lang==="fr"?"USAGES PAR APPLICATION":lang==="en"?"USES BY APPLICATION":lang==="es"?"USOS POR APLICACIÓN":"USOS POR APLICAÇÃO"}</div>
               <RopeTypesByUseSVG lang={lang}/>
             </Card>
             <SL icon="🔧" text={lc.p4} color={C.hemp}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.hemp}22`}}>
-              <div style={{fontSize:11,color:C.hemp,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔧 {lang==="fr"?"INSPECTION & SÉCURITÉ":lang==="en"?"INSPECTION & SAFETY":"INSPECCIÓN Y SEGURIDAD"}</div>
+              <div style={{fontSize:11,color:C.hemp,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔧 {lang==="fr"?"INSPECTION & SÉCURITÉ":lang==="en"?"INSPECTION & SAFETY":lang==="es"?"INSPECCIÓN Y SEGURIDAD":"INSPEÇÃO E SEGURANÇA"}</div>
               <RopeInspectionSVG lang={lang}/>
             </Card>
             <SL icon="📝" text={lc.p5} color={C.gold}/>
@@ -672,7 +672,7 @@ export default function LessonSEA_L1({ lang="en", onBack=()=>{}, onComplete=()=>
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Ropes & Fibres</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":"Lección 1"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":lang==="es"?"Lección 1":"Lição 1"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

@@ -729,25 +729,25 @@ export default function LessonSEA_L2({ lang="en", onBack=()=>{}, onComplete=()=>
             <SL icon="🪢" text={lc.p1} color={C.knot}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.knot}22`}}>
-              <div style={{fontSize:11,color:C.knot,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🪢 {lang==="fr"?"8 NŒUDS ESSENTIELS — CLIQUER POUR DÉTAILS":lang==="en"?"8 ESSENTIAL KNOTS — TAP FOR DETAILS":"8 NUDOS ESENCIALES — PULSAR PARA DETALLES"}</div>
+              <div style={{fontSize:11,color:C.knot,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🪢 {lang==="fr"?"8 NŒUDS ESSENTIELS — CLIQUER POUR DÉTAILS":lang==="en"?"8 ESSENTIAL KNOTS — TAP FOR DETAILS":lang==="es"?"8 NUDOS ESENCIALES — PULSAR PARA DETALLES":"8 NÓS ESSENCIAIS — TOQUE PARA DETALHES"}</div>
               <KnotsCardsSVG lang={lang}/>
             </Card>
             <SL icon="📊" text={lc.p2} color={C.splice}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.splice}22`}}>
-              <div style={{fontSize:11,color:C.splice,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📊 {lang==="fr"?"COMPARAISON DES RÉSISTANCES":lang==="en"?"STRENGTH COMPARISON":"COMPARACIÓN DE RESISTENCIAS"}</div>
+              <div style={{fontSize:11,color:C.splice,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📊 {lang==="fr"?"COMPARAISON DES RÉSISTANCES":lang==="en"?"STRENGTH COMPARISON":lang==="es"?"COMPARACIÓN DE RESISTENCIAS":"COMPARAÇÃO DE RESISTÊNCIAS"}</div>
               <KnotStrengthSVG lang={lang}/>
             </Card>
             <SL icon="✂️" text={lc.p3} color={C.hitch}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.hitch}22`}}>
-              <div style={{fontSize:11,color:C.hitch,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>✂️ {lang==="fr"?"GUIDE DES ÉPISSURES":lang==="en"?"SPLICES GUIDE":"GUÍA DE COSTURAS"}</div>
+              <div style={{fontSize:11,color:C.hitch,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>✂️ {lang==="fr"?"GUIDE DES ÉPISSURES":lang==="en"?"SPLICES GUIDE":lang==="es"?"GUÍA DE COSTURAS":"GUIA DE COSTURAS"}</div>
               <SplicesGuideSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p4} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontFamily:"'Courier New',monospace",fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s5}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"SCÉNARIOS PRATIQUES":lang==="en"?"PRACTICAL SCENARIOS":"ESCENARIOS PRÁCTICOS"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"SCÉNARIOS PRATIQUES":lang==="en"?"PRACTICAL SCENARIOS":lang==="es"?"ESCENARIOS PRÁCTICOS":"CENÁRIOS PRÁTICOS"}</div>
               <KnotQuizSVG lang={lang}/>
             </Card>
             <SL icon="📝" text={lc.p5} color={C.gold}/>
@@ -764,7 +764,7 @@ export default function LessonSEA_L2({ lang="en", onBack=()=>{}, onComplete=()=>
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Knots & Splices</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":"Lección 2"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":lang==="es"?"Lección 2":"Lição 2"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

@@ -56,7 +56,7 @@ function FlagStatesSVG({ lang }) {
       {sel_&&<div style={{padding:"12px",borderRadius:14,background:`${sel_.color}12`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:4}}>{sel_.icon} {(sel_.label[lang]||sel_.label.fr).replace('\n',' ')}</div>
         <div style={{fontSize:10,color:sel_.color,fontWeight:700,marginBottom:6}}>
-          {lang==="fr"?"Exemples:":lang==="en"?"Examples:":"Ejemplos:"} {sel_.examples[lang]||sel_.examples.fr}
+          {lang==="fr"?"Exemples:":lang==="en"?"Examples:":lang==="es"?"Ejemplos:":"Exemplos:"} {sel_.examples[lang]||sel_.examples.fr}
         </div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>}
@@ -184,12 +184,12 @@ function PSCTargetingSVG({ lang }) {
   return (
     <div>
       <div style={{marginBottom:10,fontSize:10,color:C.muted,textAlign:"center"}}>
-        {lang==="fr"?"Paramètres du navire → Calcul du risque PSC":lang==="en"?"Vessel parameters → PSC risk calculation":"Parámetros del buque → Cálculo de riesgo PSC"}
+        {lang==="fr"?"Paramètres du navire → Calcul du risque PSC":lang==="en"?"Vessel parameters → PSC risk calculation":lang==="es"?"Parámetros del buque → Cálculo de riesgo PSC":"Parâmetros do navio → Cálculo do risco PSC"}
       </div>
       {/* Age */}
       <div style={{marginBottom:10}}>
         <div style={{display:"flex",justifyContent:"space-between",fontSize:10,marginBottom:3}}>
-          <span style={{color:C.muted}}>{lang==="fr"?"Âge du navire:":lang==="en"?"Vessel age:":"Edad del buque:"}</span>
+          <span style={{color:C.muted}}>{lang==="fr"?"Âge du navire:":lang==="en"?"Vessel age:":lang==="es"?"Edad del buque:":"Idade do navio:"}</span>
           <span style={{color:C.gold2,fontWeight:700}}>{vessel.age} {lang==="fr"?"ans":"years"}</span>
         </div>
         <input type="range" min={1} max={40} value={vessel.age}
@@ -198,7 +198,7 @@ function PSCTargetingSVG({ lang }) {
       </div>
       {/* Flag */}
       <div style={{marginBottom:10}}>
-        <div style={{fontSize:10,color:C.muted,marginBottom:4}}>{lang==="fr"?"Pavillon:":lang==="en"?"Flag:":"Pabellón:"}</div>
+        <div style={{fontSize:10,color:C.muted,marginBottom:4}}>{lang==="fr"?"Pavillon:":lang==="en"?"Flag:":lang==="es"?"Pabellón:":"Bandeira:"}</div>
         <div style={{display:"flex",gap:6}}>
           {[["white","⬜","Paris MOU White List"],[" grey","🔲","Paris MOU Grey List"],["orange","🟧","Open Registry"],["black","⬛","Paris MOU Black List"]].map(([val,icon,lbl])=>(
             <button key={val} onClick={()=>setVessel(v=>({...v,flag:val.trim()}))}
@@ -215,7 +215,7 @@ function PSCTargetingSVG({ lang }) {
       {/* Deficiencies */}
       <div style={{marginBottom:10}}>
         <div style={{display:"flex",justifyContent:"space-between",fontSize:10,marginBottom:3}}>
-          <span style={{color:C.muted}}>{lang==="fr"?"Déficiences historiques:":lang==="en"?"Historical deficiencies:":"Deficiencias históricas:"}</span>
+          <span style={{color:C.muted}}>{lang==="fr"?"Déficiences historiques:":lang==="en"?"Historical deficiencies:":lang==="es"?"Deficiencias históricas:":"Deficiências históricas:"}</span>
           <span style={{color:C.red,fontWeight:700}}>{vessel.deficiencies}</span>
         </div>
         <input type="range" min={0} max={10} value={vessel.deficiencies}
@@ -225,7 +225,7 @@ function PSCTargetingSVG({ lang }) {
       {/* Result */}
       <div style={{padding:"12px",borderRadius:14,background:`${riskColor}12`,border:`1.5px solid ${riskColor}44`,textAlign:"center"}}>
         <div style={{fontSize:11,color:C.muted,marginBottom:4}}>
-          {lang==="fr"?"NIVEAU DE RISQUE PSC":lang==="en"?"PSC RISK LEVEL":"NIVEL DE RIESGO PSC"}
+          {lang==="fr"?"NIVEAU DE RISQUE PSC":lang==="en"?"PSC RISK LEVEL":lang==="es"?"NIVEL DE RIESGO PSC":"NÍVEL DE RISCO PSC"}
         </div>
         <div style={{fontSize:22,fontWeight:700,color:riskColor,fontFamily:"'Cinzel',serif",marginBottom:4}}>{riskLabel}</div>
         <div style={{fontSize:12,color:riskColor}}>
@@ -235,9 +235,9 @@ function PSCTargetingSVG({ lang }) {
           <div style={{height:"100%",width:`${inspection}%`,background:riskColor,transition:"width 0.4s"}}/>
         </div>
         <div style={{fontSize:9,color:C.muted}}>
-          {risk>=8?(lang==="fr"?"🔴 CIBLÉ PRIORITAIRE — Inspection quasi-certaine à chaque escale":lang==="en"?"🔴 PRIORITY TARGET — Inspection near-certain at every call":"🔴 OBJETIVO PRIORITARIO — Inspección casi segura en cada escala")
-          :risk>=5?(lang==="fr"?"🟡 CIBLAGE STANDARD — Sélectionné périodiquement":lang==="en"?"🟡 STANDARD TARGETING — Selected periodically":"🟡 SELECCIÓN ESTÁNDAR — Seleccionado periódicamente")
-          :(lang==="fr"?"🟢 FAIBLE RISQUE — Inspecté moins fréquemment":lang==="en"?"🟢 LOW RISK — Inspected less frequently":"🟢 BAJO RIESGO — Inspeccionado menos frecuentemente")}
+          {risk>=8?(lang==="fr"?"🔴 CIBLÉ PRIORITAIRE — Inspection quasi-certaine à chaque escale":lang==="en"?"🔴 PRIORITY TARGET — Inspection near-certain at every call":lang==="es"?"🔴 OBJETIVO PRIORITARIO — Inspección casi segura en cada escala":"🔴 ALVO PRIORITÁRIO — Inspeção quase certa em cada escala")
+          :risk>=5?(lang==="fr"?"🟡 CIBLAGE STANDARD — Sélectionné périodiquement":lang==="en"?"🟡 STANDARD TARGETING — Selected periodically":lang==="es"?"🟡 SELECCIÓN ESTÁNDAR — Seleccionado periódicamente":"🟡 SELEÇÃO PADRÃO — Selecionado periodicamente")
+          :(lang==="fr"?"🟢 FAIBLE RISQUE — Inspecté moins fréquemment":lang==="en"?"🟢 LOW RISK — Inspected less frequently":lang==="es"?"🟢 BAJO RIESGO — Inspeccionado menos frecuentemente":"🟢 BAIXO RISCO — Inspecionado com menos frequência")}
         </div>
       </div>
     </div>
@@ -584,25 +584,25 @@ export default function LessonPortsFlagStates({ lang="fr", onBack=()=>{}, onComp
             <SL icon="🚩" text={lc.p1} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚩 {lang==="fr"?"TYPES D'ÉTATS DU PAVILLON — INTERACTIF":lang==="en"?"FLAG STATE TYPES — INTERACTIVE":"TIPOS DE ESTADOS DE PABELLÓN — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚩 {lang==="fr"?"TYPES D'ÉTATS DU PAVILLON — INTERACTIF":lang==="en"?"FLAG STATE TYPES — INTERACTIVE":lang==="es"?"TIPOS DE ESTADOS DE PABELLÓN — INTERACTIVO":"TIPOS DE ESTADOS DE BANDEIRA — INTERATIVO"}</div>
               <FlagStatesSVG lang={lang}/>
             </Card>
             <SL icon="🌍" text={lc.p2} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"SYSTÈMES PSC MONDIAUX (MOU)":lang==="en"?"GLOBAL PSC SYSTEMS (MOU)":"SISTEMAS PSC MUNDIALES (MOU)"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"SYSTÈMES PSC MONDIAUX (MOU)":lang==="en"?"GLOBAL PSC SYSTEMS (MOU)":lang==="es"?"SISTEMAS PSC MUNDIALES (MOU)":"SISTEMAS PSC MUNDIAIS (MOU)"}</div>
               <MOUSystemsSVG lang={lang}/>
             </Card>
             <SL icon="🏛️" text={lc.p3} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🏛️ {lang==="fr"?"ACTEURS PORTUAIRES — INTERACTIF":lang==="en"?"PORT ACTORS — INTERACTIVE":"ACTORES PORTUARIOS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🏛️ {lang==="fr"?"ACTEURS PORTUAIRES — INTERACTIF":lang==="en"?"PORT ACTORS — INTERACTIVE":lang==="es"?"ACTORES PORTUARIOS — INTERACTIVO":"ATORES PORTUÁRIOS — INTERATIVO"}</div>
               <PortActorsSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"SIMULATEUR CIBLAGE PSC":lang==="en"?"PSC TARGETING SIMULATOR":"SIMULADOR SELECCIÓN PSC"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎯 {lang==="fr"?"SIMULATEUR CIBLAGE PSC":lang==="en"?"PSC TARGETING SIMULATOR":lang==="es"?"SIMULADOR SELECCIÓN PSC":"SIMULADOR DE SELEÇÃO PSC"}</div>
               <PSCTargetingSVG lang={lang}/>
             </Card>
             <SL icon="🏅" text={lc.p5} color={C.gold}/>
@@ -621,7 +621,7 @@ export default function LessonPortsFlagStates({ lang="fr", onBack=()=>{}, onComp
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Ports & Pavillons</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 8":lang==="en"?"Lesson 8":"Lección 8"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 8":lang==="en"?"Lesson 8":lang==="es"?"Lección 8":"Lição 8"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

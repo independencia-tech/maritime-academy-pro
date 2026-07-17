@@ -320,10 +320,10 @@ function LightIDSVG({ lang }) {
         </svg>
       </div>
       {!revealed&&<button onClick={()=>setRevealed(true)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:"rgba(77,166,255,0.12)",border:`1px solid ${C.blue2}44`,color:C.blue2,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif",marginBottom:8}}>
-        👁️ {lang==="fr"?"IDENTIFIER CES FEUX":lang==="en"?"IDENTIFY THESE LIGHTS":"IDENTIFICAR ESTAS LUCES"}
+        👁️ {lang==="fr"?"IDENTIFIER CES FEUX":lang==="en"?"IDENTIFY THESE LIGHTS":lang==="es"?"IDENTIFICAR ESTAS LUCES":"IDENTIFICAR ESTAS LUZES"}
       </button>}
       {revealed&&<div style={{padding:"12px",borderRadius:14,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,animation:"fadeUp 0.3s ease",marginBottom:8}}>
-        <div style={{fontSize:12,color:C.green,fontWeight:700,marginBottom:6}}>✅ {lang==="fr"?"IDENTIFICATION":lang==="en"?"IDENTIFICATION":"IDENTIFICACIÓN"}</div>
+        <div style={{fontSize:12,color:C.green,fontWeight:700,marginBottom:6}}>✅ {lang==="fr"?"IDENTIFICATION":lang==="en"?"IDENTIFICATION":lang==="es"?"IDENTIFICACIÓN":"IDENTIFICAÇÃO"}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line",marginBottom:8}}>{sc.answer[lang]||sc.answer.fr}</div>
         <div style={{padding:"8px 10px",borderRadius:10,background:"rgba(192,57,43,0.1)",border:`1px solid ${C.red}33`,fontSize:11,color:C.orange,lineHeight:1.5}}>
           {sc.danger[lang]||sc.danger.fr}
@@ -670,25 +670,25 @@ export default function LessonLightsShapes({ lang="fr", onBack=()=>{}, onComplet
             <SL icon="💡" text={lc.p1} color={C.fwht}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`,background:"rgba(0,5,16,0.6)"}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💡 {lang==="fr"?"SECTEURS DES FEUX — VUE DU DESSUS":lang==="en"?"LIGHT SECTORS — TOP VIEW":"SECTORES DE LUCES — VISTA DESDE ARRIBA"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💡 {lang==="fr"?"SECTEURS DES FEUX — VUE DU DESSUS":lang==="en"?"LIGHT SECTORS — TOP VIEW":lang==="es"?"SECTORES DE LUCES — VISTA DESDE ARRIBA":"SETORES DE LUZES — VISTA DE CIMA"}</div>
               <VesselLightsSVG lang={lang}/>
             </Card>
             <SL icon="🚢" text={lc.p2} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚢 {lang==="fr"?"FEUX PAR TYPE DE NAVIRE":lang==="en"?"LIGHTS BY VESSEL TYPE":"LUCES POR TIPO DE BUQUE"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚢 {lang==="fr"?"FEUX PAR TYPE DE NAVIRE":lang==="en"?"LIGHTS BY VESSEL TYPE":lang==="es"?"LUCES POR TIPO DE BUQUE":"LUZES POR TIPO DE NAVIO"}</div>
               <VesselTypeSVG lang={lang}/>
             </Card>
             <SL icon="⚫" text={lc.p3} color={C.steel}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid rgba(255,255,255,0.15)`}}>
-              <div style={{fontSize:11,color:C.muted,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚫ {lang==="fr"?"FORMES DE JOUR — INTERACTIF":lang==="en"?"DAY SHAPES — INTERACTIVE":"SEÑALES DIURNAS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.muted,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚫ {lang==="fr"?"FORMES DE JOUR — INTERACTIF":lang==="en"?"DAY SHAPES — INTERACTIVE":lang==="es"?"SEÑALES DIURNAS — INTERACTIVO":"SINAIS DIURNOS — INTERATIVO"}</div>
               <DayShapesSVG lang={lang}/>
             </Card>
             <SL icon="🔍" text={lc.p4} color={C.yellow}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid rgba(0,5,16,0.8)`,background:"rgba(0,5,16,0.7)"}}>
-              <div style={{fontSize:11,color:C.yellow,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"IDENTIFICATION DE FEUX — 4 SCÉNARIOS":lang==="en"?"LIGHT IDENTIFICATION — 4 SCENARIOS":"IDENTIFICACIÓN LUCES — 4 ESCENARIOS"}</div>
+              <div style={{fontSize:11,color:C.yellow,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"IDENTIFICATION DE FEUX — 4 SCÉNARIOS":lang==="en"?"LIGHT IDENTIFICATION — 4 SCENARIOS":lang==="es"?"IDENTIFICACIÓN LUCES — 4 ESCENARIOS":"IDENTIFICAÇÃO DE LUZES — 4 CENÁRIOS"}</div>
               <LightIDSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -707,7 +707,7 @@ export default function LessonLightsShapes({ lang="fr", onBack=()=>{}, onComplet
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Feux & Formes COLREG</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":"Lección 2"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":lang==="es"?"Lección 2":"Lição 2"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

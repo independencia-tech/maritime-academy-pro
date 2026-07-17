@@ -105,19 +105,19 @@ function FireTriangleSVG({ lang }) {
             border:`1.5px solid ${removed===e.id?C.green:e.color}`,
             color:removed===e.id?C.green:e.color, fontWeight:700,
           }}>
-            {removed===e.id?"✕ ":""}{e.icon} {lang==="fr"?"Retirer":lang==="en"?"Remove":"Retirar"}
+            {removed===e.id?"✕ ":""}{e.icon} {lang==="fr"?"Retirer":lang==="en"?"Remove":lang==="es"?"Retirar":"Remover"}
           </button>
         ))}
       </div>
       {fireOut && (
         <div style={{marginTop:6,padding:"8px 12px",borderRadius:10,background:"rgba(30,138,74,0.12)",border:`1px solid ${C.green}44`,fontSize:10,color:C.green,textAlign:"center",fontWeight:700}}>
-          ✅ {lang==="fr"?"Feu éteint ! Retirer un côté du triangle suffit.":lang==="en"?"Fire out! Removing one side of the triangle is enough.":"¡Fuego apagado! Retirar un lado del triángulo es suficiente."}
+          ✅ {lang==="fr"?"Feu éteint ! Retirer un côté du triangle suffit.":lang==="en"?"Fire out! Removing one side of the triangle is enough.":lang==="es"?"¡Fuego apagado! Retirar un lado del triángulo es suficiente.":"Fogo apagado! Remover um lado do triângulo é suficiente."}
         </div>
       )}
       {sel_ && (
         <div style={{marginTop:8,padding:"10px 12px",borderRadius:12,background:`${sel_.color}15`,border:`1px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
           <div style={{fontSize:12,fontWeight:700,color:sel_.color,marginBottom:4}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
-          <div style={{fontSize:11,color:C.muted,marginBottom:4}}>{lang==="fr"?"Exemples:":lang==="en"?"Examples:":"Ejemplos:"} {sel_.examples[lang]||sel_.examples.fr}</div>
+          <div style={{fontSize:11,color:C.muted,marginBottom:4}}>{lang==="fr"?"Exemples:":lang==="en"?"Examples:":lang==="es"?"Ejemplos:":"Exemplos:"} {sel_.examples[lang]||sel_.examples.fr}</div>
           <div style={{fontSize:11,color:C.white,lineHeight:1.5}}>💡 {sel_.solution[lang]||sel_.solution.fr}</div>
         </div>
       )}
@@ -179,11 +179,11 @@ function FireClassesSVG({ lang }) {
         <div style={{padding:"12px",borderRadius:14,background:`${sel_.color}12`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
           <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
           <div style={{fontSize:11,color:C.white,marginBottom:6,lineHeight:1.5}}>
-            <span style={{color:C.muted}}>{lang==="fr"?"Matériaux:":lang==="en"?"Materials:":"Materiales:"} </span>
+            <span style={{color:C.muted}}>{lang==="fr"?"Matériaux:":lang==="en"?"Materials:":lang==="es"?"Materiales:":"Materiais:"} </span>
             {sel_.material[lang]||sel_.material.fr}
           </div>
           <div style={{fontSize:11,color:C.white,marginBottom:6,lineHeight:1.6,whiteSpace:"pre-line"}}>
-            <span style={{color:C.muted,fontWeight:700}}>{lang==="fr"?"Extinction:":lang==="en"?"Extinguish:":"Extinción:"} </span>
+            <span style={{color:C.muted,fontWeight:700}}>{lang==="fr"?"Extinction:":lang==="en"?"Extinguish:":lang==="es"?"Extinción:":"Extinção:"} </span>
             {sel_.extinguish[lang]||sel_.extinguish.fr}
           </div>
           <div style={{fontSize:10,color:sel_.color,fontStyle:"italic"}}>
@@ -297,7 +297,7 @@ function CO2SystemSVG({ lang }) {
           stroke={step>=2?C.red:C.muted} strokeWidth={step>=2?2:1}/>
         <text x="240" y="65" textAnchor="middle" fontSize="7" fill={C.red} fontWeight="700">CO₂</text>
         <text x="240" y="78" textAnchor="middle" fontSize="6" fill={C.muted}>
-          {lang==="fr"?"FIXE":lang==="en"?"FIXED":"FIJO"}
+          {lang==="fr"?"FIXE":lang==="en"?"FIXED":lang==="es"?"FIJO":"FIXO"}
         </text>
         {step >= 2 && (
           <line x1="215" y1="72" x2="200" y2="72" stroke={C.red} strokeWidth="2.5">
@@ -337,7 +337,7 @@ function CO2SystemSVG({ lang }) {
 
       {/* Critical warning */}
       <div style={{marginTop:8,padding:"8px 12px",borderRadius:10,background:"rgba(192,57,43,0.1)",border:`1px solid ${C.red}33`,fontSize:10,color:C.red,fontWeight:700,textAlign:"center"}}>
-        ⚠️ {lang==="fr"?"CO2 = MORTEL — Ne jamais déclencher sans s'assurer que tout le monde est évacué":lang==="en"?"CO2 = LETHAL — Never activate without ensuring everyone is evacuated":"CO2 = MORTAL — Nunca activar sin asegurarse de que todos han sido evacuados"}
+        ⚠️ {lang==="fr"?"CO2 = MORTEL — Ne jamais déclencher sans s'assurer que tout le monde est évacué":lang==="en"?"CO2 = LETHAL — Never activate without ensuring everyone is evacuated":lang==="es"?"CO2 = MORTAL — Nunca activar sin asegurarse de que todos han sido evacuados":"CO2 = MORTAL — Nunca ativar sem garantir que todos foram evacuados"}
       </div>
     </div>
   );
@@ -813,7 +813,7 @@ export default function LessonIncendie({ lang="fr", onBack=()=>{}, onComplete=()
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
                 {lang==="fr"?"Quiz — Incendie & CO2 Fixe":lang==="en"?"Quiz — Fire & Fixed CO2":lang==="es"?"Quiz — Incendio & CO2 Fijo":"Quiz — Incêndio & CO2 Fixo"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 4":lang==="en"?"Lesson 4":"Lección 4"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 4":lang==="en"?"Lesson 4":lang==="es"?"Lección 4":"Lição 4"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

@@ -165,7 +165,7 @@ function GlossarySVG({ lang }) {
           </div>
         ))}
         {filtered.length===0&&<div style={{textAlign:"center",color:C.muted,fontSize:12,padding:"20px 0"}}>
-          {lang==="fr"?"Aucun terme trouvé":lang==="en"?"No terms found":"No se encontraron términos"}
+          {lang==="fr"?"Aucun terme trouvé":lang==="en"?"No terms found":lang==="es"?"No se encontraron términos":"Nenhum termo encontrado"}
         </div>}
       </div>
     </div>
@@ -211,7 +211,7 @@ function RapidFireSVG({ lang }) {
       <div style={{fontSize:48}}>{correct>=8?"🏆":correct>=6?"🎖️":"📚"}</div>
       <div style={{fontFamily:"'Cinzel',serif",fontSize:20,color:C.white,margin:"8px 0"}}>{correct}/{total}</div>
       <div style={{fontSize:12,color:C.muted,marginBottom:12}}>{Math.round(correct/total*100)}%</div>
-      <button onClick={()=>{setIdx(0);setRevealed(false);setCorrect(0);setTotal(0);setDone(false);}} style={{padding:"8px 16px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer",fontSize:11}}>🔄 {lang==="fr"?"Recommencer":lang==="en"?"Restart":"Reiniciar"}</button>
+      <button onClick={()=>{setIdx(0);setRevealed(false);setCorrect(0);setTotal(0);setDone(false);}} style={{padding:"8px 16px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer",fontSize:11}}>🔄 {lang==="fr"?"Recommencer":lang==="en"?"Restart":lang==="es"?"Reiniciar":"Recomeçar"}</button>
     </div>
   );
 
@@ -680,17 +680,17 @@ export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=
             </Card>
             <SL icon="📚" text={lc.p1} color={C.exam}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.exam}22`}}>
-              <div style={{fontSize:11,color:C.exam,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📚 {lang==="fr"?"RÉCAPITULATIF L1–L7":lang==="en"?"MODULE RECAP L1–L7":"RESUMEN L1–L7"}</div>
+              <div style={{fontSize:11,color:C.exam,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📚 {lang==="fr"?"RÉCAPITULATIF L1–L7":lang==="en"?"MODULE RECAP L1–L7":lang==="es"?"RESUMEN L1–L7":"RESUMO L1–L7"}</div>
               <ModuleRecapSVG lang={lang}/>
             </Card>
             <SL icon="📖" text={lc.p2} color={C.gold2}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}22`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📖 {lang==="fr"?"GLOSSAIRE SMCP":lang==="en"?"SMCP GLOSSARY":"GLOSARIO SMCP"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📖 {lang==="fr"?"GLOSSAIRE SMCP":lang==="en"?"SMCP GLOSSARY":lang==="es"?"GLOSARIO SMCP":"GLOSSÁRIO SMCP"}</div>
               <GlossarySVG lang={lang}/>
             </Card>
             <SL icon="⚡" text={lc.p3} color={C.l4}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.l4}22`}}>
-              <div style={{fontSize:11,color:C.l4,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚡ {lang==="fr"?"RÉVISION RAPIDE":lang==="en"?"RAPID FIRE REVIEW":"REVISIÓN RÁPIDA"}</div>
+              <div style={{fontSize:11,color:C.l4,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚡ {lang==="fr"?"RÉVISION RAPIDE":lang==="en"?"RAPID FIRE REVIEW":lang==="es"?"REVISIÓN RÁPIDA":"REVISÃO RÁPIDA"}</div>
               <RapidFireSVG lang={lang}/>
             </Card>
             <SL icon="📚" text={lang==="fr"?"BANQUE DE 15 QUESTIONS":lang==="en"?"15-QUESTION BANK":lang==="es"?"BANCO DE 15 PREGUNTAS":"BANCO DE 15 QUESTÕES"} color={C.purple}/>
@@ -708,7 +708,7 @@ export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=
           {phase==="exam"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:20,fontWeight:700,color:C.exam,marginBottom:4}}>🎓 {lang==="fr"?"EXAMEN FINAL SMCP":lang==="en"?"SMCP FINAL EXAM":lang==="es"?"EXAMEN FINAL SMCP":"EXAME FINAL SMCP"}</div>
-              <div style={{fontSize:12,color:C.muted}}>10 {lang==="fr"?"questions — modules L1 à L7":lang==="en"?"questions — modules L1 to L7":"preguntas — módulos L1 a L7"}</div>
+              <div style={{fontSize:12,color:C.muted}}>10 {lang==="fr"?"questions — modules L1 à L7":lang==="en"?"questions — modules L1 to L7":lang==="es"?"preguntas — módulos L1 a L7":"perguntas — módulos L1 a L7"}</div>
             </div>
             <FinalExamComp questions={exam} t={t} lang={lang} onComplete={s=>{setExamScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

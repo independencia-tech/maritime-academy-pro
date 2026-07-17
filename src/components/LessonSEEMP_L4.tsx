@@ -649,7 +649,7 @@ export default function LessonSEEMP_L4({ lang="fr", onBack=()=>{}, onComplete=()
 
             <SL icon="⚖️" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"CII - INTERACTIF":lang==="en"?"CII - INTERACTIVE":"CII - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"CII - INTERACTIF":lang==="en"?"CII - INTERACTIVE":lang==="es"?"CII - INTERACTIVO":"CII - INTERATIVO"}</div>
               <CIIOverviewSVG lang={lang}/>
             </Card>
 

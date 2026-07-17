@@ -164,7 +164,7 @@ export function UpgradeModal({ lang="fr", onClose=()=>{}, onTrialStart=()=>{} })
     const result = PremiumManager.activatePromo(promoCode);
     if (result.success) {
       setPromoOk(true);
-      setPromoMsg(lang==="fr"?"✅ Code validé ! Premium activé !":lang==="en"?"✅ Code valid! Premium activated!":"✅ ¡Código válido! ¡Premium activado!");
+      setPromoMsg(lang==="fr"?"✅ Code validé ! Premium activé !":lang==="en"?"✅ Code valid! Premium activated!":lang==="es"?"✅ ¡Código válido! ¡Premium activado!":"✅ Código válido! Premium ativado!");
       setTimeout(()=>{ onClose(); window.location.reload(); }, 1500);
     } else {
       setPromoMsg(`❌ ${result.error}`);

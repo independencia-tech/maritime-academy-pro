@@ -50,10 +50,10 @@ function ElectricalSVG({ lang }) {
     <div>
       <div style={{display:"flex",gap:6,marginBottom:8}}>
         <button onClick={()=>{setBlackout(v=>!v);if(!blackout)setEmergency(false);}} style={{flex:1,padding:"7px",borderRadius:10,fontSize:10,cursor:"pointer",fontWeight:700,background:blackout?"rgba(192,57,43,0.25)":"rgba(255,255,255,0.06)",border:`1.5px solid ${blackout?C.red:"rgba(255,255,255,0.1)"}`,color:blackout?C.red:C.muted}}>
-          {blackout?(lang==="fr"?"⚡ BLACKOUT ACTIF":lang==="en"?"⚡ BLACKOUT ACTIVE":"⚡ BLACKOUT ACTIVO"):(lang==="fr"?"💡 Simuler BLACKOUT":lang==="en"?"💡 Simulate BLACKOUT":"💡 Simular BLACKOUT")}
+          {blackout?(lang==="fr"?"⚡ BLACKOUT ACTIF":lang==="en"?"⚡ BLACKOUT ACTIVE":lang==="es"?"⚡ BLACKOUT ACTIVO":"⚡ BLACKOUT ATIVO"):(lang==="fr"?"💡 Simuler BLACKOUT":lang==="en"?"💡 Simulate BLACKOUT":lang==="es"?"💡 Simular BLACKOUT":"💡 Simular BLACKOUT")}
         </button>
         {blackout&&<button onClick={()=>setEmergency(v=>!v)} style={{flex:1,padding:"7px",borderRadius:10,fontSize:10,cursor:"pointer",fontWeight:700,background:emergency?"rgba(30,138,74,0.25)":"rgba(192,57,43,0.15)",border:`1.5px solid ${emergency?C.green:C.red}`,color:emergency?C.green:C.red}}>
-          {emergency?(lang==="fr"?"✅ Secours ACTIF":lang==="en"?"✅ Emergency ACTIVE":"✅ Emergencia ACTIVA"):(lang==="fr"?"🔴 Démarrer secours":lang==="en"?"🔴 Start emergency":"🔴 Iniciar emergencia")}
+          {emergency?(lang==="fr"?"✅ Secours ACTIF":lang==="en"?"✅ Emergency ACTIVE":lang==="es"?"✅ Emergencia ACTIVA":"✅ Emergência ATIVA"):(lang==="fr"?"🔴 Démarrer secours":lang==="en"?"🔴 Start emergency":lang==="es"?"🔴 Iniciar emergencia":"🔴 Iniciar emergência")}
         </button>}
       </div>
       <svg width="290" height="195" viewBox="0 0 290 195">
@@ -93,10 +93,10 @@ function ElectricalSVG({ lang }) {
         <rect x="0" y="180" width="290" height="15" fill="rgba(0,0,0,0.55)"/>
         <text x="8" y="191" fontSize="6.5" fill={blackout&&!emergency?C.red:blackout&&emergency?C.orange:C.green}>
           {blackout&&!emergency
-            ?(lang==="fr"?"⚠️ BLACKOUT — Démarrez le groupe de secours !":lang==="en"?"⚠️ BLACKOUT — Start the emergency generator!":"⚠️ BLACKOUT — ¡Inicie el grupo de emergencia!")
+            ?(lang==="fr"?"⚠️ BLACKOUT — Démarrez le groupe de secours !":lang==="en"?"⚠️ BLACKOUT — Start the emergency generator!":lang==="es"?"⚠️ BLACKOUT — ¡Inicie el grupo de emergencia!":"⚠️ BLACKOUT — Inicie o grupo de emergência!")
             :blackout&&emergency
-            ?(lang==="fr"?"🔴 SECOURS ACTIF — Nav/Comms/Incendie OK · Propulsion PERDUE":lang==="en"?"🔴 EMERGENCY — Nav/Comms/Fire OK · Propulsion LOST":"🔴 EMERGENCIA — Nav/Comms/Incendio OK · Propulsión PERDIDA")
-            :(lang==="fr"?"✅ Normal — GEN1+GEN2 parallèles · MSB 440V · Propulsion normale":lang==="en"?"✅ Normal — GEN1+GEN2 parallel · MSB 440V · Normal propulsion":"✅ Normal — GEN1+GEN2 paralelos · MSB 440V · Propulsión normal")}
+            ?(lang==="fr"?"🔴 SECOURS ACTIF — Nav/Comms/Incendie OK · Propulsion PERDUE":lang==="en"?"🔴 EMERGENCY — Nav/Comms/Fire OK · Propulsion LOST":lang==="es"?"🔴 EMERGENCIA — Nav/Comms/Incendio OK · Propulsión PERDIDA":"🔴 EMERGÊNCIA — Nav/Comms/Incêndio OK · Propulsão PERDIDA")
+            :(lang==="fr"?"✅ Normal — GEN1+GEN2 parallèles · MSB 440V · Propulsion normale":lang==="en"?"✅ Normal — GEN1+GEN2 parallel · MSB 440V · Normal propulsion":lang==="es"?"✅ Normal — GEN1+GEN2 paralelos · MSB 440V · Propulsión normal":"✅ Normal — GEN1+GEN2 paralelos · MSB 440V · Propulsão normal")}
         </text>
       </svg>
       {sel_&&<div style={{marginTop:8,padding:"10px 12px",borderRadius:12,background:`${sel_.color}15`,border:`1px solid ${sel_.color}44`,fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line",animation:"fadeUp 0.3s ease"}}>
@@ -199,7 +199,7 @@ function BoilerSVG({ lang }) {
         ))}
         {/* Steam */}
         <rect x="88" y="24" width="24" height="21" rx="3" fill="rgba(255,255,255,0.08)" stroke={C.muted} strokeWidth="0.8"/>
-        <text x="100" y="19" textAnchor="middle" fontSize="6.5" fill={C.muted}>{lang==="fr"?"Vapeur":lang==="en"?"Steam":"Vapor"}</text>
+        <text x="100" y="19" textAnchor="middle" fontSize="6.5" fill={C.muted}>{lang==="fr"?"Vapeur":lang==="en"?"Steam":lang==="es"?"Vapor":"Vapor"}</text>
         {running&&[0,1,2].map(i=><ellipse key={i} cx={94+i*6} cy={12-i*4} rx={4+i} ry={2.5} fill="rgba(255,255,255,0.12)"><animate attributeName="cy" values={`${12-i*4};${3-i*4};${12-i*4}`} dur={`${1+i*0.3}s`} repeatCount="indefinite"/></ellipse>)}
         {/* Gauge */}
         <circle cx="164" cy="78" r="24" fill="rgba(0,0,0,0.5)" stroke={sc} strokeWidth="2"/>
@@ -222,14 +222,14 @@ function BoilerSVG({ lang }) {
           {running?(lang==="fr"?"⏸ Arrêter":lang==="en"?"⏸ Stop":lang==="es"?"⏸ Parar":"⏸ Parar"):(lang==="fr"?"▶ Démarrer":lang==="en"?"▶ Start":lang==="es"?"▶ Iniciar":"▶ Iniciar")} {lang==="fr"?"chaudière":lang==="en"?"boiler":lang==="es"?"caldera":"caldeira"}
         </button>
         <div style={{flex:1}}>
-          <div style={{fontSize:10,color:C.muted,marginBottom:3}}>{lang==="fr"?"Pression:":lang==="en"?"Pressure:":"Presión:"} {pressure} bar</div>
+          <div style={{fontSize:10,color:C.muted,marginBottom:3}}>{lang==="fr"?"Pression:":lang==="en"?"Pressure:":lang==="es"?"Presión:":"Pressão:"} {pressure} bar</div>
           <input type="range" min={1} max={12} value={pressure} onChange={e=>setPressure(Number(e.target.value))} style={{width:"100%",accentColor:sc}}/>
         </div>
       </div>
       <div style={{marginTop:6,padding:"8px 12px",borderRadius:10,background:`${sc}12`,border:`1px solid ${sc}33`,fontSize:10,color:sc}}>
-        {status==="danger"?(lang==="fr"?"⚠️ SURPRESSION — Soupape de sécurité s'ouvre !":lang==="en"?"⚠️ OVERPRESSURE — Safety valve opens!":"⚠️ SOBREPRESIÓN — ¡Válvula de seguridad se abre!")
-        :status==="warning"?(lang==="fr"?"⚡ Pression élevée — Surveiller":lang==="en"?"⚡ High pressure — Monitor":"⚡ Presión alta — Vigilar")
-        :(lang==="fr"?"✅ Pression normale (5-8 bars)":lang==="en"?"✅ Normal pressure (5-8 bar)":"✅ Presión normal (5-8 bar)")}
+        {status==="danger"?(lang==="fr"?"⚠️ SURPRESSION — Soupape de sécurité s'ouvre !":lang==="en"?"⚠️ OVERPRESSURE — Safety valve opens!":lang==="es"?"⚠️ SOBREPRESIÓN — ¡Válvula de seguridad se abre!":"⚠️ SOBREPRESSÃO — Válvula de segurança abre-se!")
+        :status==="warning"?(lang==="fr"?"⚡ Pression élevée — Surveiller":lang==="en"?"⚡ High pressure — Monitor":lang==="es"?"⚡ Presión alta — Vigilar":"⚡ Pressão alta — Vigiar")
+        :(lang==="fr"?"✅ Pression normale (5-8 bars)":lang==="en"?"✅ Normal pressure (5-8 bar)":lang==="es"?"✅ Presión normal (5-8 bar)":"✅ Pressão normal (5-8 bar)")}
       </div>
     </div>
   );
@@ -311,7 +311,7 @@ function Exercise1({ lang, t }) {
         </div>
       ))}
       {showC&&<div style={{padding:"12px",borderRadius:12,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:11,color:C.white,lineHeight:1.7,marginBottom:10}}>
-        {lang==="fr"?"✅ Q1: 30 secondes (SOLAS − démarrage auto en <30s)\n✅ Q2: 440V (standard marine − gros équipements)\n✅ Q3: 15 ppm (MARPOL Annexe I − limite rejet eau de cale)":lang==="en"?"✅ Q1: 30 seconds (SOLAS − auto start in <30s)\n✅ Q2: 440V (marine standard − heavy equipment)\n✅ Q3: 15 ppm (MARPOL Annex I − bilge water discharge limit)":"✅ Q1: 30 s · Q2: 440V · Q3: 15 ppm (MARPOL)"}
+        {lang==="fr"?"✅ Q1: 30 secondes (SOLAS − démarrage auto en <30s)\n✅ Q2: 440V (standard marine − gros équipements)\n✅ Q3: 15 ppm (MARPOL Annexe I − limite rejet eau de cale)":lang==="en"?"✅ Q1: 30 seconds (SOLAS − auto start in <30s)\n✅ Q2: 440V (marine standard − heavy equipment)\n✅ Q3: 15 ppm (MARPOL Annex I − bilge water discharge limit)":lang==="es"?"✅ Q1: 30 s · Q2: 440V · Q3: 15 ppm (MARPOL)":"✅ Q1: 30 s · Q2: 440V · Q3: 15 ppm (MARPOL)"}
       </div>}
       <button onClick={()=>setShowC(v=>!v)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:showC?"rgba(30,138,74,0.2)":"rgba(201,146,42,0.15)",border:`1px solid ${showC?C.green:C.gold}44`,color:showC?C.green:C.gold2,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
         {showC?t.hideCorr:t.showCorr}
@@ -658,7 +658,7 @@ export default function LessonAuxiliaires({ lang="fr", onBack=()=>{}, onComplete
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
                 {lang==="fr"?"Quiz — Auxiliaires & Électricité":lang==="en"?"Quiz — Auxiliaries & Electricity":lang==="es"?"Quiz — Auxiliares & Electricidad":"Quiz — Auxiliares & Eletricidade"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions":lang==="en"?"questions":"preguntas"} · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":"Lección 2"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions":lang==="en"?"questions":lang==="es"?"preguntas":"perguntas"} · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":lang==="es"?"Lección 2":"Lição 2"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

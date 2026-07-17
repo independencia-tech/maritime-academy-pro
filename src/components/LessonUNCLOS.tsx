@@ -129,7 +129,7 @@ function MaritimeZonesSVG({ lang }) {
         </div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.rights[lang]||sel_.rights.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche une zone pour ses droits":lang==="en"?"Tap a zone for its rights":"Toca una zona para sus derechos"}
+        {lang==="fr"?"Touche une zone pour ses droits":lang==="en"?"Tap a zone for its rights":lang==="es"?"Toca una zona para sus derechos":"Toque numa zona para os seus direitos"}
       </div>}
     </div>
   );
@@ -173,7 +173,7 @@ function RightsSimulatorSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:act.color,marginBottom:8}}>{act.icon} {act.label[lang]||act.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.7,whiteSpace:"pre-line"}}>{act.rights[lang]||act.rights.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Choisis une activité pour voir les droits par zone":lang==="en"?"Choose an activity to see rights by zone":"Elige una actividad para ver los derechos por zona"}
+        {lang==="fr"?"Choisis une activité pour voir les droits par zone":lang==="en"?"Choose an activity to see rights by zone":lang==="es"?"Elige una actividad para ver los derechos por zona":"Escolha uma atividade para ver os direitos por zona"}
       </div>}
     </div>
   );
@@ -216,7 +216,7 @@ function DisputeResolutionSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {(sel_.label[lang]||sel_.label.fr).replace('\n',' ')}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche un mécanisme pour les détails":lang==="en"?"Tap a mechanism for details":"Toca un mecanismo para detalles"}
+        {lang==="fr"?"Touche un mécanisme pour les détails":lang==="en"?"Tap a mechanism for details":lang==="es"?"Toca un mecanismo para detalles":"Toque num mecanismo para detalhes"}
       </div>}
     </div>
   );
@@ -562,25 +562,25 @@ export default function LessonUNCLOS({ lang="fr", onBack=()=>{}, onComplete=()=>
             <SL icon="📅" text={lc.p1} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📅 {lang==="fr"?"TIMELINE UNCLOS — INTERACTIF":lang==="en"?"UNCLOS TIMELINE — INTERACTIVE":"CRONOLOGÍA UNCLOS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📅 {lang==="fr"?"TIMELINE UNCLOS — INTERACTIF":lang==="en"?"UNCLOS TIMELINE — INTERACTIVE":lang==="es"?"CRONOLOGÍA UNCLOS — INTERACTIVO":"CRONOLOGIA UNCLOS — INTERATIVO"}</div>
               <UNCLOSTimelineSVG lang={lang}/>
             </Card>
             <SL icon="🗺️" text={lc.p2} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"ZONES MARITIMES UNCLOS — INTERACTIF":lang==="en"?"UNCLOS MARITIME ZONES — INTERACTIVE":"ZONAS MARÍTIMAS UNCLOS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"ZONES MARITIMES UNCLOS — INTERACTIF":lang==="en"?"UNCLOS MARITIME ZONES — INTERACTIVE":lang==="es"?"ZONAS MARÍTIMAS UNCLOS — INTERACTIVO":"ZONAS MARÍTIMAS UNCLOS — INTERATIVO"}</div>
               <MaritimeZonesSVG lang={lang}/>
             </Card>
             <SL icon="⚖️" text={lc.p3} color={C.green}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}33`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"DROITS PAR ACTIVITÉ & ZONE":lang==="en"?"RIGHTS BY ACTIVITY & ZONE":"DERECHOS POR ACTIVIDAD Y ZONA"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"DROITS PAR ACTIVITÉ & ZONE":lang==="en"?"RIGHTS BY ACTIVITY & ZONE":lang==="es"?"DERECHOS POR ACTIVIDAD Y ZONA":"DIREITOS POR ATIVIDADE E ZONA"}</div>
               <RightsSimulatorSVG lang={lang}/>
             </Card>
             <SL icon="🏛️" text={lc.p4} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🏛️ {lang==="fr"?"MÉCANISMES DE RÈGLEMENT DES DIFFÉRENDS":lang==="en"?"DISPUTE SETTLEMENT MECHANISMS":"MECANISMOS DE SOLUCIÓN DE CONTROVERSIAS"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🏛️ {lang==="fr"?"MÉCANISMES DE RÈGLEMENT DES DIFFÉRENDS":lang==="en"?"DISPUTE SETTLEMENT MECHANISMS":lang==="es"?"MECANISMOS DE SOLUCIÓN DE CONTROVERSIAS":"MECANISMOS DE RESOLUÇÃO DE LITÍGIOS"}</div>
               <DisputeResolutionSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -599,7 +599,7 @@ export default function LessonUNCLOS({ lang="fr", onBack=()=>{}, onComplete=()=>
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — UNCLOS</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 6":lang==="en"?"Lesson 6":"Lección 6"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 6":lang==="en"?"Lesson 6":lang==="es"?"Lección 6":"Lição 6"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

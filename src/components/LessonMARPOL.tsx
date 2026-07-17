@@ -52,7 +52,7 @@ function MarpolAnnexesSVG({ lang }) {
               border:`1.5px solid ${sel===a.id?a.color:"rgba(255,255,255,0.08)"}`}}>
             <div style={{fontSize:20,marginBottom:4}}>{a.icon}</div>
             <div style={{fontSize:9,color:a.color,fontWeight:700}}>
-              {lang==="fr"?"Ann.":lang==="en"?"Ann.":"An."} {a.num}
+              {lang==="fr"?"Ann.":lang==="en"?"Ann.":lang==="es"?"An.":"An."} {a.num}
             </div>
             <div style={{fontSize:8,color:sel===a.id?a.color:C.muted,lineHeight:1.3,marginTop:2}}>
               {(a.label[lang]||a.label.fr).split(' ').slice(0,2).join(' ')}
@@ -61,7 +61,7 @@ function MarpolAnnexesSVG({ lang }) {
         ))}
       </div>
       {sel_?<div style={{padding:"12px",borderRadius:14,background:`${sel_.color}12`,border:`1.5px solid ${sel_.color}44`,animation:"fadeUp 0.3s ease"}}>
-        <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {lang==="fr"?"Annexe":lang==="en"?"Annex":"Anexo"} {sel_.id} — {sel_.label[lang]||sel_.label.fr}</div>
+        <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {lang==="fr"?"Annexe":lang==="en"?"Annex":lang==="es"?"Anexo":"Anexo"} {sel_.id} — {sel_.label[lang]||sel_.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"12px",fontSize:11,color:C.muted}}>
         {lang==="fr"?"Touche une annexe pour les détails":lang==="en"?"Tap an annex for details":lang==="es"?"Toca un anexo para detalles":"Toque um anexo para detalhes"}
@@ -107,11 +107,11 @@ function ECAMapSVG({ lang }) {
       <div style={{display:"flex",gap:8,marginBottom:8,flexWrap:"wrap"}}>
         <div style={{display:"flex",alignItems:"center",gap:4}}>
           <div style={{width:10,height:10,borderRadius:2,background:"rgba(26,111,212,0.4)",border:`1px solid ${C.blue2}`}}/>
-          <span style={{fontSize:9,color:C.blue2}}>{lang==="fr"?"Océan mondial (0,5% SOx)":lang==="en"?"Global ocean (0.5% SOx)":"Océano (0,5% SOx)"}</span>
+          <span style={{fontSize:9,color:C.blue2}}>{lang==="fr"?"Océan mondial (0,5% SOx)":lang==="en"?"Global ocean (0.5% SOx)":lang==="es"?"Océano (0,5% SOx)":"Oceano global (0,5% SOx)"}</span>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:4}}>
           <div style={{width:10,height:10,borderRadius:2,background:"rgba(231,76,60,0.4)",border:`1px solid ${C.red}`}}/>
-          <span style={{fontSize:9,color:C.red}}>{lang==="fr"?"Zone ECA (0,1% SOx)":lang==="en"?"ECA Zone (0.1% SOx)":"Zona ECA (0,1% SOx)"}</span>
+          <span style={{fontSize:9,color:C.red}}>{lang==="fr"?"Zone ECA (0,1% SOx)":lang==="en"?"ECA Zone (0.1% SOx)":lang==="es"?"Zona ECA (0,1% SOx)":"Zona ECA (0,1% SOx)"}</span>
         </div>
       </div>
 
@@ -143,7 +143,7 @@ function ECAMapSVG({ lang }) {
 
         {/* Global ocean SOx 0.5% label */}
         <text x="120" y="140" textAnchor="middle" fontSize="7" fill={C.blue2} opacity="0.6">
-          {lang==="fr"?"0,5% SOx mondial":lang==="en"?"0.5% SOx global":"0,5% SOx mundial"}
+          {lang==="fr"?"0,5% SOx mondial":lang==="en"?"0.5% SOx global":lang==="es"?"0,5% SOx mundial":"0,5% SOx global"}
         </text>
 
         {/* ECA Zones */}
@@ -181,11 +181,11 @@ function ECAMapSVG({ lang }) {
         <line x1="5" y1="105" x2="285" y2="105"
           stroke="rgba(255,200,0,0.2)" strokeWidth="0.8" strokeDasharray="4,4"/>
         <text x="8" y="102" fontSize="6" fill="rgba(255,200,0,0.4)">
-          {lang==="fr"?"Équateur":lang==="en"?"Equator":"Ecuador"}
+          {lang==="fr"?"Équateur":lang==="en"?"Equator":lang==="es"?"Ecuador":"Equador"}
         </text>
 
         <text x="145" y="170" textAnchor="middle" fontSize="6.5" fill={C.muted}>
-          {lang==="fr"?"Touche une zone ECA pour les détails":lang==="en"?"Tap an ECA zone for details":"Toca una zona ECA para detalles"}
+          {lang==="fr"?"Touche une zone ECA pour les détails":lang==="en"?"Tap an ECA zone for details":lang==="es"?"Toca una zona ECA para detalles":"Toque numa zona ECA para detalhes"}
         </text>
       </svg>
 
@@ -200,13 +200,13 @@ function ECAMapSVG({ lang }) {
           </div>
         </div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
-        <div style={{fontSize:10,color:C.muted,marginTop:4}}>📅 {lang==="fr"?"Depuis":lang==="en"?"Since":"Desde"} {sel_.since}</div>
+        <div style={{fontSize:10,color:C.muted,marginTop:4}}>📅 {lang==="fr"?"Depuis":lang==="en"?"Since":lang==="es"?"Desde":"Desde"} {sel_.since}</div>
       </div>}
 
       {/* Quick reference table */}
       {!sel&&<div style={{marginTop:8,background:"rgba(0,0,0,0.4)",borderRadius:10,padding:"8px 10px",border:`1px solid rgba(255,255,255,0.08)`}}>
         <div style={{fontSize:9,color:C.muted,marginBottom:6,fontWeight:700,letterSpacing:1}}>
-          {lang==="fr"?"LIMITES SOx RAPIDES":lang==="en"?"QUICK SOx LIMITS":"LÍMITES SOx RÁPIDOS"}
+          {lang==="fr"?"LIMITES SOx RAPIDES":lang==="en"?"QUICK SOx LIMITS":lang==="es"?"LÍMITES SOx RÁPIDOS":"LIMITES SOx RÁPIDOS"}
         </div>
         {[
           {zone:{fr:"Océan mondial (hors ECA)",en:"Global ocean (outside ECA)",es:"Océano mundial (fuera ECA)",pt:"Oceano mundial (fora ECA)"},sox:"0,5%",c:C.blue2},
@@ -262,7 +262,7 @@ function OilRecordBookSVG({ lang }) {
           📋 {lang==="fr"?"REGISTRE DES HYDROCARBURES (ORB)":lang==="en"?"OIL RECORD BOOK (ORB)":lang==="es"?"LIBRO DE REGISTRO DE HIDROCARBUROS":"LIVRO DE REGISTO DE HIDROCARBONETOS"}
         </div>
         <div style={{fontSize:10,color:C.muted,lineHeight:1.5}}>
-          {lang==="fr"?"Toute opération avec de l'huile ou des eaux huileuses doit être consignée. Faux enregistrement = crime maritime.":lang==="en"?"All operations with oil or oily water must be recorded. False entry = maritime crime.":"Todas las operaciones con aceite o aguas oleosas deben registrarse. Entrada falsa = delito marítimo."}
+          {lang==="fr"?"Toute opération avec de l'huile ou des eaux huileuses doit être consignée. Faux enregistrement = crime maritime.":lang==="en"?"All operations with oil or oily water must be recorded. False entry = maritime crime.":lang==="es"?"Todas las operaciones con aceite o aguas oleosas deben registrarse. Entrada falsa = delito marítimo.":"Toda operação com óleo ou águas oleosas deve ser registada. Registo falso = crime marítimo."}
         </div>
       </div>
 
@@ -286,18 +286,18 @@ function OilRecordBookSVG({ lang }) {
 
       {entries.length === 0 && !showForm && (
         <div style={{textAlign:"center",padding:"16px",fontSize:11,color:C.muted,background:"rgba(255,255,255,0.03)",borderRadius:10,marginBottom:10}}>
-          {lang==="fr"?"Aucune entrée — cliquez pour simuler une opération":lang==="en"?"No entries — click to simulate an operation":"Sin entradas — haga clic para simular una operación"}
+          {lang==="fr"?"Aucune entrée — cliquez pour simuler une opération":lang==="en"?"No entries — click to simulate an operation":lang==="es"?"Sin entradas — haga clic para simular una operación":"Sem entradas — clique para simular uma operação"}
         </div>
       )}
 
       {showForm && (
         <div style={{background:"rgba(13,31,60,0.9)",border:`1px solid ${C.border}`,borderRadius:12,padding:"12px",marginBottom:10,animation:"fadeUp 0.3s ease"}}>
           <div style={{fontSize:11,fontWeight:700,color:C.gold2,marginBottom:8}}>
-            {lang==="fr"?"Nouvelle entrée ORB":lang==="en"?"New ORB entry":"Nueva entrada ORB"}
+            {lang==="fr"?"Nouvelle entrée ORB":lang==="en"?"New ORB entry":lang==="es"?"Nueva entrada ORB":"Nova entrada ORB"}
           </div>
           {/* Operation type */}
           <div style={{marginBottom:8}}>
-            <div style={{fontSize:10,color:C.muted,marginBottom:4}}>{lang==="fr"?"Opération:":lang==="en"?"Operation:":"Operación:"}</div>
+            <div style={{fontSize:10,color:C.muted,marginBottom:4}}>{lang==="fr"?"Opération:":lang==="en"?"Operation:":lang==="es"?"Operación:":"Operação:"}</div>
             <div style={{display:"flex",flexDirection:"column",gap:4}}>
               {(operations[lang]||operations.fr).map((op,i)=>(
                 <button key={i} onClick={()=>setForm(f=>({...f,op}))} style={{
@@ -312,13 +312,13 @@ function OilRecordBookSVG({ lang }) {
           {/* Location + Quantity */}
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
             <div>
-              <div style={{fontSize:10,color:C.muted,marginBottom:3}}>{lang==="fr"?"Position:":lang==="en"?"Position:":"Posición:"}</div>
+              <div style={{fontSize:10,color:C.muted,marginBottom:3}}>{lang==="fr"?"Position:":lang==="en"?"Position:":lang==="es"?"Posición:":"Posição:"}</div>
               <input value={form.location} onChange={e=>setForm(f=>({...f,location:e.target.value}))}
                 placeholder="ex: 05°N 002°E"
                 style={{width:"100%",padding:"7px",borderRadius:8,background:"rgba(255,255,255,0.08)",border:`1px solid ${C.border}`,color:C.white,fontSize:10,boxSizing:"border-box"}}/>
             </div>
             <div>
-              <div style={{fontSize:10,color:C.muted,marginBottom:3}}>{lang==="fr"?"Quantité (m³):":lang==="en"?"Quantity (m³):":"Cantidad (m³):"}</div>
+              <div style={{fontSize:10,color:C.muted,marginBottom:3}}>{lang==="fr"?"Quantité (m³):":lang==="en"?"Quantity (m³):":lang==="es"?"Cantidad (m³):":"Quantidade (m³):"}</div>
               <input value={form.quantity} onChange={e=>setForm(f=>({...f,quantity:e.target.value}))}
                 placeholder="ex: 2.5"
                 style={{width:"100%",padding:"7px",borderRadius:8,background:"rgba(255,255,255,0.08)",border:`1px solid ${C.border}`,color:C.white,fontSize:10,boxSizing:"border-box"}}/>
@@ -327,7 +327,7 @@ function OilRecordBookSVG({ lang }) {
           {/* Separator used */}
           <div style={{marginBottom:10}}>
             <div style={{fontSize:10,color:C.muted,marginBottom:4}}>
-              {lang==="fr"?"Séparateur utilisé (15 ppm) ?":lang==="en"?"Separator used (15 ppm)?":"¿Separador usado (15 ppm)?"}
+              {lang==="fr"?"Séparateur utilisé (15 ppm) ?":lang==="en"?"Separator used (15 ppm)?":lang==="es"?"¿Separador usado (15 ppm)?":"Separador usado (15 ppm)?"}
             </div>
             <div style={{display:"flex",gap:6}}>
               {["yes","no"].map(v=>(
@@ -361,7 +361,7 @@ function OilRecordBookSVG({ lang }) {
 
       {entries.some(e=>!e.valid) && (
         <div style={{marginTop:8,padding:"8px 12px",borderRadius:10,background:"rgba(192,57,43,0.1)",border:`1px solid ${C.red}33`,fontSize:10,color:C.red}}>
-          ⚠️ {lang==="fr"?"Entrée non conforme détectée — rejet sans séparateur = infraction MARPOL":lang==="en"?"Non-compliant entry detected — discharge without separator = MARPOL violation":"Entrada no conforme — descarga sin separador = infracción MARPOL"}
+          ⚠️ {lang==="fr"?"Entrée non conforme détectée — rejet sans séparateur = infraction MARPOL":lang==="en"?"Non-compliant entry detected — discharge without separator = MARPOL violation":lang==="es"?"Entrada no conforme — descarga sin separador = infracción MARPOL":"Entrada não conforme — descarga sem separador = infração MARPOL"}
         </div>
       )}
     </div>
@@ -418,10 +418,10 @@ function GarbageSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.rule[lang]||sel_.rule.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche une catégorie pour les règles":lang==="en"?"Tap a category for rules":"Toca una categoría para las reglas"}
+        {lang==="fr"?"Touche une catégorie pour les règles":lang==="en"?"Tap a category for rules":lang==="es"?"Toca una categoría para las reglas":"Toque numa categoria para as regras"}
       </div>}
       <div style={{marginTop:8,padding:"8px 10px",borderRadius:10,background:"rgba(192,57,43,0.08)",border:`1px solid ${C.red}22`,fontSize:10,color:C.red,fontWeight:700,textAlign:"center"}}>
-        ⚠️ {lang==="fr"?"Plastiques = INTERDIT PARTOUT — amende sévère":lang==="en"?"Plastics = PROHIBITED EVERYWHERE — severe fine":"Plásticos = PROHIBIDO EN TODAS PARTES — multa grave"}
+        ⚠️ {lang==="fr"?"Plastiques = INTERDIT PARTOUT — amende sévère":lang==="en"?"Plastics = PROHIBITED EVERYWHERE — severe fine":lang==="es"?"Plásticos = PROHIBIDO EN TODAS PARTES — multa grave":"Plásticos = PROIBIDO EM TODO O LADO — multa grave"}
       </div>
     </div>
   );
@@ -771,25 +771,25 @@ export default function LessonMARPOL({ lang="fr", onBack=()=>{}, onComplete=()=>
             <SL icon="📋" text={lc.p1} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"ANNEXES MARPOL — INTERACTIF":lang==="en"?"MARPOL ANNEXES — INTERACTIVE":"ANEXOS MARPOL — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"ANNEXES MARPOL — INTERACTIF":lang==="en"?"MARPOL ANNEXES — INTERACTIVE":lang==="es"?"ANEXOS MARPOL — INTERACTIVO":"ANEXOS MARPOL — INTERATIVO"}</div>
               <MarpolAnnexesSVG lang={lang}/>
             </Card>
             <SL icon="🗺️" text={lc.p2} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"CARTE ECA MONDIALE — INTERACTIVE":lang==="en"?"WORLD ECA MAP — INTERACTIVE":"MAPA ECA MUNDIAL — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"CARTE ECA MONDIALE — INTERACTIVE":lang==="en"?"WORLD ECA MAP — INTERACTIVE":lang==="es"?"MAPA ECA MUNDIAL — INTERACTIVO":"MAPA ECA MUNDIAL — INTERATIVO"}</div>
               <ECAMapSVG lang={lang}/>
             </Card>
             <SL icon="📝" text={lc.p3} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📝 {lang==="fr"?"OIL RECORD BOOK — SIMULATEUR":lang==="en"?"OIL RECORD BOOK — SIMULATOR":"OIL RECORD BOOK — SIMULADOR"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📝 {lang==="fr"?"OIL RECORD BOOK — SIMULATEUR":lang==="en"?"OIL RECORD BOOK — SIMULATOR":lang==="es"?"OIL RECORD BOOK — SIMULADOR":"OIL RECORD BOOK — SIMULADOR"}</div>
               <OilRecordBookSVG lang={lang}/>
             </Card>
             <SL icon="🗑️" text={lc.p4} color={C.green}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.green}33`}}>
-              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗑️ {lang==="fr"?"GESTION ORDURES — INTERACTIF":lang==="en"?"GARBAGE MANAGEMENT — INTERACTIVE":"GESTIÓN BASURAS — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.green,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗑️ {lang==="fr"?"GESTION ORDURES — INTERACTIF":lang==="en"?"GARBAGE MANAGEMENT — INTERACTIVE":lang==="es"?"GESTIÓN BASURAS — INTERACTIVO":"GESTÃO DE LIXO — INTERATIVO"}</div>
               <GarbageSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -810,7 +810,7 @@ export default function LessonMARPOL({ lang="fr", onBack=()=>{}, onComplete=()=>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
                 {lang==="fr"?"Quiz — MARPOL & ECA":lang==="en"?"Quiz — MARPOL & ECA":lang==="es"?"Quiz — MARPOL & ECA":"Quiz — MARPOL & ECA"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":"Lección 1"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 1":lang==="en"?"Lesson 1":lang==="es"?"Lección 1":"Lição 1"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

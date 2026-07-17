@@ -196,11 +196,11 @@ function EmergencyProcedureSVG({ lang }) {
       <div style={{display:"flex",gap:8,marginTop:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"8px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":lang==="es"?"Anterior":"Anterior"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(3,s+1))} disabled={step===3}
           style={{flex:1,padding:"8px",borderRadius:10,background:step===3?"rgba(255,255,255,0.06)":`${steps[Math.min(3,step+1)].color}22`,border:`1px solid ${step===3?"rgba(255,255,255,0.1)":steps[Math.min(3,step+1)].color}`,color:C.white,cursor:step===3?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+          {lang==="fr"?"Suivant":lang==="en"?"Next":lang==="es"?"Siguiente":"Seguinte"} ▶
         </button>
       </div>
     </div>
@@ -547,25 +547,25 @@ export default function LessonPiracy({ lang="fr", onBack=()=>{}, onComplete=()=>
             <SL icon="🌍" text={lc.p1} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"ZONES DE PIRATERIE MONDIALE":lang==="en"?"WORLD PIRACY ZONES":"ZONAS DE PIRATERÍA MUNDIAL"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🌍 {lang==="fr"?"ZONES DE PIRATERIE MONDIALE":lang==="en"?"WORLD PIRACY ZONES":lang==="es"?"ZONAS DE PIRATERÍA MUNDIAL":"ZONAS DE PIRATARIA MUNDIAL"}</div>
               <PiracyZonesSVG lang={lang}/>
             </Card>
             <SL icon="⚔️" text={lc.p2} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚔️ {lang==="fr"?"ACTEURS ANTI-PIRATERIE":lang==="en"?"ANTI-PIRACY ACTORS":"ACTORES ANTIPIRATERÍA"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚔️ {lang==="fr"?"ACTEURS ANTI-PIRATERIE":lang==="en"?"ANTI-PIRACY ACTORS":lang==="es"?"ACTORES ANTIPIRATERÍA":"ATORES ANTIPIRATARIA"}</div>
               <AntiPiracyActorsSVG lang={lang}/>
             </Card>
             <SL icon="🛡️" text={lc.p3} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛡️ {lang==="fr"?"CODE ISPS — 3 NIVEAUX DE SÛRETÉ":lang==="en"?"ISPS CODE — 3 SECURITY LEVELS":"CÓDIGO PBIP — 3 NIVELES DE PROTECCIÓN"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛡️ {lang==="fr"?"CODE ISPS — 3 NIVEAUX DE SÛRETÉ":lang==="en"?"ISPS CODE — 3 SECURITY LEVELS":lang==="es"?"CÓDIGO PBIP — 3 NIVELES DE PROTECCIÓN":"CÓDIGO ISPS — 3 NÍVEIS DE PROTEÇÃO"}</div>
               <ISPSLevelsSVG lang={lang}/>
             </Card>
             <SL icon="🚨" text={lc.p4} color={C.purple}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.purple}33`}}>
-              <div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚨 {lang==="fr"?"PROCÉDURE D'URGENCE ANTI-PIRATERIE":lang==="en"?"ANTI-PIRACY EMERGENCY PROCEDURE":"PROCEDIMIENTO EMERGENCIA ANTIPIRATERÍA"}</div>
+              <div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚨 {lang==="fr"?"PROCÉDURE D'URGENCE ANTI-PIRATERIE":lang==="en"?"ANTI-PIRACY EMERGENCY PROCEDURE":lang==="es"?"PROCEDIMIENTO EMERGENCIA ANTIPIRATERÍA":"PROCEDIMENTO DE EMERGÊNCIA ANTIPIRATARIA"}</div>
               <EmergencyProcedureSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -584,7 +584,7 @@ export default function LessonPiracy({ lang="fr", onBack=()=>{}, onComplete=()=>
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Piraterie & Sûreté</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 9":lang==="en"?"Lesson 9":"Lección 9"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 9":lang==="en"?"Lesson 9":lang==="es"?"Lección 9":"Lição 9"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

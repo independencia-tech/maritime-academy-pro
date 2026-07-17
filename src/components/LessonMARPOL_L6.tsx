@@ -628,14 +628,14 @@ export default function LessonMARPOL_L6({ lang="fr", onBack=()=>{}, onComplete=(
             <SL icon="⚖️" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"RESPONSABILITÉS - INTERACTIF":lang==="en"?"LIABILITIES - INTERACTIVE":"RESPONSABILIDADES - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"RESPONSABILITÉS - INTERACTIF":lang==="en"?"LIABILITIES - INTERACTIVE":lang==="es"?"RESPONSABILIDADES - INTERACTIVO":"RESPONSABILIDADES - INTERATIVO"}</div>
               <ResponsibilitySVG lang={lang}/>
             </Card>
 
             <SL icon="🗣️" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗣️ {lang==="fr"?"CULTURE À BORD - INTERACTIF":lang==="en"?"ONBOARD CULTURE - INTERACTIVE":"CULTURA A BORDO - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗣️ {lang==="fr"?"CULTURE À BORD - INTERACTIF":lang==="en"?"ONBOARD CULTURE - INTERACTIVE":lang==="es"?"CULTURA A BORDO - INTERACTIVO":"CULTURA A BORDO - INTERATIVO"}</div>
               <CultureSVG lang={lang}/>
             </Card>
 
@@ -645,7 +645,7 @@ export default function LessonMARPOL_L6({ lang="fr", onBack=()=>{}, onComplete=(
             <SL icon="🎖️" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎖️ {lang==="fr"?"QUALITÉS DE LEADERSHIP - INTERACTIF":lang==="en"?"LEADERSHIP QUALITIES - INTERACTIVE":"CUALIDADES DE LIDERAZGO - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎖️ {lang==="fr"?"QUALITÉS DE LEADERSHIP - INTERACTIF":lang==="en"?"LEADERSHIP QUALITIES - INTERACTIVE":lang==="es"?"CUALIDADES DE LIDERAZGO - INTERACTIVO":"QUALIDADES DE LIDERANÇA - INTERATIVO"}</div>
               <LeaderSVG lang={lang}/>
             </Card>
 

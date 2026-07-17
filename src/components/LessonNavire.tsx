@@ -26,11 +26,11 @@ function ShipTopView({ lang }) {
       <rect x="155" y="50" width="96" height="48" rx="8" fill="rgba(30,138,74,0.2)" stroke={C.green} strokeWidth="1"/>
       <circle cx="185" cy="63" r="5" fill={C.green}/>
       <text x="200" y="67" fill={C.green} fontSize="10" fontWeight="bold">{lang==="fr"?"TRIBORD":lang==="en"?"STARBOARD":lang==="es"?"ESTRIBOR":"ESTIBORDO"}</text>
-      <text x="200" y="80" fill={C.green} fontSize="7">{lang==="fr"?"Feu VERT ▶":lang==="en"?"GREEN light ▶":"Luz VERDE ▶"}</text>
+      <text x="200" y="80" fill={C.green} fontSize="7">{lang==="fr"?"Feu VERT ▶":lang==="en"?"GREEN light ▶":lang==="es"?"Luz VERDE ▶":"Luz VERDE ▶"}</text>
       <rect x="38" y="50" width="96" height="48" rx="8" fill="rgba(192,57,43,0.2)" stroke={C.red} strokeWidth="1"/>
       <circle cx="55" cy="63" r="5" fill={C.red}/>
       <text x="68" y="67" fill={C.red} fontSize="10" fontWeight="bold">{lang==="fr"?"BÂBORD":lang==="en"?"PORT":lang==="es"?"BABOR":"BOMBORDO"}</text>
-      <text x="68" y="80" fill={C.red} fontSize="7">{lang==="fr"?"Feu ROUGE ◀":lang==="en"?"RED light ◀":"Luz ROJA ◀"}</text>
+      <text x="68" y="80" fill={C.red} fontSize="7">{lang==="fr"?"Feu ROUGE ◀":lang==="en"?"RED light ◀":lang==="es"?"Luz ROJA ◀":"Luz VERMELHA ◀"}</text>
       <polygon points="145,2 138,16 152,16" fill={C.gold2}/>
       <text x="145" y="32" textAnchor="middle" fill={C.gold2} fontSize="8" fontWeight="bold">{lang==="fr"?"PROUE":lang==="en"?"BOW":lang==="es"?"PROA":"PROA"}</text>
       <text x="145" y="140" textAnchor="middle" fill={C.muted} fontSize="8">{lang==="fr"?"POUPE":lang==="en"?"STERN":lang==="es"?"POPA":"POPA"}</text>

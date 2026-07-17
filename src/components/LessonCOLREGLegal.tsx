@@ -53,7 +53,7 @@ function ColregLegalSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche un élément pour les détails":lang==="en"?"Tap an element for details":"Toca un elemento para detalles"}
+        {lang==="fr"?"Touche un élément pour les détails":lang==="en"?"Tap an element for details":lang==="es"?"Toca un elemento para detalles":"Toque num elemento para detalhes"}
       </div>}
     </div>
   );
@@ -94,16 +94,16 @@ function CollisionLiabilitySVG({ lang }) {
           <span style={{fontSize:22}}>{s.icon}</span>
           <div style={{flex:1}}>
             <div style={{fontSize:11,fontWeight:700,color:scenario===i?s.color:C.muted}}>{s.label[lang]||s.label.fr}</div>
-            <div style={{fontSize:9,color:C.muted,marginTop:2}}>{lang==="fr"?"Voir le dossier complet →":lang==="en"?"See full case →":"Ver el caso completo →"}</div>
+            <div style={{fontSize:9,color:C.muted,marginTop:2}}>{lang==="fr"?"Voir le dossier complet →":lang==="en"?"See full case →":lang==="es"?"Ver el caso completo →":"Ver o caso completo →"}</div>
           </div>
           <span style={{fontSize:12,color:C.muted}}>{scenario===i?"▲":"▼"}</span>
         </button>
       ))}
       {sc&&(
         <div style={{padding:"12px",borderRadius:14,background:`${sc.color}10`,border:`1.5px solid ${sc.color}44`,animation:"fadeUp 0.3s ease"}}>
-          <div style={{fontSize:10,color:C.muted,fontWeight:700,marginBottom:4}}>📁 {lang==="fr"?"DOSSIER":lang==="en"?"CASE FILE":"EXPEDIENTE"}</div>
+          <div style={{fontSize:10,color:C.muted,fontWeight:700,marginBottom:4}}>📁 {lang==="fr"?"DOSSIER":lang==="en"?"CASE FILE":lang==="es"?"EXPEDIENTE":"PROCESSO"}</div>
           <div style={{fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line",marginBottom:8,padding:"7px",borderRadius:8,background:"rgba(0,0,0,0.3)"}}>{sc.facts[lang]||sc.facts.fr}</div>
-          <div style={{fontSize:10,color:sc.color,fontWeight:700,marginBottom:4}}>⚖️ {lang==="fr"?"RÈGLES VIOLÉES":lang==="en"?"RULES VIOLATED":"REGLAS INFRINGIDAS"}</div>
+          <div style={{fontSize:10,color:sc.color,fontWeight:700,marginBottom:4}}>⚖️ {lang==="fr"?"RÈGLES VIOLÉES":lang==="en"?"RULES VIOLATED":lang==="es"?"REGLAS INFRINGIDAS":"REGRAS VIOLADAS"}</div>
           <div style={{fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line",marginBottom:8}}>{sc.rules[lang]||sc.rules.fr}</div>
           <div style={{padding:"8px 10px",borderRadius:8,background:`${sc.color}15`,border:`1px solid ${sc.color}33`,fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
             🔨 {sc.verdict[lang]||sc.verdict.fr}
@@ -141,7 +141,7 @@ function FaultAnalysisSVG({ lang }) {
   return (
     <div>
       <div style={{marginBottom:10,fontSize:10,color:C.muted,textAlign:"center"}}>
-        {lang==="fr"?"Cochez les règles violées — calculez la responsabilité":lang==="en"?"Check violated rules — calculate liability":"Marque las reglas infringidas — calcula la responsabilidad"}
+        {lang==="fr"?"Cochez les règles violées — calculez la responsabilité":lang==="en"?"Check violated rules — calculate liability":lang==="es"?"Marque las reglas infringidas — calcula la responsabilidad":"Marque as regras violadas — calcule a responsabilidade"}
       </div>
       {rules.map((r,i)=>(
         <div key={r.id} onClick={()=>toggle(r.id)} style={{
@@ -166,7 +166,7 @@ function FaultAnalysisSVG({ lang }) {
         background:`${colors[count]||C.red}15`,border:`1px solid ${colors[count]||C.red}44`}}>
         <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
           <div style={{fontSize:11,color:colors[count]||C.red,fontWeight:700}}>
-            {lang==="fr"?"Responsabilité estimée":lang==="en"?"Estimated liability":"Responsabilidad estimada"}
+            {lang==="fr"?"Responsabilité estimée":lang==="en"?"Estimated liability":lang==="es"?"Responsabilidad estimada":"Responsabilidade estimada"}
           </div>
           <div style={{fontSize:14,fontWeight:700,color:colors[count]||C.red}}>{liability}%</div>
         </div>
@@ -174,9 +174,9 @@ function FaultAnalysisSVG({ lang }) {
           <div style={{height:"100%",width:`${liability}%`,background:colors[count]||C.red,transition:"width 0.4s"}}/>
         </div>
         <div style={{fontSize:9,color:C.muted,marginTop:4}}>
-          {count===0?(lang==="fr"?"Aucune règle violée = 0% responsabilité":lang==="en"?"No rule violated = 0% liability":"Ninguna regla infringida = 0% responsabilidad")
-          :count>=3?(lang==="fr"?"Fautes multiples graves = responsabilité quasi totale":lang==="en"?"Multiple serious faults = near-total liability":"Faltas múltiples graves = responsabilidad casi total")
-          :(lang==="fr"?"Partage selon Convention Bruxelles 1910":lang==="en"?"Sharing per Brussels Convention 1910":"Reparto según Convenio Bruselas 1910")}
+          {count===0?(lang==="fr"?"Aucune règle violée = 0% responsabilité":lang==="en"?"No rule violated = 0% liability":lang==="es"?"Ninguna regla infringida = 0% responsabilidad":"Nenhuma regra violada = 0% responsabilidade")
+          :count>=3?(lang==="fr"?"Fautes multiples graves = responsabilité quasi totale":lang==="en"?"Multiple serious faults = near-total liability":lang==="es"?"Faltas múltiples graves = responsabilidad casi total":"Faltas múltiplas graves = responsabilidade quase total")
+          :(lang==="fr"?"Partage selon Convention Bruxelles 1910":lang==="en"?"Sharing per Brussels Convention 1910":lang==="es"?"Reparto según Convenio Bruselas 1910":"Repartição segundo Convenção de Bruxelas 1910")}
         </div>
       </div>
     </div>
@@ -232,7 +232,7 @@ function JurisdictionSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:zone_.color,marginBottom:6}}>{zone_.icon} {zone_.label[lang]||zone_.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{zone_.jurisdiction[lang]||zone_.jurisdiction.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"10px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche une zone maritime pour la juridiction COLREG":lang==="en"?"Tap a maritime zone for COLREG jurisdiction":"Toca una zona marítima para la jurisdicción COLREG"}
+        {lang==="fr"?"Touche une zone maritime pour la juridiction COLREG":lang==="en"?"Tap a maritime zone for COLREG jurisdiction":lang==="es"?"Toca una zona marítima para la jurisdicción COLREG":"Toque numa zona marítima para a jurisdição COLREG"}
       </div>}
     </div>
   );
@@ -577,25 +577,25 @@ export default function LessonCOLREGLegal({ lang="fr", onBack=()=>{}, onComplete
             <SL icon="📜" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📜 {lang==="fr"?"VALEUR JURIDIQUE COLREG — INTERACTIF":lang==="en"?"COLREG LEGAL VALUE — INTERACTIVE":"VALOR JURÍDICO COLREG — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📜 {lang==="fr"?"VALEUR JURIDIQUE COLREG — INTERACTIF":lang==="en"?"COLREG LEGAL VALUE — INTERACTIVE":lang==="es"?"VALOR JURÍDICO COLREG — INTERACTIVO":"VALOR JURÍDICO COLREG — INTERATIVO"}</div>
               <ColregLegalSVG lang={lang}/>
             </Card>
             <SL icon="⚖️" text={lc.p2} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"JURISPRUDENCE — 3 CAS RÉELS":lang==="en"?"JURISPRUDENCE — 3 REAL CASES":"JURISPRUDENCIA — 3 CASOS REALES"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>⚖️ {lang==="fr"?"JURISPRUDENCE — 3 CAS RÉELS":lang==="en"?"JURISPRUDENCE — 3 REAL CASES":lang==="es"?"JURISPRUDENCIA — 3 CASOS REALES":"JURISPRUDÊNCIA — 3 CASOS REAIS"}</div>
               <CollisionLiabilitySVG lang={lang}/>
             </Card>
             <SL icon="🔍" text={lc.p3} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"ANALYSEUR DE RESPONSABILITÉ COLREG":lang==="en"?"COLREG LIABILITY ANALYZER":"ANALIZADOR DE RESPONSABILIDAD COLREG"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔍 {lang==="fr"?"ANALYSEUR DE RESPONSABILITÉ COLREG":lang==="en"?"COLREG LIABILITY ANALYZER":lang==="es"?"ANALIZADOR DE RESPONSABILIDAD COLREG":"ANALISADOR DE RESPONSABILIDADE COLREG"}</div>
               <FaultAnalysisSVG lang={lang}/>
             </Card>
             <SL icon="🗺️" text={lc.p4} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"JURIDICTION PAR ZONE MARITIME":lang==="en"?"JURISDICTION BY MARITIME ZONE":"JURISDICCIÓN POR ZONA MARÍTIMA"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🗺️ {lang==="fr"?"JURIDICTION PAR ZONE MARITIME":lang==="en"?"JURISDICTION BY MARITIME ZONE":lang==="es"?"JURISDICCIÓN POR ZONA MARÍTIMA":"JURISDIÇÃO POR ZONA MARÍTIMA"}</div>
               <JurisdictionSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -614,7 +614,7 @@ export default function LessonCOLREGLegal({ lang="fr", onBack=()=>{}, onComplete
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — COLREG Juridique</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 5":lang==="en"?"Lesson 5":"Lección 5"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 5":lang==="en"?"Lesson 5":lang==="es"?"Lección 5":"Lição 5"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

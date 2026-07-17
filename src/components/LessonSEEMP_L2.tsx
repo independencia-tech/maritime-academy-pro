@@ -619,21 +619,21 @@ export default function LessonSEEMP_L2({ lang="fr", onBack=()=>{}, onComplete=()
             <SL icon="📘" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.blue2}33`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📘 {lang==="fr"?"LES 3 PARTIES - INTERACTIF":lang==="en"?"THE 3 PARTS - INTERACTIVE":"LAS 3 PARTES - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📘 {lang==="fr"?"LES 3 PARTIES - INTERACTIF":lang==="en"?"THE 3 PARTS - INTERACTIVE":lang==="es"?"LAS 3 PARTES - INTERACTIVO":"AS 3 PARTES - INTERATIVO"}</div>
               <SEEMPPartsSVG lang={lang}/>
             </Card>
 
             <SL icon="👥" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>👥 {lang==="fr"?"CHAÎNE DE RESPONSABILITÉ":lang==="en"?"CHAIN OF RESPONSIBILITY":"CADENA DE RESPONSABILIDAD"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>👥 {lang==="fr"?"CHAÎNE DE RESPONSABILITÉ":lang==="en"?"CHAIN OF RESPONSIBILITY":lang==="es"?"CADENA DE RESPONSABILIDAD":"CADEIA DE RESPONSABILIDADE"}</div>
               <RolesChain lang={lang}/>
             </Card>
 
             <SL icon="🔄" text={lc.p3} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔄 {lang==="fr"?"CYCLE D'AMÉLIORATION - INTERACTIF":lang==="en"?"IMPROVEMENT CYCLE - INTERACTIVE":"CICLO DE MEJORA - INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔄 {lang==="fr"?"CYCLE D'AMÉLIORATION - INTERACTIF":lang==="en"?"IMPROVEMENT CYCLE - INTERACTIVE":lang==="es"?"CICLO DE MEJORA - INTERACTIVO":"CICLO DE MELHORIA - INTERATIVO"}</div>
               <CycleSVG lang={lang}/>
             </Card>
 

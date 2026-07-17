@@ -114,8 +114,8 @@ function StabilitySVG({ lang }) {
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginTop:8}}>
         {[
           {label:`GM: ${gm.toFixed(1)}m`,val:gm,set:setGm,min:0,max:3,step:0.1,c:sc},
-          {label:`${lang==="fr"?"Cargaison":lang==="en"?"Cargo":"Carga"}: ${cargo}%`,val:cargo,set:setCargo,min:0,max:100,c:C.orange},
-          {label:`${lang==="fr"?"Ballast":lang==="en"?"Ballast":"Lastre"}: ${ballast}%`,val:ballast,set:setBallast,min:0,max:100,c:C.blue2},
+          {label:`${lang==="fr"?"Cargaison":lang==="en"?"Cargo":lang==="es"?"Carga":"Carga"}: ${cargo}%`,val:cargo,set:setCargo,min:0,max:100,c:C.orange},
+          {label:`${lang==="fr"?"Ballast":lang==="en"?"Ballast":lang==="es"?"Lastre":"Lastro"}: ${ballast}%`,val:ballast,set:setBallast,min:0,max:100,c:C.blue2},
         ].map((s,i)=>(
           <div key={i}>
             <div style={{fontSize:9,color:s.c,marginBottom:3,fontWeight:600,textAlign:"center"}}>{s.label}</div>
@@ -192,7 +192,7 @@ function PlimsollSVG({ lang }) {
         {/* Deck line */}
         <line x1="80" y1="30" x2="170" y2="30" stroke={C.white} strokeWidth="2"/>
         <text x="175" y="34" fontSize="7" fill={C.white}>
-          {lang==="fr"?"Pont":lang==="en"?"Deck":"Cubierta"}
+          {lang==="fr"?"Pont":lang==="en"?"Deck":lang==="es"?"Cubierta":"Convés"}
         </text>
         {/* Load lines */}
         {marks.map(m=>(
@@ -218,10 +218,10 @@ function PlimsollSVG({ lang }) {
         {/* Freeboard label */}
         <line x1="70" y1="30" x2="70" y2={marks[3].y} stroke={C.gold2} strokeWidth="1" strokeDasharray="3,2"/>
         <text x="50" y={55} fontSize="7" fill={C.gold2} textAnchor="middle">
-          {lang==="fr"?"Franc-":lang==="en"?"Free-":"Franco-"}
+          {lang==="fr"?"Franc-":lang==="en"?"Free-":lang==="es"?"Franco-":"Franco-"}
         </text>
         <text x="50" y={65} fontSize="7" fill={C.gold2} textAnchor="middle">
-          {lang==="fr"?"bord":lang==="en"?"board":"bordo"}
+          {lang==="fr"?"bord":lang==="en"?"board":lang==="es"?"bordo":"bordo"}
         </text>
         {/* Draft label */}
         <line x1="78" y1={draftY} x2="78" y2="170" stroke={C.muted} strokeWidth="1" strokeDasharray="2,2"/>
@@ -233,7 +233,7 @@ function PlimsollSVG({ lang }) {
       {/* Draft slider */}
       <div style={{marginTop:8}}>
         <div style={{fontSize:10,color:C.blue2,marginBottom:3,fontWeight:600}}>
-          {lang==="fr"?"Tirant d'eau actuel:":lang==="en"?"Current draft:":"Calado actual:"} {draft}m
+          {lang==="fr"?"Tirant d'eau actuel:":lang==="en"?"Current draft:":lang==="es"?"Calado actual:":"Calado atual:"} {draft}m
         </div>
         <input type="range" min={4} max={10} step={0.1} value={draft}
           onChange={e=>setDraft(Number(e.target.value))}
@@ -321,7 +321,7 @@ function FreeSurfaceSVG({ lang }) {
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginTop:8}}>
         <div>
           <div style={{fontSize:10,color:C.teal,marginBottom:3,fontWeight:600}}>
-            {lang==="fr"?"Remplissage citerne:":lang==="en"?"Tank filling:":"Llenado tanque:"} {fill}%
+            {lang==="fr"?"Remplissage citerne:":lang==="en"?"Tank filling:":lang==="es"?"Llenado tanque:":"Enchimento tanque:"} {fill}%
           </div>
           <input type="range" min={0} max={100} value={fill}
             onChange={e=>setFill(Number(e.target.value))}
@@ -329,7 +329,7 @@ function FreeSurfaceSVG({ lang }) {
         </div>
         <div>
           <div style={{fontSize:10,color:C.orange,marginBottom:3,fontWeight:600}}>
-            {lang==="fr"?"Gîte simulée:":lang==="en"?"Simulated heel:":"Escora:"} {heel}°
+            {lang==="fr"?"Gîte simulée:":lang==="en"?"Simulated heel:":lang==="es"?"Escora:":"Adornamento simulado:"} {heel}°
           </div>
           <input type="range" min={-20} max={20} value={heel}
             onChange={e=>setHeel(Number(e.target.value))}
@@ -416,8 +416,8 @@ function TrimSVG({ lang }) {
 
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginTop:8}}>
         {[
-          {label:`${lang==="fr"?"Tirant AV (avant):":lang==="en"?"Fwd draft:":"Calado proa:"} ${fwd}m`,val:fwd,set:setFwd,c:C.blue2},
-          {label:`${lang==="fr"?"Tirant AR (arrière):":lang==="en"?"Aft draft:":"Calado popa:"} ${aft}m`,val:aft,set:setAft,c:C.orange},
+          {label:`${lang==="fr"?"Tirant AV (avant):":lang==="en"?"Fwd draft:":lang==="es"?"Calado proa:":"Calado à vante:"} ${fwd}m`,val:fwd,set:setFwd,c:C.blue2},
+          {label:`${lang==="fr"?"Tirant AR (arrière):":lang==="en"?"Aft draft:":lang==="es"?"Calado popa:":"Calado à ré:"} ${aft}m`,val:aft,set:setAft,c:C.orange},
         ].map((s,i)=>(
           <div key={i}>
             <div style={{fontSize:9,color:s.c,marginBottom:3,fontWeight:600}}>{s.label}</div>
@@ -849,7 +849,7 @@ export default function LessonStabilite({ lang="fr", onBack=()=>{}, onComplete=(
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
                 {lang==="fr"?"Quiz — Stabilité & Plimsoll":lang==="en"?"Quiz — Stability & Plimsoll":lang==="es"?"Quiz — Estabilidad & Plimsoll":"Quiz — Estabilidade & Plimsoll"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions":lang==="en"?"questions":"preguntas"} · {lang==="fr"?"Leçon 3":lang==="en"?"Lesson 3":"Lección 3"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions":lang==="en"?"questions":lang==="es"?"preguntas":"perguntas"} · {lang==="fr"?"Leçon 3":lang==="en"?"Lesson 3":lang==="es"?"Lección 3":"Lição 3"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

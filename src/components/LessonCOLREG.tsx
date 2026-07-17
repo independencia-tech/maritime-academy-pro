@@ -151,7 +151,7 @@ function ScenarioSimulator({ lang }) {
         <text x={posB.x} y={posB.y+24} textAnchor="middle" fontSize="7" fill={sc.cB} fontWeight="700">{sc.lB}</text>
         <rect x="0" y="0" width={W} height="16" fill="rgba(0,0,0,0.6)"/>
         <text x="8" y="11" fontSize="7" fill={isDanger?C.red:C.green}>
-          {isDanger?(lang==="fr"?"⚠️ RISQUE D'ABORDAGE !":lang==="en"?"⚠️ COLLISION RISK!":"⚠️ ¡RIESGO ABORDAJE!"):`✅ ${sc.rule} · dist: ${dist}`}
+          {isDanger?(lang==="fr"?"⚠️ RISQUE D'ABORDAGE !":lang==="en"?"⚠️ COLLISION RISK!":lang==="es"?"⚠️ ¡RIESGO ABORDAJE!":"⚠️ RISCO DE ABALROAMENTO!"):`✅ ${sc.rule} · dist: ${dist}`}
         </text>
         <rect x="0" y={H-5} width={tick/90*W} height={5} fill={sc.color} opacity="0.4"/>
       </svg>

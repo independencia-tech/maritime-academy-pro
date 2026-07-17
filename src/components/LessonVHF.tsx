@@ -55,7 +55,7 @@ function VHFChannelSVG({ lang }) {
         <div>
           <div style={{fontSize:9,color:C.radio,letterSpacing:2,marginBottom:2}}>VHF MARINE</div>
           <div style={{fontSize:10,color:"rgba(0,255,136,0.6)"}}>
-            {sel_?(sel_.label[lang]||sel_.label.fr):(lang==="fr"?"Canal de veille obligatoire":lang==="en"?"Mandatory watch channel":"Canal de escucha obligatoria")}
+            {sel_?(sel_.label[lang]||sel_.label.fr):(lang==="fr"?"Canal de veille obligatoire":lang==="en"?"Mandatory watch channel":lang==="es"?"Canal de escucha obligatoria":"Canal de escuta obrigatório")}
           </div>
         </div>
       </div>
@@ -166,11 +166,11 @@ function VHFSimulatorSVG({ lang }) {
       <div style={{display:"flex",gap:8}}>
         <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0}
           style={{flex:1,padding:"10px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:step===0?C.muted:C.white,cursor:step===0?"default":"pointer",fontSize:11}}>
-          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":"Anterior"}
+          ◀ {lang==="fr"?"Précédent":lang==="en"?"Previous":lang==="es"?"Anterior":"Anterior"}
         </button>
         <button onClick={()=>setStep(s=>Math.min(c.steps.length-1,s+1))} disabled={step===c.steps.length-1}
           style={{flex:1,padding:"10px",borderRadius:10,background:step===c.steps.length-1?"rgba(255,255,255,0.06)":`${C.radio}22`,border:`1px solid ${step===c.steps.length-1?"rgba(255,255,255,0.1)":C.radio}`,color:C.white,cursor:step===c.steps.length-1?"default":"pointer",fontSize:11,fontWeight:700}}>
-          {lang==="fr"?"Suivant":lang==="en"?"Next":"Siguiente"} ▶
+          {lang==="fr"?"Suivant":lang==="en"?"Next":lang==="es"?"Siguiente":"Seguinte"} ▶
         </button>
       </div>
     </div>
@@ -233,7 +233,7 @@ function MaydayProcedureSVG({ lang }) {
       </div>
       <div style={{padding:"8px 12px",borderRadius:10,background:`${sel_.color}12`,border:`1px solid ${sel_.color}33`,marginBottom:10}}>
         <div style={{fontSize:10,color:sel_.color,fontWeight:700}}>
-          {lang==="fr"?"⚡ DÉCLENCHER QUAND :":lang==="en"?"⚡ TRIGGER WHEN:":"⚡ ACTIVAR CUANDO:"} {sel_.trigger[lang]||sel_.trigger.fr}
+          {lang==="fr"?"⚡ DÉCLENCHER QUAND :":lang==="en"?"⚡ TRIGGER WHEN:":lang==="es"?"⚡ ACTIVAR CUANDO:":"⚡ ATIVAR QUANDO:"} {sel_.trigger[lang]||sel_.trigger.fr}
         </div>
       </div>
       <div style={{padding:"12px",borderRadius:14,background:`${sel_.color}10`,border:`1.5px solid ${sel_.color}33`,animation:"fadeUp 0.3s ease"}}>
@@ -282,7 +282,7 @@ function PhoneticAlphabetSVG({ lang }) {
         ))}
       </div>
       <button onClick={()=>setQuiz(true)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:`${C.radio}22`,border:`1px solid ${C.radio}44`,color:C.radio,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
-        🎯 {lang==="fr"?"TESTER MA MÉMOIRE":lang==="en"?"TEST MY MEMORY":"PROBAR MI MEMORIA"}
+        🎯 {lang==="fr"?"TESTER MA MÉMOIRE":lang==="en"?"TEST MY MEMORY":lang==="es"?"PROBAR MI MEMORIA":"TESTAR A MINHA MEMÓRIA"}
       </button>
     </div>
   );
@@ -292,7 +292,7 @@ function PhoneticAlphabetSVG({ lang }) {
       <div style={{fontSize:40}}>{score>=4?"🏆":"📚"}</div>
       <div style={{fontFamily:"'Cinzel',serif",fontSize:18,color:C.white,margin:"8px 0"}}>{score}/{quizQs.length}</div>
       <button onClick={()=>{setDone(false);setQIdx(0);setAns(null);setScore(0);setQuiz(false);}} style={{padding:"8px 16px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",color:C.muted,cursor:"pointer",fontSize:11}}>
-        🔄 {lang==="fr"?"Recommencer":"Restart"}
+        🔄 {lang==="fr"?"Recommencer":lang==="en"?"Restart":lang==="es"?"Reiniciar":"Recomeçar"}
       </button>
     </div>
   );
@@ -302,7 +302,7 @@ function PhoneticAlphabetSVG({ lang }) {
       <div style={{background:"rgba(0,0,0,0.4)",borderRadius:12,padding:"16px",marginBottom:12,textAlign:"center",border:`1px solid ${C.radio}33`}}>
         <div style={{fontFamily:"'Courier New',monospace",fontSize:40,fontWeight:900,color:C.radio,textShadow:`0 0 20px ${C.radio}`}}>{q.q}</div>
         <div style={{fontSize:11,color:C.muted,marginTop:4}}>
-          {lang==="fr"?"Quel est le mot phonétique ?":lang==="en"?"What is the phonetic word?":"¿Cuál es la palabra fonética?"}
+          {lang==="fr"?"Quel est le mot phonétique ?":lang==="en"?"What is the phonetic word?":lang==="es"?"¿Cuál es la palabra fonética?":"Qual é a palavra fonética?"}
         </div>
       </div>
       <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:10}}>
@@ -659,25 +659,25 @@ export default function LessonVHF({ lang="fr", onBack=()=>{}, onComplete=()=>{} 
             <SL icon="📡" text={lc.p1} color={C.radio}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,background:"rgba(0,10,4,0.7)",border:`1px solid ${C.radio}22`}}>
-              <div style={{fontSize:11,color:C.radio,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SÉLECTEUR DE CANAUX VHF":lang==="en"?"VHF CHANNEL SELECTOR":"SELECTOR DE CANALES VHF"}</div>
+              <div style={{fontSize:11,color:C.radio,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SÉLECTEUR DE CANAUX VHF":lang==="en"?"VHF CHANNEL SELECTOR":lang==="es"?"SELECTOR DE CANALES VHF":"SELETOR DE CANAIS VHF"}</div>
               <VHFChannelSVG lang={lang}/>
             </Card>
             <SL icon="🎙️" text={lc.p2} color={C.blue2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,background:"rgba(0,5,20,0.7)",border:`1px solid ${C.blue2}22`}}>
-              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎙️ {lang==="fr"?"SIMULATEUR DE COMMUNICATION VHF":lang==="en"?"VHF COMMUNICATION SIMULATOR":"SIMULADOR DE COMUNICACIÓN VHF"}</div>
+              <div style={{fontSize:11,color:C.blue2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🎙️ {lang==="fr"?"SIMULATEUR DE COMMUNICATION VHF":lang==="en"?"VHF COMMUNICATION SIMULATOR":lang==="es"?"SIMULADOR DE COMUNICACIÓN VHF":"SIMULADOR DE COMUNICAÇÃO VHF"}</div>
               <VHFSimulatorSVG lang={lang}/>
             </Card>
             <SL icon="🆘" text={lc.p3} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}22`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🆘 {lang==="fr"?"PROCÉDURES DE DÉTRESSE":lang==="en"?"DISTRESS PROCEDURES":"PROCEDIMIENTOS DE SOCORRO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🆘 {lang==="fr"?"PROCÉDURES DE DÉTRESSE":lang==="en"?"DISTRESS PROCEDURES":lang==="es"?"PROCEDIMIENTOS DE SOCORRO":"PROCEDIMENTOS DE SOCORRO"}</div>
               <MaydayProcedureSVG lang={lang}/>
             </Card>
             <SL icon="🔤" text={lc.p4} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}33`}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔤 {lang==="fr"?"ALPHABET PHONÉTIQUE OTAN":lang==="en"?"NATO PHONETIC ALPHABET":"ALFABETO FONÉTICO OTAN"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🔤 {lang==="fr"?"ALPHABET PHONÉTIQUE OTAN":lang==="en"?"NATO PHONETIC ALPHABET":lang==="es"?"ALFABETO FONÉTICO OTAN":"ALFABETO FONÉTICO OTAN"}</div>
               <PhoneticAlphabetSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -696,7 +696,7 @@ export default function LessonVHF({ lang="fr", onBack=()=>{}, onComplete=()=>{} 
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Radio VHF Maritime</div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 5":lang==="en"?"Lesson 5":"Lección 5"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 5":lang==="en"?"Lesson 5":lang==="es"?"Lección 5":"Lição 5"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}

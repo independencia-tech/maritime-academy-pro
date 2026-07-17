@@ -83,7 +83,7 @@ function EmergencyFlowSVG({ lang }) {
         </div>
       ):(
         <div style={{textAlign:"center",padding:"12px",fontSize:11,color:C.muted}}>
-          {lang==="fr"?"Touche une urgence pour voir la procédure":lang==="en"?"Tap an emergency to see the procedure":"Toca una emergencia para ver el procedimiento"}
+          {lang==="fr"?"Touche une urgence pour voir la procédure":lang==="en"?"Tap an emergency to see the procedure":lang==="es"?"Toca una emergencia para ver el procedimiento":"Toque numa emergência para ver o procedimento"}
         </div>
       )}
     </div>
@@ -133,7 +133,7 @@ function DeadShipSVG({ lang }) {
         border:`1px solid ${allDone?C.green:C.red}33`,fontSize:10,
         color:allDone?C.green:C.red,fontWeight:700,textAlign:"center"}}>
         {allDone
-          ?(lang==="fr"?"✅ PROPULSION RÉTABLIE — Notifier la passerelle !":lang==="en"?"✅ PROPULSION RESTORED — Notify bridge!":"✅ PROPULSIÓN RESTABLECIDA — ¡Notificar al puente!")
+          ?(lang==="fr"?"✅ PROPULSION RÉTABLIE — Notifier la passerelle !":lang==="en"?"✅ PROPULSION RESTORED — Notify bridge!":lang==="es"?"✅ PROPULSIÓN RESTABLECIDA — ¡Notificar al puente!":"✅ PROPULSÃO RESTABELECIDA — Notificar a ponte!")
           :(lang==="fr"?`⚠️ DEAD SHIP — ${completed.length}/${steps.length} étapes`:lang==="en"?`⚠️ DEAD SHIP — ${completed.length}/${steps.length} steps`:`⚠️ DEAD SHIP — ${completed.length}/${steps.length} pasos`)}
       </div>
 
@@ -233,7 +233,7 @@ function EmergencySignalsSVG({ lang }) {
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
             <div>
               <div style={{fontSize:9,color:sel_.color,fontWeight:700,marginBottom:4}}>
-                {lang==="fr"?"SIGNAL:":lang==="en"?"SIGNAL:":"SEÑAL:"}
+                {lang==="fr"?"SIGNAL:":lang==="en"?"SIGNAL:":lang==="es"?"SEÑAL:":"SINAL:"}
               </div>
               <div style={{fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
                 {sel_.signal[lang]||sel_.signal.fr}
@@ -241,7 +241,7 @@ function EmergencySignalsSVG({ lang }) {
             </div>
             <div>
               <div style={{fontSize:9,color:C.green,fontWeight:700,marginBottom:4}}>
-                {lang==="fr"?"ACTION:":lang==="en"?"ACTION:":"ACCIÓN:"}
+                {lang==="fr"?"ACTION:":lang==="en"?"ACTION:":lang==="es"?"ACCIÓN:":"AÇÃO:"}
               </div>
               <div style={{fontSize:10,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>
                 {sel_.action[lang]||sel_.action.fr}
@@ -251,7 +251,7 @@ function EmergencySignalsSVG({ lang }) {
         </div>
       ):(
         <div style={{textAlign:"center",padding:"12px",fontSize:11,color:C.muted}}>
-          {lang==="fr"?"Touche un signal pour les détails":lang==="en"?"Tap a signal for details":"Toca una señal para detalles"}
+          {lang==="fr"?"Touche un signal pour les détails":lang==="en"?"Tap a signal for details":lang==="es"?"Toca una señal para detalles":"Toque num sinal para detalhes"}
         </div>
       )}
     </div>
@@ -289,8 +289,8 @@ function MusterListSVG({ lang }) {
         color:alarm?C.red:C.gold2,
       }}>
         {alarm
-          ?(lang==="fr"?"⚡ ALARME ACTIVE — Pointer les présents":lang==="en"?"⚡ ALARM ACTIVE — Mark present":"⚡ ALARMA ACTIVA — Marcar presentes")
-          :(lang==="fr"?"🚨 DÉCLENCHER ALARME GÉNÉRALE":lang==="en"?"🚨 TRIGGER GENERAL ALARM":"🚨 ACTIVAR ALARMA GENERAL")}
+          ?(lang==="fr"?"⚡ ALARME ACTIVE — Pointer les présents":lang==="en"?"⚡ ALARM ACTIVE — Mark present":lang==="es"?"⚡ ALARMA ACTIVA — Marcar presentes":"⚡ ALARME ATIVO — Marcar presentes")
+          :(lang==="fr"?"🚨 DÉCLENCHER ALARME GÉNÉRALE":lang==="en"?"🚨 TRIGGER GENERAL ALARM":lang==="es"?"🚨 ACTIVAR ALARMA GENERAL":"🚨 ACIONAR ALARME GERAL")}
       </button>
 
       {alarm && (
@@ -300,7 +300,7 @@ function MusterListSVG({ lang }) {
             border:`1px solid ${allMustered?C.green:C.red}33`,fontSize:10,
             color:allMustered?C.green:C.red,fontWeight:700,textAlign:"center"}}>
             {allMustered
-              ?(lang==="fr"?"✅ TOUT L'ÉQUIPAGE MACHINE COMPTÉ":lang==="en"?"✅ ALL ENGINE CREW ACCOUNTED FOR":"✅ TODA LA TRIPULACIÓN DE MÁQUINAS CONTADA")
+              ?(lang==="fr"?"✅ TOUT L'ÉQUIPAGE MACHINE COMPTÉ":lang==="en"?"✅ ALL ENGINE CREW ACCOUNTED FOR":lang==="es"?"✅ TODA LA TRIPULACIÓN DE MÁQUINAS CONTADA":"✅ TODA A TRIPULAÇÃO DE MÁQUINAS CONTADA")
               :(lang==="fr"?`⚠️ ${mustered.length}/${crew.length} présents — ${crew.length-mustered.length} manquant(s)`:lang==="en"?`⚠️ ${mustered.length}/${crew.length} present — ${crew.length-mustered.length} missing`:`⚠️ ${mustered.length}/${crew.length} presentes — ${crew.length-mustered.length} ausente(s)`)}
           </div>
 
@@ -331,7 +331,7 @@ function MusterListSVG({ lang }) {
             <div style={{marginTop:8,padding:"10px",borderRadius:10,
               background:"rgba(192,57,43,0.08)",border:`1px solid ${C.red}33`,
               fontSize:10,color:C.red,fontWeight:700,textAlign:"center"}}>
-              ⚠️ {lang==="fr"?"NE DÉCLENCHER LE CO2 QU'AVEC TOUT LE MONDE COMPTÉ":lang==="en"?"ONLY ACTIVATE CO2 WHEN ALL CREW ACCOUNTED FOR":"SOLO ACTIVAR CO2 CON TODA LA TRIPULACIÓN CONTADA"}
+              ⚠️ {lang==="fr"?"NE DÉCLENCHER LE CO2 QU'AVEC TOUT LE MONDE COMPTÉ":lang==="en"?"ONLY ACTIVATE CO2 WHEN ALL CREW ACCOUNTED FOR":lang==="es"?"SOLO ACTIVAR CO2 CON TODA LA TRIPULACIÓN CONTADA":"SÓ ATIVAR O CO2 COM TODA A TRIPULAÇÃO CONTADA"}
             </div>
           )}
         </>
@@ -680,28 +680,28 @@ export default function LessonEmergency({ lang="fr", onBack=()=>{}, onComplete=(
             <SL icon="🆘" text={lc.p1} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🆘 {lang==="fr"?"6 URGENCES — PROCÉDURES INTERACTIVES":lang==="en"?"6 EMERGENCIES — INTERACTIVE PROCEDURES":"6 EMERGENCIAS — PROCEDIMIENTOS INTERACTIVOS"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🆘 {lang==="fr"?"6 URGENCES — PROCÉDURES INTERACTIVES":lang==="en"?"6 EMERGENCIES — INTERACTIVE PROCEDURES":lang==="es"?"6 EMERGENCIAS — PROCEDIMIENTOS INTERACTIVOS":"6 EMERGÊNCIAS — PROCEDIMENTOS INTERATIVOS"}</div>
               <EmergencyFlowSVG lang={lang}/>
             </Card>
 
             <SL icon="💀" text={lc.p2} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💀 {lang==="fr"?"DEAD SHIP RECOVERY — SIMULATEUR":lang==="en"?"DEAD SHIP RECOVERY — SIMULATOR":"DEAD SHIP RECOVERY — SIMULADOR"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>💀 {lang==="fr"?"DEAD SHIP RECOVERY — SIMULATEUR":lang==="en"?"DEAD SHIP RECOVERY — SIMULATOR":lang==="es"?"DEAD SHIP RECOVERY — SIMULADOR":"DEAD SHIP RECOVERY — SIMULADOR"}</div>
               <DeadShipSVG lang={lang}/>
             </Card>
 
             <SL icon="📡" text={lc.p3} color={C.purple}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.purple}33`}}>
-              <div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SIGNAUX D'ALARME — INTERACTIF":lang==="en"?"ALARM SIGNALS — INTERACTIVE":"SEÑALES DE ALARMA — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SIGNAUX D'ALARME — INTERACTIF":lang==="en"?"ALARM SIGNALS — INTERACTIVE":lang==="es"?"SEÑALES DE ALARMA — INTERACTIVO":"SINAIS DE ALARME — INTERATIVO"}</div>
               <EmergencySignalsSVG lang={lang}/>
             </Card>
 
             <SL icon="📋" text={lc.p4} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"RÔLE D'APPEL MACHINE — SIMULATEUR":lang==="en"?"ENGINE MUSTER LIST — SIMULATOR":"CUADRO OBLIGACIONES — SIMULADOR"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📋 {lang==="fr"?"RÔLE D'APPEL MACHINE — SIMULATEUR":lang==="en"?"ENGINE MUSTER LIST — SIMULATOR":lang==="es"?"CUADRO OBLIGACIONES — SIMULADOR":"QUADRO DE OBRIGAÇÕES — SIMULADOR"}</div>
               <MusterListSVG lang={lang}/>
             </Card>
 
@@ -726,9 +726,9 @@ export default function LessonEmergency({ lang="fr", onBack=()=>{}, onComplete=(
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
-                {lang==="fr"?"Quiz Final — Emergency Procedures":lang==="en"?"Final Quiz — Emergency Procedures":"Quiz Final — Procedimientos Emergencia"}
+                {lang==="fr"?"Quiz Final — Emergency Procedures":lang==="en"?"Final Quiz — Emergency Procedures":lang==="es"?"Quiz Final — Procedimientos Emergencia":"Quiz Final — Procedimentos de Emergência"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 8 — FINALE":lang==="en"?"Lesson 8 — FINAL":"Lección 8 — FINAL"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 8 — FINALE":lang==="en"?"Lesson 8 — FINAL":lang==="es"?"Lección 8 — FINAL":"Lição 8 — FINAL"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
@@ -746,7 +746,7 @@ export default function LessonEmergency({ lang="fr", onBack=()=>{}, onComplete=(
             {/* Module complete card */}
             <Card style={{marginBottom:16,background:"linear-gradient(135deg,rgba(201,146,42,0.1),rgba(13,31,60,0.9))",border:`1px solid ${C.gold}44`,textAlign:"center"}}>
               <div style={{fontSize:11,color:C.gold2,fontFamily:"'Cinzel',serif",letterSpacing:2,marginBottom:12}}>
-                {lang==="fr"?"🎖️ MODULE MACHINE — 8 LEÇONS TERMINÉES":lang==="en"?"🎖️ ENGINE MODULE — 8 LESSONS COMPLETE":"🎖️ MÓDULO MÁQUINAS — 8 LECCIONES COMPLETADAS"}
+                {lang==="fr"?"🎖️ MODULE MACHINE — 8 LEÇONS TERMINÉES":lang==="en"?"🎖️ ENGINE MODULE — 8 LESSONS COMPLETE":lang==="es"?"🎖️ MÓDULO MÁQUINAS — 8 LECCIONES COMPLETADAS":"🎖️ MÓDULO MÁQUINAS — 8 LIÇÕES CONCLUÍDAS"}
               </div>
               {["L1 Moteur Diesel","L2 Auxiliaires","L3 Stabilité","L4 Incendie & CO2","L5 Sauvetage & EPIRB","L6 Maintenance","L7 Watchkeeping","L8 Emergency Procedures"].map((l,i)=>(
                 <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"4px 0",fontSize:11,color:C.muted,textAlign:"left"}}>

@@ -49,10 +49,10 @@ function SurvivalEquipSVG({ lang }) {
         {/* Divider */}
         <line x1="10" y1="110" x2="280" y2="110" stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="4,4"/>
         <text x="145" y="108" textAnchor="middle" fontSize="6.5" fill={C.muted}>
-          {lang==="fr"?"── Protection personnelle ──":lang==="en"?"── Personal protection ──":"── Protección personal ──"}
+          {lang==="fr"?"── Protection personnelle ──":lang==="en"?"── Personal protection ──":lang==="es"?"── Protección personal ──":"── Proteção pessoal ──"}
         </text>
         <text x="145" y="128" textAnchor="middle" fontSize="6.5" fill={C.muted}>
-          {lang==="fr"?"── Localisation & détresse ──":lang==="en"?"── Location & distress ──":"── Localización & socorro ──"}
+          {lang==="fr"?"── Localisation & détresse ──":lang==="en"?"── Location & distress ──":lang==="es"?"── Localización & socorro ──":"── Localização & socorro ──"}
         </text>
         {items.map(item=>(
           <g key={item.id} onClick={()=>setSel(sel===item.id?null:item.id)} style={{cursor:"pointer"}}>
@@ -210,16 +210,16 @@ function EPIRBSimulator({ lang }) {
             ))}
             {/* Labels */}
             <text x="145" y="10" textAnchor="middle" fontSize="7" fill={C.teal} fontWeight="700">
-              {lang==="fr"?"RADAR — Vue SART":lang==="en"?"RADAR — SART View":"RADAR — Vista SART"}
+              {lang==="fr"?"RADAR — Vue SART":lang==="en"?"RADAR — SART View":lang==="es"?"RADAR — Vista SART":"RADAR — Vista SART"}
             </text>
             {sartDots && (
               <text x="145" y="168" textAnchor="middle" fontSize="7" fill={C.green} fontWeight="700">
-                {lang==="fr"?"✅ SART détecté — 12 points sur le radar":lang==="en"?"✅ SART detected — 12 dots on radar":"✅ SART detectado — 12 puntos en radar"}
+                {lang==="fr"?"✅ SART détecté — 12 points sur le radar":lang==="en"?"✅ SART detected — 12 dots on radar":lang==="es"?"✅ SART detectado — 12 puntos en radar":"✅ SART detetado — 12 pontos no radar"}
               </text>
             )}
             {!activated && (
               <text x="145" y="168" textAnchor="middle" fontSize="7" fill={C.muted}>
-                {lang==="fr"?"Activer le SART pour voir les points":lang==="en"?"Activate SART to see dots":"Activar SART para ver puntos"}
+                {lang==="fr"?"Activer le SART pour voir les points":lang==="en"?"Activate SART to see dots":lang==="es"?"Activar SART para ver puntos":"Ativar o SART para ver os pontos"}
               </text>
             )}
           </>
@@ -265,13 +265,13 @@ function EPIRBSimulator({ lang }) {
         color:activated?C.red:C.white,
       }}>
         {activated
-          ?(lang==="fr"?"⏹ DÉSACTIVER":lang==="en"?"⏹ DEACTIVATE":"⏹ DESACTIVAR")
+          ?(lang==="fr"?"⏹ DÉSACTIVER":lang==="en"?"⏹ DEACTIVATE":lang==="es"?"⏹ DESACTIVAR":"⏹ DESATIVAR")
           :(lang==="fr"?`▶ ACTIVER ${device.toUpperCase()}`:lang==="en"?`▶ ACTIVATE ${device.toUpperCase()}`:`▶ ACTIVAR ${device.toUpperCase()}`)}
       </button>
 
       {device==="epirb" && !activated && (
         <div style={{marginTop:6,fontSize:10,color:C.muted,lineHeight:1.5,textAlign:"center"}}>
-          {lang==="fr"?"⚠️ Activer uniquement en vraie détresse — fausse alerte = amende sévère":lang==="en"?"⚠️ Activate only in real distress — false alert = severe fine":"⚠️ Activar solo en verdadera angustia — falsa alarma = multa grave"}
+          {lang==="fr"?"⚠️ Activer uniquement en vraie détresse — fausse alerte = amende sévère":lang==="en"?"⚠️ Activate only in real distress — false alert = severe fine":lang==="es"?"⚠️ Activar solo en verdadera angustia — falsa alarma = multa grave":"⚠️ Ativar apenas em verdadeira angústia — alarme falso = multa grave"}
         </div>
       )}
     </div>
@@ -313,7 +313,7 @@ function LifeboatSVG({ lang }) {
         <div style={{fontSize:13,fontWeight:700,color:sel_.color,marginBottom:6}}>{sel_.icon} {sel_.label[lang]||sel_.label.fr}</div>
         <div style={{fontSize:11,color:C.white,lineHeight:1.6,whiteSpace:"pre-line"}}>{sel_.desc[lang]||sel_.desc.fr}</div>
       </div>:<div style={{textAlign:"center",padding:"12px",fontSize:11,color:C.muted}}>
-        {lang==="fr"?"Touche une embarcation pour les détails":lang==="en"?"Tap a craft for details":"Toca una embarcación para detalles"}
+        {lang==="fr"?"Touche une embarcation pour les détails":lang==="en"?"Tap a craft for details":lang==="es"?"Toca una embarcación para detalles":"Toque numa embarcação para detalhes"}
       </div>}
     </div>
   );
@@ -459,7 +459,7 @@ function Exercise1({ lang, t }) {
         </div>
       ))}
       {showC&&<div style={{padding:"12px",borderRadius:12,background:"rgba(30,138,74,0.1)",border:`1px solid ${C.green}44`,fontSize:11,color:C.white,lineHeight:1.7,marginBottom:10}}>
-        {lang==="fr"?"✅ Q1: 406 MHz (satellite COSPAS-SARSAT)\n✅ Q2: 7 sons courts + 1 son long (SOLAS)\n✅ Q3: DERNIER (Capitaine quitte le navire en dernier — Code ISM + SOLAS)":lang==="en"?"✅ Q1: 406 MHz (COSPAS-SARSAT satellite)\n✅ Q2: 7 short blasts + 1 long (SOLAS)\n✅ Q3: LAST (Captain leaves the vessel last — ISM Code + SOLAS)":"✅ Q1: 406 MHz · Q2: 7 · Q3: último/last"}
+        {lang==="fr"?"✅ Q1: 406 MHz (satellite COSPAS-SARSAT)\n✅ Q2: 7 sons courts + 1 son long (SOLAS)\n✅ Q3: DERNIER (Capitaine quitte le navire en dernier — Code ISM + SOLAS)":lang==="en"?"✅ Q1: 406 MHz (COSPAS-SARSAT satellite)\n✅ Q2: 7 short blasts + 1 long (SOLAS)\n✅ Q3: LAST (Captain leaves the vessel last — ISM Code + SOLAS)":lang==="es"?"✅ Q1: 406 MHz · Q2: 7 · Q3: último/last":"✅ Q1: 406 MHz · Q2: 7 · Q3: último"}
       </div>}
       <button onClick={()=>setShowC(v=>!v)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:showC?"rgba(30,138,74,0.2)":"rgba(201,146,42,0.15)",border:`1px solid ${showC?C.green:C.gold}44`,color:showC?C.green:C.gold2,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif"}}>
         {showC?t.hideCorr:t.showCorr}
@@ -714,25 +714,25 @@ export default function LessonSauvetage({ lang="fr", onBack=()=>{}, onComplete=(
             <SL icon="🦺" text={lc.p1} color={C.orange}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.orange}33`}}>
-              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🦺 {lang==="fr"?"ÉQUIPEMENTS SURVIE — INTERACTIF":lang==="en"?"SURVIVAL EQUIPMENT — INTERACTIVE":"EQUIPOS SUPERVIVENCIA — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.orange,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🦺 {lang==="fr"?"ÉQUIPEMENTS SURVIE — INTERACTIF":lang==="en"?"SURVIVAL EQUIPMENT — INTERACTIVE":lang==="es"?"EQUIPOS SUPERVIVENCIA — INTERACTIVO":"EQUIPAMENTOS DE SOBREVIVÊNCIA — INTERATIVO"}</div>
               <SurvivalEquipSVG lang={lang}/>
             </Card>
             <SL icon="📡" text={lc.p2} color={C.gold2}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold2}33`,background:"linear-gradient(135deg,rgba(232,185,79,0.05),rgba(13,31,60,0.8))"}}>
-              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SIMULATEUR EPIRB + SART":lang==="en"?"EPIRB + SART SIMULATOR":"SIMULADOR EPIRB + SART"}</div>
+              <div style={{fontSize:11,color:C.gold2,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📡 {lang==="fr"?"SIMULATEUR EPIRB + SART":lang==="en"?"EPIRB + SART SIMULATOR":lang==="es"?"SIMULADOR EPIRB + SART":"SIMULADOR EPIRB + SART"}</div>
               <EPIRBSimulator lang={lang}/>
             </Card>
             <SL icon="🚤" text={lc.p3} color={C.teal}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.teal}33`}}>
-              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚤 {lang==="fr"?"EMBARCATIONS — INTERACTIF":lang==="en"?"SURVIVAL CRAFT — INTERACTIVE":"EMBARCACIONES — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚤 {lang==="fr"?"EMBARCATIONS — INTERACTIF":lang==="en"?"SURVIVAL CRAFT — INTERACTIVE":lang==="es"?"EMBARCACIONES — INTERACTIVO":"EMBARCAÇÕES — INTERATIVO"}</div>
               <LifeboatSVG lang={lang}/>
             </Card>
             <SL icon="🚨" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:12}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`}}>
-              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚨 {lang==="fr"?"PROCÉDURE ABANDON — INTERACTIF":lang==="en"?"ABANDON PROCEDURE — INTERACTIVE":"PROCEDIMIENTO ABANDONO — INTERACTIVO"}</div>
+              <div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🚨 {lang==="fr"?"PROCÉDURE ABANDON — INTERACTIF":lang==="en"?"ABANDON PROCEDURE — INTERACTIVE":lang==="es"?"PROCEDIMIENTO ABANDONO — INTERACTIVO":"PROCEDIMENTO DE ABANDONO — INTERATIVO"}</div>
               <AbandonShipSVG lang={lang}/>
             </Card>
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
@@ -753,7 +753,7 @@ export default function LessonSauvetage({ lang="fr", onBack=()=>{}, onComplete=(
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
                 {lang==="fr"?"Quiz — Sauvetage & EPIRB":lang==="en"?"Quiz — Survival & EPIRB":lang==="es"?"Quiz — Salvamento & EPIRB":"Quiz — Salvamento & EPIRB"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 5":lang==="en"?"Lesson 5":"Lección 5"}</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 5":lang==="en"?"Lesson 5":lang==="es"?"Lección 5":"Lição 5"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
