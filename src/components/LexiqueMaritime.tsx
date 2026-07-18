@@ -74,7 +74,7 @@ interface LexiconEntry {
   reviewPriority?: number;            // Futur système de révision espacée
 }
 
-const LEXICON: LexiconEntry[] = [
+export const LEXICON: LexiconEntry[] = [
   // ── ANATOMIE ──────────────────────────────────────────────
   {en:"Bow",fr:"Proue / Étrave",es:"Proa",pt:"Proa",cat:"anatomie",
    def_fr:"Partie avant du navire qui fend l'eau. L'étrave est la pièce structurale d'extrémité avant.",

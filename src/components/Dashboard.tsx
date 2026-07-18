@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
 import AdminPanel, { UpgradeModal, PremiumManager } from "./AdminPanel";
+import { LEXICON } from "./LexiqueMaritime";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -495,7 +496,7 @@ export const MODULES = {
    { id:"t0", icon:"📖", color:C.blue2, access:"free",
   freeLessons:0, totalLessons:0,
   title:{fr:"Lexique Maritime",en:"Maritime Lexicon",es:"Léxico Marítimo",pt:"Léxico Marítimo"},
-  desc:{fr:"138+ termes FR/EN/ES/PT · Dictionnaire · Flashcards · Quiz",en:"138+ terms FR/EN/ES/PT · Dictionary · Flashcards · Quiz",es:"138+ términos FR/EN/ES/PT · Diccionario · Flashcards · Quiz",pt:"138+ termos FR/EN/ES/PT · Dicionário · Flashcards · Quiz"},
+  desc:{fr:`${LEXICON.length}+ termes FR/EN/ES/PT · Dictionnaire · Flashcards · Quiz`,en:`${LEXICON.length}+ terms FR/EN/ES/PT · Dictionary · Flashcards · Quiz`,es:`${LEXICON.length}+ términos FR/EN/ES/PT · Diccionario · Flashcards · Quiz`,pt:`${LEXICON.length}+ termos FR/EN/ES/PT · Dicionário · Flashcards · Quiz`},
   xp:100, status:"available", progress:0 },
     { id:"t1", icon:"🤖", color:C.purple, access:"premium_plus",
       freeLessons:0, totalLessons:0, isAI:true,
