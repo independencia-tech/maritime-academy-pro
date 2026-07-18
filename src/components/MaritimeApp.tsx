@@ -96,6 +96,13 @@ const LessonSEA_L2 = lazy(() => import("./LessonSEA_L2"));
 const LessonSEA_L3 = lazy(() => import("./LessonSEA_L3"));
 const LessonSEA_L4 = lazy(() => import("./LessonSEA_L4"));
 const LessonSEA_L5 = lazy(() => import("./LessonSEA_L5"));
+const LessonMETEO_L1 = lazy(() => import("./LessonMETEO_L1"));
+const LessonMETEO_L2 = lazy(() => import("./LessonMETEO_L2"));
+const LessonMETEO_L3 = lazy(() => import("./LessonMETEO_L3"));
+const LessonMETEO_L4 = lazy(() => import("./LessonMETEO_L4"));
+const LessonMETEO_L5 = lazy(() => import("./LessonMETEO_L5"));
+const LessonMETEO_L6 = lazy(() => import("./LessonMETEO_L6"));
+const LessonMETEO_L7 = lazy(() => import("./LessonMETEO_L7"));
 const LessonShipCareer_L1 = lazy(() => import("./LessonShipCareer_L1"));
 const LessonShipCareer_L2 = lazy(() => import("./LessonShipCareer_L2"));
 const LessonShipCareer_L3 = lazy(() => import("./LessonShipCareer_L3"));
@@ -1511,6 +1518,53 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
     </div>
   );
 }
+function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d7");
+  const title = mod?.title?.[lang] || mod?.title?.fr || "Marine Meteorology";
+  const labels:any = {
+    fr:{header:"Leçons", available:"Disponible", soon:"Bientôt", done:"Terminé ✓"},
+    en:{header:"Lessons", available:"Available", soon:"Coming soon", done:"Completed ✓"},
+    es:{header:"Lecciones", available:"Disponible", soon:"Próximamente", done:"Completado ✓"},
+    pt:{header:"Lições", available:"Disponível", soon:"Em breve", done:"Concluído ✓"},
+  };
+  const L = labels[lang] || labels.fr;
+  const lessons = mod?.lessons || [];
+  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {lessons.map((l:any, idx:number)=>{
+            const isPlayable = playable.has(l.id);
+            const isDone = completedLessons.includes(`d7-${l.id}`);
+            // access tier not yet decided (Billing policy pending) — don't assume free/premium, show no tag
+            const tag = l.access==="free" ? "FREE" : l.access==="premium_plus" ? "P+" : l.access==="premium" ? "PRO" : null;
+            const tagColor = l.access==="free" ? "#1e8a4a" : l.access==="premium_plus" ? "#9b59b6" : "#c9922a";
+            return (
+              <button key={l.id} disabled={!isPlayable} onClick={()=>onPick(l.id)} style={{
+                display:"flex",alignItems:"center",gap:12,padding:"14px",
+                background:isPlayable?"rgba(13,31,60,0.85)":"rgba(13,31,60,0.4)",
+                border:`1px solid ${isPlayable?"#0a8a6c44":"rgba(255,255,255,0.08)"}`,
+                borderRadius:14,cursor:isPlayable?"pointer":"not-allowed",
+                color:"#f0f4ff",textAlign:"left",opacity:isPlayable?1:0.6,
+              }}>
+                <div style={{width:38,height:38,borderRadius:10,background:"rgba(10,138,108,0.18)",border:"1px solid #0a8a6c44",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,flexShrink:0,color:"#0a8a6c"}}>{idx+1}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{l.title?.[lang] || l.title?.fr}</div>
+                  <div style={{fontSize:10,color:"rgba(240,244,255,0.5)"}}>{isDone ? L.done : (isPlayable ? L.available : L.soon)}</div>
+                </div>
+                {tag && <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 function ShipCareerLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d5");
@@ -2417,6 +2471,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
               else if (m?.id === "d3") setPage("sb_lessons");
               else if (m?.id === "d4") setPage("smcp_lessons");
               else if (m?.id === "d6") setPage("seamanship_lessons");
+              else if (m?.id === "d7") setPage("meteorology_lessons");
             else if (m?.id === "d5") setPage("shipcareer_lessons");
               else if (m?.id === "s1") setPage("s1_lessons");
          else if (m?.id === "s2") setPage("s2_lessons");
@@ -2463,6 +2518,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
             else if (m?.id === "d3") setPage("sb_lessons");
             else if (m?.id === "d4") setPage("smcp_lessons");
             else if (m?.id === "d6") setPage("seamanship_lessons");
+            else if (m?.id === "d7") setPage("meteorology_lessons");
           else if (m?.id === "d5") setPage("shipcareer_lessons");
           else if (m?.id === "s1") setPage("s1_lessons");
         else if (m?.id === "s2") setPage("s2_lessons");
@@ -2556,6 +2612,22 @@ else if (m?.id === "e7") setPage("e7_lessons");
   else if (lid === "l3") setPage("lesson_sea_l3");
   else if (lid === "l4") setPage("lesson_sea_l4");
   else if (lid === "l5") setPage("lesson_sea_l5");
+}}
+          />
+)}
+      {page === "meteorology_lessons" && (
+        <MeteorologyLessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          onPick={(lid:string) => {
+  if (lid === "l1") setPage("lesson_meteo_l1");
+  else if (lid === "l2") setPage("lesson_meteo_l2");
+  else if (lid === "l3") setPage("lesson_meteo_l3");
+  else if (lid === "l4") setPage("lesson_meteo_l4");
+  else if (lid === "l5") setPage("lesson_meteo_l5");
+  else if (lid === "l6") setPage("lesson_meteo_l6");
+  else if (lid === "l7") setPage("lesson_meteo_l7");
 }}
           />
 )}
@@ -3293,6 +3365,55 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
+  />
+)}
+{page === "lesson_meteo_l1" && (
+  <LessonMETEO_L1
+    lang={lang}
+    onBack={() => setPage("meteorology_lessons")}
+    onComplete={() => { markLessonCompleted("d7-l1"); setPage("meteorology_lessons"); }}
+  />
+)}
+{page === "lesson_meteo_l2" && (
+  <LessonMETEO_L2
+    lang={lang}
+    onBack={() => setPage("meteorology_lessons")}
+    onComplete={() => { markLessonCompleted("d7-l2"); setPage("meteorology_lessons"); }}
+  />
+)}
+{page === "lesson_meteo_l3" && (
+  <LessonMETEO_L3
+    lang={lang}
+    onBack={() => setPage("meteorology_lessons")}
+    onComplete={() => { markLessonCompleted("d7-l3"); setPage("meteorology_lessons"); }}
+  />
+)}
+{page === "lesson_meteo_l4" && (
+  <LessonMETEO_L4
+    lang={lang}
+    onBack={() => setPage("meteorology_lessons")}
+    onComplete={() => { markLessonCompleted("d7-l4"); setPage("meteorology_lessons"); }}
+  />
+)}
+{page === "lesson_meteo_l5" && (
+  <LessonMETEO_L5
+    lang={lang}
+    onBack={() => setPage("meteorology_lessons")}
+    onComplete={() => { markLessonCompleted("d7-l5"); setPage("meteorology_lessons"); }}
+  />
+)}
+{page === "lesson_meteo_l6" && (
+  <LessonMETEO_L6
+    lang={lang}
+    onBack={() => setPage("meteorology_lessons")}
+    onComplete={() => { markLessonCompleted("d7-l6"); setPage("meteorology_lessons"); }}
+  />
+)}
+{page === "lesson_meteo_l7" && (
+  <LessonMETEO_L7
+    lang={lang}
+    onBack={() => setPage("meteorology_lessons")}
+    onComplete={() => { markLessonCompleted("d7-l7"); setPage("meteorology_lessons"); }}
   />
 )}
    {page === "lesson_shipcareer_l1" && (

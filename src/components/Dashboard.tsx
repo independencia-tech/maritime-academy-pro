@@ -280,6 +280,21 @@ export const MODULES = {
         {id:"l5",title:{fr:"Stability & Buoyancy",en:"Stability & Buoyancy",es:"Stability & Buoyancy",pt:"Stability & Buoyancy"},access:"premium",status:"locked"},
       ]
     },
+    { id:"d7", icon:"🌦️", color:C.teal, access:"tbd",
+      freeLessons:0, totalLessons:7,
+      title:{fr:"Météorologie marine",en:"Marine Meteorology",es:"Meteorología Marina",pt:"Meteorologia Marítima"},
+      desc:{fr:"Observation, instruments, systèmes, phénomènes dangereux, routage",en:"Observation, instruments, systems, hazards, weather routing",es:"Observación, instrumentos, sistemas, fenómenos peligrosos, ruteo",pt:"Observação, instrumentos, sistemas, fenómenos perigosos, roteamento"},
+      xp:350, status:"available", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"Fondamentaux de la météorologie marine",en:"Fundamentals of Marine Meteorology",es:"Fundamentos de meteorología marina",pt:"Fundamentos de meteorologia marítima"},access:"tbd",status:"available"},
+        {id:"l2",title:{fr:"Nuages, visibilité et observation météo",en:"Clouds, Visibility and Weather Observation",es:"Nubes, visibilidad y observación meteorológica",pt:"Nuvens, visibilidade e observação meteorológica"},access:"tbd",status:"available"},
+        {id:"l3",title:{fr:"Instruments météorologiques et observations à bord",en:"Meteorological Instruments and Shipboard Observations",es:"Instrumentos meteorológicos y observaciones a bordo",pt:"Instrumentos meteorológicos e observações a bordo"},access:"tbd",status:"available"},
+        {id:"l4",title:{fr:"Systèmes de pression, masses d'air et fronts",en:"Pressure Systems, Air Masses and Fronts",es:"Sistemas de presión, masas de aire y frentes",pt:"Sistemas de pressão, massas de ar e frentes"},access:"tbd",status:"available"},
+        {id:"l5",title:{fr:"Phénomènes tropicaux et dangereux",en:"Tropical and Dangerous Phenomena",es:"Fenómenos tropicales y peligrosos",pt:"Fenómenos tropicais e perigosos"},access:"tbd",status:"available"},
+        {id:"l6",title:{fr:"Cartes météo, prévisions et informations maritimes",en:"Weather Charts, Forecasts and Maritime Information",es:"Cartas meteorológicas, previsiones e información marítima",pt:"Cartas meteorológicas, previsões e informação marítima"},access:"tbd",status:"available"},
+        {id:"l7",title:{fr:"Routage météo et décisions par gros temps",en:"Weather Routing and Heavy Weather Decision Making",es:"Ruteo meteorológico y decisiones en mal tiempo",pt:"Rota meteorológica e decisões em mau tempo"},access:"tbd",status:"available"},
+      ]
+    },
   ],
   engine:[
     { id:"e1", icon:"⚙️", color:C.orange, access:"free",
@@ -562,7 +577,8 @@ function PlanBadge({access,t,small=false}) {
     premium:  {color:C.premium, bg:"rgba(201,146,42,0.15)",  label:t.premiumTag,     icon:"⭐"},
     premium_plus:{color:C.purple,bg:"rgba(142,68,173,0.15)", label:t.premiumPlusTag, icon:"👑"},
   };
-  const c=cfg[access]||cfg.free;
+  const c=cfg[access];
+  if(!c) return null; // access tier not yet decided (e.g. "tbd") — don't assume a tier
   return (
     <div style={{
       display:"inline-flex",alignItems:"center",gap:3,
