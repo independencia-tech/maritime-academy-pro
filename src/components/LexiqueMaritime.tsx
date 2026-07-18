@@ -674,6 +674,18 @@ const LEXICON: LexiconEntry[] = [
    def_es:"Operación de embarque o desembarco de un práctico marítimo, regida por procedimientos estrictos de seguridad (escala de práctico).",
    def_pt:"Operação de embarque ou desembarque de um prático marítimo, regida por procedimentos rigorosos de segurança (escada de prático).",
    difficulty:"basic",relatedTerms:[]},
+  {en:"MRCC (Maritime Rescue Co-ordination Centre)",fr:"MRCC (Centre de coordination de sauvetage maritime)",es:"MRCC (Centro de coordinación de salvamento marítimo)",pt:"MRCC (Centro de coordenação de salvamento marítimo)",cat:"smcp",
+   def_fr:"Centre terrestre chargé de coordonner les opérations de recherche et de sauvetage en mer.",
+   def_en:"Shore-based centre responsible for coordinating search and rescue operations at sea.",
+   def_es:"Centro en tierra encargado de coordinar las operaciones de búsqueda y salvamento en el mar.",
+   def_pt:"Centro em terra responsável por coordenar as operações de busca e salvamento no mar.",
+   difficulty:"basic",relatedTerms:["VTS"]},
+  {en:"TSS (Traffic Separation Scheme)",fr:"TSS (Dispositif de séparation du trafic)",es:"TSS (Dispositivo de separación del tráfico)",pt:"TSS (Dispositivo de separação do tráfego)",cat:"smcp",
+   def_fr:"Système organisant la circulation des navires dans des zones à fort trafic, séparant les voies de navigation par direction.",
+   def_en:"System organizing ship traffic in high-density areas, separating navigation lanes by direction.",
+   def_es:"Sistema que organiza el tráfico de buques en zonas de alta densidad, separando las vías de navegación por dirección.",
+   def_pt:"Sistema que organiza o tráfego de navios em zonas de alta densidade, separando as vias de navegação por direção.",
+   difficulty:"basic",relatedTerms:["VTS"]},
 ];
 
 // Sort alphabetically by English term
