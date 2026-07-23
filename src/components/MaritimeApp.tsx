@@ -12,6 +12,8 @@ import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
+import { VESSEL_TYPE_REGISTRY } from "@/core/vesselTypeRegistry";
+import { SHIPS_LIBRARY_INDEX } from "@/core/shipsLibraryIndex";
 
 
 // ── LAZY-LOADED LESSON COMPONENTS (code-split, only downloaded when opened) ──
@@ -1132,13 +1134,34 @@ function ModulesListPage({ lang, onBack, onStart }:{lang:string;onBack:()=>void;
 
 function ShipsPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
   const t = NAV_T[lang] || NAV_T.fr;
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const entries = Object.values(VESSEL_TYPE_REGISTRY).filter((v:any) => v.id !== "all" && SHIPS_LIBRARY_INDEX[v.id]);
+
+  if (selected && SHIPS_LIBRARY_INDEX[selected]) {
+    const ShipCard = SHIPS_LIBRARY_INDEX[selected] as any;
+    return (
+      <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
+        <TopBar onBack={() => setSelected(null)} title={t.ships} backLabel={t.back}/>
+        <ShipCard lang={lang}/>
+      </div>
+    );
+  }
+
   return (
-    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={t.ships} backLabel={t.back}/>
-      <div style={{padding:"60px 24px",textAlign:"center",maxWidth:400,margin:"0 auto"}}>
-        <div style={{fontSize:72,marginBottom:16}}>🚢</div>
-        <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,marginBottom:8}}>{t.ships}</div>
-        <div style={{fontSize:13,color:"rgba(240,244,255,0.5)"}}>{t.shipsSoon}</div>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:10}}>
+        {entries.map((v:any)=>(
+          <button key={v.id} onClick={()=>setSelected(v.id)} style={{
+            display:"flex",alignItems:"center",gap:12,padding:"14px",
+            background:"rgba(13,31,60,0.8)",border:"1px solid rgba(77,166,255,0.27)",
+            borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
+          }}>
+            <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.15)",border:"1px solid rgba(77,166,255,0.27)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>🚢</div>
+            <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{v.label?.[lang] || v.label?.fr}</div>
+          </button>
+        ))}
       </div>
     </div>
   );
