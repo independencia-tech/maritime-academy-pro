@@ -28,35 +28,30 @@ const T = {
     deptDeckSub:"Capitaine, officier, matelot...",
     deptEngine:"⚙️ MACHINE — Énergie & Propulsion",
     deptEngineSub:"Chef mécanicien, officier machine, oiler...",
-    // Pont — Qui es-tu
+    // Rang actuel
     s1Deck:"⚓ Qui es-tu ? (Pont)",
-    qFutureDeck:"⛵ Futur marin (pont)",
-    qCadetDeck:"🎓 Cadet navigation",
-    qAB:"⚓ Matelot / AB",
-    qOfficerDeck:"🧭 Officier de navigation",
-    qCaptain:"👑 Capitaine / Master",
-    // Machine — Qui es-tu
     s1Engine:"⚙️ Qui es-tu ? (Machine)",
-    qFutureEngine:"🔧 Futur mécanicien",
-    qCadetEngine:"🎓 Cadet machine",
-    qOiler:"🛢️ Graisseur / Oiler",
-    qJuniorEng:"⚙️ Mécanicien junior",
-    qOfficerEngine:"🛠️ Officier mécanicien (OICM)",
-    qChiefEng:"👑 Chef mécanicien",
-    // Objectif Pont
-    s2Deck:"🎯 Ton objectif (Pont) ?",
-    qNavigation:"🧭 Maîtriser la navigation",
-    qSTCW:"🛟 Certifications STCW",
-    qLaw:"⚖️ Droit maritime",
-    qCareerDeck:"🚢 Progresser — pont",
-    qSafety:"🛡️ Sécurité et survie en mer",
-    // Objectif Machine
-    s2Engine:"🎯 Ton objectif (Machine) ?",
-    qMoteur:"⚙️ Maîtriser le moteur principal",
-    qAuxiliaries:"🔧 Systèmes auxiliaires",
-    qMARPOL:"🌊 MARPOL machine",
-    qCareerEngine:"🛠️ Progresser — machine",
-    qEnergy:"⚡ SEEMP / Efficacité énergétique",
+    // Rang visé
+    s1bDeck:"🎯 Ton rang visé ? (Pont)",
+    s1bEngine:"🎯 Ton rang visé ? (Machine)",
+    // Libellés des rangs — source unique : rankRegistry.ts
+    rankLabels:{
+      deck_cadet:"🎓 Cadet Pont",
+      os:"⚓ Matelot Léger (OS)",
+      ab:"🪢 Matelot Qualifié (AB)",
+      bosun:"🛠️ Maître d'Équipage (Bosun)",
+      oow:"🧭 Officier Chef de Quart (OOW)",
+      chief_officer:"🎖️ Second Capitaine",
+      master:"👑 Capitaine",
+      engine_cadet:"🎓 Cadet Machine",
+      wiper:"🧹 Nettoyeur (Wiper)",
+      motorman:"🔩 Motoriste",
+      oiler:"🛢️ Graisseur (Oiler)",
+      fourth_engineer:"🔧 Quatrième Mécanicien",
+      third_engineer:"⚙️ Troisième Mécanicien",
+      second_engineer:"🛠️ Second Mécanicien",
+      chief_engineer:"👑 Chef Mécanicien",
+    },
     // Niveau
     s3:"📊 Ton niveau actuel ?",
     qZero:"🌱 Débutant total",
@@ -70,18 +65,13 @@ const T = {
     shipContainer:"🚢 Porte-conteneurs",
     shipTanker:"🛢️ Pétrolier",
     shipCruise:"🛳️ Croisière",
-    shipOffshore:"🏗️ Offshore OSV",
     shipYacht:"⛵ Yacht / Voilier",
-    shipSAR:"🆘 Sauvetage SAR",
     // Ships more
     shipChemical:"⚗️ Chimiquier",
     shipGas:"💨 Gazier LNG",
-    shipCar:"🚗 Roulier",
     shipResearch:"🔬 Navire scientifique",
     shipTug:"⚓ Remorqueur",
     shipFishing:"🎣 Pêche hauturière",
-    shipPWC:"🏄 Jet-ski / Surf sauvetage",
-    shipNavy:"🏛️ Marine nationale",
     // Durée
     s5:"⏱️ Durée d'étude quotidienne ?",
     dur15:"⚡ 15 min / jour",
@@ -95,9 +85,6 @@ const T = {
     // Pays
     s7:"🌍 Ton pays de résidence ?",
     s7ph:"Ex: Cameroun, France, Maroc...",
-    // Rappel
-    s8:"🔔 Rappel de formation par email ?",
-    qYes:"✅ Oui",qNo:"❌ Non",
     // Photo
     s9:"📸 Ta photo (optionnel)",
     s9cta:"Ajouter ma photo",
@@ -124,30 +111,26 @@ const T = {
     deptEngine:"⚙️ ENGINE — Energy & Propulsion",
     deptEngineSub:"Chief engineer, engineer officer, oiler...",
     s1Deck:"⚓ Who are you? (Deck)",
-    qFutureDeck:"⛵ Future deck sailor",
-    qCadetDeck:"🎓 Navigation cadet",
-    qAB:"⚓ Sailor / AB",
-    qOfficerDeck:"🧭 Navigation officer",
-    qCaptain:"👑 Captain / Master",
     s1Engine:"⚙️ Who are you? (Engine)",
-    qFutureEngine:"🔧 Future engineer",
-    qCadetEngine:"🎓 Engine cadet",
-    qOiler:"🛢️ Oiler / Greaser",
-    qJuniorEng:"⚙️ Junior engineer",
-    qOfficerEngine:"🛠️ Engineer officer (EOOW)",
-    qChiefEng:"👑 Chief engineer",
-    s2Deck:"🎯 Your goal (Deck)?",
-    qNavigation:"🧭 Master navigation",
-    qSTCW:"🛟 STCW certifications",
-    qLaw:"⚖️ Maritime law",
-    qCareerDeck:"🚢 Advance — deck",
-    qSafety:"🛡️ Safety & survival at sea",
-    s2Engine:"🎯 Your goal (Engine)?",
-    qMoteur:"⚙️ Master the main engine",
-    qAuxiliaries:"🔧 Auxiliary systems",
-    qMARPOL:"🌊 MARPOL engine room",
-    qCareerEngine:"🛠️ Advance — engine",
-    qEnergy:"⚡ SEEMP / Energy efficiency",
+    s1bDeck:"🎯 Your target rank? (Deck)",
+    s1bEngine:"🎯 Your target rank? (Engine)",
+    rankLabels:{
+      deck_cadet:"🎓 Deck Cadet",
+      os:"⚓ Ordinary Seaman (OS)",
+      ab:"🪢 Able Seaman (AB)",
+      bosun:"🛠️ Bosun",
+      oow:"🧭 Officer of the Watch (OOW)",
+      chief_officer:"🎖️ Chief Officer",
+      master:"👑 Master",
+      engine_cadet:"🎓 Engine Cadet",
+      wiper:"🧹 Wiper",
+      motorman:"🔩 Motorman",
+      oiler:"🛢️ Oiler",
+      fourth_engineer:"🔧 Fourth Engineer",
+      third_engineer:"⚙️ Third Engineer",
+      second_engineer:"🛠️ Second Engineer",
+      chief_engineer:"👑 Chief Engineer",
+    },
     s3:"📊 Your current level?",
     qZero:"🌱 Total beginner",
     qBasic:"📄 Basic maritime",
@@ -155,12 +138,11 @@ const T = {
     s4:"🚢 Your dream ship?",
     s4more:"See all ships →",s4less:"← Reduce",
     shipContainer:"🚢 Container ship",shipTanker:"🛢️ Oil tanker",
-    shipCruise:"🛳️ Cruise ship",shipOffshore:"🏗️ Offshore OSV",
-    shipYacht:"⛵ Yacht / Sailboat",shipSAR:"🆘 SAR Rescue",
+    shipCruise:"🛳️ Cruise ship",
+    shipYacht:"⛵ Yacht / Sailboat",
     shipChemical:"⚗️ Chemical tanker",shipGas:"💨 LNG Gas carrier",
-    shipCar:"🚗 Car carrier",shipResearch:"🔬 Research vessel",
+    shipResearch:"🔬 Research vessel",
     shipTug:"⚓ Tugboat",shipFishing:"🎣 Fishing vessel",
-    shipPWC:"🏄 Jet-ski / Surf rescue",shipNavy:"🏛️ Navy",
     s5:"⏱️ Daily study duration?",
     dur15:"⚡ 15 min / day",dur30:"📚 30 min / day",
     dur60:"🎯 1 hour / day",durFree:"🌊 At my own pace",
@@ -168,8 +150,6 @@ const T = {
     qMorning:"🌅 Morning",qAfternoon:"☀️ Afternoon",
     qEvening:"🌆 Evening",qNight:"🌙 Night",
     s7:"🌍 Country of residence?",s7ph:"E.g: Nigeria, UK, Philippines...",
-    s8:"🔔 Training reminder by email?",
-    qYes:"✅ Yes",qNo:"❌ No",
     s9:"📸 Your photo (optional)",
     s9cta:"Add my photo",s9camera:"Camera",s9gallery:"Gallery",
     s9note:"Confidential · For your personalized status card 🎁 · Max 5 MB",
@@ -190,47 +170,41 @@ const T = {
     deptEngine:"⚙️ MÁQUINAS — Energía y Propulsión",
     deptEngineSub:"Jefe de máquinas, oficial, engrasador...",
     s1Deck:"⚓ ¿Quién eres? (Puente)",
-    qFutureDeck:"⛵ Futuro marino (puente)",
-    qCadetDeck:"🎓 Cadete navegación",
-    qAB:"⚓ Marinero / AB",
-    qOfficerDeck:"🧭 Oficial de navegación",
-    qCaptain:"👑 Capitán / Master",
     s1Engine:"⚙️ ¿Quién eres? (Máquinas)",
-    qFutureEngine:"🔧 Futuro mecánico",
-    qCadetEngine:"🎓 Cadete máquinas",
-    qOiler:"🛢️ Engrasador / Oiler",
-    qJuniorEng:"⚙️ Mecánico junior",
-    qOfficerEngine:"🛠️ Oficial de máquinas (OMCV)",
-    qChiefEng:"👑 Jefe de máquinas",
-    s2Deck:"🎯 ¿Tu objetivo (Puente)?",
-    qNavigation:"🧭 Dominar la navegación",
-    qSTCW:"🛟 Certificaciones STCW",
-    qLaw:"⚖️ Derecho marítimo",
-    qCareerDeck:"🚢 Avanzar — puente",
-    qSafety:"🛡️ Seguridad y supervivencia",
-    s2Engine:"🎯 ¿Tu objetivo (Máquinas)?",
-    qMoteur:"⚙️ Dominar el motor principal",
-    qAuxiliaries:"🔧 Sistemas auxiliares",
-    qMARPOL:"🌊 MARPOL sala de máquinas",
-    qCareerEngine:"🛠️ Avanzar — máquinas",
-    qEnergy:"⚡ SEEMP / Eficiencia energética",
+    s1bDeck:"🎯 ¿Tu rango objetivo? (Puente)",
+    s1bEngine:"🎯 ¿Tu rango objetivo? (Máquinas)",
+    rankLabels:{
+      deck_cadet:"🎓 Cadete de Puente",
+      os:"⚓ Marinero Ordinario (OS)",
+      ab:"🪢 Marinero Calificado (AB)",
+      bosun:"🛠️ Contramaestre (Bosun)",
+      oow:"🧭 Oficial de Guardia (OOW)",
+      chief_officer:"🎖️ Primer Oficial",
+      master:"👑 Capitán",
+      engine_cadet:"🎓 Cadete de Máquinas",
+      wiper:"🧹 Limpiador (Wiper)",
+      motorman:"🔩 Motorista",
+      oiler:"🛢️ Engrasador (Oiler)",
+      fourth_engineer:"🔧 Cuarto Maquinista",
+      third_engineer:"⚙️ Tercer Maquinista",
+      second_engineer:"🛠️ Segundo Maquinista",
+      chief_engineer:"👑 Jefe de Máquinas",
+    },
     s3:"📊 ¿Tu nivel actual?",
     qZero:"🌱 Principiante total",qBasic:"📄 Bases marítimas",qExp:"⚓ Experimentado",
     s4:"🚢 ¿Tu barco soñado?",s4more:"Ver todos →",s4less:"← Reducir",
     shipContainer:"🚢 Portacontenedores",shipTanker:"🛢️ Petrolero",
-    shipCruise:"🛳️ Crucero",shipOffshore:"🏗️ Offshore OSV",
-    shipYacht:"⛵ Yate / Velero",shipSAR:"🆘 Salvamento SAR",
+    shipCruise:"🛳️ Crucero",
+    shipYacht:"⛵ Yate / Velero",
     shipChemical:"⚗️ Quimiquero",shipGas:"💨 Gasero LNG",
-    shipCar:"🚗 Ro-Ro",shipResearch:"🔬 Buque científico",
+    shipResearch:"🔬 Buque científico",
     shipTug:"⚓ Remolcador",shipFishing:"🎣 Pesca de altura",
-    shipPWC:"🏄 Moto de agua",shipNavy:"🏛️ Marina nacional",
     s5:"⏱️ ¿Duración de estudio diario?",
     dur15:"⚡ 15 min / día",dur30:"📚 30 min / día",
     dur60:"🎯 1 hora / día",durFree:"🌊 A mi ritmo",
     s6:"⏰ ¿Hora preferida?",
     qMorning:"🌅 Mañana",qAfternoon:"☀️ Tarde",qEvening:"🌆 Noche",qNight:"🌙 Madrugada",
     s7:"🌍 ¿Tu país de residencia?",s7ph:"Ej: España, México...",
-    s8:"🔔 ¿Recordatorio por email?",qYes:"✅ Sí",qNo:"❌ No",
     s9:"📸 Tu foto (opcional)",s9cta:"Agregar mi foto",
     s9camera:"Cámara",
     s9gallery:"Galería",
@@ -251,47 +225,41 @@ const T = {
     deptEngine:"⚙️ MÁQUINAS — Energia e Propulsão",
     deptEngineSub:"Chefe de máquinas, oficial, oiler...",
     s1Deck:"⚓ Quem é você? (Convés)",
-    qFutureDeck:"⛵ Futuro marinheiro (convés)",
-    qCadetDeck:"🎓 Cadete navegação",
-    qAB:"⚓ Marinheiro / AB",
-    qOfficerDeck:"🧭 Oficial de navegação",
-    qCaptain:"👑 Capitão / Master",
     s1Engine:"⚙️ Quem é você? (Máquinas)",
-    qFutureEngine:"🔧 Futuro mecânico",
-    qCadetEngine:"🎓 Cadete máquinas",
-    qOiler:"🛢️ Oiler / Lubrificador",
-    qJuniorEng:"⚙️ Mecânico júnior",
-    qOfficerEngine:"🛠️ Oficial de máquinas (OMCV)",
-    qChiefEng:"👑 Chefe de máquinas",
-    s2Deck:"🎯 Seu objetivo (Convés)?",
-    qNavigation:"🧭 Dominar a navegação",
-    qSTCW:"🛟 Certificações STCW",
-    qLaw:"⚖️ Direito marítimo",
-    qCareerDeck:"🚢 Avançar — convés",
-    qSafety:"🛡️ Segurança e sobrevivência",
-    s2Engine:"🎯 Seu objetivo (Máquinas)?",
-    qMoteur:"⚙️ Dominar o motor principal",
-    qAuxiliaries:"🔧 Sistemas auxiliares",
-    qMARPOL:"🌊 MARPOL sala de máquinas",
-    qCareerEngine:"🛠️ Avançar — máquinas",
-    qEnergy:"⚡ SEEMP / Eficiência energética",
+    s1bDeck:"🎯 Seu posto almejado? (Convés)",
+    s1bEngine:"🎯 Seu posto almejado? (Máquinas)",
+    rankLabels:{
+      deck_cadet:"🎓 Cadete de Convés",
+      os:"⚓ Marinheiro Ordinário (OS)",
+      ab:"🪢 Marinheiro Qualificado (AB)",
+      bosun:"🛠️ Contramestre (Bosun)",
+      oow:"🧭 Oficial de Quarto (OOW)",
+      chief_officer:"🎖️ Imediato",
+      master:"👑 Comandante",
+      engine_cadet:"🎓 Cadete de Máquinas",
+      wiper:"🧹 Limpador (Wiper)",
+      motorman:"🔩 Motorista",
+      oiler:"🛢️ Lubrificador (Oiler)",
+      fourth_engineer:"🔧 Quarto Maquinista",
+      third_engineer:"⚙️ Terceiro Maquinista",
+      second_engineer:"🛠️ Segundo Maquinista",
+      chief_engineer:"👑 Chefe de Máquinas",
+    },
     s3:"📊 Seu nível atual?",
     qZero:"🌱 Iniciante total",qBasic:"📄 Bases marítimas",qExp:"⚓ Experiente",
     s4:"🚢 Seu navio dos sonhos?",s4more:"Ver todos →",s4less:"← Reduzir",
     shipContainer:"🚢 Porta-contêineres",shipTanker:"🛢️ Petroleiro",
-    shipCruise:"🛳️ Cruzeiro",shipOffshore:"🏗️ Offshore OSV",
-    shipYacht:"⛵ Iate / Veleiro",shipSAR:"🆘 Salvamento SAR",
+    shipCruise:"🛳️ Cruzeiro",
+    shipYacht:"⛵ Iate / Veleiro",
     shipChemical:"⚗️ Químico",shipGas:"💨 Gaseiro LNG",
-    shipCar:"🚗 Ro-Ro",shipResearch:"🔬 Navio científico",
+    shipResearch:"🔬 Navio científico",
     shipTug:"⚓ Rebocador",shipFishing:"🎣 Pesca de altura",
-    shipPWC:"🏄 Jet-ski / Salva-vidas",shipNavy:"🏛️ Marinha nacional",
     s5:"⏱️ Duração de estudo diário?",
     dur15:"⚡ 15 min / dia",dur30:"📚 30 min / dia",
     dur60:"🎯 1 hora / dia",durFree:"🌊 No meu ritmo",
     s6:"⏰ Horário preferido?",
     qMorning:"🌅 Manhã",qAfternoon:"☀️ Tarde",qEvening:"🌆 Noite",qNight:"🌙 Madrugada",
     s7:"🌍 Seu país de residência?",s7ph:"Ex: Brasil, Portugal, Angola...",
-    s8:"🔔 Lembrete de formação por email?",qYes:"✅ Sim",qNo:"❌ Não",
     s9:"📸 Sua foto (opcional)",s9cta:"Adicionar minha foto",
     s9camera:"Câmera",
     s9gallery:"Galeria",
@@ -472,7 +440,7 @@ function GLine() {
 
 // ── PROGRESS SUMMARY ─────────────────────────
 function ProgressSummary({answers,t}) {
-  const required=["dept","who","goal","level","ship","duration","time","reminder"];
+  const required=["dept","who","target","level","ship","duration","time"];
   const done=required.filter(k=>answers[k]!==null&&answers[k]!=="").length;
   const total=required.length+(answers.country?.trim().length>0?1:0);
   const pct=Math.round((done/required.length)*100);
@@ -535,16 +503,16 @@ export default function QuestionnaireS7({
   const [showMoreShips,setShowMoreShips]=useState(false);
   const [country,setCountry]=useState("");
   const [answers,setAnswers]=useState({
-    dept:null,who:null,goal:null,level:null,
+    dept:null,who:null,target:null,level:null,
     ship:null,duration:null,time:null,
-    reminder:null,country:"",photo:null,
+    country:"",photo:null,
   });
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
   const set=(k,v)=>setAnswers(p=>({...p,[k]:v}));
 
-  const requiredKeys=["dept","who","goal","level","ship","duration","time","reminder"];
+  const requiredKeys=["dept","who","target","level","ship","duration","time"];
   const allDone=requiredKeys.every(k=>answers[k]!==null)&&country.trim().length>0;
 
   const sectionRefs=useRef({});
@@ -594,65 +562,48 @@ export default function QuestionnaireS7({
   };
 
   const errorLabels={
-    fr:{dept:"ton département",who:"qui tu es",goal:"ton objectif",level:"ton niveau",
+    fr:{dept:"ton département",who:"qui tu es",target:"ton rang visé",level:"ton niveau",
       ship:"ton navire de rêve",duration:"la durée d'étude",time:"ton moment préféré",
-      reminder:"si tu veux un rappel",country:"ton pays"},
-    en:{dept:"your department",who:"who you are",goal:"your goal",level:"your level",
+      country:"ton pays"},
+    en:{dept:"your department",who:"who you are",target:"your target rank",level:"your level",
       ship:"your dream ship",duration:"the study duration",time:"your preferred time",
-      reminder:"if you want a reminder",country:"your country"},
-    es:{dept:"tu departamento",who:"quién eres",goal:"tu objetivo",level:"tu nivel",
+      country:"your country"},
+    es:{dept:"tu departamento",who:"quién eres",target:"tu rango objetivo",level:"tu nivel",
       ship:"tu barco soñado",duration:"la duración",time:"tu momento preferido",
-      reminder:"si quieres un recordatorio",country:"tu país"},
-    pt:{dept:"seu departamento",who:"quem você é",goal:"seu objetivo",level:"seu nível",
+      country:"tu país"},
+    pt:{dept:"seu departamento",who:"quem você é",target:"seu posto almejado",level:"seu nível",
       ship:"seu navio dos sonhos",duration:"a duração",time:"seu horário preferido",
-      reminder:"se quer um lembrete",country:"seu país"},
+      country:"seu país"},
   };
   const errorPrefix={fr:"Réponds à",en:"Please answer",es:"Responde",pt:"Responda"};
 
   const isDeck=answers.dept==="deck";
   const isEngine=answers.dept==="engine";
 
-  // Who options — adapts to department
-  const whoOptsDeck=[
-    {v:"future_deck",l:t.qFutureDeck},{v:"cadet_deck",l:t.qCadetDeck},
-    {v:"ab",l:t.qAB},{v:"officer_deck",l:t.qOfficerDeck},
-    {v:"captain",l:t.qCaptain},
-  ];
-  const whoOptsEngine=[
-    {v:"future_eng",l:t.qFutureEngine},{v:"cadet_eng",l:t.qCadetEngine},
-    {v:"oiler",l:t.qOiler},{v:"junior_eng",l:t.qJuniorEng},
-    {v:"officer_eng",l:t.qOfficerEngine},{v:"chief_eng",l:t.qChiefEng},
-  ];
-  const goalOptsDeck=[
-    {v:"nav",l:t.qNavigation},{v:"stcw",l:t.qSTCW},
-    {v:"law",l:t.qLaw},{v:"career_deck",l:t.qCareerDeck},
-    {v:"safety",l:t.qSafety},
-  ];
-  const goalOptsEngine=[
-    {v:"engine",l:t.qMoteur},{v:"aux",l:t.qAuxiliaries},
-    {v:"marpol",l:t.qMARPOL},{v:"career_eng",l:t.qCareerEngine},
-    {v:"energy",l:t.qEnergy},
-  ];
+  // Rank options — adapt to department, sourced from rankRegistry.ts (deck_cadet..master / engine_cadet..chief_engineer)
+  const DECK_RANKS=["deck_cadet","os","ab","bosun","oow","chief_officer","master"];
+  const ENGINE_RANKS=["engine_cadet","wiper","motorman","oiler","fourth_engineer","third_engineer","second_engineer","chief_engineer"];
+  const whoOptsDeck=DECK_RANKS.map(r=>({v:r,l:t.rankLabels[r]}));
+  const whoOptsEngine=ENGINE_RANKS.map(r=>({v:r,l:t.rankLabels[r]}));
+  // Target rank reuses the same rank list — a rank can be its own target (e.g. reviewing own-rank lessons)
+  const targetOptsDeck=whoOptsDeck;
+  const targetOptsEngine=whoOptsEngine;
   const levelOpts=[
     {v:"zero",l:t.qZero},{v:"basic",l:t.qBasic},{v:"exp",l:t.qExp},
   ];
+  // Ship ids match VesselTypeId exactly (vesselTypeRegistry.ts)
   const mainShips=[
-    {id:"container",emoji:"🚢",label:t.shipContainer},
-    {id:"tanker",emoji:"🛢️",label:t.shipTanker},
-    {id:"cruise",emoji:"🛳️",label:t.shipCruise},
-    {id:"offshore",emoji:"🏗️",label:t.shipOffshore},
+    {id:"container_ship",emoji:"🚢",label:t.shipContainer},
+    {id:"oil_tanker",emoji:"🛢️",label:t.shipTanker},
+    {id:"cruise_ship",emoji:"🛳️",label:t.shipCruise},
     {id:"yacht",emoji:"⛵",label:t.shipYacht},
-    {id:"sar",emoji:"🆘",label:t.shipSAR},
   ];
   const moreShips=[
-    {id:"chemical",emoji:"⚗️",label:t.shipChemical},
-    {id:"gas",emoji:"💨",label:t.shipGas},
-    {id:"car",emoji:"🚗",label:t.shipCar},
-    {id:"research",emoji:"🔬",label:t.shipResearch},
-    {id:"tug",emoji:"⚓",label:t.shipTug},
-    {id:"fishing",emoji:"🎣",label:t.shipFishing},
-    {id:"pwc",emoji:"🏄",label:t.shipPWC},
-    {id:"navy",emoji:"🏛️",label:t.shipNavy},
+    {id:"chemical_tanker",emoji:"⚗️",label:t.shipChemical},
+    {id:"lng_carrier",emoji:"💨",label:t.shipGas},
+    {id:"research_vessel",emoji:"🔬",label:t.shipResearch},
+    {id:"tugboat",emoji:"⚓",label:t.shipTug},
+    {id:"fishing_vessel",emoji:"🎣",label:t.shipFishing},
   ];
   const allShips=showMoreShips?[...mainShips,...moreShips]:mainShips;
   const durationOpts=[
@@ -736,8 +687,8 @@ export default function QuestionnaireS7({
               {/* PONT */}
               <button onClick={()=>{
                 set("dept","deck");
-                // Reset who/goal if switching dept
-                set("who",null);set("goal",null);
+                // Reset who/target if switching dept
+                set("who",null);set("target",null);
               }} style={{
                 padding:"16px 12px",borderRadius:16,
                 background:answers.dept==="deck"
@@ -768,7 +719,7 @@ export default function QuestionnaireS7({
               {/* MACHINE */}
               <button onClick={()=>{
                 set("dept","engine");
-                set("who",null);set("goal",null);
+                set("who",null);set("target",null);
               }} style={{
                 padding:"16px 12px",borderRadius:16,
                 background:answers.dept==="engine"
@@ -799,7 +750,7 @@ export default function QuestionnaireS7({
           </Card>
           </div>
 
-          {/* ── 1 — QUI ES-TU (adapté au dept) ── */}
+          {/* ── 1 — RANG ACTUEL (adapté au dept) ── */}
           {answers.dept&&(
             <div {...sectionProps("who")}>
             <Card style={{marginBottom:14}}>
@@ -817,25 +768,25 @@ export default function QuestionnaireS7({
             </div>
           )}
 
-          {/* ── 2 — OBJECTIF (adapté au dept) ── */}
+          {/* ── 1b — RANG VISÉ (adapté au dept) ── */}
           {answers.dept&&(
-            <div {...sectionProps("goal")}>
+            <div {...sectionProps("target")}>
             <Card style={{marginBottom:14}}>
               <SectionLabel
-                text={isDeck?t.s2Deck:t.s2Engine}
-                done={answers.goal!==null}/>
+                text={isDeck?t.s1bDeck:t.s1bEngine}
+                done={answers.target!==null}/>
               <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-                {(isDeck?goalOptsDeck:goalOptsEngine).map(o=>(
+                {(isDeck?targetOptsDeck:targetOptsEngine).map(o=>(
                   <Chip key={o.v} label={o.l}
-                    selected={answers.goal===o.v}
-                    onClick={()=>set("goal",o.v)}/>
+                    selected={answers.target===o.v}
+                    onClick={()=>set("target",o.v)}/>
                 ))}
               </div>
             </Card>
             </div>
           )}
 
-          {/* ── 3 — NIVEAU ── */}
+          {/* ── 2 — NIVEAU ── */}
           <div {...sectionProps("level")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s3} done={answers.level!==null}/>
@@ -849,7 +800,7 @@ export default function QuestionnaireS7({
           </Card>
           </div>
 
-          {/* ── 4 — NAVIRE DE RÊVE ── */}
+          {/* ── 3 — NAVIRE DE RÊVE ── */}
           <div {...sectionProps("ship")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s4} done={answers.ship!==null}/>
@@ -873,7 +824,7 @@ export default function QuestionnaireS7({
           </Card>
           </div>
 
-          {/* ── 5 — DURÉE ── */}
+          {/* ── 4 — DURÉE ── */}
           <div {...sectionProps("duration")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s5} done={answers.duration!==null}/>
@@ -894,7 +845,7 @@ export default function QuestionnaireS7({
           </Card>
           </div>
 
-          {/* ── 6 — HEURE ── */}
+          {/* ── 5 — HEURE ── */}
           <div {...sectionProps("time")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s6} done={answers.time!==null}/>
@@ -908,7 +859,7 @@ export default function QuestionnaireS7({
           </Card>
           </div>
 
-          {/* ── 7 — PAYS ── */}
+          {/* ── 6 — PAYS ── */}
           <div {...sectionProps("country")}>
           <Card style={{marginBottom:14}}>
             <SectionLabel text={t.s7} done={country.trim().length>0}/>
@@ -933,29 +884,7 @@ export default function QuestionnaireS7({
           </Card>
           </div>
 
-          {/* ── 8 — RAPPEL ── */}
-          <div {...sectionProps("reminder")}>
-          <Card style={{marginBottom:14}}>
-            <SectionLabel text={t.s8} done={answers.reminder!==null}/>
-            <div style={{display:"flex",gap:10}}>
-              <Chip label={t.qYes} wide
-                selected={answers.reminder==="yes"}
-                onClick={()=>set("reminder","yes")}/>
-              <Chip label={t.qNo} wide
-                selected={answers.reminder==="no"}
-                onClick={()=>set("reminder","no")}/>
-            </div>
-            {answers.reminder==="yes"&&answers.time&&(
-              <div style={{marginTop:10,padding:"10px 12px",borderRadius:10,
-                background:`rgba(77,166,255,0.1)`,border:`1px solid ${C.blue2}33`,
-                fontSize:12,color:C.blue2}}>
-                🔔 Rappel configuré selon ton heure préférée
-              </div>
-            )}
-          </Card>
-          </div>
-
-          {/* ── 9 — PHOTO ── */}
+          {/* ── 7 — PHOTO ── */}
           <Card style={{marginBottom:20}}>
             <div style={{fontSize:13,fontWeight:700,
               color:C.muted,marginBottom:10}}>{t.s9}</div>
