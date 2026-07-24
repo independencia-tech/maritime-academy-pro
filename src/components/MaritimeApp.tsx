@@ -7,6 +7,7 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import QuestionnaireS7 from "./QuestionnaireS7";
 import StatusCardS8 from "./StatusCardS8";
 import Dashboard, { MODULES as ALL_MODULES } from "./Dashboard";
+import LessonProgressBadge from "./LessonProgressBadge";
 import RegisterS6 from "./RegisterS6";
 import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
@@ -2051,7 +2052,30 @@ export default function App() {
 function AppInner() {
   const { enable, disable } = useMusic();
   const [page, setPage] = useState<string>("splash");
-   
+
+  // Manual scroll position save/restore per internal `page` screen.
+  // Internal navigation goes through this useState, not real TanStack Router
+  // routes, so the router's scrollRestoration:true never sees these transitions
+  // (see audits/2026-07-24_dashboard-progression-scroll.md, point 4). This
+  // restores scroll when returning to a previously-visited page (e.g. Dashboard,
+  // a module list, a module detail screen) and leaves the current top-of-page
+  // behavior for pages visited for the first time.
+  const scrollPositionsRef = useRef<Record<string, number>>({});
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const saved = scrollPositionsRef.current[page];
+    if (saved !== undefined) {
+      const raf = requestAnimationFrame(() => window.scrollTo(0, saved));
+      return () => {
+        cancelAnimationFrame(raf);
+        scrollPositionsRef.current[page] = window.scrollY;
+      };
+    }
+    return () => {
+      scrollPositionsRef.current[page] = window.scrollY;
+    };
+  }, [page]);
+
   useEffect(() => {
   if (typeof window === "undefined") return;
 
@@ -2126,6 +2150,9 @@ supabase
     const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
     const newStreak = lastDate === today ? (prog?.streak || 1) : lastDate === yesterday ? (prog?.streak || 1) + 1 : 1;
     const lessonXP = 100;
+    if (prog?.xp !== undefined && prog?.xp !== null && typeof prog.xp !== "number") {
+      console.warn(`[markLessonCompleted] prog.xp from Supabase is not a number — value: ${JSON.stringify(prog.xp)}, type: ${typeof prog.xp}`);
+    }
     const newXP = (prog?.xp || 0) + lessonXP;
     setUserXP(newXP);
 setUserStreak(newStreak);
@@ -2363,6 +2390,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
         ::selection{background:rgba(201,146,42,0.3);}
         button:active{opacity:0.82;transform:scale(0.98);}
       `}</style>
+      <LessonProgressBadge page={page} lang={lang} completedLessons={completedLessons}/>
       {page==="splash"      && <SplashS1 lang={lang} onDone={() => setPage("lang")}/>}
       {page==="lang"        && <LanguageSelect setLang={setLang} setPage={setPage}/>}
       {page==="music"       && (

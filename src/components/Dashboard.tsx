@@ -764,6 +764,17 @@ function PlanCard({userPlan,t,lang}) {
   );
 }
 
+// ── MODULE PROGRESS (shared between ModuleCard and the Dashboard global summary) ──
+function getModuleProgress(module,completedLessons){
+  const rawLessons=Array.isArray(module.lessons)?module.lessons:[];
+  const total=module.totalLessons||rawLessons.length||0;
+  const lessonsList=rawLessons.length>0?rawLessons:Array.from({length:total},(_,i)=>({id:`l${i+1}`}));
+  const doneCount=lessonsList.filter(l=>completedLessons.includes(`${module.id}-${l.id}`)).length;
+  const pct=total>0?Math.round((doneCount/total)*100):(module.progress||0);
+  const isDone=total>0?doneCount>=total:module.status==="completed";
+  return {total,lessonsList,doneCount,pct,isDone};
+}
+
 // ── MODULE CARD ───────────────────────────────
 function ModuleCard({module,lang,t,userPlan,onStart,onUnlock,completedLessons=[]}) {
   const hasAccess=canAccess(userPlan,module.access);
@@ -773,12 +784,7 @@ function ModuleCard({module,lang,t,userPlan,onStart,onUnlock,completedLessons=[]
   const moduleColor=module.color;
 
   // Compute progress from completed lessons (overrides hardcoded module.progress/status)
-  const rawLessons=Array.isArray(module.lessons)?module.lessons:[];
-  const total=module.totalLessons||rawLessons.length||0;
-  const lessonsList=rawLessons.length>0?rawLessons:Array.from({length:total},(_,i)=>({id:`l${i+1}`}));
-  const doneCount=lessonsList.filter(l=>completedLessons.includes(`${module.id}-${l.id}`)).length;
-  const computedPct=total>0?Math.round((doneCount/total)*100):(module.progress||0);
-  const isDone=total>0?doneCount>=total:module.status==="completed";
+  const {total,lessonsList,doneCount,pct:computedPct,isDone}=getModuleProgress(module,completedLessons);
   const isProgress=hasAccess&&!isDone&&(doneCount>0||module.status==="inProgress");
   const isAvail=hasAccess&&!isDone&&!isProgress&&module.status==="available";
 
@@ -1050,11 +1056,14 @@ userStreak=1,
   const currentModules=MODULES[activeTab]||[];
   void premiumTick;
 
-  // Global progress
+  // Global progress — same per-module lesson completion logic as ModuleCard, aggregated
   const allModules=Object.values(MODULES).flat();
   const totalModules=allModules.length;
-  const completedModules=allModules.filter(m=>m.status==="completed").length;
-  const globalPct=Math.round((completedModules/totalModules)*100);
+  const moduleProgresses=allModules.map(m=>getModuleProgress(m,completedLessons));
+  const completedModules=moduleProgresses.filter(p=>p.isDone).length;
+  const totalLessonsAll=moduleProgresses.reduce((sum,p)=>sum+p.total,0);
+  const doneLessonsAll=moduleProgresses.reduce((sum,p)=>sum+p.doneCount,0);
+  const globalPct=totalLessonsAll>0?Math.round((doneLessonsAll/totalLessonsAll)*100):0;
 
   // Free modules count
   const freeModules=allModules.filter(m=>m.access==="free").length;
