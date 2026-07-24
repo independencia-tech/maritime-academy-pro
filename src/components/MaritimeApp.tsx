@@ -2051,29 +2051,40 @@ export default function App() {
 
 function AppInner() {
   const { enable, disable } = useMusic();
-  const [page, setPage] = useState<string>("splash");
+  const [page, setPageState] = useState<string>("splash");
 
   // Manual scroll position save/restore per internal `page` screen.
   // Internal navigation goes through this useState, not real TanStack Router
   // routes, so the router's scrollRestoration:true never sees these transitions
-  // (see audits/2026-07-24_dashboard-progression-scroll.md, point 4). This
-  // restores scroll when returning to a previously-visited page (e.g. Dashboard,
-  // a module list, a module detail screen) and leaves the current top-of-page
-  // behavior for pages visited for the first time.
+  // (see audits/2026-07-24_dashboard-progression-scroll.md, point 4).
+  //
+  // The save must happen synchronously, at the moment navigation is triggered,
+  // while the outgoing page's DOM is still the one on screen — not in a
+  // useEffect cleanup, which by the time it runs has already seen React commit
+  // the new page's DOM, so window.scrollY would reflect the new (often
+  // shorter) page instead of the one being left
+  // (see audits/2026-07-24_diagnostic-scroll-partiel.md).
+  //
+  // `setPage` wraps the raw state setter so every existing call site — direct
+  // calls and every place `setPage` is passed down as a prop — captures scroll
+  // for free, without touching those ~500+ call sites individually.
   const scrollPositionsRef = useRef<Record<string, number>>({});
+  const setPage = (next: string) => {
+    if (typeof window !== "undefined") {
+      scrollPositionsRef.current[page] = window.scrollY;
+    }
+    setPageState(next);
+  };
+
+  // Restore only: runs after the new page's DOM has been committed and
+  // painted (useEffect timing), with an extra requestAnimationFrame tick as a
+  // safety margin for layout to settle before scrolling.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const saved = scrollPositionsRef.current[page];
-    if (saved !== undefined) {
-      const raf = requestAnimationFrame(() => window.scrollTo(0, saved));
-      return () => {
-        cancelAnimationFrame(raf);
-        scrollPositionsRef.current[page] = window.scrollY;
-      };
-    }
-    return () => {
-      scrollPositionsRef.current[page] = window.scrollY;
-    };
+    if (saved === undefined) return;
+    const raf = requestAnimationFrame(() => window.scrollTo(0, saved));
+    return () => cancelAnimationFrame(raf);
   }, [page]);
 
   useEffect(() => {
