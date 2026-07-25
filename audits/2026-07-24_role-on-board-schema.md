@@ -107,6 +107,20 @@ export interface OperationalPhase {
 
 export type OperationalPhases = Partial<Record<OperationalPhaseId, OperationalPhase>>;
 
+// ── ORGANIZATIONAL POSITION ──────────────────────────────────
+export interface OrganizationalPosition {
+  reportsTo?: LocalizedText[];
+  worksWith?: LocalizedText[];
+  mentors?: LocalizedText[];
+  supports?: LocalizedText[];
+}
+
+// ── PROFESSIONAL SKILLS ──────────────────────────────────────
+export interface ProfessionalSkill {
+  label: LocalizedText;
+  mapReferences?: MapReference[];
+}
+
 // ── AUTHORITY LIMITS ─────────────────────────────────────────
 export interface AuthorityLimits {
   youCan?: LocalizedText[];
@@ -134,8 +148,8 @@ export interface RoleOnBoardMediaItem {
 export interface RoleOnBoardCard {
   rankId: RankId;
   roleOverview?: LocalizedText[];
-  organizationalPosition?: LocalizedText[];
-  professionalSkills?: LocalizedText[];
+  organizationalPosition?: OrganizationalPosition;
+  professionalSkills?: ProfessionalSkill[];
   operationalPhases?: OperationalPhases;
   practicalScenarios?: LocalizedText[];
   professionalTips?: LocalizedText[];
@@ -218,12 +232,23 @@ const exampleCard: RoleOnBoardCard = {
     { en: "[Illustrative placeholder] General description of the AB role.", fr: "[Exemple] Description générale du rôle de Matelot Qualifié." },
   ],
 
-  organizationalPosition: [
-    { en: "[Illustrative placeholder] Reports to the Bosun / OOW." },
-  ],
+  organizationalPosition: {
+    reportsTo: [{ en: "[Illustrative placeholder] Bosun / OOW." }],
+    worksWith: [{ en: "[Illustrative placeholder] Other deck ratings on watch." }],
+    mentors: [{ en: "[Illustrative placeholder] Ordinary Seaman." }],
+    supports: [{ en: "[Illustrative placeholder] Chief Officer during cargo operations." }],
+  },
 
   professionalSkills: [
-    { en: "[Illustrative placeholder] Example skill statement." },
+    {
+      label: { en: "[Illustrative placeholder] Example skill statement." },
+      mapReferences: [
+        { kind: "lesson", lessonId: "d6-l2", label: { en: "Knots & Splices" } },
+      ],
+    },
+    {
+      label: { en: "[Illustrative placeholder] Another skill, no reference attached." },
+    },
   ],
 
   operationalPhases: {
@@ -280,6 +305,23 @@ Note sur la traduction partielle : l'exemple ci-dessus est volontairement incomp
 
 ---
 
+## Révision finale (2026-07-25)
+
+Relecture du schéma de Mission A par rapport au document de vision produit d'origine : deux champs avaient perdu une information métier explicitement présente dans ce document. Corrections appliquées, aucune autre structure touchée.
+
+**1. `organizationalPosition`** — remplacé `LocalizedText[]` (liste plate) par une structure relationnelle nommée `OrganizationalPosition`, reflétant les 4 relations distinctes du document de vision : `reportsTo` / `worksWith` / `mentors` / `supports`. Chaque relation reste indépendamment optionnelle et de longueur variable (`LocalizedText[]`), cohérent avec le principe de listes ouvertes déjà en place ailleurs dans le schéma.
+
+**2. `professionalSkills`** — remplacé `LocalizedText[]` par `ProfessionalSkill[]`, chaque compétence portant désormais son propre `label` (`LocalizedText`, obligatoire) et un tableau optionnel `mapReferences?: MapReference[]` (au pluriel — une compétence peut légitimement pointer vers plusieurs leçons), réutilisant le même type `MapReference` que le reste du schéma plutôt que d'introduire une nouvelle forme de référence.
+
+**Composant `RoleOnBoardShared.tsx` ajusté en conséquence** (seules ces deux sections) :
+- La section "Position in the Organization" rend désormais 4 sous-listes conditionnelles (une par relation), sur le même modèle visuel que "Authority Limits" (You can / You cannot) déjà existant — chaque sous-liste absente ou vide est simplement omise, jamais de bloc vide.
+- La section "Professional Skills" rend chaque compétence avec son libellé, suivi — uniquement si présentes — de ses références MAP résolues (via la même fonction `referenceLabel` déjà utilisée pour `mapResources` et les `mapReferences` de chaque phase opérationnelle, pas une logique de résolution dupliquée).
+- 4 nouvelles clés d'interface ont été ajoutées à `T` (`reportsTo`, `worksWith`, `mentors`, `supports`), dans les 4 langues, suivant la même convention que le reste des libellés d'interface du composant — aucun texte éditorial, uniquement des libellés d'interface.
+
+**Confirmé inchangé** : la duplication intentionnelle de `commonMistakes` et `professionalTips` au niveau fiche et au niveau de chaque phase opérationnelle reste telle quelle (deux niveaux éditoriaux distincts, non fusionnés). Aucune autre structure du schéma (`operationalPhases`, `authorityLimits`, `responsibilityMatrix`, `media`, résolution i18n) n'a été touchée.
+
+Le schéma TypeScript complet et l'exemple documentaire ci-dessus ont été mis à jour en place pour refléter ces deux corrections — ils constituent désormais la version finale, gelée.
+
 ## Fichiers créés (résumé)
 
 - `src/core/roleOnBoardRegistry.ts` — schéma + registre vide + résolveurs i18n. Aucun registre existant modifié.
@@ -287,8 +329,8 @@ Note sur la traduction partielle : l'exemple ci-dessus est volontairement incomp
 
 ## Build
 
-`vite build` ✓ et `tsc --noEmit` ✓ sans erreur sur les deux nouveaux fichiers (une erreur de typage initiale sur des appels `<SL icon=.. text=..>` sans prop `color` explicite a été détectée par `tsc` et corrigée — `SL` dans `LessonShared.tsx` n'a pas de valeur par défaut pour `color` dans sa déstructuration, donc TypeScript l'infère comme requis à l'usage).
+`vite build` ✓ et `tsc --noEmit` ✓ sans erreur, avant la Mission A initiale (une erreur de typage sur des appels `<SL icon=.. text=..>` sans prop `color` explicite avait été détectée par `tsc` et corrigée) et après la révision finale ci-dessus (nouvelle vérification `vite build` + `tsc --noEmit` ✓ sans erreur sur les deux fichiers, y compris les nouveaux types `OrganizationalPosition`/`ProfessionalSkill`).
 
 ## Statut
 
-**Schéma et composant terminés, aucun contenu de fiche créé.** Le registre `ROLE_ON_BOARD_REGISTRY` est vide en production (0 fiche). Aucune fiche pilote n'a été ajoutée au fichier source — uniquement l'exemple documentaire ci-dessus, non exécuté. Aucun commit, aucun push — en attente de votre confirmation.
+**Schéma et composant terminés et révisés — version finale gelée.** Aucun contenu de fiche créé. Le registre `ROLE_ON_BOARD_REGISTRY` est vide en production (0 fiche). Aucune fiche pilote n'a été ajoutée au fichier source — uniquement l'exemple documentaire ci-dessus, non exécuté, mis à jour pour refléter les deux structures révisées. Commit local effectué pour la Mission A initiale ; la révision finale sera commitée séparément.

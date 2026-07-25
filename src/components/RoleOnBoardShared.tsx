@@ -40,6 +40,10 @@ const T: Record<
     noData: string;
     roleOverview: string;
     organizationalPosition: string;
+    reportsTo: string;
+    worksWith: string;
+    mentors: string;
+    supports: string;
     professionalSkills: string;
     operationalPhases: string;
     practicalScenarios: string;
@@ -68,6 +72,10 @@ const T: Record<
     noData: "No content published yet for this rank.",
     roleOverview: "Role Overview",
     organizationalPosition: "Position in the Organization",
+    reportsTo: "Reports to",
+    worksWith: "Works with",
+    mentors: "Mentors",
+    supports: "Supports",
     professionalSkills: "Professional Skills",
     operationalPhases: "Operational Phases",
     practicalScenarios: "Practical Scenarios",
@@ -104,6 +112,10 @@ const T: Record<
     noData: "Aucun contenu publié pour ce rang pour le moment.",
     roleOverview: "Présentation du métier",
     organizationalPosition: "Position dans l'organisation",
+    reportsTo: "Rend compte à",
+    worksWith: "Travaille avec",
+    mentors: "Encadre",
+    supports: "Soutient",
     professionalSkills: "Compétences professionnelles",
     operationalPhases: "Phases opérationnelles",
     practicalScenarios: "Mises en situation",
@@ -140,6 +152,10 @@ const T: Record<
     noData: "Todavía no hay contenido publicado para este rango.",
     roleOverview: "Presentación del puesto",
     organizationalPosition: "Posición en la organización",
+    reportsTo: "Reporta a",
+    worksWith: "Trabaja con",
+    mentors: "Supervisa",
+    supports: "Apoya a",
     professionalSkills: "Competencias profesionales",
     operationalPhases: "Fases operacionales",
     practicalScenarios: "Escenarios prácticos",
@@ -176,6 +192,10 @@ const T: Record<
     noData: "Ainda não há conteúdo publicado para este posto.",
     roleOverview: "Apresentação da função",
     organizationalPosition: "Posição na organização",
+    reportsTo: "Reporta a",
+    worksWith: "Trabalha com",
+    mentors: "Orienta",
+    supports: "Apoia",
     professionalSkills: "Competências profissionais",
     operationalPhases: "Fases operacionais",
     practicalScenarios: "Cenários práticos",
@@ -396,8 +416,21 @@ function RoleOnBoardCardBody({
   t: (typeof T)[SupportedLanguage];
 }) {
   const roleOverview = resolveLocalizedTextList(card.roleOverview, lang);
-  const organizationalPosition = resolveLocalizedTextList(card.organizationalPosition, lang);
-  const professionalSkills = resolveLocalizedTextList(card.professionalSkills, lang);
+
+  const reportsTo = resolveLocalizedTextList(card.organizationalPosition?.reportsTo, lang);
+  const worksWith = resolveLocalizedTextList(card.organizationalPosition?.worksWith, lang);
+  const mentors = resolveLocalizedTextList(card.organizationalPosition?.mentors, lang);
+  const supports = resolveLocalizedTextList(card.organizationalPosition?.supports, lang);
+  const hasOrganizationalPosition =
+    reportsTo.length > 0 || worksWith.length > 0 || mentors.length > 0 || supports.length > 0;
+
+  const professionalSkills = (card.professionalSkills ?? [])
+    .map((skill) => ({
+      label: resolveLocalizedText(skill.label, lang),
+      mapReferences: skill.mapReferences ?? [],
+    }))
+    .filter((s): s is { label: string; mapReferences: MapReference[] } => !!s.label);
+
   const practicalScenarios = resolveLocalizedTextList(card.practicalScenarios, lang);
   const professionalTips = resolveLocalizedTextList(card.professionalTips, lang);
   const professionalMindset = resolveLocalizedTextList(card.professionalMindset, lang);
@@ -430,15 +463,52 @@ function RoleOnBoardCardBody({
         </Card>
       )}
 
-      {organizationalPosition.length > 0 && (
+      {hasOrganizationalPosition && (
         <Card style={{ marginBottom: 14 }}>
-          <Section icon="🗂️" title={t.organizationalPosition} items={organizationalPosition} />
+          <SL icon="🗂️" text={t.organizationalPosition} color={C.gold} />
+          {reportsTo.length > 0 && (
+            <div style={{ marginBottom: 8 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: C.blue2, marginBottom: 4 }}>{t.reportsTo}</div>
+              <TextList items={reportsTo} />
+            </div>
+          )}
+          {worksWith.length > 0 && (
+            <div style={{ marginBottom: 8 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: C.gold2, marginBottom: 4 }}>{t.worksWith}</div>
+              <TextList items={worksWith} />
+            </div>
+          )}
+          {mentors.length > 0 && (
+            <div style={{ marginBottom: 8 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: C.teal, marginBottom: 4 }}>{t.mentors}</div>
+              <TextList items={mentors} />
+            </div>
+          )}
+          {supports.length > 0 && (
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: C.orange, marginBottom: 4 }}>{t.supports}</div>
+              <TextList items={supports} />
+            </div>
+          )}
         </Card>
       )}
 
       {professionalSkills.length > 0 && (
         <Card style={{ marginBottom: 14 }}>
-          <Section icon="🎯" title={t.professionalSkills} items={professionalSkills} />
+          <SL icon="🎯" text={t.professionalSkills} color={C.gold} />
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {professionalSkills.map((skill, i) => {
+              const refLabels = skill.mapReferences.map((r) => referenceLabel(r, lang)).filter((l) => l.length > 0);
+              return (
+                <div key={i}>
+                  <div style={{ fontSize: 13, color: C.white, lineHeight: 1.5 }}>{skill.label}</div>
+                  {refLabels.length > 0 && (
+                    <div style={{ marginTop: 2, fontSize: 11, color: C.muted }}>📎 {refLabels.join(" · ")}</div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </Card>
       )}
 

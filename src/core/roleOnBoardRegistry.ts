@@ -127,6 +127,24 @@ export interface OperationalPhase {
 // relevant to it, the schema itself never changes.
 export type OperationalPhases = Partial<Record<OperationalPhaseId, OperationalPhase>>;
 
+// ── ORGANIZATIONAL POSITION ──────────────────────────────────
+// The 4 relationship dimensions from the original product vision document
+// (Reports to / Works with / Mentors / Supports) — not a flat text list.
+export interface OrganizationalPosition {
+  reportsTo?: LocalizedText[];
+  worksWith?: LocalizedText[];
+  mentors?: LocalizedText[];
+  supports?: LocalizedText[];
+}
+
+// ── PROFESSIONAL SKILLS ──────────────────────────────────────
+// Each skill can link to one or more MAP references (e.g. the lessons that
+// teach it) — not a flat text list.
+export interface ProfessionalSkill {
+  label: LocalizedText;
+  mapReferences?: MapReference[];
+}
+
 // ── AUTHORITY LIMITS ─────────────────────────────────────────
 export interface AuthorityLimits {
   youCan?: LocalizedText[];
@@ -167,9 +185,9 @@ export interface RoleOnBoardCard {
   /** Présentation du métier */
   roleOverview?: LocalizedText[];
   /** Position dans l'organisation */
-  organizationalPosition?: LocalizedText[];
+  organizationalPosition?: OrganizationalPosition;
   /** Compétences professionnelles */
-  professionalSkills?: LocalizedText[];
+  professionalSkills?: ProfessionalSkill[];
   /** The 8 operational phases, keyed by OperationalPhaseId. */
   operationalPhases?: OperationalPhases;
   /** Practical Scenarios */
