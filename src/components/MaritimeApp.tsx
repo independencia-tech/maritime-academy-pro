@@ -15,6 +15,8 @@ import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
 import { VESSEL_TYPE_REGISTRY } from "@/core/vesselTypeRegistry";
 import { SHIPS_LIBRARY_INDEX } from "@/core/shipsLibraryIndex";
+import { getRanksByDepartment } from "@/core/rankRegistry";
+const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
 
 
 // ── LAZY-LOADED LESSON COMPONENTS (code-split, only downloaded when opened) ──
@@ -1101,10 +1103,10 @@ function AdminPage({ setPage }) {
 
 // ── MODULES LIST & SHIPS PAGES ─────────────────────────────────
 const NAV_T:any = {
-  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour" },
-  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back" },
-  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver" },
-  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar" },
+  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine" },
+  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine" },
+  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas" },
+  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas" },
 };
 
 function ModulesListPage({ lang, onBack, onStart }:{lang:string;onBack:()=>void;onStart:(m:any)=>void}) {
@@ -1163,6 +1165,60 @@ function ShipsPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
             <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{v.label?.[lang] || v.label?.fr}</div>
           </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// Role On Board — rank list + card display. Layer 0: freely browsable, no
+// Dashboard/MAP Core/progression/Billing dependency. Ranks without a
+// published card (all except "ab" for now) still open — RoleOnBoardShared
+// itself renders the "no content published yet" fallback, never an error
+// and never a missing list entry.
+function RoleOnBoardPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const [selected, setSelected] = useState<string | null>(null);
+  const deckRanks = getRanksByDepartment("deck");
+  const engineRanks = getRanksByDepartment("engine");
+
+  if (selected) {
+    return (
+      <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
+        <TopBar onBack={() => setSelected(null)} title={t.roleOnBoard} backLabel={t.back}/>
+        <Suspense fallback={null}>
+          <RoleOnBoardShared rankId={selected} lang={lang} onBack={() => setSelected(null)}/>
+        </Suspense>
+      </div>
+    );
+  }
+
+  const renderRankButton = (r:any) => (
+    <button key={r.id} onClick={()=>setSelected(r.id)} style={{
+      display:"flex",alignItems:"center",gap:12,padding:"14px",
+      background:"rgba(13,31,60,0.8)",border:"1px solid rgba(77,166,255,0.27)",
+      borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
+    }}>
+      <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.15)",border:"1px solid rgba(77,166,255,0.27)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>⚓</div>
+      <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{r.label?.[lang] || r.label?.fr}</div>
+    </button>
+  );
+
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={t.roleOnBoard} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:18}}>
+        <div>
+          <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:8,textTransform:"uppercase"}}>{t.deckDept}</div>
+          <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            {deckRanks.map(renderRankButton)}
+          </div>
+        </div>
+        <div>
+          <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:8,textTransform:"uppercase"}}>{t.engineDept}</div>
+          <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            {engineRanks.map(renderRankButton)}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -2542,6 +2598,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
             else if (m?.id === "s5") setPage("s5_lessons");
              else if (m?.id === "s6") setPage("s6_lessons");
             else if (m?.id === "t0") setPage("lexique");
+            else if (m?.id === "t8") setPage("role_on_board");
         else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
 else if (m?.id === "e6") setPage("e6_lessons");
@@ -2588,6 +2645,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           else if (m?.id === "s4") setPage("s4_lessons");
          else if (m?.id === "s5") setPage("s5_lessons");
          else if (m?.id === "s6") setPage("s6_lessons");
+         else if (m?.id === "t8") setPage("role_on_board");
          else if (m?.id === "e2") setPage("e2_lessons");
 else if (m?.id === "e3") setPage("e3_lessons");
 else if (m?.id === "e6") setPage("e6_lessons");
@@ -2598,6 +2656,9 @@ else if (m?.id === "e7") setPage("e7_lessons");
       )}
       {page === "ships" && (
         <ShipsPage lang={lang} onBack={() => setPage("dashboard")}/>
+      )}
+      {page === "role_on_board" && (
+        <RoleOnBoardPage lang={lang} onBack={() => setPage("dashboard")}/>
       )}
       {page === "nav_lessons" && (
         <NavigationLessonsPage

@@ -533,6 +533,11 @@ export const MODULES = {
       title:{fr:"My Career Advisor™",en:"My Career Advisor™",es:"My Career Advisor™",pt:"My Career Advisor™"},
       desc:{fr:"AB→Capitaine · Oiler→Chef Mécanicien · Yacht→Skipper",en:"AB→Captain · Oiler→Chief Engineer · Yacht→Skipper",es:"AB→Capitán · Oiler→Jefe Máqs · Yacht→Patrón",pt:"AB→Capitão · Oiler→Chefe Máqs · Iate→Skipper"},
       xp:0, status:"coming", progress:0 },
+    { id:"t8", icon:"⚓", color:C.blue2, access:"free",
+      freeLessons:0, totalLessons:0,
+      title:{fr:"Rôle à Bord",en:"Role On Board",es:"Rol a Bordo",pt:"Função a Bordo"},
+      desc:{fr:"Missions, responsabilités et quotidien de chaque rang à bord",en:"Duties, responsibilities and daily life for each rank on board",es:"Funciones, responsabilidades y día a día de cada rango a bordo",pt:"Funções, responsabilidades e dia a dia de cada posto a bordo"},
+      xp:0, status:"available", progress:0 },
   ],
 };
 
