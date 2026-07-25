@@ -89,6 +89,7 @@ const LessonVHF = lazy(() => import("./LessonVHF"));
 const LessonAIS = lazy(() => import("./LessonAIS"));
 const LessonGMDSS = lazy(() => import("./LessonGMDSS"));
 const LessonSMCP_L1 = lazy(() => import("./LessonSMCP_L1"));
+const LessonSteering = lazy(() => import("./LessonSteering"));
 const LessonSMCP_L2 = lazy(() => import("./LessonSMCP_L2"));
 const LessonSMCP_L3 = lazy(() => import("./LessonSMCP_L3"));
 const LessonSMCP_L4 = lazy(() => import("./LessonSMCP_L4"));
@@ -1236,7 +1237,7 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8","l9"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -2674,6 +2675,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
             else if (lid === "l6") setPage("lesson_navpratique");
             else if (lid === "l7") setPage("lesson_marees");
             else if (lid === "l8") setPage("lesson_colreg");
+            else if (lid === "l9") setPage("lesson_steering");
           }}
         />
       )}
@@ -3684,6 +3686,13 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
+        />
+      )}
+      {page === "lesson_steering" && (
+        <LessonSteering
+          lang={lang}
+          onBack={() => setPage("nav_lessons")}
+          onComplete={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_moteur" && (

@@ -191,7 +191,7 @@ const T = {
 export const MODULES = {
   deck:[
     { id:"d1", icon:"🧭", color:C.blue2, access:"free",
-      freeLessons:2, totalLessons:8,
+      freeLessons:2, totalLessons:9,
       title:{fr:"Navigation & Cartographie",en:"Navigation & Cartography",es:"Navegación & Cartografía",pt:"Navegação & Cartografia"},
       desc:{fr:"Histoire, instruments, cartes, COLREG",en:"History, instruments, charts, COLREG",es:"Historia, instrumentos, cartas, COLREG",pt:"História, instrumentos, cartas, COLREG"},
       xp:400, status:"available", progress:0,
@@ -204,6 +204,7 @@ export const MODULES = {
         {id:"l6",title:{fr:"Navigation Pratique",en:"Practical Navigation",es:"Navegación Práctica",pt:"Navegação Prática"},access:"premium",status:"locked"},
         {id:"l7",title:{fr:"Les Marées",en:"Tides",es:"Las Mareas",pt:"As Marés"},access:"premium",status:"locked"},
         {id:"l8",title:{fr:"COLREG Avancé",en:"Advanced COLREG",es:"COLREG Avanzado",pt:"COLREG Avançado"},access:"premium",status:"locked"},
+        {id:"l9",title:{fr:"Ordres de Barre",en:"Steering & Helm Orders",es:"Órdenes de Timón",pt:"Ordens de Leme"},access:"premium",status:"locked"},
       ]
     },
     { id:"d2", icon:"⚖️", color:C.gold, access:"premium",
