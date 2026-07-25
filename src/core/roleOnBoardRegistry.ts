@@ -145,6 +145,22 @@ export interface ProfessionalSkill {
   mapReferences?: MapReference[];
 }
 
+// ── PRACTICAL SCENARIOS ───────────────────────────────────────
+// A practical scenario is a 7-dimension business object, not a paragraph of
+// text: the situation, the mission to accomplish, the expected actions, why
+// they matter, common mistakes, safety points, and MAP references — each
+// independently optional except situation/mission, which anchor the
+// scenario itself.
+export interface PracticalScenario {
+  situation: LocalizedText;
+  mission: LocalizedText;
+  expectedActions?: LocalizedText[];
+  why?: LocalizedText[];
+  commonMistakes?: LocalizedText[];
+  safetyPoints?: LocalizedText[];
+  mapReferences?: MapReference[];
+}
+
 // ── AUTHORITY LIMITS ─────────────────────────────────────────
 export interface AuthorityLimits {
   youCan?: LocalizedText[];
@@ -191,7 +207,7 @@ export interface RoleOnBoardCard {
   /** The 8 operational phases, keyed by OperationalPhaseId. */
   operationalPhases?: OperationalPhases;
   /** Practical Scenarios */
-  practicalScenarios?: LocalizedText[];
+  practicalScenarios?: PracticalScenario[];
   /** Professional Tips — card-wide, distinct from each phase's own professionalTips. */
   professionalTips?: LocalizedText[];
   /** Professional Mindset */

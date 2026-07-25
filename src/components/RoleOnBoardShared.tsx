@@ -18,6 +18,7 @@ import {
   getRoleOnBoardCard,
   type OperationalPhase,
   type OperationalPhaseId,
+  type PracticalScenario,
   type MapReference,
   type AuthorityLimits,
   type ProfessionalResponsibilityMatrix,
@@ -47,6 +48,11 @@ const T: Record<
     professionalSkills: string;
     operationalPhases: string;
     practicalScenarios: string;
+    situation: string;
+    mission: string;
+    expectedActions: string;
+    why: string;
+    safetyPoints: string;
     professionalTips: string;
     professionalMindset: string;
     professionalDocumentation: string;
@@ -79,6 +85,11 @@ const T: Record<
     professionalSkills: "Professional Skills",
     operationalPhases: "Operational Phases",
     practicalScenarios: "Practical Scenarios",
+    situation: "Situation",
+    mission: "Mission",
+    expectedActions: "Expected Actions",
+    why: "Why It Matters",
+    safetyPoints: "Safety Points",
     professionalTips: "Professional Tips",
     professionalMindset: "Professional Mindset",
     professionalDocumentation: "Professional Documentation",
@@ -119,6 +130,11 @@ const T: Record<
     professionalSkills: "Compétences professionnelles",
     operationalPhases: "Phases opérationnelles",
     practicalScenarios: "Mises en situation",
+    situation: "Situation",
+    mission: "Mission",
+    expectedActions: "Actions attendues",
+    why: "Pourquoi c'est important",
+    safetyPoints: "Points de sécurité",
     professionalTips: "Conseils professionnels",
     professionalMindset: "État d'esprit professionnel",
     professionalDocumentation: "Documentation professionnelle",
@@ -159,6 +175,11 @@ const T: Record<
     professionalSkills: "Competencias profesionales",
     operationalPhases: "Fases operacionales",
     practicalScenarios: "Escenarios prácticos",
+    situation: "Situación",
+    mission: "Misión",
+    expectedActions: "Acciones esperadas",
+    why: "Por qué importa",
+    safetyPoints: "Puntos de seguridad",
     professionalTips: "Consejos profesionales",
     professionalMindset: "Mentalidad profesional",
     professionalDocumentation: "Documentación profesional",
@@ -199,6 +220,11 @@ const T: Record<
     professionalSkills: "Competências profissionais",
     operationalPhases: "Fases operacionais",
     practicalScenarios: "Cenários práticos",
+    situation: "Situação",
+    mission: "Missão",
+    expectedActions: "Ações esperadas",
+    why: "Por que importa",
+    safetyPoints: "Pontos de segurança",
     professionalTips: "Dicas profissionais",
     professionalMindset: "Mentalidade profissional",
     professionalDocumentation: "Documentação profissional",
@@ -339,6 +365,55 @@ function OperationalPhaseBlock({
   );
 }
 
+function PracticalScenarioBlock({
+  scenario,
+  lang,
+  t,
+}: {
+  scenario: PracticalScenario;
+  lang: SupportedLanguage;
+  t: (typeof T)[SupportedLanguage];
+}) {
+  const situation = resolveLocalizedText(scenario.situation, lang);
+  const mission = resolveLocalizedText(scenario.mission, lang);
+  // situation and mission anchor the scenario — without at least one of them
+  // resolved for this language, there is nothing meaningful to render.
+  if (!situation && !mission) return null;
+
+  const expectedActions = resolveLocalizedTextList(scenario.expectedActions, lang);
+  const why = resolveLocalizedTextList(scenario.why, lang);
+  const commonMistakes = resolveLocalizedTextList(scenario.commonMistakes, lang);
+  const safetyPoints = resolveLocalizedTextList(scenario.safetyPoints, lang);
+  const hasReferences = (scenario.mapReferences?.length ?? 0) > 0;
+
+  return (
+    <Card style={{ marginBottom: 12 }}>
+      {situation && (
+        <div>
+          <SL icon="📍" text={t.situation} color={C.gold} />
+          <div style={{ fontSize: 13, color: C.white, lineHeight: 1.5 }}>{situation}</div>
+        </div>
+      )}
+      {mission && (
+        <div style={{ marginTop: situation ? 10 : 0 }}>
+          <SL icon="🎯" text={t.mission} color={C.gold} />
+          <div style={{ fontSize: 13, color: C.white, lineHeight: 1.5 }}>{mission}</div>
+        </div>
+      )}
+      {expectedActions.length > 0 && <Section icon="✅" title={t.expectedActions} items={expectedActions} />}
+      {why.length > 0 && <Section icon="💡" title={t.why} items={why} />}
+      {commonMistakes.length > 0 && <Section icon="⛔" title={t.commonMistakes} items={commonMistakes} />}
+      {safetyPoints.length > 0 && <Section icon="🛟" title={t.safetyPoints} items={safetyPoints} />}
+      {hasReferences && (
+        <div>
+          <SL icon="📎" text={t.mapResources} color={C.gold} />
+          <MapReferenceList refs={scenario.mapReferences!} lang={lang} />
+        </div>
+      )}
+    </Card>
+  );
+}
+
 // ── MAIN COMPONENT ────────────────────────────────────────────
 export default function RoleOnBoardShared({
   rankId,
@@ -431,7 +506,7 @@ function RoleOnBoardCardBody({
     }))
     .filter((s): s is { label: string; mapReferences: MapReference[] } => !!s.label);
 
-  const practicalScenarios = resolveLocalizedTextList(card.practicalScenarios, lang);
+  const practicalScenarios = card.practicalScenarios ?? [];
   const professionalTips = resolveLocalizedTextList(card.professionalTips, lang);
   const professionalMindset = resolveLocalizedTextList(card.professionalMindset, lang);
   const professionalDocumentation = resolveLocalizedTextList(card.professionalDocumentation, lang);
@@ -524,9 +599,12 @@ function RoleOnBoardCardBody({
       )}
 
       {practicalScenarios.length > 0 && (
-        <Card style={{ marginBottom: 14 }}>
-          <Section icon="🎬" title={t.practicalScenarios} items={practicalScenarios} />
-        </Card>
+        <div style={{ marginBottom: 14 }}>
+          <SL icon="🎬" text={t.practicalScenarios} color={C.gold} />
+          {practicalScenarios.map((scenario, i) => (
+            <PracticalScenarioBlock key={i} scenario={scenario} lang={lang} t={t} />
+          ))}
+        </div>
       )}
 
       {professionalTips.length > 0 && (

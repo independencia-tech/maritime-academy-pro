@@ -121,6 +121,17 @@ export interface ProfessionalSkill {
   mapReferences?: MapReference[];
 }
 
+// ── PRACTICAL SCENARIOS ───────────────────────────────────────
+export interface PracticalScenario {
+  situation: LocalizedText;
+  mission: LocalizedText;
+  expectedActions?: LocalizedText[];
+  why?: LocalizedText[];
+  commonMistakes?: LocalizedText[];
+  safetyPoints?: LocalizedText[];
+  mapReferences?: MapReference[];
+}
+
 // ── AUTHORITY LIMITS ─────────────────────────────────────────
 export interface AuthorityLimits {
   youCan?: LocalizedText[];
@@ -151,7 +162,7 @@ export interface RoleOnBoardCard {
   organizationalPosition?: OrganizationalPosition;
   professionalSkills?: ProfessionalSkill[];
   operationalPhases?: OperationalPhases;
-  practicalScenarios?: LocalizedText[];
+  practicalScenarios?: PracticalScenario[];
   professionalTips?: LocalizedText[];
   professionalMindset?: LocalizedText[];
   professionalDocumentation?: LocalizedText[];
@@ -269,7 +280,33 @@ const exampleCard: RoleOnBoardCard = {
     // the other 7 OperationalPhaseId keys are simply absent, not empty objects.
   },
 
-  practicalScenarios: [{ en: "[Illustrative placeholder] Example scenario." }],
+  practicalScenarios: [
+    {
+      situation: { en: "[Illustrative placeholder] A mooring line under tension starts to fray during departure stations." },
+      mission: { en: "[Illustrative placeholder] Prevent injury and secure the mooring operation safely." },
+      expectedActions: [
+        { en: "[Illustrative placeholder] Example expected action." },
+      ],
+      why: [
+        { en: "[Illustrative placeholder] Example reason this matters." },
+      ],
+      commonMistakes: [
+        { en: "[Illustrative placeholder] Example scenario-specific mistake." },
+      ],
+      safetyPoints: [
+        { en: "[Illustrative placeholder] Example safety point (e.g. snap-back zone)." },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "d6-l4", label: { en: "Mooring Operations" } },
+      ],
+    },
+    // A scenario with only situation/mission resolved for the current
+    // language still renders correctly — every other field is optional.
+    {
+      situation: { en: "[Illustrative placeholder] A second, shorter scenario." },
+      mission: { en: "[Illustrative placeholder] Its mission statement." },
+    },
+  ],
   professionalTips: [{ en: "[Illustrative placeholder] Card-wide tip, not tied to one phase." }],
   professionalMindset: [{ en: "[Illustrative placeholder] Example mindset statement." }],
   professionalDocumentation: [{ en: "[Illustrative placeholder] Example documentation reference." }],
@@ -320,7 +357,44 @@ Relecture du schéma de Mission A par rapport au document de vision produit d'or
 
 **Confirmé inchangé** : la duplication intentionnelle de `commonMistakes` et `professionalTips` au niveau fiche et au niveau de chaque phase opérationnelle reste telle quelle (deux niveaux éditoriaux distincts, non fusionnés). Aucune autre structure du schéma (`operationalPhases`, `authorityLimits`, `responsibilityMatrix`, `media`, résolution i18n) n'a été touchée.
 
-Le schéma TypeScript complet et l'exemple documentaire ci-dessus ont été mis à jour en place pour refléter ces deux corrections — ils constituent désormais la version finale, gelée.
+Le schéma TypeScript complet et l'exemple documentaire ci-dessus ont été mis à jour en place pour refléter ces deux corrections.
+
+## Révision finale 2 (2026-07-25) — structuration de practicalScenarios, schéma désormais gelé
+
+Deuxième et **dernière** révision structurelle avant gel définitif du schéma. `practicalScenarios` perdait toute sa richesse en tant que simple `LocalizedText[]` (un scénario réduit à un paragraphe) alors qu'un scénario pratique est un objet métier à 7 dimensions.
+
+**Remplacé :**
+```ts
+practicalScenarios?: LocalizedText[];
+```
+**par :**
+```ts
+export interface PracticalScenario {
+  situation: LocalizedText;
+  mission: LocalizedText;
+  expectedActions?: LocalizedText[];
+  why?: LocalizedText[];
+  commonMistakes?: LocalizedText[];
+  safetyPoints?: LocalizedText[];
+  mapReferences?: MapReference[];
+}
+```
+et dans `RoleOnBoardCard` :
+```ts
+practicalScenarios?: PracticalScenario[];
+```
+
+`situation` et `mission` restent les deux seuls champs obligatoires d'un scénario (ce sont eux qui l'ancrent — sans l'un des deux, il n'y a rien de significatif à afficher) ; les 5 autres champs (`expectedActions`, `why`, `commonMistakes`, `safetyPoints`, `mapReferences`) sont indépendamment optionnels, cohérent avec le principe d'indépendance des blocs déjà appliqué partout ailleurs dans le schéma. `mapReferences` réutilise le type `MapReference` existant, comme pour `professionalSkills` et `operationalPhases` — pas de nouvelle forme de référence introduite.
+
+**Composant `RoleOnBoardShared.tsx` ajusté en conséquence** (uniquement cette section) :
+- Nouveau sous-composant `PracticalScenarioBlock`, sur le même modèle que `OperationalPhaseBlock` (déjà existant pour les phases opérationnelles) : chaque scénario est sa propre carte, avec rendu conditionnel de chacun des 5 champs optionnels — un champ absent est simplement omis, jamais de bloc vide.
+- Un scénario dont ni `situation` ni `mission` ne se résolvent dans la langue courante (traduction partielle) n'est pas rendu du tout, plutôt que d'afficher une carte vide.
+- La section "Practical Scenarios" du corps de fiche itère désormais sur la liste de scénarios et rend un `PracticalScenarioBlock` par entrée, au lieu d'une simple liste à puces.
+- 5 nouvelles clés d'interface ajoutées à `T` (`situation`, `mission`, `expectedActions`, `why`, `safetyPoints`), dans les 4 langues — libellés d'interface uniquement, aucun texte éditorial. `commonMistakes` et `mapResources` (déjà existants dans `T`) sont réutilisés tels quels, pas dupliqués.
+
+**Confirmé inchangé :** aucune autre section du schéma touchée (`operationalPhases`, `organizationalPosition`, `professionalSkills`, `authorityLimits`, `responsibilityMatrix`, `media`, résolution i18n). Aucun champ non demandé ajouté, aucune anticipation d'évolution future.
+
+Le schéma TypeScript complet et l'exemple documentaire (ci-dessus, mis à jour en place) constituent désormais la **version finale, gelée**.
 
 ## Fichiers créés (résumé)
 
@@ -329,8 +403,8 @@ Le schéma TypeScript complet et l'exemple documentaire ci-dessus ont été mis 
 
 ## Build
 
-`vite build` ✓ et `tsc --noEmit` ✓ sans erreur, avant la Mission A initiale (une erreur de typage sur des appels `<SL icon=.. text=..>` sans prop `color` explicite avait été détectée par `tsc` et corrigée) et après la révision finale ci-dessus (nouvelle vérification `vite build` + `tsc --noEmit` ✓ sans erreur sur les deux fichiers, y compris les nouveaux types `OrganizationalPosition`/`ProfessionalSkill`).
+`vite build` ✓ et `tsc --noEmit` ✓ sans erreur à chaque étape : Mission A initiale (une erreur de typage sur des appels `<SL icon=.. text=..>` sans prop `color` explicite avait été détectée par `tsc` et corrigée), Révision finale 1 (`OrganizationalPosition`/`ProfessionalSkill`), et Révision finale 2 ci-dessus (`PracticalScenario`) — build et vérification de types propres sur les deux fichiers à chaque itération.
 
 ## Statut
 
-**Schéma et composant terminés et révisés — version finale gelée.** Aucun contenu de fiche créé. Le registre `ROLE_ON_BOARD_REGISTRY` est vide en production (0 fiche). Aucune fiche pilote n'a été ajoutée au fichier source — uniquement l'exemple documentaire ci-dessus, non exécuté, mis à jour pour refléter les deux structures révisées. Commit local effectué pour la Mission A initiale ; la révision finale sera commitée séparément.
+**Schéma et composant terminés — schéma structurel définitivement gelé.** Aucun contenu de fiche créé. Le registre `ROLE_ON_BOARD_REGISTRY` est vide en production (0 fiche). Aucune fiche pilote n'a été ajoutée au fichier source — uniquement l'exemple documentaire ci-dessus, non exécuté, mis à jour pour refléter l'ensemble des structures révisées (Révisions finale 1 et 2).
