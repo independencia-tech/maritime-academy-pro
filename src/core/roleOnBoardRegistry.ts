@@ -1632,13 +1632,706 @@ const BOSUN_CARD: RoleOnBoardCard = {
   ],
 };
 
+// ── OOW ───────────────────────────────────────────────────────
+// mapReferences resolved via Mission D (see
+// audits/2026-07-26_role-on-board-oow-mapreferences.md) and the
+// Product Owner's final decisions on that report. Locations with no
+// validated correspondence are left as mapReferences: [] intentionally
+// (candidates for future lessons — Passage Planning, STS Operations,
+// Pilotage/BRM — not filled with approximate matches).
+const OOW_CARD: RoleOnBoardCard = {
+  rankId: "oow",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Officer of the Watch (OOW) is the officer directly responsible for making navigational decisions for the safe conduct of the vessel during their assigned watch period — managing collision risk, weather, lookout, and the vessel's immediate safety in real time, and directing the bridge team (helmsman, lookout) accordingly. Unlike the Bosun, who organizes and coordinates deck work, the OOW makes navigational decisions and answers for them." },
+    { en: "The OOW exercises authority delegated by the Master for the duration of the watch, but never delegated accountability for professional judgment: within that scope, the OOW acts independently, but always within the Master's standing orders and the vessel's passage plan, escalating anything beyond their authority or judgment immediately." },
+    { en: "A capable OOW combines certified professional competence (COLREG, navigation, watchkeeping regulations) with continuous situational awareness, sound judgment under uncertainty, and clear command of the bridge team — the OOW is rarely alone in a literal sense, but is always the one who must decide." },
+    { en: "The OOW does not manage the deck department's daily organization (that remains the Chief Officer's and Bosun's domain), while remaining ready to direct deck operations whenever they affect the safety of navigation (e.g. anchoring, departure, mooring, man overboard)." },
+    { en: "Where the Bosun's judgment resolves ambiguity at the deck-team level, the OOW's judgment resolves ambiguity at the level of the vessel itself — a wrong call here has consequences for the whole ship, not just a task or a team." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Master (ultimate authority at all times)" },
+      { en: "Chief Officer (for administrative and departmental matters outside the watch itself)" },
+    ],
+    worksWith: [
+      { en: "Other OOWs during watch handovers" },
+      { en: "Bosun and deck crew during watch-related deck operations (rounds, mooring, anchoring)" },
+      { en: "Engine department OOW/duty engineer for cross-department coordination" },
+      { en: "Pilots and VTS during pilotage and port approaches" },
+    ],
+    mentors: [
+      { en: "Master and senior officers, who guide the OOW's professional development toward Chief Mate certification" },
+    ],
+    supports: [
+      { en: "Deck cadets and bridge trainees during bridge familiarization and training" },
+      { en: "The Bosun and deck crew, whom the OOW directs during watch-related operations without managing their daily work organization" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Collision avoidance and COLREG application" }, mapReferences: [{ kind: "lesson", lessonId: "d1-l8" }] },
+    { label: { en: "Bridge resource management and team communication" }, mapReferences: [{ kind: "lesson", lessonId: "d4-l1" }, { kind: "lesson", lessonId: "d1-l10" }] },
+    { label: { en: "Situational awareness and information integration (radar, AIS, ECDIS, visual, weather)" }, mapReferences: [{ kind: "lesson", lessonId: "d3-l6" }] },
+    { label: { en: "Passage planning execution and monitoring" } },
+    { label: { en: "Watchkeeping organization and handover discipline" }, mapReferences: [{ kind: "lesson", lessonId: "d1-l10" }] },
+    { label: { en: "Emergency response and decision-making under pressure" }, mapReferences: [{ kind: "lesson", lessonId: "d3-l7" }] },
+    { label: { en: "Pilotage and port approach coordination" }, mapReferences: [{ kind: "lesson", lessonId: "d4-l2" }] },
+    { label: { en: "Navigational equipment operation and troubleshooting" }, mapReferences: [{ kind: "lesson", lessonId: "d3-l6" }] },
+    { label: { en: "Regulatory compliance and record-keeping at officer level" } },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the OOW's focus is not organizing the deck team (that is the Bosun's responsibility) but ensuring the vessel is navigationally ready to proceed safely: the passage plan is complete and appropriate, navigational equipment is functioning, and the Master's standing orders and pilotage arrangements are understood. The OOW verifies navigational readiness as part of the vessel's overall readiness, then reports that assessment to the Master — the OOW does not personally prepare mooring equipment, but must be satisfied that the vessel, not just the deck, is ready to get underway." },
+      responsibilities: [
+        { en: "Prepare or review the passage plan for the upcoming departure and initial route, verifying it against charts, notices to mariners, and known hazards" },
+        { en: "Test and confirm the operational status of navigational equipment (radar, ECDIS, gyro, GPS, engine telegraph, whistle) required for departure" },
+        { en: "Confirm tidal, weather, and traffic conditions relevant to the departure window with the Master, and assess their impact on the intended departure" },
+        { en: "Liaise with the pilot (if embarked) or confirm pilotage arrangements, and brief or receive briefing on the passage plan as appropriate" },
+        { en: "Confirm with the Bosun/Chief Officer that the deck team is ready and stationed, without personally managing the deck preparation itself" },
+        { en: "Verify communication equipment (VHF, internal comms) is operational and appropriate channels are set" },
+        { en: "Verify that any limitations affecting navigation (equipment defects, temporary restrictions, chart corrections, standing orders) have been identified and considered before departure" },
+        { en: "Report navigational readiness to the Master, distinct from and in addition to the deck team's readiness reported by the Bosun/Chief Officer" },
+      ],
+      equipment: [
+        { en: "Passage plan, charts (paper and/or ECDIS), notices to mariners" },
+        { en: "Navigational equipment (radar, ECDIS, gyro/magnetic compass, GPS, echo sounder)" },
+        { en: "Engine order telegraph / communication with the engine room" },
+        { en: "VHF radio, whistle, navigation lights" },
+        { en: "Bridge checklists" },
+        { en: "Master's standing orders and night order book" },
+      ],
+      risks: [
+        { en: "An incomplete or unverified passage plan discovered only after departure has begun" },
+        { en: "A navigational equipment fault not detected before departure, discovered only when needed" },
+        { en: "Miscommunication with the pilot or Master regarding the passage plan or specific hazards" },
+        { en: "Confusing navigational readiness with deck readiness, and reporting one as if it covered the other" },
+        { en: "Proceeding under time pressure without having genuinely verified all navigational elements" },
+      ],
+      bestPractices: [
+        { en: "Treat passage plan review as a genuine check, not a formality — verify it against current charts and notices, not from memory of a similar route" },
+        { en: "Test every piece of navigational equipment intended for use during departure, not only the ones expected to be needed immediately. If any critical equipment is unavailable or degraded, ensure the Master is informed before departure decisions are made" },
+        { en: "Confirm pilotage arrangements and communicate clearly with the pilot before the vessel gets underway, not after" },
+        { en: "Keep navigational readiness and deck readiness as clearly distinct reports to the Master — do not blend them into a single assumption" },
+        { en: "Raise any uncertainty about the passage plan or conditions with the Master before departure, not once underway" },
+      ],
+      commonMistakes: [
+        { en: "Reviewing the passage plan superficially because the route is familiar" },
+        { en: "Assuming navigational equipment is functional because it was working on the previous watch" },
+        { en: "Reporting 'ready' to the Master based on deck readiness alone, without a separate navigational verification" },
+        { en: "Failing to brief or receive a proper briefing from the pilot before departure" },
+        { en: "Proceeding with an unresolved uncertainty about weather, traffic, or the passage plan under pressure to depart on schedule" },
+      ],
+      professionalTips: [
+        { en: "A passage plan is only as good as the last time it was actually checked against current information — familiarity is not verification" },
+        { en: "The OOW's readiness report to the Master should never be a formality — it is a professional confirmation that the navigational picture has genuinely been checked" },
+        { en: "Build a habit of testing equipment deliberately, not just observing that it appears to be running" },
+        { en: "A good relationship with the pilot starts with a clear, complete briefing — ambiguity here carries into the whole passage" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d3-l6" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the OOW directs the actual conduct of the vessel — ordering the helm, coordinating with the engine room, and managing the ship's movement away from the berth — while relying on the Bosun to supervise the technical execution of line-handling. The OOW's focus is the vessel's behaviour in the water: its position relative to the berth, other traffic, and the passage ahead." },
+      responsibilities: [
+        { en: "Direct the helm and engine orders required to manoeuvre the vessel safely away from the berth, in line with the passage plan and pilot's guidance if embarked" },
+        { en: "Maintain continuous situational awareness of the vessel's position relative to the berth, other vessels, and the surrounding channel throughout the manoeuvre" },
+        { en: "Continuously reassess whether the manoeuvre remains consistent with the passage plan and current conditions, adapting only when safety requires it" },
+        { en: "Communicate clearly with the Bosun regarding the sequence of letting go lines, confirming readiness before ordering the next step" },
+        { en: "Monitor engine response and vessel behaviour against what was ordered, and determine promptly whether corrective action or escalation is required" },
+        { en: "Coordinate with the pilot (if embarked), respecting their conduct of the vessel while maintaining an independent assessment of the situation at all times, and retaining the Master's overriding authority and the OOW's own duty to intervene if safety requires it" },
+        { en: "Confirm each mooring station's status as relayed by the Bosun, integrating it into the overall picture of the manoeuvre's progress" },
+        { en: "Report to the Master any deviation from the plan, unexpected vessel behaviour, or traffic development requiring their attention" },
+      ],
+      equipment: [
+        { en: "Helm, engine order telegraph, bridge navigation equipment (radar, ECDIS, gyro)" },
+        { en: "Thruster controls (where fitted)" },
+        { en: "VHF radio for communication with the Bosun, pilot, tugs (if used), and VTS/port control" },
+        { en: "Passage plan and berth/channel chart" },
+        { en: "Whistle and navigation lights" },
+      ],
+      risks: [
+        { en: "Misjudging the vessel's position or movement relative to the berth or channel during a critical stage of the manoeuvre" },
+        { en: "Ordering an action based on an assumption about mooring station readiness that has not actually been confirmed" },
+        { en: "Delayed recognition that the vessel is not responding to helm or engine orders as expected" },
+        { en: "Ambiguity in authority during pilotage — hesitating to intervene when the OOW's own judgment indicates a safety concern" },
+        { en: "Loss of shared situational awareness between bridge team members due to ineffective communication" },
+        { en: "Losing track of surrounding traffic while focused on the departure sequence itself" },
+      ],
+      bestPractices: [
+        { en: "Confirm mooring station status explicitly before ordering the next step of the sequence — never assume based on elapsed time alone" },
+        { en: "Cross-check the vessel's actual behaviour against the expected response to every helm or engine order" },
+        { en: "Maintain a clear, standing awareness of surrounding traffic throughout the manoeuvre, not only at its start" },
+        { en: "With a pilot embarked, monitor their conduct actively and be prepared to question or intervene if something appears unsafe — respect for the pilot's role does not remove the OOW's own responsibility" },
+        { en: "Keep the bridge team informed of significant developments so everyone shares the same operational picture" },
+        { en: "Report any deviation from the plan to the Master immediately, rather than waiting to see if it resolves on its own" },
+      ],
+      commonMistakes: [
+        { en: "Ordering the next step of the departure sequence based on assumed timing rather than confirmed station status" },
+        { en: "Failing to notice early that the vessel is not responding as expected to helm or engine orders" },
+        { en: "Deferring entirely to the pilot's judgment without maintaining independent situational awareness" },
+        { en: "Becoming absorbed in the mooring sequence and losing awareness of another vessel or hazard in the vicinity" },
+        { en: "Delaying a report to the Master about a developing concern, hoping it will resolve before it needs to be raised" },
+      ],
+      professionalTips: [
+        { en: "Trust the Bosun's station reports, but keep building your own independent picture of the vessel's overall movement — the two should confirm each other, not replace each other" },
+        { en: "A pilot's presence changes who conducts the vessel, not who is responsible for its safety — stay engaged, not passive" },
+        { en: "The moment you notice the vessel is not behaving as expected is the moment to act, not the moment to keep watching to be sure" },
+        { en: "Departure manoeuvres reward officers who manage their attention deliberately, constantly reprioritizing as the manoeuvre evolves" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d4-l4" }],
+    },
+
+    navigation: {
+      overview: { en: "Navigation is where the OOW's core responsibility is exercised continuously: maintaining a safe navigational watch, applying COLREG to avoid collision, monitoring the vessel's progress against the passage plan, and directing the bridge team throughout. Unlike the Bosun, who organizes the deck crew's watch rotation, the OOW is the one who decides — course changes, speed adjustments, actions to avoid another vessel — and answers personally for those decisions. Safe navigation is not achieved by reacting quickly to danger, but by recognizing developing situations early enough that decisive action remains simple and effective." },
+      responsibilities: [
+        { en: "Maintain a continuous and effective lookout, by sight, hearing, and all available means (radar, AIS, ECDIS), appropriate to the prevailing circumstances and conditions" },
+        { en: "Assess risk of collision with any observed vessel and take early, substantial action in accordance with COLREG when required, well before a close-quarters situation develops" },
+        { en: "Monitor the vessel's position against the passage plan continuously, verifying progress by more than one method where possible" },
+        { en: "Continuously reassess previous navigational decisions as conditions evolve, adapting the plan whenever safety requires" },
+        { en: "Direct the helmsman with clear, standard orders, and verify the vessel's response matches what was ordered" },
+        { en: "Integrate radar, AIS, ECDIS, and visual information into a single, coherent picture of the surrounding traffic and navigational situation, rather than relying on any single source alone" },
+        { en: "Communicate significant navigational decisions or developments to the Master, in accordance with standing orders, and call the Master without hesitation when required" },
+        { en: "Brief the bridge team clearly on the current situation, particularly during watch handover, ensuring the incoming OOW has a complete and accurate picture" },
+        { en: "Record navigational events, decisions, and observations accurately in the deck logbook or bridge record" },
+      ],
+      equipment: [
+        { en: "Radar, ARPA, AIS, ECDIS, gyro/magnetic compass, echo sounder" },
+        { en: "Bridge alarm / BNWAS (where fitted)" },
+        { en: "VHF radio, sound signalling equipment" },
+        { en: "Passage plan, charts, Master's standing orders and night order book" },
+        { en: "Binoculars" },
+      ],
+      risks: [
+        { en: "Misjudging risk of collision or delaying action until a close-quarters situation has already developed" },
+        { en: "Over-reliance on a single source of information (e.g. ECDIS or radar alone) without cross-checking against others" },
+        { en: "Confirmation bias — interpreting new information only in a way that supports an earlier assessment instead of reassessing the situation objectively" },
+        { en: "Loss of situational awareness due to fatigue, distraction, or prolonged routine watches" },
+        { en: "Failing to call the Master when required by standing orders, out of reluctance to escalate a developing situation" },
+        { en: "An incomplete or unclear watch handover leading to a gap in the incoming OOW's understanding of the situation" },
+        { en: "Miscommunication with the helmsman leading to an incorrect or delayed response to an order" },
+      ],
+      bestPractices: [
+        { en: "Treat every vessel sighted as requiring an assessment, however routine the traffic appears" },
+        { en: "Take early and substantial action when risk of collision exists — a small, early alteration is safer and clearer than a late, sharp one" },
+        { en: "Think ahead of the vessel, not only around it — continuously anticipate where today's traffic picture will be in the next several minutes" },
+        { en: "Cross-check radar, AIS, ECDIS, and visual observation against each other continuously, rather than trusting one source in isolation" },
+        { en: "Call the Master proactively in any situation covered by standing orders, or whenever genuinely uncertain — this is a standing invitation, not a last resort" },
+        { en: "Give a complete, honest handover at the end of watch, including anything unresolved or uncertain, not only what went well" },
+        { en: "Manage personal fatigue and the bridge team's alertness actively, requesting relief or additional support when needed" },
+      ],
+      commonMistakes: [
+        { en: "Delaying collision avoidance action while waiting for more certainty than the situation allows" },
+        { en: "Trusting a single navigational source (e.g. ECDIS track) without independently verifying the vessel's actual position" },
+        { en: "Becoming mentally committed to an initial assessment despite changing evidence" },
+        { en: "Treating a night order or standing order as optional guidance rather than a clear instruction from the Master" },
+        { en: "Rushing or shortening a watch handover because the relieving officer is 'familiar with the situation already'" },
+        { en: "Hesitating to escalate a developing concern, hoping it will resolve before the Master needs to be informed" },
+      ],
+      professionalTips: [
+        { en: "COLREG gives you the rules, but judgment tells you when to apply them early enough to matter — waiting for certainty is often waiting too long" },
+        { en: "No single piece of equipment tells the whole story — the OOW's real skill is combining several imperfect pictures into one reliable one" },
+        { en: "Calling the Master is never a sign of weakness; it is exactly what the role and the standing orders expect of you" },
+        { en: "The quality of your watch is measured as much by the clarity of your handover as by how the watch itself was conducted" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d1-l10" }, { kind: "lesson", lessonId: "d1-l9" }, { kind: "lesson", lessonId: "d1-l8" }, { kind: "lesson", lessonId: "d3-l6" }, { kind: "lesson", lessonId: "d1-l6" }],
+    },
+
+    anchoring: {
+      overview: { en: "While the Bosun takes charge at the forecastle, the OOW conducts the anchoring operation from the bridge — selecting or confirming the anchoring position, directing the timing and method of letting go, and monitoring the vessel's position continuously afterward to detect dragging before it becomes a safety concern. The OOW's judgment here is less about the mechanics of the anchor and chain, and more about whether the vessel is, and remains, in a safe position relative to the seabed, other vessels, and the surrounding area. Anchoring is not the end of navigation — it is a different phase of navigation requiring continuous assessment." },
+      responsibilities: [
+        { en: "Select or confirm the anchoring position, verifying depth, holding ground, swinging room, and proximity to other vessels or hazards against the chart" },
+        { en: "Direct the approach to the anchoring position, ordering engine and helm as required, and communicate the plan clearly to the forecastle team via the Bosun" },
+        { en: "Order the anchor let go at the appropriate position and moment, and confirm chain paid out matches the intended scope for the depth and conditions" },
+        { en: "Verify that the vessel has settled as expected after anchoring before considering the operation complete" },
+        { en: "Continuously monitor the vessel's position after anchoring, using multiple methods (visual bearings, radar, GPS) to detect any sign of dragging" },
+        { en: "Integrate the Bosun's forecastle reports (chain tendency, amount out) with the bridge's own positional data into a single assessment of the vessel's status" },
+        { en: "Reassess the anchoring position's safety as conditions change (wind, tide, traffic), and take action (veering more chain, weighing anchor) if the position is no longer adequate" },
+        { en: "Communicate any developing concern about dragging or position to the Master immediately, in line with standing orders" },
+        { en: "Organize and confirm the anchor watch arrangement with the Bosun, ensuring the bridge maintains its own independent monitoring in parallel" },
+      ],
+      equipment: [
+        { en: "Chart, radar, GPS/ECDIS for position monitoring and dragging detection" },
+        { en: "Anchor alarm (GPS/ECDIS), where fitted" },
+        { en: "VHF radio or bridge-to-forecastle communication with the Bosun" },
+        { en: "Visual bearings / azimuth compass for independent position checks" },
+        { en: "Anchor watch log / position-fixing schedule" },
+      ],
+      risks: [
+        { en: "Selecting or confirming an anchoring position without adequately verifying holding ground, depth, or swinging room" },
+        { en: "Relying solely on the forecastle's report of chain tendency without independently verifying the vessel's position from the bridge" },
+        { en: "Delayed recognition of dragging because position checks are too infrequent or inconsistent in method" },
+        { en: "Confirmation bias after anchoring — interpreting minor position changes as normal without reassessing whether conditions have changed" },
+        { en: "Failing to reassess the anchoring position as conditions change, assuming the initial assessment remains valid indefinitely" },
+        { en: "Miscommunication between the bridge and forecastle regarding chain amount, tendency, or an emerging concern" },
+      ],
+      bestPractices: [
+        { en: "Verify the anchoring position against the chart and known conditions before committing to it, not only against general familiarity with the area" },
+        { en: "Establish a clear reference point immediately after anchoring so that any subsequent movement can be assessed objectively" },
+        { en: "Fix the vessel's position by more than one independent method, at an interval appropriate to the conditions, not only when something seems wrong" },
+        { en: "Treat the Bosun's forecastle reports and the bridge's own instruments as two independent checks that should agree — investigate promptly if they do not" },
+        { en: "Reassess the anchorage explicitly whenever wind, tide, or traffic conditions change materially, rather than assuming the original assessment still holds" },
+        { en: "Communicate proactively with the Master about any developing concern, however early or uncertain" },
+      ],
+      commonMistakes: [
+        { en: "Confirming an anchoring position based on habit or convenience rather than a genuine check against current conditions" },
+        { en: "Treating the forecastle's report as the only source of truth about the vessel's position, without independent verification from the bridge" },
+        { en: "Fixing position too infrequently during quiet periods, then discovering a significant drift too late" },
+        { en: "Failing to adjust chain scope or reposition when conditions change materially after the initial anchoring" },
+        { en: "Delaying escalation to the Master while attempting to confirm a dragging concern alone" },
+      ],
+      professionalTips: [
+        { en: "An anchoring position that was safe when chosen is not guaranteed to remain safe — reassessing it is a continuous responsibility, not a one-time decision" },
+        { en: "The forecastle's judgment and the bridge's instruments should tell the same story — when they don't, that disagreement is itself important information" },
+        { en: "Dragging is far easier to manage when caught early through routine position checks than when it is discovered late through a sudden, obvious shift" },
+        { en: "A calm, well-organized anchor watch on the bridge is as much a discipline as a well-run watch underway — the vessel is still your responsibility, even at rest" },
+      ],
+      mapReferences: [],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the OOW's watch responsibility shifts from active navigation to maintaining the vessel's safety and readiness at the berth — overseeing gangway security at the officer level, monitoring the vessel's condition relative to the berth, and remaining the officer responsible for operational decisions affecting the vessel's safety and immediate readiness while alongside. The Bosun organizes and runs the deck team's port workload; the OOW ensures that workload never compromises the vessel's overall safety, security, or readiness." },
+      responsibilities: [
+        { en: "Confirm the mooring and gangway watch arrangements established by the Bosun are adequate for the port stay's conditions (traffic, tide, security level)" },
+        { en: "Maintain oversight of the vessel's security level and access control policy, escalating or making decisions on ambiguous situations referred up by the Bosun" },
+        { en: "Monitor the vessel's condition relative to the berth (draft, trim, mooring tension) as cargo or ballast operations proceed, coordinating with cargo officers as relevant" },
+        { en: "Monitor weather and port conditions continuously, reassessing whether they affect the vessel's safety alongside or its readiness to depart" },
+        { en: "Ensure fire watch, pollution prevention watch, or other high-risk operation safeguards (bunkering, hot work) are properly authorized and not compromised by workload pressure" },
+        { en: "Liaise with agents, authorities, or surveyors as required by the Master, distinct from the Bosun's coordination of contractor deck work" },
+        { en: "Maintain awareness of the vessel's readiness to get underway if required unexpectedly (e.g. weather, emergency), and communicate any factor affecting that readiness to the Master" },
+        { en: "Record port-related navigational and security events in the deck logbook, distinct from the Bosun's own operational reports" },
+      ],
+      equipment: [
+        { en: "Access control log, security level documentation (ISPS)" },
+        { en: "CCTV / security monitoring system (where fitted)" },
+        { en: "VHF radio, internal communication with the Bosun and duty engineer" },
+        { en: "Draft/trim monitoring instruments" },
+        { en: "Passage plan readiness reference (for unplanned departure)" },
+      ],
+      risks: [
+        { en: "A security escalation from the gangway watch not receiving prompt officer-level attention or decision" },
+        { en: "Draft or trim changes during cargo/ballast operations not being monitored closely enough to detect an issue with berth clearance or stability" },
+        { en: "High-risk operations (bunkering, hot work) proceeding without proper authorization or oversight due to competing priorities" },
+        { en: "Complacency during long port stays leading to reduced vigilance" },
+        { en: "Reduced readiness to get underway unexpectedly not being recognized or communicated in time" },
+        { en: "Ambiguity between the OOW's security/safety oversight and the Bosun's operational coordination, leading to a gap where neither addresses an issue" },
+      ],
+      bestPractices: [
+        { en: "Set clear escalation criteria for gangway watchkeepers before the port stay begins so ambiguous security situations reach the OOW promptly" },
+        { en: "Monitor draft and trim actively during cargo or ballast operations, not only at the start and end of the port stay" },
+        { en: "Verify personally that fire and pollution watch arrangements are genuinely in place during high-risk operations, not only scheduled" },
+        { en: "Regularly reassess whether conditions alongside have changed, even if no report has been received" },
+        { en: "Maintain a clear mental picture of what would be required to get underway on short notice, updating it as conditions change" },
+        { en: "Keep the Master informed of any factor — security, technical, or environmental — that could affect the vessel's readiness or safety while alongside" },
+      ],
+      commonMistakes: [
+        { en: "Treating gangway security as entirely the Bosun's responsibility rather than maintaining officer-level oversight of escalations" },
+        { en: "Failing to notice a gradual change in draft or trim during cargo operations because attention is focused elsewhere" },
+        { en: "Allowing a high-risk operation to proceed informally without confirming proper authorization" },
+        { en: "Losing track of the vessel's readiness to depart while absorbed in routine port administration" },
+        { en: "Assuming the Bosun's operational reports cover everything relevant to the vessel's overall safety, without independent officer-level verification" },
+      ],
+      professionalTips: [
+        { en: "Port stays can feel administratively quiet, but the vessel's safety obligations do not pause — maintain the same standard of attention as during navigation, adapted to a different set of risks" },
+        { en: "The Bosun runs the deck team's port workload; your job is to make sure that workload never creates a safety or security gap the team cannot see from where they stand" },
+        { en: "Know, at any moment during a port stay, what it would take to get the vessel ready to move — this awareness costs little to maintain and matters enormously if it is suddenly needed" },
+        { en: "Security escalations deserve the same seriousness as a navigational one — a gangway watch that hesitates to call you is a bigger risk than the situation it was unsure about" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d4-l2" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "STS operations place the OOW in direct command of the vessel's approach, positioning, and station-keeping alongside another vessel — a task requiring precise ship-handling and continuous judgment, since two vessels are moving relative to each other rather than one vessel relative to a fixed berth. While the Bosun leads the deck team's rigging and monitoring at the interface between the hulls, the OOW is responsible for the vessel's actual manoeuvring and for the decision to proceed, hold position, or abort if conditions deteriorate. Throughout the operation, the OOW continuously reassesses whether the conditions that justified proceeding still exist." },
+      responsibilities: [
+        { en: "Plan and direct the approach to the other vessel, using helm, engine, and thrusters (where fitted) to achieve and maintain a safe closing speed and angle" },
+        { en: "Maintain continuous situational awareness of the relative position, speed, and motion of both vessels throughout the approach and the operation" },
+        { en: "Communicate clearly with the other vessel's bridge team (or through an agreed common frame, e.g. the Master's designated liaison), establishing procedures before the approach begins" },
+        { en: "Continuously verify that both vessels continue to operate under the same shared understanding of the manoeuvre and its current status" },
+        { en: "Integrate the Bosun's reports on fender condition and mooring status with the bridge's own assessment of relative vessel motion into a single operational picture" },
+        { en: "Decide whether to continue, hold, or abort the approach or the operation itself if conditions (weather, sea state, traffic, equipment) develop unfavourably" },
+        { en: "Direct or coordinate emergency separation procedures if ordered, ensuring both the deck team and the counterpart vessel are aware of the action being taken" },
+        { en: "Communicate any developing concern about vessel separation, weather, or equipment to the Master immediately, in line with standing orders" },
+      ],
+      equipment: [
+        { en: "Helm, engine order telegraph, thruster controls (where fitted)" },
+        { en: "Radar, ECDIS, AIS for relative motion monitoring" },
+        { en: "Mooring load monitoring or tension indicators (where fitted)" },
+        { en: "VHF radio for communication with the Bosun, the counterpart vessel, and the Master" },
+        { en: "Passage plan / STS operational plan, weather and sea state information" },
+      ],
+      risks: [
+        { en: "Misjudging the approach speed or angle, resulting in an unsafe closing rate or contact between vessels" },
+        { en: "Relying on the counterpart vessel's assumed procedures without confirming them beforehand, particularly with an unfamiliar company or crew" },
+        { en: "Loss of shared situational awareness between the two bridge teams despite ongoing communication" },
+        { en: "Delayed recognition that relative vessel motion has become unsafe due to changing weather or sea state" },
+        { en: "Hesitating to abort or hold the operation once already committed, despite developing signs that conditions are no longer safe" },
+        { en: "Miscommunication between the OOW and the Bosun regarding fender or mooring status during a rapidly evolving situation" },
+      ],
+      bestPractices: [
+        { en: "Confirm communication procedures and abort criteria with the counterpart vessel before the approach begins, not during it" },
+        { en: "Monitor relative motion continuously throughout the operation, not only during the approach phase" },
+        { en: "Set a personal threshold for aborting or holding the operation before it begins, and act on it without hesitation if conditions reach it" },
+        { en: "Reconfirm critical assumptions whenever conditions change rather than relying on the original briefing alone" },
+        { en: "Treat the Bosun's fender and mooring reports as one input among several — combine them with the bridge's own assessment of relative motion" },
+        { en: "Communicate proactively with the Master about any deteriorating condition, rather than waiting until the situation has clearly become unsafe" },
+      ],
+      commonMistakes: [
+        { en: "Committing to the approach without a clear, mutually confirmed understanding of procedures with the counterpart vessel" },
+        { en: "Continuing an operation past a developing safety concern because significant time or effort has already been invested" },
+        { en: "Underestimating how quickly relative vessel motion can change in swell, wind, or wake conditions" },
+        { en: "Treating the Bosun's reports as sufficient on their own, without maintaining independent bridge-level assessment" },
+        { en: "Delaying a decision to abort or hold, hoping conditions will improve on their own" },
+      ],
+      professionalTips: [
+        { en: "Decide your abort criteria before you need them — a threshold set in advance is followed more reliably than one decided under pressure" },
+        { en: "STS success depends on precise, continuous ship-handling — small, early corrections are far safer than large, late ones" },
+        { en: "Two ships moving together create their own dynamics; do not assume experience with one vessel type automatically transfers to another" },
+        { en: "The hardest decision in STS is often not how to proceed, but when to stop — protect your ability to make that call by not waiting too long" },
+      ],
+      mapReferences: [],
+    },
+
+    maintenance: {
+      overview: { en: "Unlike the Bosun, who organizes and inspects deck maintenance work, the OOW's maintenance responsibility centres on the navigational and safety-critical equipment their watch depends on — verifying that equipment defects are properly recorded, reported, and followed up, and ensuring that no piece of bridge or navigational equipment is silently tolerated as 'not quite right.' The OOW does not typically perform technical repairs personally, but is the one who identifies, assesses, documents, and escalates any degradation that could affect the safety of navigation." },
+      responsibilities: [
+        { en: "Test and verify navigational and bridge equipment during routine watch duties, not only when a defect is suspected" },
+        { en: "Record any equipment defect, degradation, or irregularity accurately and promptly in the appropriate log, distinguishing confirmed faults from suspected ones" },
+        { en: "Report navigational equipment defects to the Master and, where relevant, coordinate with the Chief Officer or duty engineer for repair or workaround" },
+        { en: "Verify that a reported defect has actually been addressed before considering it resolved, rather than assuming a report alone closes the matter" },
+        { en: "Assess the operational impact of any outstanding defect on the current or upcoming passage, adjusting watch practices (e.g. increased reliance on other methods) accordingly" },
+        { en: "Verify that any temporary operational limitations or alternative procedures resulting from equipment defects are understood and consistently applied throughout the watch" },
+        { en: "Ensure required navigational publications, charts, and software (ECDIS updates, notices to mariners) are current and correctly applied" },
+        { en: "Communicate any degraded equipment status clearly during watch handover, so the incoming OOW inherits an accurate picture, not an assumption of full functionality" },
+      ],
+      equipment: [
+        { en: "Bridge equipment log / defect reporting system" },
+        { en: "Planned Maintenance System (PMS) interface or defect tracking system (where applicable)" },
+        { en: "Navigational publications, chart correction records, ECDIS software update status" },
+        { en: "Backup or alternative navigational methods relevant to any degraded equipment" },
+        { en: "Master's standing orders regarding equipment defects and reporting thresholds" },
+      ],
+      risks: [
+        { en: "A navigational equipment defect going unreported because it seems minor or is expected to resolve itself" },
+        { en: "Continuing to rely on a piece of equipment as if fully functional after a defect has been identified but not yet resolved" },
+        { en: "Normalization of deviance — gradually accepting degraded equipment as 'normal' because it has been operating that way for some time" },
+        { en: "An incomplete watch handover leaving the incoming OOW unaware of a known degradation" },
+        { en: "Outdated charts or publications being used because updates were not verified or applied" },
+        { en: "Assuming a reported defect has been fixed without confirming the repair was actually completed" },
+      ],
+      bestPractices: [
+        { en: "Test equipment actively during the watch, not only reactively when something seems wrong" },
+        { en: "Record defects factually and specifically — what is affected, since when, and what has been done about it" },
+        { en: "Adjust watch practices immediately when equipment is degraded, rather than waiting for the repair before compensating" },
+        { en: "Whenever possible, verify degraded equipment using an independent method rather than relying on repeated readings from the same source" },
+        { en: "Verify chart corrections and publication updates are current before relying on them, particularly before an unfamiliar passage" },
+        { en: "Include the full, current status of any equipment defect in every watch handover, without exception" },
+      ],
+      commonMistakes: [
+        { en: "Not reporting a minor equipment irregularity because it does not yet affect the current watch" },
+        { en: "Continuing normal watch practice as if equipment were fully functional after a defect has been identified" },
+        { en: "Passing along a defect report from a previous watch without personally verifying its current status" },
+        { en: "Relying on outdated charts or publications because updates were not checked" },
+        { en: "Giving an incomplete handover that omits a known equipment limitation, leaving the next OOW to discover it independently" },
+      ],
+      professionalTips: [
+        { en: "An unreported defect is worse than a reported one — the OOW who says nothing has not made the equipment work, only made the risk invisible" },
+        { en: "Treat 'it's probably fine' as a signal to check, not a conclusion — equipment degradation rarely announces itself clearly" },
+        { en: "A watch handover that mentions every known limitation, however minor, is worth more than one that sounds reassuring but leaves gaps" },
+        { en: "Good watchkeeping habits assume equipment can fail — build in the cross-checks that make a single defect survivable, not catastrophic" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d3-l6" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the OOW's first responsibility is often the one most easily overlooked under pressure: the vessel must still be safely conducted, even while the emergency itself is being managed. Depending on the nature of the emergency, the OOW may be the one who first recognizes and raises the alarm, the one who continues to navigate the vessel while others respond, or the one who takes on a specific emergency role under the Master's direction. Detailed procedures for each type of emergency are covered in the Safety curriculum; this phase focuses on how the OOW is expected to think and act once an emergency begins. An emergency changes the priorities of navigation, but it never removes the responsibility to navigate safely." },
+      responsibilities: [
+        { en: "Recognize and raise the alarm immediately upon detecting an emergency, providing an initial, accurate assessment (nature, location, immediate risk) to the Master" },
+        { en: "Continue to ensure the safe navigation of the vessel throughout the emergency, unless explicitly relieved of the watch or directed otherwise by the Master" },
+        { en: "Confirm explicitly whenever responsibility for the conduct of the vessel is transferred, relieved, or resumed during the emergency" },
+        { en: "Take the specific emergency role assigned by the muster list or the Master's direction, integrating it with ongoing navigational responsibility where both apply" },
+        { en: "Maintain clear, calm communication with the Master and bridge team, providing updates as the situation develops rather than waiting to be asked" },
+        { en: "Adjust the vessel's course, speed, or position as required by the emergency (e.g. manoeuvring for a man overboard recovery, positioning for firefighting or damage control support)" },
+        { en: "Coordinate with other departments (engine, safety teams) through the bridge as the vessel's point of navigational continuity during the response" },
+        { en: "Record key times, decisions, and communications accurately as the emergency unfolds, to the extent practicable without compromising the response itself" },
+        { en: "Reassess continuously whether the vessel's position, heading, or speed remain appropriate as the emergency and its response evolve" },
+      ],
+      equipment: [
+        { en: "Bridge communication equipment (radio, internal comms, alarms)" },
+        { en: "Emergency checklists / quick-reference cards specific to the bridge role in various emergency types" },
+        { en: "Emergency manoeuvring information / bridge contingency procedures (where applicable)" },
+        { en: "Manoeuvring equipment (helm, engine controls, thrusters) as required to support the emergency response" },
+        { en: "Muster list and emergency organization reference" },
+      ],
+      risks: [
+        { en: "Losing focus on the vessel's safe navigation while attention is consumed by the emergency itself" },
+        { en: "Tunnel vision — focusing exclusively on the emergency while losing awareness of the wider navigational picture" },
+        { en: "Delayed or unclear initial alarm and assessment, slowing the overall response" },
+        { en: "Confusion between navigational responsibility and an assigned emergency role when both apply simultaneously" },
+        { en: "Miscommunication with the Master or bridge team under the stress of a developing situation" },
+        { en: "Failing to reassess the vessel's course, speed, or position as the emergency response itself changes the surrounding circumstances (e.g. other vessels approaching to assist)" },
+      ],
+      bestPractices: [
+        { en: "Raise the alarm the moment an emergency is recognized — a slightly imperfect early report is more valuable than a delayed, complete one" },
+        { en: "Never let the emergency response cause navigation to be forgotten — explicitly confirm who is conducting the vessel at every stage" },
+        { en: "Communicate proactively and specifically with the Master, rather than waiting to be asked for an update" },
+        { en: "Reduce uncertainty by communicating intentions as well as observations whenever time permits" },
+        { en: "Keep manoeuvring decisions during an emergency deliberate and clearly communicated, even under time pressure" },
+        { en: "Continuously reassess the surrounding situation as the response unfolds — other vessels, changing weather, or drifting position can all change what 'safe navigation' requires" },
+      ],
+      commonMistakes: [
+        { en: "Becoming absorbed in the emergency response and neglecting the vessel's ongoing safe navigation" },
+        { en: "Delaying the initial alarm while trying to fully confirm the situation first" },
+        { en: "Assuming someone else is conducting the vessel when no explicit handover of that responsibility has occurred" },
+        { en: "Providing updates to the Master only when asked, rather than proactively as the situation develops" },
+        { en: "Failing to reassess navigational safety as the emergency response itself changes the surrounding circumstances" },
+      ],
+      professionalTips: [
+        { en: "In any emergency, someone must still be navigating the vessel — make sure that responsibility is never left ambiguous, especially if you are also assigned another role" },
+        { en: "An early, imperfect alarm saves more time than a late, polished one — raise it the moment you recognize the situation" },
+        { en: "The Master relies on the OOW to keep the navigational picture current throughout an emergency — this responsibility does not pause because something more dramatic is happening" },
+        { en: "The discipline you bring to an emergency reflects the discipline you have practiced during every routine watch beforehand" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d3-l7" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "During a night watch, radar shows a target on a steady bearing with decreasing range — a possible risk of collision — but visibility is reduced and the target's aspect is not yet clearly confirmed visually." },
+      mission: { en: "Decide and act early enough that any necessary action remains simple and unambiguous to the other vessel." },
+      expectedActions: [
+        { en: "Do not wait for full visual confirmation before assessing the situation — treat a steady bearing with decreasing range as a developing risk of collision" },
+        { en: "Take early and substantial action in accordance with COLREG once risk is assessed, rather than a late, minor adjustment" },
+        { en: "Inform the Master if the situation approaches any threshold defined in standing orders" },
+        { en: "Continue to monitor and reassess as the situation develops, adjusting action if the target's behaviour changes" },
+      ],
+      why: [{ en: "Waiting for full certainty before acting is itself a delay that narrows the safety margin — COLREG's requirement for early, substantial action exists precisely because late action is harder for both vessels to interpret correctly. Good watchkeeping manages uncertainty rather than waiting for it to disappear." }],
+      commonMistakes: [
+        { en: "Waiting for visual confirmation before beginning any assessment" },
+        { en: "Taking a small, ambiguous action instead of an early, clear one" },
+        { en: "Failing to inform the Master because the situation 'isn't serious yet'" },
+      ],
+      safetyPoints: [{ en: "A single radar contact assessed early and calmly is far safer than the same contact reassessed in a panic once it has become a close-quarters situation." }],
+      mapReferences: [{ kind: "lesson", lessonId: "d1-l8" }],
+    },
+    {
+      situation: { en: "Midway through a demanding watch in traffic, a crew member reports that the ECDIS has briefly frozen and recovered on its own. It appears to be working normally now." },
+      mission: { en: "Decide whether 'working normally now' is sufficient, or whether the defect requires further action despite the immediate pressure of the watch." },
+      expectedActions: [
+        { en: "Record the defect as reported, even though it appears resolved" },
+        { en: "Cross-check the vessel's position independently (radar, GPS, visual) rather than trusting the ECDIS alone for the remainder of the watch" },
+        { en: "Consider whether temporary compensatory measures remain appropriate until the defect has been formally investigated" },
+        { en: "Report the defect to the Master and, where relevant, to the department responsible for equipment follow-up" },
+        { en: "Include the full defect history in the watch handover, regardless of whether it recurs again before the watch ends" },
+      ],
+      why: [{ en: "An intermittent defect that 'resolves itself' is not the same as a resolved defect — treating it as closed risks normalization of a deviance that could recur at a worse moment." }],
+      commonMistakes: [
+        { en: "Assuming the equipment is fine because it currently displays normally" },
+        { en: "Not reporting the defect because the watch is busy" },
+        { en: "Omitting the incident from the handover because 'it's working again now'" },
+      ],
+      safetyPoints: [{ en: "The absence of a current symptom is not evidence of a resolved cause — independent verification remains necessary until the defect is properly investigated." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "A pilot is conducting the vessel's approach to berth. The OOW notices the vessel's position relative to a moored vessel appears closer than expected, though the pilot has given no indication of concern." },
+      mission: { en: "Decide whether and how to raise the observation without undermining the pilot's conduct of the vessel, while preserving the OOW's own responsibility for the vessel's safety." },
+      expectedActions: [
+        { en: "Raise the observation clearly and promptly with the pilot and/or Master — do not stay silent out of deference to the pilot's authority" },
+        { en: "Express the concern using objective bridge information (distance, closing rate, bearing) rather than personal opinion whenever possible" },
+        { en: "Be prepared to escalate to the Master immediately if the concern is not adequately addressed" },
+        { en: "Continue independent monitoring throughout the approach regardless of the pilot's reassurance" },
+      ],
+      why: [{ en: "The presence of a pilot changes who conducts the vessel, not who remains responsible for its safety — the OOW's silence in the face of a genuine concern removes a safety layer that exists precisely for this situation." }],
+      commonMistakes: [
+        { en: "Staying silent to avoid appearing to question the pilot's judgment" },
+        { en: "Raising a vague concern instead of a specific, actionable observation" },
+        { en: "Stopping independent monitoring once the concern has been raised once" },
+      ],
+      safetyPoints: [{ en: "Respect for the pilot's expertise and the OOW's duty to intervene are not in conflict — professional pilots expect and welcome a clear, factual observation from the bridge team." }],
+      mapReferences: [],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Decide early, act clearly — the value of a good decision decreases the longer it is delayed, even if the decision itself doesn't change." },
+    { en: "Treat every readiness report you give as a professional declaration, not a routine statement — the Master depends on its accuracy, not its reassurance." },
+    { en: "No single instrument tells the whole story — build your situational picture from multiple sources, and trust none of them blindly." },
+    { en: "Calling the Master is never a failure — it is exactly what your role and the standing orders require of a professional officer." },
+    { en: "An unreported defect is more dangerous than a reported one — silence does not make equipment work; it only hides the risk." },
+    { en: "Respect for a pilot's expertise and your own duty to intervene are not in conflict — raise any genuine concern clearly and factually, every time." },
+    { en: "A watch handover is only as good as its honesty — include what went well and what remains uncertain, not just what is convenient to report." },
+    { en: "Manage your attention deliberately — the busiest-looking problem is not always the one that most needs it right now." },
+    { en: "Being an OOW is not simply about knowing the rules — it is about applying professional judgment continuously under uncertainty and accepting personal accountability for every decision made." },
+    { en: "Good watchkeeping is measured not by the absence of problems, but by how early they are recognised and how effectively they are managed." },
+  ],
+
+  professionalMindset: [
+    { en: "Think in terms of risk trajectory, not just current state. A situation is rarely dangerous the moment it is first observed — it becomes dangerous through how it develops. An OOW watches where things are heading, not only where they are now." },
+    { en: "Treat certainty as a luxury you rarely have. Waiting for full confirmation before deciding is itself a decision — often the wrong one. Professional judgment means acting responsibly on the best available picture, not the perfect one." },
+    { en: "See yourself as personally accountable, not merely present. A watch is not something you attend — it is something you answer for. Every course held, every action taken or not taken, traces back to a decision you made." },
+    { en: "Assume every source of information is partial. Radar, AIS, ECDIS, and visual observation each tell part of the story. The OOW's real skill is integrating them into one coherent navigational picture, without over-trusting any single one." },
+    { en: "Recognize that authority and responsibility are not always in the same place. A pilot may conduct the vessel; the Master holds ultimate command — but the OOW's own responsibility for the vessel's safety never transfers away simply because someone else is also involved." },
+    { en: "Hold the whole navigational picture, even while managing one part of it. An emergency, a defect, or a single close-quarters situation can dominate your attention — but the vessel's overall situation does not pause while your focus narrows." },
+    { en: "Treat routine watches with the same discipline as difficult ones. The habits that hold up during a genuine emergency are the same ones practiced, or neglected, during a thousand ordinary watches beforehand." },
+    { en: "Remain willing to revise your assessment. The first explanation that fits the situation is not always the correct one. Professional judgment includes recognizing when new information requires abandoning an earlier conclusion." },
+    { en: "Accept that communication is part of navigation, not separate from it. A decision made correctly but never communicated to the Master, the pilot, or the bridge team is only half complete — the vessel's safety depends on a shared operational picture, not just individual judgment." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Deck Logbook — The OOW is normally responsible for personally recording navigational events during their watch: course and speed changes, position fixes, sightings, communications with the Master or pilot, and any incident. Unlike the Bosun, who consolidates information for others to log, the OOW's entries are often the primary legal record of what happened during navigation." },
+    { en: "Passage plan and chart records — The OOW verifies and, where required, annotates the passage plan and charts (paper or ECDIS) with actual track, position fixes, and any deviation from the planned route, ensuring the navigational record accurately reflects the voyage actually conducted, not merely the voyage originally planned." },
+    { en: "Bridge equipment defect log — The OOW records equipment irregularities factually and promptly, distinguishing confirmed defects from suspected ones, and follows through to confirm resolution rather than leaving an entry open indefinitely." },
+    { en: "Watch handover record — The OOW's handover, whether written, verbal, or both depending on company procedure, must accurately convey the navigational picture, outstanding concerns, ongoing issues, and any assumptions that still require verification to the incoming OOW." },
+    { en: "Master's standing orders and night order book — The OOW reads, acknowledges, and applies these instructions, and signs or confirms understanding as required by company procedure — this is not paperwork to skim, but the Master's explicit direction for the watch." },
+    { en: "Bridge operational checklists — Before departure, arrival, pilot boarding, restricted visibility, heavy weather, or other critical phases, the OOW completes or contributes to bridge checklists as required by company procedures, ensuring that recorded confirmations reflect actions actually completed rather than assumptions." },
+    { en: "Incident and near-miss reports — When an incident or near-miss occurs during the OOW's watch, they contribute an accurate, factual account, distinguishing what was directly observed, what was reported by others, and what is inferred, in support of the vessel's safety management system." },
+    { en: "Why this matters: Unlike most other records aboard, many entries the OOW makes carry direct legal and regulatory weight — in an investigation, the deck logbook and passage plan records are often the primary evidence of what actually happened during navigation. An OOW who treats this documentation with the same seriousness as the navigational decisions themselves protects the vessel, supports regulatory compliance, and preserves the integrity of the factual record." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Discharge authorization and oversight — Where company procedures assign this responsibility, the OOW authorizes and directly oversees any permitted discharge conducted during the watch (e.g. treated bilge water via the Oily Water Separator, within MARPOL limits and documented zones), verifying the equipment and conditions genuinely permit it before authorizing the action." },
+    { en: "MARPOL zone awareness — The OOW verifies the vessel's position against applicable MARPOL Annex zones (special areas, ECAs) before any discharge decision, ensuring the passage plan and watch practices account for any zone-specific restriction along the route." },
+    { en: "Oil Record Book entries — Where the OOW is designated to make or verify Oil Record Book entries during their watch, these must accurately and promptly reflect any operation covered by MARPOL Annex I, recorded as it occurs rather than reconstructed afterward." },
+    { en: "Immediate pollution prevention measures — When there is a risk of pollution, the OOW takes immediate actions within their authority to minimize or prevent environmental harm while informing the Master without delay, ensuring that environmental protection begins before the formal reporting process." },
+    { en: "Reporting environmental incidents — The OOW who observes or is informed of a sheen, unusual discharge, or any sign of pollution reports it to the Master immediately, distinguishing confirmed observation from suspicion, and ensures the vessel's position and time are accurately recorded alongside the report, preserving any factual information that may later support the investigation." },
+    { en: "Weather routing and emission awareness — Where the passage plan includes environmental objectives such as fuel-efficient routing or measures supporting the vessel's CII/EEXI strategy, the OOW follows the approved plan during the watch and does not alter routing solely for efficiency without proper authorization." },
+    { en: "Why this matters: Environmental compliance at the OOW level is not a matter of general awareness — it involves specific, documented, and legally consequential decisions made during the watch. An OOW who authorizes a discharge, records an entry, or reports an incident is creating a record that regulators, auditors, and investigators may rely on directly. Precision and honesty in these decisions protect the vessel's compliance, the company's reputation, and the integrity of the environmental record." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Make independent navigational decisions during your watch (course, speed, collision avoidance action) within the Master's standing orders and the passage plan" },
+      { en: "Call the Master at any time, for any reason, without needing to justify the call in advance" },
+      { en: "Take early and substantial action to avoid risk of collision, in accordance with COLREG, without waiting for prior approval" },
+      { en: "Direct the helmsman, lookout, and bridge team during your watch, including assigning specific tasks and correcting technique on the spot, while maintaining effective Bridge Resource Management" },
+      { en: "Authorize permitted discharges during your watch where company procedures assign you this responsibility, after verifying conditions genuinely permit it" },
+      { en: "Raise a concern or objection to a pilot's conduct of the vessel, and escalate to the Master if the concern is not adequately addressed" },
+      { en: "Adjust course, speed, or manoeuvring as required to respond to a developing emergency, before or, where necessary, without waiting for the Master to arrive on the bridge" },
+      { en: "Temporarily suspend an operation under your control (pilotage, departure, approach, transfer) when continuing would present an immediate risk, while informing the Master as soon as practicable" },
+      { en: "Refuse to proceed with an action you judge unsafe, and report your decision and reasoning immediately to the Master" },
+    ],
+    youCannot: [
+      { en: "Deviate from the Master's standing orders or the approved passage plan without authorization, except where immediate safety requires it, followed by immediate notification to the Master" },
+      { en: "Alter the vessel's routing solely for fuel efficiency or environmental optimization without proper authorization, where this deviates from an officer-approved plan" },
+      { en: "Assume conduct of the vessel from a pilot without clear communication and, where required, the Master's awareness" },
+      { en: "Certify or resolve an equipment defect as fixed based on your own assessment alone, where company procedure requires technical confirmation" },
+      { en: "Manage the deck department's daily work organization or discipline — this remains with the Chief Officer and Bosun" },
+      { en: "Take command of the vessel in place of the Master, except where explicitly authorized by standing orders or where the Master's incapacity or absence requires immediate action to protect the vessel" },
+      { en: "Omit or alter a factual entry in the deck logbook, passage plan record, or Oil Record Book to make a situation appear other than what actually occurred" },
+      { en: "Delegate responsibility for the safety of the watch, even when individual tasks are assigned to others" },
+      { en: "Bypass the chain of command by making a decision affecting the vessel's overall safety, another department, or company policy, without promptly informing the Master" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Waiting for certainty before deciding — Delaying action until a situation is fully confirmed, when professional judgment means acting responsibly on the best available picture well before that point." },
+    { en: "Trusting a single source of information — Relying on one instrument, one report, or one impression as if it were the complete picture, rather than cross-checking it against others." },
+    { en: "Treating a readiness or handover report as a formality — Confirming that everything is 'fine' without having genuinely verified it, because the report is expected rather than because it is true." },
+    { en: "Hesitating to call the Master — Avoiding or delaying a call out of concern about appearing unable to handle the situation, when the role explicitly expects and requires that call." },
+    { en: "Deferring entirely to a pilot's judgment — Treating the pilot's presence as removing the OOW's own responsibility for the vessel's safety, rather than maintaining independent assessment throughout." },
+    { en: "Letting an unresolved concern go unreported — Continuing to operate as normal despite an equipment defect, a navigational doubt, or an environmental risk, hoping it resolves itself before it needs to be raised." },
+    { en: "Confusing routine with reduced vigilance — Applying less attention or verification to a familiar situation than to an unfamiliar one, when routine is where risk most often goes unnoticed." },
+    { en: "Becoming mentally committed to an initial assessment — Continuing to interpret new information in a way that supports an earlier conclusion, rather than genuinely reassessing when the evidence changes." },
+    { en: "Losing track of the whole picture while managing one part of it — Allowing an emergency, a defect, or a single close-quarters situation to absorb all attention, while the vessel's broader situation continues to evolve." },
+    { en: "Assuming silence means everything is normal — Interpreting the absence of reports, alarms, or requests as evidence that the situation is under control, instead of actively confirming that conditions remain as expected." },
+    { en: "Allowing time pressure to narrow judgment — Believing that being busy justifies skipping a verification or delaying a communication, when pressure is often the moment disciplined routines matter most." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Chief Officer (Chief Mate) — a significant step, requiring further certification and a shift from standing an individual navigational watch to managing the deck department as a whole: cargo operations, stability, planning, and the coordination of the ship's entire deck organization on behalf of the Master." },
+    { en: "Skills to develop: Cargo operations and stability calculations; departmental planning and resource management across multiple simultaneous activities (not just one watch); leadership and decision-making beyond the bridge — developing the ability to coordinate people, resolve operational conflicts, mentor junior officers, and maintain departmental standards over time rather than during a single watch; broader regulatory and commercial responsibility (port state control, class surveys, charter party requirements); the ability to represent the Master's authority across the whole deck department, not just during a single watch." },
+    { en: "Recommended experience: A solid period as OOW across the full range of navigational and watchkeeping situations (pilotage, restricted visibility, emergency response, multiple vessel types if possible), with demonstrated reliability in independent judgment and communication with the Master — this operational experience builds the professional credibility on which a Chief Officer's departmental authority is built." },
+    { en: "Certificates typically required: Certificates required vary by flag State, company policy, and national administration. Progression to Chief Officer typically requires the corresponding STCW certificate of competency (Chief Mate), sufficient certified sea time as OOW, and any additional endorsements required for the vessel type or trade." },
+    { en: "Recommended MAP courses: Cargo Operations & Stability; Ship Management & Departmental Planning; Role On Board – Chief Officer (when available); Specialized Operations (depending on vessel type); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from OOW to Chief Officer means shifting your primary focus from conducting a single watch to managing the deck department's entire operation across every watch, every day. Navigational judgment remains essential, but planning, delegation, and departmental accountability become your defining responsibilities. Success as a Chief Officer is measured less by how well you personally perform each task, and more by how effectively the entire deck department performs under your leadership." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "d1-l9", label: { en: "Steering" } },
+    { kind: "lesson", lessonId: "d1-l10", label: { en: "Watchkeeping" } },
+    { kind: "lesson", lessonId: "d1-l5", label: { en: "Compass & Headings" } },
+    { kind: "lesson", lessonId: "d1-l6", label: { en: "Practical Navigation" } },
+    { kind: "lesson", lessonId: "d3-l2", label: { en: "Lights & Shapes" } },
+    { kind: "lesson", lessonId: "d3-l3", label: { en: "Sound Signals & Fog" } },
+    { kind: "lesson", lessonId: "d3-l5", label: { en: "VHF Radio Procedures" } },
+    { kind: "lesson", lessonId: "d4-l1", label: { en: "Bridge Watch & Reporting" } },
+    { kind: "lesson", lessonId: "s6-l2", label: { en: "Common Ship Emergencies & Immediate Actions" } },
+    { kind: "lesson", lessonId: "s6-l6", label: { en: "Safety Culture & Professional Responsibility" } },
+    { kind: "lesson", lessonId: "d1-l8", label: { en: "Advanced COLREG" } },
+    { kind: "lesson", lessonId: "d3-l6", label: { en: "AIS & Electronic Navigation" } },
+    { kind: "lesson", lessonId: "d3-l7", label: { en: "GMDSS & Distress Signals" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — navigation, bridge, and watchkeeping terminology" } },
+    { kind: "external", externalCode: "SMCP", label: { en: "SMCP (Standard Marine Communication Phrases) reference" } },
+    { kind: "external", externalCode: "COLREG", label: { en: "COLREG reference" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on STCW OOW certification requirements by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore bridge arrangements, navigational equipment, and operational characteristics across different vessel types to understand how watchkeeping practices adapt between ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on navigation, watchkeeping, COLREG, or STCW requirements" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from OOW to Chief Officer and beyond" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document sea time, certificates, and watchkeeping responsibilities gained as OOW" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_BOSUN", label: { en: "Role On Board — Bosun" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_CHIEF_OFFICER", label: { en: "Role On Board — Chief Officer (when published)" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "Navigational decisions during my watch (course, speed, collision avoidance action) within standing orders and the passage plan" },
+      { en: "Direct conduct of the vessel during departure, arrival, anchoring, and STS manoeuvres, where assigned to the watch and within the Master's standing orders" },
+      { en: "Deck logbook, passage plan annotations, and Oil Record Book entries where assigned" },
+      { en: "Bridge team direction (helm orders, lookout tasking) and coordination of communication with the Master, pilot, engine room, and shore authorities as required, throughout my watch" },
+      { en: "Immediate emergency actions and manoeuvring required by a developing situation within my watchkeeping responsibility" },
+    ],
+    iMonitor: [
+      { en: "The vessel's position, course, and speed against the passage plan continuously" },
+      { en: "Risk of collision from all observed or detected traffic" },
+      { en: "Navigational and bridge equipment status and reliability" },
+      { en: "The vessel's readiness to get underway at all times, including while alongside or at anchor" },
+      { en: "Shared situational awareness across the bridge team, including during pilotage or STS operations" },
+    ],
+    iReport: [
+      { en: "Any deviation from the passage plan, standing orders, or expected vessel behaviour" },
+      { en: "Any equipment defect, distinguishing confirmed faults from suspected ones" },
+      { en: "Any environmental incident or pollution risk, distinguishing confirmed observation from suspicion" },
+      { en: "My own uncertainty when a situation cannot be fully resolved at my level" },
+      { en: "A complete and honest watch handover, including anything unresolved" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Deviation from the Master's standing orders or approved passage plan without proper authorization" },
+      { en: "Discharge of oil, oily water, garbage, or regulated substances outside my assigned authority or documented conditions" },
+      { en: "Assumption of conduct of the vessel from a pilot without clear communication and Master awareness" },
+      { en: "Alteration of the deck department's daily organization — this remains with the Chief Officer and Bosun" },
+      { en: "My own delegation of responsibility for the safety of the watch, even when individual tasks are assigned to others" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Bridge layout showing typical OOW watchkeeping position and equipment arrangement." } },
+    { kind: "diagram", caption: { en: "COLREG collision avoidance decision flow (early action, substantial action, ample time/room)." } },
+    { kind: "image", caption: { en: "Example of a properly completed passage plan with annotated track and position fixes." } },
+    { kind: "video", caption: { en: "Demonstration of a complete and effective watch handover between two OOWs." } },
+    { kind: "document", caption: { en: "Sample bridge equipment defect log entry." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
-// Partial: currently populated for "ab" and "bosun" — remaining ranks are
-// still pending content.
+// Partial: currently populated for "ab", "bosun" and "oow" — remaining
+// ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
+  oow: OOW_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
