@@ -940,12 +940,705 @@ const AB_CARD: RoleOnBoardCard = {
   ],
 };
 
+// ── BOSUN ─────────────────────────────────────────────────────
+// mapReferences resolved via Mission D (see
+// audits/2026-07-25_role-on-board-bosun-mapreferences.md) and the
+// Product Owner's final decisions on that report. Locations with no
+// validated correspondence are left as mapReferences: [] intentionally
+// (candidates for a future Leadership/Supervision module, not filled
+// with approximate matches).
+const BOSUN_CARD: RoleOnBoardCard = {
+  rankId: "bosun",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Bosun (Boatswain) organizes, allocates and supervises the execution of the daily deck work planned by the deck officers. Unlike the AB, who executes assigned tasks, the Bosun translates officers' instructions into organized, safe, and properly executed deck work carried out by the deck crew." },
+    { en: "The Bosun is expected to ensure that work is completed safely, efficiently, and to the standard expected by the deck officers before reporting it as complete." },
+    { en: "The Bosun does not decide navigational strategy or operational priorities — those remain with the OOW and Chief Officer — but is the person officers rely on to keep deck work organized and to standard, without direct officer supervision at every step." },
+    { en: "A capable Bosun combines strong practical seamanship (built through years as an AB) with the ability to organize a team, train junior ratings, and maintain discipline and standards on deck." },
+    { en: "The Bosun's authority is operational and practical, not decisional: they enforce standards, allocate work, and escalate anything beyond their authority — they do not set the vessel's course, approve deviations from procedure, or make decisions reserved for the officer corps." },
+    { en: "The Bosun leads by example. Junior ratings learn not only from the Bosun's instructions, but also from the Bosun's own professional conduct, discipline, and seamanship." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Chief Officer (primary)" },
+      { en: "OOW during watch-related deck operations" },
+    ],
+    worksWith: [
+      { en: "Deck officers for daily work planning" },
+      { en: "AB and OS teams for task execution" },
+      { en: "Engine department counterparts during joint operations (mooring assistance, STS, emergency drills)" },
+    ],
+    mentors: [
+      { en: "Experienced Bosuns (during the seafarer's development toward the role)" },
+      { en: "Chief Officer" },
+    ],
+    supports: [
+      { en: "AB, OS, and Deck Cadets — the Bosun trains, corrects, and organizes their daily work, ensuring junior ratings understand both the task and the safety expectations" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Team organization & delegation" } },
+    { label: { en: "Communication with deck officers" }, mapReferences: [{ kind: "lesson", lessonId: "d4-l1" }, { kind: "lesson", lessonId: "d1-l10" }] },
+    { label: { en: "Deck work planning" } },
+    { label: { en: "Training junior ratings" } },
+    { label: { en: "Advanced seamanship (mooring, anchoring, rigging)" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l1" }, { kind: "lesson", lessonId: "d6-l2" }, { kind: "lesson", lessonId: "d6-l3" }, { kind: "lesson", lessonId: "d6-l4" }] },
+    { label: { en: "Equipment oversight" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l6" }, { kind: "lesson", lessonId: "d6-l7" }] },
+    { label: { en: "Worksite coordination" } },
+    { label: { en: "Safety leadership" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l6" }] },
+    { label: { en: "Reporting" }, mapReferences: [{ kind: "lesson", lessonId: "d4-l1" }, { kind: "lesson", lessonId: "d1-l10" }] },
+    { label: { en: "Conflict resolution" } },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Bosun translates the Chief Officer's instructions into an organized deck work plan: assigning mooring stations, allocating preparation tasks among the deck crew, and personally verifying that the work has been carried out correctly before reporting readiness. The Bosun does not typically prepare each piece of equipment personally — the value added is in organizing the team efficiently, catching gaps before they become problems, and standing as the operational point of accountability for deck readiness before departure." },
+      responsibilities: [
+        { en: "Receive departure instructions and priorities from the Chief Officer and translate them into specific task assignments for the deck crew" },
+        { en: "Allocate ABs and OS to mooring stations and preparation tasks based on experience and the demands of the operation" },
+        { en: "Personally verify the condition of mooring equipment through inspection and crew feedback before authorizing its operational use within the team's preparation" },
+        { en: "Verify that assigned tasks (line preparation, fender rigging, deck walk-round) have been completed to standard before reporting readiness upward" },
+        { en: "Brief the deck crew on the specific departure plan — sequence, expected conditions, any non-routine elements" },
+        { en: "Confirm with the Chief Officer or OOW that the deck team is ready and stationed, and relay any last-minute equipment or personnel concern" },
+        { en: "Ensure PPE compliance and safe working practices are respected across the team during preparation" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (safety helmet, gloves, safety shoes, high-visibility vest)" },
+        { en: "Mooring lines, wires, winches, windlass — verified at organizational/oversight level, not only hands-on" },
+        { en: "Fenders and deck lighting — verified as part of the readiness check" },
+        { en: "Departure checklist / work list" },
+        { en: "Communication equipment (radio) for coordinating with the bridge and the deck team simultaneously" },
+      ],
+      risks: [
+        { en: "A gap in task allocation leading to an unprepared mooring station discovered too late" },
+        { en: "Reporting readiness without having personally verified the work, based only on assumption that assigned tasks were completed" },
+        { en: "Crew members assuming someone else has completed a critical preparation task because responsibilities were not clearly assigned" },
+        { en: "Miscommunication between the Bosun's instructions and the crew's understanding, leading to incomplete preparation" },
+        { en: "Injury to a crew member due to inadequate briefing on a non-routine element of the departure plan" },
+        { en: "Equipment defects missed because oversight relied solely on the crew's own reporting rather than independent verification" },
+      ],
+      bestPractices: [
+        { en: "Always verify completed work personally rather than relying solely on a crew member's report that a task is 'done'" },
+        { en: "Brief the team clearly before work begins, not only afterward when correcting mistakes" },
+        { en: "Allocate tasks according to each crew member's experience — pair less experienced ratings with more experienced ones on critical stations" },
+        { en: "Walk the entire deck before reporting readiness — never assume that one completed area reflects the condition of the whole operation" },
+        { en: "Report readiness to the bridge only once genuinely confident in the team's preparation, not under time pressure alone" },
+      ],
+      commonMistakes: [
+        { en: "Assigning tasks without clearly briefing the sequence or expectations" },
+        { en: "Reporting the deck 'ready' without a personal verification pass" },
+        { en: "Overloading experienced crew members while under-supervising less experienced ones" },
+        { en: "Becoming the best worker instead of remaining the team leader" },
+        { en: "Failing to escalate an equipment concern because it seems minor at the organizational level" },
+        { en: "Losing track of the overall picture while personally absorbed in a single task" },
+      ],
+      professionalTips: [
+        { en: "A Bosun's real preparation work happens before the crew's — anticipate what could go wrong in the plan itself, not only in its execution" },
+        { en: "Trust your team, but verify their work — this is not a lack of confidence, it is the standard expected of the role" },
+        { en: "The way you brief a team shapes how well they execute — a rushed, unclear briefing produces a rushed, unclear departure" },
+        { en: "An excellent Bosun is measured not by how hard they work alone, but by how consistently the entire deck team performs under their leadership" },
+      ],
+      mapReferences: [],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Bosun coordinates the mooring stations in real time, relaying orders from the OOW to the deck team and ensuring each station executes correctly and safely. Unlike the AB, who handles a single station, the Bosun holds situational awareness across the whole operation — maintaining an accurate operational picture of every mooring station so the bridge can make informed decisions throughout the manoeuvre." },
+      responsibilities: [
+        { en: "Position at the most critical or complex mooring station, or move between stations as needed to maintain oversight of the whole operation" },
+        { en: "Relay orders from the OOW/bridge to each mooring station clearly and without delay" },
+        { en: "Continuously monitor communications to ensure bridge orders are correctly understood and acknowledged by every station" },
+        { en: "Confirm each station's status back to the bridge (line away, station clear, equipment issue) in a consolidated, reliable manner" },
+        { en: "Monitor the whole deck team's execution, correcting technique or positioning in real time if a station is not performing safely" },
+        { en: "Resolve routine deck-level issues within Bosun authority and immediately escalate any issue affecting the overall manoeuvre, vessel safety, or bridge decision-making" },
+        { en: "Ensure PPE and snap-back zone discipline are respected across all stations simultaneously, not only the one directly supervised" },
+        { en: "Report any equipment failure or safety concern to the OOW immediately, with enough detail for the bridge to assess the situation" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (safety helmet, gloves, safety shoes, high-visibility vest)" },
+        { en: "Portable radio — the primary tool of the role during this phase, used continuously to relay information between stations and the bridge" },
+        { en: "Station list / mooring arrangement plan" },
+        { en: "Mooring lines, wires, winches, capstan — overseen across multiple stations rather than operated directly at every moment" },
+        { en: "Fenders" },
+      ],
+      risks: [
+        { en: "Loss of overview if the Bosun becomes absorbed in a single station's execution during a critical moment elsewhere" },
+        { en: "Delayed or garbled relay of bridge orders to a station, causing a mistimed action" },
+        { en: "Multiple stations requesting attention simultaneously, causing prioritization errors" },
+        { en: "Failure to notice a developing hazard at a station not currently being directly observed" },
+        { en: "Making a decision beyond Bosun authority (e.g. altering the departure sequence) instead of escalating to the OOW" },
+        { en: "Same physical risks as the AB at any station personally supervised (snap-back, crushing, falling) — the Bosun is not exempt from these simply by virtue of rank" },
+      ],
+      bestPractices: [
+        { en: "Position yourself where you can see or reach the most stations, not necessarily the busiest one" },
+        { en: "Repeat back every bridge order before relaying it to a station, to avoid introducing an error in the relay itself" },
+        { en: "Actively move between stations during the operation rather than remaining fixed at one point throughout" },
+        { en: "Make quick operational decisions confidently within your authority, but escalate anything touching the sequence or safety of the overall manoeuvre" },
+        { en: "Maintain calm and consistent radio discipline — your tone influences the entire deck team's confidence during the manoeuvre" },
+        { en: "Keep the bridge informed proactively — a station gone quiet is often more concerning than one reporting a problem" },
+      ],
+      commonMistakes: [
+        { en: "Staying at one station for the entire manoeuvre and losing awareness of the others" },
+        { en: "Relaying an order inaccurately or with unnecessary delay" },
+        { en: "Hesitating to make a minor on-the-spot decision that clearly falls within Bosun authority, slowing the whole operation" },
+        { en: "Trying to solve every problem personally instead of directing the appropriate crew member to resolve it" },
+        { en: "Failing to notice or address unsafe technique at a station because attention is fixed elsewhere" },
+        { en: "Not reporting a resolved issue back to the bridge, leaving the OOW with an outdated picture of the deck's status" },
+      ],
+      professionalTips: [
+        { en: "During departure, your eyes and radio matter more than your hands — the value you add is coordination, not personally handling every line" },
+        { en: "A good Bosun is heard clearly and briefly on the radio — clarity under time pressure is a skill worth deliberately practicing" },
+        { en: "Trust your ABs to execute; your job is to watch the whole picture they cannot see from their individual stations" },
+        { en: "The stations that never call in are not necessarily the ones with nothing to report — check on them, don't just wait to be told" },
+        { en: "The bridge should never have to guess what is happening on deck — your communication keeps both teams operating as one" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l4" }, { kind: "lesson", lessonId: "d4-l4" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Bosun's presence on the bridge is occasional rather than continuous — the watch itself is run by the OOW, with an AB at the wheel and on lookout. The Bosun's role during this phase centres on helping implement the deck officers' watch and work schedule by organizing the deck crew, monitoring fatigue in daily operations, and ensuring that assigned duties are carried out by fit and properly briefed crew members." },
+      responsibilities: [
+        { en: "Implement and coordinate the deck crew's watch and daywork rotation established by the Chief Officer" },
+        { en: "Assign and brief crew members sent on scheduled rounds, and review their reports for completeness before passing them to the OOW" },
+        { en: "Coordinate routine daywork (maintenance, painting, housekeeping) so it does not conflict with watch duties or rest periods" },
+        { en: "Step in personally to take the wheel, stand lookout, or carry out a round if the schedule or an unexpected absence requires it" },
+        { en: "Monitor the general fitness and alertness of the deck team, addressing fatigue or performance concerns before they affect watch safety" },
+        { en: "Report any fatigue concern that cannot be resolved through routine team organization to the Chief Officer or OOW" },
+        { en: "Relay any recurring or pattern-based issue observed during rounds (e.g. repeated minor defects in the same area) to the OOW or Chief Officer, rather than treating each report in isolation" },
+        { en: "Ensure PPE and safe procedure are respected during rounds and daywork, even when not personally present at every task" },
+      ],
+      equipment: [
+        { en: "Watch and rest-hour schedule / rotation plan" },
+        { en: "Work schedule / daily work board" },
+        { en: "Personal protective equipment appropriate to the task if personally standing in" },
+        { en: "Torch/flashlight, radio — if personally carrying out a round or relief duty" },
+        { en: "Rounds checklist / reporting log used by the deck crew" },
+      ],
+      risks: [
+        { en: "Fatigue accumulating across the deck crew due to poor rotation planning, increasing the risk of a lapse during watch duties" },
+        { en: "A recurring minor issue going unnoticed as a pattern because each round report is reviewed in isolation" },
+        { en: "Routine work gradually drifting into watch time because priorities were not continuously adjusted" },
+        { en: "A gap in rounds or watch coverage caused by unclear rotation planning, particularly during crew changes or absences" },
+        { en: "Losing track of individual crew members' rest status while focused on the day's task list" },
+        { en: "Same physical risks as the AB when personally standing a watch or round" },
+      ],
+      bestPractices: [
+        { en: "Plan the rotation with margin, not to the exact legal minimum — unexpected absences or delays should not immediately create a rest violation" },
+        { en: "Review rounds reports for patterns over time, not only for the specific issue mentioned in a given report" },
+        { en: "Walk the deck regularly rather than managing the team only through reports" },
+        { en: "Keep daywork flexible enough to be paused or reassigned if it starts to encroach on rest periods or watch coverage" },
+        { en: "When personally standing in for a watch or round, apply the exact same standard expected of any AB — rank does not lower the bar" },
+      ],
+      commonMistakes: [
+        { en: "Planning the rotation around workload alone, without sufficient margin for rest requirements" },
+        { en: "Treating each round report as a standalone item rather than watching for recurring patterns" },
+        { en: "Prioritizing daywork completion over protecting rest periods" },
+        { en: "Assuming an experienced AB needs less supervision and gradually losing awareness of that person's workload or fatigue" },
+        { en: "Lowering personal standards when stepping in briefly, on the assumption that 'it's only for a short while'" },
+      ],
+      professionalTips: [
+        { en: "A tired crew is an unreliable crew, no matter how skilled — protecting rest is as much a safety responsibility as any physical task" },
+        { en: "Patterns matter more than single reports — three small defects reported separately in the same area are one real problem, not three" },
+        { en: "The Bosun who checks in on the crew before being asked builds more trust than one who only reacts to complaints" },
+        { en: "When you occasionally step into an AB's duties, do it to support the team — not because you have stopped leading it" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d1-l10" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Bosun takes personal charge at the forecastle — this is one of the phases where the Bosun's own hands-on judgment matters most, personally directing and, where appropriate, operating the windlass while continuously interpreting the behaviour of the anchor chain and the forecastle situation. At the same time, the Bosun remains the deck team's single voice to the bridge, consolidating what is observed at the forecastle into clear, timely reports that let the OOW manage the anchoring operation with confidence." },
+      responsibilities: [
+        { en: "Verify that the forecastle is fully prepared before the anchor is walked out or let go, including personnel readiness, equipment readiness and communication checks" },
+        { en: "Personally take charge of the windlass operation, directing the exact pace of paying out or heaving in chain based on the bridge's instructions and the forecastle team's observations" },
+        { en: "Position and brief the forecastle team clearly before the operation, assigning specific observation and safety roles (chain tendency, brake, area clearance)" },
+        { en: "Relay chain-out amount, tendency, and any abnormal behaviour to the bridge promptly and precisely, consolidating the team's observations into a single clear report" },
+        { en: "Personally judge and confirm when the anchor is holding versus dragging, escalating any uncertainty to the OOW immediately rather than waiting for it to resolve itself" },
+        { en: "Maintain direct oversight of the forecastle team's safety throughout the operation, correcting positioning or technique in real time" },
+        { en: "Organize and brief the anchor watch rotation during extended periods at anchor, ensuring each watchkeeper understands what to monitor and when to escalate" },
+        { en: "Ensure the anchor and windlass are properly secured at the end of the operation and confirm this to the bridge" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (safety helmet, gloves, safety shoes, high-visibility vest)" },
+        { en: "Windlass and anchor chain — operated directly, not only supervised" },
+        { en: "Chain stopper / bow stopper" },
+        { en: "Anchor markings / chain markings" },
+        { en: "Portable radio for continuous communication with the bridge" },
+        { en: "Anchor watch schedule / log" },
+      ],
+      risks: [
+        { en: "Misjudging chain tendency or dragging due to divided attention between hands-on windlass work and team supervision" },
+        { en: "Misinterpreting chain behaviour because visibility, weather, or vessel movement makes observation more difficult" },
+        { en: "Delayed escalation of a dragging concern because the Bosun attempts to confirm it alone before reporting" },
+        { en: "A forecastle team member positioned unsafely near the chain because briefing was rushed or incomplete" },
+        { en: "An anchor watch handover that fails to convey what to monitor, leaving a gap in vigilance" },
+        { en: "Same physical risks as the AB at the forecastle (crushing, entanglement, falling) — hands-on involvement does not reduce personal exposure to these risks" },
+      ],
+      bestPractices: [
+        { en: "Brief the forecastle team on roles and hazards before the anchor is prepared, not while the chain is already running" },
+        { en: "Report chain tendency and amount out as observed, even if the picture is not yet fully clear — the bridge can combine partial information faster than it can wait for certainty" },
+        { en: "Keep communications concise, standardized and continuous — the bridge depends on timely updates more than lengthy explanations" },
+        { en: "Rotate attention deliberately between the windlass, the chain, and the team — do not fixate on one at the expense of the others" },
+        { en: "Treat every anchor watch handover as a full briefing, not a formality — the incoming watchkeeper should know exactly what 'normal' looks like" },
+        { en: "When uncertain whether the anchor is dragging, report the uncertainty itself rather than waiting to resolve it privately" },
+      ],
+      commonMistakes: [
+        { en: "Becoming so focused on the windlass that team safety at the forecastle is not actively monitored" },
+        { en: "Waiting to confirm a dragging concern personally before informing the bridge, losing valuable response time" },
+        { en: "Rushing the pre-operation briefing because the team has 'done this before'" },
+        { en: "Reporting conclusions instead of observations (e.g. 'Anchor is fine' instead of 'Seven shackles on deck, chain leading 10 degrees to port, moderate tension')" },
+        { en: "Handing over the anchor watch with only a status update, not a full explanation of what to watch for" },
+        { en: "Treating a quiet anchor watch period as a reason to relax attention to the same standard as an active one" },
+      ],
+      professionalTips: [
+        { en: "At the forecastle, your hands and your eyes work on the equipment — your voice works for the bridge. Never let one silence the other" },
+        { en: "Dragging usually begins as a collection of small indications rather than one obvious sign. Experienced Bosuns learn to recognize the pattern early and report it without hesitation" },
+        { en: "The quality of an anchor watch handover is measured by how quickly the next watchkeeper could take over without needing to ask a single question" },
+        { en: "Confidence at the windlass comes from repetition, but respect for the chain should never fade with experience" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l3" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Bosun organizes and oversees the deck team's port duties — gangway watch rotation, security rounds, mooring monitoring, and cargo-related deck work — while ensuring that non-routine issues are escalated promptly to the appropriate deck officer. Port stays bring a higher volume of external contacts (agents, contractors, authorities, visitors) and a wider range of simultaneous activity than any other phase, and the Bosun's main value is keeping this activity organized and safe." },
+      responsibilities: [
+        { en: "Organize and brief the gangway watch and security round rotation, ensuring each crew member understands access control procedures and reporting expectations" },
+        { en: "Coordinate mooring line monitoring throughout the port stay, ensuring adjustments for tide, draft, or traffic surge are actually carried out, not just scheduled" },
+        { en: "Allocate and oversee deck crew support for cargo-related operations (hatch covers, lashing, deck preparation), coordinating timing with cargo officers as needed" },
+        { en: "Coordinate routine deck-side interactions with contractors under the Chief Officer's instructions, ensuring the deck crew understands its support role and safety boundaries" },
+        { en: "Personally verify or address any access control uncertainty escalated by a gangway watchkeeper (e.g. an unclear visitor situation) before it becomes a delay or a security gap" },
+        { en: "Ensure fire watch or pollution prevention watch during high-risk port operations (bunkering, hot work) is properly assigned, briefed, and not combined with other duties" },
+        { en: "Relay any recurring deficiency at the berth (fenders, gangway condition, lighting) to the Chief Officer, especially if repeated across port calls" },
+        { en: "Maintain visibility across the whole port workload — gangway, moorings, cargo support, maintenance — rather than becoming absorbed in a single task" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (safety helmet, gloves, safety shoes, high-visibility vest)" },
+        { en: "Gangway watch schedule / access control log" },
+        { en: "Visitor passes / access authorization records (where applicable)" },
+        { en: "Portable radio for coordinating across multiple simultaneous activities" },
+        { en: "Mooring lines and fenders — overseen across the whole berth, not one station" },
+        { en: "Port work plan / cargo support schedule, where applicable" },
+      ],
+      risks: [
+        { en: "A security gap created by an unclear visitor situation not escalated promptly by a gangway watchkeeper" },
+        { en: "Mooring adjustments falling behind schedule because attention is absorbed by cargo-related coordination" },
+        { en: "Fire or pollution watch duties becoming diluted by being combined informally with other tasks" },
+        { en: "A recurring berth deficiency going unreported because each occurrence is treated as an isolated, minor issue" },
+        { en: "Conflicting operational priorities (cargo, mooring adjustments, contractors, visitors) leading to delayed supervision of a critical activity" },
+        { en: "Loss of overview of the whole port workload due to the higher number of simultaneous activities compared to other phases" },
+      ],
+      bestPractices: [
+        { en: "Set clear escalation criteria for gangway watchkeepers before the port stay begins — what to handle directly, what to escalate immediately" },
+        { en: "Physically check mooring conditions periodically rather than relying solely on watchkeeper reports" },
+        { en: "Treat fire and pollution watch as protected, dedicated duties when assigning port workload — never double up these roles informally" },
+        { en: "Keep the Chief Officer informed of changing priorities before they become operational conflicts" },
+        { en: "Track recurring issues across port calls, not just within a single stay, to identify patterns worth escalating" },
+        { en: "Walk the full extent of the port workload periodically — gangway, moorings, cargo support areas — to maintain a genuine overview" },
+      ],
+      commonMistakes: [
+        { en: "Allowing gangway watchkeepers to resolve ambiguous access situations alone rather than setting clear escalation expectations in advance" },
+        { en: "Letting mooring checks slip during busy cargo periods, assuming they can wait" },
+        { en: "Assigning fire or pollution watch duties alongside other tasks under workload pressure" },
+        { en: "Assuming that familiar contractors or frequent visitors no longer require the same level of access control discipline" },
+        { en: "Treating each berth deficiency report as new information rather than checking for a pattern" },
+        { en: "Becoming absorbed in one visible activity (e.g. cargo support) while losing track of quieter but equally important duties (gangway, moorings)" },
+      ],
+      professionalTips: [
+        { en: "Port stays test your ability to keep several things going at once — the skill is not doing everything yourself, but continually deciding where your attention adds the greatest value at that moment" },
+        { en: "A gangway watch that never asks a question is not necessarily a well-run one — make sure your team knows it's expected to escalate, not just to cope" },
+        { en: "The busiest-looking activity is not always the one that most needs your attention — a quiet mooring line under increasing tension deserves the same vigilance as active cargo work" },
+        { en: "Recurring small problems at the same berth are worth mentioning even if each one seems minor on its own — patterns are information" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d4-l2" }, { kind: "lesson", lessonId: "d6-l4" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "STS operations combine the technical demands of Anchoring (hands-on expertise, precise reading of load and behaviour) with the coordination demands of Departure Manoeuvres (multiple positions, continuous relay to the bridge) — but with a smaller margin for error, since two vessels are moving relative to each other rather than one vessel relative to a fixed berth. The Bosun leads the deck team's rigging and monitoring work at the interface between the two hulls, providing the bridge with a continuous, accurate operational picture of the interface between both vessels throughout the operation." },
+      responsibilities: [
+        { en: "Verify that all personnel understand the designated exclusion zones and safe escape routes before the vessels come alongside" },
+        { en: "Organize and brief the deck team on fender and mooring rigging specific to the STS operation, assigning clear positions and observation roles before work begins" },
+        { en: "Personally verify fender attachment and positioning before the operation starts, not relying solely on the team's report that rigging is complete" },
+        { en: "Maintain continuous oversight of fender condition and inter-vessel separation throughout the operation, consolidating team observations into clear reports to the bridge" },
+        { en: "Coordinate operationally with the designated counterpart on the other vessel whenever required, while respecting each vessel's chain of command" },
+        { en: "Ensure the working area between the vessels is kept clear of unnecessary personnel and equipment throughout the operation" },
+        { en: "Confirm the deck team's familiarity with emergency quick-release procedures before the operation begins, and personally coordinate their execution if an emergency separation is ordered" },
+        { en: "Relay any change in fender condition, mooring load, or relative vessel movement to the bridge immediately, however minor it may appear" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (safety helmet, gloves, safety shoes, high-visibility vest, flotation aid where required)" },
+        { en: "Fenders and fender lines — overseen and personally verified, not only supervised remotely" },
+        { en: "Mooring lines and wires specific to STS operations" },
+        { en: "STS mooring arrangement / rigging plan" },
+        { en: "Portable radio for coordination with the bridge and, where applicable, the other vessel's crew" },
+        { en: "Emergency quick-release equipment" },
+      ],
+      risks: [
+        { en: "Divided attention between personally verifying rigging and maintaining oversight of the whole interface between the vessels" },
+        { en: "Conflicting information received from different observation points leading to an incorrect overall assessment if not verified" },
+        { en: "Miscommunication with an unfamiliar counterpart crew, particularly where procedures or language differ" },
+        { en: "A change in fender condition or vessel separation not reported promptly because it seemed to stabilize on its own" },
+        { en: "A team member positioned in or near the gap between the vessels longer than necessary due to unclear briefing" },
+        { en: "Delayed coordination of an emergency quick-release if roles were not clearly assigned beforehand" },
+        { en: "Same physical risks as the AB during STS operations (crushing, falling overboard between hulls) — personal involvement in rigging does not reduce this exposure" },
+      ],
+      bestPractices: [
+        { en: "Brief the team thoroughly on fender rigging, monitoring roles, and emergency procedures before the operation begins, not as it unfolds" },
+        { en: "Verify fender attachment and rigging personally before confirming readiness to the bridge" },
+        { en: "Establish clear communication procedures and signals with an unfamiliar counterpart crew before the operation starts, not during it" },
+        { en: "Acknowledge every critical report received from the team so that no observation is assumed to have gone unheard" },
+        { en: "Treat every report of changing separation or fender condition as worth relaying immediately, even if it later proves minor" },
+        { en: "Keep the team's positions actively monitored throughout — do not assume initial positioning remains safe as the operation progresses" },
+      ],
+      commonMistakes: [
+        { en: "Confirming rigging readiness based on the team's report alone, without personal verification" },
+        { en: "Focusing attention only on the point where work is actively taking place, instead of monitoring the entire interface between both vessels" },
+        { en: "Underestimating how quickly relative vessel movement can change in swell, wind, or wake conditions" },
+        { en: "Assuming a counterpart crew from another company follows the same procedures without confirming beforehand" },
+        { en: "Delaying the report of a fender or mooring concern while attempting to assess its significance alone" },
+        { en: "Allowing a team member to remain in the gap between vessels longer than the task strictly requires" },
+      ],
+      professionalTips: [
+        { en: "STS success is built before the operation starts — a properly briefed and rigged team prevents far more problems than a fast response after something goes wrong" },
+        { en: "When working with an unfamiliar crew, invest in clear communication early; assumptions about shared procedure are a common source of confusion" },
+        { en: "Treat the space between two vessels as inherently dangerous throughout the operation, not only when it visibly narrows" },
+        { en: "If there is uncertainty about the safety of the operation, communicate it immediately rather than waiting for certainty" },
+        { en: "Your greatest contribution during STS is early recognition and early communication — the bridge can only react to information it receives" },
+      ],
+      mapReferences: [],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Bosun's planning and technical judgment combine most visibly: translating the vessel's maintenance schedule into a practical work plan, assigning the right tasks to the right crew members, and personally verifying that the standard of work protects the ship over the long term. Unlike the AB, whose focus is the task in front of them, the Bosun must balance the maintenance workload against watch duties, weather windows, and the varying skill levels of the deck team — while remaining accountable for the quality of the deck team's maintenance work and for keeping the Chief Officer accurately informed of the deck's condition." },
+      responsibilities: [
+        { en: "Translate the vessel's planned maintenance schedule into a practical daywork plan, sequencing tasks around weather, watch rotation, and available crew" },
+        { en: "Verify that maintenance tools and equipment are serviceable before assigning work, removing defective equipment from use when necessary" },
+        { en: "Assign maintenance tasks according to each crew member's skill level, pairing less experienced ratings with more experienced ones on technical work (e.g. surface preparation, painting)" },
+        { en: "Personally verify critical stages of the work and inspect completed tasks, checking preparation quality and application standard before considering a task finished" },
+        { en: "Identify and prioritize early signs of corrosion or wear observed during rounds or reported by the crew, escalating anything beyond routine surface treatment to the Chief Officer" },
+        { en: "Ensure the correct products (paint, primer, grease) and PPE are used for each task, in line with the vessel's procedures and the PMS" },
+        { en: "Maintain deck stores, paint lockers, and maintenance equipment in an organized, safe, and properly stocked condition" },
+        { en: "Report overall maintenance progress and any recurring or structural concern to the Chief Officer, distinguishing between routine upkeep and issues requiring officer-level decision" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task (helmet, gloves, safety shoes, eye and respiratory protection where required)" },
+        { en: "Planned Maintenance System (PMS) records and schedule" },
+        { en: "Manufacturer instructions / technical specifications where required" },
+        { en: "Chipping, scaling, and painting tools and materials — allocated and overseen across the team" },
+        { en: "Grease guns and lubricants — allocated according to specification, not general habit" },
+        { en: "Deck stores and paint locker inventory" },
+      ],
+      risks: [
+        { en: "Maintenance tasks assigned without matching crew skill level, leading to substandard work or safety incidents" },
+        { en: "Experienced crew repeatedly assigned the same work, limiting the development of junior ratings and creating unnecessary dependence on a few individuals" },
+        { en: "A recurring corrosion or wear issue treated repeatedly as routine surface work rather than escalated as a structural concern" },
+        { en: "Maintenance schedule slipping due to poor sequencing around weather windows or watch demands" },
+        { en: "Incorrect product use (wrong paint, incompatible grease) due to insufficient verification against the PMS" },
+        { en: "Loss of oversight of overall deck condition while focused on a single ongoing task" },
+      ],
+      bestPractices: [
+        { en: "Plan maintenance work around realistic weather windows rather than optimistic ones — a rushed job in poor conditions rarely holds" },
+        { en: "Personally verify critical stages and inspect finished work — a good result can still come from a shortcut that will fail later" },
+        { en: "Pair experience deliberately: junior ratings learn technique from senior ones, not only from instructions" },
+        { en: "Use maintenance work as an opportunity to coach and assess crew competence, not only to complete the planned task" },
+        { en: "Track recurring maintenance issues across time and location, not only as isolated tasks, to catch developing structural problems early" },
+        { en: "Keep the PMS and actual deck condition consistent — do not let paperwork and reality drift apart" },
+      ],
+      commonMistakes: [
+        { en: "Assigning technical tasks without considering the experience level of the crew member" },
+        { en: "Keeping the most experienced crew members on every critical task instead of progressively developing the rest of the team" },
+        { en: "Treating a recurring corrosion issue as routine because it has always been handled the same way before" },
+        { en: "Approving finished work based on a quick visual check rather than verifying preparation quality underneath" },
+        { en: "Letting maintenance planning become reactive, only responding to problems rather than following a proactive schedule" },
+        { en: "Allowing deck stores or the paint locker to become disorganized, slowing down future tasks and creating fire or safety risks" },
+      ],
+      professionalTips: [
+        { en: "The best maintenance decisions are made before the work starts — sequencing, assignment, and preparation matter more than speed of execution" },
+        { en: "The team quickly learns which standard you actually enforce — not the one written in the procedures, but the one you consistently accept" },
+        { en: "Corrosion tells a story over time — comparing today's observation to previous reports often reveals more than a single inspection ever could" },
+        { en: "Training junior ratings during maintenance work is one of the most effective ways to build a stronger deck team, not just a byproduct of getting the job done" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l6" }, { kind: "lesson", lessonId: "d6-l7" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Bosun's role shifts from organizing daily work to leading a team under pressure at an assigned emergency station — directing the crew's actions, maintaining accountability for everyone under their charge, and serving as the operational link between the emergency team and the officer in command, ensuring that orders are understood, executed, and accurately reported back. Detailed procedures for each type of emergency are covered in the Safety curriculum; this phase focuses on how the Bosun is expected to lead once an emergency begins." },
+      responsibilities: [
+        { en: "Proceed immediately to the assigned emergency station and take charge of organizing the team present, following the vessel's muster list and emergency organization" },
+        { en: "Verify that the assigned emergency station is operationally ready upon arrival, identifying any immediate equipment or personnel issue before the response develops further" },
+        { en: "Maintain continuous accountability for the assigned team throughout the emergency, not only during the initial muster" },
+        { en: "Translate orders received from the officer in command into clear, specific actions for the team, verifying that each member understands their task" },
+        { en: "Maintain direct oversight of the team's safety and equipment use throughout the emergency, correcting unsafe action immediately" },
+        { en: "Consolidate observations from team members into clear, factual reports to the officer in command or bridge, rather than passing along raw or conflicting information" },
+        { en: "Make immediate operational decisions on matters within their authority (e.g. reallocating a task among the team) while escalating anything affecting the overall response or vessel safety" },
+        { en: "Maintain calm, clear communication and set the tone for the team's discipline throughout the emergency, regardless of personal uncertainty about the situation" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list (firefighting outfit, immersion suit, lifejacket, etc.)" },
+        { en: "Portable radio or other communication equipment designated for the emergency team" },
+        { en: "Muster list and emergency organization reference" },
+        { en: "Team accountability / personnel checklist (where used by company procedures)" },
+        { en: "Emergency equipment specific to the assigned station (as covered in Safety training)" },
+      ],
+      risks: [
+        { en: "Delayed or unclear direction to the team due to hesitation in translating orders into specific action" },
+        { en: "Failure to account for all team members promptly, delaying recognition of someone missing or in difficulty" },
+        { en: "Passing along conflicting or unverified information from the team without consolidating it into a clear picture" },
+        { en: "Loss of situational awareness because all attention becomes focused on one immediate problem within the emergency station" },
+        { en: "Team discipline breaking down under stress if the Bosun's own composure is visibly shaken" },
+        { en: "Making a decision beyond Bosun authority instead of escalating to the officer in command" },
+        { en: "Same physical risks as any crew member at the emergency station — leadership responsibility does not reduce personal exposure" },
+      ],
+      bestPractices: [
+        { en: "Take the muster count immediately and repeat it as the team's composition changes during the response" },
+        { en: "Translate every order into a specific, concrete instruction for each team member — never assume the order alone is enough guidance" },
+        { en: "Report clearly and factually to command — state what is confirmed and what is still uncertain, rather than blending the two" },
+        { en: "Reassess the team's situation regularly as the emergency evolves rather than assuming the initial plan remains appropriate" },
+        { en: "Maintain visible calm and discipline, even when personally uncertain — the team takes its cue from the Bosun's demeanour" },
+        { en: "Make quick decisions confidently within your authority, but escalate anything touching the overall response or vessel safety without delay" },
+      ],
+      commonMistakes: [
+        { en: "Hesitating to give specific direction, leaving team members waiting for instructions that never fully arrive" },
+        { en: "Failing to re-verify the team count as members move or are reassigned during the response" },
+        { en: "Relaying every individual team member's raw observation to command instead of consolidating them into one clear report" },
+        { en: "Attempting to perform every critical task personally instead of continuing to lead and coordinate the team" },
+        { en: "Allowing visible panic or hesitation to spread confidence loss through the team" },
+        { en: "Attempting to resolve a situation beyond Bosun authority rather than escalating it promptly" },
+      ],
+      professionalTips: [
+        { en: "In an emergency, your team follows your tone as much as your instructions — steady communication is itself a form of leadership" },
+        { en: "Translate, don't just transmit — an order relayed word-for-word is not the same as an order made actionable for the specific people in front of you" },
+        { en: "Command can only act on the information it receives — a consolidated, accurate report is more valuable than several raw ones" },
+        { en: "The standard your team demonstrates during an emergency is usually the standard you demanded during every drill beforehand" },
+      ],
+      mapReferences: [],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "While anchoring, one crew member at the forecastle reports the chain 'seems fine,' while another, positioned differently, mentions the chain angle looks unusual. The two observations are not fully consistent." },
+      mission: { en: "Reconcile the conflicting observations quickly and give the bridge a single, reliable assessment rather than passing along two different impressions." },
+      expectedActions: [
+        { en: "Personally check the chain tendency and windlass condition directly rather than choosing between the two reports" },
+        { en: "Ask each crew member a specific, clarifying question rather than accepting a vague impression" },
+        { en: "Report to the bridge only once you have a consolidated, confident picture — or explicitly report the uncertainty if it cannot yet be resolved" },
+        { en: "Continue monitoring after the initial report and update the bridge if the situation becomes clearer or changes" },
+      ],
+      why: [{ en: "Passing along one of two conflicting reports without verification risks giving the bridge a false sense of certainty in either direction — the Bosun's role is to resolve the ambiguity, not transmit it." }],
+      commonMistakes: [
+        { en: "Picking the more reassuring of the two reports without checking" },
+        { en: "Relaying both reports to the bridge without adding a personal assessment" },
+        { en: "Delaying the report altogether while trying to fully resolve the disagreement alone" },
+      ],
+      safetyPoints: [
+        { en: "A dragging anchor is a slow-developing risk — an unresolved ambiguity at the forecastle should never be allowed to delay the bridge's awareness of a possible problem." },
+        { en: "When uncertainty affects navigational safety, early reporting is safer than delayed certainty." },
+      ],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "You are planning the day's maintenance tasks. Your most experienced AB is available, and assigning the technical painting task to them would be the fastest, safest option — as it has been on every previous occasion." },
+      mission: { en: "Balance the immediate efficiency of the day's work against the longer-term development of the rest of the deck team." },
+      expectedActions: [
+        { en: "Consider pairing a less experienced rating with the technical task under closer supervision, rather than defaulting to the same experienced AB" },
+        { en: "Select the learning opportunity deliberately, not automatically — only when the task, conditions, and available supervision make it appropriate" },
+        { en: "Brief the less experienced rating clearly and check in more frequently during the task" },
+        { en: "If time or conditions genuinely do not allow this, note it and plan differently for the next opportunity rather than letting it become a permanent pattern" },
+      ],
+      why: [{ en: "Repeatedly assigning critical work to the same experienced crew member is efficient in the short term but limits the development of the rest of the team and creates unnecessary dependence on one individual." }],
+      commonMistakes: [
+        { en: "Always defaulting to the same experienced crew member without noticing the pattern" },
+        { en: "Assuming junior ratings will 'naturally' develop skills without deliberate assignment and supervision" },
+      ],
+      safetyPoints: [{ en: "Supervised skill development does not mean lowering the safety standard — closer Bosun oversight compensates for the junior rating's lesser experience." }],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l7" }],
+    },
+    {
+      situation: { en: "A gangway watchkeeper radios you, unsure whether to allow a visitor aboard — the person has partial identification but no confirmation from the agent was received in advance." },
+      mission: { en: "Resolve the uncertainty quickly without creating an unnecessary security gap or an unnecessary delay for a legitimate visitor." },
+      expectedActions: [
+        { en: "Do not instruct the watchkeeper to 'use their judgment' and move on — personally verify the visitor's identity and purpose, or escalate to the OOW/duty officer if verification cannot be completed at your level" },
+        { en: "Confirm the decision clearly back to the watchkeeper before ending the exchange" },
+        { en: "Inform the Chief Officer or OOW afterwards if the situation reveals a recurring weakness in access control procedures" },
+      ],
+      why: [{ en: "An unclear instruction ('figure it out') passes the Bosun's uncertainty down to a less experienced crew member rather than resolving it — the Bosun's role is to remove ambiguity, not delegate it under pressure." }],
+      commonMistakes: [
+        { en: "Giving a vague answer that leaves the watchkeeper still uncertain" },
+        { en: "Deciding based on convenience (letting the visitor in to avoid delay) rather than verification" },
+        { en: "Failing to close the loop with a clear final instruction" },
+      ],
+      safetyPoints: [{ en: "Every access decision should be traceable to a clear verification step — never to an assumption made under time pressure." }],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Your value is measured by your team's performance, not your own — the moment you catch yourself doing every critical task personally, you have stopped leading and started competing with your own crew." },
+    { en: "Verify before you trust, then trust without micromanaging — responsibility grows when people know they will be supported and held accountable." },
+    { en: "Say it once, clearly, and check understanding — clear communication is confirmed by understanding, not by speaking." },
+    { en: "The standard you accept on a quiet day is the standard your team will default to under pressure — consistency matters more than occasional strictness." },
+    { en: "Develop your team deliberately, not accidentally — every task is an opportunity to build a more capable crew, not just to get the job done." },
+    { en: "Early escalation gives officers more options than late escalation ever can." },
+    { en: "Lead by example without needing to prove it constantly — your crew notices consistent professionalism far more than occasional displays of skill." },
+    { en: "A calm, organized Bosun makes an organized deck team — calm is contagious, but so is panic." },
+    { en: "Never allow routine to replace attention — familiar tasks deserve the same discipline as unfamiliar ones." },
+    { en: "Being a Bosun is not simply being a very experienced AB — it is a different job, built on organizing, coordinating, verifying, and developing others, not on personal execution alone." },
+  ],
+
+  professionalMindset: [
+    { en: "Think in terms of the team's picture, not your own task. An AB focuses on doing their job well; a Bosun must constantly hold a mental map of what every station, every crew member, and every ongoing task is doing at once." },
+    { en: "Assume information is incomplete until verified. A single report, a single observation, a single crew member's impression is a starting point, not a conclusion — the Bosun's job is to build the most reliable operational picture possible before acting or reporting." },
+    { en: "See routine as the moment risk hides best. The most dangerous point in most operations is not the unfamiliar one — it is the familiar one, repeated so often that attention quietly drops." },
+    { en: "Measure success by what your team can do without you, not by what you can do yourself. A Bosun who has built a genuinely capable team can step away briefly without the operation losing quality — that capability is the real achievement." },
+    { en: "Treat every instruction you give as something that must be understood, not just heard. Communication ends only when the other person can perform the task correctly." },
+    { en: "Hold two timeframes at once: today's task and the team's long-term development. The fastest solution today (assigning the same experienced hand again) is not always the best decision for the team's future capability." },
+    { en: "Accept that authority is operational, not absolute. A Bosun organizes, decides, and acts within a real scope — but always within a chain of command that extends above them, never around it, and strengthens it by providing reliable execution and timely escalation." },
+    { en: "Recognize that your composure is a resource the team draws on. In a difficult moment, the crew is watching how you react as much as listening to what you say — your emotional discipline becomes operational discipline for the team." },
+    { en: "Think beyond today's operation. Every report, every inspection, every maintenance task, and every briefing contributes to the long-term condition of the vessel and the capability of the crew." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Deck Logbook — The Bosun does not maintain the logbook directly, but often provides the verified operational summary from which several logbook entries are prepared: mooring operations, rounds, maintenance completed, and incidents observed." },
+    { en: "Planned Maintenance System (PMS) records — The Bosun bridges the gap between paperwork and reality: verifying that completed work is properly reflected in the PMS, and flagging any discrepancy between what is recorded and what is actually observed on deck. The Bosun also reports when planned maintenance cannot be completed as scheduled, helping keep the PMS realistic rather than artificially up to date." },
+    { en: "Checklists (departure, arrival, anchoring, STS, safety rounds) — The Bosun often reviews, verifies, or countersigns checklists completed by the crew, adding a layer of verification beyond the individual rating's own check. A checklist approved by the Bosun should reflect something they have genuinely confirmed, not simply trusted." },
+    { en: "Watch and rest-hour records — The Bosun contributes factual information about crew deployment and actual work performed, supporting accurate records without becoming responsible for regulatory compliance." },
+    { en: "Maintenance and defect reports — The Bosun consolidates individual crew observations into clear, prioritized reports for the Chief Officer, distinguishing routine items from anything requiring officer-level decision. Recurring observations should be linked together whenever they indicate a developing trend rather than treated as isolated events." },
+    { en: "Access/visitor logs (during port operations) — The Bosun helps ensure the accuracy of this log across the whole port stay, spot-checking entries and resolving any gap or ambiguity escalated by a gangway watchkeeper." },
+    { en: "Why this matters: As information moves up from individual crew members to the officers, the Bosun is often the last point where accuracy can still be verified before it becomes an official record. A Bosun who treats this consolidation role seriously protects the integrity of the vessel's records — and therefore the quality of the operational decisions based on them." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Waste segregation and disposal oversight — The Bosun ensures the deck crew correctly sorts and disposes of waste according to the vessel's Garbage Management Plan, correcting improper practices early before they become accepted team habits." },
+    { en: "Oil and fuel handling supervision — During bunkering, transfer, or maintenance work involving oil or fuel, the Bosun verifies that drip trays, containment, and spill-response readiness are actually in place — not just assumed — before work begins, and verifies that every crew member understands their assigned role before the operation begins." },
+    { en: "Prohibited discharges — team awareness — The Bosun ensures every crew member understands and consistently follows the rule that no oil, oily water, garbage, or chemical may be discharged overboard without explicit authorization and officer supervision, and immediately corrects any shortcut observed, however minor it appears." },
+    { en: "Reporting environmental incidents — The Bosun consolidates and escalates any environmental observation from the team (a sheen, an unusual smell, visible contamination) to the OOW or Chief Officer promptly. The Bosun should distinguish confirmed facts from observations requiring further investigation, while ensuring both are reported appropriately." },
+    { en: "Sediment and residue control — The Bosun organizes maintenance and painting work so that deck areas, drains, and scuppers remain clear of paint chips, rust, or oil residue, and verifies this as part of closing out a maintenance task. Environmental protection should be considered part of completing the task — not an additional clean-up activity after the work is finished." },
+    { en: "Good housekeeping — The Bosun promotes clean, orderly deck operations where spills, loose materials, and unnecessary waste are prevented through disciplined daily housekeeping rather than corrected only after they become a problem." },
+    { en: "Why this matters: Environmental compliance on deck depends less on individual knowledge and more on consistent team habits — a single well-informed Bosun who tolerates shortcuts under time pressure undermines the standard for the whole team. The Bosun's role is to build a team culture where environmentally responsible practice is simply the normal way of working." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Allocate and reallocate deck crew tasks based on experience, workload, and operational priorities established by the officers" },
+      { en: "Make immediate operational decisions on deck-level matters (e.g. reassigning a crew member, adjusting a work sequence) within the operational intent established by the officers, without waiting for officer instruction on routine matters" },
+      { en: "Suspend or reorganize routine deck work when operational priorities change, ensuring the team remains aligned with the officers' intent" },
+      { en: "Review, verify, or countersign checklists and reports completed by the deck crew before passing them to the officers" },
+      { en: "Correct unsafe technique or non-compliant behaviour observed in any member of the deck team, on the spot" },
+      { en: "Refuse to proceed with a task, or direct the team to stop, if you judge it unsafe, until the situation has been reassessed with the appropriate officer" },
+      { en: "Personally operate equipment (windlass, winches) when your direct involvement is warranted by the complexity or criticality of the situation" },
+      { en: "Escalate any concern — equipment, personnel, or procedural — directly to the Chief Officer or OOW without needing prior approval to raise it" },
+    ],
+    youCannot: [
+      { en: "Decide navigational strategy, operational priorities, or departure/arrival sequencing — these remain with the OOW and Chief Officer" },
+      { en: "Authorize the boarding of a visitor or contractor without confirmation from the OOW or duty officer" },
+      { en: "Discharge oil, oily water, garbage, or any regulated substance overboard without explicit authorization and officer supervision" },
+      { en: "Sign or approve official ship's documents or records as the final authority — that responsibility remains with the officers" },
+      { en: "Alter the vessel's planned maintenance schedule or safety procedures on your own judgment, except where immediate safety requires temporarily stopping or delaying work until officers are informed" },
+      { en: "Take command of an emergency response beyond your assigned station, or redirect resources belonging to another team without the officer in command's authorization" },
+      { en: "Assume regulatory responsibility for crew rest-hour compliance — you contribute accurate information, but the Chief Officer holds this accountability" },
+      { en: "Bypass the chain of command by making a decision that affects the overall operation, vessel safety, or another department, without escalating first" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Confusing leadership with personal execution — Continuing to work as if you were still the most experienced AB, instead of organizing, verifying, and developing the team around you." },
+    { en: "Accepting a lower standard because a task is routine — Letting familiar operations receive less attention or verification than unfamiliar ones, when routine is exactly where risk tends to hide." },
+    { en: "Passing along unverified information — Relaying a crew member's report to the officers without first adding your own verification or clearly distinguishing confirmed facts from unverified observations." },
+    { en: "Defaulting to the same experienced crew member — Repeatedly assigning critical tasks to whoever is fastest or most reliable today, at the cost of developing the rest of the team over time." },
+    { en: "Giving unclear or incomplete instructions — Assuming communication was successful simply because the instruction was delivered, rather than confirming actual understanding before work begins." },
+    { en: "Trying to supervise every detail personally — Spending so much time controlling individual tasks that you lose the ability to coordinate the operation as a whole." },
+    { en: "Hesitating to escalate — Waiting for a situation to become undeniable before informing an officer, rather than raising a developing concern early when more options are still available." },
+    { en: "Losing the overall picture — Becoming absorbed in a single task or station and failing to notice a developing issue elsewhere on deck." },
+    { en: "Letting personal composure slip visibly under pressure — Allowing the team to sense hesitation, because uncertainty spreads through a team faster than the original problem itself." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Officer of the Watch (OOW) — a significant step, requiring both formal certification and a transition from supervising work on deck to being directly responsible for the safe conduct of the navigational watch." },
+    { en: "Skills to develop: Navigational theory and certification (chartwork, COLREG application at officer level, watchkeeping regulations); bridge resource management and decision-making under time pressure; the ability to integrate information from multiple sources (radar, AIS, ECDIS, visual, weather) into a single navigational picture, extending the consolidation skills already built as Bosun to a new domain; formal reporting and record-keeping at officer level." },
+    { en: "Recommended experience: A solid period as Bosun across the full range of deck operations (mooring, anchoring, port work, maintenance, STS, emergency response), with demonstrated reliability in consolidating information and communicating clearly with the bridge — this operational experience helps establish the professional credibility on which an OOW's independence is built." },
+    { en: "Certificates typically required: Certificates required vary by flag State, company policy, and national administration. Progression to OOW typically requires completion of an approved officer training program and the corresponding STCW certificate of competency (Officer in Charge of a Navigational Watch), together with any additional endorsements required for the vessel type or trade." },
+    { en: "Recommended MAP courses: Navigation & Bridge Watchkeeping; Leadership & Bridge Resource Management; Role On Board – Officer of the Watch (when available); Specialized Operations (depending on vessel type); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from Bosun to OOW means shifting your primary focus from supervising people to managing the safe operation of the vessel. Leadership remains important, but navigational judgment, situational awareness, and independent decision-making become your defining responsibilities." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "d6-l4", label: { en: "Mooring Operations" } },
+    { kind: "lesson", lessonId: "d6-l3", label: { en: "Anchoring & Anchor Types" } },
+    { kind: "lesson", lessonId: "d6-l1", label: { en: "Ropes & Fibres" } },
+    { kind: "lesson", lessonId: "d6-l2", label: { en: "Knots & Splices" } },
+    { kind: "lesson", lessonId: "d6-l6", label: { en: "Basic Maintenance & Greasing" } },
+    { kind: "lesson", lessonId: "d6-l7", label: { en: "Painting & Corrosion Prevention" } },
+    { kind: "lesson", lessonId: "d1-l9", label: { en: "Steering" } },
+    { kind: "lesson", lessonId: "d1-l10", label: { en: "Watchkeeping" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l2", label: { en: "Common Ship Emergencies & Immediate Actions" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — terminology related to seamanship, deck operations, equipment, and supervision" } },
+    { kind: "external", externalCode: "SMCP", label: { en: "SMCP (Standard Marine Communication Phrases) reference" } },
+    { kind: "external", externalCode: "COLREG", label: { en: "COLREG reference" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore deck arrangements, equipment, and operational characteristics across different vessel types" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on supervision, deck operations, STCW requirements, and operational best practices" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Bosun to Officer of the Watch and beyond" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document sea time, certificates, and supervisory responsibilities and leadership experience gained as Bosun" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_AB", label: { en: "Role On Board — Able Seaman" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_OOW", label: { en: "Role On Board — Officer of the Watch (when published)" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "Organization and allocation of the deck team's daily work" },
+      { en: "Personal operation of windlass and mooring equipment when direct involvement is warranted" },
+      { en: "Verification and countersigning of checklists and reports completed by the deck crew" },
+      { en: "Team briefing before departure, anchoring, port operations, and STS operations" },
+      { en: "Assigned emergency response actions and team leadership at my designated station" },
+    ],
+    iMonitor: [
+      { en: "Condition, performance, and coordination of the deck team across multiple simultaneous activities" },
+      { en: "Fatigue, rest rotation, and overall fitness of the deck crew" },
+      { en: "Quality and standard of completed maintenance and operational work" },
+      { en: "Recurring patterns in defect reports, rounds, or berth conditions" },
+      { en: "Team safety and PPE compliance across all deck activities, not only the task directly supervised" },
+    ],
+    iReport: [
+      { en: "A consolidated and verified operational picture, highlighting priorities, risks, and any issue requiring officer-level attention" },
+      { en: "Any recurring or structural concern that goes beyond routine surface treatment or maintenance" },
+      { en: "Any fatigue, competence, or performance concern affecting the deck team" },
+      { en: "Any environmental observation or incident, distinguishing confirmed facts from observations requiring further verification" },
+      { en: "My own uncertainty when a situation cannot be fully resolved at my level" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Boarding of visitors or contractors without officer confirmation" },
+      { en: "Discharge of oil, oily water, garbage, or regulated substances overboard" },
+      { en: "Deviation from navigational strategy, operational priorities, or departure/arrival sequencing" },
+      { en: "Final approval or signature of official ship's documents and records" },
+      { en: "Command of an emergency response or redirection of resources beyond my assigned station and authority" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Deck team organization chart showing the Bosun's position between officers and ratings." } },
+    { kind: "diagram", caption: { en: "Mooring station layout showing typical Bosun positioning during departure/arrival manoeuvres." } },
+    { kind: "image", caption: { en: "Example of a completed and verified deck maintenance checklist." } },
+    { kind: "video", caption: { en: "Demonstration of an effective pre-departure team briefing." } },
+    { kind: "document", caption: { en: "Sample consolidated deck status report format for the bridge." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
-// Partial: currently populated for "ab" only — remaining ranks are still
-// pending content.
+// Partial: currently populated for "ab" and "bosun" — remaining ranks are
+// still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
+  bosun: BOSUN_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
