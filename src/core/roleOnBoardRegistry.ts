@@ -272,14 +272,14 @@ const AB_CARD: RoleOnBoardCard = {
 
   professionalSkills: [
     { label: { en: "Lookout" }, mapReferences: [{ kind: "lesson", lessonId: "d3-l2", label: { en: "Lights & Shapes" } }, { kind: "lesson", lessonId: "d3-l3", label: { en: "Sound Signals & Fog" } }] },
-    { label: { en: "Steering" } },
+    { label: { en: "Steering" }, mapReferences: [{ kind: "lesson", lessonId: "d1-l9" }] },
     { label: { en: "Mooring Operations" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l4", label: { en: "Mooring Operations" } }] },
     { label: { en: "Anchoring Assistance" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l3", label: { en: "Anchoring & Anchor Types" } }] },
     { label: { en: "Rope Work (Knots, Splicing)" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l1", label: { en: "Ropes & Fibres" } }, { kind: "lesson", lessonId: "d6-l2", label: { en: "Knots & Splices" } }] },
     { label: { en: "Communication & SMCP" }, mapReferences: [{ kind: "lesson", lessonId: "d3-l5", label: { en: "VHF Radio Procedures" } }, { kind: "lesson", lessonId: "d4-l4", label: { en: "Navigation & Maneuvering" } }] },
     { label: { en: "Safety & Emergency Response" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l2" }, { kind: "lesson", lessonId: "s4-l3" }, { kind: "lesson", lessonId: "s5-l1" }] },
-    { label: { en: "Basic Maintenance & Greasing" } },
-    { label: { en: "Painting & Corrosion Prevention" } },
+    { label: { en: "Basic Maintenance & Greasing" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l6" }] },
+    { label: { en: "Painting & Corrosion Prevention" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l7" }] },
     { label: { en: "Teamwork & Following Instructions Precisely" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l4" }] },
   ],
 
@@ -448,6 +448,8 @@ const AB_CARD: RoleOnBoardCard = {
       mapReferences: [
         { kind: "lesson", lessonId: "d1-l6", label: { en: "Practical Navigation" } },
         { kind: "lesson", lessonId: "d1-l5", label: { en: "Compass & Headings" } },
+        { kind: "lesson", lessonId: "d1-l9" },
+        { kind: "lesson", lessonId: "d1-l10" },
       ],
     },
 
@@ -670,6 +672,10 @@ const AB_CARD: RoleOnBoardCard = {
         { en: "Treat every maintenance task as if the vessel's long-term condition depends on it, because in a very real sense, it does" },
         { en: "Experienced ABs never walk past a defect assuming someone else will report it. Small observations made today prevent major repairs tomorrow" },
       ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "d6-l6" },
+        { kind: "lesson", lessonId: "d6-l7" },
+      ],
     },
 
     emergency_situations: {
@@ -875,6 +881,10 @@ const AB_CARD: RoleOnBoardCard = {
     { kind: "lesson", lessonId: "d6-l3", label: { en: "Anchoring & Anchor Types" } },
     { kind: "lesson", lessonId: "d6-l1", label: { en: "Ropes & Fibres" } },
     { kind: "lesson", lessonId: "d6-l2", label: { en: "Knots & Splices" } },
+    { kind: "lesson", lessonId: "d1-l9", label: { en: "Steering" } },
+    { kind: "lesson", lessonId: "d1-l10", label: { en: "Watchkeeping" } },
+    { kind: "lesson", lessonId: "d6-l6", label: { en: "Basic Maintenance & Greasing" } },
+    { kind: "lesson", lessonId: "d6-l7", label: { en: "Painting & Corrosion Prevention" } },
     { kind: "lesson", lessonId: "s3-l1", label: { en: "Scene Safety & Primary Survey (DRABC)" } },
     { kind: "lesson", lessonId: "s4-l1", label: { en: "Fire Behaviour & Early Fire Recognition" } },
     { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },

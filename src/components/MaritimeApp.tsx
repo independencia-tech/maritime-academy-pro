@@ -90,6 +90,7 @@ const LessonAIS = lazy(() => import("./LessonAIS"));
 const LessonGMDSS = lazy(() => import("./LessonGMDSS"));
 const LessonSMCP_L1 = lazy(() => import("./LessonSMCP_L1"));
 const LessonSteering = lazy(() => import("./LessonSteering"));
+const LessonWatchOrganization = lazy(() => import("./LessonWatchOrganization"));
 const LessonSMCP_L2 = lazy(() => import("./LessonSMCP_L2"));
 const LessonSMCP_L3 = lazy(() => import("./LessonSMCP_L3"));
 const LessonSMCP_L4 = lazy(() => import("./LessonSMCP_L4"));
@@ -102,6 +103,8 @@ const LessonSEA_L2 = lazy(() => import("./LessonSEA_L2"));
 const LessonSEA_L3 = lazy(() => import("./LessonSEA_L3"));
 const LessonSEA_L4 = lazy(() => import("./LessonSEA_L4"));
 const LessonSEA_L5 = lazy(() => import("./LessonSEA_L5"));
+const LessonSEA_L6 = lazy(() => import("./LessonSEA_L6"));
+const LessonSEA_L7 = lazy(() => import("./LessonSEA_L7"));
 const LessonMETEO_L1 = lazy(() => import("./LessonMETEO_L1"));
 const LessonMETEO_L2 = lazy(() => import("./LessonMETEO_L2"));
 const LessonMETEO_L3 = lazy(() => import("./LessonMETEO_L3"));
@@ -1237,7 +1240,7 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8","l9"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8","l9","l10"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1565,7 +1568,7 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
   };
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
-  const playable = new Set(["l1","l2","l3","l4","l5"]);
+  const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -2676,6 +2679,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
             else if (lid === "l7") setPage("lesson_marees");
             else if (lid === "l8") setPage("lesson_colreg");
             else if (lid === "l9") setPage("lesson_steering");
+            else if (lid === "l10") setPage("lesson_watch_org");
           }}
         />
       )}
@@ -2737,6 +2741,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
   else if (lid === "l3") setPage("lesson_sea_l3");
   else if (lid === "l4") setPage("lesson_sea_l4");
   else if (lid === "l5") setPage("lesson_sea_l5");
+  else if (lid === "l6") setPage("lesson_sea_l6");
+  else if (lid === "l7") setPage("lesson_sea_l7");
 }}
           />
 )}
@@ -3492,6 +3498,20 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
   />
 )}
+{page === "lesson_sea_l6" && (
+  <LessonSEA_L6
+    lang={lang}
+    onBack={() => setPage("seamanship_lessons")}
+    onComplete={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
+  />
+)}
+{page === "lesson_sea_l7" && (
+  <LessonSEA_L7
+    lang={lang}
+    onBack={() => setPage("seamanship_lessons")}
+    onComplete={() => { markLessonCompleted("d6-l7"); setPage("seamanship_lessons"); }}
+  />
+)}
 {page === "lesson_meteo_l1" && (
   <LessonMETEO_L1
     lang={lang}
@@ -3693,6 +3713,13 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
+        />
+      )}
+      {page === "lesson_watch_org" && (
+        <LessonWatchOrganization
+          lang={lang}
+          onBack={() => setPage("nav_lessons")}
+          onComplete={() => { markLessonCompleted("d1-l10"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_moteur" && (

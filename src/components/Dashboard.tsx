@@ -191,7 +191,7 @@ const T = {
 export const MODULES = {
   deck:[
     { id:"d1", icon:"🧭", color:C.blue2, access:"free",
-      freeLessons:2, totalLessons:9,
+      freeLessons:2, totalLessons:10,
       title:{fr:"Navigation & Cartographie",en:"Navigation & Cartography",es:"Navegación & Cartografía",pt:"Navegação & Cartografia"},
       desc:{fr:"Histoire, instruments, cartes, COLREG",en:"History, instruments, charts, COLREG",es:"Historia, instrumentos, cartas, COLREG",pt:"História, instrumentos, cartas, COLREG"},
       xp:400, status:"available", progress:0,
@@ -205,6 +205,7 @@ export const MODULES = {
         {id:"l7",title:{fr:"Les Marées",en:"Tides",es:"Las Mareas",pt:"As Marés"},access:"premium",status:"locked"},
         {id:"l8",title:{fr:"COLREG Avancé",en:"Advanced COLREG",es:"COLREG Avanzado",pt:"COLREG Avançado"},access:"premium",status:"locked"},
         {id:"l9",title:{fr:"Ordres de Barre",en:"Steering & Helm Orders",es:"Órdenes de Timón",pt:"Ordens de Leme"},access:"premium",status:"locked"},
+        {id:"l10",title:{fr:"Organisation du Quart",en:"Watchkeeping Organization",es:"Organización de la Guardia",pt:"Organização do Quarto"},access:"premium",status:"locked"},
       ]
     },
     { id:"d2", icon:"⚖️", color:C.gold, access:"premium",
@@ -270,7 +271,7 @@ export const MODULES = {
   ]
     },
     { id:"d6", icon:"⚓", color:C.teal, access:"premium",
-      freeLessons:0, totalLessons:5,
+      freeLessons:0, totalLessons:7,
       title:{fr:"Seamanship",en:"Seamanship",es:"Seamanship",pt:"Seamanship"},
       desc:{fr:"Cordages, nœuds, mouillage, amarrage, stabilité",en:"Ropes, knots, anchoring, mooring, stability",es:"Cabos, nudos, fondeo, amarre, estabilidad",pt:"Cabos, nós, fundeio, amarração, estabilidade"},
       xp:250, status:"available", progress:0,
@@ -280,6 +281,8 @@ export const MODULES = {
         {id:"l3",title:{fr:"Anchoring & Anchor Types",en:"Anchoring & Anchor Types",es:"Anchoring & Anchor Types",pt:"Anchoring & Anchor Types"},access:"premium",status:"locked"},
         {id:"l4",title:{fr:"Mooring Operations",en:"Mooring Operations",es:"Mooring Operations",pt:"Mooring Operations"},access:"premium",status:"locked"},
         {id:"l5",title:{fr:"Stability & Buoyancy",en:"Stability & Buoyancy",es:"Stability & Buoyancy",pt:"Stability & Buoyancy"},access:"premium",status:"locked"},
+        {id:"l6",title:{fr:"Maintenance de Base & Graissage",en:"Basic Maintenance & Greasing",es:"Mantenimiento Básico y Engrase",pt:"Manutenção Básica e Lubrificação"},access:"premium",status:"locked"},
+        {id:"l7",title:{fr:"Peinture & Prévention de la Corrosion",en:"Painting & Corrosion Prevention",es:"Pintura y Prevención de la Corrosión",pt:"Pintura e Prevenção da Corrosão"},access:"premium",status:"locked"},
       ]
     },
     { id:"d7", icon:"🌦️", color:C.teal, access:"tbd",
