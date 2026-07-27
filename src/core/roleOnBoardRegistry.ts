@@ -2324,14 +2324,710 @@ const OOW_CARD: RoleOnBoardCard = {
   ],
 };
 
+// ── CHIEF OFFICER ─────────────────────────────────────────────
+// mapReferences resolved via Mission D (see
+// audits/2026-07-26_role-on-board-chief-officer-mapreferences.md) and the
+// Product Owner's final decisions on that report. e1-l3 and d4-l5 are
+// explicitly flagged as partial/foundation-level coverage — no dedicated
+// officer-level Cargo Operations & Stability lesson exists yet. Locations
+// with no validated correspondence are left as mapReferences: []
+// intentionally (candidates for future lessons — Leadership/Supervision,
+// Cargo Operations & Stability — not filled with approximate matches).
+const CHIEF_OFFICER_CARD: RoleOnBoardCard = {
+  rankId: "chief_officer",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Chief Officer (Chief Mate) is the head of the deck department, responsible for cargo operations, stability, deck maintenance planning, and the overall organization and performance of the deck team — OOWs, Bosun, and ratings — on behalf of the Master. Unlike the OOW, who manages the safe conduct of a single watch, the Chief Officer manages the safe operation of the deck department, ensuring consistent operational standards across every watch, every operation, and every day." },
+    { en: "The Chief Officer holds direct responsibility for cargo and ballast operations (planning, stability, stress calculations) and for ensuring the vessel remains safely loaded and stable throughout the voyage — a technical, operational, and statutory responsibility distinct from anything at the OOW or Bosun level." },
+    { en: "The Chief Officer plans and oversees the deck department's maintenance program, safety drills, and administrative requirements (certificates, surveys, port state control), coordinating resources across multiple simultaneous priorities while ensuring routine operations continue safely despite competing priorities." },
+    { en: "The Chief Officer supervises and develops the OOWs and the Bosun, ensuring consistent standards across watches and operations, and acts on behalf of the Master for the routine management of the deck department whenever the Master is not directly exercising that authority." },
+    { en: "Where the OOW's judgment resolves ambiguity at the level of a single watch, the Chief Officer's judgment resolves ambiguity at the level of the department as a whole — balancing cargo, safety, maintenance, and personnel simultaneously, often under commercial and regulatory pressure." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Master (direct report, second-in-command of the vessel)" },
+    ],
+    worksWith: [
+      { en: "OOWs for watch standards and cargo/navigation coordination" },
+      { en: "Bosun for deck team organization and maintenance" },
+      { en: "Chief Engineer for cross-department coordination (stability, ballast, dry-dock)" },
+      { en: "Surveyors, port state control, agents, and charterers for cargo and certification matters" },
+      { en: "Terminal representatives and stevedores during cargo operations" },
+    ],
+    mentors: [
+      { en: "Master, whose operational judgment and command experience prepare the Chief Officer for future command responsibilities" },
+    ],
+    supports: [
+      { en: "OOWs, whom the Chief Officer supervises and develops toward their own further certification" },
+      { en: "The Bosun, whose deck organization the Chief Officer directs at a departmental level" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Cargo operations planning and execution" }, mapReferences: [{ kind: "lesson", lessonId: "d4-l5" }] },
+    { label: { en: "Stability, stress, and loading calculations" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l3" }] },
+    { label: { en: "Risk assessment and operational prioritization" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l5" }] },
+    { label: { en: "Departmental planning and resource management" } },
+    { label: { en: "Supervision and development of OOWs and the Bosun" } },
+    { label: { en: "Safety management and drills coordination" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l6" }] },
+    { label: { en: "Regulatory compliance and certification management (port state control, class, flag state)" }, mapReferences: [{ kind: "lesson", lessonId: "d2-l1" }] },
+    { label: { en: "Commercial coordination (charterers, agents, surveyors)" } },
+    { label: { en: "Emergency command support and departmental crisis coordination" }, mapReferences: [{ kind: "lesson", lessonId: "s4-l7" }] },
+    { label: { en: "Departmental communication and reporting to the Master" }, mapReferences: [{ kind: "lesson", lessonId: "d1-l10" }, { kind: "lesson", lessonId: "d4-l1" }] },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Chief Officer's responsibility is neither the OOW's navigational verification nor the Bosun's deck team organization — it is confirming that the vessel's cargo, stability, and departmental readiness are all sound, and that the reports from both the OOW and the Bosun form a consistent, complete picture before the Chief Officer reports departmental readiness to the Master. The Chief Officer's role is to ensure that no unresolved departmental uncertainty reaches the Master disguised as readiness. The Chief Officer does not personally test navigational equipment or inspect every mooring line, but is accountable for the overall soundness of the department's preparation." },
+      responsibilities: [
+        { en: "Verify final stability and stress calculations against the actual loaded condition, confirming the vessel is safely configured for the intended departure and passage" },
+        { en: "Review and reconcile the OOW's navigational readiness report and the Bosun's deck team readiness report into a single departmental assessment" },
+        { en: "Confirm that any outstanding cargo, maintenance, or certification matter does not compromise the vessel's readiness to depart safely" },
+        { en: "Verify that drills, certificates, or surveys due before departure have been completed or are not overdue in a way that would affect the vessel's compliance" },
+        { en: "Resolve any discrepancy between the OOW's and Bosun's reports personally, rather than passing an unreconciled picture to the Master" },
+        { en: "Prioritize unresolved issues according to their operational impact, ensuring that critical deficiencies are addressed before non-critical administrative matters" },
+        { en: "Report departmental readiness to the Master, distinct from and encompassing both navigational and deck team readiness" },
+        { en: "Coordinate with the Chief Engineer to confirm cross-departmental readiness factors affecting stability or departure (ballast, trim) are aligned" },
+      ],
+      equipment: [
+        { en: "Stability and stress calculation software/booklet, loading computer" },
+        { en: "Cargo and ballast plan, draft survey records" },
+        { en: "Cargo documentation (loading plan, cargo manifest, dangerous goods documentation where applicable)" },
+        { en: "Certificate and survey tracking system" },
+        { en: "Departmental readiness checklist consolidating navigational and deck inputs" },
+      ],
+      risks: [
+        { en: "Reporting departmental readiness to the Master without genuinely reconciling the OOW's and Bosun's separate reports" },
+        { en: "A stability or stress calculation error going unnoticed because it was not independently verified against the actual loaded condition" },
+        { en: "An overdue certificate, survey, or drill being overlooked amid cargo and departure pressures" },
+        { en: "Assuming cross-departmental readiness (e.g. engine room ballast operations) without direct confirmation from the Chief Engineer" },
+        { en: "Allowing commercial departure pressure to influence technical readiness decisions" },
+        { en: "Deferring to the OOW's or Bosun's assessment entirely without personally verifying the areas for which the Chief Officer is accountable" },
+      ],
+      bestPractices: [
+        { en: "Treat the OOW's and Bosun's readiness reports as inputs to be reconciled, not as a completed picture to simply relay upward" },
+        { en: "Verify stability and stress figures against the actual condition, not only the planned one, before departure" },
+        { en: "Track certificates, surveys, and drill schedules proactively, rather than discovering an overdue item under departure pressure" },
+        { en: "Confirm cross-departmental factors directly with the Chief Engineer rather than assuming alignment" },
+        { en: "Resolve the highest-risk uncertainties first before refining lower-priority issues" },
+        { en: "Resolve any discrepancy or uncertainty before reporting readiness to the Master, even if it requires a short delay" },
+      ],
+      commonMistakes: [
+        { en: "Relaying the OOW's and Bosun's reports to the Master without adding a personal, reconciled assessment" },
+        { en: "Trusting planned stability figures without confirming them against the actual loaded condition" },
+        { en: "Overlooking a certificate or survey deadline because attention is focused on cargo or departure logistics" },
+        { en: "Assuming engine room readiness factors are aligned without direct confirmation" },
+        { en: "Reporting readiness under time pressure without having genuinely resolved an open question" },
+      ],
+      professionalTips: [
+        { en: "Departmental readiness is not the sum of two separate reports — it is the Chief Officer's own reconciled judgment built from them" },
+        { en: "A stability calculation is only as reliable as the data it is built on — verify the data, not just the arithmetic" },
+        { en: "Certificates and surveys rarely become urgent gradually — track them continuously so they never become a departure-day surprise" },
+        { en: "Cross-departmental readiness depends on direct confirmation, not assumption — a five-minute conversation with the Chief Engineer prevents most surprises" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l3" }, { kind: "lesson", lessonId: "d2-l1" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Chief Officer is typically stationed as officer-in-charge of a mooring station (commonly forward), providing qualified technical judgment and decision authority at that station — distinct from the Bosun's hands-on organization of the crew executing the lines, and distinct from the OOW's conduct of the vessel from the bridge. The Chief Officer's role is to translate the bridge's orders into precise station-level decisions, verify the technical condition of equipment under load, and report back information the bridge can rely on without further interpretation. The Chief Officer ensures that the bridge receives technically validated information from the station, allowing manoeuvring decisions to be based on reliable, interpreted reports rather than raw observations." },
+      responsibilities: [
+        { en: "Take charge of the assigned mooring station as the responsible officer, with authority to make station-level decisions within the sequence ordered by the bridge" },
+        { en: "Verify the technical condition of lines, wires, and winches under load, and decide whether continued use is safe as the manoeuvre progresses" },
+        { en: "Relay precise, technical reports to the bridge (line status, remaining capacity, any developing issue) rather than passing along the crew's raw observations unfiltered" },
+        { en: "Coordinate directly with the Bosun regarding crew positioning and technique at the station, without duplicating the Bosun's day-to-day team management" },
+        { en: "Anticipate how developments at the station may affect the overall manoeuvre, reporting emerging risks before they become operational constraints" },
+        { en: "Assess whether trim or draft changes during the manoeuvre (e.g. ballast shifting) remain within safe limits, escalating to the bridge if a stability concern develops" },
+        { en: "Confirm station readiness and completion to the bridge clearly and promptly, enabling the OOW to sequence the overall manoeuvre with confidence" },
+        { en: "Report any equipment failure, technical concern, or safety issue at the station immediately, with a professional assessment of its severity" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the station" },
+        { en: "Mooring lines, wires, winches — assessed at a technical/decision level, distinct from the Bosun's operational oversight" },
+        { en: "Mooring arrangement plan / station layout" },
+        { en: "Portable radio for communication with the bridge and the Bosun" },
+        { en: "Trim/draft reference information relevant to the manoeuvre" },
+      ],
+      risks: [
+        { en: "Making a station-level decision that conflicts with the bridge's overall sequencing due to incomplete communication" },
+        { en: "Relaying an imprecise or overly raw report to the bridge, forcing the OOW to interpret rather than act" },
+        { en: "Focusing exclusively on the assigned station while losing awareness of how its status affects the overall manoeuvre" },
+        { en: "Missing a developing equipment issue because attention is divided between technical assessment and station coordination" },
+        { en: "Failing to recognize a trim or stability implication of the manoeuvre in time to escalate it" },
+        { en: "Undermining the Bosun's crew coordination by duplicating instructions rather than working through them" },
+      ],
+      bestPractices: [
+        { en: "Confirm the overall manoeuvre sequence with the bridge before the station begins acting, to avoid a station-level decision conflicting with the bridge's plan" },
+        { en: "Report station status in terms the bridge can act on directly — specific, technical, and unambiguous" },
+        { en: "Report significant trends, not only current conditions, whenever they may influence the bridge's next decision" },
+        { en: "Work through the Bosun for crew-level coordination rather than issuing parallel instructions to individual crew members" },
+        { en: "Maintain awareness of trim and draft implications throughout the manoeuvre, not only at its start and end" },
+        { en: "Escalate any technical concern the moment it is identified, rather than attempting to resolve it alone under time pressure" },
+      ],
+      commonMistakes: [
+        { en: "Acting on a station-level judgment without confirming it aligns with the bridge's overall sequence" },
+        { en: "Passing along an unfiltered crew observation instead of a clear professional assessment" },
+        { en: "Duplicating the Bosun's instructions to the crew, creating confusion about who is directing the team" },
+        { en: "Missing a stability or trim implication because attention is fixed on the mechanics of the station" },
+        { en: "Delaying the report of a technical concern while attempting to manage it independently first" },
+      ],
+      professionalTips: [
+        { en: "Your value at the station is precision — the bridge should never have to ask a follow-up question to understand your report" },
+        { en: "Authority at a station means making the right call within its scope, not making every call — work with the Bosun, not around them" },
+        { en: "A departure manoeuvre involves more than lines and winches; keep the vessel's overall condition in view, not just the equipment in front of you" },
+        { en: "The station that reports clearly and promptly is the one the bridge trusts most during the next manoeuvre" },
+      ],
+      mapReferences: [],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Chief Officer stands their own watch under the same principles covered in the OOW curriculum, but their departmental responsibility extends well beyond that single watch: overseeing the standard of watchkeeping across all OOWs, monitoring the vessel's stability and cargo condition throughout the passage, and progressing the department's administrative and planning work toward the next port. The Chief Officer ensures that watchkeeping remains a consistent departmental standard rather than the individual performance of separate officers. Where the OOW's judgment is confined to the watch in front of them, the Chief Officer's judgment spans the entire passage and every watch within it." },
+      responsibilities: [
+        { en: "Stand a navigational watch to the same standard expected of any OOW, applying the same judgment, COLREG application, and reporting discipline" },
+        { en: "Review other OOWs' logbook entries, handover records, and reported incidents across the voyage, identifying any pattern or standard requiring correction" },
+        { en: "Monitor the vessel's stability and cargo condition throughout the passage (e.g. ballast changes, weather routing effects on stress), adjusting the plan if conditions require it" },
+        { en: "Identify opportunities to improve departmental procedures or watchkeeping practices based on operational experience gathered during the passage" },
+        { en: "Progress passage-related administrative work (arrival documentation, cargo planning for the next port, certificate tracking) between watches, without compromising watchkeeping duties" },
+        { en: "Address any watchkeeping standard or competency concern identified in another OOW directly and constructively, escalating to the Master only if it cannot be resolved departmentally" },
+        { en: "Coordinate with the Master on the overall passage plan's progress and any adjustment required by weather, traffic, or operational developments" },
+        { en: "Maintain departmental readiness for the next port throughout the passage, rather than leaving preparation until arrival is imminent" },
+      ],
+      equipment: [
+        { en: "Standard bridge navigational equipment (as OOW, during own watch)" },
+        { en: "Stability and stress monitoring tools, voyage cargo/ballast plan" },
+        { en: "Passage plan revisions and weather routing updates" },
+        { en: "Departmental planning documents (arrival checklist, next-port cargo plan, certificate tracker)" },
+        { en: "Logbook and handover records across all watches, for review" },
+      ],
+      risks: [
+        { en: "A recurring watchkeeping standard issue across OOWs going unaddressed because each incident is reviewed in isolation" },
+        { en: "Correcting individual mistakes without addressing the underlying systemic cause affecting multiple watches" },
+        { en: "Stability or cargo condition drifting from the planned state during the passage without being actively monitored" },
+        { en: "Departmental administrative work being deferred until arrival, creating avoidable pressure at the port" },
+        { en: "Addressing a competency concern with an OOW too bluntly or too late, damaging trust rather than correcting the standard" },
+        { en: "Becoming so focused on departmental oversight that personal watchkeeping standards during one's own watch slip" },
+      ],
+      bestPractices: [
+        { en: "Review logbook and handover records across the voyage for patterns, not only isolated incidents" },
+        { en: "Monitor stability and cargo condition proactively during the passage, not only at scheduled calculation points" },
+        { en: "Progress next-port preparation incrementally throughout the passage, rather than compressing it into the final approach" },
+        { en: "Use routine passage periods to strengthen departmental standards before deficiencies become incidents" },
+        { en: "Address a standard or competency concern early, directly, and constructively — the goal is correction, not blame" },
+        { en: "Hold your own watch to the same standard you expect from every other OOW" },
+      ],
+      commonMistakes: [
+        { en: "Reviewing each OOW's watch in isolation rather than looking for patterns across the voyage" },
+        { en: "Assuming stability and cargo condition remain as planned without active monitoring during the passage" },
+        { en: "Deferring all administrative and next-port preparation until the final approach" },
+        { en: "Avoiding a difficult conversation about a watchkeeping standard until it becomes a more serious incident" },
+        { en: "Holding a personal watchkeeping standard lower than the one expected of the OOWs being supervised" },
+      ],
+      professionalTips: [
+        { en: "Supervising other officers' watches means reading between the lines of a logbook, not just checking that entries exist" },
+        { en: "The passage is your best opportunity to prepare the next port gradually — use it, rather than compressing everything into the final hours" },
+        { en: "A direct, early, and respectful correction protects both the standard and the relationship — waiting rarely improves either" },
+        { en: "You cannot credibly hold others to a standard you do not hold yourself during your own watch" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d1-l10" }, { kind: "lesson", lessonId: "d1-l9" }, { kind: "lesson", lessonId: "d1-l8" }, { kind: "lesson", lessonId: "d3-l6" }, { kind: "lesson", lessonId: "d1-l6" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Chief Officer is typically the responsible officer at the forecastle, providing the same technical judgment and decision authority as during departure — verifying equipment condition, relaying precise reports to the bridge, and supporting the OOW's assessment of the vessel's position. Where this differs from a routine mooring station, the Chief Officer also carries a departmental responsibility that extends beyond the operation itself: the implications of an extended stay at anchor on stability, cargo condition, and departmental planning, particularly if the anchorage is prolonged or unplanned. The Chief Officer transforms an anchoring operation into a managed operational period, ensuring both the immediate safety of the vessel and the efficient use of the time that follows." },
+      responsibilities: [
+        { en: "Take charge of the forecastle as the responsible officer, verifying windlass and chain condition and directing the pace of paying out or heaving in based on the bridge's instructions" },
+        { en: "Relay precise, technical chain reports (amount out, tendency, load indications) to the bridge, consolidating forecastle observations into a single professional assessment" },
+        { en: "Assess the operational and departmental implications of an extended or unplanned period at anchor (crew rest planning, maintenance opportunities, stability/ballast condition) and advise the Master accordingly" },
+        { en: "Review and reprioritize departmental activities as the expected duration of the anchorage changes, ensuring resources remain focused on the highest operational priorities" },
+        { en: "Coordinate with the Bosun on forecastle team organization and anchor watch rotation, without duplicating the Bosun's crew-level direction" },
+        { en: "Monitor cargo and stability condition throughout an extended anchorage, adjusting ballast or reporting any change in the vessel's configuration as required" },
+        { en: "Liaise with the agent or company, where relevant, on the operational or commercial consequences of anchoring delays (e.g. notice of readiness, demurrage implications), distinct from the technical anchoring operation itself" },
+        { en: "Ensure departmental work (maintenance, drills, administrative tasks) is planned productively during an extended anchor period rather than left idle" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the forecastle" },
+        { en: "Windlass, anchor chain — assessed at a technical/decision level, distinct from the Bosun's operational oversight" },
+        { en: "Anchor plan / anchorage instructions (where applicable)" },
+        { en: "Portable radio for communication with the bridge and the Bosun" },
+        { en: "Stability/ballast reference relevant to an extended anchorage" },
+        { en: "Commercial/administrative documentation relevant to anchoring delays (notice of readiness, agent correspondence), where applicable" },
+      ],
+      risks: [
+        { en: "Relaying an imprecise or overly raw chain report to the bridge, forcing the OOW to interpret rather than act" },
+        { en: "Failing to recognize the departmental or commercial implications of an anchoring delay until they become urgent" },
+        { en: "Continuing to plan on the basis of the original schedule despite a significant change in the expected duration of the anchorage" },
+        { en: "Cargo or stability condition drifting during an extended anchorage without active monitoring" },
+        { en: "Departmental work remaining unplanned during an extended anchor period, wasting an available opportunity" },
+        { en: "Duplicating the Bosun's forecastle team direction rather than working through them" },
+      ],
+      bestPractices: [
+        { en: "Report chain status in precise, technical terms the bridge can act on directly, exactly as during departure manoeuvres" },
+        { en: "Anticipate the departmental consequences of an anchorage extending beyond its planned duration, rather than waiting for the delay to become significant" },
+        { en: "Review departmental priorities whenever the expected departure time changes significantly" },
+        { en: "Use an extended anchor period productively — maintenance, drills, or administrative work that would otherwise compete with watchkeeping time" },
+        { en: "Maintain direct communication with the agent or company on any commercial implication of the delay, keeping the Master informed" },
+        { en: "Work through the Bosun for forecastle team coordination rather than issuing parallel instructions" },
+      ],
+      commonMistakes: [
+        { en: "Treating an extended anchorage purely as a waiting period rather than an opportunity for departmental progress" },
+        { en: "Failing to flag the commercial or operational consequences of a delay until asked" },
+        { en: "Allowing cargo or stability condition to drift unmonitored during a prolonged stay at anchor" },
+        { en: "Passing an unfiltered forecastle observation to the bridge instead of a clear technical assessment" },
+        { en: "Undermining the Bosun's direction of the forecastle team by issuing separate instructions" },
+      ],
+      professionalTips: [
+        { en: "An anchorage is rarely just 'waiting' from a departmental point of view — treat it as time to be used, not time to get through" },
+        { en: "The same precision expected of your reports during departure applies at anchor — the bridge relies on your assessment either way" },
+        { en: "Commercial and operational consequences of a delay are easier to manage when raised early, not once they have already become a problem" },
+        { en: "Supporting the OOW's judgment on the vessel's position does not mean silence — a second technical perspective from the forecastle adds real value" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l3" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Chief Officer holds direct responsibility for cargo operations — planning, supervising loading/discharging, and ensuring stability and stress remain within safe limits throughout — while also overseeing the deck department's port workload alongside the Bosun and OOW. Unlike at sea, where the Chief Officer's role is largely oversight and standard-setting, in port the Chief Officer becomes the vessel's primary interface with cargo interests: terminal, surveyors, charterers, and agents, while remaining accountable for the ship's safety and compliance throughout. The Chief Officer balances operational safety, commercial efficiency, and regulatory compliance throughout the port stay, ensuring that none is achieved at the expense of the others." },
+      responsibilities: [
+        { en: "Prepare and execute the cargo plan, sequencing loading or discharging operations to maintain safe stability, stress, and trim throughout the operation" },
+        { en: "Continuously monitor stability and stress during cargo operations, halting or adjusting the sequence if calculated limits are approached" },
+        { en: "Liaise directly with the terminal, stevedores, and surveyors on cargo operation progress, timing, and any technical or commercial issue arising" },
+        { en: "Anticipate the impact of operational delays or cargo plan changes on the remainder of the port stay, adjusting departmental priorities accordingly" },
+        { en: "Oversee the Bosun's and OOW's port workload (gangway security, mooring monitoring, high-risk operations) at a departmental level, intervening only where cargo operations create additional demands or risks" },
+        { en: "Coordinate with the Chief Engineer on ballast operations required to support the cargo plan and maintain vessel stability" },
+        { en: "Ensure required cargo documentation (loading plan, manifest, dangerous goods declarations, draft surveys) is accurate, complete, and available as required by the terminal or authorities" },
+        { en: "Manage competing priorities during port stay — cargo operations, maintenance, administrative deadlines, crew rest — resolving conflicts and escalating to the Master when departmental resources are insufficient" },
+        { en: "Report cargo operation progress, any deviation from plan, and departmental readiness for departure to the Master throughout the port stay" },
+      ],
+      equipment: [
+        { en: "Cargo plan, stability/stress calculation software, loading computer" },
+        { en: "Cargo documentation (manifest, dangerous goods declarations, draft survey records)" },
+        { en: "Terminal loading/discharging sequence and cargo operation timetable" },
+        { en: "Communication equipment for coordination with terminal, surveyors, and the bridge/Bosun" },
+        { en: "Departmental port workload plan (in coordination with the Bosun and OOW)" },
+      ],
+      risks: [
+        { en: "Continuing cargo operations without adequately monitoring stability or stress as the loaded condition changes" },
+        { en: "Miscommunication with the terminal or surveyor leading to a discrepancy between the planned and actual cargo operation" },
+        { en: "Allowing multiple small operational changes to accumulate without reassessing their combined impact on the cargo plan" },
+        { en: "Cargo documentation being incomplete or inaccurate, creating delay or compliance exposure" },
+        { en: "Competing port priorities (cargo, maintenance, administration) overwhelming departmental capacity without clear prioritization" },
+        { en: "Deferring to the terminal's schedule pressure at the expense of a genuine stability or safety check" },
+      ],
+      bestPractices: [
+        { en: "Monitor stability and stress continuously throughout cargo operations, not only at the planned checkpoints" },
+        { en: "Maintain direct, proactive communication with the terminal and surveyors rather than waiting for a discrepancy to surface on its own" },
+        { en: "Reassess the cargo plan whenever significant operational conditions change, rather than relying on the original sequence alone" },
+        { en: "Verify cargo documentation accuracy before it is required, not under the pressure of an imminent deadline" },
+        { en: "Prioritize departmental port workload explicitly, communicating trade-offs to the Bosun, OOW, and Master rather than leaving them implicit" },
+        { en: "Treat terminal schedule pressure as an input to manage, not a reason to skip a genuine safety verification" },
+      ],
+      commonMistakes: [
+        { en: "Allowing cargo operations to proceed on assumption rather than continuously verified stability data" },
+        { en: "Accepting a terminal's or surveyor's assessment without independent verification when a discrepancy is plausible" },
+        { en: "Discovering a documentation gap only when it is urgently needed rather than verifying it in advance" },
+        { en: "Allowing commercial or schedule pressure to compress or skip a safety check" },
+        { en: "Failing to communicate departmental priority trade-offs clearly, leaving the Bosun or OOW to guess at what matters most" },
+      ],
+      professionalTips: [
+        { en: "Cargo operations reward continuous verification, not periodic checkpoints — stability can shift meaningfully between calculations if not actively tracked" },
+        { en: "A good working relationship with the terminal is built on clear, proactive communication, not on hoping problems resolve themselves" },
+        { en: "Documentation errors are far cheaper to fix before they are needed than during a surveyor's or authority's review" },
+        { en: "Port stays test your ability to prioritize visibly — a department that understands the trade-offs performs better than one left to guess" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d4-l5" }, { kind: "lesson", lessonId: "e1-l3" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "STS operations are, from the Chief Officer's perspective, a complete operational event to be planned and orchestrated — not simply a mooring exercise or a cargo transfer, but the coordination of both together, alongside every departmental resource required to support them. Where the Bosun executes and coordinates the mooring station and the OOW ensures the vessel's safe manoeuvring and station-keeping, the Chief Officer plans the STS operation as a whole: cargo transfer sequencing and stability, departmental resource allocation, regulatory compliance, and the commercial and operational consequences of any deviation from plan." },
+      responsibilities: [
+        { en: "Prepare the overall STS operational plan, integrating the cargo transfer sequence, mooring/fender arrangement, and departmental resource allocation into a single coordinated plan" },
+        { en: "Liaise directly with the counterpart vessel's Chief Officer or cargo team (or floating terminal representative) to align procedures, timing, and safety requirements before the operation begins" },
+        { en: "Oversee fender and mooring rigging standards alongside the Bosun, verifying readiness before the approach begins, without duplicating the Bosun's crew-level direction" },
+        { en: "Plan and directly manage the cargo transfer sequence (if applicable), ensuring stability and stress remain within safe limits as cargo is transferred" },
+        { en: "Continuously monitor stability and cargo condition throughout the transfer, halting or adjusting the operation if calculated limits are approached" },
+        { en: "Coordinate with the Chief Engineer on ballast operations required to support the transfer and maintain vessel stability" },
+        { en: "Coordinate emergency shutdown or disconnection procedures for the cargo transfer with the counterpart vessel, distinct from the mooring emergency release covered by the deck team" },
+        { en: "Ensure required cargo transfer and regulatory documentation (transfer plan, quantities, sampling records, compliance certificates where applicable) is accurate and complete" },
+        { en: "Manage the operational and commercial consequences of any delay, pause, or change to the STS plan, liaising with surveyors, agents, or charterer representatives as required" },
+        { en: "Report STS operation progress and any developing concern to the Master throughout the operation" },
+      ],
+      equipment: [
+        { en: "STS operational plan (mooring arrangement, cargo transfer plan, stability/stress calculation tools)" },
+        { en: "Cargo transfer documentation (quantities, sampling records, checklists, compliance certificates)" },
+        { en: "Communication equipment for liaison with the counterpart vessel's cargo team, the bridge/Bosun, and shore-based parties (agent, surveyor) where relevant" },
+        { en: "Emergency shutdown/disconnection procedures specific to the cargo transfer system" },
+      ],
+      risks: [
+        { en: "Planning the mooring and cargo transfer elements of the operation separately rather than as a single coordinated plan" },
+        { en: "Cargo transfer proceeding without adequate stability monitoring as the loaded condition changes on both vessels" },
+        { en: "Miscommunication with the counterpart vessel's cargo team regarding procedures, timing, or an emerging concern" },
+        { en: "Emergency shutdown coordination being unclear between the two vessels if an incident develops" },
+        { en: "Documentation or regulatory compliance discrepancies between the two vessels' records" },
+        { en: "Allowing commercial pressure (charter party timing) to influence a technical decision about pausing or slowing the operation" },
+        { en: "Failing to anticipate the operational or commercial consequences of a delay until it has already become significant" },
+      ],
+      bestPractices: [
+        { en: "Treat the STS operation as one integrated plan from the outset — mooring, cargo transfer, and departmental resourcing should be prepared together, not separately" },
+        { en: "Confirm transfer procedures and terminology with the counterpart vessel's cargo team before the operation begins, particularly with an unfamiliar company" },
+        { en: "Monitor stability and cargo condition continuously throughout the transfer, not only at planned checkpoints" },
+        { en: "Establish and confirm emergency shutdown procedures and communication signals with the counterpart vessel before starting" },
+        { en: "Reconcile quantity, documentation, and compliance records with the counterpart vessel as the operation proceeds, not only at completion" },
+        { en: "Anticipate the operational and commercial consequences of a delay early, engaging agents or surveyors proactively rather than reactively" },
+        { en: "Treat commercial time pressure as a factor to manage, not a reason to bypass a genuine stability or safety check" },
+      ],
+      commonMistakes: [
+        { en: "Treating the mooring and cargo transfer as two separate operations rather than one coordinated plan" },
+        { en: "Assuming the counterpart vessel's cargo team follows the same procedures without confirming beforehand" },
+        { en: "Continuing the transfer without reassessing stability as conditions change" },
+        { en: "Leaving emergency shutdown coordination undefined until an emergency actually develops" },
+        { en: "Reconciling documentation only after the operation is complete, when a discrepancy is harder to resolve" },
+        { en: "Allowing schedule or commercial pressure to delay a necessary pause in the operation" },
+        { en: "Failing to flag the commercial or operational consequences of a delay until asked" },
+      ],
+      professionalTips: [
+        { en: "An STS operation is only as coordinated as its weakest link — plan it as one system, not as a mooring exercise plus a separate cargo transfer" },
+        { en: "Stability during a transfer is a moving target — treat every calculation as provisional until the next one confirms it" },
+        { en: "The relationship with a counterpart vessel's Chief Officer sets the tone for the whole operation — clear, professional communication reduces friction when something needs to change" },
+        { en: "Commercial pressure to keep operations moving is real, but it is not a technical argument — treat it as such" },
+        { en: "The Chief Officer who has anticipated the consequences of a delay is never caught explaining one after the fact" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d4-l5" }, { kind: "lesson", lessonId: "e1-l3" }],
+    },
+
+    maintenance: {
+      overview: { en: "While the Bosun organizes and executes deck maintenance work and the OOW ensures navigational equipment reliability, the Chief Officer owns the department's maintenance system as a whole: translating the vessel's Planned Maintenance System into a realistic schedule, tracking certificates and surveys, and ensuring maintenance never becomes the department's lowest priority under commercial or operational pressure. The Chief Officer ensures that maintenance remains a continuous management process rather than a series of isolated repair activities. The Chief Officer does not typically perform maintenance tasks personally, but is accountable for whether the deck department's material condition genuinely reflects what the PMS and certification records claim." },
+      responsibilities: [
+        { en: "Translate the vessel's Planned Maintenance System into a realistic, prioritized schedule, balancing maintenance against cargo operations, watchkeeping, and crew rest" },
+        { en: "Track certificates, surveys, and class requirements proactively, ensuring nothing becomes overdue under operational pressure" },
+        { en: "Review the Bosun's maintenance reports for patterns and structural concerns, distinguishing routine upkeep from issues requiring budget, spare parts, or shore-side support" },
+        { en: "Verify that the PMS and the actual material condition of the deck department remain consistent, investigating any discrepancy rather than assuming the records are accurate" },
+        { en: "Evaluate maintenance effectiveness periodically, adjusting departmental priorities when recurring defects indicate that the current strategy is no longer sufficient" },
+        { en: "Prioritize maintenance and certification work against competing departmental demands, escalating to the Master when resources are genuinely insufficient" },
+        { en: "Coordinate with the Chief Engineer and, where relevant, shore-side technical staff on maintenance items requiring cross-departmental resources or expertise" },
+        { en: "Plan for dry-dock, survey, or major maintenance periods well in advance, ensuring the department is prepared rather than reacting under deadline pressure" },
+      ],
+      equipment: [
+        { en: "Planned Maintenance System (PMS) records and scheduling tools" },
+        { en: "Certificate and survey tracking system" },
+        { en: "Survey reports and class inspection findings" },
+        { en: "Budget/spare parts request and tracking system" },
+        { en: "Bosun's maintenance reports and defect logs, for review" },
+      ],
+      risks: [
+        { en: "Maintenance being deprioritized indefinitely under commercial or operational pressure, until a deferred item becomes urgent" },
+        { en: "A discrepancy between the PMS records and actual material condition going unnoticed because records are trusted without verification" },
+        { en: "Maintaining compliance on paper while the department's actual condition progressively deteriorates" },
+        { en: "A certificate or survey becoming overdue because tracking was reactive rather than proactive" },
+        { en: "Treating a recurring Bosun-reported issue as routine when it actually reflects a structural or budgetary problem" },
+        { en: "Being unprepared for a dry-dock or major survey period because planning began too late" },
+      ],
+      bestPractices: [
+        { en: "Build maintenance and certification tracking into routine departmental planning, not as a separate task addressed only when urgent" },
+        { en: "Verify the PMS against actual material condition periodically, rather than assuming paperwork and reality remain aligned" },
+        { en: "Use survey findings and recurring defects to refine future maintenance priorities rather than treating them as isolated events" },
+        { en: "Review the Bosun's reports for recurring patterns across time, not only as isolated maintenance items" },
+        { en: "Escalate resource shortfalls (budget, spare parts, manpower) early, rather than absorbing the risk silently" },
+        { en: "Begin dry-dock and major survey planning well ahead of the deadline, building in margin for the unexpected" },
+      ],
+      commonMistakes: [
+        { en: "Allowing maintenance to be pushed back repeatedly under operational pressure without ever formally reprioritizing it" },
+        { en: "Trusting PMS records without periodically verifying them against the deck department's actual condition" },
+        { en: "Reacting to certificate or survey deadlines only once they become urgent" },
+        { en: "Treating a recurring maintenance issue reported by the Bosun as routine without asking why it keeps recurring" },
+        { en: "Starting dry-dock or major survey preparation too close to the deadline to manage it comfortably" },
+      ],
+      professionalTips: [
+        { en: "A Planned Maintenance System is only useful if it reflects reality — treat any gap between the two as more urgent than it might appear" },
+        { en: "Certificates and surveys rarely become urgent gradually — the Chief Officer who tracks them continuously never faces a departure-day surprise" },
+        { en: "A recurring defect report is rarely bad luck twice — it is usually a signal worth investigating once" },
+        { en: "The department that is ready for dry-dock months in advance spends far less time firefighting than the one that starts preparing at the last minute" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d2-l1" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Chief Officer typically takes command of a designated emergency team (e.g. fire party, damage control team) or a specific zone of the vessel, translating the Master's overall strategy into a coordinated team response and providing the Master with a consolidated, reliable picture of that team's situation. Where the OOW ensures the vessel continues to be safely navigated and the Bosun leads a team's execution at their station, the Chief Officer commands at a broader level: integrating multiple team inputs, making tactical decisions within their assigned area, and serving as the Master's most senior operational link to the response itself." },
+      responsibilities: [
+        { en: "Take command of the assigned emergency team or zone immediately, establishing communication with all team members and confirming the team's readiness and understanding of the situation" },
+        { en: "Translate the Master's overall strategy into specific tactical actions for the assigned team, adjusting the approach as the situation develops" },
+        { en: "Consolidate reports from Bosuns, team leaders, or individual crew members within the assigned area into a single, reliable assessment for the Master" },
+        { en: "Make tactical decisions within the assigned area of responsibility (e.g. deploying resources, adjusting firefighting strategy, prioritizing search areas) without waiting for instruction on matters within that authority" },
+        { en: "Continuously reassess whether the assigned tactical response remains aligned with the Master's overall strategy as the emergency evolves, adapting promptly when conditions change" },
+        { en: "Assess and communicate the evolving risk within the assigned area (e.g. structural integrity, spreading fire, flooding progression) to inform the Master's overall decision-making" },
+        { en: "Coordinate with other department heads (Chief Engineer, Safety Officer) through the Master where the emergency spans multiple areas of the vessel" },
+        { en: "Maintain accountability for all personnel within the assigned team or zone throughout the emergency, reporting any casualty or missing person immediately" },
+        { en: "Record key decisions, actions, and communications within the assigned area as the emergency unfolds, to the extent practicable without compromising the response" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear appropriate to the assigned role (firefighting outfit, damage control equipment, etc.)" },
+        { en: "Portable radio or other communication equipment designated for team and command-level communication" },
+        { en: "Muster list, emergency organization reference, and any zone-specific emergency plan" },
+        { en: "Damage control plans and vessel emergency drawings" },
+        { en: "Stability/damage control reference relevant to the assigned area, where applicable" },
+      ],
+      risks: [
+        { en: "Delayed or unclear tactical direction to the team due to hesitation in translating the Master's strategy into specific action" },
+        { en: "Consolidating team reports inaccurately, giving the Master an unreliable picture of the assigned area's situation" },
+        { en: "Making a tactical decision that conflicts with the Master's overall strategy due to incomplete communication" },
+        { en: "Continuing to pursue an initially appropriate tactic after conditions have changed, without reassessing its suitability" },
+        { en: "Losing track of personnel within the assigned team or zone as the response evolves" },
+        { en: "Tunnel vision on the assigned area, losing awareness of how it relates to the vessel's overall emergency response" },
+        { en: "Miscommunication with other department heads when the emergency spans multiple areas of the vessel" },
+      ],
+      bestPractices: [
+        { en: "Confirm understanding of the Master's overall strategy before translating it into tactical action for the team" },
+        { en: "Consolidate team reports into clear, factual assessments — state what is confirmed and what remains uncertain" },
+        { en: "Make confident tactical decisions within your assigned authority, but escalate anything that could affect the Master's overall strategy" },
+        { en: "Regularly reassess whether tactical actions remain consistent with the evolving overall strategy" },
+        { en: "Maintain continuous accountability for personnel within your area, reassessing as the team's composition or positioning changes" },
+        { en: "Communicate proactively with the Master and other department heads, rather than waiting to be asked for an update" },
+      ],
+      commonMistakes: [
+        { en: "Hesitating to give specific tactical direction, leaving the team without clear action" },
+        { en: "Relaying unfiltered or unreconciled reports to the Master instead of a consolidated professional assessment" },
+        { en: "Making a tactical decision beyond the assigned authority without confirming alignment with the Master's strategy" },
+        { en: "Losing track of personnel accountability while focused on the technical aspects of the response" },
+        { en: "Failing to communicate how the assigned area's situation relates to the vessel's broader emergency" },
+      ],
+      professionalTips: [
+        { en: "Your team looks to you to turn the Master's strategy into something they can actually do — vague direction produces a vague response" },
+        { en: "A consolidated, honest report from your area is worth more to the Master than several raw ones — that synthesis is your primary contribution" },
+        { en: "Tactical authority within your zone is real, but it exists inside the Master's overall strategy — confident action and clear escalation are not in conflict" },
+        { en: "The discipline your team shows in a real emergency reflects how seriously your drills were run beforehand — as their commander, that standard starts with you" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "s4-l7" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "The OOW reports the vessel navigationally ready for departure. Separately, the Bosun mentions in passing that one mooring winch was 'a bit slow' during testing, without flagging it as a defect requiring escalation." },
+      mission: { en: "Decide whether to report departmental readiness to the Master as stated, or to resolve the discrepancy first." },
+      expectedActions: [
+        { en: "Do not relay the OOW's readiness report as if it already covered the deck team's equipment status" },
+        { en: "Personally clarify the Bosun's comment — is the winch safe to use, marginal, or unsafe" },
+        { en: "Resolve the ambiguity before reporting readiness, even if it takes a few extra minutes" },
+        { en: "Report departmental readiness to the Master only once genuinely reconciled, not as two separate inputs" },
+      ],
+      why: [{ en: "A vague comment mentioned in passing is not the same as a resolved technical assessment — the Chief Officer's role is precisely to catch this kind of unreconciled detail before it reaches the Master disguised as readiness. Readiness is an integrated assessment, not the sum of independent reports." }],
+      commonMistakes: [
+        { en: "Relaying the OOW's report without checking whether the Bosun's comment changes the picture" },
+        { en: "Treating 'a bit slow' as acceptable without a real technical judgment" },
+        { en: "Reporting readiness under time pressure rather than resolving the ambiguity first" },
+      ],
+      safetyPoints: [{ en: "An unclear equipment status at departure is exactly the kind of small, unresolved uncertainty that the Chief Officer exists to catch before it becomes an operational problem." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "The Bosun's maintenance reports show the same minor hydraulic leak on a cargo crane reappearing for the third consecutive port call, each time 'fixed' temporarily. The vessel is under commercial pressure to maintain a tight port schedule." },
+      mission: { en: "Decide whether to continue treating this as routine maintenance or to address it as a structural issue, despite the schedule pressure." },
+      expectedActions: [
+        { en: "Recognize the pattern across the three reports rather than treating this occurrence in isolation" },
+        { en: "Investigate the underlying cause rather than authorizing another temporary fix" },
+        { en: "Escalate the need for proper repair or shore-side support to the Master, even if it affects the schedule" },
+        { en: "Communicate the decision and its reasoning clearly to relevant parties (Master, possibly the terminal/agent if it affects timing)" },
+      ],
+      why: [{ en: "A defect that recurs despite repeated 'fixes' is not a maintenance task anymore — it is a signal that the current approach is not addressing the actual cause, and continuing to defer it risks a more serious failure at a worse moment. The decision is not about today's leak, but about the credibility of the department's maintenance strategy." }],
+      commonMistakes: [
+        { en: "Approving another temporary fix because the schedule doesn't allow time for a proper one" },
+        { en: "Treating each occurrence as unrelated to the previous two" },
+        { en: "Avoiding the conversation about schedule impact because it is uncomfortable" },
+      ],
+      safetyPoints: [{ en: "Recurring defects on cargo-handling equipment carry real risk to personnel and cargo — commercial pressure is a factor to manage, not a reason to defer a genuine technical decision." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "Midway through an STS cargo transfer, your vessel's figures and the counterpart vessel's figures for quantity transferred differ by a small but non-trivial margin. The counterpart's Chief Officer suggests it's likely a minor instrumentation difference and proposes continuing." },
+      mission: { en: "Decide whether to accept this explanation and continue, or to pause and reconcile the discrepancy first." },
+      expectedActions: [
+        { en: "Do not accept an unverified explanation for a documented discrepancy, however plausible it sounds" },
+        { en: "Request that both vessels compare methods and figures before continuing" },
+        { en: "Pause or slow the operation if the discrepancy cannot be quickly explained" },
+        { en: "Document the discrepancy and its resolution clearly, regardless of outcome" },
+      ],
+      why: [{ en: "A quantity discrepancy during a cargo transfer has direct commercial, contractual, and sometimes safety implications — accepting a plausible-sounding explanation without verification transfers the Chief Officer's professional judgment to someone with different interests in the outcome." }],
+      commonMistakes: [
+        { en: "Accepting the counterpart's explanation to avoid friction or delay" },
+        { en: "Failing to document the discrepancy clearly at the time it was noticed" },
+        { en: "Resuming the transfer before the figures are actually reconciled" },
+      ],
+      safetyPoints: [{ en: "An unresolved quantity discrepancy is exactly the kind of ambiguity that should pause a technical operation until genuinely clarified. Verification protects both vessels equally by ensuring operational decisions remain evidence-based rather than assumption-based." }],
+      mapReferences: [],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Readiness is never the sum of separate reports — it is your own reconciled judgment built from them. Never relay an unresolved discrepancy upward disguised as certainty." },
+    { en: "Think in patterns, not incidents — the same small defect appearing three times is not bad luck, it is a signal about your department's system, not a coincidence." },
+    { en: "Commercial and operational pressure are real inputs to manage, never technical arguments in themselves — treat schedule urgency as a factor, not as a reason to skip verification." },
+    { en: "A plausible explanation is not the same as a verified one — professional courtesy toward another officer never substitutes for confirming the facts yourself." },
+    { en: "Your value is measured by the reliability of what reaches the Master, not by the volume of information you pass along — synthesis is your primary contribution, not relay." },
+    { en: "Anticipate consequences before they become visible — the Chief Officer who has already considered 'what happens if this delay continues' is never caught explaining one after the fact." },
+    { en: "Documentation and reality must be checked against each other continuously — a system that looks compliant on paper can still be silently drifting from what is actually true on deck." },
+    { en: "Delegate the execution, never the accountability — the Bosun executes, the OOWs conduct their watches, but the departmental outcome remains yours to answer for." },
+    { en: "The Master should never have to integrate your department's information themselves — your responsibility is to deliver a coherent operational picture, not disconnected facts." },
+    { en: "Being a Chief Officer is not about knowing more than a Bosun or an OOW — it is about integrating what they know, what the situation requires, and what the Master needs, into one coherent, dependable decision." },
+  ],
+
+  professionalMindset: [
+    { en: "Think in systems, not incidents. A single defect, a single delay, a single discrepancy is rarely the real subject — the Chief Officer looks for what the pattern reveals about the department's underlying condition." },
+    { en: "Treat every report as an input, never as a finished conclusion. Information from the OOW, the Bosun, a surveyor, or a counterpart vessel each carries a partial truth — your role is to reconcile them into one reliable picture, not to relay the first one that arrives." },
+    { en: "Hold multiple time horizons simultaneously. A cargo operation happening now, a certificate due next month, and a dry-dock a year away all compete for attention — the Chief Officer manages the present without losing sight of what is coming." },
+    { en: "See documentation as a claim to be verified, not a fact to be trusted. The PMS, the cargo plan, the stability calculation all describe an intended reality — your judgment is what confirms whether that description still matches what is actually true." },
+    { en: "Accept that authority operates within someone else's strategy. Tactical decisions within your department are yours to make confidently, but they exist inside the Master's overall intent — integration means fitting your decisions into that larger picture, not replacing it." },
+    { en: "Recognize that pressure is information, not instruction. Commercial urgency, schedule pressure, or a counterpart's confidence all shape the situation you are deciding in — but none of them make the decision for you." },
+    { en: "Understand that your synthesis is the product, not the raw material. The Master does not need every detail you have gathered — the Master needs the coherent, reconciled judgment you have built from them." },
+    { en: "Delegate execution deliberately, but never delegate accountability. Trusting the Bosun and the OOWs to do their work well does not transfer your responsibility for the departmental outcome — it is simply how that responsibility is properly exercised." },
+    { en: "Measure success by the quality of the department's decisions, not by the number of decisions you make. A well-led department solves many problems before they ever require your intervention." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Cargo and stability documentation — The Chief Officer prepares, verifies, or approves the cargo plan, loading/discharging sequence, and stability/stress calculations, ensuring these documents reflect the vessel's actual condition throughout the operation, not only the planned one. These records often carry direct commercial and legal weight (charter party compliance, cargo claims)." },
+    { en: "Certificates and survey records — The Chief Officer maintains oversight of the deck department's certificates, class survey status, and port state control history, ensuring records are current and genuinely reflect the vessel's compliance status, not merely its paperwork." },
+    { en: "Planned Maintenance System (PMS) governance — The Chief Officer is accountable for the accuracy of PMS records relative to the deck department's actual material condition, periodically verifying that documentation and reality have not drifted apart." },
+    { en: "Deck logbook oversight — While individual OOWs make their own entries, the Chief Officer reviews logbook entries across the department for consistency, completeness, and pattern, using them as a management tool rather than only a legal record." },
+    { en: "Oil Record Book and environmental compliance records — The Chief Officer oversees the accuracy and completeness of these records at a departmental level, ensuring entries made by different OOWs remain consistent and genuinely reflect operations conducted." },
+    { en: "Cargo transfer and STS documentation — The Chief Officer ensures transfer quantities, sampling records, and compliance certificates are accurate and reconciled with the counterpart vessel, resolving discrepancies before they become disputes." },
+    { en: "Incident, near-miss, and audit findings — The Chief Officer contributes departmental-level analysis to incident reports and internal/external audit findings, distinguishing isolated events from patterns requiring a change in departmental practice." },
+    { en: "Why this matters: The Chief Officer's documentation responsibility is different in kind from the OOW's or the Bosun's — it is not primarily about personally recording events, but about governing whether the department's entire body of records remains an honest, reconciled reflection of reality. Cargo, stability, and certification records in particular carry legal, commercial, and safety consequences well beyond the vessel itself — a Chief Officer who treats this governance role seriously protects the vessel, the company, and the integrity of every decision built on these records. Reliable documentation is not the end product of good leadership — it is the evidence that good leadership has been consistently exercised." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "MARPOL compliance governance — The Chief Officer ensures the deck department's environmental practices (discharge authorization, waste segregation, cargo-related pollution prevention) remain consistent across all OOWs and all watches, rather than varying by individual officer's interpretation." },
+    { en: "Oil Record Book and Garbage Record Book oversight — The Chief Officer verifies these records are accurate, complete, and consistent across entries made by different OOWs, investigating any discrepancy rather than assuming each entry is independently correct." },
+    { en: "Cargo-related environmental risk — During cargo and ballast operations, the Chief Officer ensures environmental safeguards (tank cleaning procedures, ballast water management, cargo residue handling) are properly planned and followed, particularly where commercial schedule pressure could tempt a shortcut." },
+    { en: "STS and cargo transfer environmental oversight — The Chief Officer ensures environmental precautions during cargo transfers (containment, spill response readiness) are genuinely in place, not only documented, especially when coordinating with an unfamiliar counterpart vessel." },
+    { en: "Reporting and escalation — When an environmental incident or near-miss occurs anywhere in the deck department's operations, the Chief Officer ensures it is reported accurately and promptly to the Master, and that the underlying cause — not only the immediate event — is investigated." },
+    { en: "Balancing environmental compliance against commercial pressure — The Chief Officer resists allowing schedule or commercial pressure to compromise a genuine environmental safeguard, treating such pressure as a factor to manage rather than a justification for a shortcut." },
+    { en: "Why this matters: Environmental compliance at the Chief Officer level is a question of departmental consistency, not individual awareness — a single OOW's lapse or a single cargo operation's shortcut can create legal, commercial, and reputational exposure for the entire vessel and company. The Chief Officer who ensures environmental standards are applied uniformly, verified honestly, and never quietly compromised under pressure protects not only compliance on paper, but the department's actual environmental performance. Environmental compliance becomes sustainable only when it is embedded in the department's daily decisions rather than depending on the vigilance of individual officers." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Plan, prepare, and execute cargo operations, including sequencing loading/discharging and making stability decisions within your professional competence" },
+      { en: "Halt or adjust a cargo operation if stability, stress, or safety limits are approached, without waiting for the Master's prior approval" },
+      { en: "Supervise and correct OOWs and the Bosun on departmental standards, including addressing a competency concern directly" },
+      { en: "Make tactical decisions within an assigned emergency command role, without waiting for instruction on matters within that authority" },
+      { en: "Resolve discrepancies between departmental reports (OOW, Bosun, surveyor, counterpart vessel) before they reach the Master, rather than passing them along unreconciled" },
+      { en: "Prioritize and reallocate departmental resources (maintenance, personnel, administrative work) in response to changing operational demands" },
+      { en: "Liaise directly with terminals, surveyors, agents, and counterpart vessels on technical and operational matters within your responsibility" },
+      { en: "Escalate any concern — technical, commercial, or personnel-related — directly to the Master without needing prior justification" },
+    ],
+    youCannot: [
+      { en: "Deviate from the Master's overall strategy or standing orders without authorization, except where immediate safety requires it, followed by immediate notification to the Master" },
+      { en: "Take command of the vessel in place of the Master, except where explicitly authorized by standing orders or where the Master's incapacity or absence requires immediate action" },
+      { en: "Approve a cargo operation, stability configuration, or departure that you know or suspect to be unsafe, regardless of commercial or schedule pressure" },
+      { en: "Certify departmental compliance (certificates, surveys, environmental records) as satisfactory without genuine verification, based on documentation alone" },
+      { en: "Allow commercial or operational pressure to override a genuine safety, stability, or environmental concern" },
+      { en: "Treat unresolved uncertainty as if it were already resolved — when significant doubt remains, your authority requires clarification or escalation, not assumption" },
+      { en: "Bypass the Master when a decision affects the vessel's overall safety, another department, or matters beyond your departmental authority" },
+      { en: "Delegate accountability for the department's overall performance, even when individual tasks and decisions are properly assigned to OOWs, the Bosun, or other crew members" },
+      { en: "Omit, alter, or allow to be altered any factual entry in cargo, stability, environmental, or certification records to present a situation as other than what actually occurred" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Relaying unreconciled information upward — Passing the OOW's and Bosun's reports to the Master as if they already formed a coherent picture, instead of personally resolving any discrepancy first." },
+    { en: "Treating isolated incidents as unrelated — Reviewing each defect, delay, or deviation on its own, rather than recognizing when several similar occurrences reveal a systemic issue." },
+    { en: "Trusting documentation over verified reality — Accepting that the PMS, cargo plan, or certificate records are accurate because they exist, without periodically confirming they still reflect the department's actual condition." },
+    { en: "Allowing commercial or schedule pressure to influence a technical decision — Treating urgency as a reason to skip a genuine safety, stability, or environmental verification, rather than as a factor to manage alongside it." },
+    { en: "Confusing departmental autonomy with independence from the Master's strategy — Making a decision that technically falls within your authority but conflicts with the Master's overall intent, without confirming alignment first." },
+    { en: "Absorbing accountability without delegating properly — Attempting to personally verify or control every detail instead of trusting the Bosun and OOWs to execute well within a properly organized system." },
+    { en: "Deferring a difficult conversation about standards — Avoiding addressing a recurring competency or compliance concern with an officer or the Bosun until it becomes a more serious incident." },
+    { en: "Accepting a plausible explanation without verification — Allowing a counterpart's, surveyor's, or officer's reasonable-sounding account of a discrepancy to substitute for actually confirming the facts." },
+    { en: "Failing to distinguish between what is urgent and what is important — Allowing immediate operational demands to consistently displace long-term departmental priorities such as maintenance planning, crew development, or certification readiness." },
+    { en: "Reacting to problems instead of anticipating them — Managing certificates, maintenance, or departmental readiness only once they become urgent, rather than tracking them continuously." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Master — the culmination of the deck department progression, requiring a shift from managing the deck department to bearing ultimate legal and operational responsibility for the entire vessel, its crew, and its safe conduct, on behalf of the owner and flag State." },
+    { en: "Skills to develop: Integration across all departments (Deck, Engine, Safety), not only Deck; strategic decision-making under commercial, operational, and regulatory pressure at the level of the whole vessel; representation of the vessel to owners, charterers, authorities, and the public; final accountability for crew welfare, vessel safety, and company policy; the ability to set the vessel's overall strategic intent that Chief Officers and OOWs will translate into departmental and watch-level decisions." },
+    { en: "Recommended experience: A solid period as Chief Officer across the full range of departmental responsibilities (cargo operations, stability, maintenance governance, emergency command, environmental compliance), with demonstrated reliability in delivering the Master with reconciled, trustworthy departmental assessments — this integrative credibility is the foundation on which command authority is built." },
+    { en: "Certificates typically required: Certificates required vary by flag State, company policy, and national administration. Progression to Master typically requires the corresponding STCW certificate of competency (Master Mariner), sufficient certified sea time as Chief Officer, and any additional endorsements required for the vessel type or trade." },
+    { en: "Recommended MAP courses: Ship Command & Crisis Leadership; Cross-Departmental Integration (Deck/Engine/Safety); Regulatory and Commercial Responsibility at Command Level; Role On Board – Master (when available); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from Chief Officer to Master means shifting your integration from a single department to the entire vessel — cargo, navigation, engine, safety, crew, and company interests all become inputs to a single strategic judgment. The skills the Chief Officer has already built (reconciling reports, thinking in patterns, resisting pressure, verifying reality against documentation) do not change — only the scope to which they are applied. Success as a Master is measured by the vessel's ability to operate safely, compliantly, and effectively as a whole, under a single coherent strategic intent. The Chief Officer becomes ready for command when they no longer see the Deck Department as the center of the vessel, but as one essential part of a much larger operational system." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "d1-l8", label: { en: "Advanced COLREG" } },
+    { kind: "lesson", lessonId: "d1-l9", label: { en: "Steering & Helm Orders" } },
+    { kind: "lesson", lessonId: "d1-l10", label: { en: "Watchkeeping Organization" } },
+    { kind: "lesson", lessonId: "s6-l6", label: { en: "Safety Culture & Professional Responsibility" } },
+    { kind: "lesson", lessonId: "s6-l2", label: { en: "Common Ship Emergencies & Immediate Actions" } },
+    { kind: "lesson", lessonId: "e1-l3", label: { en: "Stability & Loading (foundation-level; partial coverage — no dedicated officer-level Cargo Operations & Stability lesson exists yet)" } },
+    { kind: "lesson", lessonId: "d4-l5", label: { en: "Cargo Operations (SMCP) — vocabulary, documentation, stowage & lashing" } },
+    { kind: "lesson", lessonId: "d2-l1", label: { en: "SOLAS" } },
+    { kind: "lesson", lessonId: "s4-l7", label: { en: "Fire Command, Teams & Damage Control" } },
+    { kind: "lesson", lessonId: "s6-l5", label: { en: "Permit to Work & Risk Assessment" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — cargo, stability, and departmental management terminology" } },
+    { kind: "external", externalCode: "COLREG", label: { en: "COLREG reference" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on STCW Chief Mate certification requirements by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore cargo arrangements, stability characteristics, and departmental organization across different vessel types" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on cargo operations, stability, departmental management, or STCW requirements" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Chief Officer to Master" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document sea time, certificates, and departmental management experience gained as Chief Officer" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_BOSUN", label: { en: "Role On Board — Bosun" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_OOW", label: { en: "Role On Board — Officer of the Watch" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_MASTER", label: { en: "Role On Board — Master (when published)" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "Cargo operation planning, sequencing, and stability/stress calculations" },
+      { en: "My own navigational watch, to the same standard expected of any OOW" },
+      { en: "Technical station-level decisions during departure, arrival, anchoring, and STS operations" },
+      { en: "Departmental resource prioritization and reallocation in response to changing operational demands" },
+      { en: "Tactical decisions within my assigned emergency command role" },
+    ],
+    iMonitor: [
+      { en: "Consistency of navigational and departmental standards across all OOWs and the Bosun" },
+      { en: "Stability, stress, and cargo condition throughout every phase of operation" },
+      { en: "Alignment between documentation (PMS, certificates, cargo/environmental records) and the department's actual condition" },
+      { en: "Recurring patterns across defects, incidents, or discrepancies rather than isolated occurrences" },
+      { en: "Cross-department interfaces affecting Deck operations (Engine, Safety, terminal, contractors), ensuring coordination remains effective throughout the operation" },
+      { en: "The department's readiness for certification, survey, and dry-dock requirements" },
+    ],
+    iReport: [
+      { en: "A reconciled departmental assessment to the Master, never an unresolved collection of separate reports" },
+      { en: "Any technical, commercial, or personnel-related concern requiring the Master's decision" },
+      { en: "Any discrepancy identified with a counterpart vessel, surveyor, or terminal, distinguishing confirmed facts from unverified explanations" },
+      { en: "Any recurring pattern suggesting a systemic issue in departmental practice" },
+      { en: "My own uncertainty when a situation cannot be fully resolved at the departmental level" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Deviation from the Master's overall strategy or standing orders without proper authorization" },
+      { en: "A cargo operation, stability configuration, or departure known or suspected to be unsafe" },
+      { en: "Certification of departmental compliance based on documentation alone, without genuine verification" },
+      { en: "Commercial or schedule pressure overriding a genuine safety, stability, or environmental concern" },
+      { en: "My own delegation of accountability for the department's overall performance, even when individual tasks are properly assigned" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Cargo stowage and stability diagram showing loading sequence and stress distribution." } },
+    { kind: "diagram", caption: { en: "Deck department organization chart showing the Chief Officer's coordination role between OOWs, Bosun, and other departments." } },
+    { kind: "image", caption: { en: "Example of a completed and reconciled cargo/stability calculation printout." } },
+    { kind: "video", caption: { en: "Demonstration of a departmental readiness briefing before departure." } },
+    { kind: "document", caption: { en: "Sample PMS discrepancy investigation record." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
-// Partial: currently populated for "ab", "bosun" and "oow" — remaining
-// ranks are still pending content.
+// Partial: currently populated for "ab", "bosun", "oow" and "chief_officer"
+// — remaining ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
   oow: OOW_CARD,
+  chief_officer: CHIEF_OFFICER_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
