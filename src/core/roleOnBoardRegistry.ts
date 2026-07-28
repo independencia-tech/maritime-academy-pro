@@ -3019,15 +3019,708 @@ const CHIEF_OFFICER_CARD: RoleOnBoardCard = {
   ],
 };
 
+// ── MASTER ────────────────────────────────────────────────────
+// mapReferences resolved via Mission D (see
+// audits/2026-07-27_role-on-board-master-mapreferences.md) and the
+// Product Owner's final decisions on that report. s5-l4 (Abandon Ship &
+// Survival Leadership, featuring the Costa Concordia case study) and
+// d3-l7 (GMDSS & Distress Signals) are new discoveries not used on any
+// prior card. Locations with no validated correspondence are left as
+// mapReferences: [] intentionally (candidates for a future Command
+// Decision-Making / Cross-Departmental Integration module — departure
+// manoeuvres/pilotage-BRM, anchoring risk judgment, cross-departmental
+// report reconciliation, weather routing judgment, strategic
+// decision-making under uncertainty).
+const MASTER_CARD: RoleOnBoardCard = {
+  rankId: "master",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Master is the person in ultimate command of the vessel, holding final legal and operational responsibility for the safety of the ship, its crew, its cargo, and the marine environment, at all times and under all circumstances. Unlike the Chief Officer, who integrates the deck department's operations, the Master integrates every department — Deck, Engine, Safety — along with the vessel's commercial, regulatory, and human dimensions, into a single coherent command." },
+    { en: "The Master's authority is the highest aboard the vessel and cannot be delegated away: officers act with authority delegated by the Master, but the Master's own accountability for the vessel's safe operation is never transferred, regardless of how much is properly delegated to the Chief Officer, Chief Engineer, or OOWs." },
+    { en: "The Master sets the vessel's overall strategic intent — passage strategy, risk tolerance, priorities under pressure — which the Chief Officer, Chief Engineer, and OOWs translate into departmental and watch-level decisions; the Master does not need to make every decision personally, but is accountable for the quality of the system that makes them." },
+    { en: "The Master represents the vessel and the company to owners, charterers, authorities, and the public, and bears personal legal responsibility under flag State and international law (SOLAS, MARPOL, ISM Code) that no other person aboard carries in the same way." },
+    { en: "Where the Chief Officer's judgment resolves ambiguity at the level of the deck department, the Master's judgment resolves ambiguity at the level of the entire vessel and its voyage — balancing safety, commercial pressure, crew welfare, and regulatory compliance simultaneously, often with incomplete information and no one above to escalate to." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "The company (owner/operator), typically through the Designated Person Ashore (DPA) under the ISM Code" },
+      { en: "Ultimately accountable to flag State authorities and international maritime law" },
+    ],
+    worksWith: [
+      { en: "Chief Officer and Chief Engineer as heads of the vessel's two main departments" },
+      { en: "Pilots, port authorities, and VTS during navigation and port calls" },
+      { en: "Charterers, agents, and surveyors on commercial and compliance matters" },
+      { en: "The company's shore-based management on operational and strategic matters" },
+    ],
+    mentors: [
+      { en: "The Master typically receives no onboard mentor — professional development at this level comes from experience, company training, peer Masters, and external command courses; the Master instead becomes the primary mentor for the Chief Officer's own development toward command" },
+    ],
+    supports: [
+      { en: "The Chief Officer and Chief Engineer, whom the Master trusts to manage their departments while remaining the final point of decision and accountability" },
+      { en: "The whole crew, whose welfare and safety the Master is ultimately responsible for" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Strategic decision-making under uncertainty and incomplete information" } },
+    { label: { en: "Cross-departmental integration (Deck, Engine, Safety)" } },
+    { label: { en: "Crisis command and emergency leadership" }, mapReferences: [{ kind: "lesson", lessonId: "s4-l7" }, { kind: "lesson", lessonId: "s5-l4" }] },
+    { label: { en: "Legal and regulatory accountability (SOLAS, MARPOL, ISM Code, flag State law)" }, mapReferences: [{ kind: "lesson", lessonId: "d2-l1" }, { kind: "lesson", lessonId: "d2-l2" }, { kind: "lesson", lessonId: "d2-l3" }, { kind: "lesson", lessonId: "d2-l8" }] },
+    { label: { en: "Commercial and company relationship management (owners, charterers, DPA)" }, mapReferences: [{ kind: "lesson", lessonId: "d2-l7" }, { kind: "lesson", lessonId: "d2-l10" }] },
+    { label: { en: "Crew welfare, discipline, and human resource leadership" }, mapReferences: [{ kind: "lesson", lessonId: "d2-l4" }] },
+    { label: { en: "External representation (authorities, port state control, media/public where relevant)" }, mapReferences: [{ kind: "lesson", lessonId: "d2-l8" }] },
+    { label: { en: "Risk tolerance calibration and final safety authority" } },
+    { label: { en: "Governance of the vessel's overall documentation and compliance system" }, mapReferences: [{ kind: "lesson", lessonId: "d2-l1" }, { kind: "lesson", lessonId: "d2-l8" }] },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Master's responsibility is not to personally verify each departmental readiness report — that is the Chief Officer's and Chief Engineer's role — but to receive, question, and ultimately own the final decision to proceed. The Master integrates the Chief Officer's departmental readiness (navigation, cargo, deck) with the Chief Engineer's readiness (propulsion, machinery, power) into a single command decision, and is personally accountable for that decision regardless of how sound each department's individual input appeared. The Master commands through department heads, not by replacing them." },
+      responsibilities: [
+        { en: "Receive and question the Chief Officer's consolidated departmental readiness report, probing any area that seems uncertain rather than accepting it at face value" },
+        { en: "Receive and question the Chief Engineer's readiness report on propulsion, machinery, and power generation in the same manner" },
+        { en: "Confirm the passage plan's overall appropriateness — route, weather routing, port and pilotage arrangements — as the final decision-maker, even though the OOW and Chief Officer prepared it" },
+        { en: "Weigh commercial, schedule, and charter party pressure against the vessel's genuine readiness, making the final call to proceed or delay" },
+        { en: "Verify that the vessel's certificates, manning, and documentation are legally sufficient for the intended voyage, ultimately the Master's personal responsibility under flag State law" },
+        { en: "Assess overall crew readiness (fatigue, morale, and operational effectiveness) across all departments" },
+        { en: "Make the final decision to sail, communicating it clearly to both department heads and, where required, to the company or port authorities" },
+      ],
+      equipment: [
+        { en: "Consolidated departmental readiness reports (Deck and Engine)" },
+        { en: "Passage plan, charts, weather routing information" },
+        { en: "Risk assessment / voyage risk review" },
+        { en: "Certificate and manning documentation" },
+        { en: "Company standing instructions / voyage orders, where applicable" },
+      ],
+      risks: [
+        { en: "Accepting a departmental readiness report without genuinely questioning it, treating consolidation by the Chief Officer or Chief Engineer as equivalent to personal verification" },
+        { en: "Overconfidence in experienced department heads leading to insufficient questioning" },
+        { en: "Allowing commercial or schedule pressure to override a genuine doubt about readiness" },
+        { en: "A legal or certification gap being overlooked because departmental reports did not flag it" },
+        { en: "Crew fatigue or morale issues at a whole-vessel level going unnoticed because each department reports only its own condition" },
+        { en: "Deciding to sail without having actually resolved a raised uncertainty, hoping it will not matter" },
+      ],
+      bestPractices: [
+        { en: "Ask direct, specific questions of both department heads rather than accepting a general assurance that 'everything is ready'" },
+        { en: "Treat commercial pressure as one input among several, never as the deciding factor over a genuine safety concern" },
+        { en: "Personally verify the vessel's legal and certification standing before departure, rather than assuming departmental reports cover it" },
+        { en: "Look across departments for crew welfare patterns (fatigue, morale) that neither department alone would necessarily flag" },
+        { en: "Never sail with an unresolved doubt — resolve it, delay, or accept the risk consciously and explicitly, but never by default" },
+      ],
+      commonMistakes: [
+        { en: "Treating a department head's readiness report as a substitute for the Master's own judgment rather than an input to it" },
+        { en: "Allowing schedule pressure to quietly lower the threshold for what counts as 'ready'" },
+        { en: "Assuming legal and certification compliance without personal verification" },
+        { en: "Missing a whole-vessel welfare issue because it was never anyone's job to look across departments" },
+        { en: "Sailing with a known unresolved concern in the hope that it will not materialize" },
+      ],
+      professionalTips: [
+        { en: "Your signature on the decision to sail carries weight that no departmental report can substitute for — question before you sign" },
+        { en: "Commercial pressure will always argue for departure; your job is to make sure safety gets an equally clear voice in that decision" },
+        { en: "The certificates and documentation are your personal legal exposure — verify them as such, not as paperwork someone else handles" },
+        { en: "A vessel is only as ready as its most tired or most anxious crew member — look at the whole crew, not just the reports" },
+        { en: "Command is not about knowing everything yourself; it is about ensuring that every critical question has been asked before committing the ship to sea" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d2-l1" }, { kind: "lesson", lessonId: "d2-l8" }, { kind: "lesson", lessonId: "e1-l3" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Master is typically present on the bridge, retaining ultimate authority over the vessel's conduct even when the OOW is executing the manoeuvre or a pilot is directing it. The Master does not need to give every order personally, but is the final authority who can intervene, override, or take direct conduct of the vessel at any moment the situation requires it. With a pilot embarked, the Master's role is distinctive: the pilot provides local expertise and conducts the vessel, but command and ultimate responsibility for the vessel's safety never leave the Master. The Master remains responsible for the vessel's safety even when every manoeuvring order originates from another qualified person." },
+      responsibilities: [
+        { en: "Be present on the bridge for departure, maintaining situational awareness of the manoeuvre without necessarily conducting it personally" },
+        { en: "Monitor the OOW's or pilot's conduct of the vessel, intervening decisively if safety requires it, regardless of who is currently directing the manoeuvre" },
+        { en: "Establish clear communication and expectations with an embarked pilot before the manoeuvre begins, confirming the pilot understands the vessel's characteristics and the Master's expectations for intervention" },
+        { en: "Retain final authority over all manoeuvring decisions, including engine and helm orders, even when delegated to the OOW or followed from the pilot's direction" },
+        { en: "Make the final call on any ambiguous or borderline situation arising during the manoeuvre (e.g. tug availability, traffic conflict, marginal weather) that exceeds the OOW's or pilot's authority to resolve alone" },
+        { en: "Confirm with the Chief Officer that mooring stations are ready and coordinated before committing to the manoeuvre" },
+        { en: "Confirm with the Chief Engineer that propulsion and steering remain fully available throughout the manoeuvre" },
+        { en: "Communicate any decision to deviate from the standard departure procedure clearly to all parties involved (OOW, pilot, Chief Officer) before acting on it" },
+      ],
+      equipment: [
+        { en: "Full bridge navigational and communication equipment" },
+        { en: "Passage plan, berth/channel chart, pilot card (vessel particulars for the pilot)" },
+        { en: "Engine status / propulsion availability information" },
+        { en: "VHF radio for communication with tugs, VTS, and the pilot" },
+      ],
+      risks: [
+        { en: "Deferring too completely to an embarked pilot's judgment, losing the independent readiness to intervene if something goes wrong" },
+        { en: "Hesitating to override the OOW or pilot when a genuine safety concern arises, out of reluctance to disrupt an ongoing manoeuvre" },
+        { en: "Unclear communication with the pilot about expectations, leading to ambiguity about who is truly in control if a problem develops" },
+        { en: "Loss of bridge team coordination due to unclear distribution of authority between Master, Pilot, and OOW" },
+        { en: "Being drawn into managing operational detail personally, losing the overview needed to catch a developing problem" },
+        { en: "Delaying a difficult decision (e.g. aborting the departure) due to commercial or schedule pressure" },
+      ],
+      bestPractices: [
+        { en: "Set clear expectations with the pilot before the manoeuvre begins — respect their expertise while making the Master's intervention authority explicit" },
+        { en: "Maintain enough distance from the operational detail to preserve the overview needed to intervene at the right moment" },
+        { en: "Intervene decisively and without hesitation the moment a genuine safety concern is identified — a pilot's presence does not remove this responsibility" },
+        { en: "Confirm departmental readiness (mooring, engine) directly rather than assuming it because the manoeuvre has begun" },
+        { en: "Treat commercial or schedule pressure as a factor to weigh, never as a reason to proceed past a genuine safety doubt" },
+      ],
+      commonMistakes: [
+        { en: "Treating a pilot's presence as removing the Master's own responsibility to intervene if necessary" },
+        { en: "Hesitating to override an ongoing manoeuvre out of social or professional reluctance to contradict the OOW or pilot" },
+        { en: "Losing the overview needed to catch a developing problem by becoming absorbed in operational detail" },
+        { en: "Failing to set clear intervention expectations with the pilot before the manoeuvre begins" },
+        { en: "Allowing schedule pressure to delay a necessary decision to pause or abort the departure" },
+      ],
+      professionalTips: [
+        { en: "A pilot conducts the vessel; the Master commands it — both facts must remain true throughout the manoeuvre, never just one" },
+        { en: "The right moment to intervene is the moment you notice the concern, not the moment you are certain it is serious" },
+        { en: "Presence on the bridge is not passive — your attention during a routine departure is what makes a sudden intervention possible when it matters" },
+        { en: "Respect for a pilot's skill and willingness to override them when necessary are not in tension — both are part of exercising command properly" },
+        { en: "Good Masters intervene early enough that the bridge team understands why the intervention was necessary, not after the situation has already become critical" },
+      ],
+      mapReferences: [],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Master typically does not stand a routine watch — that is the responsibility of the OOWs and the Chief Officer — but sets the framework within which every watch operates: standing orders, night orders, and clear criteria for when to be called. The Master's presence during navigation is felt through this framework and through decisive intervention when called, not through constant personal conduct of the vessel. Legal responsibility for the vessel's navigation remains with the Master at all times, whether or not the Master is physically on the bridge. The Master's role is to design a navigation system that remains safe even when the Master is not physically on the bridge." },
+      responsibilities: [
+        { en: "Issue clear, specific standing orders and night orders that leave no genuine ambiguity about when an OOW must call the Master" },
+        { en: "Respond immediately and fully to any call from the OOW, treating every call as legitimate rather than questioning the OOW's judgment in calling" },
+        { en: "Review the passage plan's overall strategy periodically during the voyage, adjusting for weather, traffic, or operational developments beyond the OOW's or Chief Officer's authority to decide alone" },
+        { en: "Approve any major deviation from the passage plan that exceeds the delegated authority of the bridge team" },
+        { en: "Maintain awareness of the Chief Officer's oversight of watchkeeping standards across all OOWs, intervening personally only where a departmental correction is insufficient" },
+        { en: "Define and communicate the vessel's operational risk tolerance for the voyage (e.g. weather routing decisions, speed versus schedule trade-offs), which the Chief Officer and OOWs then apply" },
+        { en: "Be genuinely available when required, ensuring rest and personal routine do not create reluctance in the OOW to call when standing orders require it" },
+        { en: "Take direct conduct of the vessel when the situation genuinely requires the Master's personal judgment, not only the OOW's" },
+      ],
+      equipment: [
+        { en: "Standing orders and night order book (authored and maintained by the Master)" },
+        { en: "Standing Orders / Night Orders record" },
+        { en: "Passage plan, weather routing information, voyage strategy documentation" },
+        { en: "Bridge communication equipment for being called at any hour" },
+      ],
+      risks: [
+        { en: "Standing orders vague enough that OOWs remain uncertain about when a call is genuinely required" },
+        { en: "Standing orders becoming outdated as the voyage or operating conditions evolve" },
+        { en: "Creating, even unintentionally, a culture where OOWs hesitate to call due to the Master's visible fatigue or irritation at being woken" },
+        { en: "Losing track of the voyage's overall strategic picture by remaining too detached from routine navigation" },
+        { en: "Delaying a strategic passage decision (e.g. weather routing) until it becomes urgent rather than addressing it proactively" },
+        { en: "Undermining the Chief Officer's watchkeeping oversight by intervening in departmental matters that should be resolved at that level" },
+      ],
+      bestPractices: [
+        { en: "Write standing and night orders with genuine specificity — vague thresholds produce hesitant OOWs" },
+        { en: "Respond to every call as if it were legitimate, regardless of how it turns out — this is what sustains a culture of calling early" },
+        { en: "Review the voyage's strategic picture periodically, not only when prompted by an OOW's call" },
+        { en: "Make risk tolerance decisions (weather routing, schedule trade-offs) explicitly and communicate them clearly, rather than leaving OOWs to infer them" },
+        { en: "Trust the Chief Officer's departmental oversight of watchkeeping standards, intervening personally only when genuinely necessary" },
+      ],
+      commonMistakes: [
+        { en: "Writing standing orders vague enough to leave OOWs uncertain about when to call" },
+        { en: "Reacting to a call with visible frustration, teaching the bridge team to delay or avoid calling next time" },
+        { en: "Becoming so detached from routine navigation that a strategic passage decision is made too late" },
+        { en: "Micromanaging watchkeeping standards that the Chief Officer is already handling appropriately" },
+        { en: "Leaving risk tolerance decisions implicit, forcing OOWs to guess what the Master would accept" },
+      ],
+      professionalTips: [
+        { en: "The quality of your standing orders is measured by how confidently an OOW can decide, alone at 3 a.m., whether to call you" },
+        { en: "How you respond to being called shapes whether you are called again when it truly matters — protect that instinct in your bridge team" },
+        { en: "Command at sea is often exercised through the orders you have already given, not the ones you give in the moment" },
+        { en: "Trusting the Chief Officer's oversight is not distance from navigation — it is how command scales across an entire voyage" },
+        { en: "Good Masters create bridge teams that know exactly when to think independently and exactly when to ask for help" },
+      ],
+      mapReferences: [],
+    },
+
+    anchoring: {
+      overview: { en: "For routine anchoring in a well-known, low-risk area, the Master typically delegates the operation to the OOW and Chief Officer, who apply the same judgment described in their own curricula. The Master's distinct role emerges when the anchorage carries elevated risk — congested waters, marginal holding ground, forecast deterioration, or a politically or commercially sensitive location — where the decision to anchor, remain, or reposition exceeds what should be decided at the department level alone. The Master's presence and judgment become directly engaged exactly where the routine ends. The Master's role begins where routine anchoring decisions become command decisions." },
+      responsibilities: [
+        { en: "Decide whether a given anchorage's risk profile (congestion, holding ground, forecast weather) requires the Master's personal authorization before anchoring, rather than leaving it entirely to the OOW and Chief Officer" },
+        { en: "Be called and personally engaged when dragging, deteriorating conditions, or an emerging conflict with other vessels or authorities is reported, rather than treated as a routine departmental matter" },
+        { en: "Make the final decision on remaining at anchor, repositioning, or getting underway when conditions deteriorate beyond what the bridge team's delegated authority covers" },
+        { en: "Weigh the commercial and operational consequences of a prolonged or unplanned anchorage against the vessel's safety, making the final call when these interests are in tension" },
+        { en: "Confirm with the Chief Officer and Chief Engineer that the vessel retains genuine readiness to get underway throughout an extended anchor period, particularly in a higher-risk anchorage" },
+        { en: "Communicate directly with the company, agent, or authorities when an anchoring decision has significant commercial, legal, or diplomatic implications" },
+        { en: "Authorize any exceptional anchoring strategy that departs from normal company procedures when immediate safety requires it, documenting the reasons for the decision" },
+      ],
+      equipment: [
+        { en: "Chart and passage plan reference for the anchorage area" },
+        { en: "Weather forecast and routing information" },
+        { en: "Anchor watch reports and bridge situation reports" },
+        { en: "Company/agent communication channels for commercially or legally significant anchoring decisions" },
+      ],
+      risks: [
+        { en: "Treating every anchorage as routine, missing the specific conditions that actually warranted the Master's personal engagement" },
+        { en: "Being called too late because standing orders did not clearly define the threshold for an anchoring-related call" },
+        { en: "Allowing commercial pressure (avoiding delay, demurrage) to override a genuine safety concern about remaining at a deteriorating anchorage" },
+        { en: "Assuming the vessel's readiness to get underway remains intact during an extended anchorage without direct confirmation" },
+        { en: "Failing to reassess the anchorage as conditions evolve, assuming yesterday's decision remains valid today" },
+        { en: "Underestimating the escalation potential of an anchorage in a congested, politically sensitive, or otherwise non-routine location" },
+      ],
+      bestPractices: [
+        { en: "Define, in standing orders, which anchoring conditions require the Master's personal decision rather than departmental judgment alone" },
+        { en: "Treat any report of dragging, deteriorating weather, or a developing conflict at anchor as requiring direct Master engagement, not routine departmental handling" },
+        { en: "Weigh commercial consequences explicitly and transparently against safety, rather than letting one silently dominate the decision" },
+        { en: "Confirm underway readiness directly during an extended or higher-risk anchorage, rather than assuming it remains as it was" },
+        { en: "Engage the company or agent proactively when an anchoring decision has commercial, legal, or diplomatic weight" },
+      ],
+      commonMistakes: [
+        { en: "Leaving anchoring entirely to the department level even in a genuinely higher-risk situation that warranted the Master's engagement" },
+        { en: "Standing orders vague enough that the bridge team is uncertain when an anchoring situation requires a call" },
+        { en: "Allowing schedule or commercial pressure to delay a necessary decision to reposition or get underway" },
+        { en: "Assuming readiness to get underway without confirming it directly during a prolonged anchor period" },
+        { en: "Underestimating a non-routine anchorage's potential to escalate into a commercial, legal, or diplomatic matter" },
+      ],
+      professionalTips: [
+        { en: "Most anchorages are genuinely routine — your judgment is in recognizing quickly which ones are not" },
+        { en: "A dragging report at anchor deserves the same urgency as a collision risk at sea — treat it accordingly" },
+        { en: "Commercial consequences of a delay are real, but they are never a reason to accept a safety risk you would not otherwise accept" },
+        { en: "An anchorage that seems calm today can become the vessel's most consequential decision of the voyage if conditions or circumstances shift" },
+        { en: "Good Masters review an anchorage continuously, not just the decision that placed the vessel there" },
+      ],
+      mapReferences: [],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Chief Officer manages cargo operations and the Bosun and OOW manage deck workload and security, but the Master becomes the vessel's primary representative to the outside world — port authorities, Port State Control, agents, charterers, and, where relevant, the media or public. The Master's distinct contribution in port is less about the cargo itself and more about the vessel's standing: its compliance, its reputation, and its relationships with the parties who can grant or withhold operational freedom. The Master's authority in port extends beyond ship operations to protecting the vessel's legal standing, commercial interests, and professional reputation." },
+      responsibilities: [
+        { en: "Receive and personally engage with Port State Control inspections, class surveyors, or authorities when they require the Master's direct involvement, rather than delegating entirely to the Chief Officer" },
+        { en: "Set the vessel's security level and access policy in line with the ISPS Code, authorizing any deviation or exceptional access decision that exceeds the Chief Officer's or OOW's delegated authority" },
+        { en: "Maintain the primary relationship with the agent and charterer's representatives on matters affecting the vessel's schedule, commercial standing, or legal exposure" },
+        { en: "Make the final decision on any dispute or discrepancy with the terminal, surveyor, or charterer that the Chief Officer cannot resolve at a technical level" },
+        { en: "Approve any decision to suspend cargo operations or delay departure when safety, compliance, or legal considerations require it" },
+        { en: "Authorize crew changes, shore leave policy, and provisioning decisions affecting the whole vessel, balancing crew welfare against port-specific constraints" },
+        { en: "Represent the vessel and company appropriately in any interaction with port officials, media, or the public, protecting both the vessel's legal standing and the company's reputation" },
+        { en: "Confirm with the Chief Officer and Chief Engineer that the vessel's overall readiness to depart is genuinely sound before authorizing departure preparations" },
+      ],
+      equipment: [
+        { en: "Certificates, class documentation, and PSC deficiency records" },
+        { en: "ISPS security plan and access control documentation" },
+        { en: "Port regulations and local authority instructions" },
+        { en: "Agent, charterer, and company communication channels" },
+        { en: "Crew list, rest-hour records, and provisioning/welfare documentation" },
+      ],
+      risks: [
+        { en: "Delegating a Port State Control or authority interaction entirely to the Chief Officer when the Master's personal engagement was actually required or expected" },
+        { en: "Allowing commercial or charterer pressure to influence a decision that should rest on safety or compliance grounds alone" },
+        { en: "An access control or security level decision being made without the Master's awareness when it exceeds departmental authority" },
+        { en: "Losing track of a dispute with the terminal or charterer because it was assumed to be a technical matter the Chief Officer would resolve alone" },
+        { en: "Failing to recognize that a commercial discussion has evolved into a legal issue requiring immediate company involvement" },
+        { en: "Representing the vessel or company poorly in an external interaction, creating legal or reputational exposure beyond the immediate issue" },
+      ],
+      bestPractices: [
+        { en: "Be personally present and engaged for inspections or interactions that carry genuine legal or commercial weight, rather than delegating by default" },
+        { en: "Set clear, explicit criteria for what security or access decisions require the Master's authorization" },
+        { en: "Maintain direct, proactive contact with the agent and charterer rather than relying solely on the Chief Officer's operational updates" },
+        { en: "Treat crew welfare decisions (shore leave, rest, provisioning) as a whole-vessel responsibility, not an afterthought to cargo operations" },
+        { en: "Prepare for external representation deliberately — know what can and cannot be said or committed to on the company's behalf" },
+      ],
+      commonMistakes: [
+        { en: "Assuming a Port State Control or authority matter is purely technical and delegating it away from the Master's own engagement" },
+        { en: "Allowing schedule or commercial pressure from the charterer to quietly influence a compliance or safety decision" },
+        { en: "Being unaware of a security or access decision made at the departmental level that exceeded delegated authority" },
+        { en: "Neglecting the primary relationship with the agent or charterer, leaving the Chief Officer to manage commercial matters beyond their authority" },
+        { en: "Speaking or committing to something externally without appreciating its legal or commercial consequence for the company" },
+      ],
+      professionalTips: [
+        { en: "Port State Control does not just inspect the vessel — it forms an impression of its Master; be present and engaged, not just compliant" },
+        { en: "The relationships you maintain with agents and charterers outside of any crisis are what make navigating an actual crisis with them possible" },
+        { en: "Every external representation of the vessel is also a representation of the company — know the difference between what is yours to decide and what is not" },
+        { en: "Crew welfare in port is not separate from vessel safety — a well-rested, fairly treated crew is a safer crew at sea" },
+        { en: "A Master's credibility is built long before a dispute arises; professionalism in routine interactions is part of command" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d2-l8" }, { kind: "lesson", lessonId: "d2-l4" }, { kind: "lesson", lessonId: "d2-l1" }, { kind: "lesson", lessonId: "d2-l10" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "STS operations combine every dimension the Master has already engaged with in other phases — commanding through department heads, weighing commercial pressure against safety, and representing the vessel externally — concentrated into a single, higher-risk operation. The Master authorizes the STS operation itself, is typically present or immediately available throughout, and holds final authority over whether to proceed, pause, or abort, particularly when conditions or counterpart behaviour raise concerns beyond what the Chief Officer or OOW can resolve alone. The Master's responsibility extends beyond the safety of one vessel to the safe coordination of two command teams operating together." },
+      responsibilities: [
+        { en: "Authorize the STS operation in advance, confirming the plan, the counterpart vessel's suitability, and the conditions under which the operation will proceed" },
+        { en: "Be present on the bridge or immediately available throughout the operation, given its elevated risk relative to routine manoeuvring" },
+        { en: "Establish command-level contact with the counterpart vessel's Master before the operation begins, confirming mutual understanding of procedures, abort criteria, and communication protocols" },
+        { en: "Make the final decision to proceed, pause, or abort the operation when conditions (weather, counterpart readiness, technical concerns) exceed the Chief Officer's or OOW's authority to decide alone" },
+        { en: "Weigh commercial pressure (charter party timing, cargo value) against genuine safety concerns, retaining final authority over any decision to continue under marginal conditions" },
+        { en: "Authorize emergency separation if required, ensuring the decision and its reasoning are clearly communicated to both vessels and the company" },
+        { en: "Ensure the company or relevant authorities are informed of the operation's outcome, particularly if it was aborted, delayed, or encountered a significant issue" },
+        { en: "Ensure that lessons learned from any significant STS event are reported and incorporated into future operational planning" },
+      ],
+      equipment: [
+        { en: "STS operational plan and counterpart vessel compatibility documentation" },
+        { en: "STS checklist and emergency contingency procedures" },
+        { en: "Bridge communication equipment for direct contact with the counterpart vessel's Master" },
+        { en: "Weather and sea state forecast relevant to the operation's risk assessment" },
+        { en: "Company communication channels for authorization and reporting" },
+      ],
+      risks: [
+        { en: "Authorizing an STS operation without genuinely verifying the counterpart vessel's suitability or the conditions supporting it" },
+        { en: "Being insufficiently engaged or available during the operation, leaving a genuinely elevated risk decision to be made without the Master's judgment" },
+        { en: "Allowing commercial pressure to influence the decision to proceed or continue under marginal conditions" },
+        { en: "Assuming that both vessels share the same operational standards without confirming them explicitly" },
+        { en: "Miscommunication or unclear command-level understanding with the counterpart vessel's Master before the operation begins" },
+        { en: "Hesitating to abort once significant resources or time have already been committed to the operation" },
+      ],
+      bestPractices: [
+        { en: "Treat STS authorization as a genuine decision, not a formality — verify the plan and the counterpart vessel's suitability personally" },
+        { en: "Establish direct Master-to-Master contact with the counterpart vessel before the operation, confirming shared understanding of abort criteria" },
+        { en: "Remain present or immediately available throughout the operation, given its elevated risk compared to routine manoeuvring" },
+        { en: "Treat commercial pressure as an input to weigh, never as the deciding factor over a genuine safety concern" },
+        { en: "Report the operation's outcome to the company proactively, particularly if it did not proceed as planned" },
+      ],
+      commonMistakes: [
+        { en: "Authorizing an STS operation as a routine formality without genuinely assessing its specific risk" },
+        { en: "Being unavailable or insufficiently engaged during the operation despite its elevated risk profile" },
+        { en: "Allowing commercial pressure (cargo value, schedule) to influence a decision that should rest on safety grounds" },
+        { en: "Failing to establish clear command-level communication with the counterpart vessel before the operation begins" },
+        { en: "Hesitating to abort due to the resources or time already invested in the operation" },
+      ],
+      professionalTips: [
+        { en: "An STS operation is authorized twice — once on paper before it begins, and once in your genuine judgment that conditions still support it" },
+        { en: "A Master-to-Master conversation before the operation sets the tone for how quickly and clearly a real problem will be communicated later" },
+        { en: "The commercial value of a cargo transfer is never a reason to accept a risk you would not otherwise accept" },
+        { en: "Presence during an STS operation is not symbolic — it is what makes a timely abort decision possible" },
+        { en: "The safest STS operations are those where both Masters are equally willing to stop the operation before a minor concern becomes a major incident" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d4-l5" }, { kind: "lesson", lessonId: "e1-l3" }, { kind: "lesson", lessonId: "d2-l7" }],
+    },
+
+    maintenance: {
+      overview: { en: "The Chief Officer and Chief Engineer each govern their department's maintenance system; the Master's distinct responsibility is to ensure these two systems remain coordinated and adequately resourced, and to make the strategic decisions — deferring a repair, requesting additional budget, scheduling a dry-dock — that exceed either department head's authority alone. The Master is ultimately accountable to the company and to class for the vessel's overall material condition, regardless of which department a given deficiency originates in. The Master's responsibility is not to manage maintenance tasks, but to ensure the vessel's long-term material integrity is protected through sound strategic decisions." },
+      responsibilities: [
+        { en: "Review consolidated maintenance status from both the Chief Officer and Chief Engineer, identifying any cross-departmental resource conflict or priority requiring the Master's decision" },
+        { en: "Authorize or escalate to the company any maintenance expenditure, spare parts request, or shore-side support exceeding departmental budget authority" },
+        { en: "Make the final decision on deferring a non-critical repair against operational or commercial priorities, weighing the risk explicitly rather than allowing deferral to become default" },
+        { en: "Ensure that any accepted maintenance risk is formally communicated, documented, and periodically reviewed until resolved" },
+        { en: "Plan and negotiate dry-dock or major survey timing with the company, balancing the vessel's actual material condition against commercial and schedule considerations" },
+        { en: "Ensure that a maintenance deficiency identified by either department is not silently absorbed at the departmental level when it has vessel-wide safety or compliance implications" },
+        { en: "Maintain the company's confidence in the vessel's material condition through honest, proactive reporting, rather than allowing gaps to surface only during an external inspection" },
+      ],
+      equipment: [
+        { en: "Consolidated maintenance and PMS status from both Deck and Engine departments" },
+        { en: "Risk register / deferred defects list" },
+        { en: "Class survey schedule and dry-dock planning documentation" },
+        { en: "Company budget and technical support communication channels" },
+      ],
+      risks: [
+        { en: "A cross-departmental maintenance priority conflict (Deck versus Engine) being resolved informally rather than through a genuine Master-level decision" },
+        { en: "Deferring a repair repeatedly under operational pressure until deferral becomes the default rather than a conscious, documented decision" },
+        { en: "Normalizing degraded equipment because it has continued operating without immediate failure" },
+        { en: "Discovering a significant material deficiency only during an external inspection because it was not proactively reported to the company" },
+        { en: "Dry-dock or major survey planning being driven primarily by commercial schedule rather than the vessel's genuine material condition" },
+        { en: "Assuming departmental maintenance reports are complete and accurate without periodically verifying them personally" },
+      ],
+      bestPractices: [
+        { en: "Review both departments' maintenance status together periodically, looking specifically for conflicts or gaps neither department alone would surface" },
+        { en: "Treat every deferral decision as a conscious, documented choice, not a default outcome of competing pressures" },
+        { en: "Report the vessel's genuine material condition to the company proactively, before an external inspection forces the issue" },
+        { en: "Negotiate dry-dock and major survey timing based on the vessel's actual condition, using commercial factors as one input among several" },
+        { en: "Periodically verify departmental maintenance reports personally, rather than assuming their completeness" },
+      ],
+      commonMistakes: [
+        { en: "Allowing a cross-departmental resource conflict to persist unresolved because it falls between the Chief Officer's and Chief Engineer's separate authorities" },
+        { en: "Letting repeated deferrals of a non-critical repair become an unconscious pattern rather than an explicit decision" },
+        { en: "Being surprised by a material deficiency during an external inspection that internal reporting should have already surfaced" },
+        { en: "Allowing commercial schedule to dictate dry-dock timing without genuinely weighing the vessel's material condition" },
+        { en: "Trusting departmental maintenance reports without any personal verification" },
+      ],
+      professionalTips: [
+        { en: "The company trusts your account of the vessel's condition more than any report — make sure that trust is earned through honesty, not convenience" },
+        { en: "A deferred repair is a decision, not a default — treat it that way every time" },
+        { en: "Dry-dock timing is one of the most consequential decisions you make for the vessel's long-term condition — protect it from being driven by schedule alone" },
+        { en: "The Master who reports problems before they are discovered externally builds more credibility than the one who reports only good news" },
+        { en: "Good Masters protect the vessel's future condition, not only its ability to complete today's voyage" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d2-l1" }, { kind: "lesson", lessonId: "d2-l8" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When a major emergency develops, the Master becomes the single point of ultimate decision for the entire vessel — setting the overall strategy that the Chief Officer, Chief Engineer, and OOWs translate into departmental and tactical action, and making the decisions no one else aboard has the authority to make: overall priorities when they conflict, the decision to abandon ship, and communication with the company and external rescue authorities. The Master does not personally fight the fire or plug the leak, but is accountable for the strategy that determines whether the response succeeds. In a major emergency, every tactical action on board should support a single command strategy defined by the Master." },
+      responsibilities: [
+        { en: "Take command of the overall emergency response immediately, establishing clear communication with all department heads and confirming the muster and emergency organization is functioning" },
+        { en: "Set the overall strategic priority when competing interests conflict (e.g. life safety versus vessel salvage versus environmental protection), communicating this clearly to all department heads" },
+        { en: "Receive consolidated situation reports from the Chief Officer, Chief Engineer, and any other team leader, integrating them into a single command picture rather than acting on any one report alone" },
+        { en: "Make the final decision to continue fighting to save the vessel, to abandon ship, or to request external assistance (SAR, salvage, other vessels), based on the integrated situation and available expertise" },
+        { en: "Authorize the transition from one emergency phase to another (response, stabilization, recovery), ensuring the command strategy evolves with the situation" },
+        { en: "Communicate directly and promptly with the company (DPA) and, where required, coast guard or SAR authorities, providing an accurate and updated picture of the situation" },
+        { en: "Reassess the overall strategy continuously as the emergency evolves, adjusting priorities and resource allocation as new information arrives from department heads" },
+        { en: "Ensure accountability for all persons aboard throughout the emergency, personally confirming the muster is complete and accurate before any major decision (e.g. abandon ship) is finalized" },
+        { en: "Debrief and ensure lessons from the emergency are captured and reported to the company once the situation is resolved" },
+      ],
+      equipment: [
+        { en: "Full bridge and emergency communication equipment, including satellite communication with the company and authorities" },
+        { en: "Muster list, emergency organization plan, and stability/damage control references" },
+        { en: "Emergency response procedures and contingency plans" },
+        { en: "SAR and distress communication equipment (GMDSS)" },
+        { en: "Company emergency contact and DPA communication channels" },
+      ],
+      risks: [
+        { en: "Making tactical decisions personally instead of setting strategy and trusting department heads to execute it, losing the overview needed for command" },
+        { en: "Delaying the decision to abandon ship or request external assistance out of reluctance to accept the severity of the situation" },
+        { en: "Acting on one department head's report without integrating it with others, missing a critical factor from elsewhere on the vessel" },
+        { en: "Allowing cognitive overload to narrow situational awareness, focusing on one problem while missing a more critical developing threat elsewhere" },
+        { en: "Losing track of personnel accountability during a fast-moving emergency, delaying recognition of someone missing" },
+        { en: "Underestimating how quickly a situation can escalate, continuing with an initial strategy after conditions have fundamentally changed" },
+        { en: "Miscommunicating or delaying communication with the company or external authorities, losing valuable time or support" },
+      ],
+      bestPractices: [
+        { en: "Set the overall strategy clearly and let department heads execute the tactics within their zones — resist the pull toward personal tactical involvement" },
+        { en: "Integrate every department head's report into a single command picture before making a major decision, rather than acting on the most recent or most urgent-sounding one" },
+        { en: "Communicate proactively and continuously with the company and authorities, even before a final decision is needed" },
+        { en: "Reassess the overall strategy explicitly and regularly as the emergency evolves, rather than assuming the initial plan remains correct" },
+        { en: "Maintain personal, continuous accountability for all persons aboard throughout the emergency, verifying rather than assuming" },
+      ],
+      commonMistakes: [
+        { en: "Becoming personally absorbed in tactical detail at the expense of the overall strategic command" },
+        { en: "Hesitating on a major decision (abandon ship, external assistance) until the situation has deteriorated further than necessary" },
+        { en: "Acting on an incomplete or unreconciled picture because reports from different areas were not properly integrated" },
+        { en: "Losing track of personnel accountability while managing multiple simultaneous demands" },
+        { en: "Continuing an initial strategy without adapting it as the emergency's nature or severity changes" },
+      ],
+      professionalTips: [
+        { en: "Your job in a major emergency is to think, not to fight — the moment you start doing a department head's job, no one is doing yours" },
+        { en: "The decision to call for help or abandon ship is never a failure of command — delaying it out of pride is" },
+        { en: "A consolidated, integrated picture from all departments is worth more than any single urgent-sounding report — build it deliberately" },
+        { en: "The muster count is not a formality during an emergency — it is the one piece of information you can never afford to get wrong" },
+        { en: "How you led during routine operations is what your crew draws on when you lead them through a real emergency" },
+        { en: "The crew will often remember the clarity of your decisions more than the complexity of the emergency itself" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "s4-l7" }, { kind: "lesson", lessonId: "s5-l4" }, { kind: "lesson", lessonId: "d3-l7" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "The Chief Officer reports the vessel ready to proceed through a challenging strait, having reconciled all deck-level concerns. Separately, the Chief Engineer mentions that one of two generators is running 'a bit hotter than usual' but is not flagging it as a defect requiring delay." },
+      mission: { en: "Decide whether to proceed as scheduled or resolve the engineering comment first, weighing the schedule pressure of the strait's tidal window against an unconfirmed technical concern." },
+      expectedActions: [
+        { en: "Do not treat the Chief Officer's readiness report as covering the whole vessel" },
+        { en: "Personally question the Chief Engineer's comment — is this within normal parameters, or a developing issue" },
+        { en: "Consider whether additional technical assessment or monitoring is required before committing the vessel to a phase where recovery options become limited" },
+        { en: "Resolve the ambiguity before committing to the tidal window, even if it means missing it" },
+        { en: "Make the final decision explicitly, documenting the reasoning either way" },
+      ],
+      why: [{ en: "A comment mentioned without escalation is not the same as a resolved technical assessment — the Master's role is to ensure genuine integration between departments before a decision with real consequences (a committed passage through a challenging strait) is made, not to let scheduling urgency substitute for it." }],
+      commonMistakes: [
+        { en: "Treating the Chief Officer's readiness as sufficient without checking the engineering comment" },
+        { en: "Allowing the tidal window to pressure a decision before the concern is resolved" },
+        { en: "Failing to document why the decision was made either way" },
+      ],
+      safetyPoints: [{ en: "A committed passage through a challenging strait is a poor moment to discover an unresolved technical concern — resolve it while the option to delay still exists." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "Weather routing shows a developing system that would justify a significant, costly deviation to avoid the worst of it. The charterer's representative contacts you directly, expressing strong preference for staying on the direct route to meet a laycan deadline." },
+      mission: { en: "Decide the vessel's routing strategy, weighing the charterer's commercial pressure against your own safety judgment." },
+      expectedActions: [
+        { en: "Acknowledge the charterer's commercial interest without allowing it to substitute for your own weather and safety assessment" },
+        { en: "Make the routing decision based on the vessel's safety and the crew's welfare first" },
+        { en: "Communicate the decision and its reasoning clearly and professionally to the charterer, rather than avoiding the conversation" },
+        { en: "Document the decision and the weather data supporting it" },
+      ],
+      why: [{ en: "The Master's authority over the vessel's safety cannot be delegated to commercial interests, however legitimate those interests are — a charterer's preference is an input to communicate around, never a factor that overrides a genuine weather-based safety judgment. Professional disagreement with commercial stakeholders is part of command when safety requires it." }],
+      commonMistakes: [
+        { en: "Allowing the charterer's direct contact to create pressure that influences the routing decision" },
+        { en: "Avoiding a difficult conversation with the charterer by simply complying" },
+        { en: "Failing to document the weather data and reasoning behind the decision" },
+      ],
+      safetyPoints: [{ en: "A significant weather deviation decided too late, under commercial pressure, is far more dangerous and far more costly than one decided early and communicated clearly." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "A fire has broken out in a machinery space. The Chief Officer reports the deck team's muster as complete. Minutes later, the Chief Engineer's muster report for the engine team is still pending, and initial indications suggest one engine crew member may be unaccounted for." },
+      mission: { en: "Decide how to proceed with the overall emergency strategy while this personnel discrepancy remains unresolved." },
+      expectedActions: [
+        { en: "Do not treat the deck team's completed muster as sufficient to consider the overall muster resolved" },
+        { en: "Personally confirm the status of the engine team's muster before finalizing any major strategic decision" },
+        { en: "Avoid making assumptions based on incomplete reports; require positive confirmation before treating any personnel status as resolved" },
+        { en: "Treat the possible missing crew member as the immediate priority alongside the firefighting response, not as a secondary concern" },
+        { en: "Communicate clearly to all department heads that the muster remains open until confirmed complete" },
+      ],
+      why: [{ en: "A partial muster is not a complete muster — the Master's responsibility for personnel accountability does not end when the first department reports in; treating an unresolved personnel status as settled risks a catastrophic gap in exactly the moment it matters most." }],
+      commonMistakes: [
+        { en: "Treating the deck team's completed muster as representative of the whole vessel" },
+        { en: "Allowing the firefighting response to overshadow an unresolved personnel discrepancy" },
+        { en: "Delaying escalation of the missing crew member possibility while waiting for more certainty" },
+      ],
+      safetyPoints: [{ en: "In any emergency, an unresolved muster discrepancy is itself an emergency — it should never wait quietly behind the more visible problem." }],
+      mapReferences: [{ kind: "lesson", lessonId: "s4-l7" }, { kind: "lesson", lessonId: "s5-l4" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Command through your department heads, never around them — the moment you start doing their job personally, you have stopped doing yours." },
+    { en: "Integrate before you decide — a report from one department is an input, never the whole picture; the picture is yours to build." },
+    { en: "Commercial pressure will always have a voice — your job is to make sure safety has an equally clear one in every decision that matters." },
+    { en: "Calling for help, delaying departure, or aborting an operation is never a failure of command — hesitating to do so out of pride is, because protecting lives and the vessel is the purpose of command, not preserving appearances." },
+    { en: "Your standing orders and the culture you build around being called are what keep the vessel safe when you are not physically present." },
+    { en: "A muster count, a certificate, a maintenance deferral — treat every piece of documentation as your personal legal and professional responsibility, not administrative background noise." },
+    { en: "Every external interaction — with authorities, charterers, or the media — represents the vessel and the company; know precisely what is yours to decide and what is not." },
+    { en: "The crew remembers the clarity of your decisions more than the complexity of the situations that required them." },
+    { en: "Command is not measured by how many decisions you make yourself, but by how reliably the system you have built produces good ones when you are not physically present." },
+    { en: "The higher you rise in command, the less your value comes from solving problems yourself and the more it comes from creating a ship where the right people solve the right problems at the right time." },
+  ],
+
+  professionalMindset: [
+    { en: "Think in terms of the whole vessel, not any single department. A problem raised by the Chief Engineer, the Chief Officer, or an external party is never the whole picture — the Master's mind holds the vessel as one system, not a collection of separate reports." },
+    { en: "Treat authority as something that flows through people, not around them. Command is exercised by setting strategy and trusting department heads to execute it — the impulse to solve a problem personally is usually a sign that trust, not the problem, needs attention." },
+    { en: "Assume that certainty is rare and that decisions must still be made. Waiting for complete information before deciding is itself a decision, usually the wrong one — command means acting responsibly on the best integrated picture available, not the perfect one. The objective is not certainty, but responsible judgment under uncertainty." },
+    { en: "See commercial and external pressure as permanent features of the environment, not obstacles to be removed. Charterers, schedules, and authorities will always have interests — the Master's judgment exists precisely to weigh those interests against safety, not to wish them away." },
+    { en: "Recognize that your own accountability never transfers, no matter how much authority is properly delegated. Every officer aboard acts with delegated authority; only the Master's accountability for the vessel's overall safety has nowhere further to be delegated." },
+    { en: "Understand that documentation and reality must be held to the same standard as any operational decision. A certificate, a muster, a maintenance record are not administrative background — they are claims about reality that the Master is personally answerable for." },
+    { en: "Hold multiple time horizons at once. Today's passage, this quarter's maintenance budget, and the vessel's long-term material condition all compete for attention — the Master manages the present without mortgaging the future. Avoid solving today's problem by creating tomorrow's larger one." },
+    { en: "Accept that command is proven less in crisis than in the years of routine that precede it. The standing orders written, the calls answered without irritation, the honest reports sent before they were required — these are what a crew actually draws on when a real emergency arrives." },
+    { en: "Measure your effectiveness by what the vessel can do without your direct involvement. A Master who has built a genuinely capable command team can be temporarily unavailable without the vessel's safety depending on it — that capability, not personal indispensability, is the real achievement of command." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Official Logbook — The Master is the ultimate legal custodian of the vessel's official logbook, personally responsible for its accuracy and completeness even where entries are made by officers. In many jurisdictions, specific entries (crew events, disciplinary matters, major incidents) require the Master's personal signature or entry." },
+    { en: "Certificates and statutory documents — The Master holds final personal responsibility for the vessel carrying valid, current certificates (safety, load line, pollution prevention, ISM/ISPS) — not merely for their existence, but for their genuine validity relative to the vessel's actual condition, including ensuring that no certificate is relied upon when the vessel's actual condition no longer supports its validity." },
+    { en: "Safety Management System (SMS) and ISM Code compliance — The Master ensures the vessel operates in accordance with the company's SMS, reporting non-conformities to the Designated Person Ashore (DPA) and ensuring the system is a living practice aboard, not only a shelf of manuals." },
+    { en: "Oil Record Book and environmental compliance records — While the Chief Officer governs the accuracy of these records at a departmental level, the Master carries the final personal legal accountability for their truthfulness — falsification of these records is a criminal matter in most jurisdictions, and the Master's signature or oversight carries that weight." },
+    { en: "Incident, casualty, and near-miss reporting — The Master ensures any reportable incident is accurately and promptly reported to the company, flag State, and other authorities as required, distinguishing confirmed facts from matters still under investigation, and resists any pressure — internal or external — to minimize or delay a report. Initial reports must be factual, timely, and clearly distinguish confirmed information from assumptions or developing information." },
+    { en: "Crew documentation — The Master oversees the accuracy of crew certificates, contracts, discharge books, and rest-hour records at a whole-vessel level, ensuring the vessel's manning remains genuinely compliant, not merely paper-compliant." },
+    { en: "Communication with the company (DPA) and authorities — The Master maintains a documented, honest record of significant communications with the company and external authorities, recognizing that this correspondence often becomes the primary evidence of the Master's judgment in any subsequent review or investigation." },
+    { en: "Why this matters: The Master's documentation responsibility is different in kind from every other rank aboard — it carries personal legal and criminal liability under flag State and international law (SOLAS, MARPOL, ISM Code), not only commercial or professional consequence. A Master who treats the vessel's documentary record with the same seriousness as any operational decision protects the vessel, the crew, the company, and their own personal legal standing — because in an investigation, the record is very often the only account of events anyone outside the vessel will ever see. Professional documentation is therefore not separate from command — it is one of the ways command is exercised and later judged." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Final legal accountability for MARPOL compliance — The Master carries personal legal and often criminal liability for the vessel's compliance with MARPOL across all departments, distinct from the Chief Officer's and Chief Engineer's departmental governance of their own records and practices." },
+    { en: "Authorizing exceptional environmental decisions — The Master makes or ratifies any decision that departs from standard environmental procedure under exceptional circumstances (e.g. an emergency discharge to protect life or the vessel), ensuring that any departure from normal procedure remains strictly within the limits permitted by international law and is fully documented." },
+    { en: "Environmental incident command — When a pollution incident occurs or is imminent, the Master takes command of the response strategy, coordinating departmental action, activating the vessel's Shipboard Oil Pollution Emergency Plan (SOPEP) or equivalent, and ensuring the company and authorities are notified without delay. The Master ensures that environmental response priorities are coordinated with life-saving and vessel safety priorities, recognizing that these objectives may compete during a major emergency." },
+    { en: "Balancing environmental compliance against commercial and operational pressure — The Master ensures that schedule, cost, or charterer pressure never compromises a genuine environmental safeguard, and personally resolves any situation where departmental judgment and commercial pressure are in conflict." },
+    { en: "Company and regulatory relationship on environmental matters — The Master represents the vessel in environmental matters with Port State Control, class, and the company's DPA, ensuring the vessel's environmental standing is protected and accurately represented externally." },
+    { en: "Culture of environmental compliance — The Master ensures environmental responsibility is treated as integral to the vessel's operation across all departments, not as a compliance formality separate from commercial and operational priorities, building this culture through personal example, clear expectations, and consistent decision-making." },
+    { en: "Why this matters: Environmental compliance failures carry among the most severe legal, financial, and reputational consequences a Master and company can face — criminal liability, vessel detention, and significant financial penalties are all realistic outcomes of a poorly managed environmental incident or a falsified record. The Master who ensures genuine compliance, decisive incident command, and an honest relationship with authorities protects not only the vessel and company, but their own personal legal standing and professional future. Environmental leadership is therefore not a separate responsibility of command — it is one of the standards by which command itself is judged." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Make the final decision on any matter affecting the vessel's safety, navigation, or the safety of life, overriding any officer's decision or any external party's preference when safety requires it" },
+      { en: "Deviate from the passage plan, standing procedures, or company instructions when the safety of the vessel, crew, or environment requires it, reporting the deviation and its reasoning afterward" },
+      { en: "Authorize emergency actions (including emergency discharges to protect life or the vessel) that would not be permitted under normal circumstances, provided they remain within the bounds of international law" },
+      { en: "Overrule a pilot's conduct of the vessel, or take direct command from any officer, at any moment the Master judges necessary" },
+      { en: "Make the final decision to abandon ship, request external assistance, or divert to a port of refuge, based on the Master's integrated judgment of the situation" },
+      { en: "Discipline crew members and make decisions regarding crew welfare, repatriation, or medical evacuation within the Master's authority under maritime law and company policy" },
+      { en: "Communicate directly with authorities, media, or the public on matters concerning the vessel, within the limits of the Master's authority to represent the company" },
+      { en: "Refuse an instruction from the company or charterer that the Master judges would compromise the safety of the vessel, crew, or environment" },
+      { en: "Request clarification, additional resources, or shore-based expertise whenever the situation exceeds the information reasonably available on board" },
+    ],
+    youCannot: [
+      { en: "Direct the vessel or crew to act in violation of international law (SOLAS, MARPOL, COLREG) or the flag State's requirements, regardless of company or commercial pressure to do so" },
+      { en: "Falsify, omit, or authorize the falsification of any official record (logbook, Oil Record Book, certificates) to misrepresent what actually occurred" },
+      { en: "Delegate personal accountability for the vessel's overall safety and compliance, even where operational authority is properly delegated to department heads" },
+      { en: "Ignore or override the company's Safety Management System without proper justification and reporting through the Designated Person Ashore" },
+      { en: "Withhold or delay a legally required report of an incident, casualty, or environmental event to the company, flag State, or relevant authorities" },
+      { en: "Allow commercial or charter party pressure to override a genuine safety, stability, or environmental concern" },
+      { en: "Act outside the vessel's certified capabilities or beyond what the vessel's certificates and documentation legally permit" },
+      { en: "Ignore credible safety concerns raised by any crew member solely because of rank or position" },
+      { en: "Use emergency powers for convenience rather than genuine necessity" },
+      { en: "Exercise command carelessly on the assumption that ultimate authority removes the need to question, verify, or integrate information before deciding" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Doing a department head's job instead of commanding through them — Stepping in to personally solve a Chief Officer's or Chief Engineer's problem, rather than setting strategy and trusting them to execute it, quietly eroding both their development and the Master's own overview." },
+    { en: "Acting on one report instead of an integrated picture — Making a major decision based on whichever department's input arrived first or sounded most urgent, rather than deliberately reconciling all available information." },
+    { en: "Letting commercial or schedule pressure quietly shift the safety threshold — Allowing charterer, company, or schedule pressure to gradually lower what counts as an acceptable risk, without ever making that shift a conscious, examined decision." },
+    { en: "Trusting documentation without verifying reality — Assuming certificates, records, and departmental reports accurately reflect the vessel's actual condition, without periodically confirming this personally." },
+    { en: "Hesitating on a major decision out of reluctance to accept its consequences — Delaying a call for assistance, an abandon ship decision, or an unfavorable report because accepting it feels like a personal or professional failure, while the time lost to indecision can quietly close off the safest options still available." },
+    { en: "Creating a culture where officers hesitate to call or report — Reacting to being woken, questioned, or given bad news in a way that teaches the bridge team or department heads to delay next time." },
+    { en: "Treating documentation as administrative rather than personal legal exposure — Signing, approving, or overlooking a record without recognizing that it may become the primary evidence of the Master's own judgment in a future investigation." },
+    { en: "Confusing ultimate authority with license to decide carelessly — Assuming that being the final decision-maker removes the need to question, verify, and integrate information before acting." },
+    { en: "Neglecting the routine in favor of the exceptional — Underinvesting in the standing orders, culture, and systems that determine how the vessel performs during an actual emergency, focusing attention only once a crisis has already begun — the quality of an emergency response is usually determined long before the emergency itself occurs." },
+  ],
+
+  careerProgression: [
+    { en: "Next steps: The Master rank has no higher position within the deck department hierarchy — it is the culmination of the seagoing career progression from Deck Cadet through Chief Officer. Further progression typically takes one of several directions: command of larger or more complex vessel types, senior/fleet Master roles within a company, or a transition ashore into roles such as Marine Superintendent, DPA, fleet manager, or maritime training and pilotage." },
+    { en: "Skills to develop for continued command growth: Deeper specialization in complex vessel types or high-value/high-risk trades (LNG, chemical, deep-sea offshore); company-level fleet management and policy-setting if moving toward a superintendent or DPA role; mentorship and formal development of future Masters, extending the command judgment built over a career to shaping the next generation of officers; broader business and regulatory literacy if a shore-based transition is anticipated." },
+    { en: "Recommended experience: A demonstrated record of sound command judgment across a range of vessel types, operating conditions, and situations — including at least one genuinely challenging emergency or high-pressure commercial situation handled well — builds the professional reputation on which further command opportunities or a shore-based transition are typically built." },
+    { en: "Certificates typically required: Requirements vary by flag State, company policy, and the specific next step. Command of a larger or more complex vessel type may require additional certification or endorsements (e.g. tanker/gas/chemical endorsements, ice navigation, polar code). A transition to a superintendent or DPA role typically requires demonstrated seagoing command experience together with company-specific or shore-based management training, rather than an additional STCW certificate." },
+    { en: "Recommended MAP courses: Fleet & Company Management; Marine Superintendency & Shore-Based Roles; Mentorship & Command Development (training future Chief Officers and Masters); Specialized Vessel Type Certification (as relevant); Career Navigator (career progression planning)." },
+    { en: "Mindset for continued growth: Reaching Master does not mean command stops developing — it means the terrain changes. Continued growth as a Master means deepening judgment across more complex vessels and situations, and eventually deciding whether your greatest value lies in commanding one more ship well, or in shaping how an entire fleet, company, or the next generation of officers commands theirs. Either path continues the same core work: building systems, people, and judgment that keep vessels safe long after any single decision has been made." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "d1-l8", label: { en: "Advanced COLREG" } },
+    { kind: "lesson", lessonId: "d1-l9", label: { en: "Steering & Helm Orders" } },
+    { kind: "lesson", lessonId: "d1-l10", label: { en: "Watchkeeping Organization" } },
+    { kind: "lesson", lessonId: "s6-l6", label: { en: "Safety Culture & Professional Responsibility" } },
+    { kind: "lesson", lessonId: "s6-l2", label: { en: "Common Ship Emergencies & Immediate Actions" } },
+    { kind: "lesson", lessonId: "s4-l7", label: { en: "Fire Command, Teams & Damage Control" } },
+    { kind: "lesson", lessonId: "d2-l1", label: { en: "SOLAS" } },
+    { kind: "lesson", lessonId: "e1-l3", label: { en: "Stability & Loading (foundation-level resource used to support command-level understanding until dedicated command-level content is introduced)" } },
+    { kind: "lesson", lessonId: "d2-l2", label: { en: "MARPOL — Law, Sanctions & Liabilities" } },
+    { kind: "lesson", lessonId: "d2-l3", label: { en: "STCW — Training, Certification & Responsibilities" } },
+    { kind: "lesson", lessonId: "d2-l4", label: { en: "MLC 2006 — Seafarer Rights & Responsibilities" } },
+    { kind: "lesson", lessonId: "d2-l7", label: { en: "Maritime Liability & Insurance" } },
+    { kind: "lesson", lessonId: "d2-l8", label: { en: "Ports & Flag States" } },
+    { kind: "lesson", lessonId: "d2-l9", label: { en: "Piracy & Maritime Security" } },
+    { kind: "lesson", lessonId: "d2-l10", label: { en: "Arbitration & Maritime Dispute Resolution" } },
+    { kind: "lesson", lessonId: "d3-l7", label: { en: "GMDSS & Distress Signals" } },
+    { kind: "lesson", lessonId: "s5-l4", label: { en: "Abandon Ship & Survival Leadership" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — command, legal, and regulatory terminology" } },
+    { kind: "external", externalCode: "COLREG", label: { en: "COLREG reference" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on STCW Master certification requirements by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore command bridge arrangements and operational characteristics across different vessel types" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on command decisions, regulatory compliance, or STCW requirements" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize post-command career paths (fleet command, shore-based roles, superintendency)" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document command experience, certificates, and leadership achievements as Master" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_CHIEF_OFFICER", label: { en: "Role On Board — Chief Officer" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_OOW", label: { en: "Role On Board — Officer of the Watch" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_BOSUN", label: { en: "Role On Board — Bosun" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "The final decision on any matter affecting the vessel's safety, navigation, or the safety of life" },
+      { en: "Direct command of the vessel during high-risk manoeuvres or emergencies, when personal conduct is genuinely required" },
+      { en: "Authorization of any emergency action, exceptional deviation, or departure from standard procedure" },
+      { en: "Communication with the company (DPA), authorities, agents, and charterers on matters of significant consequence" },
+      { en: "The final decision to sail, remain in port, anchor, abandon ship, or seek external assistance" },
+    ],
+    iMonitor: [
+      { en: "Consistency and integration between the Deck and Engine departments' reports, plans, and priorities" },
+      { en: "The vessel's overall material condition, certification, and compliance status relative to what documentation claims" },
+      { en: "Crew welfare, fatigue, and morale across the whole vessel, not within a single department" },
+      { en: "The company's and external parties' (charterer, authority) pressure relative to the vessel's genuine safety and compliance needs" },
+      { en: "The vessel's readiness to respond to a major emergency at all times, including during routine operations" },
+    ],
+    iReport: [
+      { en: "A reconciled, whole-vessel assessment to the company (DPA), never a collection of separate departmental reports" },
+      { en: "Any reportable incident, casualty, or environmental event, accurately, promptly, and distinguishing confirmed facts from matters under investigation" },
+      { en: "Any deviation from standing instructions, the passage plan, or company procedure, together with its reasoning" },
+      { en: "Any recurring or systemic issue across departments suggesting a need for company-level attention or resource" },
+      { en: "My own uncertainty when a situation cannot be fully resolved with the information and resources available aboard" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any action that violates international law (SOLAS, MARPOL, COLREG) or flag State requirements, regardless of commercial or company pressure" },
+      { en: "Falsification, omission, or alteration of any official record to misrepresent what actually occurred" },
+      { en: "Delegation of my own accountability for the vessel's overall safety and compliance, even where operational authority is properly assigned to department heads" },
+      { en: "Commercial or schedule pressure overriding a genuine safety, stability, or environmental concern" },
+      { en: "The use of emergency or command authority for convenience rather than genuine necessity" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Ship command organization chart showing the Master's position relative to the company (DPA), Chief Officer, and Chief Engineer." } },
+    { kind: "diagram", caption: { en: "Command decision flow during a major emergency (Master strategy → department head tactics → execution)." } },
+    { kind: "image", caption: { en: "Example of a Master's night order book entry." } },
+    { kind: "video", caption: { en: "Demonstration of a Master-to-Master STS pre-operation briefing." } },
+    { kind: "document", caption: { en: "Sample incident report format for company (DPA) and flag State notification." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
-// Partial: currently populated for "ab", "bosun", "oow" and "chief_officer"
-// — remaining ranks are still pending content.
+// Partial: currently populated for "ab", "bosun", "oow", "chief_officer"
+// and "master" — remaining ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
   oow: OOW_CARD,
   chief_officer: CHIEF_OFFICER_CARD,
+  master: MASTER_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
