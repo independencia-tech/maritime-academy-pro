@@ -4289,10 +4289,580 @@ const DECK_CADET_CARD: RoleOnBoardCard = {
   ],
 };
 
+// ── ORDINARY SEAMAN ───────────────────────────────────────────
+// mapReferences resolved via Mission D (see
+// audits/2026-07-28_role-on-board-os-mapreferences.md) and the
+// Product Owner's final decisions on that report. All lessonId used are
+// foundation-level lessons whose targetRanks explicitly include "os".
+// Locations with no validated correspondence are left as
+// mapReferences: [] intentionally (all 3 practical scenarios, and
+// several behavioral/meta skills — instruction-following, technique
+// building through repetition, honest self-reporting, professional
+// conduct — that no existing lesson content covers).
+const OS_CARD: RoleOnBoardCard = {
+  rankId: "os",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Ordinary Seaman (OS) is a rating in active training toward Able Seaman qualification, performing real deck tasks under closer supervision than an AB, while building the sea time, competence, and confidence required for full unsupervised responsibility. Unlike the Deck Cadet, whose primary role is observation and academic certification, the OS is a working member of the deck team from day one — but unlike the AB, the OS is not yet trusted to judge independently when a situation departs from the routine." },
+    { en: "The OS executes assigned tasks (mooring assistance, rope work, watchkeeping support, basic maintenance) under the direct guidance of the Bosun or an assigned AB, with supervision focused on technique, safety, and building genuine competence rather than simply completing the task." },
+    { en: "The OS's progression toward AB is measured by demonstrated reliability across a widening range of tasks — the supervising Bosun or AB gradually extends the OS's scope as trust in their judgment and technique grows, rather than through a fixed timeline alone." },
+    { en: "The OS works most closely with the Bosun and ABs, who directly train and correct their technique day to day, and increasingly stands basic watch duties (lookout, steering under supervision) as competence is demonstrated." },
+    { en: "Where the AB is trusted to execute a task correctly and flag anything unusual, the OS is still building that judgment — an OS's role is to execute precisely what is instructed, ask when uncertain, and let the supervising AB or Bosun catch what the OS cannot yet be expected to catch alone." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Bosun (day-to-day task supervision and training)" },
+      { en: "OOW (during watch duties)" },
+    ],
+    worksWith: [
+      { en: "AB, from whom the OS learns technique and judgment directly on a daily basis" },
+      { en: "Deck Cadets, with whom the OS may share some training activities" },
+    ],
+    mentors: [
+      { en: "The Bosun and experienced ABs, who directly train and correct the OS's technique and judgment" },
+    ],
+    supports: [
+      { en: "The OS does not yet supervise anyone, but may assist a Deck Cadet with basic technique under an AB's or the Bosun's oversight" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Basic seamanship execution (ropework, mooring, anchoring assistance) under supervision" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l1" }, { kind: "lesson", lessonId: "d6-l2" }, { kind: "lesson", lessonId: "d6-l3" }, { kind: "lesson", lessonId: "d6-l4" }] },
+    { label: { en: "Following instructions precisely and asking when uncertain" } },
+    { label: { en: "Basic watchkeeping support (lookout, supervised steering)" }, mapReferences: [{ kind: "lesson", lessonId: "d1-l9" }, { kind: "lesson", lessonId: "d1-l10" }] },
+    { label: { en: "Building technique and judgment through repetition and feedback" } },
+    { label: { en: "Basic safety awareness and PPE compliance" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }] },
+    { label: { en: "Deck maintenance and painting under guidance" }, mapReferences: [{ kind: "lesson", lessonId: "d6-l6" }, { kind: "lesson", lessonId: "d6-l7" }] },
+    { label: { en: "Honest self-assessment and reporting of task completion" } },
+    { label: { en: "Professional conduct and reliability within the deck team" } },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the OS carries out assigned preparation tasks directly — mooring line handling, deck equipment checks, basic rigging — under the supervision of the Bosun or an assigned AB, who verifies the work rather than performing it. Unlike the Deck Cadet, who mainly observes this phase, the OS is genuinely executing real tasks; unlike the AB, the OS's work is checked closely rather than trusted on sight." },
+      responsibilities: [
+        { en: "Carry out assigned pre-departure tasks (mooring line preparation, fender rigging, deck walk-round assistance) to the standard demonstrated by the supervising AB or Bosun" },
+        { en: "Report task completion clearly and honestly, flagging anything uncertain rather than assuming it is fine" },
+        { en: "Ask for clarification or a demonstration before attempting an unfamiliar task or technique" },
+        { en: "Follow all PPE and safety requirements exactly as instructed" },
+        { en: "Accept correction from the supervising AB or Bosun as part of building competence, adjusting technique accordingly" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (safety helmet, gloves, safety shoes, high-visibility vest)" },
+        { en: "Mooring lines, fenders, basic deck equipment, used under supervision" },
+        { en: "Departure checklist / work list, as directed by the Bosun" },
+      ],
+      risks: [
+        { en: "Attempting an unfamiliar task without asking for guidance, risking incorrect execution" },
+        { en: "Reporting a task as complete without genuinely confirming it meets the expected standard" },
+        { en: "Reacting defensively to correction rather than using it to improve technique" },
+        { en: "Working carelessly under time pressure, missing a step that a supervisor would have caught" },
+      ],
+      bestPractices: [
+        { en: "Ask for a demonstration before attempting an unfamiliar task, even under time pressure" },
+        { en: "Report honestly on task completion, including anything not fully confident about" },
+        { en: "Treat correction from the Bosun or an AB as direct, valuable training, not criticism" },
+        { en: "Work at a pace that allows genuine attention to the task, not just speed" },
+      ],
+      commonMistakes: [
+        { en: "Guessing at an unfamiliar task rather than asking" },
+        { en: "Overstating confidence in completed work to avoid seeming inexperienced" },
+        { en: "Taking correction personally rather than using it to improve" },
+        { en: "Rushing a task to the point of missing a step" },
+      ],
+      professionalTips: [
+        { en: "Every task you're checked on now is a task you'll be trusted with alone soon — use the supervision while you have it" },
+        { en: "Being corrected is not a setback in your training — it's the training working as intended" },
+        { en: "The AB you work under today learned exactly the same way you are now" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l4" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the OS is assigned to a mooring station under the direct supervision of the Bosun or an assigned AB, executing line-handling tasks as instructed while being watched closely for technique and safety. Unlike the AB, who is trusted to handle the station's full sequence independently, the OS carries out specific, assigned actions within the sequence, with the supervising AB or Bosun coordinating the overall station." },
+      responsibilities: [
+        { en: "Execute assigned line-handling tasks (letting go, tending, heaving) exactly as instructed by the supervising AB or Bosun" },
+        { en: "Maintain awareness of snap-back zones and other hazards at all times, applying training rather than relying solely on being told" },
+        { en: "Report completion of an assigned action immediately and clearly, so the station's coordination is not delayed" },
+        { en: "Ask for clarification if an instruction is unclear, rather than guessing during an active manoeuvre" },
+        { en: "Follow PPE and safety requirements exactly, with no exceptions during active operations" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (safety helmet, gloves, safety shoes, high-visibility vest)" },
+        { en: "Mooring lines, wires, winches — operated under supervision" },
+        { en: "Portable radio, if assigned for communication within the station" },
+      ],
+      risks: [
+        { en: "Misjudging a hazard (snap-back zone, line under tension) due to still-developing experience" },
+        { en: "Executing an action slightly differently from what was instructed, disrupting the station's coordination" },
+        { en: "Hesitating or freezing when uncertain, rather than asking for immediate clarification" },
+        { en: "Losing focus during a routine-seeming manoeuvre, missing an early sign of a developing issue" },
+      ],
+      bestPractices: [
+        { en: "Apply hazard awareness training actively, not only when specifically reminded" },
+        { en: "Execute exactly what is instructed — if something seems different from what you expected, ask rather than adjusting on your own" },
+        { en: "Communicate task completion clearly and promptly, in the terms used by the rest of the team" },
+        { en: "Stay mentally engaged even during a routine, well-practiced manoeuvre" },
+      ],
+      commonMistakes: [
+        { en: "Underestimating a hazard because the manoeuvre feels routine" },
+        { en: "Adjusting an instruction based on personal judgment rather than confirming first" },
+        { en: "Staying silent when uncertain instead of asking immediately" },
+        { en: "Losing attention during a manoeuvre that has gone smoothly so far" },
+      ],
+      professionalTips: [
+        { en: "The hazards at a mooring station don't become less real just because the manoeuvre is routine — stay alert every time" },
+        { en: "If an instruction seems off, say so immediately — a moment's clarification is always faster than fixing a mistake" },
+        { en: "The technique you build now, under close supervision, is what will let you run a station independently as an AB" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l4" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the OS begins standing basic watch duties — lookout and, as competence is demonstrated, supervised steering — under the direct oversight of the OOW. Unlike the Deck Cadet, who mainly observes the watch, the OS is genuinely performing watch functions; unlike the AB, the OS's lookout and steering are more closely monitored, and the OS is not yet expected to independently judge the significance of what is observed." },
+      responsibilities: [
+        { en: "Maintain an attentive, continuous lookout as assigned, reporting anything observed to the OOW immediately, without first deciding whether it matters" },
+        { en: "Execute steering orders precisely as given, repeating them back exactly as trained, once assigned to the wheel under supervision" },
+        { en: "Ask the OOW to clarify an order or observation that is not fully understood, rather than guessing" },
+        { en: "Report any difficulty maintaining focus or any personal limitation (fatigue, discomfort) honestly, rather than pushing through silently" },
+        { en: "Follow bridge communication discipline exactly as demonstrated, including standard phrases and reporting formats" },
+      ],
+      equipment: [
+        { en: "Binoculars, as assigned for lookout duty" },
+        { en: "Helm, under direct OOW supervision" },
+        { en: "Bridge communication equipment, as instructed" },
+      ],
+      risks: [
+        { en: "Filtering observations before reporting them, deciding something is 'probably nothing' rather than letting the OOW judge its significance" },
+        { en: "Executing a steering order slightly incorrectly due to inexperience, without immediately flagging the uncertainty" },
+        { en: "Losing concentration during a long or uneventful watch period" },
+        { en: "Hesitating to report personal fatigue or difficulty out of concern it reflects poorly" },
+      ],
+      bestPractices: [
+        { en: "Report every observation to the OOW, however minor it seems — judging significance is the OOW's role, not yet the OS's" },
+        { en: "Repeat every steering order back exactly, and confirm execution clearly" },
+        { en: "Ask for clarification immediately if an order or explanation is not understood" },
+        { en: "Be honest about fatigue or difficulty maintaining focus — this protects the watch, not just yourself" },
+      ],
+      commonMistakes: [
+        { en: "Deciding an observation is not worth reporting rather than letting the OOW assess it" },
+        { en: "Executing a steering order with uncertainty rather than confirming it first" },
+        { en: "Disengaging mentally during a quiet watch instead of maintaining active attention" },
+        { en: "Staying silent about fatigue or difficulty to avoid seeming inexperienced" },
+      ],
+      professionalTips: [
+        { en: "Report everything you see — the OOW would always rather hear about something unimportant than miss something that mattered" },
+        { en: "Precision in repeating and executing an order matters more than speed — get it exactly right, every time" },
+        { en: "The watch discipline you build now as an OS is the same discipline that will define you as an AB and, eventually, as an officer" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d1-l9" }, { kind: "lesson", lessonId: "d1-l10" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the OS works at the forecastle under the direct supervision of the Bosun or an assigned AB, assisting with the windlass and chain while being closely monitored for technique and hazard awareness. Unlike the AB, who is trusted to judge chain tendency and load independently, the OS executes assigned actions and reports observations directly to the supervising AB or Bosun, who interprets and consolidates them for the bridge." },
+      responsibilities: [
+        { en: "Assist with windlass operation and chain handling exactly as instructed by the supervising AB or Bosun" },
+        { en: "Report chain observations (amount out, visible tendency) directly and factually to the supervising AB or Bosun, without interpreting their significance" },
+        { en: "Maintain constant hazard awareness around the windlass and moving chain, applying training actively rather than needing repeated reminders" },
+        { en: "Ask for clarification before attempting an unfamiliar action at the forecastle" },
+        { en: "Follow PPE and safety requirements exactly, with particular attention to the windlass and chain" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (safety helmet, gloves, safety shoes, high-visibility vest)" },
+        { en: "Windlass and anchor chain, operated under direct supervision" },
+        { en: "Portable radio, if assigned for forecastle communication" },
+      ],
+      risks: [
+        { en: "Misjudging the hazard posed by moving chain or the windlass due to still-developing experience" },
+        { en: "Interpreting a chain observation instead of reporting it factually, potentially distorting the information reaching the Bosun or AB" },
+        { en: "Standing in an unsafe position out of habit or inattention rather than active awareness" },
+        { en: "Hesitating to report an observation because it seems minor or uncertain" },
+      ],
+      bestPractices: [
+        { en: "Report chain observations factually and immediately — let the supervising AB or Bosun interpret what they mean" },
+        { en: "Treat hazard awareness at the forecastle as continuous, not something to remember only when reminded" },
+        { en: "Ask before attempting anything unfamiliar with the windlass or chain" },
+        { en: "Stay in the position assigned by the supervising AB or Bosun, adjusting only when instructed" },
+      ],
+      commonMistakes: [
+        { en: "Deciding a chain observation is not significant before reporting it" },
+        { en: "Relaxing hazard awareness once the anchor is let go, assuming the highest-risk moment has passed" },
+        { en: "Standing closer to moving equipment than instructed out of familiarity" },
+        { en: "Guessing at an unfamiliar windlass action rather than asking" },
+      ],
+      professionalTips: [
+        { en: "Report what you see, not what you think it means — that judgment call belongs to the AB or Bosun for now" },
+        { en: "The chain and windlass deserve the same respect on your hundredth anchoring as on your first" },
+        { en: "Precision in your reports at the forecastle is what earns you the trust to interpret them yourself, later, as an AB" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l3" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the OS carries out assigned port duties — gangway watch support, mooring line monitoring, cargo-related deck assistance — under the supervision of the Bosun or an assigned AB, with less independent decision-making than an AB but more genuine responsibility than a Cadet. Port stays offer the OS repeated, varied practice across many of the tasks that will define their work as an AB." },
+      responsibilities: [
+        { en: "Stand gangway watch alongside a supervising rating or officer, following access control procedures exactly and escalating any uncertain situation immediately rather than deciding alone" },
+        { en: "Assist with mooring line monitoring and adjustment as instructed, reporting any change in tension or condition to the supervising AB or Bosun" },
+        { en: "Carry out assigned cargo-related deck tasks under direct supervision, without independently judging safety or sequencing" },
+        { en: "Ask for clarification on any port procedure or documentation task not fully understood" },
+        { en: "Follow PPE and safety requirements exactly, particularly around cargo operations and access control" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment as instructed" },
+        { en: "Access control log / gangway watch materials, as directed" },
+        { en: "Mooring lines, monitored under supervision" },
+      ],
+      risks: [
+        { en: "Making an independent decision at the gangway about an uncertain visitor situation, rather than escalating immediately" },
+        { en: "Missing a gradual change in mooring line tension due to inexperience or divided attention" },
+        { en: "Attempting a cargo-related task beyond current competence without asking first" },
+        { en: "Losing track of the variety of activity happening simultaneously in port, focusing narrowly on one task" },
+      ],
+      bestPractices: [
+        { en: "Escalate any uncertain gangway situation immediately — this is never a decision to make alone at this stage" },
+        { en: "Check mooring line condition attentively and regularly, not only when specifically told to" },
+        { en: "Ask before attempting an unfamiliar cargo-related task, however routine it may look" },
+        { en: "Stay aware of the broader port activity around your assigned task, not just the task itself" },
+      ],
+      commonMistakes: [
+        { en: "Deciding a gangway situation is minor enough to handle alone" },
+        { en: "Assuming mooring lines are fine without actively checking them" },
+        { en: "Attempting a cargo task without confirming the correct technique first" },
+        { en: "Focusing so narrowly on one task that broader port activity goes unnoticed" },
+      ],
+      professionalTips: [
+        { en: "At the gangway, when in doubt, escalate — every experienced rating started exactly where you are now" },
+        { en: "Port stays are some of the best training opportunities you'll get — pay attention to everything, not just what you're assigned" },
+        { en: "The habits of asking and escalating you build now are what will make you a reliable AB later, not a limitation you'll eventually outgrow" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d4-l2" }, { kind: "lesson", lessonId: "d6-l4" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "STS operations are demanding for every rank aboard, and for the OS this phase is strictly limited to closely supervised, well-defined tasks — assisting with fender or mooring rigging under the direct oversight of the Bosun or an assigned AB, positioned well clear of the interface between the two vessels. The OS's role here is deliberately narrow, given the elevated risk of the operation and the OS's still-developing experience." },
+      responsibilities: [
+        { en: "Carry out assigned rigging or monitoring tasks exactly as instructed by the supervising AB or Bosun, without independently expanding the assigned role" },
+        { en: "Remain in the exact position assigned, well clear of the space between the two vessels at all times" },
+        { en: "Report any observation (fender condition, mooring load, unusual movement) directly and factually to the supervising AB or Bosun" },
+        { en: "Ask for clarification before attempting any unfamiliar action related to the operation" },
+        { en: "Follow PPE and safety requirements exactly, including flotation aid where required" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment as instructed, including flotation aid where required" },
+        { en: "Fenders and mooring lines, handled under direct supervision" },
+      ],
+      risks: [
+        { en: "Underestimating the danger of the space between the two vessels due to inexperience" },
+        { en: "Reporting an observation with a personal interpretation rather than the plain fact observed" },
+        { en: "Drifting from the assigned position, even slightly, during a long or repetitive phase of the operation" },
+        { en: "Hesitating to report a minor change, uncertain whether it is worth mentioning" },
+      ],
+      bestPractices: [
+        { en: "Stay exactly where positioned throughout the operation, regardless of how calm it appears" },
+        { en: "Report observations factually and immediately — let the supervising AB or Bosun assess their significance" },
+        { en: "Ask before attempting anything not explicitly assigned, however capable you may feel" },
+        { en: "Treat every STS operation with the same level of attention, regardless of how many you have done" },
+      ],
+      commonMistakes: [
+        { en: "Moving closer to the interface between the vessels out of curiosity or to get a better view" },
+        { en: "Deciding an observation is too minor to mention" },
+        { en: "Assuming familiarity with a task after only one or two supervised attempts" },
+        { en: "Losing attentiveness during a long or uneventful phase of the operation" },
+      ],
+      professionalTips: [
+        { en: "STS operations are exactly where the gap between 'supervised' and 'independent' matters most — respect the boundary of your assigned role" },
+        { en: "Your job here is to be a reliable set of eyes and hands within a narrow, well-defined task — that narrowness is intentional, not a limitation" },
+        { en: "The AB or Bosun supervising you is watching how carefully you follow instructions here — it shapes how much independence you're given next time" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l4" }],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the OS gets substantial hands-on practice, working directly alongside the Bosun and ABs on real deck maintenance tasks — chipping, painting, greasing, rope work — with growing independence as technique and reliability are demonstrated. This phase offers some of the clearest, most frequent opportunities for the OS to close the gap toward AB-level competence." },
+      responsibilities: [
+        { en: "Carry out assigned maintenance tasks to the technique demonstrated by the supervising AB or Bosun, asking for a demonstration before attempting anything unfamiliar" },
+        { en: "Report task progress and completion honestly, including any part not confidently understood or executed" },
+        { en: "Accept inspection and correction of completed work as a normal, expected part of the task, not a sign of failure" },
+        { en: "Follow product, tool, and PPE requirements exactly as instructed for each specific task" },
+        { en: "Take on progressively more complex maintenance tasks as the supervising AB or Bosun extends trust, without requesting more responsibility than has been offered" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task" },
+        { en: "Maintenance tools and materials, used under supervision that decreases as competence is demonstrated" },
+        { en: "Product specifications as directed by the Bosun or PMS" },
+      ],
+      risks: [
+        { en: "Attempting a technique without a proper demonstration, risking poor-quality work or injury" },
+        { en: "Overstating confidence in a task to avoid seeming inexperienced, leading to substandard or unsafe execution" },
+        { en: "Using the wrong product or technique due to insufficient supervision or unclear instruction" },
+        { en: "Becoming frustrated by close supervision rather than recognizing it as the path to greater independence" },
+      ],
+      bestPractices: [
+        { en: "Ask for a demonstration before attempting any unfamiliar maintenance task or technique" },
+        { en: "Report your confidence level honestly for each task — supervision is calibrated to what you actually know, not what you claim to know" },
+        { en: "Welcome inspection of your work as feedback that improves your technique, not as a judgment of your worth" },
+        { en: "Use each maintenance task to build genuine skill, since these are exactly the competencies expected of an AB" },
+      ],
+      commonMistakes: [
+        { en: "Attempting an unfamiliar technique without asking for a demonstration" },
+        { en: "Claiming more confidence in a task than is genuinely felt" },
+        { en: "Rushing through inspection or correction instead of absorbing the feedback" },
+        { en: "Resenting close supervision instead of using it to build toward independence" },
+      ],
+      professionalTips: [
+        { en: "There's no benefit to pretending you already know a technique — every AB you work under once stood exactly where you are" },
+        { en: "The maintenance skills you build now, carefully and correctly, are what will let you work independently and safely as an AB" },
+        { en: "How you respond to correction says more about your future as a seafarer than how quickly you complete a task" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "d6-l6" }, { kind: "lesson", lessonId: "d6-l7" }, { kind: "lesson", lessonId: "d6-l1" }, { kind: "lesson", lessonId: "d6-l2" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the OS proceeds to an assigned muster station and carries out real tasks as part of the emergency team, under the direct instruction of the officer or rating in charge — a genuine operational role, not just observation, but still closely directed rather than independently judged. The OS's contribution during a drill or real emergency is measured by how precisely instructions are followed and how reliably the OS performs an assigned function under pressure." },
+      responsibilities: [
+        { en: "Proceed immediately to the assigned muster station upon hearing the alarm, exactly as required by the muster list" },
+        { en: "Carry out the specific task assigned by the officer or rating in charge of the station (e.g. handling equipment, assisting with a task) precisely as instructed" },
+        { en: "Report task completion or any difficulty immediately and clearly to the station leader" },
+        { en: "Ask for clarification if an instruction during a drill is not understood, rather than guessing" },
+        { en: "Take every drill with full seriousness, treating it as genuine practice for the emergency response expected of an AB" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list" },
+        { en: "Emergency equipment specific to the assigned station, used under direct supervision" },
+      ],
+      risks: [
+        { en: "Hesitating or improvising when an instruction is unclear, rather than asking immediately" },
+        { en: "Treating a drill as less serious than a genuine emergency, reducing its training value" },
+        { en: "Losing focus on the assigned task while trying to observe the broader response" },
+        { en: "Reporting task completion inaccurately under pressure, rather than confirming it is genuinely done" },
+      ],
+      bestPractices: [
+        { en: "Execute the assigned task precisely, and confirm completion clearly to the station leader" },
+        { en: "Ask immediately if an instruction is unclear — hesitation costs more time than a quick question" },
+        { en: "Treat every drill exactly as you would a genuine emergency, building the habits that will matter when it counts" },
+        { en: "Stay focused on your assigned task first, understanding the broader response through the post-drill debrief" },
+      ],
+      commonMistakes: [
+        { en: "Guessing at an unclear instruction instead of asking immediately" },
+        { en: "Going through the motions of a drill without full engagement" },
+        { en: "Becoming distracted by the wider situation instead of completing the assigned task" },
+        { en: "Reporting a task as done before genuinely confirming it" },
+      ],
+      professionalTips: [
+        { en: "In an emergency, precision and speed both matter — but precision comes first, because a fast mistake is still a mistake" },
+        { en: "The habits you build in every drill are the habits that will actually show up in a real emergency — there is no separate 'serious mode'" },
+        { en: "Being reliably instructable under pressure is exactly what earns you more independent responsibility during the next drill" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l2" }, { kind: "lesson", lessonId: "s6-l1" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "You are assigned to grease a winch, a task you have done successfully several times before. This time, the fitting looks slightly different from what you remember, and you're not entirely sure the grease gun connects the same way." },
+      mission: { en: "Decide whether to proceed based on your prior experience or check first." },
+      expectedActions: [
+        { en: "Do not proceed based on assumed familiarity when something looks different from what you remember" },
+        { en: "Ask the supervising AB or Bosun to confirm before proceeding" },
+        { en: "Explain specifically what looks different, rather than a vague 'I'm not sure'" },
+        { en: "Proceed only once the difference is explained or resolved" },
+      ],
+      why: [{ en: "Prior success with a similar task is not the same as certainty about this specific one — the moment something looks different is exactly the moment an OS should check, not push through on memory of how it usually goes." }],
+      commonMistakes: [
+        { en: "Proceeding anyway because the task feels familiar overall" },
+        { en: "Assuming the difference is unimportant without asking" },
+        { en: "Forcing a fitting that doesn't feel quite right rather than stopping to check" },
+      ],
+      safetyPoints: [{ en: "Equipment that looks slightly different may have a different specification or condition — forcing an unfamiliar fitting risks both the equipment and personal injury." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "An AB corrects your knot technique in front of another crew member, in a tone that feels more critical than helpful. The correction itself seems accurate." },
+      mission: { en: "Decide how to respond, given that the correction is useful but the delivery felt uncomfortable." },
+      expectedActions: [
+        { en: "Separate the content of the correction from how it was delivered" },
+        { en: "Accept and apply the technical correction, since it is accurate" },
+        { en: "Avoid responding defensively or visibly resentful, even if the moment felt uncomfortable" },
+        { en: "If the pattern of harsh delivery continues and genuinely affects your ability to learn, raise it privately with the Bosun rather than reacting in the moment" },
+      ],
+      why: [{ en: "An OS's job is to build competence as efficiently as possible, and rejecting accurate feedback because of how it was delivered slows that progress — the correction's value doesn't depend on its tone, even when the tone could have been better." }],
+      commonMistakes: [
+        { en: "Becoming defensive or dismissive because of how the correction felt" },
+        { en: "Letting one uncomfortable moment affect willingness to accept future feedback" },
+        { en: "Escalating the tone issue immediately rather than absorbing the technical point first" },
+      ],
+      safetyPoints: [],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "During a busy maintenance period, an AB working nearby asks you to quickly help with something outside what the Bosun originally assigned you — nothing dangerous, just outside your current task." },
+      mission: { en: "Decide whether to help immediately or check with your supervising Bosun first." },
+      expectedActions: [
+        { en: "Briefly confirm with the AB whether this replaces or adds to your assigned task" },
+        { en: "If there's any doubt about priority or whether the Bosun should know, mention it — a quick word is enough, not a formal request" },
+        { en: "Help if it's clearly minor and within your competence, but stay aware of your original assigned task once done" },
+        { en: "If genuinely unsure, ask rather than simply assuming it's fine" },
+      ],
+      why: [{ en: "An OS is still building the judgment to weigh competing instructions from different people — a quick check protects against confusion or an assigned task being quietly dropped, without requiring the OS to treat every small request as a major decision." }],
+      commonMistakes: [
+        { en: "Dropping the assigned task without a word to anyone" },
+        { en: "Refusing to help at all out of rigid adherence to the original assignment" },
+        { en: "Helping without any communication, leaving the Bosun unaware of where their assigned task stands" },
+      ],
+      safetyPoints: [],
+      mapReferences: [],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Report what you observe, not what you assume it means — that judgment call still belongs to the AB, Bosun, or OOW supervising you." },
+    { en: "When something looks even slightly different from what you expected, that's the moment to check, not to rely on memory." },
+    { en: "Correction is not criticism of your worth — it's the fastest path to becoming the AB you're training to be." },
+    { en: "Ask before you assume, especially when instructions from different people seem to overlap or conflict." },
+    { en: "The supervision you have now won't last forever — use it deliberately, while it's there, to build habits that will hold up without it." },
+    { en: "Precision matters more than speed at this stage — a fast, careless action teaches you less than a slow, correct one." },
+    { en: "Every task you're trusted with a little more independence on is a task you earned trust on before — reliability compounds." },
+    { en: "Being an OS is not about proving you're ready for more responsibility — it's about actually becoming ready, one demonstrated task at a time." },
+  ],
+
+  professionalMindset: [
+    { en: "See yourself as building toward independence, not yet possessing it. Every task you execute is real work, but the judgment behind it still belongs to whoever supervises you — your role is to execute precisely and flag what you notice, not to decide what matters." },
+    { en: "Treat close supervision as the mechanism of your progress, not a ceiling on it. The scope of what you're trusted with grows exactly as fast as your demonstrated reliability — supervision is not a fixed limitation, it is a responsive one." },
+    { en: "Assume familiarity is not the same as certainty. A task you've done successfully before can still hide a detail worth checking — the habit of verifying, even when confident, is what will make you a trustworthy AB." },
+    { en: "Separate the accuracy of feedback from the way it was delivered. A correction can be worth applying even when it didn't feel good to receive — your job is to extract the useful part, not to judge the tone." },
+    { en: "Recognize that reporting factually, without interpreting, is itself a skill. Passing along exactly what you observed — not what you think it means — gives your supervisor a cleaner picture than a filtered or pre-judged one." },
+    { en: "Hold competing instructions as something to clarify, not something to silently resolve alone. When two people ask different things of you, a quick check protects everyone's plan — it is not a sign you can't manage the situation." },
+    { en: "Accept that trust is built specifically, not generally. Being trusted with one task doesn't automatically extend to another — each new piece of responsibility is usually earned on its own terms." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Sea time and service records — The OS's sea time is recorded and confirmed as required by flag State regulations, directly supporting eventual eligibility for AB certification — accuracy here matters as much as it does for a Cadet's TRB, even though the OS's daily work looks more like an AB's." },
+    { en: "Task completion reporting — When the OS reports a task as complete to the supervising Bosun or AB, this report is often taken at face value for routine matters — making honest, accurate reporting a genuine professional responsibility, not just good practice." },
+    { en: "Maintenance and defect observations — When the OS notices something during a task (a developing defect, an unusual condition), reporting it clearly and factually to the Bosun or AB contributes directly to the department's maintenance records, even though the OS does not maintain those records personally." },
+    { en: "Training and competency progress — Where the company or training pathway tracks the OS's demonstrated competencies toward AB qualification, the OS ensures this record is accurate and genuinely reflects tasks performed and supervision received, rather than tasks merely attempted." },
+    { en: "Why this matters: The OS's documentation responsibility sits between the Cadet's (proving learning happened) and the AB's (a trusted, independent account of work performed): the OS's reports are increasingly relied upon at face value, even while the work itself remains supervised. Building the habit of accurate, honest reporting now — about tasks completed, competencies genuinely demonstrated, and things noticed but not yet understood — is what will make the OS's future reports as an AB something the whole department can trust without double-checking." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Following environmental procedures in real tasks — The OS applies waste segregation, product handling, and pollution prevention procedures exactly as instructed during maintenance, mooring, and deck tasks — this is not observation, it is genuine practice that the OS will rely on independently as an AB." },
+    { en: "Reporting anything unusual immediately — If the OS notices an unexpected discharge, spill, or unclear waste handling situation during a task, they report it to the supervising AB or Bosun immediately, rather than deciding independently whether it is significant enough to mention." },
+    { en: "Correct product and material handling — The OS follows instructions precisely regarding which products, materials, and disposal methods apply to a given task, asking for clarification rather than assuming when uncertain." },
+    { en: "Building environmental discipline through repetition — Each task where environmental procedure is followed correctly under supervision builds the habit that will define the OS's independent practice as an AB, where verification will no longer be automatic." },
+    { en: "Why this matters: The OS's environmental responsibility is no longer just about noticing and learning, as it was for the Cadet — it is about correctly executing real environmental procedures in real tasks, with the safety net of supervision still in place. The habits built now, particularly around reporting anything unusual immediately rather than filtering it, are exactly what will protect the vessel's environmental compliance once that supervision naturally decreases." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Execute assigned tasks within your demonstrated competence, under the supervision of the Bosun or an assigned AB" },
+      { en: "Ask any crew member or officer to clarify an instruction or demonstrate a technique" },
+      { en: "Report anything observed that seems unclear, unsafe, or worth mentioning, to your supervising AB, Bosun, or officer" },
+      { en: "Refuse to proceed with a task you do not understand or feel unprepared for, requesting clarification first" },
+      { en: "Escalate a gangway or access situation immediately if uncertain, rather than deciding alone" },
+      { en: "Request feedback on your performance from your supervising AB or Bosun" },
+    ],
+    youCannot: [
+      { en: "Perform a task independently without supervision, unless explicitly authorized by the Bosun or supervising AB for that specific task" },
+      { en: "Interpret or judge the significance of an observation on the vessel's behalf — report it factually and let the supervising AB, Bosun, or OOW assess it" },
+      { en: "Make an independent decision at the gangway or regarding access control" },
+      { en: "Stand an independent watch, gangway duty, or emergency station role without direct supervision" },
+      { en: "Correct or discipline another crew member, regardless of what is observed" },
+      { en: "Sign off, verify, or confirm any operational readiness, safety check, or compliance matter on the vessel's behalf" },
+      { en: "Represent the vessel or the company in any interaction with external parties (agents, surveyors, authorities)" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Relying on memory instead of verifying — Assuming a task is understood because it resembles one done before, without checking whether this specific instance is genuinely the same." },
+    { en: "Filtering observations before reporting — Deciding something is 'probably not worth mentioning' instead of reporting it factually and letting the supervising AB, Bosun, or OOW judge its significance." },
+    { en: "Overstating confidence to avoid seeming inexperienced — Claiming to understand or be ready for a task rather than honestly flagging uncertainty, risking a poorly executed or unsafe outcome." },
+    { en: "Taking correction personally rather than practically — Reacting defensively to feedback instead of separating its accuracy from how it felt to receive." },
+    { en: "Silently resolving competing instructions — Choosing between two different requests from different people without a quick check, risking confusion or a dropped task." },
+    { en: "Mistaking one success for readiness — Assuming that performing a task correctly once under supervision means it can now be performed independently." },
+    { en: "Losing engagement during routine or quiet moments — Treating a repetitive task or an uneventful watch period as a time to disengage rather than to keep building attentiveness and technique." },
+    { en: "Escalating too slowly or not at all — Hesitating to report an uncertain situation (a gangway concern, an unclear instruction, a possible hazard) out of concern about seeming unsure." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Able Seaman (AB) — the next step in the deck rating progression, marking the transition from supervised task execution to trusted, independent responsibility for a full range of deck duties without close oversight." },
+    { en: "Skills to develop: Consistent, reliable technique across the full range of basic seamanship tasks (ropework, mooring, anchoring, maintenance) without requiring correction; the judgment to recognize when a situation departs from the routine and to act or escalate appropriately; independent watchkeeping competence (lookout, steering) to the standard expected without direct oversight; the confidence to make sound decisions within a defined scope, rather than deferring every judgment call upward." },
+    { en: "Recommended experience: A demonstrated track record across a wide range of tasks and conditions — not just repeated familiar ones — with consistent reliability, honest reporting, and a visible pattern of the supervising Bosun or AB extending trust and independence over time; sufficient sea time and watchkeeping experience as required for AB certification." },
+    { en: "Certificates typically required: Requirements vary by flag State and company policy. Progression to AB typically requires the corresponding STCW certificate of competency (Able Seafarer Deck), a minimum period of qualifying sea service, and completion of any required practical and safety training." },
+    { en: "Recommended MAP courses: All foundational Deck lessons relevant to AB competency (advanced seamanship, watchkeeping, safety); Role On Board – Able Seaman (to preview the next step in detail); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from OS to AB means the supervision that has shaped your technique begins to step back, and the judgment you've only practiced under guidance becomes something you exercise on your own. The transition is not about knowing more than you did as an OS — it is about being trusted to act on what you already know, and to recognize, without being told, when a situation calls for more than routine execution." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "d1-l5", label: { en: "Compass & Headings" } },
+    { kind: "lesson", lessonId: "d1-l6", label: { en: "Practical & Astronomical Navigation" } },
+    { kind: "lesson", lessonId: "d1-l9", label: { en: "Steering & Helm Orders" } },
+    { kind: "lesson", lessonId: "d1-l10", label: { en: "Watchkeeping Organization" } },
+    { kind: "lesson", lessonId: "d6-l1", label: { en: "Ropes & Fibres" } },
+    { kind: "lesson", lessonId: "d6-l2", label: { en: "Knots & Splices" } },
+    { kind: "lesson", lessonId: "d6-l3", label: { en: "Anchoring & Anchor Types" } },
+    { kind: "lesson", lessonId: "d6-l4", label: { en: "Mooring Operations" } },
+    { kind: "lesson", lessonId: "d6-l6", label: { en: "Basic Maintenance & Greasing" } },
+    { kind: "lesson", lessonId: "d6-l7", label: { en: "Painting & Corrosion Prevention" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l2", label: { en: "Common Ship Emergencies & Immediate Actions" } },
+    { kind: "lesson", lessonId: "d4-l2", label: { en: "Port & VTS Communications" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — foundational seamanship and navigation terminology" } },
+    { kind: "external", externalCode: "SMCP", label: { en: "SMCP (Standard Marine Communication Phrases) reference" } },
+    { kind: "external", externalCode: "COLREG", label: { en: "COLREG reference" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on AB certification requirements and qualifying sea service by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and basic layouts to build familiarity across different ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on task technique, certification requirements, or basic seamanship" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Ordinary Seaman through to Able Seaman and beyond" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document sea time and demonstrated competencies" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_DECK_CADET", label: { en: "Role On Board — Deck Cadet" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_AB", label: { en: "Role On Board — Able Seaman" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "Assigned deck tasks (ropework, mooring, maintenance) to the technique demonstrated, under supervision that decreases as competence is shown" },
+      { en: "Basic watchkeeping duties (lookout, supervised steering) as assigned" },
+      { en: "Task completion reports, honestly and promptly" },
+    ],
+    iMonitor: [
+      { en: "My own technique and understanding against what has been demonstrated, checking rather than assuming" },
+      { en: "Hazards directly relevant to my assigned task (moving equipment, snap-back zones, chain, cargo areas)" },
+      { en: "Any change or difference from what was expected in a task I've done before" },
+    ],
+    iReport: [
+      { en: "Task completion or difficulty, honestly and without overstating confidence" },
+      { en: "Any observation (chain tendency, fender condition, unusual situation) factually, without interpreting its significance" },
+      { en: "Any uncertain gangway or access situation, immediately, for escalation" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any independent decision affecting the vessel's safety, navigation, cargo, or access control" },
+      { en: "My own progression to unsupervised task performance, without confirmation from the supervising AB or Bosun" },
+      { en: "Any correction or instruction directed at another crew member" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "OS training progression showing widening task scope as competence is demonstrated." } },
+    { kind: "image", caption: { en: "Example of a properly rigged mooring station with an OS assisting an AB." } },
+    { kind: "diagram", caption: { en: "Deck department organization chart showing the OS's position between Deck Cadet and AB." } },
+    { kind: "video", caption: { en: "Demonstration of proper technique feedback between an AB and an OS." } },
+    { kind: "document", caption: { en: "Sample sea time / competency progress record for AB certification." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
-// "master" and "deck_cadet" — remaining ranks are still pending content.
+// "master", "deck_cadet" and "os" — remaining ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -4300,6 +4870,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   chief_officer: CHIEF_OFFICER_CARD,
   master: MASTER_CARD,
   deck_cadet: DECK_CADET_CARD,
+  os: OS_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
