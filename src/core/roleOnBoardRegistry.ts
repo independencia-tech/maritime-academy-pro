@@ -5429,11 +5429,568 @@ const ENGINE_CADET_CARD: RoleOnBoardCard = {
   ],
 };
 
+// ── WIPER ──────────────────────────────────────────────────────
+// mapReferences resolved via Mission D (see
+// audits/2026-07-29_role-on-board-wiper-mapreferences.md) and the
+// Product Owner's final decisions on that report. All lessonId used are
+// verified to exist in lessonRegistry.ts and to target "wiper" — unlike
+// the Engine Cadet card, targetRanks was a real constraint here: e1-l3,
+// e1-l7, e4-l2, e6-l1 and e6-l2 all exclude "wiper" and were therefore
+// never proposed. Locations with no validated correspondence are left as
+// mapReferences: [] intentionally (practical scenario 2, and several
+// behavioral/meta skills — instruction-following, technique building
+// through repetition, honest task reporting, professional conduct — that
+// no existing lesson content covers).
+const WIPER_CARD: RoleOnBoardCard = {
+  rankId: "wiper",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Wiper is the entry-level rating in the engine department, responsible for basic cleaning, housekeeping, and simple assistance tasks in the engine room under the direct supervision of the Motorman, Oiler, or watchkeeping engineer. Unlike the Engine Cadet, whose role is primarily supervised learning, the Wiper is a genuine working member of the engine team — but unlike the Motorman or Oiler, the Wiper's scope of independent judgment remains deliberately narrow." },
+    { en: "The Wiper executes clearly defined, lower-risk tasks (cleaning, basic housekeeping, simple tool and material handling) while building the foundational competence and reliability that will support progression to Motorman or Oiler. The Wiper is not yet trusted to interpret ambiguous situations independently — that judgment still belongs to the supervising rating or officer." },
+    { en: "The Wiper's progression is measured by demonstrated reliability, attention to safety, and a growing familiarity with the engine room environment — the supervising Motorman, Oiler, or engineer gradually extends the Wiper's scope of tasks as trust and competence grow." },
+    { en: "The Wiper works most closely with the Motorman and Oiler, who directly guide and correct technique day to day, and may occasionally assist an Engine Cadet with basic tasks under a senior rating's oversight." },
+    { en: "Where the Motorman or Oiler is trusted to execute a task independently and flag anything unusual, the Wiper's role is to execute precisely what is instructed, maintain a clean and safe working environment, and let the supervising rating or officer catch what the Wiper cannot yet be expected to catch alone." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Motorman or Oiler (day-to-day task supervision)" },
+      { en: "Watchkeeping engineer (during watch-related tasks)" },
+    ],
+    worksWith: [
+      { en: "Motorman and Oiler, from whom the Wiper learns technique and engine room practice directly" },
+      { en: "Engine Cadets, whom the Wiper may occasionally assist with basic tasks under supervision" },
+    ],
+    mentors: [
+      { en: "The Motorman, Oiler, and watchkeeping engineers, who directly guide and correct the Wiper's technique and judgment" },
+    ],
+    supports: [
+      { en: "The Wiper does not yet supervise anyone, but may assist an Engine Cadet with basic technique under a senior rating's or engineer's oversight" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Basic cleaning and housekeeping in the engine room environment" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }] },
+    { label: { en: "Following instructions precisely and asking when uncertain" }, mapReferences: [] },
+    { label: { en: "Basic tool and material handling under supervision" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }] },
+    { label: { en: "Basic safety awareness and PPE compliance" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l3" }, { kind: "lesson", lessonId: "s6-l1" }] },
+    { label: { en: "Building technique and reliability through repetition and feedback" }, mapReferences: [] },
+    { label: { en: "Honest self-assessment and reporting of task completion" }, mapReferences: [] },
+    { label: { en: "Professional conduct and reliability within the engine team" }, mapReferences: [] },
+    { label: { en: "Basic familiarity with engine room equipment and terminology" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l1" }, { kind: "lesson", lessonId: "e1-l2" }] },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Wiper's role is to carry out assigned cleaning and basic preparation tasks in the engine room — ensuring the working environment is clean, tools and materials are in order, and simple checks are completed exactly as instructed by the supervising Motorman, Oiler, or engineer. Unlike the Engine Cadet, who mainly observes this phase, the Wiper is genuinely executing real tasks; unlike the Motorman or Oiler, the Wiper's tasks remain limited to lower-risk, clearly defined actions." },
+      responsibilities: [
+        { en: "Carry out assigned pre-departure cleaning and housekeeping tasks in the engine room, ensuring the working environment meets the standard expected before departure" },
+        { en: "Assist the Motorman, Oiler, or engineer with simple preparation tasks (handing tools, basic checks) exactly as instructed" },
+        { en: "Report task completion clearly and honestly, flagging anything uncertain rather than assuming it is fine" },
+        { en: "Ask for clarification before attempting an unfamiliar task" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, given the specific hazards of the engine room environment" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (ear protection, safety shoes, coveralls, gloves)" },
+        { en: "Cleaning materials and basic hand tools, used as instructed" },
+        { en: "Departure checklist / work list, as directed by the supervising rating or engineer" },
+      ],
+      risks: [
+        { en: "Attempting an unfamiliar task without asking for guidance, risking incorrect execution or injury" },
+        { en: "Reporting a task as complete without genuinely confirming it meets the expected standard" },
+        { en: "Working carelessly under time pressure, missing a step that a supervisor would have caught" },
+        { en: "Underestimating the hazards of the engine room environment because assigned tasks appear low-risk" },
+      ],
+      bestPractices: [
+        { en: "Ask for a demonstration before attempting an unfamiliar task, even under time pressure" },
+        { en: "Report honestly on task completion, including anything not fully confident about" },
+        { en: "Treat every task, however simple, as an opportunity to build reliability and technique" },
+        { en: "Maintain constant awareness of engine room hazards, even during routine cleaning tasks" },
+      ],
+      commonMistakes: [
+        { en: "Guessing at an unfamiliar task rather than asking" },
+        { en: "Overstating confidence in completed work to avoid seeming inexperienced" },
+        { en: "Rushing a task to the point of missing a step" },
+        { en: "Treating a cleaning or housekeeping task as unimportant compared to more technical work" },
+      ],
+      professionalTips: [
+        { en: "A clean, well-organized engine room is not a minor detail — it directly affects safety and how quickly problems can be spotted" },
+        { en: "Every task you're checked on now is a task you'll be trusted with more independence on soon — use the supervision while you have it" },
+        { en: "The Motorman or Oiler you work under today started exactly where you are now" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l3" }, { kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Wiper remains in the engine room under the direct supervision of the Motorman, Oiler, or watchkeeping engineer, carrying out any assigned lower-risk task while staying well clear of any safety-critical action. The Wiper's contribution during this phase is limited but real — supporting the team's readiness without independently monitoring or interpreting what is happening." },
+      responsibilities: [
+        { en: "Remain in the position assigned by the supervising rating or engineer, carrying out only the specific task instructed" },
+        { en: "Assist with any simple, assigned task (handing tools, basic housekeeping) without independently expanding the assigned role" },
+        { en: "Report completion of an assigned action immediately and clearly" },
+        { en: "Ask for clarification if an instruction is unclear, rather than guessing during an active manoeuvre" },
+        { en: "Follow PPE and safety requirements exactly, with no exceptions during active operations" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (ear protection, safety shoes, coveralls, gloves)" },
+        { en: "Basic tools and materials, used under supervision" },
+      ],
+      risks: [
+        { en: "Standing too close to moving machinery or a hazardous area due to inexperience or momentary inattention" },
+        { en: "Attempting to assist beyond the assigned task, creating confusion or risk during a safety-critical operation" },
+        { en: "Hesitating or freezing when uncertain, rather than asking for immediate clarification" },
+        { en: "Losing focus during a routine-seeming manoeuvre, missing an early sign of a developing issue" },
+      ],
+      bestPractices: [
+        { en: "Stay exactly where positioned and do only what has been explicitly assigned" },
+        { en: "Apply hazard awareness training actively, not only when specifically reminded" },
+        { en: "Communicate task completion clearly and promptly, in the terms used by the rest of the team" },
+        { en: "Stay mentally engaged even during a routine, well-practiced manoeuvre" },
+      ],
+      commonMistakes: [
+        { en: "Underestimating a hazard because the manoeuvre feels routine" },
+        { en: "Attempting a task beyond what was assigned, rather than confirming first" },
+        { en: "Staying silent when uncertain instead of asking immediately" },
+        { en: "Losing attention during a manoeuvre that has gone smoothly so far" },
+      ],
+      professionalTips: [
+        { en: "The hazards in the engine room don't become less real just because the manoeuvre is routine — stay alert every time" },
+        { en: "If an instruction seems unclear, say so immediately — a moment's clarification is always faster than fixing a mistake" },
+        { en: "Reliability in small, assigned tasks is exactly what builds the trust needed for greater responsibility later" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }, { kind: "lesson", lessonId: "s6-l3" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Wiper carries out routine cleaning, housekeeping, and simple assigned tasks in the engine room, occasionally alongside the watchkeeping engineer or an assigned Motorman/Oiler. Unlike the Motorman or Oiler, who may take on watch duties, the Wiper does not stand an independent watch — their contribution during this phase is steady, reliable task execution that keeps the engine room clean, organized, and ready for inspection at any time." },
+      responsibilities: [
+        { en: "Carry out assigned cleaning, housekeeping, and basic tasks throughout the watch period, as directed by the supervising rating or engineer" },
+        { en: "Report anything observed that seems unusual (a leak, an unfamiliar noise, a loose fitting) to the supervising rating or engineer immediately, without deciding whether it is significant" },
+        { en: "Ask for clarification if an instruction is unclear, rather than guessing" },
+        { en: "Maintain a clean, organized, and safe working environment throughout the watch" },
+        { en: "Follow engine room communication discipline exactly as demonstrated, including proper use of standard phrases when reporting" },
+      ],
+      equipment: [
+        { en: "Cleaning materials and basic hand tools" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Deciding an observation is not worth reporting rather than letting the supervising rating or engineer assess it" },
+        { en: "Losing concentration during a long or repetitive task, missing something worth reporting" },
+        { en: "Neglecting housekeeping standards during a quiet period, assuming it matters less when nothing else is happening" },
+        { en: "Standing too close to machinery while cleaning, out of habit or inattention" },
+      ],
+      bestPractices: [
+        { en: "Report every observation to the supervising rating or engineer, however minor it seems" },
+        { en: "Maintain the same standard of housekeeping and attentiveness throughout the watch, not only when directly supervised" },
+        { en: "Ask for clarification immediately if an instruction or observation is not understood" },
+        { en: "Treat every cleaning task as an opportunity to notice the engine room's normal condition, so anything unusual stands out" },
+      ],
+      commonMistakes: [
+        { en: "Deciding an observation is not worth reporting" },
+        { en: "Letting housekeeping standards slip during a quiet or repetitive period" },
+        { en: "Standing closer to machinery than necessary while cleaning" },
+        { en: "Disengaging mentally during a long watch instead of maintaining active attention" },
+      ],
+      professionalTips: [
+        { en: "A clean engine room isn't just tidy — it's easier to spot when something is wrong" },
+        { en: "Report everything you notice — the watchkeeping engineer would rather hear about something unimportant than miss something that mattered" },
+        { en: "The discipline you build in routine tasks now is the same discipline that will define you as a Motorman or Oiler" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }, { kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Wiper continues assigned engine room tasks — cleaning, housekeeping, and simple assistance — while the engine team maintains readiness for a possible unplanned departure. The Wiper's contribution during this phase is largely unchanged from routine navigation: steady, reliable task execution, with continued attention to anything unusual that might affect the engine room's readiness." },
+      responsibilities: [
+        { en: "Carry out assigned cleaning, housekeeping, and basic tasks as instructed during the anchor period" },
+        { en: "Report anything observed that seems unusual to the supervising rating or engineer, without deciding whether it matters" },
+        { en: "Maintain the same standard of attentiveness and safety awareness as during active navigation, even though the vessel is not underway" },
+        { en: "Ask for clarification if an instruction is unclear" },
+        { en: "Follow PPE and safety requirements exactly as instructed" },
+      ],
+      equipment: [
+        { en: "Cleaning materials and basic hand tools" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Assuming tasks matter less during anchoring because the vessel is stationary" },
+        { en: "Missing an observation worth reporting due to reduced attentiveness during a quieter phase" },
+        { en: "Standing too close to machinery while cleaning, out of habit or inattention" },
+        { en: "Treating an extended anchor period as a reason to relax standards" },
+      ],
+      bestPractices: [
+        { en: "Maintain the same standard of attention and safety awareness during anchoring as during any other phase" },
+        { en: "Report anything unusual immediately, regardless of how quiet the period seems" },
+        { en: "Use routine tasks during anchoring as an opportunity to reinforce good habits" },
+        { en: "Stay aware that the engine room's readiness matters even when the vessel is not moving" },
+      ],
+      commonMistakes: [
+        { en: "Relaxing attentiveness because the vessel is at anchor" },
+        { en: "Assuming a quiet period means observations are less important" },
+        { en: "Standing closer to machinery than necessary while cleaning" },
+        { en: "Treating routine tasks as less significant during anchoring than during navigation" },
+      ],
+      professionalTips: [
+        { en: "The vessel being at anchor doesn't mean the engine room stops needing attention — readiness continues quietly" },
+        { en: "Consistency in your standards, whether underway or at anchor, is exactly what builds a reputation for reliability" },
+        { en: "A quiet period is a good time to build the habits that will matter during a busier one" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Wiper is exposed to more intensive engine room activity — maintenance work, bunkering support, and cargo pump operation if applicable — carrying out assigned cleaning, housekeeping, and simple assistance tasks under supervision. Port stays intensify the pace of engine room work, and the Wiper's reliability in routine tasks becomes especially valuable when the team's attention is stretched across more activity." },
+      responsibilities: [
+        { en: "Carry out assigned cleaning and housekeeping tasks in support of maintenance or bunkering activity, exactly as instructed" },
+        { en: "Assist with simple tasks during bunkering or cargo pump operations (if applicable) only as explicitly assigned, without expanding the assigned role" },
+        { en: "Report anything unusual observed during port activity to the supervising rating or engineer immediately" },
+        { en: "Ask for clarification on any unfamiliar task before attempting it" },
+        { en: "Follow PPE and safety requirements exactly as instructed, particularly around bunkering and maintenance activities" },
+      ],
+      equipment: [
+        { en: "Cleaning materials and basic hand tools" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Standing too close to active bunkering or maintenance work out of curiosity, without recognizing the hazard" },
+        { en: "Attempting to assist beyond an assigned task during a busy or safety-critical port operation" },
+        { en: "Missing an observation worth reporting due to the increased pace and activity in port" },
+        { en: "Neglecting housekeeping standards under time pressure" },
+      ],
+      bestPractices: [
+        { en: "Stay at a safe distance from active bunkering or maintenance work unless directly assigned a task within it" },
+        { en: "Maintain housekeeping standards even under the increased pace of a port stay" },
+        { en: "Report anything unusual immediately, even during a busy period" },
+        { en: "Ask before attempting an unfamiliar task, however routine it may look under time pressure" },
+      ],
+      commonMistakes: [
+        { en: "Getting too close to bunkering or maintenance activity out of curiosity" },
+        { en: "Letting housekeeping standards slip because the pace of work has increased" },
+        { en: "Attempting a task beyond what was assigned during a busy period" },
+        { en: "Failing to report something unusual because attention is stretched across more activity" },
+      ],
+      professionalTips: [
+        { en: "Port stays test whether your habits hold up under a faster pace — that's exactly when good habits matter most" },
+        { en: "Bunkering and major maintenance work happen more often in port — pay close attention to what you're allowed to observe" },
+        { en: "Reliable, careful task execution during a busy port stay is noticed and remembered" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e4-l1" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "During STS operations, the Wiper remains in the engine room, carrying out assigned cleaning, housekeeping, or simple assistance tasks while the engine team maintains propulsion and manoeuvring readiness throughout the operation. The Wiper's role here is deliberately narrow, given the elevated risk of the overall operation and the coordination required between the engine room, the bridge, and the counterpart vessel." },
+      responsibilities: [
+        { en: "Carry out assigned tasks exactly as instructed by the supervising rating or engineer, without independently expanding the assigned role" },
+        { en: "Remain in the position assigned throughout the operation" },
+        { en: "Report anything unusual observed to the supervising rating or engineer immediately" },
+        { en: "Ask for clarification before attempting any unfamiliar action related to the operation" },
+        { en: "Follow PPE and safety requirements exactly as instructed, with particular attention to the heightened risk of this operation" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment as instructed" },
+        { en: "Basic tools and materials, used under direct supervision" },
+      ],
+      risks: [
+        { en: "Underestimating the importance of continuous readiness because the visible action is happening elsewhere on the vessel" },
+        { en: "Attempting to assist beyond an assigned task during a high-risk operation" },
+        { en: "Assuming a minor observation is not worth reporting during a busy operation" },
+        { en: "Losing attentiveness during a long or repetitive phase of the operation" },
+      ],
+      bestPractices: [
+        { en: "Stay exactly where positioned throughout the operation, regardless of how routine it appears" },
+        { en: "Report observations immediately, however minor they seem" },
+        { en: "Ask before attempting anything not explicitly assigned" },
+        { en: "Treat every STS operation with the same level of attention, regardless of how many you have experienced" },
+      ],
+      commonMistakes: [
+        { en: "Assuming your task is unimportant because the main visible activity is elsewhere" },
+        { en: "Losing attentiveness because the engine room's part of the operation appears uneventful" },
+        { en: "Deciding an observation is too minor to mention" },
+        { en: "Attempting to help beyond the assigned task" },
+      ],
+      professionalTips: [
+        { en: "STS operations depend on more than what is visible on deck — every reliable task in the engine room supports the whole operation's safety" },
+        { en: "Your attentiveness during a routine-looking phase is exactly what makes a fast response possible if something changes" },
+        { en: "The habits of precision and reliability you build here are the same ones that will define you at a higher rank" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Wiper gets the most hands-on experience and the clearest opportunities to build technique — assisting the Motorman, Oiler, and engineers with real engine room maintenance tasks under close supervision. This phase offers genuine opportunities to practice skills directly, provided every task is properly supervised and the Wiper never exceeds their demonstrated competence." },
+      responsibilities: [
+        { en: "Assist with assigned maintenance tasks (cleaning, basic component maintenance, lubrication support, parts handling) exactly as instructed, under direct supervision from the Motorman, Oiler, or an assigned engineer" },
+        { en: "Ask for a demonstration before attempting an unfamiliar task, rather than guessing at the correct technique" },
+        { en: "Report task progress and completion honestly, including any part not confidently understood" },
+        { en: "Observe how the supervising rating or engineer inspects work and decides whether it meets standard" },
+        { en: "Follow all PPE and safety requirements exactly as instructed for the specific task, particularly around hot surfaces, moving parts, and chemical handling" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task" },
+        { en: "Maintenance tools and materials, used only as instructed and under supervision" },
+      ],
+      risks: [
+        { en: "Attempting a task technique without having it properly demonstrated first, risking poor quality work or injury" },
+        { en: "Overstating confidence in a task to avoid appearing inexperienced, then performing it incorrectly" },
+        { en: "Missing the opportunity to understand why a maintenance standard exists, treating the task only as a mechanical action" },
+        { en: "Using tools, products, or procedures incorrectly due to insufficient supervision or unclear instruction" },
+      ],
+      bestPractices: [
+        { en: "Ask to see a task demonstrated before attempting it yourself, even if it looks straightforward" },
+        { en: "Be honest about your confidence level for a given task — supervision is calibrated to what you actually know, not what you claim to know" },
+        { en: "Watch how the supervising rating or engineer inspects finished work, not only how they perform it" },
+        { en: "Use every maintenance task as a chance to build real technique, since these are skills you will rely on directly as a Motorman or Oiler later" },
+      ],
+      commonMistakes: [
+        { en: "Attempting a technique without asking for a demonstration first" },
+        { en: "Claiming more confidence in a task than is genuinely felt, out of concern about appearing inexperienced" },
+        { en: "Treating a maintenance task as a box to check rather than a skill to build" },
+        { en: "Rushing a task without a clear understanding of the standard it needs to meet" },
+      ],
+      professionalTips: [
+        { en: "There is no reward for pretending to already know a technique — asking for a demonstration is exactly what this stage of your career is for" },
+        { en: "The maintenance skills you build now as a Wiper are the same ones you'll be expected to already have as a Motorman or Oiler — take them seriously" },
+        { en: "Watching how work gets inspected teaches you as much as watching how it gets done" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Wiper proceeds to an assigned muster station and carries out real tasks as part of the emergency team, under the direct instruction of the officer or rating in charge — a genuine operational role, not just observation, but still closely directed rather than independently judged. The Wiper's contribution during a drill or real emergency is measured by how precisely instructions are followed and how reliably an assigned function is performed under pressure." },
+      responsibilities: [
+        { en: "Proceed immediately to the assigned muster station upon hearing the alarm, exactly as required by the muster list" },
+        { en: "Carry out the specific task assigned by the officer or rating in charge of the station precisely as instructed" },
+        { en: "Report task completion or any difficulty immediately and clearly to the station leader" },
+        { en: "Ask for clarification if an instruction during a drill is not understood, rather than guessing" },
+        { en: "Take every drill with full seriousness, treating it as genuine practice for the emergency response expected at every rank" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list" },
+        { en: "Emergency equipment specific to the assigned station, used under direct supervision" },
+      ],
+      risks: [
+        { en: "Hesitating or improvising when an instruction is unclear, rather than asking immediately" },
+        { en: "Treating a drill as less serious than a genuine emergency, reducing its training value" },
+        { en: "Losing focus on the assigned task while trying to observe the broader response" },
+        { en: "Reporting task completion inaccurately under pressure, rather than confirming it is genuinely done" },
+      ],
+      bestPractices: [
+        { en: "Execute the assigned task precisely, and confirm completion clearly to the station leader" },
+        { en: "Ask immediately if an instruction is unclear — hesitation costs more time than a quick question" },
+        { en: "Treat every drill exactly as you would a genuine emergency, building the habits that will matter when it counts" },
+        { en: "Stay focused on your assigned task first, understanding the broader response through the post-drill debrief" },
+      ],
+      commonMistakes: [
+        { en: "Guessing at an unclear instruction instead of asking immediately" },
+        { en: "Going through the motions of a drill without full engagement" },
+        { en: "Becoming distracted by the wider situation instead of completing the assigned task" },
+        { en: "Reporting a task as done before genuinely confirming it" },
+      ],
+      professionalTips: [
+        { en: "In an emergency, precision and speed both matter — but precision comes first, because a fast mistake is still a mistake" },
+        { en: "The habits you build in every drill are the habits that will actually show up in a real emergency — there is no separate 'serious mode'" },
+        { en: "Being reliably instructable under pressure is exactly what earns you more independent responsibility during the next drill" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l8" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "You are assigned to clean an area using a product you don't recognize from previous tasks. The label is partially worn and you're not entirely sure what it is or how it should be used." },
+      mission: { en: "Decide whether to proceed using your best guess or check first." },
+      expectedActions: [
+        { en: "Do not use an unfamiliar product based on assumption" },
+        { en: "Ask the supervising Motorman, Oiler, or engineer to confirm what it is and how it should be used" },
+        { en: "Wait for confirmation before proceeding" },
+        { en: "Report clearly if you cannot identify the product at all" },
+      ],
+      why: [{ en: "Chemicals in the engine room can have specific handling requirements, incompatibilities with certain surfaces, or safety precautions that are not obvious from a worn label — proceeding on a guess risks both the task and personal safety." }],
+      commonMistakes: [
+        { en: "Using the product anyway because it 'looks similar' to something familiar" },
+        { en: "Guessing at the correct method rather than asking" },
+        { en: "Not mentioning the unclear labeling at all" },
+      ],
+      safetyPoints: [{ en: "Unlabeled or partially labeled chemicals should never be used without confirmation — this applies even under time pressure or when a task seems urgent." }],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l3" }],
+    },
+    {
+      situation: { en: "A Motorman corrects the same aspect of your technique for the third time. You feel you understand what's being asked but keep making the same small mistake under pressure." },
+      mission: { en: "Decide how to respond to repeated correction on the same point." },
+      expectedActions: [
+        { en: "Acknowledge the correction without becoming defensive, even though it's the third time" },
+        { en: "Ask directly what specifically is going wrong, rather than assuming you already understand" },
+        { en: "Consider whether slowing down or a different approach would help avoid the same mistake" },
+        { en: "Thank the Motorman for the patience shown rather than treating the repetition as a sign of failure" },
+      ],
+      why: [{ en: "Repeated correction on the same point usually means the underlying cause hasn't been identified yet, not that the correction itself is unnecessary — asking specifically what's going wrong is more useful than simply promising to try harder." }],
+      commonMistakes: [
+        { en: "Becoming visibly frustrated or defensive at being corrected again" },
+        { en: "Assuming you understand without actually confirming what specifically keeps going wrong" },
+        { en: "Avoiding the conversation about why the mistake keeps recurring" },
+      ],
+      safetyPoints: [],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "While cleaning around a piece of equipment, you notice a small amount of fluid that doesn't look like it belongs there. It's a small amount, and you're not sure if it's normal or worth mentioning." },
+      mission: { en: "Decide whether to report the observation or continue with the task." },
+      expectedActions: [
+        { en: "Report the observation to the supervising rating or engineer immediately, factually describing what you saw (location, amount, appearance)" },
+        { en: "Do not attempt to clean it up or investigate it yourself before reporting" },
+        { en: "Do not decide in advance that it's 'probably nothing'" },
+      ],
+      why: [{ en: "A small amount of unexpected fluid can be the earliest visible sign of a developing leak — the Wiper's job is to report what is observed factually, not to judge its significance, which belongs to someone with more experience and context." }],
+      commonMistakes: [
+        { en: "Deciding the observation is too minor to mention" },
+        { en: "Cleaning it up before reporting it, losing the chance for anyone to assess it" },
+        { en: "Assuming someone else has probably already noticed" },
+      ],
+      safetyPoints: [{ en: "Reporting small, early signs promptly is exactly what prevents them from becoming larger problems — this is one of the most valuable things a Wiper can do." }],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Report what you observe, not what you assume it means — that judgment call belongs to the Motorman, Oiler, or engineer supervising you." },
+    { en: "When something is unfamiliar — a product, a fitting, a procedure — that's the moment to ask, not to guess based on something similar." },
+    { en: "Repeated correction usually means the real cause hasn't been found yet — ask specifically what's going wrong, rather than just trying harder at the same thing." },
+    { en: "A clean, well-organized engine room is not a minor task — it is what makes problems easier to spot for everyone." },
+    { en: "Precision matters more than speed at this stage — a fast, careless action teaches you less than a slow, correct one." },
+    { en: "The supervision you have now won't last forever — use it deliberately, while it's there, to build habits that will hold up without it." },
+    { en: "Every task you're trusted with a little more independence on is a task you earned trust on before — reliability compounds." },
+    { en: "Being a Wiper is not about proving you're ready for more responsibility — it's about actually becoming ready, one demonstrated task at a time." },
+  ],
+
+  professionalMindset: [
+    { en: "See yourself as building toward independence, not yet possessing it. Every task you execute is real work, but the judgment behind it still belongs to whoever supervises you — your role is to execute precisely and flag what you notice, not to decide what matters." },
+    { en: "Treat close supervision as the mechanism of your progress, not a ceiling on it. The scope of what you're trusted with grows exactly as fast as your demonstrated reliability — supervision is not a fixed limitation, it is a responsive one." },
+    { en: "Assume the unfamiliar deserves a question, not a guess. An unlabeled product, an unusual fitting, an unexpected observation — these are exactly the moments where checking first protects you and the task." },
+    { en: "Recognize that a clean, organized environment is part of the work, not separate from it. Housekeeping in the engine room isn't a lesser task compared to technical work — it directly supports safety and makes problems visible sooner." },
+    { en: "Accept that repeated correction is information, not judgment. If the same mistake keeps happening, the goal is to understand why, not simply to feel bad about it or promise to try harder." },
+    { en: "Recognize that reporting factually, without interpreting, is itself a skill. Passing along exactly what you observed — not what you think it means — gives your supervisor a cleaner picture than a filtered or pre-judged one." },
+    { en: "Accept that trust is built specifically, not generally. Being trusted with one task doesn't automatically extend to another — each new piece of responsibility is usually earned on its own terms." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Sea time and service records — The Wiper's sea time is recorded and confirmed as required by flag State regulations, directly supporting eventual eligibility for Motorman or Oiler certification — accuracy here matters just as much as at every other rank." },
+    { en: "Task completion reporting — When the Wiper reports a task as complete to the supervising rating or engineer, this report is often taken at face value for routine matters — making honest, accurate reporting a genuine professional responsibility, not just good practice." },
+    { en: "Maintenance and defect observations — When the Wiper notices something during a task (a developing leak, an unusual condition), reporting it clearly and factually to the supervising rating or engineer contributes directly to the department's maintenance records, even though the Wiper does not maintain those records personally." },
+    { en: "Training and competency progress — Where the company or training pathway tracks the Wiper's demonstrated competencies toward Motorman or Oiler qualification, the Wiper ensures this record is accurate and genuinely reflects tasks performed and supervision received, rather than tasks merely attempted." },
+    { en: "Why this matters: The Wiper's documentation responsibility sits at the foundation of what every subsequent rank builds on: honest, accurate reporting of tasks completed, competencies genuinely demonstrated, and things noticed but not yet understood. Building this habit now — before it carries any formal weight — is what will make the Wiper's future reports as a Motorman, Oiler, or officer something the whole department can trust without double-checking." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Following environmental procedures in real tasks — The Wiper applies waste segregation, product handling, and pollution prevention procedures exactly as instructed during cleaning and maintenance tasks — this is genuine practice, not observation, and it is exactly what the Wiper will rely on independently at a higher rank." },
+    { en: "Correct product and material handling — The Wiper follows instructions precisely regarding which cleaning products, materials, and disposal methods apply to a given task, asking for clarification rather than assuming when uncertain, particularly with unfamiliar or partially labeled products." },
+    { en: "Reporting anything unusual immediately — If the Wiper notices an unexpected discharge, spill, leak, or unclear waste handling situation during a task, they report it to the supervising rating or engineer immediately, rather than deciding independently whether it is significant enough to mention." },
+    { en: "Building environmental discipline through repetition — Each task where environmental procedure is followed correctly under supervision builds the habit that will define the Wiper's independent practice at a higher rank, where verification will no longer be automatic." },
+    { en: "Why this matters: The Wiper's environmental responsibility is about correctly executing real procedures in real tasks, with the safety net of supervision still in place. The habits built now, particularly around reporting anything unusual immediately rather than filtering it, are exactly what will protect the vessel's environmental compliance once that supervision naturally decreases — and given how central these procedures are to daily engine room work, this foundation matters early." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Execute assigned tasks within your demonstrated competence, under the supervision of the Motorman, Oiler, or engineer" },
+      { en: "Ask any crew member or officer to clarify an instruction or demonstrate a technique" },
+      { en: "Report anything observed that seems unclear, unsafe, or worth mentioning, to your supervising rating or officer" },
+      { en: "Refuse to proceed with a task you do not understand or feel unprepared for, requesting clarification first" },
+      { en: "Request feedback on your performance from your supervising rating or officer" },
+    ],
+    youCannot: [
+      { en: "Perform a task independently without supervision, unless explicitly authorized by the supervising rating or engineer for that specific task" },
+      { en: "Interpret or judge the significance of an observation on the vessel's behalf — report it factually and let the supervising rating or engineer assess it" },
+      { en: "Stand an independent watch or emergency station role without direct supervision" },
+      { en: "Correct or discipline another crew member, regardless of what is observed" },
+      { en: "Sign off, verify, or confirm any operational readiness, safety check, or compliance matter on the vessel's behalf" },
+      { en: "Represent the vessel or the company in any interaction with external parties (shore engineers, surveyors, authorities)" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Relying on assumption instead of verifying — Using an unfamiliar product or attempting an unfamiliar task based on how similar it seems to something known, without checking first." },
+    { en: "Filtering observations before reporting — Deciding something is 'probably not worth mentioning' instead of reporting it factually and letting the supervising rating or engineer judge its significance." },
+    { en: "Overstating confidence to avoid seeming inexperienced — Claiming to understand or be ready for a task rather than honestly flagging uncertainty, risking a poorly executed or unsafe outcome." },
+    { en: "Taking correction personally rather than practically — Reacting defensively to repeated feedback instead of asking specifically what keeps going wrong." },
+    { en: "Treating housekeeping as less important than technical tasks — Letting cleaning and organization standards slip under the assumption that this work matters less than more visible tasks." },
+    { en: "Mistaking one success for readiness — Assuming that performing a task correctly once under supervision means it can now be performed independently." },
+    { en: "Losing engagement during routine or quiet moments — Treating a repetitive task or a quiet period as a time to disengage rather than to keep building attentiveness and technique." },
+    { en: "Escalating too slowly or not at all — Hesitating to report an uncertain situation (an unusual observation, an unclear instruction) out of concern about seeming unsure." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Motorman or Oiler, depending on company structure and vessel type — engine room rating progression varies between companies, and some vessels do not distinguish these as separate roles from one another. The Wiper's actual next step should be confirmed against their specific company's structure." },
+    { en: "Skills to develop: Consistent, reliable technique across the full range of basic engine room tasks (cleaning, basic maintenance, material handling) without requiring correction; growing familiarity with engine room systems and terminology; the judgment to recognize when a situation departs from the routine and to report or escalate appropriately; increasing initiative within the bounds of what is actually authorized." },
+    { en: "Recommended experience: A demonstrated track record across a wide range of tasks and conditions, with consistent reliability, honest reporting, and a visible pattern of the supervising Motorman, Oiler, or engineer extending trust and independence over time; sufficient sea time as required for further certification." },
+    { en: "Certificates typically required: Requirements vary by flag State and company policy. Progression typically requires a minimum period of qualifying sea service and completion of any required basic training and safety certification relevant to the next rating role." },
+    { en: "Recommended MAP courses: All foundational Engine lessons relevant to Motorman/Oiler competency (engine systems, maintenance, watchkeeping basics, safety); Role On Board – Fourth Engineer (to preview the officer path); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving beyond Wiper means the supervision that has shaped your technique begins to step back, and the judgment you've only practiced under guidance becomes something you exercise on your own. The transition is not about knowing more than you did as a Wiper — it is about being trusted to act on what you already know, and to recognize, without being told, when a situation calls for more than routine execution." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "e1-l1", label: { en: "Main Engine" } },
+    { kind: "lesson", lessonId: "e1-l2", label: { en: "Auxiliaries & Electricity" } },
+    { kind: "lesson", lessonId: "e1-l4", label: { en: "Fire Safety & CO2 System" } },
+    { kind: "lesson", lessonId: "e1-l5", label: { en: "Survival & EPIRB" } },
+    { kind: "lesson", lessonId: "e1-l6", label: { en: "Maintenance & Troubleshooting" } },
+    { kind: "lesson", lessonId: "e1-l8", label: { en: "Emergency Procedures" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l3", label: { en: "PPE, Safe Behaviour & Human Factors" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — foundational engine room and machinery terminology" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on rating structure, sea time requirements, and Motorman/Oiler certification pathway by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and basic machinery layouts to build familiarity across different ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on task technique, certification requirements, or basic engine room practice" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Wiper through to Motorman/Oiler and beyond" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document sea time and demonstrated competencies" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_ENGINE_CADET", label: { en: "Role On Board — Engine Cadet" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_FOURTH_ENGINEER", label: { en: "Role On Board — Fourth Engineer" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "Assigned cleaning, housekeeping, and basic engine room tasks, under supervision that decreases as competence is demonstrated" },
+      { en: "Basic assistance tasks (tool handling, material handling) as instructed" },
+      { en: "Task completion reports, honestly and promptly" },
+    ],
+    iMonitor: [
+      { en: "My own technique and understanding against what has been demonstrated, checking rather than assuming" },
+      { en: "Hazards directly relevant to my assigned task (moving equipment, chemicals, hot surfaces, confined spaces)" },
+      { en: "The general condition of the engine room environment during routine tasks" },
+    ],
+    iReport: [
+      { en: "Task completion or difficulty, honestly and without overstating confidence" },
+      { en: "Any observation (unusual fluid, unfamiliar smell, unclear labeling) factually, without interpreting its significance" },
+      { en: "Any uncertain situation immediately, for escalation" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any independent decision affecting the vessel's safety, machinery operation, or environmental compliance" },
+      { en: "My own progression to unsupervised task performance, without confirmation from the supervising rating or engineer" },
+      { en: "Any correction or instruction directed at another crew member" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Wiper task scope showing widening responsibilities as competence is demonstrated toward Motorman/Oiler." } },
+    { kind: "image", caption: { en: "Example of proper PPE and cleaning technique in an engine room environment." } },
+    { kind: "diagram", caption: { en: "Engine department organization chart showing the Wiper's position between Engine Cadet and Motorman/Oiler." } },
+    { kind: "video", caption: { en: "Demonstration of correct product handling and labeling verification." } },
+    { kind: "document", caption: { en: "Sample sea time / competency progress record for Motorman/Oiler certification." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
-// "master", "deck_cadet", "os" and "engine_cadet" — remaining ranks are
-// still pending content.
+// "master", "deck_cadet", "os", "engine_cadet" and "wiper" — remaining
+// ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -5443,6 +6000,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   deck_cadet: DECK_CADET_CARD,
   os: OS_CARD,
   engine_cadet: ENGINE_CADET_CARD,
+  wiper: WIPER_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
