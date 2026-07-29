@@ -4859,10 +4859,581 @@ const OS_CARD: RoleOnBoardCard = {
   ],
 };
 
+// ── ENGINE CADET ───────────────────────────────────────────────
+// mapReferences resolved via Mission D (see
+// audits/2026-07-29_role-on-board-engine-cadet-mapreferences.md) and the
+// Product Owner's final decisions on that report. All lessonId used are
+// verified to exist in lessonRegistry.ts and to target "engine_cadet".
+// Locations with no validated correspondence are left as
+// mapReferences: [] intentionally (practical scenario 1, and several
+// behavioral/meta skills — active observation, TRB documentation, asking
+// clarifying questions, honest task reporting, professional
+// curiosity/conduct — that no existing lesson content covers).
+const ENGINE_CADET_CARD: RoleOnBoardCard = {
+  rankId: "engine_cadet",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Engine Cadet is a trainee officer undergoing structured seagoing training toward an Engineer Officer of the Watch certificate, working under structured supervision provided by the Chief Engineer, watchkeeping engineers, and experienced ratings (Motorman, Oiler) to build the practical experience required alongside academic study. Like the Deck Cadet, the Engine Cadet's primary task aboard is not independent execution — it is supervised learning, observation, and the accumulation of documented training records." },
+    { en: "The Cadet participates in real engine room operations — watchkeeping, maintenance, monitoring, machinery rounds and routine inspections — but always under supervision, and never bears independent operational responsibility the way a Motorman or Oiler does; a Cadet's mistake is expected to be caught and corrected by the supervising engineer or rating, not carried through to consequence. The level of supervision may gradually decrease as competence is demonstrated, but responsibility remains with the supervising engineer or rating." },
+    { en: "The Cadet's success is measured differently from every operational rank: not by flawless execution, but by demonstrated understanding, genuine curiosity, and progress recorded in the Training Record Book (TRB) that will support certification as an Engineer Officer of the Watch." },
+    { en: "The Cadet works closely with the Motorman and Oiler for hands-on engine room tasks, and with watchkeeping engineers for machinery space familiarization and monitoring — building relationships and reputation that often shape how quickly they are trusted with real responsibility once qualified." },
+    { en: "Where every operational rank in the engine department is evaluated on the quality of their decisions or execution, the Cadet is evaluated on the quality of their learning — asking good questions, seeking clarification rather than guessing, and building the foundation of judgment that will define their entire career." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Chief Engineer (overall training oversight)" },
+      { en: "Watchkeeping engineers (engine room watch familiarization)" },
+    ],
+    worksWith: [
+      { en: "Experienced Motormen, Oilers, and engine officers, from whom the Cadet learns hands-on engine room practice directly" },
+      { en: "Other cadets (Deck and Engine) during shared training activities" },
+    ],
+    mentors: [
+      { en: "Chief Engineer, who typically oversees the Cadet's Training Record Book and certification progress" },
+      { en: "Experienced Motormen and Oilers, who mentor practical engine room skills" },
+      { en: "Watchkeeping engineers, who mentor monitoring and watchkeeping familiarization" },
+    ],
+    supports: [
+      { en: "The Cadet contributes as a team member but holds no supervisory responsibility" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Observation and active learning under supervision" }, mapReferences: [] },
+    { label: { en: "Professional conduct and integration into the engine team" }, mapReferences: [] },
+    { label: { en: "Basic engine room tasks (rounds assistance, basic maintenance) under guidance" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }] },
+    { label: { en: "Engine room familiarization, basic machinery identification, and technical terminology" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l1" }, { kind: "lesson", lessonId: "e1-l2" }] },
+    { label: { en: "Training Record Book (TRB) documentation and self-assessment" }, mapReferences: [] },
+    { label: { en: "Asking clarifying questions and seeking guidance appropriately" }, mapReferences: [] },
+    { label: { en: "Basic safety awareness and PPE compliance in the engine room environment" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l3" }] },
+    { label: { en: "Following instructions precisely and reporting task completion honestly" }, mapReferences: [] },
+    { label: { en: "Maintaining curiosity, professionalism, and a willingness to learn from feedback" }, mapReferences: [] },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Cadet's role is to observe and assist under direct supervision in the engine room — following the watchkeeping engineer or an assigned Motorman/Oiler during pre-departure checks (main engine readiness, auxiliary systems, fuel and lubrication levels), without independently deciding or confirming anything. The value of this phase for the Cadet is not in completing checks alone, but in seeing how experienced engine room personnel actually verify readiness — what they check, what they ask, and what they consider 'good enough' before reporting the engine room ready to the bridge." },
+      responsibilities: [
+        { en: "Assist the watchkeeping engineer or an assigned Motorman/Oiler with assigned pre-departure checks (fluid levels, auxiliary machinery status, standby equipment) exactly as instructed, without making independent judgment calls" },
+        { en: "Observe how the Chief Engineer or watchkeeping engineer verifies main engine and propulsion readiness, asking questions afterward rather than interrupting the process" },
+        { en: "Report completion of an assigned check honestly and promptly, including anything unclear or not fully understood" },
+        { en: "Record relevant training observations in the Training Record Book, connecting what was observed to the required competencies" },
+        { en: "Ask for clarification immediately when an instruction is not understood, rather than proceeding on a guess" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, without exception, given the specific hazards of the engine room environment" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment as instructed by the supervising engineer or rating (ear protection, safety shoes, coveralls)" },
+        { en: "Training Record Book (TRB)" },
+        { en: "Notebook or equivalent for capturing observations and questions" },
+      ],
+      risks: [
+        { en: "Guessing at an unclear instruction rather than asking, risking an incorrectly completed check" },
+        { en: "Attempting a task beyond current competence without supervision present, particularly around moving or hot machinery" },
+        { en: "Missing the learning value of the phase by focusing only on completing an assigned check mechanically" },
+        { en: "Failing to record observations promptly, losing detail relevant to TRB competency requirements" },
+      ],
+      bestPractices: [
+        { en: "Ask questions before starting an unfamiliar check, not partway through it" },
+        { en: "Treat every assigned check as an opportunity to understand why it matters, not only how to do it" },
+        { en: "Record TRB observations as soon as possible after the activity, while details are still fresh" },
+        { en: "Report honestly when something was not fully understood, rather than implying it was" },
+      ],
+      commonMistakes: [
+        { en: "Proceeding on a guess rather than asking for clarification" },
+        { en: "Treating a check as complete without genuinely understanding what it verified or why" },
+        { en: "Waiting too long after an activity to record TRB observations, losing useful detail" },
+        { en: "Hesitating to ask a question out of concern it might seem inexperienced" },
+      ],
+      professionalTips: [
+        { en: "Asking a good question is not a sign of inexperience — it is exactly what this stage of training expects of you" },
+        { en: "The habits you build now — asking, observing, recording — are the same habits that will make you a good engineer officer later" },
+        { en: "A check done correctly but not understood teaches you far less than one you had to ask about" },
+        { en: "Your reputation as a Cadet is built more by your willingness to learn than by pretending to already know" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Cadet is positioned in the engine room or engine control room purely as an observer and light assistant, never as a decision-maker or independent executor. The value of this phase is watching how the engine room responds in real time to bridge orders — engine telegraph commands, standby procedures, and the coordination between the watchkeeping engineer and the bridge — while staying completely out of the way of any actual safety-critical action." },
+      responsibilities: [
+        { en: "Remain in the position assigned by the supervising engineer, observing without independently acting on what is seen" },
+        { en: "Observe how engine orders from the bridge are received, confirmed, and executed, noting the communication discipline involved" },
+        { en: "Ask questions once the manoeuvre is safely completed, not during active operations" },
+        { en: "Record observations about engine room coordination and communication with the bridge in the Training Record Book" },
+        { en: "Remain alert to PPE and personal safety at all times, particularly regarding moving machinery, heat sources, and noise" },
+        { en: "Report immediately to the supervising engineer if given an instruction that seems unclear or unsafe, rather than acting on it uncertainly" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment as instructed (ear protection, safety shoes, coveralls)" },
+        { en: "Training Record Book" },
+      ],
+      risks: [
+        { en: "Standing too close to moving machinery or a hazardous area due to inexperience or momentary inattention" },
+        { en: "Attempting to assist beyond the assigned task, creating confusion or risk during a safety-critical operation" },
+        { en: "Missing the coordination between the engine room and the bridge by focusing narrowly on one detail" },
+        { en: "Asking a question at a moment that distracts the supervising engineer during active operations" },
+      ],
+      bestPractices: [
+        { en: "Stay exactly where positioned and do only what has been explicitly assigned, however tempting it is to help further" },
+        { en: "Watch the whole coordination — bridge to engine room, engine room to team — not just the immediate task in front of you" },
+        { en: "Save questions for after the manoeuvre, when the supervising engineer can actually engage with them" },
+        { en: "Treat every departure as a chance to see the same principles applied slightly differently, and note what varies and what stays constant" },
+      ],
+      commonMistakes: [
+        { en: "Wandering into a hazardous area out of curiosity or inattention" },
+        { en: "Trying to help beyond the assigned role, adding risk rather than value during a safety-critical operation" },
+        { en: "Interrupting active communication with a question that could wait" },
+        { en: "Watching only the task directly assigned and missing the broader coordination taking place" },
+      ],
+      professionalTips: [
+        { en: "During a manoeuvre, your job is to be exactly where you are told and nowhere else — this is not a limitation, it is the safest way to learn from a genuinely demanding operation" },
+        { en: "The best departures to learn from are the routine ones — pay attention to how little drama a well-run manoeuvre actually has" },
+        { en: "What separates a good future engineer officer from an average one often starts here: noticing not just what people do, but why they do it in that order" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Cadet's primary activity is engine room familiarization — standing alongside the watchkeeping engineer, learning to read gauges, monitor parameters, and use engine room equipment under direct supervision, and gradually taking on simple, closely monitored tasks (recording readings, checking a specific parameter) as competence is demonstrated. The Cadet never stands an independent watch or bears responsibility for the machinery's safe operation; every action is checked by the supervising engineer before or as it is relied upon." },
+      responsibilities: [
+        { en: "Stand watch alongside the watchkeeping engineer as assigned, observing monitoring technique, equipment use, and decision-making without independently acting on what is seen" },
+        { en: "Perform simple, supervised tasks (recording a parameter, logging an observation) only as explicitly assigned, with the watchkeeping engineer verifying the result" },
+        { en: "Ask the watchkeeping engineer to explain reasoning behind a decision or action when the opportunity allows, rather than assuming understanding" },
+        { en: "Record engine room observations, terminology, and procedures in the Training Record Book, connecting them to required competencies" },
+        { en: "Report anything observed that seems unusual or unclear to the watchkeeping engineer immediately, rather than assuming it is not worth mentioning" },
+        { en: "Follow engine room communication discipline exactly as demonstrated, including proper use of standard phrases and reporting formats" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring and control equipment, used only under direct supervision" },
+        { en: "Training Record Book" },
+        { en: "Notebook for capturing terminology and procedures" },
+      ],
+      risks: [
+        { en: "Acting on an observation or task result without having it verified by the watchkeeping engineer, treating a supervised task as if it were independent" },
+        { en: "Assuming understanding of an explanation without actually confirming it through a follow-up question" },
+        { en: "Disturbing the watchkeeping engineer's concentration during a genuinely demanding moment of the watch with a question that could wait" },
+        { en: "Losing engagement during long, uneventful watch periods, missing the value of quieter observation" },
+      ],
+      bestPractices: [
+        { en: "Treat every supervised task as an opportunity for the watchkeeping engineer to check your understanding, not as an independent responsibility" },
+        { en: "Time questions for appropriate moments — quieter periods of the watch rather than active decision-making" },
+        { en: "Use quiet periods of the watch actively, reviewing terminology or procedures rather than disengaging" },
+        { en: "Confirm understanding of an explanation by restating it in your own words when appropriate" },
+      ],
+      commonMistakes: [
+        { en: "Treating a supervised task result as final without waiting for the watchkeeping engineer's verification" },
+        { en: "Nodding along to an explanation without genuinely understanding it" },
+        { en: "Asking a question at a moment that interrupts the watchkeeping engineer's attention during a critical task" },
+        { en: "Mentally disengaging during quiet watch periods instead of using them to learn" },
+      ],
+      professionalTips: [
+        { en: "The watchkeeping engineer you shadow today is showing you what a normal watch actually looks like — pay attention even when nothing dramatic is happening" },
+        { en: "A quiet watch is not wasted time — it is often the best time to ask questions and absorb detail" },
+        { en: "Every task you're given supervised is a task you'll eventually do alone — learn it as if that day were coming soon, because it is" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Cadet remains in the engine room or engine control room, observing how the engine team supports the operation — maintaining machinery readiness for a possible unplanned departure, and responding to any bridge request related to propulsion or auxiliary systems. Unlike the deck team, who handle the anchor directly, the engine room's role during anchoring is quieter but still essential: staying prepared while apparently idle." },
+      responsibilities: [
+        { en: "Remain in the position assigned by the supervising engineer, observing without independently acting on what is seen" },
+        { en: "Observe how the engine room maintains readiness during an extended anchor period (standby status, auxiliary machinery monitoring), noting what is actively checked versus assumed" },
+        { en: "Ask questions once the operation allows, focusing on what the engine room specifically monitors or prepares during anchoring" },
+        { en: "Record observations about engine room readiness and communication with the bridge in the Training Record Book" },
+        { en: "Remain alert to PPE and personal safety at all times, particularly if assigned tasks involve moving machinery" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment as instructed" },
+        { en: "Training Record Book" },
+      ],
+      risks: [
+        { en: "Assuming the engine room has 'nothing to do' during anchoring and disengaging from observation" },
+        { en: "Missing the quiet but continuous monitoring that keeps the vessel ready for an unplanned departure" },
+        { en: "Standing in an unsafe position near machinery out of inattention rather than active awareness" },
+        { en: "Failing to connect the readiness maintained at anchor to the broader principle of continuous vigilance" },
+      ],
+      bestPractices: [
+        { en: "Treat the apparent quiet of anchoring in the engine room as evidence of ongoing readiness, not evidence that nothing is happening" },
+        { en: "Ask specifically what the watchkeeping engineer checks during an anchor period that might otherwise go unnoticed" },
+        { en: "Note how quickly the engine room could respond if the bridge requested unplanned engine readiness" },
+        { en: "Stay engaged even during a phase that looks uneventful — this is often where habits of attentiveness are tested most" },
+      ],
+      commonMistakes: [
+        { en: "Assuming the engine room is essentially inactive during anchoring" },
+        { en: "Losing attentiveness because the phase appears to have little visible activity" },
+        { en: "Standing closer to machinery than necessary out of habit or inattention" },
+        { en: "Missing the connection between quiet readiness and genuine operational vigilance" },
+      ],
+      professionalTips: [
+        { en: "Anchoring reveals a quieter side of engine room discipline — readiness maintained without visible action is still real work" },
+        { en: "The engine room's job during anchoring is to be ready for anything, without being told exactly what that 'anything' might be" },
+        { en: "Watching how vigilance is maintained during a quiet phase teaches you as much as watching an active manoeuvre" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Cadet is exposed to a wide variety of engine room activity — maintenance work, bunkering support, cargo pump operation (if applicable to the vessel type), and interactions with shore engineers or surveyors — always under supervision and never with independent authority over any of it. Port stays are an opportunity to see how engine room work intensifies when the vessel is stationary, in contrast to the steady rhythm of a sea passage." },
+      responsibilities: [
+        { en: "Assist with engine room maintenance tasks as assigned, under direct supervision, without making independent judgments about safety or sequencing" },
+        { en: "Observe bunkering operations or cargo pump support (if applicable) when permitted, noting the precautions taken and the communication involved" },
+        { en: "Observe interactions between engine officers and external parties (shore engineers, surveyors) when permitted, noting how professional communication is conducted" },
+        { en: "Ask questions about port procedures once appropriate, rather than during an active task or a busy exchange with an external party" },
+        { en: "Record observations about port engine room operations in the Training Record Book" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, particularly around bunkering and maintenance activities" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment as instructed" },
+        { en: "Training Record Book" },
+      ],
+      risks: [
+        { en: "Standing too close to active bunkering or maintenance work out of curiosity, without recognizing the hazard" },
+        { en: "Attempting to assist beyond an assigned task during a busy or safety-critical port operation" },
+        { en: "Missing the variety of activity happening simultaneously in the engine room during port stay by focusing narrowly on one task" },
+        { en: "Interrupting an officer's interaction with an external party with a question that could wait" },
+      ],
+      bestPractices: [
+        { en: "Stay at a safe distance from active bunkering or maintenance work unless directly assigned a task within it" },
+        { en: "Watch how officers interact with shore engineers and surveyors — professional communication with external parties is a skill you will need directly one day" },
+        { en: "Save procedural questions for a quieter moment, not during an active exchange or task" },
+        { en: "Treat every port stay as an opportunity to see maintenance work you might not encounter during a routine sea passage" },
+      ],
+      commonMistakes: [
+        { en: "Getting too close to bunkering or maintenance activity out of curiosity rather than maintaining a safe observation distance" },
+        { en: "Focusing only on the assigned task and missing the broader engine room activity happening around it" },
+        { en: "Asking a question at a moment that interrupts an officer's professional interaction with an external party" },
+        { en: "Treating a busy port stay as less structured than a routine watch, and losing attentiveness as a result" },
+      ],
+      professionalTips: [
+        { en: "Port stays compress an enormous amount of learning into a short time — pay attention to everything happening, not only your assigned task" },
+        { en: "Bunkering and major maintenance work often only happen in port — these are opportunities you won't get at sea" },
+        { en: "The way officers speak to shore engineers and surveyors is a skill in itself — watch it as closely as you watch any technical procedure" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e6-l1" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "During STS operations, the Cadet remains in the engine room, observing how the engine team supports the operation — maintaining propulsion and manoeuvring readiness throughout, and assisting with cargo pump or ballast operations if the vessel type requires it. The Cadet's role is strictly observational and supervised, given the elevated risk of the overall operation and the coordination required between the engine room, the bridge, and the counterpart vessel." },
+      responsibilities: [
+        { en: "Remain in the position assigned by the supervising engineer, observing without independently acting on what is seen" },
+        { en: "Observe how the engine room maintains readiness to manoeuvre throughout the operation, noting what is monitored continuously" },
+        { en: "Observe cargo pump or ballast operations, if assigned to assist, exactly as instructed and without expanding the assigned role" },
+        { en: "Ask questions once the operation is safely completed, focusing on how the engine room's readiness supported the overall operation" },
+        { en: "Record observations about engine room coordination during STS in the Training Record Book" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, with particular attention to the heightened risk of this operation" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment as instructed" },
+        { en: "Training Record Book" },
+      ],
+      risks: [
+        { en: "Underestimating the importance of continuous engine room readiness because the visible action is happening elsewhere on the vessel" },
+        { en: "Attempting to assist beyond an assigned task during a high-risk operation" },
+        { en: "Missing the significance of continuous monitoring, focusing only on any visible pump or valve operation" },
+        { en: "Assuming the engine room's role is minor because it is less visible than the deck team's" },
+      ],
+      bestPractices: [
+        { en: "Recognize that engine room readiness during STS is as critical as the visible rigging work happening on deck, even though it is less visible" },
+        { en: "Stay exactly where positioned, regardless of how routine the operation appears to be proceeding" },
+        { en: "Pay attention to how quickly the engine room could respond to an unplanned request from the bridge" },
+        { en: "Treat every STS operation with the same level of attention, regardless of how many you have observed" },
+      ],
+      commonMistakes: [
+        { en: "Assuming the engine room's contribution is secondary because the main visible activity is elsewhere" },
+        { en: "Losing attentiveness because the engine room's part of the operation appears uneventful" },
+        { en: "Attempting to help with cargo pump or ballast operations beyond what was assigned" },
+        { en: "Missing how continuous readiness, not a single visible action, is what makes the engine room's contribution real" },
+      ],
+      professionalTips: [
+        { en: "STS operations depend on more than what is visible on deck — the engine room's continuous readiness is part of what keeps the whole operation safe" },
+        { en: "What looks like waiting in the engine room during STS is often active monitoring — learn to recognize the difference" },
+        { en: "The coordination between the engine room and the bridge during STS is a preview of the communication discipline you will need as a watchkeeping officer" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e6-l1" }, { kind: "lesson", lessonId: "e6-l2" }],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Cadet gets the most hands-on experience of the whole training programme — assisting the Motorman, Oiler, and engineers with real engine room maintenance tasks under close supervision, learning proper technique from the very people who perform it daily. Unlike the more observational phases, maintenance offers genuine opportunities to practice skills directly, provided every task is properly supervised and the Cadet never exceeds their demonstrated competence." },
+      responsibilities: [
+        { en: "Assist with assigned maintenance tasks (routine rounds, basic component maintenance, cleaning, lubrication) exactly as instructed, under direct supervision from the Motorman, Oiler, or an assigned engineer" },
+        { en: "Ask for a demonstration before attempting an unfamiliar task, rather than guessing at the correct technique" },
+        { en: "Report task progress and completion honestly, including any part not confidently understood" },
+        { en: "Observe how the supervising rating or engineer inspects work and decides whether it meets standard, connecting this to the broader concept of quality verification" },
+        { en: "Record maintenance skills practiced and techniques learned in the Training Record Book" },
+        { en: "Follow all PPE and safety requirements exactly as instructed for the specific task, particularly around hot surfaces, moving parts, and chemical handling" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task" },
+        { en: "Maintenance tools and materials, used only as instructed and under supervision" },
+        { en: "Training Record Book" },
+      ],
+      risks: [
+        { en: "Attempting a task technique without having it properly demonstrated first, risking poor quality work or injury" },
+        { en: "Overstating confidence in a task to avoid appearing inexperienced, then performing it incorrectly" },
+        { en: "Missing the opportunity to understand why a maintenance standard exists, treating the task only as a mechanical action" },
+        { en: "Using tools, products, or procedures incorrectly due to insufficient supervision or unclear instruction, with particular risk given the hazards of the engine room environment" },
+      ],
+      bestPractices: [
+        { en: "Ask to see a task demonstrated before attempting it yourself, even if it looks straightforward" },
+        { en: "Be honest about your confidence level for a given task — supervision exists precisely to catch what you don't yet know" },
+        { en: "Watch how the supervising rating or engineer inspects finished work, not only how they perform it" },
+        { en: "Use every maintenance task as a chance to build real technique, since these are skills you will rely on directly as a Motorman, Oiler, or officer later" },
+      ],
+      commonMistakes: [
+        { en: "Attempting a technique without asking for a demonstration first" },
+        { en: "Claiming more confidence in a task than is genuinely felt, out of concern about appearing inexperienced" },
+        { en: "Treating a maintenance task as a box to check rather than a skill to build" },
+        { en: "Rushing a task without a clear understanding of the standard it needs to meet" },
+      ],
+      professionalTips: [
+        { en: "There is no reward for pretending to already know a technique — asking for a demonstration is exactly what this stage of your career is for" },
+        { en: "The maintenance skills you build now as a Cadet are the same ones you'll be expected to already have as a rating or officer — take them seriously" },
+        { en: "Watching how work gets inspected teaches you as much as watching how it gets done" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Cadet has an assigned station on the muster list, like every other crew member, but their role there is strictly supervised — following the instructions of the officer or rating in charge of that station, never acting independently. Drills and, if it ever occurs, a genuine emergency are among the most important learning moments of the whole training programme: the Cadet is seeing, in real time, how the calm structure they have observed during routine engine room operations holds up under pressure." },
+      responsibilities: [
+        { en: "Proceed immediately to the assigned muster station upon hearing the alarm, exactly as required by the muster list" },
+        { en: "Follow the instructions of the officer or rating in charge of the station precisely, without independently deciding on an action" },
+        { en: "Observe how the station is organized, how the team leader communicates, and how information flows to and from command during drills" },
+        { en: "Ask questions after a drill is complete, focusing on what was done and why, rather than during the exercise itself" },
+        { en: "Record observations from drills and, if applicable, genuine emergencies in the Training Record Book" },
+        { en: "Take every drill as seriously as a genuine emergency, participating fully rather than treating it as a formality" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list" },
+        { en: "Training Record Book" },
+      ],
+      risks: [
+        { en: "Treating a drill as a formality rather than genuine practice, reducing its training value" },
+        { en: "Acting on personal initiative during an emergency or drill rather than following the station leader's instructions" },
+        { en: "Missing the value of the drill by focusing only on personal actions rather than observing the team's overall coordination" },
+        { en: "Failing to ask questions afterward, losing the opportunity to understand decisions made under pressure" },
+      ],
+      bestPractices: [
+        { en: "Treat every drill with full seriousness — the habits practiced in a drill are the ones that will actually be used in a real emergency" },
+        { en: "Follow the station leader's instructions precisely, even if the reason is not yet fully clear — ask afterward" },
+        { en: "Watch how the team leader communicates under pressure, not only what actions are performed" },
+        { en: "Use the post-drill debrief actively, asking specific questions about decisions or communications observed" },
+      ],
+      commonMistakes: [
+        { en: "Going through the motions of a drill without genuine engagement" },
+        { en: "Acting independently during an emergency situation instead of following the assigned station leader" },
+        { en: "Focusing only on personal tasks during a drill and missing the broader team coordination" },
+        { en: "Skipping the opportunity to ask questions once a drill is complete" },
+      ],
+      professionalTips: [
+        { en: "How you take a drill is how you will take the real thing — there is no separate 'serious mode' you can switch into later" },
+        { en: "The calmest-looking emergency responses are usually the ones that have been drilled the most seriously, not the ones with the least at stake" },
+        { en: "Watching a team leader communicate clearly under pressure during a drill teaches you more about leadership than almost anything else in your training" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l8" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "An Oiler asks you to 'clean up around that pump' before a scheduled inspection, but does not specify exactly what needs to be removed or to what standard. You are fairly sure you understand what is meant." },
+      mission: { en: "Decide whether to proceed on your best understanding or clarify the instruction first." },
+      expectedActions: [
+        { en: "Ask a quick clarifying question before starting, even if you feel reasonably confident" },
+        { en: "Confirm the expected standard (how thoroughly, what specifically to remove or avoid disturbing) rather than assuming" },
+        { en: "Proceed only once the instruction is genuinely clear" },
+        { en: "Report back honestly if partway through the task you realize your understanding was incomplete" },
+      ],
+      why: [{ en: "'Fairly sure' is not the same as certain, and a Cadet's job at this stage is to build the habit of confirming understanding, not to prove independence by guessing correctly. Asking costs a few seconds; redoing a task around sensitive equipment, or doing it to the wrong standard before an inspection, costs more." }],
+      commonMistakes: [
+        { en: "Proceeding on assumption to avoid seeming unsure" },
+        { en: "Not mentioning partway through that the instruction turned out to be less clear than expected" },
+        { en: "Completing the task to a standard that was never actually confirmed" },
+      ],
+      safetyPoints: [{ en: "Cleaning around machinery may involve chemicals, hot surfaces, or components that should not be disturbed — an unclarified instruction can turn a simple task into a safety or equipment issue." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "During a supervised task, you notice an experienced Motorman skip a step that you learned in your training is supposed to be mandatory. The Motorman does not seem concerned, and the task is completed without incident." },
+      mission: { en: "Decide how to respond to what you observed, given your position as a Cadet with no supervisory authority." },
+      expectedActions: [
+        { en: "Do not confront the Motorman directly or assume you must have misunderstood the training material" },
+        { en: "Note the observation clearly and factually in your Training Record Book or personal notes" },
+        { en: "Raise the question with your supervising officer (e.g. Chief Engineer) at an appropriate moment, framed as a genuine question rather than an accusation" },
+        { en: "Let the officer determine what, if anything, needs to be addressed" },
+      ],
+      why: [{ en: "A Cadet has no authority to correct a rating's practice directly, but observing a discrepancy between trained standard and actual practice is exactly the kind of learning moment the TRB exists to capture — the right response is to raise it through the proper channel, not to ignore it or act on it alone." }],
+      commonMistakes: [
+        { en: "Assuming the shortcut must be fine simply because an experienced person did it without consequence" },
+        { en: "Saying nothing at all, losing a genuine learning opportunity" },
+        { en: "Confronting the Motorman directly, which is outside the Cadet's role" },
+      ],
+      safetyPoints: [{ en: "The absence of an immediate consequence does not mean a skipped safety step was actually safe — this is precisely the kind of normalization that a fresh, trained perspective can help catch." }],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l6" }, { kind: "lesson", lessonId: "s6-l3" }],
+    },
+    {
+      situation: { en: "You are shadowing a busy watchkeeping engineer during a demanding period with multiple alarms and parameter checks happening in quick succession. You are struggling to follow everything that is happening." },
+      mission: { en: "Decide how to handle feeling behind without disrupting the engineer's ability to manage the situation." },
+      expectedActions: [
+        { en: "Do not pretend to understand more than you do" },
+        { en: "Stay out of the engineer's way and avoid asking questions during the busiest moments" },
+        { en: "Observe as much as you can even if you cannot follow every detail" },
+        { en: "Ask your questions afterward, once the watch has calmed or ended, being specific about what you did not follow" },
+      ],
+      why: [{ en: "A demanding watch is not the moment for a Cadet's questions, however genuine — the engineer's full attention belongs to the situation, and a Cadet's role there is to absorb what can be absorbed and fill the gaps afterward through honest, specific questions." }],
+      commonMistakes: [
+        { en: "Interrupting the engineer during a busy moment with a question that could wait" },
+        { en: "Pretending to have followed everything to avoid looking lost" },
+        { en: "Failing to follow up afterward, letting the confusion simply pass unaddressed" },
+      ],
+      safetyPoints: [{ en: "A distracted watchkeeping engineer during a genuinely demanding period is a real safety risk — protecting the engineer's attention during those moments is itself part of the Cadet's responsibility." }],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Ask questions at the right moment, not the most convenient one — timing your question well is itself a professional skill you are building." },
+    { en: "Never pretend to understand something you don't — a Cadet who admits confusion learns faster than one who hides it." },
+    { en: "Every task, however small, is either done correctly and understood, or it isn't worth much — chase the understanding, not just the completion." },
+    { en: "Your Training Record Book is not paperwork — it is the only record that will later prove you actually learned what you experienced." },
+    { en: "Watch how experienced engine room personnel handle the moments that don't go according to plan — that is where the real skill shows." },
+    { en: "Observation is not passive — a Cadet who is genuinely watching gauges, listening to machinery, and following reasoning is doing real work, even standing still." },
+    { en: "The reputation you build as a Cadet follows you into your first real rank — professionalism now shapes the trust you're given later." },
+    { en: "You are not expected to know yet — you are expected to want to know, and to say so honestly when you don't." },
+  ],
+
+  professionalMindset: [
+    { en: "See yourself as a learner, not yet an operator. Every task assigned to you is a training opportunity first and a job second — your value at this stage is measured by what you understand, not by what you can do unsupervised." },
+    { en: "Treat supervision as protection, not restriction. The close oversight you experience now exists to let you build real skill safely in an environment full of genuine hazards — it is not a lack of trust, it is exactly the structure every engineer before you learned within." },
+    { en: "Assume your understanding is partial until confirmed. A task that seems obvious may still hide a detail you have not yet encountered — checking your understanding is a habit, not a sign of weakness." },
+    { en: "Notice the gap between what is trained and what is practiced. Real engine room life sometimes differs from what you learned ashore — your job is to observe this honestly and raise it through the proper channel, not to silently adopt or silently reject it." },
+    { en: "Hold two roles at once: contributing crew member and active learner. You are genuinely useful to the team even while you are still learning — these two things are not in tension, they happen together." },
+    { en: "Recognize that today's supervised task is tomorrow's independent responsibility. Every skill you practice under guidance now is one you will eventually perform alone — learn it as if that day were close, because it is." },
+    { en: "Accept that your questions serve everyone, not just you. A clarifying question asked at the right moment protects the task, the machinery, the team, and your own understanding all at once." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Training Record Book (TRB) — The Cadet's primary and most important document, recording engine room tasks observed and performed, competencies demonstrated, and reflections on what was learned. Unlike every operational rank's documentation, the TRB exists entirely for the Cadet's own benefit — it is the official evidence of seagoing training that supports certification as an Engineer Officer of the Watch." },
+    { en: "Sea time and service records — The Cadet ensures their sea time is accurately recorded and confirmed by the Chief Engineer or Master as required by flag State and STCW regulations, since this record directly determines eligibility for certification exams." },
+    { en: "Task and competency sign-offs — Where the training programme requires a supervising officer's or rating's signature confirming a specific competency has been demonstrated, the Cadet ensures this is obtained honestly, only once the competency is genuinely understood, not simply completed once." },
+    { en: "Personal notes and observations — Beyond the formal TRB, the Cadet is encouraged to keep personal notes on machinery systems, procedures, and terminology observed, supporting deeper understanding and later exam preparation." },
+    { en: "Why this matters: Every operational rank's documentation exists to prove something happened correctly aboard the vessel; the Cadet's documentation exists to prove that genuine learning happened within the Cadet. A TRB completed honestly, thoroughly, and with real reflection is worth far more — both for certification and for the Cadet's actual competence later — than one filled in quickly to satisfy a requirement. The habits of honest, careful documentation built here will carry directly into the professional documentation responsibilities of every rank that follows." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Following environmental procedures under supervision — The Cadet follows all waste segregation, oil handling, and pollution prevention procedures exactly as instructed, without independently deciding how a substance or waste item should be handled." },
+    { en: "Observing environmental decision-making — The Cadet watches how the Chief Engineer or watchkeeping engineer make environmental decisions (e.g. authorizing a bilge water discharge, handling an oil record book entry) and asks questions afterward to understand the reasoning, particularly the reference to MARPOL requirements and documentation." },
+    { en: "Reporting anything observed — If the Cadet notices anything unusual (an unexpected leak, an unclear waste handling practice), they report it to a supervising officer or rating immediately rather than assuming it is not their place to mention it." },
+    { en: "Building environmental awareness for future responsibility — The Cadet records observations about environmental procedures and decision-making in the Training Record Book, recognizing that environmental compliance responsibility will grow substantially at every rank ahead, particularly given how central it is to the engine department's daily work." },
+    { en: "Why this matters: The Cadet carries no independent environmental authority, but the habits of attention and honest reporting built now are exactly what will be expected, at a much higher level of responsibility, once qualified as an officer. A Cadet who learns to notice and question environmental practice early builds the foundation for the environmental governance responsibilities that await at every subsequent rank — responsibilities that, in the engine department, are rarely far from any given day's work." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Ask questions of any crew member or officer to clarify an instruction or understand a procedure" },
+      { en: "Report anything observed that seems unclear, unsafe, or inconsistent with training, to a supervising officer or rating" },
+      { en: "Refuse to proceed with a task you do not understand or feel unprepared for, requesting clarification or demonstration first" },
+      { en: "Request feedback on your performance from any supervising officer or rating" },
+    ],
+    youCannot: [
+      { en: "Perform any task independently without a supervising officer or rating present or explicitly authorizing it" },
+      { en: "Make any decision affecting the vessel's safety, machinery operation, or environmental compliance — every action is supervised and verified" },
+      { en: "Stand an independent watch, or emergency station role, without direct supervision" },
+      { en: "Correct or discipline any crew member, regardless of what is observed — any concern is raised through a supervising officer, never acted on directly" },
+      { en: "Assume that a task performed correctly once means it can now be performed unsupervised" },
+      { en: "Sign off, verify, or confirm any operational readiness, safety check, or compliance matter on the vessel's behalf" },
+      { en: "Represent the vessel or the company in any interaction with external parties (shore engineers, surveyors, authorities)" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Pretending to understand instead of asking — Nodding along or proceeding on a guess to avoid appearing inexperienced, rather than confirming genuine understanding." },
+    { en: "Treating supervision as a formality — Going through the motions of an assigned task without engaging with why it matters or what standard it needs to meet." },
+    { en: "Waiting to be taught instead of actively observing — Remaining passive during training, expecting knowledge to arrive rather than seeking it out through active attention and questions." },
+    { en: "Interrupting at the wrong moment — Asking a genuine question during a busy or safety-critical moment instead of saving it for an appropriate time." },
+    { en: "Filling in the Training Record Book carelessly — Completing TRB entries quickly to satisfy a requirement rather than reflecting honestly on what was actually learned." },
+    { en: "Overestimating readiness after a single supervised success — Assuming a task performed correctly once under supervision means it can now be performed independently." },
+    { en: "Staying silent about something inconsistent or unclear — Noticing a gap between trained standard and observed practice, or an unclear instruction, and saying nothing rather than raising it appropriately." },
+    { en: "Confusing eagerness to help with readiness to act alone — Attempting to assist beyond an assigned role during a safety-critical operation, adding risk rather than value." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Wiper or, depending on the training pathway and company structure, direct progression toward Engineer Officer of the Watch certification upon completing sea time and academic requirements — the Cadet's path is defined by the specific cadetship programme and flag State requirements rather than a single universal next step. Engine room rating structures (Wiper, Motorman, Oiler) vary between companies and vessel types, and the Cadet's actual next step should be confirmed against their specific training programme." },
+    { en: "Skills to develop: Consistent, hands-on engine room competence (basic maintenance, rounds, monitoring) to the standard expected of an experienced rating; growing confidence in watchkeeping fundamentals; the discipline of thorough, honest self-documentation that will carry into professional documentation at every future rank; increasing initiative within the bounds of what is actually authorized." },
+    { en: "Recommended experience: Completion of the required sea time with genuine, varied exposure across engine room systems and operations (not just repeated familiar tasks), a Training Record Book reflecting real engagement and reflection rather than minimal compliance, and demonstrated reliability and honesty in reporting — the qualities supervising officers remember when a Cadet is later trusted with real responsibility." },
+    { en: "Certificates typically required: Requirements vary significantly by flag State, training institution, and company cadetship structure. Progression typically requires completion of approved sea time, a satisfactorily completed Training Record Book, and passing the required academic and practical examinations for the Engineer Officer of the Watch certificate of competency." },
+    { en: "Recommended MAP courses: All foundational Engine lessons (machinery systems, watchkeeping, safety) relevant to the cadetship syllabus; Role On Board – Fourth Engineer (to preview the officer path); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving beyond Cadet means the supervision that has protected you begins to lighten, and the habits built now — asking rather than guessing, documenting honestly, observing actively — become the foundation you will rely on the first time no one is checking your work. The transition is not from learner to non-learner; it is from a learner who is watched closely to one who must watch themselves." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "e1-l1", label: { en: "Main Engine" } },
+    { kind: "lesson", lessonId: "e1-l2", label: { en: "Auxiliaries & Electricity" } },
+    { kind: "lesson", lessonId: "e1-l3", label: { en: "Stability & Loading" } },
+    { kind: "lesson", lessonId: "e1-l4", label: { en: "Fire Safety & CO2 System" } },
+    { kind: "lesson", lessonId: "e1-l5", label: { en: "Survival & EPIRB" } },
+    { kind: "lesson", lessonId: "e1-l6", label: { en: "Maintenance & Troubleshooting" } },
+    { kind: "lesson", lessonId: "e1-l7", label: { en: "Engine Watchkeeping" } },
+    { kind: "lesson", lessonId: "e1-l8", label: { en: "Emergency Procedures" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l2", label: { en: "Common Ship Emergencies & Immediate Actions" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — foundational engine room and machinery terminology" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on cadetship structure, sea time requirements, and Engineer Officer of the Watch certification pathway by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and basic machinery layouts to build early familiarity" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on training requirements, TRB documentation, or basic engine room practice" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Engine Cadet through to Engineer Officer" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document sea time and early training achievements" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_FOURTH_ENGINEER", label: { en: "Role On Board — Fourth Engineer" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "Assigned tasks exactly as instructed, under direct supervision, without independent judgment" },
+      { en: "Training Record Book entries, honestly and promptly after each relevant activity" },
+      { en: "Requests for clarification, demonstration, or feedback whenever needed" },
+    ],
+    iMonitor: [
+      { en: "My own understanding of each task, procedure, or explanation, checking rather than assuming it is complete" },
+      { en: "How experienced engine room personnel and officers coordinate, communicate, and make decisions, as a continuous learning activity" },
+      { en: "Any gap between what I was trained to expect and what I observe in actual practice" },
+    ],
+    iReport: [
+      { en: "Task completion, honestly, including anything not fully understood" },
+      { en: "Anything observed that seems unclear, unsafe, or inconsistent with training, to a supervising officer or rating" },
+      { en: "My own uncertainty whenever a task or instruction is not genuinely clear" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any independent decision affecting the vessel's safety, machinery operation, or environmental compliance" },
+      { en: "My own progression to unsupervised task performance, without explicit confirmation from a supervising officer or rating" },
+      { en: "Any correction or instruction directed at another crew member, regardless of what is observed" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Cadetship training pathway showing sea time milestones toward Engineer Officer certification." } },
+    { kind: "image", caption: { en: "Example of a completed Training Record Book (TRB) entry." } },
+    { kind: "diagram", caption: { en: "Engine department organization chart showing the Cadet's position and reporting lines." } },
+    { kind: "video", caption: { en: "Demonstration of a well-conducted supervised task (e.g. basic maintenance with a Motorman)." } },
+    { kind: "document", caption: { en: "Sample sea time / service record confirmation form." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
-// "master", "deck_cadet" and "os" — remaining ranks are still pending content.
+// "master", "deck_cadet", "os" and "engine_cadet" — remaining ranks are
+// still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -4871,6 +5442,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   master: MASTER_CARD,
   deck_cadet: DECK_CADET_CARD,
   os: OS_CARD,
+  engine_cadet: ENGINE_CADET_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
