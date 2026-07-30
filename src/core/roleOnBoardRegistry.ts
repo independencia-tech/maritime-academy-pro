@@ -5986,11 +5986,579 @@ const WIPER_CARD: RoleOnBoardCard = {
   ],
 };
 
+// ── MOTORMAN ───────────────────────────────────────────────────
+// mapReferences resolved via Mission D (see
+// audits/2026-07-30_role-on-board-motorman-mapreferences.md) and the
+// Product Owner's final decisions on that report. All lessonId used are
+// verified to exist in lessonRegistry.ts and to target "motorman". As
+// identified in the Mission D report, e1-l7 (Engine Watchkeeping) — the
+// most directly relevant lesson for this card's watch-support content —
+// excludes "motorman" from its targetRanks; this is a real content gap,
+// not a behavioral/meta skill gap, and was deliberately NOT corrected
+// here (targetRanks in lessonRegistry.ts was left untouched per explicit
+// instruction). Locations with no validated correspondence are left as
+// mapReferences: [] intentionally (practical scenario 2, the
+// "Watch-support duties" skill — blocked by the e1-l7 exclusion — and
+// several behavioral/meta skills that no existing lesson content covers).
+const MOTORMAN_CARD: RoleOnBoardCard = {
+  rankId: "motorman",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Motorman is an engine room rating with a broader scope of responsibility than the Wiper — carrying out maintenance tasks, assisting during watchkeeping, operating basic engine room equipment, and performing routine inspections with a growing degree of independent judgment. Unlike the Wiper, whose tasks remain deliberately narrow and closely supervised, the Motorman is trusted to complete a wider range of tasks with less constant oversight, while still working under the direction of the Oiler, watchkeeping engineer, or Chief Engineer for anything beyond routine, well-defined work." },
+    { en: "The Motorman's judgment is exercised within a defined scope: recognizing when a routine task requires escalation, and recognizing abnormal sounds, vibrations, leaks, or operating conditions that require reporting, correctly interpreting instructions without needing every detail specified, and maintaining safe, reliable execution across a wider variety of engine room tasks than the Wiper handles. The Motorman is not yet expected to interpret ambiguous or unfamiliar situations independently at the level of an Oiler or officer — that judgment still belongs above the Motorman when a situation genuinely departs from the routine." },
+    { en: "The Motorman's progression is measured by demonstrated competence across a widening range of maintenance and watch-support tasks, and by the confidence the Oiler, watchkeeping engineer, or Chief Engineer places in the Motorman's judgment as that competence is repeatedly demonstrated." },
+    { en: "The Motorman works closely with the Oiler and watchkeeping engineers, often assisting directly during watch duties and maintenance work, and may help coach a Wiper on straightforward tasks under the oversight of a senior rating or engineer." },
+    { en: "Where the Wiper executes precisely defined, lower-risk tasks under close supervision, the Motorman is trusted to complete a broader set of tasks correctly with less constant checking — but still defers upward the moment a situation requires judgment beyond what has been explicitly covered. Knowing when to stop and seek guidance is part of the Motorman's professional competence, not a sign of weakness." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Oiler or watchkeeping engineer (day-to-day task supervision and watch-related duties)" },
+      { en: "Chief Engineer (overall standards and training)" },
+    ],
+    worksWith: [
+      { en: "Oiler, with whom the Motorman frequently works during watchkeeping and maintenance" },
+      { en: "Wiper, whom the Motorman may coach on straightforward tasks under senior oversight" },
+      { en: "Watchkeeping engineers, during watch-support duties" },
+    ],
+    mentors: [
+      { en: "The Oiler and watchkeeping engineers, who guide the Motorman's technique and judgment" },
+      { en: "The Chief Engineer, who oversees standards and training progression across the rating structure" },
+    ],
+    supports: [
+      { en: "The Motorman may help coach a Wiper on straightforward tasks, but does so under the oversight of a senior rating or engineer rather than as an independent supervisory responsibility" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Engine room maintenance execution across a range of tasks" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }] },
+    { label: { en: "Watch-support duties and basic monitoring assistance" }, mapReferences: [] },
+    { label: { en: "Recognizing when a task requires escalation beyond routine execution" }, mapReferences: [] },
+    { label: { en: "Following instructions precisely while exercising sound judgment within a defined scope" }, mapReferences: [] },
+    { label: { en: "Basic safety awareness and PPE compliance" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l3" }, { kind: "lesson", lessonId: "s6-l1" }] },
+    { label: { en: "Guiding junior ratings (Wiper) on straightforward tasks under senior oversight" }, mapReferences: [] },
+    { label: { en: "Honest self-assessment and reporting of task completion and observations" }, mapReferences: [] },
+    { label: { en: "Professional conduct and reliability within the engine team" }, mapReferences: [] },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Motorman carries out a wider range of pre-departure checks than the Wiper — fluid levels, auxiliary machinery status, basic system checks — with a degree of independent judgment about what 'normal' looks like, while still escalating anything uncertain to the Oiler, watchkeeping engineer, or Chief Engineer rather than deciding alone. The Motorman's contribution here is genuine technical verification, not just task completion, though the final judgment on overall readiness remains with the supervising engineer." },
+      responsibilities: [
+        { en: "Carry out assigned pre-departure checks (fluid levels, auxiliary machinery status, standby equipment) with judgment about what constitutes a normal reading or condition, escalating anything uncertain" },
+        { en: "Assist the watchkeeping engineer or Oiler with main engine and propulsion readiness verification, contributing observations rather than only following instructions step by step" },
+        { en: "Report check results clearly and honestly, distinguishing what was confirmed normal from what requires further attention" },
+        { en: "Ask for clarification when a reading or condition is genuinely ambiguous, rather than assuming it is fine or assuming it is a problem" },
+        { en: "Follow all PPE and safety requirements exactly as instructed" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (ear protection, safety shoes, coveralls, gloves)" },
+        { en: "Engine room monitoring instruments and basic tools" },
+        { en: "Departure checklist / work list" },
+      ],
+      risks: [
+        { en: "Misjudging a borderline reading as normal without escalating it, when a more experienced rating or engineer would have flagged it" },
+        { en: "Overstating confidence in a check result to move faster, missing something that needed attention" },
+        { en: "Escalating every minor variation unnecessarily, rather than developing genuine judgment about what warrants attention" },
+        { en: "Rushing checks under time pressure, missing a step that would normally be caught" },
+      ],
+      bestPractices: [
+        { en: "Develop a genuine sense of what 'normal' looks like for each system, rather than mechanically following a checklist without understanding it" },
+        { en: "Escalate anything genuinely uncertain, but distinguish uncertainty from routine variation as your judgment develops" },
+        { en: "Report specific, factual observations rather than vague reassurances" },
+        { en: "Ask the Oiler or watchkeeping engineer to explain their reasoning when a borderline reading is discussed, to build your own judgment over time" },
+      ],
+      commonMistakes: [
+        { en: "Treating a borderline reading as acceptable without genuinely evaluating it" },
+        { en: "Escalating routine variations unnecessarily out of excess caution, without developing real judgment" },
+        { en: "Reporting a vague 'all fine' instead of specific, factual results" },
+        { en: "Rushing pre-departure checks because they feel routine" },
+      ],
+      professionalTips: [
+        { en: "Your judgment on what's 'normal' is being built right now, check by check — take each one seriously, not just as a box to tick" },
+        { en: "The line between a variation and a genuine concern is exactly what experience teaches you — ask about the ones you're unsure of" },
+        { en: "A Motorman who reports specific observations, not just conclusions, is far more useful to whoever makes the final readiness call" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l1" }, { kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Motorman assists in the engine room or engine control room with a more active role than the Wiper — supporting the watchkeeping engineer's execution of engine telegraph commands and standby procedures, and contributing observations about engine response rather than only executing assigned tasks. The Motorman does not make manoeuvring decisions, but is trusted to notice and report when something doesn't look or sound right." },
+      responsibilities: [
+        { en: "Assist the watchkeeping engineer with executing engine orders and monitoring engine response, escalating anything that seems abnormal" },
+        { en: "Maintain awareness of engine parameters and behaviour throughout the manoeuvre, reporting observations rather than waiting to be asked" },
+        { en: "Carry out assigned tasks precisely, while contributing relevant observations when appropriate" },
+        { en: "Ask for clarification if an instruction is unclear, rather than guessing during an active manoeuvre" },
+        { en: "Follow PPE and safety requirements exactly, with no exceptions during active operations" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (ear protection, safety shoes, coveralls, gloves)" },
+        { en: "Engine room monitoring and control equipment, used under supervision" },
+        { en: "Portable radio, if assigned for communication" },
+      ],
+      risks: [
+        { en: "Noticing an abnormal engine response but hesitating to report it, assuming the watchkeeping engineer has already seen it" },
+        { en: "Misjudging the significance of an observation, either over- or under-reporting its urgency" },
+        { en: "Standing too close to moving machinery due to inattention during a demanding moment" },
+        { en: "Losing focus during a routine-seeming manoeuvre, missing an early sign of a developing issue" },
+      ],
+      bestPractices: [
+        { en: "Report engine observations proactively rather than waiting to be asked, particularly anything that departs from what's expected" },
+        { en: "Trust your growing sense of what's normal, but escalate genuine uncertainty rather than deciding alone" },
+        { en: "Stay engaged throughout the manoeuvre, even when it is proceeding smoothly" },
+        { en: "Communicate observations clearly and specifically, using the terminology the team relies on" },
+      ],
+      commonMistakes: [
+        { en: "Assuming someone else has already noticed an abnormal observation" },
+        { en: "Either over-escalating minor variations or under-reporting genuine concerns, without a clear sense of the difference yet" },
+        { en: "Losing attentiveness during a routine manoeuvre" },
+        { en: "Communicating an observation vaguely rather than specifically" },
+      ],
+      professionalTips: [
+        { en: "A Motorman who reports early and factually is more valuable than one who waits to be sure — let the watchkeeping engineer decide what matters" },
+        { en: "Developing your sense of what's routine versus what's genuinely worth flagging takes deliberate attention, manoeuvre after manoeuvre" },
+        { en: "Precision in communication is what makes your observations actually useful under time pressure" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l1" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Motorman regularly assists the watchkeeping engineer with monitoring duties — reading gauges, checking parameters, conducting rounds — with a genuine contribution to the watch rather than only performing assigned tasks. The Motorman does not stand an independent watch, but is trusted to interpret routine readings and flag genuine concerns without needing every observation double-checked." },
+      responsibilities: [
+        { en: "Assist the watchkeeping engineer with monitoring tasks (parameter checks, rounds, logging) with growing independence in interpreting routine readings" },
+        { en: "Report anything observed that departs from normal conditions promptly and specifically, distinguishing what seems routine from what seems genuinely concerning" },
+        { en: "Ask the watchkeeping engineer to clarify reasoning behind a decision when the opportunity allows, to build understanding for future independent judgment" },
+        { en: "Carry out rounds and checks thoroughly, understanding what each check verifies rather than treating it mechanically" },
+        { en: "Follow engine room communication discipline exactly as demonstrated, including proper use of standard phrases and reporting formats" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring and control equipment" },
+        { en: "Rounds checklist / logging materials" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Misjudging a reading as routine when it actually warranted escalation, due to still-developing judgment" },
+        { en: "Becoming overconfident in interpreting readings independently before genuine competence supports it" },
+        { en: "Losing concentration during a long or repetitive round, missing something worth reporting" },
+        { en: "Treating a round as a mechanical checklist rather than a genuine verification of engine room condition" },
+      ],
+      bestPractices: [
+        { en: "Build genuine understanding of what each reading or check verifies, not just how to record it" },
+        { en: "Report observations with the specific reasoning behind your assessment, so the watchkeeping engineer can quickly confirm or correct your judgment" },
+        { en: "Ask about borderline cases actively, using them as opportunities to develop judgment" },
+        { en: "Maintain the same thoroughness on a routine round as on one where something seems unusual" },
+      ],
+      commonMistakes: [
+        { en: "Treating a reading as routine without genuinely evaluating it against what's normal" },
+        { en: "Assuming independent judgment is appropriate before it has actually been demonstrated and confirmed" },
+        { en: "Rushing through a round mechanically instead of genuinely checking each item" },
+        { en: "Failing to ask about a borderline case, missing a chance to build judgment" },
+      ],
+      professionalTips: [
+        { en: "The gap between recording a reading and understanding what it means is exactly where your judgment develops — don't skip past it" },
+        { en: "Every borderline case you ask about now builds the instinct you'll rely on later as an Oiler" },
+        { en: "A thorough, engaged round on a quiet day is what makes you reliable on a demanding one" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e2-l3" }, { kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Motorman assists the watchkeeping engineer in maintaining machinery readiness for a possible unplanned departure — monitoring auxiliary systems, conducting rounds, and contributing genuine observations about the engine room's standby condition. The Motorman's role during this phase closely resembles routine navigation, but with particular attention to readiness rather than active operation." },
+      responsibilities: [
+        { en: "Assist with monitoring auxiliary machinery and standby systems during the anchor period, interpreting routine readings with growing independence" },
+        { en: "Report anything observed that seems to depart from normal readiness conditions promptly and specifically" },
+        { en: "Conduct rounds thoroughly, understanding what each check confirms about the engine room's readiness to respond if required" },
+        { en: "Ask for clarification on borderline observations, rather than assuming they are fine or assuming they require escalation" },
+        { en: "Follow PPE and safety requirements exactly as instructed" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring equipment" },
+        { en: "Rounds checklist / logging materials" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Assuming the anchor period requires less attention because the vessel is stationary, missing a genuine readiness concern" },
+        { en: "Misjudging a borderline reading during an extended, quieter period due to reduced vigilance" },
+        { en: "Treating routine rounds during anchoring as less important than during active navigation" },
+        { en: "Standing too close to machinery during checks, out of habit or inattention" },
+      ],
+      bestPractices: [
+        { en: "Maintain the same standard of attentiveness and thoroughness during anchoring as during active navigation" },
+        { en: "Treat readiness monitoring as a genuine, ongoing responsibility rather than a formality during a quiet period" },
+        { en: "Report borderline observations for discussion, using them to build judgment" },
+        { en: "Stay aware that the engine room's readiness matters continuously, even when the vessel is not underway" },
+      ],
+      commonMistakes: [
+        { en: "Relaxing vigilance because the vessel is at anchor" },
+        { en: "Treating extended anchor periods as a reason to reduce the thoroughness of rounds" },
+        { en: "Missing a genuine readiness concern due to reduced attentiveness during a quiet phase" },
+        { en: "Standing closer to machinery than necessary during routine checks" },
+      ],
+      professionalTips: [
+        { en: "Readiness during anchoring isn't passive — it's continuously verified, even when nothing visible is happening" },
+        { en: "A quiet anchor period is a good time to sharpen your judgment on borderline readings, without the pressure of active manoeuvring" },
+        { en: "The habits of thoroughness you maintain during quiet periods are what carry through when the pace picks up again" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Motorman takes on a more active role in engine room activity — supporting maintenance work, bunkering operations, and cargo pump support where applicable — with genuine technical contribution rather than only assisting. Port stays intensify the pace of engine room work, and the Motorman's growing competence becomes particularly valuable when multiple activities compete for the team's attention." },
+      responsibilities: [
+        { en: "Carry out assigned maintenance tasks with growing independence, escalating anything beyond demonstrated competence" },
+        { en: "Assist with bunkering operations or cargo pump support (if applicable), contributing genuine technical observations rather than only following instructions" },
+        { en: "Report anything unusual observed during port activity promptly and specifically to the supervising engineer or Oiler" },
+        { en: "Ask for clarification on any task genuinely beyond current competence, rather than attempting it based on general familiarity" },
+        { en: "Follow PPE and safety requirements exactly as instructed, particularly around bunkering and maintenance activities" },
+      ],
+      equipment: [
+        { en: "Engine room maintenance tools and materials" },
+        { en: "Bunkering or cargo pump equipment, where applicable and under appropriate supervision" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Overestimating competence during a busy port stay and attempting a task beyond genuine readiness" },
+        { en: "Missing an observation worth reporting due to the increased pace and simultaneous activity in port" },
+        { en: "Standing too close to active bunkering work due to inattention under pressure" },
+        { en: "Neglecting thoroughness under time pressure during a demanding port stay" },
+      ],
+      bestPractices: [
+        { en: "Distinguish honestly between tasks within your demonstrated competence and those still requiring supervision, even under time pressure" },
+        { en: "Maintain thoroughness and attentiveness despite the increased pace of a port stay" },
+        { en: "Report observations proactively, even during a busy period when attention is stretched" },
+        { en: "Ask for clarification before attempting a genuinely unfamiliar task, regardless of time pressure" },
+      ],
+      commonMistakes: [
+        { en: "Attempting a task beyond genuine competence because the pace of the port stay creates pressure to appear capable" },
+        { en: "Letting thoroughness slip because of the increased pace of work" },
+        { en: "Failing to report something unusual because attention is stretched across more activity" },
+        { en: "Standing too close to bunkering or maintenance work under time pressure" },
+      ],
+      professionalTips: [
+        { en: "Port stays test whether your judgment holds up under pressure — that's exactly when honest self-assessment matters most" },
+        { en: "The busiest moments are when observations matter most, not when they're easiest to skip" },
+        { en: "Genuine competence, demonstrated consistently, is what earns you more responsibility during the next port call" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e6-l1" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "During STS operations, the Motorman assists in the engine room with a more active role than the Wiper — supporting propulsion and manoeuvring readiness, and contributing to cargo pump or ballast operations where the vessel type requires it. The Motorman's judgment here remains within a defined scope: contributing genuine technical observations while deferring to the watchkeeping engineer or Oiler for any decision beyond routine execution, given the elevated risk of the operation." },
+      responsibilities: [
+        { en: "Assist with maintaining propulsion and manoeuvring readiness throughout the operation, monitoring relevant parameters with growing independence" },
+        { en: "Support cargo pump or ballast operations (if applicable), contributing technical observations rather than only following instructions" },
+        { en: "Report anything unusual observed promptly and specifically to the supervising engineer or Oiler" },
+        { en: "Ask for clarification before attempting any task genuinely beyond demonstrated competence" },
+        { en: "Follow PPE and safety requirements exactly as instructed, with particular attention to the heightened risk of this operation" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring and control equipment" },
+        { en: "Cargo pump or ballast system equipment, where applicable" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Underestimating the importance of continuous readiness because the visible action is happening elsewhere on the vessel" },
+        { en: "Overestimating competence to handle an unfamiliar aspect of cargo pump or ballast operations under pressure" },
+        { en: "Missing a significant observation due to divided attention across multiple monitored parameters" },
+        { en: "Losing attentiveness during a long or repetitive phase of the operation" },
+      ],
+      bestPractices: [
+        { en: "Maintain continuous, active monitoring throughout the operation, regardless of how routine it appears" },
+        { en: "Distinguish honestly between tasks within your competence and those requiring escalation, given the elevated risk of STS operations" },
+        { en: "Report observations promptly and specifically, especially anything that could affect the overall operation's safety" },
+        { en: "Treat every STS operation with full attention, regardless of prior experience" },
+      ],
+      commonMistakes: [
+        { en: "Assuming the engine room's contribution is secondary because the main visible activity is elsewhere" },
+        { en: "Attempting to handle an unfamiliar situation independently rather than escalating given the operation's elevated risk" },
+        { en: "Missing an observation due to attention divided across multiple systems" },
+        { en: "Losing attentiveness because the engine room's part of the operation appears uneventful" },
+      ],
+      professionalTips: [
+        { en: "STS operations reward the Motorman who knows precisely where their competence ends and escalation begins" },
+        { en: "Continuous readiness during STS depends on active monitoring, not passive waiting — stay engaged throughout" },
+        { en: "The judgment you build here, knowing when to act and when to escalate, is exactly what defines a reliable Oiler later" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e6-l1" }, { kind: "lesson", lessonId: "e6-l2" }],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Motorman's broader scope of responsibility is most visible — carrying out a wide range of maintenance tasks with growing independence, while still escalating anything beyond demonstrated competence to the Oiler, watchkeeping engineer, or Chief Engineer. Unlike the Wiper, whose maintenance role remains closely supervised, the Motorman is trusted to complete many tasks correctly with less constant checking, and may guide a Wiper on straightforward technique under senior oversight." },
+      responsibilities: [
+        { en: "Carry out a wide range of assigned maintenance tasks (component maintenance, lubrication, basic repairs, inspections) with growing independence as competence is demonstrated" },
+        { en: "Recognize when a maintenance task exceeds demonstrated competence and escalate rather than attempting it based on general familiarity" },
+        { en: "Report task progress and completion honestly, including genuine assessment of what was found and what was done" },
+        { en: "Help coach a Wiper on straightforward maintenance technique when appropriate, under the oversight of a senior rating or engineer" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, particularly around hot surfaces, moving parts, and chemical handling" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task" },
+        { en: "Maintenance tools and materials, used with growing independence" },
+        { en: "Planned Maintenance System (PMS) references, where accessible to the rating structure" },
+      ],
+      risks: [
+        { en: "Attempting a maintenance task beyond genuine competence, risking poor quality work, equipment damage, or injury" },
+        { en: "Overstating confidence in a completed task rather than honestly reporting uncertainty" },
+        { en: "Missing an underlying issue by treating a task as routine when it actually revealed something worth escalating" },
+        { en: "Coaching a Wiper on a technique not yet fully mastered, passing along an incomplete or incorrect method" },
+      ],
+      bestPractices: [
+        { en: "Distinguish honestly between tasks within demonstrated competence and those requiring escalation, even when time pressure encourages moving forward alone" },
+        { en: "Report specific, factual findings from maintenance work, not just 'task complete'" },
+        { en: "Verify your own technique is genuinely correct before coaching a Wiper on it" },
+        { en: "Use every maintenance task as an opportunity to build toward the broader competence expected of an Oiler" },
+      ],
+      commonMistakes: [
+        { en: "Attempting a task beyond genuine competence to avoid appearing limited" },
+        { en: "Reporting a task as complete without genuinely confirming the quality of the work" },
+        { en: "Missing a developing issue because a task was treated as routine" },
+        { en: "Coaching a Wiper on technique that hasn't itself been fully verified as correct" },
+      ],
+      professionalTips: [
+        { en: "Knowing precisely where your competence ends is more valuable than appearing to know everything" },
+        { en: "A maintenance task done thoroughly and reported honestly builds more trust than one rushed to completion" },
+        { en: "Coaching a Wiper well means being certain of your own technique first — check yourself before you teach" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Motorman proceeds to an assigned muster station and takes on a genuine operational role within the emergency team — often a more substantial task than the Wiper's, given the Motorman's broader technical competence — while still following the direction of the officer or rating in charge of the station rather than making independent decisions about the overall response." },
+      responsibilities: [
+        { en: "Proceed immediately to the assigned muster station upon hearing the alarm, exactly as required by the muster list" },
+        { en: "Carry out the assigned task within the emergency team competently and reliably, contributing technical judgment within the scope instructed by the station leader" },
+        { en: "Report task completion, difficulty, or any relevant observation clearly and promptly to the station leader" },
+        { en: "Ask for clarification if an instruction during a drill or emergency is not understood, rather than guessing" },
+        { en: "Take every drill with full seriousness, treating it as genuine practice for the emergency response expected at every rank" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list" },
+        { en: "Emergency equipment specific to the assigned station" },
+      ],
+      risks: [
+        { en: "Hesitating or improvising when an instruction is unclear, rather than asking immediately" },
+        { en: "Overestimating the scope of independent decision-making appropriate during a genuine emergency" },
+        { en: "Missing a relevant technical observation while focused narrowly on the assigned task" },
+        { en: "Treating a drill as less serious than a genuine emergency, reducing its training value" },
+      ],
+      bestPractices: [
+        { en: "Execute the assigned task competently and confirm completion clearly to the station leader" },
+        { en: "Contribute relevant technical observations, but defer decisions about the overall response to the station leader" },
+        { en: "Ask immediately if an instruction is unclear — hesitation costs more time than a quick question" },
+        { en: "Treat every drill exactly as you would a genuine emergency, building the habits that will matter when it counts" },
+      ],
+      commonMistakes: [
+        { en: "Guessing at an unclear instruction instead of asking immediately" },
+        { en: "Assuming a level of independent authority during an emergency beyond what has actually been granted" },
+        { en: "Missing a technical observation relevant to the response because attention is narrowly focused" },
+        { en: "Going through the motions of a drill without full engagement" },
+      ],
+      professionalTips: [
+        { en: "Your technical competence is valuable during an emergency, but it supports the station leader's decisions — it doesn't replace them" },
+        { en: "The habits you build in every drill are the habits that will actually show up in a real emergency — there is no separate 'serious mode'" },
+        { en: "Being reliably competent and clearly communicative under pressure is exactly what earns you more responsibility as an Oiler" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l8" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "During a routine round, you note a temperature reading that's slightly higher than what you remember from previous rounds, but still within the range marked as acceptable on the gauge. You're not sure if this is normal variation or worth mentioning." },
+      mission: { en: "Decide whether to report the observation or continue the round without mentioning it." },
+      expectedActions: [
+        { en: "Report the observation factually to the Oiler or watchkeeping engineer, including the specific reading and how it compares to what you recall from previous rounds" },
+        { en: "Do not decide in advance that it's 'probably normal variation'" },
+        { en: "Continue the round as normal after reporting, unless instructed otherwise" },
+      ],
+      why: [{ en: "A reading within the acceptable range can still be worth flagging if it represents a meaningful change from what's normally observed — the Motorman's growing judgment is exactly about noticing these small shifts, not about deciding alone whether they matter." }],
+      commonMistakes: [
+        { en: "Assuming a reading within range doesn't need mentioning" },
+        { en: "Waiting until the next round to see if it changes before saying anything" },
+        { en: "Reporting vaguely ('something seemed a bit off') instead of the specific reading and comparison" },
+      ],
+      safetyPoints: [{ en: "Small, early shifts in readings are often the first visible sign of a developing issue — reporting them factually, even within acceptable range, is part of building genuine engine room vigilance." }],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }],
+    },
+    {
+      situation: { en: "A Wiper asks you to show them how to complete a specific maintenance task. You've done it a few times yourself, but you're not entirely certain you're doing it exactly the right way." },
+      mission: { en: "Decide whether to coach the Wiper based on what you know, or address your own uncertainty first." },
+      expectedActions: [
+        { en: "Be honest with yourself about your own uncertainty before coaching someone else" },
+        { en: "Verify the correct technique with the Oiler or a senior engineer before demonstrating it to the Wiper" },
+        { en: "If verification isn't immediately possible, tell the Wiper honestly that you want to confirm the technique first rather than teaching something uncertain" },
+      ],
+      why: [{ en: "Coaching someone on an unverified technique risks passing along an incomplete or incorrect method that then has to be corrected later — the Motorman's own competence should be genuinely confirmed before it's taught to someone else." }],
+      commonMistakes: [
+        { en: "Coaching based on assumed competence to appear capable in front of a junior rating" },
+        { en: "Teaching a technique without checking it first, even when uncertain" },
+        { en: "Avoiding the conversation about your own uncertainty out of concern about how it looks" },
+      ],
+      safetyPoints: [{ en: "An incorrectly taught technique can compound across two people rather than one — verifying your own competence first protects both the immediate task and everyone who learns from you." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "While carrying out a routine maintenance task you've done many times before, you find something that doesn't match what you'd normally expect — slightly more wear, or a component that looks different than usual. It's not clearly a problem, but it's not clearly nothing either." },
+      mission: { en: "Decide whether to complete the task as planned or escalate before proceeding." },
+      expectedActions: [
+        { en: "Pause the task and report the specific observation to the Oiler, watchkeeping engineer, or Chief Engineer" },
+        { en: "Describe exactly what looks different, rather than a general sense that 'something's off'" },
+        { en: "Wait for guidance before continuing or completing the task, rather than proceeding based on your own assessment alone" },
+      ],
+      why: [{ en: "A maintenance task revealing an unexpected condition is exactly the kind of situation that exceeds the Motorman's defined scope of independent judgment — pausing to escalate protects against completing a task in a way that might mask or worsen an underlying issue." }],
+      commonMistakes: [
+        { en: "Completing the task as planned because the unexpected finding isn't clearly a problem" },
+        { en: "Deciding alone that it's probably fine based on limited experience" },
+        { en: "Failing to describe the observation specifically enough for someone else to assess it properly" },
+      ],
+      safetyPoints: [{ en: "An unexpected finding during routine maintenance is often the earliest and clearest opportunity to catch a developing issue — treating it as worth pausing for is exactly the right instinct at this stage of experience." }],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Know precisely where your competence ends — that boundary, honestly recognized, is more valuable than appearing to know everything." },
+    { en: "Report specific observations, not vague impressions — 'this reading is higher than usual' is far more useful than 'something seems a bit off.'" },
+    { en: "A reading within acceptable range can still be worth flagging if it represents a genuine change — your growing judgment is about noticing shifts, not deciding alone what they mean." },
+    { en: "Verify your own technique before coaching someone else on it — an unverified method taught to a junior rating compounds the risk, not just the convenience." },
+    { en: "Escalating is not a failure of independence — it's exactly what your defined scope of judgment is supposed to produce when a situation genuinely calls for it." },
+    { en: "The gap between recording something and understanding it is where your judgment actually develops — don't rush past it." },
+    { en: "Consistency across routine and demanding moments is what earns you the trust that defines an Oiler." },
+    { en: "Being a Motorman means exercising real judgment within a real scope — not guessing beyond it, and not hiding behind excessive caution either." },
+  ],
+
+  professionalMindset: [
+    { en: "Think in terms of a defined scope, not a fixed ceiling. Your judgment operates within real boundaries today, but those boundaries expand as competence is demonstrated — the scope itself is not static." },
+    { en: "Treat 'borderline' as a category worth reporting, not resolving alone. A reading within range that still feels different from normal is exactly the kind of observation your role exists to surface, not to quietly settle." },
+    { en: "Assume your own technique needs verification before it becomes someone else's. What you believe you know correctly should be confirmed, not just repeated, especially once you start coaching a junior rating." },
+    { en: "Recognize that escalation is a demonstration of judgment, not an absence of it. Recognizing the edge of your competence and acting accordingly is itself the skill being built at this stage." },
+    { en: "Hold two things at once: growing independence and continued deference. You are trusted with more than the Wiper, but that trust exists inside limits — both are true simultaneously, not in tension." },
+    { en: "See specific, factual reporting as the currency of trust. The more precisely you describe what you observed, the more useful your reports become — and the more independence you're likely to be given next." },
+    { en: "Accept that consistency, not occasional brilliance, is what defines reliability. A Motorman who performs the same way on a quiet day and a demanding one is the one who earns the next level of trust." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Sea time and service records — The Motorman's sea time is recorded and confirmed as required by flag State regulations, directly supporting eventual eligibility for Oiler certification." },
+    { en: "Maintenance and rounds reporting — When the Motorman reports on a maintenance task or a round, the report is increasingly relied upon as a genuine technical account — not just confirmation that a task was completed, but an honest assessment of what was found and what it means." },
+    { en: "Task and competency sign-offs — Where the training or certification pathway requires a supervising rating's or engineer's signature confirming a specific competency has been demonstrated, the Motorman ensures this reflects genuinely verified competence, not simply repeated attempts." },
+    { en: "Contribution to defect and observation records — When the Motorman notices something during a task (a borderline reading, an unexpected finding), reporting it clearly and factually contributes directly to the department's maintenance and defect records, even though the Motorman does not maintain those records personally." },
+    { en: "Why this matters: As the Motorman's scope of independent judgment widens, so does the weight placed on their reports — a supervising engineer increasingly relies on the Motorman's account of a task or observation without independently re-verifying every detail. Building a track record of honest, specific, and accurate reporting now is what allows that trust to keep expanding toward the fuller responsibility expected of an Oiler." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Executing environmental procedures with growing independence — The Motorman applies waste segregation, product handling, and pollution prevention procedures across a wider range of tasks than the Wiper, with growing independence in recognizing what a given task requires." },
+    { en: "Recognizing borderline environmental situations — The Motorman is expected to notice and report situations that aren't clearly a violation but depart from normal conditions (an unusual amount of residue, an ambiguous disposal situation), rather than deciding alone whether they matter." },
+    { en: "Correct product and material handling — The Motorman follows procedures precisely regarding products, materials, and disposal methods, escalating genuinely unfamiliar or ambiguous situations rather than assuming familiarity covers them." },
+    { en: "Contributing to environmental compliance through consistent practice — Each task where environmental procedure is genuinely understood and correctly applied — not just followed mechanically — builds the judgment that will define the Motorman's independent practice as an Oiler." },
+    { en: "Why this matters: The Motorman's environmental responsibility now includes a genuine element of judgment — recognizing borderline situations and reporting them factually, rather than simply executing fixed procedures. This is exactly the transition from following rules to understanding why they exist, and it is what prepares the Motorman for the fuller environmental judgment expected at the Oiler level and beyond." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Execute a wide range of engine room tasks within your demonstrated competence, with reduced supervision compared to a Wiper" },
+      { en: "Exercise judgment on routine, well-defined situations (interpreting a normal reading, deciding a task is genuinely complete) within your demonstrated competence" },
+      { en: "Coach a Wiper on straightforward, verified technique, under the oversight of a senior rating or engineer" },
+      { en: "Ask any crew member or officer to clarify an instruction, verify a technique, or confirm a borderline observation" },
+      { en: "Report anything observed that seems unclear, unsafe, or worth mentioning, to your supervising rating or officer" },
+      { en: "Refuse to proceed with a task genuinely beyond your demonstrated competence, requesting clarification or escalation first" },
+      { en: "Request feedback on your performance from your supervising rating or officer" },
+    ],
+    youCannot: [
+      { en: "Make an independent decision on a situation that departs from the routine or falls outside your demonstrated competence" },
+      { en: "Interpret or judge the significance of a genuinely borderline or unusual observation on the vessel's behalf — report it factually and let the supervising rating or engineer assess it" },
+      { en: "Coach a junior rating on a technique you have not personally verified as correct" },
+      { en: "Stand an independent watch or emergency station role without direct supervision" },
+      { en: "Correct or discipline another crew member as a supervisory action, regardless of what is observed" },
+      { en: "Sign off, verify, or confirm any operational readiness, safety check, or compliance matter on the vessel's behalf" },
+      { en: "Represent the vessel or the company in any interaction with external parties (shore engineers, surveyors, authorities)" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Treating a borderline observation as settled instead of reporting it — Deciding alone that a reading within range or an unusual finding is probably fine, rather than reporting it factually and letting someone else assess it." },
+    { en: "Overestimating competence under time or social pressure — Attempting a task genuinely beyond demonstrated competence to avoid appearing limited, particularly during a busy port stay or in front of a junior rating." },
+    { en: "Coaching before verifying your own technique — Teaching a Wiper a method that hasn't itself been confirmed as correct, compounding any error across two people." },
+    { en: "Reporting conclusions instead of specific observations — Passing along a vague impression ('seems fine,' 'something's off') instead of the specific reading, comparison, or detail that would let someone else assess it properly." },
+    { en: "Confusing growing independence with unlimited independence — Assuming that increased trust in routine matters extends automatically to situations that genuinely depart from the routine." },
+    { en: "Over-escalating out of excess caution — Reporting every minor, expected variation as if it were significant, rather than developing genuine judgment about what warrants attention." },
+    { en: "Relaxing thoroughness during quiet or repetitive periods — Treating a routine round or a quiet phase as less deserving of full attention than a busy or demanding one." },
+    { en: "Hesitating to escalate a genuine uncertainty — Delaying or avoiding a report on something ambiguous out of concern that it might turn out to be nothing." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Oiler, or in some company structures a broader watchkeeping rating role — the exact progression depends on the company's rating structure and vessel type, since Motorman and Oiler roles vary in how distinctly they are separated between companies." },
+    { en: "Skills to develop: Broader independent judgment across a wider range of engine room situations, including genuinely ambiguous or unfamiliar ones; deeper technical understanding of engine systems beyond routine maintenance and monitoring; the confidence to make sound decisions within an expanding scope, while still knowing when a situation exceeds even that expanded scope; growing responsibility for the technical development of junior ratings." },
+    { en: "Recommended experience: A demonstrated track record of sound judgment across a wide range of routine and borderline situations, with consistent, specific, and honest reporting; a visible pattern of the Oiler, watchkeeping engineer, or Chief Engineer extending trust and independence over time; sufficient sea time as required for further certification." },
+    { en: "Certificates typically required: Requirements vary by flag State and company policy. Progression typically requires a minimum period of qualifying sea service and completion of any required training and certification relevant to the Oiler role." },
+    { en: "Recommended MAP courses: All foundational and intermediate Engine lessons relevant to Oiler competency (engine systems, maintenance, watchkeeping, safety); Role On Board – Fourth Engineer (to preview the officer path); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from Motorman to Oiler means the scope of your judgment continues to widen, but the underlying discipline stays the same — recognizing what you genuinely know, reporting what you observe factually, and escalating what falls outside your competence. The transition is not about eliminating that discipline; it's about applying it across a broader and more demanding range of situations." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "e1-l1", label: { en: "Main Engine" } },
+    { kind: "lesson", lessonId: "e1-l2", label: { en: "Auxiliaries & Electricity" } },
+    { kind: "lesson", lessonId: "e1-l4", label: { en: "Fire Safety & CO2 System" } },
+    { kind: "lesson", lessonId: "e1-l5", label: { en: "Survival & EPIRB" } },
+    { kind: "lesson", lessonId: "e1-l6", label: { en: "Maintenance & Troubleshooting" } },
+    { kind: "lesson", lessonId: "e1-l8", label: { en: "Emergency Procedures" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l3", label: { en: "PPE, Safe Behaviour & Human Factors" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — foundational engine room and machinery terminology" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on rating structure, sea time requirements, and Oiler certification pathway by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and basic machinery layouts to build familiarity across different ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on task technique, certification requirements, or engine room practice" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Motorman through to Oiler and beyond" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document sea time and demonstrated competencies" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_WIPER", label: { en: "Role On Board — Wiper" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_FOURTH_ENGINEER", label: { en: "Role On Board — Fourth Engineer" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "A wide range of engine room maintenance, monitoring, and watch-support tasks, with growing independence as competence is demonstrated" },
+      { en: "Routine judgment calls within my demonstrated competence (interpreting normal readings, assessing task completion)" },
+      { en: "Task and observation reports, honestly and with specific factual detail" },
+    ],
+    iMonitor: [
+      { en: "My own technique and understanding against demonstrated competence, checking rather than assuming readiness for a new task" },
+      { en: "Engine room parameters and conditions during rounds and watch-support duties, distinguishing normal variation from genuine concern" },
+      { en: "The technique of a Wiper I may be coaching, verifying my own competence before teaching it" },
+    ],
+    iReport: [
+      { en: "Task completion, honestly, distinguishing genuine confidence from uncertainty" },
+      { en: "Any borderline or unusual observation factually, without deciding alone whether it matters" },
+      { en: "My own uncertainty whenever a situation approaches the edge of my demonstrated competence" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any independent decision on a situation that departs from the routine or falls outside my demonstrated competence" },
+      { en: "My own progression to a wider scope of independent judgment, without confirmation from the supervising rating or engineer" },
+      { en: "Coaching a junior rating on a technique I have not personally verified as correct" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Motorman task scope showing widening judgment as competence is demonstrated toward Oiler." } },
+    { kind: "image", caption: { en: "Example of a properly conducted engine room round with logged parameters." } },
+    { kind: "diagram", caption: { en: "Engine department organization chart showing the Motorman's position between Wiper and Oiler." } },
+    { kind: "video", caption: { en: "Demonstration of coaching a Wiper on a verified maintenance technique." } },
+    { kind: "document", caption: { en: "Sample sea time / competency progress record for Oiler certification." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
-// "master", "deck_cadet", "os", "engine_cadet" and "wiper" — remaining
-// ranks are still pending content.
+// "master", "deck_cadet", "os", "engine_cadet", "wiper" and "motorman" —
+// remaining ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -6001,6 +6569,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   os: OS_CARD,
   engine_cadet: ENGINE_CADET_CARD,
   wiper: WIPER_CARD,
+  motorman: MOTORMAN_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
