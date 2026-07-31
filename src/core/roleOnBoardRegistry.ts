@@ -8320,11 +8320,607 @@ const THIRD_ENGINEER_CARD: RoleOnBoardCard = {
   ],
 };
 
+const SECOND_ENGINEER_CARD: RoleOnBoardCard = {
+  rankId: "second_engineer",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Second Engineer holds day-to-day responsibility for the entire engine department's operation — not a single system or a single watch, but the coordination of all systems, all watchkeeping officers, and all maintenance priorities across the department. Where the Third Engineer owns specific assigned systems, the Second Engineer owns the department's overall performance, reporting directly to the Chief Engineer and acting on their behalf for daily departmental management." },
+    { en: "The Second Engineer's judgment now operates at a genuinely departmental scale: balancing competing priorities across multiple systems and officers, deciding how to allocate limited time and personnel across simultaneous demands, and recognizing when a departmental matter requires the Chief Engineer's involvement rather than being resolved independently. This is a different kind of decision-making than system ownership — it's about tradeoffs across an entire operation, not depth on one part of it." },
+    { en: "The Second Engineer's progression is measured by how well the department runs as a whole under their day-to-day management — not just whether any single system or watch performs well, but whether the Third and Fourth Engineers are developing, whether maintenance priorities are being balanced soundly, and whether the Chief Engineer can rely on the Second Engineer's account of departmental status without needing to verify it personally." },
+    { en: "The Second Engineer works closely with the Third and Fourth Engineers, formally supervising their development and coordinating their competing priorities, and reports directly to the Chief Engineer, translating overall departmental standing orders and priorities into the daily reality of watch schedules, maintenance planning, and resource allocation." },
+    { en: "Where the Third Engineer's authority is bounded by system-level ownership, the Second Engineer's authority extends across the whole department — a genuine step up in scope that requires thinking simultaneously across systems, people, and time, rather than deeply about any one of them." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Chief Engineer (direct report, effectively second-in-command of the engine department)" },
+    ],
+    worksWith: [
+      { en: "Third Engineer and Fourth Engineer, whom the Second Engineer formally supervises" },
+      { en: "Oiler, Motorman, and Wiper through the officers who direct them" },
+      { en: "Chief Officer for cross-departmental coordination (stability, ballast, cargo-related engine support)" },
+    ],
+    mentors: [
+      { en: "Chief Engineer, who guides the Second Engineer's development toward eventual command of the department" },
+    ],
+    supports: [
+      { en: "The Second Engineer formally supervises and develops the Third and Fourth Engineers, and is accountable for the department's overall readiness and performance on the Chief Engineer's behalf" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Departmental-level planning and resource allocation across all engine systems" } },
+    { label: { en: "Formal supervision and development of Third and Fourth Engineers" } },
+    { label: { en: "Balancing competing priorities across systems, personnel, and time" } },
+    { label: { en: "Recognizing when a departmental matter requires the Chief Engineer's involvement" } },
+    { label: { en: "Cross-departmental coordination (particularly with the Chief Officer)" } },
+    { label: { en: "Departmental maintenance oversight and planning across all systems" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }] },
+    { label: { en: "Departmental reporting and accountability to the Chief Engineer" } },
+    { label: { en: "Professional conduct and reliability as the department's day-to-day manager" } },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Second Engineer consolidates readiness across the entire engine department — not personally verifying every system as a Third Engineer would their assigned systems, but integrating the Third and Fourth Engineers' reports into a single departmental assessment for the Chief Engineer. The Second Engineer's role is to catch what individual system-level reports might miss when viewed only in isolation." },
+      responsibilities: [
+        { en: "Consolidate readiness reports from the Third and Fourth Engineers across all engine room systems into a single departmental assessment" },
+        { en: "Identify any conflict or gap between individual system reports before it reaches the Chief Engineer, resolving it directly with the reporting officer where possible" },
+        { en: "Verify that competing pre-departure priorities across systems have been resourced adequately, adjusting officer or rating assignments if needed" },
+        { en: "Report departmental readiness formally to the Chief Engineer, distinguishing confirmed readiness from any cross-system concern" },
+        { en: "Escalate any finding that exceeds departmental-level authority immediately" },
+      ],
+      equipment: [
+        { en: "Consolidated readiness reports from Third and Fourth Engineers" },
+        { en: "Departmental readiness checklist and standing orders" },
+        { en: "Personnel and resource allocation records" },
+      ],
+      risks: [
+        { en: "Passing along individual officers' reports without genuinely reconciling them into a coherent departmental picture" },
+        { en: "Missing a resource conflict between competing pre-departure priorities across different systems" },
+        { en: "Assuming a system-level report is complete without questioning it, when a cross-system gap might exist" },
+        { en: "Reporting readiness to the Chief Engineer without having personally resolved a known discrepancy" },
+      ],
+      bestPractices: [
+        { en: "Treat each officer's readiness report as an input to reconcile, not a completed picture to relay upward" },
+        { en: "Actively look for resource conflicts across systems before they become a problem on departure day" },
+        { en: "Ask specific, clarifying questions of the Third or Fourth Engineer when a report seems incomplete or inconsistent with another" },
+        { en: "Resolve discrepancies before reporting to the Chief Engineer, even if it requires a short delay" },
+      ],
+      commonMistakes: [
+        { en: "Relaying officers' reports to the Chief Engineer without adding a personal, reconciled assessment" },
+        { en: "Missing a resource conflict because each system's readiness was checked independently rather than together" },
+        { en: "Assuming individual reports are complete without cross-checking them against each other" },
+        { en: "Reporting readiness under time pressure without resolving a known gap" },
+      ],
+      professionalTips: [
+        { en: "Your value here is integration — the Chief Engineer needs one reliable picture, not several separate reports to reconcile personally" },
+        { en: "A resource conflict between two systems is often invisible until someone looks at the whole department at once — that's your job" },
+        { en: "Resolving a discrepancy yourself, before it reaches the Chief Engineer, is exactly the departmental judgment this rank exists to exercise" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l1" }, { kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Second Engineer typically oversees the engine room's overall performance rather than personally executing engine orders — the Fourth Engineer (supported by the Third Engineer) usually handles direct execution, while the Second Engineer maintains a departmental view, ready to intervene or make a resourcing decision if something across the department requires it. The Second Engineer is often the one coordinating with the Chief Engineer if the manoeuvre reveals a genuine departmental issue." },
+      responsibilities: [
+        { en: "Maintain overall situational awareness of the engine room's performance during the manoeuvre, without displacing the Fourth or Third Engineer's direct execution" },
+        { en: "Make departmental-level decisions (reallocating personnel, adjusting priorities) if a development during the manoeuvre requires it" },
+        { en: "Escalate to the Chief Engineer immediately if a genuine departmental issue arises, distinct from a system-level concern the Third Engineer would handle directly" },
+        { en: "Support coordination between the Third and Fourth Engineers if their efforts need departmental-level resolution" },
+        { en: "Follow PPE and safety requirements exactly, with no exceptions during active operations" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the engine room environment" },
+        { en: "Engine room monitoring equipment (departmental overview level)" },
+        { en: "Portable radio, standing orders reference" },
+      ],
+      risks: [
+        { en: "Stepping into the Fourth or Third Engineer's direct execution unnecessarily, undermining their developing confidence and authority" },
+        { en: "Missing a genuine departmental issue by focusing too narrowly on one system or officer's performance" },
+        { en: "Failing to intervene when a departmental-level resourcing decision is genuinely needed" },
+        { en: "Delaying escalation to the Chief Engineer, attempting to resolve a departmental issue that exceeds this rank's authority" },
+      ],
+      bestPractices: [
+        { en: "Maintain a departmental overview rather than absorbing yourself in a single system's execution" },
+        { en: "Intervene only when a genuine departmental-level decision is needed, trusting the Third and Fourth Engineers within their own scope" },
+        { en: "Escalate promptly and clearly when a development genuinely exceeds departmental authority" },
+        { en: "Support coordination between junior officers proactively, rather than waiting for a conflict to surface on its own" },
+      ],
+      commonMistakes: [
+        { en: "Taking over a Fourth or Third Engineer's task rather than trusting them within their scope" },
+        { en: "Losing departmental overview by becoming absorbed in one system's details" },
+        { en: "Hesitating to make a resourcing decision that's clearly within departmental authority" },
+        { en: "Attempting to resolve a genuinely departmental issue alone rather than escalating to the Chief Engineer" },
+      ],
+      professionalTips: [
+        { en: "Your job during a manoeuvre is often to watch the whole department, not to do any single officer's job for them" },
+        { en: "A departmental-level decision made confidently and promptly is what the Chief Engineer expects from this rank" },
+        { en: "Trusting your junior officers within their scope is what actually develops them into future system owners and eventually department managers" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e1-l1" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Second Engineer typically stands their own watch like any other engineering officer, but their broader responsibility extends well beyond that single watch: overseeing the standard of watchkeeping across all officers, monitoring departmental maintenance progress across every assigned system, and managing the ongoing coordination between the Third and Fourth Engineers. Where a Third Engineer tracks trends on their own systems, the Second Engineer tracks how the whole department is performing across every system and every watch." },
+      responsibilities: [
+        { en: "Stand a navigational watch to the same standard expected of any engineering officer, applying the same judgment and standing-order discipline" },
+        { en: "Review the Third and Fourth Engineers' logbook entries, handover records, and system reports across the voyage, identifying any pattern or standard requiring correction" },
+        { en: "Monitor departmental maintenance progress across all systems, not just those personally assigned, adjusting priorities as needed" },
+        { en: "Address any watchkeeping standard or competency concern identified in a Third or Fourth Engineer directly and constructively, escalating to the Chief Engineer only if it cannot be resolved departmentally" },
+        { en: "Coordinate with the Chief Engineer on overall departmental progress and any adjustment required by operational developments" },
+      ],
+      equipment: [
+        { en: "Standard engine room watchkeeping equipment (during own watch)" },
+        { en: "Departmental maintenance tracking tools and PMS overview" },
+        { en: "Logbook and handover records across all watches, for review" },
+      ],
+      risks: [
+        { en: "A recurring watchkeeping standard issue across officers going unaddressed because each incident is reviewed in isolation" },
+        { en: "Departmental maintenance drifting from planned priorities without being actively monitored across systems" },
+        { en: "Addressing a competency concern with a junior officer too bluntly or too late, damaging trust rather than correcting the standard" },
+        { en: "Becoming so focused on departmental oversight that personal watchkeeping standards during one's own watch slip" },
+      ],
+      bestPractices: [
+        { en: "Review logbook and handover records across the voyage for patterns, not only isolated incidents" },
+        { en: "Monitor departmental maintenance progress proactively across all systems, not only those you once owned directly as a Third Engineer" },
+        { en: "Address a standard or competency concern early, directly, and constructively — the goal is correction, not blame" },
+        { en: "Hold your own watch to the same standard you expect from every officer you supervise" },
+      ],
+      commonMistakes: [
+        { en: "Reviewing each officer's watch in isolation rather than looking for patterns across the voyage" },
+        { en: "Losing track of departmental maintenance priorities while focused on personal watch duties" },
+        { en: "Avoiding a difficult conversation about a watchkeeping standard until it becomes a more serious incident" },
+        { en: "Holding a personal watchkeeping standard lower than the one expected of the officers being supervised" },
+      ],
+      professionalTips: [
+        { en: "Supervising other officers' watches means reading between the lines of a logbook, not just checking that entries exist" },
+        { en: "Departmental maintenance oversight means seeing the whole picture across systems you no longer personally own, not just the ones you remember best" },
+        { en: "A direct, early, and respectful correction protects both the standard and the relationship — waiting rarely improves either" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Second Engineer maintains departmental oversight of engine room readiness across all systems, but the phase's real value at this rank is coordinating an extended, quieter period into a genuinely productive departmental maintenance window — balancing multiple officers' maintenance priorities against each other, not just planning for a single assigned system as a Third Engineer would." },
+      responsibilities: [
+        { en: "Maintain departmental-level oversight of engine room readiness throughout the anchor period, coordinating the Third and Fourth Engineers' monitoring" },
+        { en: "Plan and prioritize departmental maintenance opportunities the anchor period makes possible, balancing competing system-level priorities from multiple officers" },
+        { en: "Escalate to the Chief Engineer if readiness is genuinely compromised, or if maintenance planning reveals a resourcing conflict exceeding departmental authority" },
+        { en: "Coordinate handovers during the anchor period, ensuring both readiness status and maintenance progress are communicated across the department" },
+        { en: "Follow PPE and safety requirements exactly as instructed" },
+      ],
+      equipment: [
+        { en: "Departmental maintenance planning tools and PMS overview" },
+        { en: "Engine room monitoring equipment" },
+        { en: "Standing orders reference, departmental work schedule" },
+      ],
+      risks: [
+        { en: "Allowing multiple officers' maintenance priorities to compete disorganized rather than actively coordinating them" },
+        { en: "Losing departmental readiness oversight while focused on maintenance planning during an extended anchor period" },
+        { en: "Failing to balance competing system priorities fairly, leaving one officer's maintenance consistently deprioritized" },
+        { en: "Under-communicating departmental maintenance progress during handovers" },
+      ],
+      bestPractices: [
+        { en: "Coordinate maintenance priorities across officers explicitly, rather than letting each pursue their own system's needs independently" },
+        { en: "Maintain the same departmental readiness discipline throughout an extended anchor period, regardless of maintenance activity underway" },
+        { en: "Balance competing system priorities deliberately, communicating the reasoning behind prioritization decisions" },
+        { en: "Report both readiness status and departmental maintenance progress clearly at every handover" },
+      ],
+      commonMistakes: [
+        { en: "Letting officers pursue their own maintenance priorities without departmental coordination" },
+        { en: "Losing readiness oversight because attention is absorbed by maintenance planning" },
+        { en: "Consistently favoring one system or officer's priorities over others without clear justification" },
+        { en: "Giving an incomplete departmental handover that omits maintenance progress across systems" },
+      ],
+      professionalTips: [
+        { en: "An anchor period is a departmental resource to allocate deliberately, not a free-for-all where whoever asks first gets priority" },
+        { en: "Readiness oversight and maintenance planning both run continuously — neither pauses because you're focused on the other" },
+        { en: "Fair, transparent prioritization across officers builds trust that makes future coordination easier" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Second Engineer coordinates the department's most intensive period — significant maintenance work, bunkering, cargo pump support, and often direct interaction with shore engineers or surveyors — balancing competing demands across the Third Engineer, Fourth Engineer, and ratings while representing the department's overall status to the Chief Engineer. Port calls are where departmental-level coordination is most visibly tested." },
+      responsibilities: [
+        { en: "Coordinate significant maintenance work across systems during the port stay, balancing the Third Engineer's system-specific priorities against departmental needs" },
+        { en: "Oversee bunkering operations and cargo pump support at a departmental level, ensuring adequate coverage across simultaneous activities" },
+        { en: "Liaise with shore engineers, surveyors, or contractors where the Chief Engineer delegates this responsibility, representing the department's status" },
+        { en: "Report departmental progress and any developing concern clearly to the Chief Engineer, distinguishing routine matters from genuine issues" },
+        { en: "Follow PPE and safety requirements exactly as instructed, particularly around bunkering and maintenance activities" },
+      ],
+      equipment: [
+        { en: "Departmental maintenance and resource planning tools" },
+        { en: "Bunkering or cargo pump equipment and associated documentation" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Allowing competing priorities across officers to go unresolved, creating friction or gaps in coverage" },
+        { en: "Losing departmental oversight while personally absorbed in one activity or interaction" },
+        { en: "Representing the department's status to external parties without having genuinely verified it" },
+        { en: "Underestimating the coordination demands of multiple simultaneous port activities" },
+      ],
+      bestPractices: [
+        { en: "Prioritize deliberately across competing departmental demands, communicating that prioritization clearly to all officers involved" },
+        { en: "Maintain a genuine departmental overview throughout the port stay, checking in across activities rather than focusing narrowly" },
+        { en: "Verify departmental status personally before representing it to shore engineers, surveyors, or the Chief Engineer" },
+        { en: "Build in coordination checkpoints throughout a busy port stay, rather than waiting for a problem to surface" },
+      ],
+      commonMistakes: [
+        { en: "Leaving competing priorities between officers unresolved, creating avoidable friction" },
+        { en: "Losing departmental overview while absorbed in a single high-visibility activity" },
+        { en: "Representing departmental status without having personally verified it" },
+        { en: "Underestimating how much active coordination a busy port stay actually requires" },
+      ],
+      professionalTips: [
+        { en: "Port calls test departmental coordination more than any other phase — this is exactly where the Second Engineer's role is most visible" },
+        { en: "External parties (surveyors, shore engineers) are forming an impression of the whole department through you — represent it accurately" },
+        { en: "Proactive coordination during a busy port stay prevents most of the friction that would otherwise surface as a problem later" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e6-l1" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "During STS operations, the Second Engineer coordinates the department's overall contribution — propulsion and manoeuvring readiness, cargo pump or ballast support — ensuring the Third and Fourth Engineers are properly resourced and coordinated for an operation with genuinely elevated risk. The Second Engineer's role is departmental orchestration: making sure the right officers are positioned appropriately and that departmental resources support the operation without competing against each other." },
+      responsibilities: [
+        { en: "Coordinate departmental resource allocation for the operation, ensuring the Third and Fourth Engineers are appropriately positioned and supported" },
+        { en: "Maintain departmental oversight of propulsion, manoeuvring readiness, and cargo pump or ballast operations throughout" },
+        { en: "Escalate immediately to the Chief Engineer if any development exceeds departmental authority, given the operation's elevated risk" },
+        { en: "Resolve any coordination conflict between the Third and Fourth Engineers' efforts during the operation" },
+        { en: "Follow PPE and safety requirements exactly as instructed, with particular attention to the heightened risk of this operation" },
+      ],
+      equipment: [
+        { en: "Departmental coordination and communication equipment" },
+        { en: "Cargo pump or ballast system equipment and associated documentation" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Losing departmental oversight by becoming absorbed in one officer's or system's execution" },
+        { en: "Failing to resolve a coordination conflict between the Third and Fourth Engineers promptly, creating confusion during a high-risk operation" },
+        { en: "Delaying escalation because departmental resources seem sufficient to manage a developing concern" },
+        { en: "Underestimating the elevated risk of the operation due to accumulated departmental experience with routine STS calls" },
+      ],
+      bestPractices: [
+        { en: "Maintain a genuine departmental overview throughout the operation, rather than focusing on a single system or officer" },
+        { en: "Resolve any coordination conflict between junior officers immediately and clearly" },
+        { en: "Escalate the moment a development approaches the edge of departmental authority, given the operation's elevated risk" },
+        { en: "Treat every STS operation with full departmental attentiveness, regardless of how routine previous ones have felt" },
+      ],
+      commonMistakes: [
+        { en: "Becoming absorbed in one aspect of the operation and losing the departmental overview this rank is meant to provide" },
+        { en: "Allowing a coordination conflict between the Third and Fourth Engineers to persist unresolved during the operation" },
+        { en: "Hesitating to escalate because departmental resources seem adequate to handle a developing concern" },
+        { en: "Treating STS as routine due to departmental experience, reducing attentiveness" },
+      ],
+      professionalTips: [
+        { en: "STS operations reward the Second Engineer who keeps the whole department coordinated, not the one who focuses on a single impressive detail" },
+        { en: "A quick resolution of a coordination conflict between your junior officers prevents confusion from reaching the ratings" },
+        { en: "Departmental experience with STS should sharpen your oversight, not reduce your attentiveness to this operation's elevated risk" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e6-l1" }, { kind: "lesson", lessonId: "e6-l2" }, { kind: "lesson", lessonId: "e1-l7" }],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Second Engineer's departmental scope is most fully exercised — not owning individual systems as a Third Engineer does, but coordinating and prioritizing maintenance across the entire department, balancing competing system needs, personnel availability, and the Chief Engineer's overall priorities. This is the phase where 'system ownership' becomes 'departmental resource management.'" },
+      responsibilities: [
+        { en: "Coordinate and prioritize maintenance planning across all engine room systems, balancing competing demands from the Third Engineer and other system owners" },
+        { en: "Allocate personnel (Fourth Engineer, ratings) across simultaneous maintenance activities, matching assignments to demonstrated competence and departmental priority" },
+        { en: "Review departmental PMS records for consistency and completeness across systems, ensuring documentation reflects genuine departmental condition" },
+        { en: "Escalate to the Chief Engineer any resourcing conflict or maintenance priority that exceeds departmental-level authority to resolve" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, particularly around hot surfaces, moving parts, and chemical handling" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task" },
+        { en: "Departmental maintenance planning and resource allocation tools" },
+        { en: "Planned Maintenance System (PMS) access across all departmental systems" },
+      ],
+      risks: [
+        { en: "Allowing competing maintenance priorities across systems to go unresolved, creating friction between officers" },
+        { en: "Allocating personnel without genuinely matching assignments to competence and departmental priority" },
+        { en: "Reviewing PMS records superficially, missing inconsistencies that reflect a real gap between documentation and condition" },
+        { en: "Resolving a resourcing conflict independently that actually exceeded departmental authority" },
+      ],
+      bestPractices: [
+        { en: "Coordinate maintenance priorities across systems explicitly, rather than letting each system owner compete informally for resources" },
+        { en: "Match personnel assignments deliberately to competence and departmental priority, not just availability" },
+        { en: "Review PMS records across the department periodically, looking for patterns or inconsistencies a single-system view would miss" },
+        { en: "Escalate genuine resourcing conflicts to the Chief Engineer rather than resolving them through informal compromise" },
+      ],
+      commonMistakes: [
+        { en: "Letting maintenance priorities across systems compete without departmental coordination" },
+        { en: "Assigning personnel based on convenience rather than genuine competence and priority matching" },
+        { en: "Trusting individual system PMS records without a departmental-level review for consistency" },
+        { en: "Resolving a resourcing conflict independently that should have been escalated" },
+      ],
+      professionalTips: [
+        { en: "Departmental maintenance coordination means seeing the whole picture, not just whichever system is asking loudest" },
+        { en: "Matching the right person to the right task across the whole department is a skill that compounds across every maintenance cycle" },
+        { en: "A departmental PMS review catches what a single system owner's view never could — patterns across the whole engine room" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e2-l7" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Second Engineer typically coordinates across multiple emergency stations or teams — integrating reports from the Third and Fourth Engineers, who command individual stations, into a single departmental picture for the Chief Engineer. Unlike the Third or Fourth Engineer, who lead a specific station, the Second Engineer's contribution is often departmental-level coordination and communication, a role that mirrors the integration responsibility exercised during routine departmental operations." },
+      responsibilities: [
+        { en: "Coordinate across multiple emergency stations or teams, consolidating reports from the Third and Fourth Engineers into a single departmental assessment" },
+        { en: "Relay the Chief Engineer's overall strategy into coordinated direction across stations, ensuring consistency between officers" },
+        { en: "Make departmental-level decisions on resource allocation between stations if the Chief Engineer's direction requires it" },
+        { en: "Report the department's overall emergency status clearly and promptly to the Chief Engineer, distinguishing confirmed facts from developing uncertainty" },
+        { en: "Take every drill with full seriousness, treating it as genuine practice for the departmental coordination expected of this rank" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list" },
+        { en: "Departmental communication equipment for coordinating between multiple stations" },
+        { en: "Emergency organization reference and muster list" },
+      ],
+      risks: [
+        { en: "Passing along unreconciled reports from multiple stations rather than genuinely integrating them into one departmental picture" },
+        { en: "Losing track of one station's status while focused on another during a fast-moving emergency" },
+        { en: "Making a resource allocation decision that conflicts with the Chief Engineer's overall strategy due to incomplete communication" },
+        { en: "Delaying an integrated departmental report to the Chief Engineer while attempting to resolve inconsistencies alone" },
+      ],
+      bestPractices: [
+        { en: "Actively integrate reports from multiple stations into a single, coherent departmental picture, rather than relaying them individually" },
+        { en: "Maintain continuous awareness of all stations' status, not just the one most recently reported" },
+        { en: "Confirm resource allocation decisions align with the Chief Engineer's overall strategy before acting" },
+        { en: "Report proactively and specifically to the Chief Engineer, even when the picture is not yet fully resolved" },
+      ],
+      commonMistakes: [
+        { en: "Relaying multiple stations' reports without reconciling them into a coherent departmental assessment" },
+        { en: "Losing awareness of one station while attention is absorbed by another" },
+        { en: "Making a resourcing decision that conflicts with the Chief Engineer's strategy due to insufficient communication" },
+        { en: "Waiting to report until every uncertainty is resolved, delaying the Chief Engineer's overall picture" },
+      ],
+      professionalTips: [
+        { en: "Your value during a genuine emergency is the same as during routine operations — turning multiple partial pictures into one reliable one" },
+        { en: "The Chief Engineer depends on your integration to make sound overall decisions — an unreconciled relay of station reports doesn't serve that purpose" },
+        { en: "Departmental coordination under pressure is built on the same habits practiced during every routine departmental task before it" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l8" }, { kind: "lesson", lessonId: "s4-l7" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "The Third Engineer wants dedicated ratings for a significant boiler maintenance task tomorrow. The Fourth Engineer, separately, has already planned to use the same ratings for routine watch-support duties during the same period. Neither officer is aware of the other's plan." },
+      mission: { en: "Decide how to resolve the resource conflict between the two officers." },
+      expectedActions: [
+        { en: "Bring both officers together to discuss the conflict directly rather than deciding unilaterally without their input" },
+        { en: "Assess which need is genuinely more time-sensitive or important to departmental priorities, rather than defaulting to whichever officer is more senior" },
+        { en: "Communicate the resolution clearly to both officers and the ratings involved" },
+        { en: "If the two tasks are both critical and can't be reconciled with available resources, escalate to the Chief Engineer for additional resourcing or reprioritization" },
+      ],
+      why: [{ en: "A departmental resource conflict invisible to either officer individually is exactly what this rank exists to catch and resolve — the Second Engineer's overview across both plans is the only vantage point from which the conflict is visible at all." }],
+      commonMistakes: [
+        { en: "Deciding unilaterally without input from either officer" },
+        { en: "Resolving the conflict in favor of whichever officer asked first or is more senior, rather than genuine priority" },
+        { en: "Failing to communicate the resolution clearly, leaving one officer to discover the change only when the ratings don't show up" },
+      ],
+      safetyPoints: [],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "The Third Engineer reports that a diagnosed issue on an assigned system is resolved, but the explanation seems briefer and more confident than the complexity of the issue would typically warrant." },
+      mission: { en: "Decide whether to accept the report as given or probe further." },
+      expectedActions: [
+        { en: "Ask specific follow-up questions about what was actually verified, rather than accepting a confident conclusion at face value" },
+        { en: "Distinguish between genuine resolution and an assumption that the issue is resolved because symptoms have stopped" },
+        { en: "Request the underlying reasoning or data if the explanation remains too brief to assess" },
+        { en: "Use the exchange as an opportunity to reinforce the standard of documentation expected, without undermining the Third Engineer's standing" },
+      ],
+      why: [{ en: "Departmental oversight includes verifying that officer-level reports reflect genuine resolution, not just confidence — accepting an under-explained report at face value transfers your own judgment to someone else's account without genuine verification." }],
+      commonMistakes: [
+        { en: "Accepting a confident-sounding report without asking what was actually verified" },
+        { en: "Failing to distinguish between 'resolved' and 'symptoms stopped'" },
+        { en: "Embarrassing the Third Engineer publicly rather than addressing the gap constructively" },
+      ],
+      safetyPoints: [{ en: "A prematurely closed diagnosis can mask a recurring or worsening issue — probing a report that seems too brief protects the department, not just the paperwork." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "During a busy period, you notice the Fourth Engineer struggling with a technical issue you could likely solve faster yourself. Taking it over would resolve it quickly, but the Fourth Engineer hasn't asked for help yet." },
+      mission: { en: "Decide whether to step in directly or support the Fourth Engineer through it." },
+      expectedActions: [
+        { en: "Approach the Fourth Engineer to offer guidance rather than immediately taking over the task" },
+        { en: "Ask what they've tried and what they're considering next, before offering your own perspective" },
+        { en: "Let the Fourth Engineer complete the task themselves with your guidance, unless time or safety genuinely requires direct intervention" },
+        { en: "Use the moment as a coaching opportunity rather than a quick fix" },
+      ],
+      why: [{ en: "A Second Engineer's departmental value comes from developing the officers below them, not personally solving every technical problem faster — taking over a task the Fourth Engineer could complete with guidance trades their development for a small time saving." }],
+      commonMistakes: [
+        { en: "Taking over the task without offering the Fourth Engineer a chance to work through it first" },
+        { en: "Assuming personal speed is more valuable than the officer's development" },
+        { en: "Waiting to be asked for help rather than proactively checking in when struggle is visible" },
+      ],
+      safetyPoints: [],
+      mapReferences: [],
+    },
+  ],
+
+  professionalTips: [
+    { en: "A resource conflict invisible to either officer individually is exactly what your departmental overview exists to catch — look across plans, not just within them." },
+    { en: "A report that sounds confident isn't the same as one that's been genuinely verified — ask what was actually checked, not just what conclusion was reached." },
+    { en: "Your value isn't solving problems faster than your junior officers — it's developing their ability to solve them themselves." },
+    { en: "Departmental coordination during a genuine emergency runs on the same integration skills you practice every routine day — build the habit before you need it under pressure." },
+    { en: "Fair, transparent prioritization across competing officer demands builds trust that makes every future coordination easier." },
+    { en: "The Chief Engineer depends on your integration of the department's status — an unreconciled relay of separate reports doesn't serve that purpose." },
+    { en: "Matching the right person to the right task across the whole department, not just convenience, is what actually develops a stronger department over time." },
+    { en: "Being a Second Engineer means your attention now spans the entire department, not one system — plan your time accordingly." },
+  ],
+
+  professionalMindset: [
+    { en: "Think in terms of the whole department, not any single system or officer. A conflict, a report, a maintenance need is never the whole picture in isolation — your role is to hold the department as one coordinated system, not a collection of separate concerns." },
+    { en: "Treat a confident report as a claim to verify, not a conclusion to accept. An officer's account of a resolved issue is an input to your own judgment, not a substitute for it — genuine verification protects the department more than trust alone." },
+    { en: "See your junior officers' development as part of the department's performance, not separate from it. A Fourth Engineer who learns to solve a problem is a stronger department tomorrow; a problem you solved for them yourself is not." },
+    { en: "Hold competing priorities as something to reconcile deliberately, not resolve by default. Whichever officer asked first, or is more senior, is not automatically right — genuine departmental priority is decided by what the department actually needs." },
+    { en: "Recognize that your integration is the product the Chief Engineer relies on. Multiple reports, multiple officers, multiple systems all feed into the single, reconciled picture only you are positioned to build — that synthesis is your primary contribution." },
+    { en: "Accept that fairness across officers is a form of departmental discipline, not a personal preference. Consistent, transparent prioritization protects working relationships that repeated, unexplained favoritism would quietly erode." },
+    { en: "Understand that departmental authority means resolving what individual system ownership cannot see. The Third Engineer's scope is deep but narrow; yours is wide — the conflicts and patterns visible only at that width are precisely what you exist to catch." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Departmental PMS oversight — The Second Engineer reviews Planned Maintenance System records across all systems, not just those personally assigned, verifying consistency and completeness at a departmental level rather than trusting each system owner's records in isolation." },
+    { en: "Engine room logbook entries — The Second Engineer makes official logbook entries during their own watch, carrying the same legal and regulatory weight as any officer's entry, in addition to departmental oversight responsibilities." },
+    { en: "Departmental status reports to the Chief Engineer — Where the Second Engineer consolidates and reports on departmental readiness, maintenance progress, or personnel matters, this account is often relied upon directly by the Chief Engineer as the official departmental picture, not a raw collection of individual officer reports." },
+    { en: "Supervisory and development records — Where company procedure tracks the Third and Fourth Engineers' competency development, the Second Engineer ensures this record accurately reflects genuine progress and areas requiring continued development, not just completed tasks." },
+    { en: "Why this matters: The Second Engineer's documentation responsibility is genuinely departmental — the Chief Engineer relies on the Second Engineer's consolidated account of the whole department's status, maintenance condition, and personnel development, often without independently re-verifying every detail. A departmental report that is honest, reconciled, and complete protects not only the Second Engineer's own credibility, but the quality of every decision the Chief Engineer makes based on it." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Departmental environmental compliance oversight — The Second Engineer ensures environmental practices remain consistent across all systems and officers, rather than relying on each system owner's individual compliance without departmental-level verification." },
+    { en: "Authorizing environmental procedures within standing orders — Like the Third and Fourth Engineers, the Second Engineer may authorize environmental actions within documented conditions, but also verifies consistency across the department's overall practice." },
+    { en: "Recognizing departmental patterns in environmental risk — The Second Engineer connects environmental observations across systems and officers, recognizing when a pattern (recurring near-misses, similar discharge concerns across systems) suggests a departmental issue rather than isolated incidents." },
+    { en: "Coordinating environmental training and standards across the department — The Second Engineer ensures the Third Engineer, Fourth Engineer, and ratings apply environmental procedures consistently, addressing any departmental gap directly with the Chief Engineer where systemic correction is needed." },
+    { en: "Why this matters: The Second Engineer's environmental responsibility now operates at the departmental level — recognizing patterns across systems and officers that no single system owner would be positioned to see. A department where environmental compliance is consistent, verified, and genuinely understood — not just individually practiced — reflects exactly the kind of departmental governance this rank exists to provide, and prepares the Second Engineer for the full environmental accountability held by the Chief Engineer." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Coordinate and prioritize maintenance, personnel, and resources across the entire engine department" },
+      { en: "Formally supervise and develop the Third and Fourth Engineers, addressing performance or standard concerns directly" },
+      { en: "Resolve resource conflicts between officers, reallocating personnel and priorities as departmental needs require" },
+      { en: "Make departmental-level decisions during routine operations and emergencies within standing orders, without waiting for the Chief Engineer's approval on every detail" },
+      { en: "Authorize environmental procedures and other actions explicitly covered by standing orders and documented conditions" },
+      { en: "Make official logbook entries and departmental status reports as a certified officer" },
+      { en: "Refuse to proceed with an action you believe exceeds departmental authority or genuinely requires the Chief Engineer's decision, requesting guidance first" },
+      { en: "Escalate any concern — technical, procedural, or personnel-related — directly to the Chief Engineer without needing prior justification" },
+    ],
+    youCannot: [
+      { en: "Make a final decision on any matter that standing orders or company policy reserve for the Chief Engineer, however confident your own assessment" },
+      { en: "Authorize a major deviation from the Chief Engineer's overall departmental strategy or standing orders without explicit authorization" },
+      { en: "Take command of the vessel's overall emergency response, or represent the engine department's final position in a cross-departmental decision reserved for the Chief Engineer" },
+      { en: "Discipline an officer or rating in a way that exceeds the authority explicitly delegated by the Chief Engineer" },
+      { en: "Represent the vessel or the company in any interaction with external parties (owners, class, flag State authorities) beyond what the Chief Engineer delegates" },
+      { en: "Approve significant departmental expenditure, dry-dock planning, or major maintenance decisions reserved for the Chief Engineer" },
+      { en: "Bypass the Chief Engineer on a decision affecting the vessel's overall safety, another department, or company policy" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Relaying unreconciled reports instead of integrating them — Passing officers' individual reports to the Chief Engineer without genuinely reconciling them into a coherent departmental picture." },
+    { en: "Missing a cross-system resource conflict — Failing to notice when two officers' plans compete for the same personnel or resources, because each was reviewed in isolation." },
+    { en: "Accepting a confident report without verifying it — Taking an officer's account of a resolved issue at face value, without asking what was actually confirmed." },
+    { en: "Solving a junior officer's problem instead of developing their ability to solve it — Taking over a task the Fourth or Third Engineer could complete with guidance, trading their development for a small time saving." },
+    { en: "Resolving priority conflicts by seniority or convenience rather than genuine need — Defaulting to whichever officer asked first or is more experienced, rather than assessing actual departmental priority." },
+    { en: "Losing departmental overview by focusing too narrowly on one activity — Becoming absorbed in a single system, officer, or task, missing what's happening elsewhere in the department." },
+    { en: "Treating PMS review as a formality rather than genuine oversight — Trusting individual system records without periodically checking them for departmental-level consistency." },
+    { en: "Hesitating to escalate a genuine departmental issue to the Chief Engineer — Attempting to resolve something that exceeds departmental authority independently, rather than raising it promptly." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Chief Engineer — the culmination of the engineering officer progression, marking the transition from managing the department's daily operation to bearing ultimate legal and operational responsibility for the entire engine department, its material condition, and its compliance, on behalf of the Master and the company." },
+    { en: "Skills to develop: Strategic, long-term departmental planning (dry-dock, major overhauls, budget) beyond day-to-day coordination; formal accountability to the Master and the company for the department's overall performance; cross-departmental leadership at the level of ship command, working directly alongside the Master and Chief Officer; the transition from developing individual officers to shaping the department's overall culture and standards." },
+    { en: "Recommended experience: A demonstrated track record of sound departmental coordination — resolving resource conflicts fairly, developing junior officers effectively, and providing the Chief Engineer with reliable, reconciled departmental reports — across a range of routine and demanding situations; sufficient sea time as required for further certification." },
+    { en: "Certificates typically required: Requirements vary significantly by flag State and company policy. Progression to Chief Engineer typically requires sufficient qualifying sea time as a Second Engineer and the corresponding STCW certificate of competency (Chief Engineer Officer), together with any additional endorsements required by the flag State or company." },
+    { en: "Recommended MAP courses: Ship Command & Crisis Leadership (Engine); Strategic Departmental Management & Dry-Dock Planning; Role On Board – Chief Engineer (to preview the next step in detail); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from Second Engineer to Chief Engineer means the departmental coordination discipline built managing daily operations — integrating reports, resolving conflicts, developing junior officers — becomes the foundation for bearing final accountability for the department as a whole, to the Master, the company, and the regulatory framework governing the vessel. The scope broadens again, from day-to-day management to enduring stewardship and final responsibility." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "e1-l1", label: { en: "Main Engine" } },
+    { kind: "lesson", lessonId: "e1-l2", label: { en: "Auxiliaries & Electricity" } },
+    { kind: "lesson", lessonId: "e1-l3", label: { en: "Stability & Loading" } },
+    { kind: "lesson", lessonId: "e1-l4", label: { en: "Fire Safety & CO2 System" } },
+    { kind: "lesson", lessonId: "e1-l5", label: { en: "Survival & EPIRB" } },
+    { kind: "lesson", lessonId: "e1-l6", label: { en: "Maintenance & Troubleshooting" } },
+    { kind: "lesson", lessonId: "e1-l7", label: { en: "Engine Watchkeeping" } },
+    { kind: "lesson", lessonId: "e1-l8", label: { en: "Emergency Procedures" } },
+    { kind: "lesson", lessonId: "e2-l1", label: { en: "Generators & Power Generation" } },
+    { kind: "lesson", lessonId: "e2-l2", label: { en: "Switchboards & Distribution" } },
+    { kind: "lesson", lessonId: "e2-l3", label: { en: "Pumps & Hydraulic Systems" } },
+    { kind: "lesson", lessonId: "e2-l4", label: { en: "Compressors & Compressed Air" } },
+    { kind: "lesson", lessonId: "e2-l5", label: { en: "Purifiers & Separators" } },
+    { kind: "lesson", lessonId: "e2-l6", label: { en: "Heat Exchangers" } },
+    { kind: "lesson", lessonId: "e2-l7", label: { en: "Electrical Troubleshooting" } },
+    { kind: "lesson", lessonId: "e3-l1", label: { en: "Marine Boiler Types" } },
+    { kind: "lesson", lessonId: "e3-l2", label: { en: "Combustion & Burners" } },
+    { kind: "lesson", lessonId: "e3-l3", label: { en: "Boiler Water Treatment" } },
+    { kind: "lesson", lessonId: "e3-l4", label: { en: "Steam Systems & Distribution" } },
+    { kind: "lesson", lessonId: "e3-l5", label: { en: "Boiler Safety & Alarms" } },
+    { kind: "lesson", lessonId: "e3-l6", label: { en: "Boiler Maintenance & Inspection" } },
+    { kind: "lesson", lessonId: "e4-l1", label: { en: "MARPOL & Environment" } },
+    { kind: "lesson", lessonId: "e4-l2", label: { en: "Annex I - Oil Pollution" } },
+    { kind: "lesson", lessonId: "e4-l3", label: { en: "Annex V - Garbage Management" } },
+    { kind: "lesson", lessonId: "e4-l4", label: { en: "Annex VI - Air Pollution" } },
+    { kind: "lesson", lessonId: "e4-l5", label: { en: "Environmental Compliance" } },
+    { kind: "lesson", lessonId: "e4-l6", label: { en: "Environmental Leadership" } },
+    { kind: "lesson", lessonId: "e5-l1", label: { en: "Why Energy Efficiency Matters" } },
+    { kind: "lesson", lessonId: "e5-l2", label: { en: "The SEEMP" } },
+    { kind: "lesson", lessonId: "e5-l3", label: { en: "The EEXI" } },
+    { kind: "lesson", lessonId: "e5-l4", label: { en: "The CII & A-E Ratings" } },
+    { kind: "lesson", lessonId: "e5-l5", label: { en: "Practical Energy Efficiency" } },
+    { kind: "lesson", lessonId: "e6-l1", label: { en: "Cargo Pumps" } },
+    { kind: "lesson", lessonId: "e6-l2", label: { en: "Ballast System" } },
+    { kind: "lesson", lessonId: "e6-l3", label: { en: "Inert Gas System (IGS)" } },
+    { kind: "lesson", lessonId: "e6-l4", label: { en: "COW & Tank Cleaning" } },
+    { kind: "lesson", lessonId: "e6-l5", label: { en: "Cargo Heating" } },
+    { kind: "lesson", lessonId: "e6-l6", label: { en: "Gauging & Measurements" } },
+    { kind: "lesson", lessonId: "e7-l1", label: { en: "UMS — Unattended Machinery Space" } },
+    { kind: "lesson", lessonId: "e7-l2", label: { en: "Alarm Systems & Monitoring" } },
+    { kind: "lesson", lessonId: "e7-l3", label: { en: "PLC & Programmable Controllers" } },
+    { kind: "lesson", lessonId: "e7-l4", label: { en: "SCADA & Human-Machine Interfaces" } },
+    { kind: "lesson", lessonId: "e7-l5", label: { en: "Embedded Systems Cybersecurity" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l3", label: { en: "PPE, Safe Behaviour & Human Factors" } },
+    { kind: "lesson", lessonId: "s6-l6", label: { en: "Safety Culture & Professional Responsibility" } },
+    { kind: "lesson", lessonId: "s4-l7", label: { en: "Fire Command, Teams & Damage Control" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — engine room, machinery, and regulatory terminology" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on Chief Engineer certification requirements by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and machinery layouts across different ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on departmental coordination, resource planning, or certification requirements" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Second Engineer through to Chief Engineer" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document departmental management experience, certificates, and supervisory responsibilities" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_THIRD_ENGINEER", label: { en: "Role On Board — Third Engineer" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_CHIEF_ENGINEER", label: { en: "Role On Board — Chief Engineer" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "Departmental coordination across all engine room systems, personnel, and maintenance priorities" },
+      { en: "Formal supervision and development of the Third and Fourth Engineers" },
+      { en: "Official logbook entries and consolidated departmental status reports as a certified officer" },
+    ],
+    iMonitor: [
+      { en: "Departmental readiness, maintenance progress, and PMS consistency across all systems, not just those personally assigned" },
+      { en: "Officer-level reports for genuine reconciliation, distinguishing confident conclusions from verified findings" },
+      { en: "Resource conflicts and competing priorities across officers before they become operational problems" },
+    ],
+    iReport: [
+      { en: "A reconciled, whole-department assessment to the Chief Engineer, never an unresolved collection of separate officer reports" },
+      { en: "Any resourcing conflict, competency concern, or departmental pattern requiring the Chief Engineer's attention" },
+      { en: "My own uncertainty when a situation cannot be fully resolved at the departmental level" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any decision that standing orders or company policy reserve for the Chief Engineer" },
+      { en: "A major deviation from the Chief Engineer's overall departmental strategy or standing orders" },
+      { en: "Significant departmental expenditure, dry-dock planning, or major maintenance decisions reserved for the Chief Engineer" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Engine department organization chart showing the Second Engineer's departmental coordination role between the Chief Engineer and junior officers." } },
+    { kind: "image", caption: { en: "Example of a consolidated departmental readiness report." } },
+    { kind: "diagram", caption: { en: "Resource allocation matrix balancing competing maintenance priorities across systems." } },
+    { kind: "video", caption: { en: "Demonstration of a Second Engineer resolving a resource conflict between two junior officers." } },
+    { kind: "document", caption: { en: "Sample departmental maintenance and personnel status report to the Chief Engineer." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
 // "master", "deck_cadet", "os", "engine_cadet", "wiper", "motorman", "oiler",
-// "fourth_engineer" and "third_engineer" — remaining ranks are still pending content.
+// "fourth_engineer", "third_engineer" and "second_engineer" — remaining ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -8339,6 +8935,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   oiler: OILER_CARD,
   fourth_engineer: FOURTH_ENGINEER_CARD,
   third_engineer: THIRD_ENGINEER_CARD,
+  second_engineer: SECOND_ENGINEER_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
