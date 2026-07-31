@@ -6554,11 +6554,607 @@ const MOTORMAN_CARD: RoleOnBoardCard = {
   ],
 };
 
+const OILER_CARD: RoleOnBoardCard = {
+  rankId: "oiler",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Oiler is the most experienced rating in the engine department, combining broad hands-on maintenance competence with genuine watch-support responsibility — assisting the watchkeeping engineer directly, interpreting a wide range of readings independently, and exercising judgment across situations that would still require escalation for a Motorman or Wiper. The Oiler is the rating other ratings look to for guidance, and the one a watchkeeping engineer relies on most heavily during a demanding watch." },
+    { en: "The Oiler's judgment extends further than the Motorman's: recognizing not just when something is abnormal, but often having a working sense of why, and contributing meaningfully to a watchkeeping engineer's assessment rather than only supplying raw observations. The Oiler is still a rating, not an officer — final decisions on anything beyond routine execution remain with the watchkeeping engineer or Chief Engineer — but the Oiler's independent judgment is trusted across a genuinely wide operational scope." },
+    { en: "The Oiler's progression toward officer certification, where applicable, is built on this accumulated depth of hands-on experience and demonstrated judgment — the Oiler who consistently interprets situations correctly and communicates clearly is the one best positioned for further certification as a Fourth Engineer." },
+    { en: "The Oiler works closely with watchkeeping engineers during watch duties, and is often the rating a Motorman or Wiper turns to first for guidance on technique or judgment, even though formal coaching oversight remains with the engineer or Chief Engineer." },
+    { en: "Where the Motorman's scope of judgment is deliberately bounded, the Oiler's scope is wide enough that the boundary itself becomes less obvious — which is exactly why the discipline of recognizing genuine escalation points, rather than assuming experience covers everything, remains essential even at this level." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Watchkeeping engineer (day-to-day watch and task supervision)" },
+      { en: "Chief Engineer (overall standards and training)" },
+    ],
+    worksWith: [
+      { en: "Watchkeeping engineers, with whom the Oiler works closely during watch duties" },
+      { en: "Motorman and Wiper, whom the Oiler frequently guides informally on technique and judgment" },
+    ],
+    mentors: [
+      { en: "Watchkeeping engineers and the Chief Engineer, who guide the Oiler's continued technical development and any progression toward officer certification" },
+    ],
+    supports: [
+      { en: "The Oiler is often the first point of guidance for a Motorman or Wiper's technical questions, though formal training oversight remains with the supervising engineer or Chief Engineer" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Broad engine room maintenance competence across systems" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }] },
+    { label: { en: "Watch-support duties with genuine interpretive responsibility" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }] },
+    { label: { en: "Recognizing and reporting abnormal conditions with informed technical judgment" }, mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }] },
+    { label: { en: "Guiding junior ratings (Motorman, Wiper) on technique and judgment" } },
+    { label: { en: "Recognizing when a situation genuinely exceeds rating-level authority" } },
+    { label: { en: "Safety leadership by example within the rating structure" } },
+    { label: { en: "Honest, detailed reporting of observations and technical assessments" } },
+    { label: { en: "Professional conduct and reliability as the most experienced rating" } },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Oiler carries out pre-departure checks with genuine interpretive judgment — assessing main engine and auxiliary readiness not just against a checklist, but with a working understanding of what could go wrong and why. The Oiler often contributes directly to the watchkeeping engineer's or Chief Engineer's overall assessment, rather than simply reporting individual results for someone else to interpret." },
+      responsibilities: [
+        { en: "Carry out pre-departure checks across main engine, auxiliary systems, and standby equipment with independent judgment about readiness, escalating only what genuinely requires officer-level decision" },
+        { en: "Contribute directly to the watchkeeping engineer's or Chief Engineer's readiness assessment, offering informed technical input rather than only raw results" },
+        { en: "Verify that any issue found during checks is properly understood before reporting it, rather than passing along an incomplete assessment" },
+        { en: "Guide a Motorman or Wiper through an unfamiliar pre-departure task when asked, verifying their own understanding is solid before doing so" },
+        { en: "Follow all PPE and safety requirements exactly as instructed" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (ear protection, safety shoes, coveralls, gloves)" },
+        { en: "Engine room monitoring instruments and diagnostic tools" },
+        { en: "Departure checklist / work list" },
+      ],
+      risks: [
+        { en: "Overestimating the completeness of a readiness assessment due to accumulated experience, missing something a fresher perspective might have caught" },
+        { en: "Under-communicating technical reasoning to the watchkeeping engineer, providing conclusions without the detail needed to verify them" },
+        { en: "Guiding a junior rating through a task without having genuinely confirmed the correct method first" },
+        { en: "Treating routine pre-departure checks as a formality due to familiarity, rather than genuine verification" },
+      ],
+      bestPractices: [
+        { en: "Contribute technical reasoning, not just results, when reporting to the watchkeeping engineer or Chief Engineer" },
+        { en: "Treat experience as a foundation for judgment, not a substitute for genuinely checking each system" },
+        { en: "Verify your own understanding is current and correct before guiding a Motorman or Wiper" },
+        { en: "Escalate genuinely uncertain findings clearly, distinguishing them from routine variation" },
+      ],
+      commonMistakes: [
+        { en: "Becoming complacent about pre-departure checks due to years of repetition" },
+        { en: "Reporting a conclusion without the supporting detail the watchkeeping engineer needs to act on it" },
+        { en: "Guiding a junior rating based on outdated or unverified assumptions about correct technique" },
+        { en: "Assuming experience alone justifies skipping a genuine verification step" },
+      ],
+      professionalTips: [
+        { en: "Your experience is valuable exactly because it's paired with continued diligence — the moment it replaces genuine checking, it stops being an asset" },
+        { en: "The watchkeeping engineer relies on your reasoning as much as your conclusion — explain what you found, not just what you think it means" },
+        { en: "Guiding a junior rating well means your own understanding has to be current, not just familiar" },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "e1-l1" },
+        { kind: "lesson", lessonId: "e2-l1" },
+      ],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Oiler assists the watchkeeping engineer with a genuine level of interpretive responsibility — monitoring engine response, executing telegraph orders, and contributing informed observations about anything that departs from expected behaviour. The Oiler is often the engineer's closest working support during this phase, trusted to notice and correctly assess developments without needing everything double-checked." },
+      responsibilities: [
+        { en: "Assist the watchkeeping engineer with executing engine orders and monitoring engine response, contributing informed technical assessment of any abnormality observed" },
+        { en: "Maintain continuous awareness of engine parameters throughout the manoeuvre, communicating proactively rather than only when asked" },
+        { en: "Exercise judgment on routine variations versus genuine concerns, escalating clearly when something exceeds rating-level assessment" },
+        { en: "Guide a Motorman through their role during the manoeuvre if asked, without taking over their assigned task unnecessarily" },
+        { en: "Follow PPE and safety requirements exactly, with no exceptions during active operations" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (ear protection, safety shoes, coveralls, gloves)" },
+        { en: "Engine room monitoring and control equipment" },
+        { en: "Portable radio, if assigned for communication" },
+      ],
+      risks: [
+        { en: "Misjudging a genuinely serious development as routine due to overconfidence in accumulated experience" },
+        { en: "Under-communicating a developing concern because it seems manageable at the rating level" },
+        { en: "Taking over a Motorman's assigned task rather than guiding them through it, undermining their own development" },
+        { en: "Losing attentiveness during a routine manoeuvre due to over-familiarity" },
+      ],
+      bestPractices: [
+        { en: "Communicate proactively and specifically, even for observations that turn out to be minor" },
+        { en: "Maintain a clear sense of where your judgment ends and the watchkeeping engineer's decision begins, however experienced you are" },
+        { en: "Guide rather than replace a junior rating during their assigned task, unless safety requires immediate intervention" },
+        { en: "Treat every manoeuvre with full attentiveness, regardless of how many you've experienced" },
+      ],
+      commonMistakes: [
+        { en: "Assuming a developing situation is manageable at the rating level when it genuinely requires escalation" },
+        { en: "Taking over a Motorman's task instead of coaching them through a difficulty" },
+        { en: "Becoming less attentive due to extensive experience with routine manoeuvres" },
+        { en: "Communicating vaguely because a concern feels minor, rather than reporting it specifically" },
+      ],
+      professionalTips: [
+        { en: "Experience widens your judgment, but it never removes the line between rating-level assessment and officer-level decision" },
+        { en: "The most valuable thing you can do for a junior rating during a manoeuvre is often to let them work through it with your guidance, not to take over" },
+        { en: "A calm, precise report from an experienced Oiler carries real weight with the watchkeeping engineer — use that credibility deliberately, not casually" },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "e1-l7" },
+        { kind: "lesson", lessonId: "e1-l1" },
+      ],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Oiler's watch-support role is at its most developed — assisting the watchkeeping engineer with genuine interpretive responsibility across a wide range of parameters, rounds, and observations. Unlike the Motorman, whose independent judgment remains bounded to routine matters, the Oiler is trusted to assess a broader range of situations correctly, though the watchkeeping engineer retains final responsibility for the watch." },
+      responsibilities: [
+        { en: "Assist the watchkeeping engineer with monitoring duties across a wide range of parameters, exercising informed judgment about what is normal and what warrants discussion" },
+        { en: "Conduct rounds thoroughly, contributing genuine technical assessment rather than mechanical observation" },
+        { en: "Report developments with clear reasoning, distinguishing confirmed findings from matters still requiring the watchkeeping engineer's judgment" },
+        { en: "Guide a Motorman or Wiper through an unfamiliar observation or task when the opportunity arises, reinforcing their developing judgment" },
+        { en: "Follow engine room communication discipline exactly as demonstrated, including proper use of standard phrases and reporting formats" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring and control equipment" },
+        { en: "Rounds checklist / logging materials" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Overestimating the reliability of a routine judgment based on extensive experience, missing a genuinely unusual development" },
+        { en: "Becoming the de facto decision-maker during a watch without the watchkeeping engineer's full awareness, blurring where responsibility actually sits" },
+        { en: "Losing thoroughness during a long or repetitive watch due to over-familiarity" },
+        { en: "Under-explaining reasoning to a junior rating being guided, leaving them with a conclusion rather than genuine understanding" },
+      ],
+      bestPractices: [
+        { en: "Maintain the same thoroughness on a routine watch as on a demanding one, regardless of accumulated experience" },
+        { en: "Keep the watchkeeping engineer genuinely informed, rather than quietly absorbing more decision-making than the role actually carries" },
+        { en: "Explain your reasoning when guiding a junior rating, not just the conclusion you've reached" },
+        { en: "Treat every borderline observation as worth raising, even when experience suggests it's probably fine" },
+      ],
+      commonMistakes: [
+        { en: "Assuming a situation is routine based on experience without genuinely reassessing it each time" },
+        { en: "Effectively making decisions that should remain the watchkeeping engineer's, without clear communication about it" },
+        { en: "Letting thoroughness slip during a long or familiar watch" },
+        { en: "Giving a junior rating an answer without the reasoning behind it, limiting their own development" },
+      ],
+      professionalTips: [
+        { en: "The more experienced you become, the more deliberately you have to keep the watchkeeping engineer informed — trust doesn't mean less communication, it means more efficient communication" },
+        { en: "Explaining your reasoning to a junior rating is a skill in itself — a good Oiler teaches judgment, not just conclusions" },
+        { en: "The watch you take seriously when it feels routine is exactly what builds the credibility that matters when something isn't" },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "e1-l7" },
+        { kind: "lesson", lessonId: "e2-l3" },
+      ],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Oiler helps maintain the engine room's readiness for a possible unplanned departure, contributing genuine technical judgment about the standby condition of machinery rather than only executing assigned checks. The Oiler's broader experience is particularly valuable during extended anchor periods, where sustained vigilance can be harder to maintain without real understanding of what's being verified." },
+      responsibilities: [
+        { en: "Assist in monitoring auxiliary machinery and standby systems during the anchor period, exercising informed judgment about readiness" },
+        { en: "Report developments with clear technical reasoning, distinguishing routine conditions from anything genuinely worth escalating" },
+        { en: "Conduct rounds thoroughly throughout the anchor period, maintaining the same standard regardless of how long the vessel remains at anchor" },
+        { en: "Guide a Motorman or Wiper on what to watch for during an extended anchor period, reinforcing their developing judgment" },
+        { en: "Follow PPE and safety requirements exactly as instructed" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring equipment" },
+        { en: "Rounds checklist / logging materials" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Allowing extensive experience to substitute for genuine vigilance during an extended, uneventful anchor period" },
+        { en: "Missing a gradual, developing readiness concern because attention has settled into routine" },
+        { en: "Under-communicating a borderline observation because experience suggests it's probably nothing" },
+        { en: "Guiding a junior rating with outdated assumptions about what matters during anchoring" },
+      ],
+      bestPractices: [
+        { en: "Maintain the same thoroughness throughout an extended anchor period as during the first hours, regardless of how quiet it feels" },
+        { en: "Report borderline observations clearly, even when experience suggests they're likely routine" },
+        { en: "Use quieter periods to reinforce a junior rating's understanding of what genuinely matters during anchoring" },
+        { en: "Treat sustained readiness as an active responsibility, not a passive state" },
+      ],
+      commonMistakes: [
+        { en: "Letting vigilance decline as an anchor period extends, assuming familiarity means less needs checking" },
+        { en: "Missing a slow, developing concern because attention has become routine" },
+        { en: "Downplaying a borderline observation due to accumulated confidence rather than genuine reassessment" },
+        { en: "Passing outdated assumptions to a junior rating rather than reinforcing current standards" },
+      ],
+      professionalTips: [
+        { en: "An extended anchor period tests whether your vigilance is genuine or simply habitual — the difference matters" },
+        { en: "Experience should sharpen your judgment about what's worth reporting, not raise your threshold for reporting it" },
+        { en: "Teaching a junior rating what matters during anchoring is one of the most valuable things your experience can offer" },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "e1-l7" },
+        { kind: "lesson", lessonId: "e2-l1" },
+      ],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Oiler takes on substantial technical responsibility across maintenance, bunkering, and cargo pump operations — often serving as the watchkeeping engineer's or Chief Engineer's most relied-upon rating during the intensified pace of port activity. The Oiler's broad competence allows them to move fluidly between tasks while maintaining genuine technical oversight of what's happening across the engine room." },
+      responsibilities: [
+        { en: "Carry out and oversee a wide range of maintenance tasks during the port stay, exercising independent judgment about priority and technique" },
+        { en: "Take an active technical role in bunkering operations or cargo pump support, contributing informed assessment rather than only following instructions" },
+        { en: "Report anything unusual observed during port activity with clear technical reasoning, distinguishing routine variation from genuine concern" },
+        { en: "Guide a Motorman or Wiper through unfamiliar or higher-pressure tasks during the busier pace of port operations" },
+        { en: "Follow PPE and safety requirements exactly as instructed, particularly around bunkering and maintenance activities" },
+      ],
+      equipment: [
+        { en: "Engine room maintenance tools and materials" },
+        { en: "Bunkering or cargo pump equipment" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Spreading attention too thin across multiple simultaneous tasks, missing something that needed closer oversight" },
+        { en: "Overestimating the reliability of a quick assessment made under the pressure of a busy port stay" },
+        { en: "Under-supporting a junior rating during a demanding period because attention is absorbed elsewhere" },
+        { en: "Allowing accumulated experience to substitute for genuine verification during rushed conditions" },
+      ],
+      bestPractices: [
+        { en: "Prioritize deliberately when multiple tasks compete for attention, rather than spreading focus thin without a clear order" },
+        { en: "Maintain the same standard of verification during a busy port stay as during a quieter period" },
+        { en: "Check in on a junior rating handling an unfamiliar or pressured task, even briefly, during a demanding port call" },
+        { en: "Communicate proactively with the watchkeeping engineer or Chief Engineer about developing priorities, not just completed tasks" },
+      ],
+      commonMistakes: [
+        { en: "Spreading attention across too many tasks without clear prioritization" },
+        { en: "Rushing an assessment under port-stay pressure that would normally receive more careful verification" },
+        { en: "Leaving a junior rating without support during a demanding or unfamiliar task" },
+        { en: "Reporting only completed work, without flagging emerging priorities the team should know about" },
+      ],
+      professionalTips: [
+        { en: "Port stays reward the Oiler who prioritizes deliberately, not the one who tries to do everything at once" },
+        { en: "Your broad competence is most valuable when it's paired with genuine attention, not spread thin across too much at once" },
+        { en: "A brief check-in with a struggling junior rating during a busy port call often matters more than any single task you complete yourself" },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "e1-l6" },
+        { kind: "lesson", lessonId: "e6-l1" },
+      ],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "During STS operations, the Oiler takes on a substantial technical role — maintaining propulsion and manoeuvring readiness, and actively supporting cargo pump or ballast operations where the vessel type requires it. Given the elevated risk of the operation, the Oiler's broad experience is genuinely valuable, but the discipline of recognizing when something exceeds rating-level judgment remains just as essential as at any other rank." },
+      responsibilities: [
+        { en: "Maintain propulsion and manoeuvring readiness throughout the operation, monitoring parameters with genuine interpretive judgment" },
+        { en: "Take an active technical role in cargo pump or ballast operations, contributing informed assessment rather than only executing instructions" },
+        { en: "Report anything unusual promptly with clear technical reasoning, escalating anything that exceeds rating-level assessment given the operation's elevated risk" },
+        { en: "Support a Motorman or Wiper through their assigned role during the operation, without taking over their task unnecessarily" },
+        { en: "Follow PPE and safety requirements exactly as instructed, with particular attention to the heightened risk of this operation" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring and control equipment" },
+        { en: "Cargo pump or ballast system equipment" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Overestimating the reliability of an assessment made under the elevated risk and pace of an STS operation" },
+        { en: "Assuming experience alone justifies handling a genuinely ambiguous situation without escalating" },
+        { en: "Missing a significant development while attention is divided across multiple monitored systems" },
+        { en: "Taking over a junior rating's task rather than supporting them through it" },
+      ],
+      bestPractices: [
+        { en: "Maintain continuous, active monitoring throughout the operation, regardless of prior experience with STS" },
+        { en: "Escalate clearly and promptly whenever a situation approaches the edge of rating-level judgment, given the operation's elevated risk" },
+        { en: "Support rather than replace a junior rating's assigned role, unless safety requires immediate intervention" },
+        { en: "Communicate technical reasoning clearly to the watchkeeping engineer or Chief Engineer, not just conclusions" },
+      ],
+      commonMistakes: [
+        { en: "Assuming broad experience covers a genuinely unfamiliar or ambiguous development during STS" },
+        { en: "Taking over a junior rating's task instead of supporting them through a difficulty" },
+        { en: "Missing a developing concern due to attention divided across multiple systems" },
+        { en: "Communicating a conclusion without the reasoning the watchkeeping engineer needs" },
+      ],
+      professionalTips: [
+        { en: "STS operations reward the Oiler who knows exactly where broad competence ends and genuine escalation begins" },
+        { en: "Supporting a junior rating through their task builds their competence — taking it over only builds your own workload" },
+        { en: "The elevated risk of STS is exactly why clear, proactive communication matters more here than during routine operations" },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "e6-l1" },
+        { kind: "lesson", lessonId: "e6-l2" },
+      ],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Oiler's broad technical competence is most fully exercised — carrying out complex tasks independently, diagnosing issues with genuine understanding rather than following a checklist, and guiding Motormen and Wipers through technique and judgment. The Oiler's maintenance work often forms the technical backbone the watchkeeping engineer and Chief Engineer rely on for the department's day-to-day reliability." },
+      responsibilities: [
+        { en: "Carry out a wide range of maintenance tasks independently, including diagnosing issues rather than only executing predetermined steps" },
+        { en: "Verify the quality and completeness of maintenance work with genuine technical judgment, not just procedural completion" },
+        { en: "Report findings with clear technical reasoning, distinguishing routine wear from anything requiring officer-level decision" },
+        { en: "Guide Motormen and Wipers on technique and judgment, ensuring their own understanding is current and correct before teaching it" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, particularly around hot surfaces, moving parts, and chemical handling" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task" },
+        { en: "Maintenance tools and materials, used with genuine independence" },
+        { en: "Planned Maintenance System (PMS) references" },
+      ],
+      risks: [
+        { en: "Overestimating a diagnosis based on experience without genuinely verifying it against the actual condition found" },
+        { en: "Guiding a junior rating with outdated or unverified technique, compounding the error across multiple people" },
+        { en: "Treating a familiar type of task as fully understood without checking for what might be different this time" },
+        { en: "Under-communicating a finding's significance to the watchkeeping engineer or Chief Engineer" },
+      ],
+      bestPractices: [
+        { en: "Verify a diagnosis against what's actually found, not just what experience suggests is likely" },
+        { en: "Confirm your own technique remains current before guiding a Motorman or Wiper on it" },
+        { en: "Report findings with the technical reasoning behind them, not just a conclusion" },
+        { en: "Treat each maintenance task as specific, even when it resembles many you've done before" },
+      ],
+      commonMistakes: [
+        { en: "Diagnosing based on pattern-matching to past experience without genuinely verifying the current situation" },
+        { en: "Guiding a junior rating with technique that hasn't been recently confirmed as correct" },
+        { en: "Treating a familiar task type as requiring less attention than an unfamiliar one" },
+        { en: "Reporting conclusions without the reasoning that lets the watchkeeping engineer or Chief Engineer verify them" },
+      ],
+      professionalTips: [
+        { en: "Your experience gives you a strong hypothesis, not a conclusion — verify it against what's actually in front of you" },
+        { en: "The best Oilers teach reasoning, not just answers — a Motorman or Wiper who understands why will diagnose better next time" },
+        { en: "Genuine technical depth is demonstrated by how carefully you verify, not by how quickly you recognize a pattern" },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "e1-l6" },
+      ],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Oiler takes on a substantial technical role within the emergency team, often relied upon for complex or demanding tasks given their broad competence — while still operating under the direction of the officer or rating in charge of the station rather than making independent decisions about the overall response. The Oiler's calm, technical reliability under pressure is often what the station leader depends on most." },
+      responsibilities: [
+        { en: "Proceed immediately to the assigned muster station upon hearing the alarm, exactly as required by the muster list" },
+        { en: "Carry out the assigned task competently and reliably, contributing technical judgment and expertise within the scope instructed by the station leader" },
+        { en: "Report progress, difficulty, or relevant technical observations clearly and promptly to the station leader" },
+        { en: "Support a Motorman or Wiper assigned to the same station, without taking over their role unnecessarily" },
+        { en: "Take every drill with full seriousness, treating it as genuine practice for the emergency response expected of the most experienced rating present" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list" },
+        { en: "Emergency equipment specific to the assigned station" },
+      ],
+      risks: [
+        { en: "Assuming a level of independent authority during an emergency beyond what has actually been granted by the station leader" },
+        { en: "Overestimating the reliability of a technical assessment made under the stress of a genuine emergency" },
+        { en: "Taking over a junior rating's assigned task rather than supporting them through it" },
+        { en: "Treating a drill as less demanding than a real emergency because of accumulated experience" },
+      ],
+      bestPractices: [
+        { en: "Execute the assigned task competently and confirm completion clearly, contributing technical reasoning the station leader can act on" },
+        { en: "Support junior ratings within the emergency team without displacing their assigned role" },
+        { en: "Communicate proactively and specifically, even under the pressure of a genuine emergency" },
+        { en: "Treat every drill exactly as you would a real emergency, reinforcing the standard for the whole team" },
+      ],
+      commonMistakes: [
+        { en: "Assuming independent authority beyond what the station leader has actually granted" },
+        { en: "Displacing a junior rating's task instead of supporting them through it" },
+        { en: "Overestimating a technical assessment made quickly under pressure" },
+        { en: "Treating a drill less seriously due to years of experience with them" },
+      ],
+      professionalTips: [
+        { en: "Your technical competence is most valuable in service of the station leader's decisions, not as a substitute for them" },
+        { en: "Supporting a junior rating during a real emergency teaches them more than any drill debrief could" },
+        { en: "The calm you bring to an emergency reflects the seriousness you've brought to every drill before it" },
+      ],
+      mapReferences: [
+        { kind: "lesson", lessonId: "e1-l8" },
+        { kind: "lesson", lessonId: "s6-l2" },
+      ],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "During maintenance, you find a defect that looks exactly like one you've diagnosed and fixed many times before on similar equipment. Everything about it seems familiar, and you're confident you know exactly what's needed." },
+      mission: { en: "Decide whether to proceed based on your confident pattern recognition or verify the specifics first." },
+      expectedActions: [
+        { en: "Verify the actual condition found against your assumption before proceeding, rather than acting purely on how familiar it looks" },
+        { en: "Check for any detail that differs from previous cases, even briefly" },
+        { en: "Proceed with the fix only once genuinely confirmed, not just recognized" },
+        { en: "Report the finding with the reasoning that confirmed it, not just the conclusion" },
+      ],
+      why: [{ en: "Confident pattern recognition built on genuine experience is valuable, but it becomes a risk the moment it replaces verification — the details that differ are exactly what experience can cause you to overlook if you move too quickly from recognition to action." }],
+      commonMistakes: [
+        { en: "Skipping verification because the situation looks completely familiar" },
+        { en: "Proceeding on assumption to save time given your confidence" },
+        { en: "Reporting a conclusion without mentioning what was actually confirmed versus assumed" },
+      ],
+      safetyPoints: [{ en: "The most dangerous moment for an experienced rating is often not the unfamiliar situation, but the familiar-looking one that turns out to differ in a way that matters." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "You notice a Motorman repeating a mistake you remember making yourself early in your own experience. You could quickly fix it yourself, or take the time to explain it properly." },
+      mission: { en: "Decide how to respond in a way that actually helps the Motorman's development." },
+      expectedActions: [
+        { en: "Take the time to explain the reasoning behind the correction, not just point out or fix the mistake" },
+        { en: "Relate it to your own experience if useful, without making the Motorman feel singled out" },
+        { en: "Confirm the Motorman understands why, not just what to do differently" },
+        { en: "Let them redo it themselves rather than doing it for them, if time and safety allow" },
+      ],
+      why: [{ en: "Quickly fixing the mistake yourself solves today's problem but teaches nothing — the Oiler's value in guiding junior ratings comes from building their understanding, not from being faster or more capable in the moment." }],
+      commonMistakes: [
+        { en: "Fixing it yourself because it's faster, missing the coaching opportunity entirely" },
+        { en: "Correcting the action without explaining the reasoning" },
+        { en: "Making the Motorman feel inadequate rather than supported" },
+      ],
+      safetyPoints: [],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "You encounter a situation during a watch that seems like something you'd normally handle and report as routine, but something about it feels slightly different from past experience — not clearly serious, just not entirely typical either." },
+      mission: { en: "Decide whether to handle it at your own level or raise it with the watchkeeping engineer." },
+      expectedActions: [
+        { en: "Raise it with the watchkeeping engineer, even if it likely turns out to be routine" },
+        { en: "Describe specifically what feels different from past experience, not just a general sense of uncertainty" },
+        { en: "Let the watchkeeping engineer make the final call on whether it needs further attention" },
+        { en: "Continue monitoring as instructed rather than assuming the matter is closed once mentioned" },
+      ],
+      why: [{ en: "The instinct that something is 'not entirely typical' is itself valuable information, built from real experience — the Oiler's judgment is trusted precisely because it includes recognizing the edges of what that judgment covers, not because it never encounters them." }],
+      commonMistakes: [
+        { en: "Dismissing the feeling because it doesn't meet a clear threshold for concern" },
+        { en: "Handling it alone because raising something vague feels unnecessary given your experience" },
+        { en: "Failing to describe specifically what felt different, leaving the watchkeeping engineer without enough to assess it" },
+      ],
+      safetyPoints: [{ en: "An experienced rating's sense that something is slightly off is often an early, valuable signal — treating it as worth raising, even without full certainty, is exactly the judgment this role is meant to exercise." }],
+      mapReferences: [
+        { kind: "lesson", lessonId: "s6-l1" },
+        { kind: "lesson", lessonId: "e1-l7" },
+      ],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Experience gives you a strong hypothesis, not a conclusion — verify it against what's actually in front of you, every time." },
+    { en: "The most dangerous moment is often the familiar-looking one, not the unfamiliar one — that's exactly where verification matters most." },
+    { en: "Teach reasoning, not just answers — a Motorman or Wiper who understands why will diagnose better next time, long after you've moved on." },
+    { en: "The line between rating-level judgment and officer-level decision doesn't disappear with experience — it just becomes less obvious, which is exactly why staying deliberate about it matters." },
+    { en: "A calm, precise report from an experienced Oiler carries real weight — use that credibility deliberately, not casually." },
+    { en: "The instinct that something feels 'not entirely typical' is valuable information — raise it specifically, even without full certainty." },
+    { en: "Supporting a junior rating through their own task builds their competence; taking it over only builds your own workload." },
+    { en: "Being the most experienced rating means your standards are watched closely — what you accept quietly becomes what everyone else assumes is acceptable." },
+  ],
+
+  professionalMindset: [
+    { en: "Treat experience as a hypothesis generator, not a verification substitute. Recognizing a familiar pattern quickly is valuable, but the recognition itself is only the starting point — genuine judgment still requires confirming that this specific situation matches what experience suggests." },
+    { en: "See the boundary of rating-level judgment as something that requires ongoing attention, not something experience settles once. The more capable you become, the less obvious that boundary is — which makes actively recognizing it more important, not less." },
+    { en: "Understand that teaching is different from doing, and both matter. Fixing something yourself and helping someone else understand why are separate skills — the second is what actually builds the department's capability over time." },
+    { en: "Hold a felt sense of 'slightly off' as real data, not vague doubt. An experienced rating's instinct that something isn't quite typical is built from genuine pattern recognition — it deserves to be raised specifically, not dismissed for lacking full certainty." },
+    { en: "Recognize that your credibility is a resource you spend deliberately. A calm, well-reasoned report from an experienced rating carries weight precisely because it isn't used carelessly — protect that by reserving it for what genuinely warrants it." },
+    { en: "Accept that being the standard others watch is part of the role, whether or not it's formally assigned. Junior ratings absorb what you visibly accept as normal — this happens regardless of whether you intend to teach it." },
+    { en: "See supporting a junior rating through difficulty as more valuable than resolving it yourself. Your competence is most useful when it builds someone else's, not when it simply outpaces theirs." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Sea time and service records — The Oiler's sea time is recorded and confirmed as required by flag State regulations, directly supporting eventual progression toward officer certification (Fourth Engineer) where applicable." },
+    { en: "Maintenance and diagnostic reporting — When the Oiler reports on a maintenance task or diagnosis, this account is often relied upon substantially by the watchkeeping engineer or Chief Engineer — not as a raw observation requiring verification, but as an informed technical assessment." },
+    { en: "Contribution to defect and maintenance records — The Oiler's findings, particularly diagnostic reasoning behind a defect or recurring issue, contribute directly and substantively to the department's maintenance records, even where the Oiler does not maintain those records personally." },
+    { en: "Guidance and training documentation — Where the Oiler's informal guidance to a Motorman or Wiper is tracked as part of that rating's development, the Oiler ensures any input given is accurate and reflects genuinely verified technique, not just experience-based assumption." },
+    { en: "Why this matters: The Oiler's reports often function as technical diagnosis rather than raw data — a watchkeeping engineer or Chief Engineer may act on the Oiler's assessment directly, without independently re-verifying every detail. This level of trust means the Oiler's documentation habits carry real operational weight: honest, specific, and technically sound reporting protects not only the Oiler's own credibility, but the decisions made based on it." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Exercising substantial judgment in environmental practice — The Oiler applies waste segregation, product handling, and pollution prevention procedures with genuine technical understanding across a wide range of tasks, recognizing not just what's required but why." },
+    { en: "Diagnosing borderline environmental situations — The Oiler is often the first to assess whether an observed condition (a residue level, an unusual discharge indication) genuinely warrants escalation, contributing informed technical reasoning rather than only a raw observation." },
+    { en: "Guiding junior ratings on environmental discipline — The Oiler helps reinforce correct environmental practice with Motormen and Wipers, ensuring the reasoning behind procedures is understood, not just the steps themselves." },
+    { en: "Correct product and material handling — The Oiler follows procedures precisely and can often diagnose why a specific product or method applies to a given situation, escalating genuinely ambiguous cases with clear technical reasoning." },
+    { en: "Why this matters: The Oiler's environmental judgment is substantial enough that a watchkeeping engineer or Chief Engineer often relies on the Oiler's assessment directly — making the Oiler's technical reasoning, not just their compliance, a genuine part of the vessel's environmental safeguard. This is exactly the depth of judgment that prepares an Oiler for the fuller environmental accountability expected at the officer level." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Exercise independent technical judgment across a wide range of maintenance, monitoring, and watch-support situations within your demonstrated competence" },
+      { en: "Diagnose issues independently and recommend a course of action, contributing substantive technical reasoning to the watchkeeping engineer's or Chief Engineer's decision" },
+      { en: "Guide Motormen and Wipers on technique and judgment, based on your own verified understanding" },
+      { en: "Make immediate, practical decisions on routine matters within your scope, without waiting for officer approval on every detail" },
+      { en: "Refuse to proceed with a task or diagnosis you genuinely believe requires officer-level verification, requesting it before continuing" },
+      { en: "Report anything observed with your own technical assessment attached, rather than only raw data" },
+      { en: "Request feedback or verification from a watchkeeping engineer or Chief Engineer on any judgment you're uncertain about" },
+    ],
+    youCannot: [
+      { en: "Make a final decision on any matter that genuinely exceeds rating-level judgment, however confident your assessment" },
+      { en: "Authorize any operational readiness, safety check, or compliance matter on the vessel's behalf" },
+      { en: "Take command of a watch, emergency station, or operational decision reserved for an officer" },
+      { en: "Guide a junior rating on technique you have not personally and currently verified as correct" },
+      { en: "Assume that accumulated experience alone justifies bypassing verification of a specific situation" },
+      { en: "Discipline another crew member as a formal supervisory action, regardless of what is observed" },
+      { en: "Represent the vessel or the company in any interaction with external parties (shore engineers, surveyors, authorities)" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Letting pattern recognition replace verification — Acting on how familiar a situation looks rather than confirming the specific details actually match what experience suggests." },
+    { en: "Quietly absorbing decisions that belong to an officer — Handling a genuinely ambiguous situation independently because experience makes it feel manageable, without the watchkeeping engineer's awareness." },
+    { en: "Fixing a junior rating's mistake instead of teaching through it — Solving the immediate problem quickly rather than taking the time to build the Motorman's or Wiper's understanding." },
+    { en: "Dismissing a 'not entirely typical' instinct for lacking full certainty — Treating a genuine but vague sense that something is off as not worth raising, rather than describing it specifically." },
+    { en: "Under-communicating technical reasoning — Reporting a conclusion to the watchkeeping engineer or Chief Engineer without the detail needed to verify or act on it." },
+    { en: "Letting accumulated credibility go unspent carelessly — Raising minor concerns as loudly as genuine ones, diluting the weight an experienced rating's report should carry." },
+    { en: "Taking over a junior rating's task rather than supporting them through it — Displacing their assigned work under time pressure instead of coaching them to complete it themselves." },
+    { en: "Treating routine familiarity as reduced risk — Assuming a task or situation is lower-risk simply because it's been encountered many times before." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Fourth Engineer (or equivalent junior officer certification), for those pursuing an officer pathway — the Oiler represents the top of the rating structure in the engine department, and progression from here typically means pursuing formal officer certification rather than a further rating role." },
+    { en: "Skills to develop: Formal theoretical knowledge to complement accumulated hands-on experience, particularly in areas required for officer certification exams; the transition from informal guidance of junior ratings to formal supervisory and training responsibility; broader systems-level understanding beyond individual task competence; the discipline of officer-level documentation, reporting, and accountability standards." },
+    { en: "Recommended experience: A demonstrated track record of sound technical judgment across a genuinely wide range of situations, consistent and detailed reporting that watchkeeping engineers and the Chief Engineer have come to rely on directly, and a track record of effectively guiding junior ratings; sufficient sea time and any prerequisite coursework required for officer certification." },
+    { en: "Certificates typically required: Requirements vary significantly by flag State and company policy. Progression to Fourth Engineer typically requires completion of approved officer training and the corresponding STCW certificate of competency (Engineer Officer of the Watch), together with sufficient qualifying sea time as a rating." },
+    { en: "Recommended MAP courses: Advanced Engine Systems and Watchkeeping (intermediate/advanced content, now accessible at officer-track level); Role On Board – Fourth Engineer (to preview the officer transition in detail); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from Oiler to Fourth Engineer means the hands-on judgment built over years of rating experience becomes the foundation for a different kind of responsibility — formal accountability, documented decisions, and supervisory authority rather than informal guidance. The technical instinct doesn't change; what changes is the weight the role now places behind it, and the officer-level discipline required to carry that weight properly." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "e1-l1", label: { en: "Main Engine" } },
+    { kind: "lesson", lessonId: "e1-l2", label: { en: "Auxiliaries & Electricity" } },
+    { kind: "lesson", lessonId: "e1-l4", label: { en: "Fire Safety & CO2 System" } },
+    { kind: "lesson", lessonId: "e1-l5", label: { en: "Survival & EPIRB" } },
+    { kind: "lesson", lessonId: "e1-l6", label: { en: "Maintenance & Troubleshooting" } },
+    { kind: "lesson", lessonId: "e1-l7", label: { en: "Engine Watchkeeping" } },
+    { kind: "lesson", lessonId: "e1-l8", label: { en: "Emergency Procedures" } },
+    { kind: "lesson", lessonId: "e2-l1", label: { en: "Generators & Power Generation" } },
+    { kind: "lesson", lessonId: "e2-l2", label: { en: "Switchboards & Distribution" } },
+    { kind: "lesson", lessonId: "e2-l3", label: { en: "Pumps & Hydraulic Systems" } },
+    { kind: "lesson", lessonId: "e2-l4", label: { en: "Compressors & Compressed Air" } },
+    { kind: "lesson", lessonId: "e2-l5", label: { en: "Purifiers & Separators" } },
+    { kind: "lesson", lessonId: "e2-l7", label: { en: "Electrical Troubleshooting" } },
+    { kind: "lesson", lessonId: "e3-l1", label: { en: "Marine Boiler Types" } },
+    { kind: "lesson", lessonId: "e3-l2", label: { en: "Combustion & Burners" } },
+    { kind: "lesson", lessonId: "e3-l4", label: { en: "Steam Systems & Distribution" } },
+    { kind: "lesson", lessonId: "e3-l5", label: { en: "Boiler Safety & Alarms" } },
+    { kind: "lesson", lessonId: "e6-l1", label: { en: "Cargo Pumps" } },
+    { kind: "lesson", lessonId: "e6-l2", label: { en: "Ballast System" } },
+    { kind: "lesson", lessonId: "e6-l5", label: { en: "Cargo Heating" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l3", label: { en: "PPE, Safe Behaviour & Human Factors" } },
+    { kind: "lesson", lessonId: "s6-l6", label: { en: "Safety Culture & Professional Responsibility" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — engine room and machinery terminology" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on Engineer Officer of the Watch certification requirements by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and machinery layouts to build familiarity across different ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on technical diagnosis, certification requirements, or engine room practice" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Oiler through to Fourth Engineer and beyond" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document sea time, demonstrated competencies, and guidance/training experience" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_MOTORMAN", label: { en: "Role On Board — Motorman" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_FOURTH_ENGINEER", label: { en: "Role On Board — Fourth Engineer" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "A broad range of maintenance, monitoring, and watch-support tasks independently, exercising genuine technical judgment" },
+      { en: "Diagnostic work, distinguishing routine wear or variation from findings that warrant escalation" },
+      { en: "Informal guidance of Motormen and Wipers on technique and judgment" },
+    ],
+    iMonitor: [
+      { en: "Engine room parameters and conditions across a wide range of situations, with substantial interpretive judgment" },
+      { en: "My own pattern recognition against the specific details of each situation, verifying rather than assuming a familiar case is identical" },
+      { en: "The technique and understanding of junior ratings I guide, ensuring my own knowledge remains current before teaching it" },
+    ],
+    iReport: [
+      { en: "Technical assessments with clear reasoning, not just conclusions, to the watchkeeping engineer or Chief Engineer" },
+      { en: "Any situation that feels genuinely uncertain, described specifically, even without full certainty about its significance" },
+      { en: "My own recognition of when a matter exceeds rating-level judgment" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any final decision on a matter that genuinely exceeds rating-level judgment" },
+      { en: "Operational readiness, safety checks, or compliance matters on the vessel's behalf" },
+      { en: "My own assumption that experience alone justifies bypassing verification of a specific situation" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Oiler task scope showing the broadest rating-level judgment before officer certification." } },
+    { kind: "image", caption: { en: "Example of a completed diagnostic assessment reported by an Oiler." } },
+    { kind: "diagram", caption: { en: "Engine department organization chart showing the Oiler's position as senior rating." } },
+    { kind: "video", caption: { en: "Demonstration of an Oiler coaching a Motorman through a diagnostic reasoning process." } },
+    { kind: "document", caption: { en: "Sample sea time / competency progress record for Fourth Engineer certification." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
-// "master", "deck_cadet", "os", "engine_cadet", "wiper" and "motorman" —
-// remaining ranks are still pending content.
+// "master", "deck_cadet", "os", "engine_cadet", "wiper", "motorman" and
+// "oiler" — remaining ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -6570,6 +7166,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   engine_cadet: ENGINE_CADET_CARD,
   wiper: WIPER_CARD,
   motorman: MOTORMAN_CARD,
+  oiler: OILER_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
