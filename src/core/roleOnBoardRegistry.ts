@@ -7150,11 +7150,595 @@ const OILER_CARD: RoleOnBoardCard = {
   ],
 };
 
+const FOURTH_ENGINEER_CARD: RoleOnBoardCard = {
+  rankId: "fourth_engineer",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Fourth Engineer is the junior engineering officer, holding an Engineer Officer of the Watch certificate and assuming formal responsibility for the safe operation of assigned machinery during the watch — a fundamentally different responsibility from the Oiler's, who assists a watch but does not own it. Unlike the Oiler, whose judgment operates within an informally bounded scope, the Fourth Engineer carries formal, certified accountability for the safe operation of the engine room during their watch." },
+    { en: "The Fourth Engineer's judgment is now exercised independently within the watch, but always within the framework set by the Chief Engineer's standing orders and the broader engineering department's procedures — the Fourth Engineer decides what a routine watch requires, including prioritizing routine actions and responding to expected operational variations, but escalates anything that departs from routine to the Second or Third Engineer, or the Chief Engineer, exactly as an Oiler once escalated to a watchkeeping engineer." },
+    { en: "The Fourth Engineer's progression is measured by the reliability and soundness of watch decisions, the quality of engine room readiness maintained independently, and the depth of technical understanding demonstrated across the systems now formally within their responsibility." },
+    { en: "The Fourth Engineer works closely with the ratings (Oiler, Motorman, Wiper) who support the watch, coordinating and directing their work during watch hours, and reports to the Second or Third Engineer and ultimately the Chief Engineer, who set standing orders and departmental standards." },
+    { en: "Where the Oiler's experience widens judgment within a scope that remains bounded by rating status, the Fourth Engineer's certification changes the nature of that boundary — replacing an informal ceiling with a formal one, defined by standing orders, certification limits, and the chain of command above." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Second Engineer or Third Engineer (day-to-day watch and departmental supervision, depending on company structure)" },
+      { en: "Chief Engineer (overall standing orders and departmental standards)" },
+    ],
+    worksWith: [
+      { en: "Oiler, Motorman, and Wiper, whom the Fourth Engineer directs during watch hours" },
+      { en: "Other watchkeeping officers during handovers" },
+    ],
+    mentors: [
+      { en: "The Second Engineer, Third Engineer, and Chief Engineer, who guide the Fourth Engineer's development toward further certification and departmental responsibility" },
+    ],
+    supports: [
+      { en: "The Fourth Engineer directs the ratings assigned to support the watch, and may mentor an Engine Cadet during engine room familiarization, though formal training oversight of cadets typically remains with the Chief Engineer" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Independent engine room watchkeeping" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }] },
+    { label: { en: "Applying standing orders and escalation criteria correctly" } },
+    { label: { en: "Recognizing when a situation exceeds watch-level authority" } },
+    { label: { en: "Directing ratings during watch hours" } },
+    { label: { en: "Broad technical understanding across engine room systems" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e2-l7" }] },
+    { label: { en: "Basic maintenance planning and execution oversight during watch hours" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e3-l6" }] },
+    { label: { en: "Clear, accurate watch reporting and handover discipline" } },
+    { label: { en: "Professional conduct and reliability as a certified officer" } },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Fourth Engineer carries out pre-departure checks with formal decision-making responsibility — not just contributing technical input as an Oiler would, but personally confirming that assigned systems are ready and reporting that readiness with the weight of a certified officer's signature behind it. The Fourth Engineer's checks feed directly into the Chief Engineer's overall departmental readiness assessment." },
+      responsibilities: [
+        { en: "Personally verify readiness of assigned engine room systems (main engine, auxiliary machinery, standby equipment) before departure, exercising independent judgment within standing orders" },
+        { en: "Direct the Oiler, Motorman, or Wiper in completing assigned pre-departure tasks, verifying their work rather than only receiving reports" },
+        { en: "Report readiness formally to the Second/Third Engineer or Chief Engineer, distinguishing confirmed readiness from any outstanding concern" },
+        { en: "Escalate any finding that exceeds watch-level authority or standing orders immediately, rather than resolving it independently" },
+        { en: "Follow all PPE and safety requirements exactly as instructed" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (ear protection, safety shoes, coveralls, gloves)" },
+        { en: "Engine room monitoring instruments and diagnostic tools" },
+        { en: "Departure checklist, standing orders, and departmental readiness documentation" },
+      ],
+      risks: [
+        { en: "Reporting readiness without personally verifying it, relying too heavily on a rating's report without independent confirmation" },
+        { en: "Misjudging whether a finding requires escalation, either under-escalating a genuine concern or over-escalating routine matters" },
+        { en: "Directing ratings without verifying their completed work meets the required standard" },
+        { en: "Treating pre-departure checks as routine due to certification, without genuine verification each time" },
+      ],
+      bestPractices: [
+        { en: "Personally verify critical readiness items rather than relying solely on ratings' reports, even when experienced ratings are involved" },
+        { en: "Apply standing orders precisely when deciding what requires escalation, rather than relying on personal judgment alone" },
+        { en: "Verify a rating's completed task meets the standard, not just that it was reported complete" },
+        { en: "Report readiness with the specific reasoning behind it, supporting the Chief Engineer's overall assessment" },
+      ],
+      commonMistakes: [
+        { en: "Accepting a rating's report of task completion without independent verification" },
+        { en: "Escalating routine matters unnecessarily or, conversely, resolving something that should have gone to the Chief Engineer" },
+        { en: "Rushing pre-departure verification under time pressure, trusting certification to substitute for genuine checking" },
+        { en: "Reporting readiness vaguely rather than with the specific detail the Chief Engineer needs" },
+      ],
+      professionalTips: [
+        { en: "Your certification gives you the authority to decide, but it doesn't remove the need to genuinely verify before deciding" },
+        { en: "Standing orders exist precisely so escalation decisions don't depend on your mood or how busy the day is — apply them consistently" },
+        { en: "The way you verify a rating's work sets the standard the whole watch team will hold itself to" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l1" }, { kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Fourth Engineer takes formal responsibility for executing engine orders and monitoring engine response — no longer assisting a watchkeeping engineer as an Oiler would, but personally accountable for the engine room's performance during the manoeuvre, working under the Chief Engineer's or a senior engineer's oversight if present. The Fourth Engineer directs the supporting ratings and makes real-time decisions within the scope of standing orders." },
+      responsibilities: [
+        { en: "Execute engine orders from the bridge accurately and promptly, personally responsible for correct interpretation and execution" },
+        { en: "Monitor engine response continuously, making independent judgments about normal variation versus a genuine developing issue" },
+        { en: "Direct the Oiler, Motorman, or Wiper supporting the manoeuvre, coordinating their actions with the engine room's overall response" },
+        { en: "Escalate immediately to the Chief Engineer or senior engineer if a development exceeds standing orders or watch-level authority" },
+        { en: "Follow PPE and safety requirements exactly, with no exceptions during active operations" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment (ear protection, safety shoes, coveralls, gloves)" },
+        { en: "Engine room monitoring and control equipment, including telegraph and communication systems" },
+        { en: "Standing orders reference, portable radio" },
+      ],
+      risks: [
+        { en: "Misjudging a developing issue as routine, delaying escalation beyond what standing orders permit" },
+        { en: "Directing ratings unclearly during a demanding moment, causing confusion in the engine room response" },
+        { en: "Hesitating to make a routine decision independently, deferring unnecessarily when standing orders already cover the situation" },
+        { en: "Losing situational awareness while managing multiple aspects of the manoeuvre simultaneously" },
+      ],
+      bestPractices: [
+        { en: "Apply standing orders decisively for routine decisions — hesitation here slows the whole manoeuvre without adding safety" },
+        { en: "Escalate immediately and clearly the moment a development exceeds standing orders, rather than attempting to resolve it independently" },
+        { en: "Direct ratings with clear, specific instructions, confirming understanding rather than assuming it" },
+        { en: "Maintain a complete picture of the manoeuvre's progress, not just the immediate task in front of you" },
+      ],
+      commonMistakes: [
+        { en: "Escalating every uncertainty unnecessarily, slowing decision-making that standing orders already cover" },
+        { en: "Failing to escalate a genuine developing issue in time, attempting to manage it alone" },
+        { en: "Giving unclear direction to ratings during a demanding moment" },
+        { en: "Becoming absorbed in one system's monitoring and losing broader awareness of the manoeuvre" },
+      ],
+      professionalTips: [
+        { en: "Confident, standing-order-based decisions are what a Chief Engineer expects from a Fourth Engineer — indecision on routine matters is its own kind of risk" },
+        { en: "The clarity of your direction to the ratings determines how smoothly the engine room's part of the manoeuvre actually runs" },
+        { en: "Escalating promptly when something exceeds your authority is a demonstration of judgment, not a limitation of it" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e1-l1" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Fourth Engineer stands an independent engine room watch — the defining responsibility of this rank, and the clearest departure from the Oiler's supporting role. The Fourth Engineer owns the watch: monitoring all assigned parameters, directing the supporting ratings, and making the continuous stream of routine decisions that keep the engine room running safely, while applying standing orders to know precisely when something requires the Second/Third Engineer or Chief Engineer." },
+      responsibilities: [
+        { en: "Stand an independent watch, monitoring all assigned engine room parameters and systems with full personal accountability for their normal operation" },
+        { en: "Direct the Oiler, Motorman, or Wiper supporting the watch, assigning rounds and tasks appropriate to their competence" },
+        { en: "Apply standing orders to decide what requires escalation versus what falls within watch-level authority, escalating promptly and clearly when required" },
+        { en: "Conduct a complete, accurate handover at the end of watch, ensuring the relieving officer has a genuine understanding of the watch's condition" },
+        { en: "Maintain engine room communication discipline, including proper use of standard phrases and reporting formats" },
+      ],
+      equipment: [
+        { en: "Full engine room monitoring and control equipment" },
+        { en: "Standing orders and night order book (engine room equivalent, where used)" },
+        { en: "Watch log / rounds documentation" },
+      ],
+      risks: [
+        { en: "Misapplying standing orders, either escalating unnecessarily or failing to escalate a genuine concern" },
+        { en: "Directing ratings without matching tasks to their actual competence, creating risk or inefficiency" },
+        { en: "Giving an incomplete handover, leaving the relieving officer with an inaccurate picture of the watch" },
+        { en: "Becoming overconfident in independent judgment, treating certification as removing the need for standing-order discipline" },
+      ],
+      bestPractices: [
+        { en: "Apply standing orders as the primary basis for escalation decisions, not personal comfort with a situation" },
+        { en: "Match tasks to each rating's demonstrated competence when directing the watch team" },
+        { en: "Treat the handover as a complete, honest account of the watch, including anything unresolved" },
+        { en: "Maintain the same standard of attentiveness throughout the watch, regardless of how routine it has been" },
+      ],
+      commonMistakes: [
+        { en: "Treating standing orders as a general guideline rather than the actual basis for escalation decisions" },
+        { en: "Directing a rating to a task beyond their demonstrated competence without adequate supervision" },
+        { en: "Giving a rushed or incomplete handover because the watch felt uneventful" },
+        { en: "Assuming certification alone is sufficient judgment, without the discipline standing orders provide" },
+      ],
+      professionalTips: [
+        { en: "Standing orders exist so that escalation decisions are consistent regardless of who's on watch — apply them as written, not as you'd prefer to interpret them" },
+        { en: "A watch is only as well-handed-over as the honesty of what's reported, including what wasn't fully resolved" },
+        { en: "Directing the watch team well means matching the task to the person, not just assigning what's convenient" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e2-l3" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Fourth Engineer maintains formal responsibility for the engine room's readiness for a possible unplanned departure — applying the same standing-order discipline used during navigation to an extended, often quieter period where sustained accountability is easy to let slip. The Fourth Engineer directs the watch team's monitoring and rounds throughout the anchor period, regardless of its duration." },
+      responsibilities: [
+        { en: "Maintain and personally verify engine room readiness throughout the anchor period, applying standing orders to any developing concern" },
+        { en: "Direct the Oiler, Motorman, or Wiper in conducting rounds and monitoring standby systems, verifying their work rather than assuming completion" },
+        { en: "Escalate promptly to the Second/Third Engineer or Chief Engineer if readiness is genuinely compromised, rather than managing it independently beyond standing orders" },
+        { en: "Conduct a complete handover at watch change during the anchor period, including the readiness status and any developing observation" },
+        { en: "Follow PPE and safety requirements exactly as instructed" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring equipment" },
+        { en: "Standing orders reference" },
+        { en: "Watch log / rounds documentation" },
+      ],
+      risks: [
+        { en: "Allowing extended anchor duration to erode the discipline applied during active navigation" },
+        { en: "Under-verifying a rating's rounds during a quiet period, assuming routine completion" },
+        { en: "Missing a slow, developing readiness concern due to reduced vigilance over time" },
+        { en: "Giving an incomplete handover because the anchor period feels uneventful" },
+      ],
+      bestPractices: [
+        { en: "Apply the same standing-order discipline throughout an extended anchor period as during the first hours" },
+        { en: "Personally verify readiness periodically, rather than relying solely on ratings' rounds reports" },
+        { en: "Treat every handover during an anchor period with the same completeness as during active navigation" },
+        { en: "Use quieter periods to reinforce watch team standards, rather than letting them relax" },
+      ],
+      commonMistakes: [
+        { en: "Letting standing-order discipline erode as an anchor period extends" },
+        { en: "Assuming ratings' rounds are thorough without periodic verification" },
+        { en: "Missing a gradual readiness concern due to accumulated complacency" },
+        { en: "Giving a minimal handover because the period has been quiet" },
+      ],
+      professionalTips: [
+        { en: "An extended anchor period is exactly where formal discipline matters most, precisely because it's easiest to let slip" },
+        { en: "Readiness during anchoring isn't passive — it's a standing responsibility you own for the full duration of your watch" },
+        { en: "The watch team's standards during a quiet period reflect what you've consistently required, not what circumstances happen to allow" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Fourth Engineer takes on formal responsibility across maintenance oversight, bunkering operations, and cargo pump support — often the officer directly accountable for coordinating the ratings across multiple simultaneous port activities. The Fourth Engineer's certification means decisions that would have required escalation as an Oiler can now often be made independently, within standing orders." },
+      responsibilities: [
+        { en: "Oversee and prioritize maintenance work during the port stay, directing the Oiler, Motorman, or Wiper across multiple simultaneous tasks" },
+        { en: "Take formal responsibility for bunkering operations or cargo pump support, applying standing orders and escalating anything genuinely outside their scope" },
+        { en: "Report developments during port activity clearly and promptly to the Second/Third Engineer or Chief Engineer, distinguishing routine matters from genuine concerns" },
+        { en: "Coordinate the watch team's competing priorities during a busy port stay, ensuring critical activities receive appropriate oversight" },
+        { en: "Follow PPE and safety requirements exactly as instructed, particularly around bunkering and maintenance activities" },
+      ],
+      equipment: [
+        { en: "Engine room maintenance tools and materials" },
+        { en: "Bunkering or cargo pump equipment and associated documentation" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Spreading oversight too thin across multiple simultaneous port activities, missing something requiring closer attention" },
+        { en: "Making a decision independently that standing orders actually require escalating, given the elevated activity of a port stay" },
+        { en: "Under-directing the watch team during a demanding period, leaving ratings without clear priorities" },
+        { en: "Rushing verification under the pressure of a busy port call" },
+      ],
+      bestPractices: [
+        { en: "Prioritize deliberately across competing port activities, communicating that prioritization clearly to the watch team" },
+        { en: "Apply standing orders consistently even under the increased pace of a port stay, rather than defaulting to independent judgment under pressure" },
+        { en: "Check in on the watch team regularly during a busy port call, not only when a problem is reported" },
+        { en: "Maintain verification standards regardless of how much a port stay's pace tempts shortcuts" },
+      ],
+      commonMistakes: [
+        { en: "Failing to prioritize clearly when multiple port activities compete for attention" },
+        { en: "Making an independent decision under time pressure that standing orders required escalating" },
+        { en: "Leaving the watch team without clear direction during a demanding port call" },
+        { en: "Cutting corners on verification because the port stay is busy" },
+      ],
+      professionalTips: [
+        { en: "A busy port stay tests whether your standing-order discipline holds under pressure — that's exactly when it matters most" },
+        { en: "Clear prioritization, communicated to the whole watch team, is what turns a chaotic-feeling port call into a manageable one" },
+        { en: "The officer who checks in proactively during a demanding period catches problems before they escalate on their own" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e6-l1" }, { kind: "lesson", lessonId: "e3-l6" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "During STS operations, the Fourth Engineer holds formal responsibility for propulsion and manoeuvring readiness, and for the engine room's active role in cargo pump or ballast operations — a genuine officer-level responsibility given the elevated risk of the operation. Standing orders remain the primary reference for what falls within watch-level authority, and applying them precisely matters more here than in almost any other phase." },
+      responsibilities: [
+        { en: "Maintain and personally verify propulsion and manoeuvring readiness throughout the operation, with full accountability for the engine room's contribution" },
+        { en: "Take formal responsibility for cargo pump or ballast operations where applicable, directing the watch team and applying standing orders to any developing concern" },
+        { en: "Escalate immediately to the Chief Engineer or senior engineer if any development exceeds standing orders, given the operation's elevated risk" },
+        { en: "Direct the Oiler, Motorman, or Wiper supporting the operation, maintaining clear communication throughout" },
+        { en: "Follow PPE and safety requirements exactly as instructed, with particular attention to the heightened risk of this operation" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring and control equipment" },
+        { en: "Cargo pump or ballast system equipment and associated documentation" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Misapplying standing orders under the pressure and pace of an STS operation, either escalating unnecessarily or too late" },
+        { en: "Directing the watch team unclearly during a demanding, high-risk operation" },
+        { en: "Losing situational awareness while managing multiple monitored systems simultaneously" },
+        { en: "Underestimating the elevated risk of the operation due to accumulated experience with routine STS calls" },
+      ],
+      bestPractices: [
+        { en: "Apply standing orders with particular precision during STS, given the operation's elevated risk and reduced margin for error" },
+        { en: "Maintain clear, continuous communication with the watch team throughout the operation" },
+        { en: "Escalate the moment a development approaches the edge of watch-level authority, rather than waiting to see how it develops" },
+        { en: "Treat every STS operation with full attentiveness, regardless of how routine previous ones have felt" },
+      ],
+      commonMistakes: [
+        { en: "Hesitating to escalate during STS due to confidence built from previous uneventful operations" },
+        { en: "Giving unclear direction to the watch team during a demanding phase of the operation" },
+        { en: "Losing awareness of one monitored system while focused on another" },
+        { en: "Treating STS as routine because of accumulated experience, reducing attentiveness" },
+      ],
+      professionalTips: [
+        { en: "STS operations reward precise application of standing orders, not personal judgment about what 'probably' needs escalating" },
+        { en: "The elevated risk of STS means your communication with the watch team has to be even clearer than during routine operations" },
+        { en: "Confidence built from previous STS operations should sharpen your attentiveness, not reduce it" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e6-l1" }, { kind: "lesson", lessonId: "e6-l2" }],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Fourth Engineer's formal oversight responsibility is most visible — planning and directing maintenance work across the watch team, verifying quality with an officer's accountability, and applying the Planned Maintenance System with genuine ownership rather than only executing individual tasks. The Fourth Engineer's certification means maintenance decisions once escalated as an Oiler can often now be made independently, within standing orders and PMS guidance." },
+      responsibilities: [
+        { en: "Plan and direct maintenance tasks across the watch team, matching work to each rating's demonstrated competence" },
+        { en: "Verify completed maintenance work with formal accountability, ensuring it meets both technical standard and PMS requirements" },
+        { en: "Diagnose and resolve maintenance issues within watch-level authority, escalating anything requiring the Second/Third Engineer or Chief Engineer's decision" },
+        { en: "Ensure PMS records accurately reflect completed work, maintaining the link between documentation and actual condition" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, particularly around hot surfaces, moving parts, and chemical handling" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task" },
+        { en: "Maintenance tools and materials, directed across the watch team" },
+        { en: "Planned Maintenance System (PMS) access and records" },
+      ],
+      risks: [
+        { en: "Directing maintenance work without matching it to a rating's actual competence, creating quality or safety risk" },
+        { en: "Verifying completed work superficially rather than with genuine officer-level accountability" },
+        { en: "Allowing PMS records to drift from actual engine room condition due to time pressure" },
+        { en: "Misjudging whether a maintenance issue requires escalation, given the broader authority now available" },
+      ],
+      bestPractices: [
+        { en: "Match maintenance tasks deliberately to each rating's demonstrated competence, supervising accordingly" },
+        { en: "Verify completed work with genuine technical scrutiny, not just confirmation that it was reported done" },
+        { en: "Keep PMS records current and accurate, treating documentation as a direct reflection of actual condition" },
+        { en: "Apply standing orders and PMS guidance consistently when deciding what to resolve independently versus escalate" },
+      ],
+      commonMistakes: [
+        { en: "Assigning maintenance tasks without genuinely considering the rating's competence for that specific task" },
+        { en: "Signing off completed work without verifying it meets the required standard" },
+        { en: "Letting PMS documentation fall behind actual maintenance activity under time pressure" },
+        { en: "Resolving an issue independently that standing orders or PMS guidance actually required escalating" },
+      ],
+      professionalTips: [
+        { en: "Your officer-level authority over maintenance decisions comes with officer-level accountability for verifying them properly" },
+        { en: "PMS records that don't reflect reality are worse than no records at all — they create false confidence" },
+        { en: "Matching the right task to the right rating is a skill that pays off across the whole watch team's development" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e3-l6" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Fourth Engineer typically takes command of an assigned emergency station or team — a genuine officer-level leadership role, directing ratings and making tactical decisions within the scope set by the Chief Engineer or senior officer coordinating the overall response. The Fourth Engineer's calm, decisive leadership at their station is what the ratings and the wider response depend on." },
+      responsibilities: [
+        { en: "Proceed immediately to the assigned emergency station and take command of the team present, confirming readiness and understanding of the situation" },
+        { en: "Translate instructions from the Chief Engineer or senior officer into clear, specific actions for the ratings at the station" },
+        { en: "Make tactical decisions within the scope of the assigned station, escalating anything that exceeds that authority or affects the overall response" },
+        { en: "Report the station's status and any developing concern clearly and promptly to the officer coordinating the response" },
+        { en: "Take every drill with full seriousness, treating it as genuine practice for the leadership expected of a certified officer" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list" },
+        { en: "Emergency equipment specific to the assigned station" },
+        { en: "Portable radio or communication equipment for station-to-command communication" },
+      ],
+      risks: [
+        { en: "Hesitating to make a tactical decision within the assigned station's authority, slowing the team's response" },
+        { en: "Making a decision that exceeds the scope granted by the Chief Engineer or senior officer, without adequate communication" },
+        { en: "Giving unclear direction to the ratings at the station under the stress of a genuine emergency" },
+        { en: "Losing track of the team's status while managing multiple aspects of the station's response" },
+      ],
+      bestPractices: [
+        { en: "Make confident tactical decisions within your station's authority, escalating clearly the moment something exceeds it" },
+        { en: "Translate command instructions into specific, actionable direction for the ratings, not just relayed orders" },
+        { en: "Communicate the station's status proactively, rather than waiting to be asked" },
+        { en: "Treat every drill exactly as you would a genuine emergency, setting the standard for the ratings you lead" },
+      ],
+      commonMistakes: [
+        { en: "Hesitating on a decision clearly within the station's own authority" },
+        { en: "Exceeding the scope granted by command without clear communication about it" },
+        { en: "Giving vague direction to ratings during a high-stress moment" },
+        { en: "Losing accountability for team members while focused on a single aspect of the response" },
+      ],
+      professionalTips: [
+        { en: "Your team looks to you to turn command's strategy into action they can actually execute — vague direction produces a vague response" },
+        { en: "Confident decision-making within your authority is exactly what a Chief Engineer expects from a station leader" },
+        { en: "The discipline your ratings show in a real emergency reflects the standard you held during every drill before it" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l8" }, { kind: "lesson", lessonId: "s4-l7" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "During your watch, you encounter a parameter reading that's abnormal, but the specific situation doesn't quite match any scenario explicitly described in the standing orders. It feels like it should probably be escalated, but you're not entirely certain the standing orders actually require it." },
+      mission: { en: "Decide whether to resolve the situation independently or escalate it, given the ambiguity in how it maps to standing orders." },
+      expectedActions: [
+        { en: "Treat genuine ambiguity about whether standing orders apply as itself a reason to escalate, rather than resolving it independently" },
+        { en: "Call the Second/Third Engineer or Chief Engineer and describe the situation specifically, including why it doesn't clearly match a standing order scenario" },
+        { en: "Let the senior officer decide whether it falls within your authority going forward" },
+        { en: "Document the situation and the decision made" },
+      ],
+      why: [{ en: "Standing orders can't anticipate every situation, and a genuine gap between what's written and what's happening is exactly the kind of ambiguity a certified officer should raise rather than resolve alone — the point of standing orders is consistency, and an unclear case is precisely where that consistency depends on checking rather than guessing." }],
+      commonMistakes: [
+        { en: "Deciding independently because the situation seems minor, without checking whether standing orders actually cover it" },
+        { en: "Assuming that if it's not explicitly prohibited, it's within your authority" },
+        { en: "Failing to describe the ambiguity specifically when raising it" },
+      ],
+      safetyPoints: [{ en: "A situation that doesn't clearly map to standing orders is not automatically low-risk — the ambiguity itself is the signal that more senior judgment should weigh in." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "You direct an Oiler to complete a task in a specific way. The Oiler, who has significantly more hands-on experience than you in this particular area, suggests a different approach and seems confident it's better." },
+      mission: { en: "Decide how to respond to the disagreement, given the Oiler's greater practical experience." },
+      expectedActions: [
+        { en: "Listen genuinely to the Oiler's reasoning rather than dismissing it based on rank alone" },
+        { en: "Ask specifically what makes their approach preferable, to understand the reasoning" },
+        { en: "If the Oiler's approach is sound and within standing orders, be willing to adopt it" },
+        { en: "If you still believe your instruction is correct, explain your reasoning clearly rather than simply repeating the order" },
+      ],
+      why: [{ en: "A Fourth Engineer's authority comes from certification, but an experienced Oiler's practical knowledge is genuinely valuable — good officers integrate that experience rather than dismissing it, while still retaining the responsibility to make the final call and explain it." }],
+      commonMistakes: [
+        { en: "Insisting on the original instruction purely to assert authority, without genuinely considering the Oiler's reasoning" },
+        { en: "Deferring automatically to the Oiler's experience without exercising independent judgment" },
+        { en: "Failing to explain the reasoning behind whichever approach is ultimately chosen" },
+      ],
+      safetyPoints: [],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "You're several hours into an uneventful watch. Everything has been routine, and you notice your attention has started to drift slightly — checking parameters a little less thoroughly than at the start of the watch." },
+      mission: { en: "Decide how to respond to noticing this in yourself." },
+      expectedActions: [
+        { en: "Recognize the drift honestly rather than dismissing it because nothing has gone wrong so far" },
+        { en: "Deliberately re-engage full attentiveness, treating the remaining watch with the same standard as the beginning" },
+        { en: "Consider a brief physical or mental reset (a round, a change in task) to restore focus" },
+        { en: "Do not wait for something to happen before correcting the lapse" },
+      ],
+      why: [{ en: "A quiet watch is exactly where standards erode gradually, often without any single moment that feels like a lapse — noticing the drift and correcting it deliberately is a core discipline of independent watchkeeping, not an optional extra." }],
+      commonMistakes: [
+        { en: "Rationalizing reduced attentiveness because nothing has happened yet" },
+        { en: "Waiting for an external prompt to re-engage rather than self-correcting" },
+        { en: "Treating the remaining hours of a quiet watch as lower-stakes than the beginning" },
+      ],
+      safetyPoints: [{ en: "Watch-related incidents often occur during exactly this kind of gradual, self-reinforcing complacency — catching it in yourself, before anything goes wrong, is one of the most valuable disciplines a watchkeeping officer can maintain." }],
+      mapReferences: [{ kind: "lesson", lessonId: "s6-l1" }, { kind: "lesson", lessonId: "e1-l7" }],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Standing orders exist so that consistency doesn't depend on who's on watch — apply them precisely, not as a rough guideline to your own judgment." },
+    { en: "Genuine ambiguity about whether a situation is covered by standing orders is itself a reason to escalate, not a reason to decide alone." },
+    { en: "An experienced rating's practical knowledge is a resource, not a challenge to your authority — listen to it, then make and explain your own decision." },
+    { en: "A quiet watch is where standards erode gradually — noticing the drift in yourself, before anything happens, is a core discipline of independent watchkeeping." },
+    { en: "Confident decisions on routine matters are what your certification is for — hesitation here is its own kind of risk." },
+    { en: "Escalating promptly when something exceeds your authority is a demonstration of judgment, not an admission of limitation." },
+    { en: "The clarity of your direction to the watch team determines how smoothly the engine room actually runs — vague instructions produce vague results." },
+    { en: "Being a certified officer doesn't mean knowing everything — it means knowing precisely what falls within your authority to decide, and acting decisively within that scope." },
+  ],
+
+  professionalMindset: [
+    { en: "See standing orders as the mechanism of consistent judgment, not a constraint on your own. They exist precisely so that the same situation produces the same decision regardless of who's on watch — applying them precisely is professional discipline, not a lack of independent thinking." },
+    { en: "Treat ambiguity about authority as a signal to check, not a gap to fill with assumption. When a situation doesn't clearly map to standing orders, that uncertainty itself is meaningful information worth raising, not a detail to resolve quietly." },
+    { en: "Hold authority and expertise as separate things that both matter. Your certification gives you decision-making authority; a rating's years of hands-on experience gives them practical knowledge — good judgment integrates both rather than letting either one dominate by default." },
+    { en: "Notice your own attention as something that needs active maintenance, not something you can assume is constant. A watch that feels uneventful is exactly where vigilance quietly erodes — catching that drift in yourself is a skill, not a given." },
+    { en: "Accept that your first watches are building a track record, not just completing shifts. Every decision, escalation, and handover contributes to how much independence you're trusted with next — consistency now shapes opportunity later." },
+    { en: "Recognize that directing a team well means matching instruction to the person, not issuing the same order regardless of who's receiving it. Clear direction accounts for what the specific rating already understands and where they need more explanation." },
+    { en: "Understand that officer-level authority comes with officer-level accountability, not less scrutiny. Being trusted to decide independently means your decisions are also expected to hold up to review — the responsibility increases along with the authority." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Engine room logbook entries — The Fourth Engineer personally makes official logbook entries during their watch, a formal record with legal and regulatory weight, distinct from the informal reports an Oiler contributes toward someone else's entry." },
+    { en: "Watch handover records — The Fourth Engineer's handover, whether written, verbal, or both depending on company procedure, must accurately convey the watch's condition, any outstanding concern, and the status of standing order applications, since the relieving officer relies on it as an official account, not an informal briefing." },
+    { en: "PMS and maintenance records — Where the Fourth Engineer directs and verifies maintenance work, the corresponding PMS entries reflect the Fourth Engineer's own accountability for accuracy — a discrepancy between record and reality is now the reporting officer's responsibility, not just an observation to pass upward." },
+    { en: "Standing order application records — Where company procedure requires documenting when and how a standing order was applied or an escalation decision was made, the Fourth Engineer ensures this record is accurate and specific, since it may be reviewed as part of understanding a subsequent incident or near-miss." },
+    { en: "Why this matters: Unlike the Oiler's reports, which inform someone else's official record, the Fourth Engineer's documentation often is the official record — carrying regulatory and, in some jurisdictions, legal weight as a certified officer's account of what happened during their watch. This shift from contributing information to formally recording it is one of the clearest markers of the transition from rating to officer, and it demands the same discipline the Fourth Engineer now applies to standing orders: precise, honest, and complete every time, not just when it feels significant." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Authorizing routine environmental procedures within standing orders — The Fourth Engineer may be authorized, within standing orders and company procedure, to approve routine environmental actions (e.g. a bilge water discharge meeting documented conditions) — a formal authority the Oiler does not hold, exercised with the same discipline applied to any standing-order decision." },
+    { en: "Oil Record Book and environmental log entries — Where the Fourth Engineer is designated to make or verify these entries during their watch, they carry the same official weight as any other logbook entry — accurate, timely, and reflecting what actually occurred rather than what was assumed." },
+    { en: "Recognizing when an environmental matter exceeds watch-level authority — The Fourth Engineer escalates any environmental situation that falls outside standing orders or documented conditions immediately, rather than extending independent judgment beyond what's formally authorized." },
+    { en: "Directing the watch team's environmental practice — The Fourth Engineer ensures ratings under their direction apply environmental procedures correctly, correcting any lapse directly rather than assuming it will be caught elsewhere." },
+    { en: "Why this matters: The Fourth Engineer's environmental responsibility now includes formal authorization within a defined scope — a genuine escalation from the Oiler's informal judgment to an officer's documented decision-making authority. Getting this right matters beyond the immediate watch: an incorrectly authorized discharge or an inaccurate Oil Record Book entry carries regulatory and legal consequences that a certified officer is personally accountable for, in a way no rating-level report ever was." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Stand an independent engine room watch and make routine operational decisions within standing orders, without waiting for officer approval on every detail" },
+      { en: "Direct ratings (Oiler, Motorman, Wiper) during watch hours, assigning tasks appropriate to their demonstrated competence" },
+      { en: "Authorize routine environmental procedures explicitly covered by standing orders and documented conditions" },
+      { en: "Make official logbook entries and other formal watch records as a certified officer" },
+      { en: "Diagnose and resolve maintenance issues within watch-level authority, verified against PMS guidance" },
+      { en: "Refuse to proceed with an action you believe exceeds your standing orders or genuinely requires escalation, requesting guidance first" },
+      { en: "Escalate any concern — technical, procedural, or personnel-related — directly to the Second/Third Engineer or Chief Engineer without needing prior justification" },
+    ],
+    youCannot: [
+      { en: "Make a final decision on any matter that standing orders reserve for the Second/Third Engineer or Chief Engineer, however confident your own assessment" },
+      { en: "Authorize an environmental discharge or action outside what standing orders and documented conditions explicitly permit" },
+      { en: "Alter or deviate from the Chief Engineer's standing orders without explicit authorization" },
+      { en: "Take command of the overall emergency response beyond your assigned station without explicit direction from the officer coordinating it" },
+      { en: "Sign off on departmental readiness, major maintenance decisions, or compliance matters reserved for a more senior officer" },
+      { en: "Discipline another crew member as a formal supervisory action outside the scope granted by the Chief Engineer" },
+      { en: "Represent the vessel or the company in any interaction with external parties (shore engineers, surveyors, authorities)" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Treating standing orders as guidelines rather than the actual basis for decisions — Applying personal judgment where standing orders already specify a clear course of action, introducing inconsistency into what should be a reliable framework." },
+    { en: "Resolving genuine ambiguity independently instead of escalating it — Deciding alone when a situation doesn't clearly map to standing orders, rather than raising the ambiguity itself." },
+    { en: "Hesitating on decisions clearly within watch-level authority — Escalating routine matters unnecessarily out of excess caution, slowing the watch without adding safety." },
+    { en: "Dismissing a rating's practical experience based on rank alone — Insisting on an instruction without genuinely considering an experienced Oiler's or Motorman's reasoning." },
+    { en: "Letting a quiet watch erode attentiveness gradually — Allowing vigilance to drift during uneventful periods, without noticing or correcting it." },
+    { en: "Giving vague direction to the watch team — Issuing instructions without confirming understanding, particularly under time pressure or during a demanding moment." },
+    { en: "Treating official documentation as routine paperwork — Completing logbook entries, handovers, or PMS records without the accuracy and completeness their official weight requires." },
+    { en: "Extending authority beyond what standing orders actually grant — Assuming certification alone justifies a decision that standing orders reserve for a more senior officer." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Third Engineer — the next step in the engineering officer progression, typically bringing broader departmental responsibility (often including boiler and auxiliary systems oversight) and a wider scope of independent decision-making within an expanded set of standing orders." },
+    { en: "Skills to develop: Broader technical ownership across additional engine room systems beyond the watch itself; the transition from directing ratings during a single watch to broader departmental coordination; deeper understanding of the Planned Maintenance System at a supervisory level; growing familiarity with the commercial, regulatory, and cross-departmental dimensions of engineering officer work that become more prominent at each subsequent rank." },
+    { en: "Recommended experience: A demonstrated track record of sound watch-level decisions, consistent and accurate documentation, and reliable application of standing orders across a range of routine and demanding situations; effective direction of ratings that builds their competence rather than simply completing tasks; sufficient sea time as required for further certification." },
+    { en: "Certificates typically required: Requirements vary significantly by flag State and company policy. Progression to Third Engineer typically requires sufficient qualifying sea time as a Fourth Engineer and any additional certification or endorsements required by the flag State or company for the next level of responsibility." },
+    { en: "Recommended MAP courses: Advanced Engine Systems (boilers, auxiliary systems, departmental maintenance planning); Role On Board – Third Engineer (to preview the next step in detail); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from Fourth Engineer to Third Engineer means the discipline of applying standing orders precisely — built and proven during independent watchkeeping — becomes the foundation for a broader scope of departmental responsibility. The core skill doesn't change: knowing exactly what falls within your authority and acting decisively within it. What changes is the breadth of what that authority now covers." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "e1-l1", label: { en: "Main Engine" } },
+    { kind: "lesson", lessonId: "e1-l2", label: { en: "Auxiliaries & Electricity" } },
+    { kind: "lesson", lessonId: "e1-l3", label: { en: "Stability & Loading" } },
+    { kind: "lesson", lessonId: "e1-l4", label: { en: "Fire Safety & CO2 System" } },
+    { kind: "lesson", lessonId: "e1-l5", label: { en: "Survival & EPIRB" } },
+    { kind: "lesson", lessonId: "e1-l6", label: { en: "Maintenance & Troubleshooting" } },
+    { kind: "lesson", lessonId: "e1-l7", label: { en: "Engine Watchkeeping" } },
+    { kind: "lesson", lessonId: "e1-l8", label: { en: "Emergency Procedures" } },
+    { kind: "lesson", lessonId: "e2-l1", label: { en: "Generators & Power Generation" } },
+    { kind: "lesson", lessonId: "e2-l2", label: { en: "Switchboards & Distribution" } },
+    { kind: "lesson", lessonId: "e2-l3", label: { en: "Pumps & Hydraulic Systems" } },
+    { kind: "lesson", lessonId: "e2-l4", label: { en: "Compressors & Compressed Air" } },
+    { kind: "lesson", lessonId: "e2-l5", label: { en: "Purifiers & Separators" } },
+    { kind: "lesson", lessonId: "e2-l6", label: { en: "Heat Exchangers" } },
+    { kind: "lesson", lessonId: "e2-l7", label: { en: "Electrical Troubleshooting" } },
+    { kind: "lesson", lessonId: "e3-l1", label: { en: "Marine Boiler Types" } },
+    { kind: "lesson", lessonId: "e3-l2", label: { en: "Combustion & Burners" } },
+    { kind: "lesson", lessonId: "e3-l3", label: { en: "Boiler Water Treatment" } },
+    { kind: "lesson", lessonId: "e3-l4", label: { en: "Steam Systems & Distribution" } },
+    { kind: "lesson", lessonId: "e3-l5", label: { en: "Boiler Safety & Alarms" } },
+    { kind: "lesson", lessonId: "e3-l6", label: { en: "Boiler Maintenance & Inspection" } },
+    { kind: "lesson", lessonId: "e4-l1", label: { en: "MARPOL & Environment" } },
+    { kind: "lesson", lessonId: "e4-l2", label: { en: "Annex I - Oil Pollution" } },
+    { kind: "lesson", lessonId: "e4-l3", label: { en: "Annex V - Garbage Management" } },
+    { kind: "lesson", lessonId: "e4-l4", label: { en: "Annex VI - Air Pollution" } },
+    { kind: "lesson", lessonId: "e4-l5", label: { en: "Environmental Compliance" } },
+    { kind: "lesson", lessonId: "e6-l1", label: { en: "Cargo Pumps" } },
+    { kind: "lesson", lessonId: "e6-l2", label: { en: "Ballast System" } },
+    { kind: "lesson", lessonId: "e6-l3", label: { en: "Inert Gas System (IGS)" } },
+    { kind: "lesson", lessonId: "e6-l4", label: { en: "COW & Tank Cleaning" } },
+    { kind: "lesson", lessonId: "e6-l5", label: { en: "Cargo Heating" } },
+    { kind: "lesson", lessonId: "e6-l6", label: { en: "Gauging & Measurements" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l3", label: { en: "PPE, Safe Behaviour & Human Factors" } },
+    { kind: "lesson", lessonId: "s6-l6", label: { en: "Safety Culture & Professional Responsibility" } },
+    { kind: "lesson", lessonId: "s4-l7", label: { en: "Fire Command, Teams & Damage Control" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — engine room, machinery, and regulatory terminology" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on Third Engineer certification requirements by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and machinery layouts across different ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on watchkeeping decisions, standing orders, or certification requirements" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Fourth Engineer through to Third Engineer and beyond" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document watchkeeping experience, certificates, and departmental responsibilities" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_OILER", label: { en: "Role On Board — Oiler" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_THIRD_ENGINEER", label: { en: "Role On Board — Third Engineer" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "An independent engine room watch, with full personal accountability for its safe operation within standing orders" },
+      { en: "Official logbook entries, handovers, and PMS records as a certified officer" },
+      { en: "Routine environmental authorizations explicitly covered by standing orders" },
+    ],
+    iMonitor: [
+      { en: "All assigned engine room parameters and systems throughout the watch, with formal responsibility for their normal operation" },
+      { en: "The watch team's task execution, matching direction to each rating's demonstrated competence" },
+      { en: "My own attentiveness, particularly during quiet or routine periods where standards can erode gradually" },
+    ],
+    iReport: [
+      { en: "Watch conditions and readiness, formally and with the accuracy expected of an official record" },
+      { en: "Any situation genuinely ambiguous relative to standing orders, described specifically rather than resolved independently" },
+      { en: "My own uncertainty whenever a decision approaches the edge of watch-level authority" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any decision that standing orders reserve for the Second/Third Engineer or Chief Engineer" },
+      { en: "Any environmental discharge or action outside what standing orders and documented conditions explicitly permit" },
+      { en: "Any deviation from the Chief Engineer's standing orders without explicit authorization" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Engine department organization chart showing the Fourth Engineer's position as junior watchkeeping officer." } },
+    { kind: "image", caption: { en: "Example of a properly completed engine room logbook entry." } },
+    { kind: "diagram", caption: { en: "Standing orders escalation decision flow (routine action → watch-level decision → escalation)." } },
+    { kind: "video", caption: { en: "Demonstration of a complete watch handover between two engineering officers." } },
+    { kind: "document", caption: { en: "Sample standing orders excerpt with escalation criteria." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
-// "master", "deck_cadet", "os", "engine_cadet", "wiper", "motorman" and
-// "oiler" — remaining ranks are still pending content.
+// "master", "deck_cadet", "os", "engine_cadet", "wiper", "motorman", "oiler"
+// and "fourth_engineer" — remaining ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -7167,6 +7751,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   wiper: WIPER_CARD,
   motorman: MOTORMAN_CARD,
   oiler: OILER_CARD,
+  fourth_engineer: FOURTH_ENGINEER_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
