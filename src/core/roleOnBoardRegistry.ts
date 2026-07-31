@@ -7734,11 +7734,597 @@ const FOURTH_ENGINEER_CARD: RoleOnBoardCard = {
   ],
 };
 
+const THIRD_ENGINEER_CARD: RoleOnBoardCard = {
+  rankId: "third_engineer",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Third Engineer is a more experienced engineering officer than the Fourth Engineer, typically holding formal responsibility for specific engine room systems — most commonly boilers and steam systems — in addition to standing an independent watch. Where the Fourth Engineer applies standing orders within a single watch, the Third Engineer begins to hold system-level ownership that extends across watches, coordinating maintenance and readiness for their assigned systems continuously, ensuring their long-term reliability and operational availability." },
+    { en: "The Third Engineer's judgment operates with a wider scope than the Fourth Engineer's — not just deciding what a routine watch requires, but planning and prioritizing maintenance for assigned systems, diagnosing more complex issues independently before determining whether escalation or specialist support is required, and exercising discretion within standing orders that is broader because the underlying technical understanding is deeper. Escalation to the Second Engineer or Chief Engineer remains the standard for anything beyond this expanded but still bounded authority." },
+    { en: "The Third Engineer's progression is measured by demonstrated ownership of assigned systems — not just responding well during a watch, but proactively managing the condition and reliability of specific machinery over time — alongside continued reliability in independent watchkeeping." },
+    { en: "The Third Engineer works closely with the Fourth Engineer, often acting as the first technical reference for the Fourth Engineer during routine operations, and reports to the Second Engineer and Chief Engineer, who set departmental priorities and standing orders." },
+    { en: "Where the Fourth Engineer's authority is defined primarily by watch-level standing orders, the Third Engineer's authority begins to extend into system-level ownership — a responsibility that spans time in a way a single watch does not, and that requires planning ahead rather than only responding well in the moment." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Second Engineer (day-to-day departmental supervision)" },
+      { en: "Chief Engineer (overall standing orders and departmental standards)" },
+    ],
+    worksWith: [
+      { en: "Fourth Engineer, whom the Third Engineer often guides informally" },
+      { en: "Oiler, Motorman, and Wiper during watch hours and system-specific maintenance" },
+    ],
+    mentors: [
+      { en: "The Second Engineer and Chief Engineer, who guide the Third Engineer's development toward further departmental responsibility" },
+    ],
+    supports: [
+      { en: "The Third Engineer often provides informal technical guidance to the Fourth Engineer, and directs ratings during both watch hours and system-specific maintenance work" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "System ownership, reliability, and lifecycle management of assigned machinery" }, mapReferences: [{ kind: "lesson", lessonId: "e3-l6" }, { kind: "lesson", lessonId: "e3-l1" }] },
+    { label: { en: "Independent engine room watchkeeping" }, mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }] },
+    { label: { en: "Applying standing orders and escalation criteria correctly, with broader technical discretion" } },
+    { label: { en: "Proactive maintenance planning for assigned systems" }, mapReferences: [{ kind: "lesson", lessonId: "e3-l6" }] },
+    { label: { en: "Recognizing when a situation exceeds departmental-level authority" } },
+    { label: { en: "Directing and informally guiding junior officers and ratings" } },
+    { label: { en: "Clear, accurate watch and system reporting, including handover discipline" } },
+    { label: { en: "Professional conduct and reliability as a system-responsible officer" } },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Third Engineer verifies readiness with a dual focus the Fourth Engineer doesn't yet carry — confirming the watch-level readiness of assigned systems, but also drawing on accumulated system knowledge to anticipate issues that a less experienced officer might miss. The Third Engineer's boiler and steam system checks, in particular, often require judgment built from ongoing system ownership rather than a single readiness verification." },
+      responsibilities: [
+        { en: "Verify readiness of assigned systems (typically boilers and steam systems) using accumulated knowledge of their specific condition and history, not only a standard checklist" },
+        { en: "Direct the Fourth Engineer or ratings in completing pre-departure checks on assigned systems, verifying their work with system-specific expertise" },
+        { en: "Anticipate potential issues based on recent maintenance history or known system tendencies, rather than only checking current readings" },
+        { en: "Report readiness formally, distinguishing between standard verification and any system-specific concern based on accumulated knowledge" },
+        { en: "Escalate any finding that exceeds departmental-level authority or standing orders immediately" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the engine room environment" },
+        { en: "System-specific diagnostic tools and monitoring instruments (boiler and steam system instrumentation)" },
+        { en: "Maintenance history records, standing orders, and departmental readiness documentation" },
+      ],
+      risks: [
+        { en: "Relying on general readiness checks without applying the specific system knowledge that distinguishes this rank's contribution" },
+        { en: "Directing a Fourth Engineer without sharing the reasoning behind a system-specific concern, missing a coaching opportunity" },
+        { en: "Overlooking a known system tendency because a routine check doesn't specifically prompt for it" },
+        { en: "Reporting readiness without flagging a pattern from recent maintenance history that could matter" },
+      ],
+      bestPractices: [
+        { en: "Draw explicitly on system history and known tendencies when verifying readiness, not just current readings" },
+        { en: "Share the reasoning behind a system-specific check when directing a Fourth Engineer, building their understanding for the future" },
+        { en: "Treat recent maintenance activity on assigned systems as directly relevant to today's readiness assessment" },
+        { en: "Report any pattern-based concern clearly, even if current readings appear normal" },
+      ],
+      commonMistakes: [
+        { en: "Treating pre-departure checks on assigned systems as identical to a Fourth Engineer's general verification, without applying deeper system knowledge" },
+        { en: "Directing without explaining reasoning, missing the opportunity to develop a junior officer's understanding" },
+        { en: "Failing to connect recent maintenance activity to today's readiness assessment" },
+        { en: "Reporting readiness without mentioning a known tendency or pattern worth watching" },
+      ],
+      professionalTips: [
+        { en: "Your value here isn't just checking readiness — it's checking it with the accumulated knowledge only ownership over time provides" },
+        { en: "Explaining your reasoning to a Fourth Engineer during a routine check is one of the most efficient ways to develop their judgment" },
+        { en: "A system's history is part of its current readiness — treat it that way in your assessment" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l1" }, { kind: "lesson", lessonId: "e2-l1" }, { kind: "lesson", lessonId: "e3-l5" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Third Engineer typically monitors and supports assigned systems (boilers, steam) alongside standing watch responsibilities, applying deeper system knowledge to distinguish normal transient behaviour from a genuine developing concern. The Third Engineer may also support or oversee the Fourth Engineer's execution of engine orders, providing a more experienced technical reference during a demanding phase." },
+      responsibilities: [
+        { en: "Monitor assigned systems (boilers, steam) during the manoeuvre, applying system-specific knowledge to interpret transient behaviour correctly" },
+        { en: "Support or oversee the Fourth Engineer's execution of engine orders where applicable, offering technical guidance without displacing their role" },
+        { en: "Escalate immediately to the Second Engineer or Chief Engineer if a development on assigned systems exceeds departmental-level authority" },
+        { en: "Direct ratings supporting assigned systems, coordinating with the Fourth Engineer's direction of the broader watch team" },
+        { en: "Follow PPE and safety requirements exactly, with no exceptions during active operations" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the engine room environment" },
+        { en: "System-specific monitoring and control equipment (boiler and steam instrumentation)" },
+        { en: "Portable radio, standing orders reference" },
+      ],
+      risks: [
+        { en: "Misjudging a system-specific transient as routine due to accumulated familiarity, missing an early genuine concern" },
+        { en: "Undermining the Fourth Engineer's developing confidence by taking over rather than supporting their execution" },
+        { en: "Losing coordination between system-specific oversight and the broader watch team's direction" },
+        { en: "Escalating a system concern too slowly, assuming deeper knowledge allows more time to assess independently" },
+      ],
+      bestPractices: [
+        { en: "Distinguish clearly between normal transient behaviour and a genuine developing concern, using system history as a reference" },
+        { en: "Support the Fourth Engineer's execution with guidance rather than displacement, unless safety requires direct intervention" },
+        { en: "Coordinate explicitly with the Fourth Engineer to avoid duplicated or conflicting direction to the same ratings" },
+        { en: "Escalate promptly once a system-specific concern is identified, rather than extending independent assessment beyond what's warranted" },
+      ],
+      commonMistakes: [
+        { en: "Assuming deeper system knowledge justifies delaying escalation beyond standing orders" },
+        { en: "Taking over the Fourth Engineer's tasks rather than coaching them through a difficulty" },
+        { en: "Giving ratings conflicting direction because coordination with the Fourth Engineer wasn't explicit" },
+        { en: "Treating a system-specific transient as routine without genuinely reassessing it against known history" },
+      ],
+      professionalTips: [
+        { en: "Deep system knowledge sharpens your judgment about what's routine — it should never become a reason to escalate more slowly" },
+        { en: "Supporting a Fourth Engineer through a demanding manoeuvre builds their competence more than quietly taking over would" },
+        { en: "Clear coordination with the Fourth Engineer prevents the ratings from receiving mixed signals during a critical moment" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e1-l1" }, { kind: "lesson", lessonId: "e3-l4" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Third Engineer stands an independent watch like the Fourth Engineer, but with an added dimension: continuous ownership of assigned systems that doesn't end when the watch does. Monitoring during navigation isn't only about the current watch's readings — it's about tracking trends over time that inform proactive maintenance decisions, a responsibility the Fourth Engineer doesn't yet carry." },
+      responsibilities: [
+        { en: "Stand an independent watch, monitoring all assigned parameters with the same accountability expected of a Fourth Engineer" },
+        { en: "Track trends in assigned system performance across watches, not just within a single watch, informing proactive maintenance planning" },
+        { en: "Provide informal technical guidance to the Fourth Engineer when the opportunity arises, particularly on assigned systems" },
+        { en: "Apply standing orders to escalation decisions, exercising the broader technical discretion appropriate to this rank" },
+        { en: "Conduct a complete, accurate handover, including both watch-level status and any relevant system-level trend" },
+      ],
+      equipment: [
+        { en: "Full engine room monitoring and control equipment" },
+        { en: "System-specific trend data and maintenance history" },
+        { en: "Standing orders and watch log / rounds documentation" },
+      ],
+      risks: [
+        { en: "Focusing only on the current watch's readings, missing a developing trend that spans multiple watches" },
+        { en: "Failing to distinguish system-level observations from routine watch-level status during handover, leaving the next officer without the full picture" },
+        { en: "Providing guidance to the Fourth Engineer inconsistently, depending on personal availability rather than deliberate mentoring" },
+        { en: "Becoming overconfident in system knowledge, treating deep familiarity as removing the need for standing-order discipline" },
+      ],
+      bestPractices: [
+        { en: "Review system trends deliberately, not only current readings, to catch developments that build gradually across watches" },
+        { en: "Include both watch-level status and system-level trends explicitly in every handover" },
+        { en: "Look for genuine opportunities to explain reasoning to the Fourth Engineer, treating mentoring as part of the role, not an occasional favor" },
+        { en: "Apply standing orders with the same discipline regardless of how familiar a system has become" },
+      ],
+      commonMistakes: [
+        { en: "Treating each watch's readings in isolation, missing a trend that only shows up across several watches" },
+        { en: "Giving a handover focused only on the current watch, omitting relevant system-level trends" },
+        { en: "Mentoring the Fourth Engineer only when convenient rather than consistently" },
+        { en: "Assuming deep system familiarity justifies more independent judgment than standing orders actually permit" },
+      ],
+      professionalTips: [
+        { en: "A single watch's readings tell you the moment; system ownership means also watching the trend across many moments" },
+        { en: "The handover you give reflects not just your watch, but your ongoing stewardship of the systems you own — make both visible" },
+        { en: "Consistent, deliberate mentoring is what actually develops a Fourth Engineer — occasional guidance leaves gaps" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e3-l6" }],
+    },
+
+    anchoring: {
+      overview: { en: "During anchoring, the Third Engineer maintains the same watch-level readiness responsibility as the Fourth Engineer, but with the added dimension of using an extended, quieter period productively for assigned system maintenance — an opportunity the Fourth Engineer supports but doesn't typically plan independently. Anchoring periods are often when boiler or steam system maintenance that can't easily happen underway becomes possible." },
+      responsibilities: [
+        { en: "Maintain engine room readiness throughout the anchor period, applying standing orders to any developing concern" },
+        { en: "Plan and execute maintenance on assigned systems that the anchor period makes possible, coordinating with the Chief Engineer's overall maintenance priorities" },
+        { en: "Direct the Fourth Engineer and ratings in monitoring and maintenance tasks during the anchor period" },
+        { en: "Escalate promptly if readiness is genuinely compromised, or if planned maintenance reveals an issue exceeding departmental-level authority" },
+        { en: "Conduct a complete handover, including readiness status and the progress of any system-specific maintenance underway" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring equipment" },
+        { en: "System-specific maintenance tools and materials" },
+        { en: "Standing orders reference, watch log / rounds documentation" },
+      ],
+      risks: [
+        { en: "Prioritizing maintenance opportunistically without coordinating with the Chief Engineer's overall departmental priorities" },
+        { en: "Allowing extended anchor duration to erode watch-level readiness discipline while attention is focused on maintenance planning" },
+        { en: "Leaving maintenance work incomplete or poorly documented if the anchor period ends sooner than expected" },
+        { en: "Under-communicating system-specific maintenance progress during handover" },
+      ],
+      bestPractices: [
+        { en: "Coordinate planned maintenance during anchoring with the Chief Engineer, rather than deciding priorities independently" },
+        { en: "Maintain the same watch-level readiness discipline throughout the anchor period, regardless of maintenance activity underway" },
+        { en: "Plan maintenance work with a realistic view of how long the anchor period might last, avoiding leaving critical work incomplete" },
+        { en: "Report both readiness status and maintenance progress clearly at every handover during the anchor period" },
+      ],
+      commonMistakes: [
+        { en: "Starting significant maintenance work on assigned systems without confirming it aligns with departmental priorities" },
+        { en: "Letting watch-level vigilance decline because attention is absorbed by maintenance planning" },
+        { en: "Beginning maintenance that can't reasonably be completed if the anchor period ends earlier than expected" },
+        { en: "Giving an incomplete handover that omits the status of maintenance work in progress" },
+      ],
+      professionalTips: [
+        { en: "An anchor period is valuable maintenance time, but only if it's coordinated with the department's actual priorities, not just what's convenient for you" },
+        { en: "Watch-level readiness doesn't pause because you're focused on a maintenance opportunity — both responsibilities run simultaneously" },
+        { en: "Plan maintenance work with an exit point in mind, so an early departure never leaves a system in a worse state than before you started" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e3-l6" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Third Engineer takes on substantial responsibility for planned maintenance on assigned systems — port calls are often the primary window for boiler and steam system work that can't be done underway — while also supporting bunkering and cargo pump operations alongside the Fourth Engineer. The Third Engineer's departmental-level planning becomes especially visible here, coordinating competing priorities across multiple activities." },
+      responsibilities: [
+        { en: "Plan and execute significant maintenance on assigned systems during the port stay, coordinating timing with the Chief Engineer's overall departmental priorities" },
+        { en: "Support bunkering operations or cargo pump support alongside the Fourth Engineer, applying deeper system knowledge where relevant" },
+        { en: "Direct ratings and coordinate with the Fourth Engineer across multiple simultaneous port activities" },
+        { en: "Report maintenance progress and any developing concern clearly to the Chief Engineer, distinguishing routine matters from genuine issues" },
+        { en: "Follow PPE and safety requirements exactly as instructed, particularly around bunkering and maintenance activities" },
+      ],
+      equipment: [
+        { en: "System-specific maintenance tools and materials" },
+        { en: "Bunkering or cargo pump equipment where applicable" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Overcommitting to maintenance work that competes with the Fourth Engineer's need for support during bunkering or cargo operations" },
+        { en: "Losing coordination across multiple simultaneous port activities, leaving something under-supervised" },
+        { en: "Underestimating the time a significant maintenance task requires, creating pressure as departure approaches" },
+        { en: "Reporting maintenance progress without flagging emerging risks to departure readiness" },
+      ],
+      bestPractices: [
+        { en: "Coordinate maintenance scheduling explicitly with the Fourth Engineer's port workload, avoiding conflicting demands on the same ratings" },
+        { en: "Prioritize deliberately across competing port activities, communicating that prioritization clearly" },
+        { en: "Build realistic time estimates for significant maintenance work, with margin for the unexpected" },
+        { en: "Report proactively on anything that could affect departure readiness, not only completed tasks" },
+      ],
+      commonMistakes: [
+        { en: "Scheduling maintenance without accounting for the Fourth Engineer's competing demands during the same port call" },
+        { en: "Losing oversight of one activity while focused on another during a busy port stay" },
+        { en: "Underestimating maintenance duration, creating avoidable pressure before departure" },
+        { en: "Reporting only completed work without flagging developing risks to departure readiness" },
+      ],
+      professionalTips: [
+        { en: "Port calls are valuable maintenance windows precisely because they're limited — plan them with the same discipline you'd want from anyone else's time" },
+        { en: "Coordinating with the Fourth Engineer explicitly prevents the ratings from being pulled in two directions during a busy port stay" },
+        { en: "A realistic maintenance timeline protects departure readiness far better than an optimistic one" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e6-l1" }, { kind: "lesson", lessonId: "e3-l6" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "During STS operations, the Third Engineer supports propulsion and manoeuvring readiness alongside the Fourth Engineer, contributing deeper system-specific judgment where boiler or steam systems are involved, and taking an active technical role in cargo pump or ballast operations where the vessel type requires it. The elevated risk of the operation means standing-order discipline matters as much here as at any junior rank, despite the additional experience." },
+      responsibilities: [
+        { en: "Support propulsion and manoeuvring readiness throughout the operation, contributing system-specific expertise where relevant" },
+        { en: "Take an active technical role in cargo pump or ballast operations where applicable, working alongside the Fourth Engineer" },
+        { en: "Escalate immediately to the Chief Engineer or senior officer if any development exceeds departmental-level authority, given the operation's elevated risk" },
+        { en: "Coordinate directly with the Fourth Engineer to avoid duplicated or conflicting direction to the same ratings" },
+        { en: "Follow PPE and safety requirements exactly as instructed, with particular attention to the heightened risk of this operation" },
+      ],
+      equipment: [
+        { en: "Engine room monitoring and control equipment" },
+        { en: "Cargo pump or ballast system equipment" },
+        { en: "Personal protective equipment as instructed" },
+      ],
+      risks: [
+        { en: "Assuming accumulated experience with STS operations justifies delaying escalation beyond standing orders" },
+        { en: "Creating confusion for the ratings by giving direction that isn't coordinated with the Fourth Engineer" },
+        { en: "Missing a significant development due to divided attention across system-specific and general watch responsibilities" },
+        { en: "Underestimating the elevated risk of the operation due to familiarity with routine STS calls" },
+      ],
+      bestPractices: [
+        { en: "Apply standing orders with the same precision regardless of accumulated experience with STS operations" },
+        { en: "Coordinate explicitly with the Fourth Engineer before directing ratings, avoiding conflicting instructions" },
+        { en: "Maintain continuous, active monitoring of assigned systems throughout the operation" },
+        { en: "Treat every STS operation with full attentiveness, regardless of how routine previous ones have felt" },
+      ],
+      commonMistakes: [
+        { en: "Delaying escalation because experience makes a developing situation feel manageable" },
+        { en: "Directing ratings without confirming the Fourth Engineer's own instructions to the same team" },
+        { en: "Losing awareness of a system-specific parameter while focused on the broader operation" },
+        { en: "Treating STS as routine due to experience, reducing attentiveness" },
+      ],
+      professionalTips: [
+        { en: "STS operations don't get less risky with experience — your judgment should sharpen, not your caution decrease" },
+        { en: "A quick coordination check with the Fourth Engineer before directing ratings prevents confusion during a demanding moment" },
+        { en: "Deeper system knowledge is most valuable here when it speeds up accurate assessment, not when it slows down escalation" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e6-l1" }, { kind: "lesson", lessonId: "e6-l2" }, { kind: "lesson", lessonId: "e1-l7" }],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Third Engineer's system ownership is most fully exercised — not just executing or verifying individual tasks as a Fourth Engineer would, but planning proactively for the long-term reliability of assigned systems, diagnosing complex issues independently, and directing the maintenance work of both ratings and the Fourth Engineer. This is the phase where the shift from 'watch responsibility' to 'system responsibility' is most visible." },
+      responsibilities: [
+        { en: "Plan proactive maintenance for assigned systems (typically boilers, steam systems) based on condition, history, and the Planned Maintenance System, rather than only responding to reported issues" },
+        { en: "Diagnose complex issues on assigned systems independently, determining whether specialist support or escalation is required before proceeding" },
+        { en: "Direct ratings and the Fourth Engineer on maintenance tasks related to assigned systems, verifying work with system-specific expertise" },
+        { en: "Maintain accurate, detailed PMS records for assigned systems, reflecting genuine condition and maintenance history" },
+        { en: "Follow all PPE and safety requirements exactly as instructed, particularly around hot surfaces, moving parts, and chemical handling" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment appropriate to the task" },
+        { en: "System-specific maintenance tools, diagnostic equipment, and materials" },
+        { en: "Planned Maintenance System (PMS) access and detailed system records" },
+      ],
+      risks: [
+        { en: "Reacting to maintenance needs only as they're reported, rather than planning proactively based on condition and history" },
+        { en: "Diagnosing a complex issue based on partial understanding, missing the point where specialist support or escalation is genuinely warranted" },
+        { en: "Directing maintenance work without matching it to the actual competence of the rating or Fourth Engineer involved" },
+        { en: "Allowing PMS records for assigned systems to become generic or incomplete, losing the detail that makes them useful for future planning" },
+      ],
+      bestPractices: [
+        { en: "Use condition, history, and PMS data together to plan maintenance proactively, not only reactively" },
+        { en: "Recognize the point where a diagnosis genuinely requires specialist support or escalation, rather than extending independent effort indefinitely" },
+        { en: "Match maintenance tasks to the demonstrated competence of whoever is directed to perform them, whether rating or Fourth Engineer" },
+        { en: "Keep PMS records detailed and current for assigned systems, treating them as a planning tool, not just a compliance requirement" },
+      ],
+      commonMistakes: [
+        { en: "Waiting for a problem to be reported rather than planning maintenance proactively based on known condition" },
+        { en: "Persisting with an independent diagnosis well past the point where specialist input was genuinely needed" },
+        { en: "Assigning a maintenance task without considering whether the assigned person is actually ready for it" },
+        { en: "Letting PMS records become vague or outdated, reducing their value for future planning" },
+      ],
+      professionalTips: [
+        { en: "System ownership means the maintenance plan exists because you built it, not because something broke" },
+        { en: "Recognizing when you've reached the edge of what you can diagnose alone is as valuable a skill as the diagnosis itself" },
+        { en: "Detailed PMS records are a gift to your future self and to whoever inherits the system after you" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }, { kind: "lesson", lessonId: "e3-l6" }, { kind: "lesson", lessonId: "e3-l3" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When an emergency is declared, the Third Engineer typically takes command of an assigned emergency station or team, similar to the Fourth Engineer's role, but often with greater technical depth on systems relevant to the emergency (particularly boiler or steam-related incidents). The Third Engineer's system ownership can make them the most useful technical resource during an emergency directly involving their assigned machinery." },
+      responsibilities: [
+        { en: "Proceed immediately to the assigned muster station and take command of the team present, confirming readiness and understanding of the situation" },
+        { en: "Translate instructions from the Chief Engineer or senior officer into clear, specific actions, contributing deeper technical assessment where the emergency involves assigned systems" },
+        { en: "Make tactical decisions within the scope of the assigned station, escalating anything that exceeds that authority or affects the overall response" },
+        { en: "Coordinate with the Fourth Engineer if both are involved in the response, avoiding duplicated effort or conflicting direction" },
+        { en: "Take every drill with full seriousness, treating it as genuine practice for the leadership and technical judgment expected of this rank" },
+      ],
+      equipment: [
+        { en: "Personal protective equipment and emergency-specific gear as assigned by the muster list" },
+        { en: "Emergency equipment specific to the assigned station" },
+        { en: "Portable radio or communication equipment for station-to-command communication" },
+      ],
+      risks: [
+        { en: "Overestimating the reliability of a rapid technical assessment made under the stress of a genuine emergency, even with deep system knowledge" },
+        { en: "Creating confusion with the Fourth Engineer if both are directing overlapping efforts without clear coordination" },
+        { en: "Hesitating to make a tactical decision within the assigned station's authority, slowing the team's response" },
+        { en: "Losing track of team members while focused on the technical aspects of an emergency involving assigned systems" },
+      ],
+      bestPractices: [
+        { en: "Contribute technical assessment clearly and specifically to whoever is coordinating the overall response, especially when the emergency involves assigned systems" },
+        { en: "Coordinate explicitly with the Fourth Engineer if both are part of the response, clarifying who directs which aspect" },
+        { en: "Make confident tactical decisions within your station's authority, escalating clearly the moment something exceeds it" },
+        { en: "Maintain accountability for all team members at the station throughout the response" },
+      ],
+      commonMistakes: [
+        { en: "Trusting a rapid technical assessment without appropriate verification, even when system familiarity is high" },
+        { en: "Directing the same ratings as the Fourth Engineer without coordinating first, creating confusion during a critical moment" },
+        { en: "Hesitating on a decision clearly within the station's own authority" },
+        { en: "Losing accountability for team members while absorbed in a technical diagnosis" },
+      ],
+      professionalTips: [
+        { en: "Your system knowledge is most valuable during an emergency when it's shared clearly with command, not kept as a personal assessment" },
+        { en: "A quick coordination check with the Fourth Engineer prevents two officers from working against each other during a genuine crisis" },
+        { en: "The calm, decisive leadership you show at your station reflects the standard you've held during every drill before it" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l8" }, { kind: "lesson", lessonId: "s4-l7" }, { kind: "lesson", lessonId: "s6-l2" }, { kind: "lesson", lessonId: "e3-l5" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "Over the past few weeks, you've noticed a minor issue on a boiler system you're responsible for — nothing urgent each time, but it's happened three times now, each time resolved with a quick fix." },
+      mission: { en: "Decide whether to continue resolving it as it recurs or treat it as a pattern requiring a different response." },
+      expectedActions: [
+        { en: "Recognize the recurrence as a pattern rather than three isolated minor issues" },
+        { en: "Investigate the underlying cause rather than continuing to apply the same quick fix" },
+        { en: "Plan a proper diagnostic or repair during the next suitable opportunity (port call, maintenance window) rather than waiting for it to recur again" },
+        { en: "Report the pattern and your plan to the Chief Engineer, even though each individual occurrence seemed minor" },
+      ],
+      why: [{ en: "A system owner's responsibility includes recognizing when repeated minor issues indicate an underlying problem — three quick fixes solve today's symptom three times without addressing why it keeps happening, which is exactly the judgment this rank is meant to exercise." }],
+      commonMistakes: [
+        { en: "Continuing to apply the same quick fix because each occurrence individually seems minor" },
+        { en: "Failing to connect the recurrences into a pattern worth addressing directly" },
+        { en: "Not reporting the pattern because no single occurrence warranted escalation" },
+      ],
+      safetyPoints: [{ en: "A recurring issue that's 'always minor' can be masking a developing condition that eventually isn't — treating the pattern seriously, even without urgency, is a core discipline of system ownership." }],
+      mapReferences: [{ kind: "lesson", lessonId: "e3-l6" }, { kind: "lesson", lessonId: "e1-l6" }],
+    },
+    {
+      situation: { en: "You've planned a maintenance task on an assigned system during an upcoming port call. The Fourth Engineer mentions they were expecting to use the same ratings for a different, unrelated task during that same window." },
+      mission: { en: "Decide how to resolve the competing demand on the same team." },
+      expectedActions: [
+        { en: "Discuss the conflict directly with the Fourth Engineer rather than assuming your task takes priority by rank" },
+        { en: "Assess which task is genuinely more time-sensitive or important, rather than defaulting to whichever was planned first" },
+        { en: "Escalate to the Chief Engineer if the two of you can't agree on priority, rather than letting the conflict play out informally" },
+        { en: "Communicate the resolution clearly to the ratings involved" },
+      ],
+      why: [{ en: "Coordinating explicitly with the Fourth Engineer, rather than assuming seniority settles the question automatically, protects both the port call's overall priorities and the working relationship between the two officers — the Chief Engineer's departmental priorities should decide genuine conflicts, not rank alone." }],
+      commonMistakes: [
+        { en: "Assuming your task takes precedence simply because you're more senior" },
+        { en: "Failing to discuss the conflict directly, leaving the ratings caught between two sets of instructions" },
+        { en: "Not escalating a genuine disagreement to the Chief Engineer when needed" },
+      ],
+      safetyPoints: [],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "You've been diagnosing an issue on an assigned system for some time. You have a reasonable theory about the cause, but your attempts to confirm it haven't been fully conclusive, and you're starting to spend a significant amount of time on it." },
+      mission: { en: "Decide whether to continue diagnosing independently or seek additional input." },
+      expectedActions: [
+        { en: "Recognize that time spent without a conclusive result is itself useful information, not just a delay" },
+        { en: "Consult the Chief Engineer or a specialist resource before investing significantly more time alone" },
+        { en: "Present your reasonable theory clearly, including what has and hasn't been confirmed, rather than presenting only a finished conclusion" },
+        { en: "Remain open to a different diagnosis if the additional input suggests one" },
+      ],
+      why: [{ en: "System ownership includes knowing when independent diagnosis has reached its useful limit — continuing alone well past that point, out of a desire to solve it personally, delays the actual repair and can miss an entirely different underlying cause." }],
+      commonMistakes: [
+        { en: "Continuing to invest time in an unconfirmed theory well past the point where additional input would help" },
+        { en: "Presenting only a confident conclusion rather than being transparent about what remains uncertain" },
+        { en: "Treating a request for input as an admission of failure rather than good system ownership" },
+      ],
+      safetyPoints: [{ en: "An unresolved diagnosis on a system you're responsible for is itself a risk worth surfacing — knowing when to seek help protects the system more than an extended solo effort would." }],
+      mapReferences: [{ kind: "lesson", lessonId: "e3-l6" }, { kind: "lesson", lessonId: "e1-l6" }],
+    },
+  ],
+
+  professionalTips: [
+    { en: "A recurring 'minor' issue is a pattern, not three coincidences — investigate the underlying cause once it repeats, not the third or fourth time it's convenient." },
+    { en: "Coordinate explicitly with the Fourth Engineer on competing priorities — seniority doesn't automatically settle a scheduling conflict, and clear communication prevents the ratings from being caught in the middle." },
+    { en: "Know where your own diagnosis reaches its useful limit — time spent without a conclusive result is information, not just delay." },
+    { en: "System ownership means the maintenance plan exists because you built it, not because something broke — plan proactively, not just reactively." },
+    { en: "Explaining your reasoning to a Fourth Engineer during a routine task is one of the most efficient ways to develop their judgment — don't save mentoring for when it's convenient." },
+    { en: "A system's history is part of its current condition — use it deliberately when assessing readiness or diagnosing an issue." },
+    { en: "Detailed, accurate PMS records are a gift to your future self and to whoever inherits the system after you." },
+    { en: "Being trusted with system ownership means your attention now spans time, not just a single watch — plan accordingly." },
+  ],
+
+  professionalMindset: [
+    { en: "Think across time, not just within a watch. A Fourth Engineer's responsibility resets with each watch; a system owner's responsibility accumulates — today's decision about an assigned system is shaped by its history and will shape its future." },
+    { en: "Treat recurrence as a signal, not a coincidence. A problem that keeps happening, even in minor form, is telling you something about the system that a single occurrence never could — the pattern itself is the diagnosis worth pursuing." },
+    { en: "Hold seniority and priority as separate things. Being more experienced than the Fourth Engineer doesn't automatically mean your task matters more — genuine priority is decided by what the department actually needs, not by rank." },
+    { en: "Recognize your own diagnostic limits as useful information, not a personal failure. Knowing when independent effort has reached its edge is part of technical judgment, not a departure from it." },
+    { en: "See documentation as a form of care for the system, not an administrative burden. Detailed records reflect genuine attention to a system's condition over time — they are how ownership becomes visible to anyone who looks." },
+    { en: "Understand that developing a Fourth Engineer is part of owning your role, not a side task. Sharing reasoning consistently, not just when convenient, is what actually builds the next generation of system owners." },
+    { en: "Accept that broader technical discretion comes with broader responsibility for using it well. The deeper your system knowledge, the more your judgment is trusted — which means the more carefully it needs to be exercised, not less." },
+  ],
+
+  professionalDocumentation: [
+    { en: "System-specific PMS records — The Third Engineer maintains detailed, accurate Planned Maintenance System records for assigned systems, treating documentation as a planning tool that reflects genuine condition and history, not just a compliance requirement completed after the fact." },
+    { en: "Engine room logbook entries — The Third Engineer makes official logbook entries during their own watch, carrying the same legal and regulatory weight as any officer's entry, in addition to system-specific maintenance documentation." },
+    { en: "Maintenance planning and diagnostic records — Where the Third Engineer plans proactive maintenance or diagnoses a complex issue on an assigned system, the reasoning and findings are documented clearly enough that a future officer (including a successor system owner) can understand the decision, not just its outcome." },
+    { en: "Watch and system handover records — The Third Engineer's handover includes both watch-level status and system-level trends or ongoing maintenance, ensuring the relieving officer inherits a complete picture across both dimensions of the role." },
+    { en: "Why this matters: The Third Engineer's documentation now spans two timeframes at once — the immediate accuracy expected of any officer's watch record, and the longer-term accuracy that makes system ownership visible and transferable. A future officer who inherits an assigned system depends entirely on the quality of what was documented before them; incomplete or vague records don't just create inconvenience, they erase the accumulated system knowledge that is this rank's defining contribution." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "System-level environmental compliance for assigned machinery — The Third Engineer ensures assigned systems (particularly boilers and steam systems, where relevant to emissions or discharge) remain compliant over time, not just during a single watch's authorization decisions." },
+    { en: "Authorizing routine environmental procedures within standing orders — Like the Fourth Engineer, the Third Engineer may authorize routine environmental actions within documented conditions, applying the same discipline and record-keeping." },
+    { en: "Recognizing environmental implications of system condition — The Third Engineer connects assigned system maintenance and condition to environmental performance (e.g. combustion efficiency, emissions), recognizing that neglected system ownership can create environmental compliance risk over time, not just immediate operational risk." },
+    { en: "Directing the watch team and Fourth Engineer's environmental practice on assigned systems — The Third Engineer ensures correct environmental procedure is applied consistently to assigned systems, correcting any lapse directly." },
+    { en: "Why this matters: The Third Engineer's environmental responsibility extends across the same timeframe as their system ownership — a system maintained well tends to perform well environmentally, and a system allowed to degrade often creates environmental risk long before it creates an operational failure. This connection between technical stewardship and environmental compliance is exactly the kind of long-term thinking that distinguishes system ownership from watch-level responsibility, and it prepares the Third Engineer for the broader departmental environmental accountability expected at the Second Engineer level and beyond." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Stand an independent engine room watch and make routine operational decisions within standing orders, with the same authority as a Fourth Engineer" },
+      { en: "Plan and execute proactive maintenance on assigned systems, prioritizing work based on condition, history, and PMS guidance" },
+      { en: "Diagnose complex issues on assigned systems independently, up to the point where specialist support or escalation is genuinely warranted" },
+      { en: "Direct ratings and the Fourth Engineer on tasks related to assigned systems, verifying work with system-specific expertise" },
+      { en: "Authorize routine environmental procedures explicitly covered by standing orders and documented conditions" },
+      { en: "Make official logbook entries and detailed PMS records for assigned systems as a certified officer" },
+      { en: "Refuse to proceed with an action you believe exceeds your standing orders or genuinely requires escalation or specialist input, requesting guidance first" },
+      { en: "Escalate any concern — technical, procedural, or personnel-related — directly to the Second Engineer or Chief Engineer without needing prior justification" },
+    ],
+    youCannot: [
+      { en: "Make a final decision on any matter that standing orders reserve for the Second Engineer or Chief Engineer, however deep your system knowledge" },
+      { en: "Authorize an environmental discharge or action outside what standing orders and documented conditions explicitly permit" },
+      { en: "Alter or deviate from the Chief Engineer's standing orders or overall departmental maintenance priorities without explicit authorization" },
+      { en: "Take command of the overall emergency response beyond your assigned station without explicit direction from the officer coordinating it" },
+      { en: "Reassign departmental resources or priorities that conflict with the Fourth Engineer's without explicit coordination or, if unresolved, the Chief Engineer's decision" },
+      { en: "Discipline another crew member as a formal supervisory action outside the scope granted by the Chief Engineer" },
+      { en: "Represent the vessel or the company in any interaction with external parties (shore engineers, surveyors, authorities)" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Treating a recurring minor issue as three separate coincidences — Continuing to apply the same quick fix each time an issue reappears, rather than recognizing the pattern and investigating the underlying cause." },
+    { en: "Assuming seniority automatically settles priority conflicts — Defaulting to your own task's priority over the Fourth Engineer's without genuinely discussing which is more time-sensitive." },
+    { en: "Persisting with an independent diagnosis past its useful limit — Investing significant additional time in an unconfirmed theory rather than seeking specialist input or escalation." },
+    { en: "Letting system-specific PMS records become vague or generic — Documenting maintenance work without the detail that makes records useful for future planning or a future system owner." },
+    { en: "Mentoring the Fourth Engineer only when convenient — Sharing reasoning inconsistently rather than treating development of a junior officer as a consistent part of the role." },
+    { en: "Confusing deep system knowledge with expanded independent authority — Assuming familiarity with a system justifies a decision that standing orders still reserve for a more senior officer." },
+    { en: "Reacting to maintenance needs instead of planning proactively — Waiting for a reported issue rather than using condition, history, and PMS data to plan ahead." },
+    { en: "Directing ratings without coordinating with the Fourth Engineer — Creating conflicting instructions for the same team by acting independently rather than confirming who is directing what." },
+  ],
+
+  careerProgression: [
+    { en: "Next role: Second Engineer — the next step in the engineering officer progression, marking the transition from owning specific assigned systems to overseeing the entire engine department's daily operation, a significant broadening of scope similar in nature to the OOW-to-Chief Officer transition on the deck side." },
+    { en: "Skills to develop: Departmental-level planning and resource coordination across all engine room systems, not just those personally assigned; supervisory responsibility for multiple Fourth Engineers and the watch rotation as a whole; broader commercial, regulatory, and cross-departmental coordination (particularly with the Chief Officer on stability, ballast, and cargo-related engine support); the transition from informal mentoring of one Fourth Engineer to formal training oversight across the department." },
+    { en: "Recommended experience: A demonstrated track record of genuine system ownership — proactive maintenance planning, sound diagnosis, and detailed record-keeping — across at least one significant system over an extended period; consistent, reliable independent watchkeeping; effective coordination with other officers and demonstrated mentoring of junior officers; sufficient sea time as required for further certification." },
+    { en: "Certificates typically required: Requirements vary significantly by flag State and company policy. Progression to Second Engineer typically requires sufficient qualifying sea time as a Third Engineer and any additional certification or endorsements required by the flag State or company for departmental-level responsibility." },
+    { en: "Recommended MAP courses: Departmental Management & Resource Planning (Engine); Role On Board – Second Engineer (to preview the next step in detail); Career Navigator (career progression planning)." },
+    { en: "Mindset for the next step: Moving from Third Engineer to Second Engineer means the ownership discipline built around specific assigned systems — planning ahead, tracking condition over time, developing a junior officer — becomes the foundation for owning the entire department's daily operation. The scope changes significantly; the underlying discipline of proactive stewardship, honest documentation, and deliberate development of others does not." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "e1-l1", label: { en: "Main Engine" } },
+    { kind: "lesson", lessonId: "e1-l2", label: { en: "Auxiliaries & Electricity" } },
+    { kind: "lesson", lessonId: "e1-l3", label: { en: "Stability & Loading" } },
+    { kind: "lesson", lessonId: "e1-l4", label: { en: "Fire Safety & CO2 System" } },
+    { kind: "lesson", lessonId: "e1-l5", label: { en: "Survival & EPIRB" } },
+    { kind: "lesson", lessonId: "e1-l6", label: { en: "Maintenance & Troubleshooting" } },
+    { kind: "lesson", lessonId: "e1-l7", label: { en: "Engine Watchkeeping" } },
+    { kind: "lesson", lessonId: "e1-l8", label: { en: "Emergency Procedures" } },
+    { kind: "lesson", lessonId: "e2-l1", label: { en: "Generators & Power Generation" } },
+    { kind: "lesson", lessonId: "e2-l2", label: { en: "Switchboards & Distribution" } },
+    { kind: "lesson", lessonId: "e2-l3", label: { en: "Pumps & Hydraulic Systems" } },
+    { kind: "lesson", lessonId: "e2-l4", label: { en: "Compressors & Compressed Air" } },
+    { kind: "lesson", lessonId: "e2-l5", label: { en: "Purifiers & Separators" } },
+    { kind: "lesson", lessonId: "e2-l6", label: { en: "Heat Exchangers" } },
+    { kind: "lesson", lessonId: "e2-l7", label: { en: "Electrical Troubleshooting" } },
+    { kind: "lesson", lessonId: "e3-l1", label: { en: "Marine Boiler Types" } },
+    { kind: "lesson", lessonId: "e3-l2", label: { en: "Combustion & Burners" } },
+    { kind: "lesson", lessonId: "e3-l3", label: { en: "Boiler Water Treatment" } },
+    { kind: "lesson", lessonId: "e3-l4", label: { en: "Steam Systems & Distribution" } },
+    { kind: "lesson", lessonId: "e3-l5", label: { en: "Boiler Safety & Alarms" } },
+    { kind: "lesson", lessonId: "e3-l6", label: { en: "Boiler Maintenance & Inspection" } },
+    { kind: "lesson", lessonId: "e4-l1", label: { en: "MARPOL & Environment" } },
+    { kind: "lesson", lessonId: "e4-l2", label: { en: "Annex I - Oil Pollution" } },
+    { kind: "lesson", lessonId: "e4-l3", label: { en: "Annex V - Garbage Management" } },
+    { kind: "lesson", lessonId: "e4-l4", label: { en: "Annex VI - Air Pollution" } },
+    { kind: "lesson", lessonId: "e4-l5", label: { en: "Environmental Compliance" } },
+    { kind: "lesson", lessonId: "e4-l6", label: { en: "Environmental Leadership" } },
+    { kind: "lesson", lessonId: "e6-l1", label: { en: "Cargo Pumps" } },
+    { kind: "lesson", lessonId: "e6-l2", label: { en: "Ballast System" } },
+    { kind: "lesson", lessonId: "e6-l3", label: { en: "Inert Gas System (IGS)" } },
+    { kind: "lesson", lessonId: "e6-l4", label: { en: "COW & Tank Cleaning" } },
+    { kind: "lesson", lessonId: "e6-l5", label: { en: "Cargo Heating" } },
+    { kind: "lesson", lessonId: "e6-l6", label: { en: "Gauging & Measurements" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l3", label: { en: "PPE, Safe Behaviour & Human Factors" } },
+    { kind: "lesson", lessonId: "s6-l6", label: { en: "Safety Culture & Professional Responsibility" } },
+    { kind: "lesson", lessonId: "s4-l7", label: { en: "Fire Command, Teams & Damage Control" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — engine room, machinery, and regulatory terminology" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on Second Engineer certification requirements by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and machinery layouts across different ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on system ownership, maintenance planning, or certification requirements" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize the path from Third Engineer through to Second Engineer and beyond" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document system ownership experience, certificates, and departmental responsibilities" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_FOURTH_ENGINEER", label: { en: "Role On Board — Fourth Engineer" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_SECOND_ENGINEER", label: { en: "Role On Board — Second Engineer" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "An independent engine room watch, with the same watch-level accountability as a Fourth Engineer" },
+      { en: "Proactive maintenance planning and diagnosis for assigned systems, based on condition, history, and PMS guidance" },
+      { en: "Official logbook entries and detailed system-specific PMS records as a certified officer" },
+    ],
+    iMonitor: [
+      { en: "Assigned system condition and trends across watches, not just within a single watch" },
+      { en: "Recurring issues on assigned systems, distinguishing genuine patterns from isolated occurrences" },
+      { en: "The Fourth Engineer's development and understanding, particularly on matters related to assigned systems" },
+    ],
+    iReport: [
+      { en: "Watch conditions and system-level trends, formally and with the accuracy expected of an official record" },
+      { en: "Any pattern or recurring issue on assigned systems, even when each individual occurrence seemed minor" },
+      { en: "My own diagnostic limits, seeking specialist input or escalation rather than extending independent effort indefinitely" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any decision that standing orders reserve for the Second Engineer or Chief Engineer, however deep my system knowledge" },
+      { en: "Any environmental discharge or action outside what standing orders and documented conditions explicitly permit" },
+      { en: "Any deviation from the Chief Engineer's standing orders or overall departmental maintenance priorities without explicit authorization" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Engine department organization chart showing the Third Engineer's system ownership alongside watchkeeping duties." } },
+    { kind: "image", caption: { en: "Example of a detailed, well-maintained PMS record for an assigned system." } },
+    { kind: "diagram", caption: { en: "System condition trend chart illustrating proactive maintenance planning over time." } },
+    { kind: "video", caption: { en: "Demonstration of a Third Engineer mentoring a Fourth Engineer through a diagnostic reasoning process." } },
+    { kind: "document", caption: { en: "Sample maintenance planning record showing condition-based prioritization." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
-// "master", "deck_cadet", "os", "engine_cadet", "wiper", "motorman", "oiler"
-// and "fourth_engineer" — remaining ranks are still pending content.
+// "master", "deck_cadet", "os", "engine_cadet", "wiper", "motorman", "oiler",
+// "fourth_engineer" and "third_engineer" — remaining ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -7752,6 +8338,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   motorman: MOTORMAN_CARD,
   oiler: OILER_CARD,
   fourth_engineer: FOURTH_ENGINEER_CARD,
+  third_engineer: THIRD_ENGINEER_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
