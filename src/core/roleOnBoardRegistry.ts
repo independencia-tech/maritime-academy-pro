@@ -8916,11 +8916,613 @@ const SECOND_ENGINEER_CARD: RoleOnBoardCard = {
   ],
 };
 
+const CHIEF_ENGINEER_CARD: RoleOnBoardCard = {
+  rankId: "chief_engineer",
+
+  // ─────────────────────────────────────────────
+  // FONDATIONS
+  // ─────────────────────────────────────────────
+  roleOverview: [
+    { en: "The Chief Engineer holds ultimate responsibility for the entire engine department — its material condition, its compliance with international and flag State regulations, its overall performance, and its long-term operational reliability — answering personally to the Master and the company for matters the Second Engineer manages day-to-day but does not bear final accountability for. Where the Second Engineer coordinates the department's daily operation, the Chief Engineer owns its long-term condition, its legal standing, and its strategic direction." },
+    { en: "The Chief Engineer's judgment operates at the level of the vessel's overall technical viability: deciding when a repair can wait for the next dry-dock versus when it cannot, weighing commercial pressure against genuine safety and compliance requirements, and setting the standing orders that every other engine department rank operates within, and establishing the technical standards expected throughout the department. This is a different register of decision-making than departmental coordination — it concerns the department's survival and legal standing over months and years, not the next watch or the next port call." },
+    { en: "The Chief Engineer's progression within the role, rather than toward a further rank, is measured by the department's sustained material condition, its genuine regulatory compliance (not just its paperwork), and the strength of the officers developed under their supervision — a Chief Engineer's legacy is often the condition in which the next Chief Engineer inherits the department." },
+    { en: "The Chief Engineer works through the Second Engineer, who manages the department's day-to-day operation on the Chief Engineer's behalf, and reports directly to the Master, coordinating with the Chief Officer on cross-departmental matters (stability, ballast, cargo-related engine support) and with the company's technical superintendent or DPA on strategic and compliance matters." },
+    { en: "Where the Second Engineer's authority is bounded by day-to-day departmental coordination, the Chief Engineer's authority and accountability extend to the department's entire legal, financial, and material standing — a responsibility that, like the Master's, has no one above it aboard the vessel to catch what the Chief Engineer misses." },
+  ],
+
+  organizationalPosition: {
+    reportsTo: [
+      { en: "Master (direct report for vessel-level matters)" },
+      { en: "Company technical superintendent or DPA (for departmental compliance and strategic matters)" },
+    ],
+    worksWith: [
+      { en: "Second Engineer, who executes daily departmental management" },
+      { en: "Third and Fourth Engineers through the Second Engineer's supervision" },
+      { en: "Chief Officer for cross-departmental coordination (stability, ballast, cargo-related engine support)" },
+      { en: "Class surveyors, port state control, and shore-based technical support" },
+    ],
+    mentors: [
+      { en: "The Master, company technical management, and class societies contribute to the Chief Engineer's continued professional development and strategic decision-making" },
+    ],
+    supports: [
+      { en: "The Second Engineer, whom the Chief Engineer develops toward eventual Chief Engineer certification" },
+      { en: "The department as a whole, whose material condition and compliance the Chief Engineer is ultimately accountable for" },
+    ],
+  },
+
+  professionalSkills: [
+    { label: { en: "Legal and regulatory accountability for the engine department (MARPOL, SOLAS, class, flag State)" }, mapReferences: [{ kind: "lesson", lessonId: "e4-l1" }] },
+    { label: { en: "Strategic technical decision-making (dry-dock planning, major repairs, budget)" } },
+    { label: { en: "Setting and maintaining departmental standing orders" } },
+    { label: { en: "Balancing commercial pressure against genuine safety and compliance requirements" } },
+    { label: { en: "Supervision and development of the Second Engineer and overall departmental leadership" } },
+    { label: { en: "Cross-departmental coordination at the command level (Master, Chief Officer)" } },
+    { label: { en: "Company and regulatory relationship management (DPA, class, port state control)" } },
+    { label: { en: "Governance of the department's documentation and compliance system" } },
+  ],
+
+  // ─────────────────────────────────────────────
+  // LES 8 PHASES OPÉRATIONNELLES
+  // ─────────────────────────────────────────────
+  operationalPhases: {
+    pre_departure_preparation: {
+      overview: { en: "Before departure, the Chief Engineer's role is not to verify individual systems or even reconcile officer reports — that consolidation is the Second Engineer's job — but to receive, question, and ultimately own the final decision that the engine department is fit to proceed. The Chief Engineer weighs the Second Engineer's consolidated report against genuine legal and commercial pressure, personally accountable for the decision regardless of how sound the departmental input appeared." },
+      responsibilities: [
+        { en: "Receive and question the Second Engineer's consolidated departmental readiness report, probing any area that seems uncertain rather than accepting it at face value" },
+        { en: "Verify that the vessel's engine-related certificates and compliance documentation are genuinely current and valid, not merely present on file" },
+        { en: "Weigh commercial or schedule pressure against the department's genuine readiness, making the final call to proceed or delay" },
+        { en: "Confirm with the Master that the engine department's readiness is communicated clearly, distinct from and alongside the deck department's readiness" },
+        { en: "Escalate any finding that constitutes a genuine legal, safety, or compliance risk to the Master immediately, rather than deciding to proceed alone" },
+      ],
+      equipment: [
+        { en: "Consolidated departmental readiness report from the Second Engineer" },
+        { en: "Certificate and compliance documentation (class, flag State, statutory)" },
+        { en: "Company standing instructions / voyage orders, where applicable" },
+      ],
+      risks: [
+        { en: "Accepting the Second Engineer's consolidated report without genuinely questioning it, treating departmental consolidation as equivalent to personal verification" },
+        { en: "Allowing commercial or schedule pressure to override a genuine doubt about departmental readiness" },
+        { en: "A certificate or compliance gap being overlooked because the departmental report did not flag it" },
+        { en: "Deciding to proceed without having resolved a known concern, hoping it will not matter" },
+      ],
+      bestPractices: [
+        { en: "Ask direct, specific questions of the Second Engineer rather than accepting a general assurance that 'the department is ready'" },
+        { en: "Personally verify the department's legal and certification standing before departure, rather than assuming the Second Engineer's report covers it" },
+        { en: "Treat commercial pressure as one input among several, never as the deciding factor over a genuine compliance or safety concern" },
+        { en: "Coordinate explicitly with the Master so the vessel's overall readiness reflects an accurate, undiluted picture of the engine department" },
+      ],
+      commonMistakes: [
+        { en: "Treating the Second Engineer's readiness report as a substitute for the Chief Engineer's own judgment rather than an input to it" },
+        { en: "Allowing schedule pressure to quietly lower the threshold for what counts as 'ready'" },
+        { en: "Assuming certificate and compliance validity without personal verification" },
+        { en: "Proceeding with a known unresolved concern in the hope that it will not materialize" },
+      ],
+      professionalTips: [
+        { en: "Your signature on departmental readiness carries legal weight no departmental report can substitute for — question before you commit" },
+        { en: "Commercial pressure will always argue for departure; your role is to make sure compliance and safety get an equally clear voice in that decision" },
+        { en: "The certificates are your personal legal exposure — verify them as such, not as paperwork the Second Engineer handles" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l1" }, { kind: "lesson", lessonId: "e2-l1" }],
+    },
+
+    departure_manoeuvres: {
+      overview: { en: "During departure manoeuvres, the Chief Engineer is typically present in the engine control room or on standby, retaining ultimate authority over the department's conduct even when the Fourth Engineer executes orders and the Second Engineer coordinates departmental oversight. The Chief Engineer does not need to intervene in routine execution, but is the final authority who can override any departmental decision or take direct command if the situation genuinely requires it." },
+      responsibilities: [
+        { en: "Be present or immediately available in the engine control room during departure, maintaining awareness of the manoeuvre without necessarily directing it personally" },
+        { en: "Retain final authority over any engine room decision during the manoeuvre, intervening decisively if a genuine safety or compliance concern arises" },
+        { en: "Confirm with the Master that engine department readiness and communication are aligned throughout the manoeuvre" },
+        { en: "Make the final call on any ambiguous or high-stakes situation that exceeds the Second Engineer's departmental authority" },
+        { en: "Follow PPE and safety requirements exactly, with no exceptions during active operations" },
+      ],
+      equipment: [
+        { en: "Full engine room monitoring and communication equipment" },
+        { en: "Standing orders reference" },
+        { en: "Direct communication link with the bridge/Master" },
+      ],
+      risks: [
+        { en: "Deferring too completely to the Second Engineer's departmental coordination, losing the independent readiness to intervene if something goes wrong" },
+        { en: "Hesitating to override a departmental decision when a genuine safety concern arises, out of reluctance to disrupt an ongoing manoeuvre" },
+        { en: "Being drawn into operational detail unnecessarily, losing the overview needed to catch a developing problem" },
+        { en: "Delaying a difficult decision (e.g. aborting or delaying departure) due to commercial or schedule pressure" },
+      ],
+      bestPractices: [
+        { en: "Maintain enough distance from operational detail to preserve the overview needed to intervene at the right moment" },
+        { en: "Intervene decisively and without hesitation the moment a genuine safety or compliance concern is identified" },
+        { en: "Trust the Second Engineer's departmental coordination within its scope, while remaining ready to take final authority when needed" },
+        { en: "Treat commercial or schedule pressure as a factor to weigh, never as a reason to proceed past a genuine safety doubt" },
+      ],
+      commonMistakes: [
+        { en: "Treating departmental delegation as removing the Chief Engineer's own responsibility to intervene if necessary" },
+        { en: "Hesitating to override an ongoing manoeuvre out of reluctance to contradict the Second Engineer" },
+        { en: "Losing the overview needed to catch a developing problem by becoming absorbed in operational detail" },
+        { en: "Allowing schedule pressure to delay a necessary decision to pause or abort the departure" },
+      ],
+      professionalTips: [
+        { en: "The Second Engineer coordinates the department; you remain accountable for it — both facts must stay true throughout the manoeuvre" },
+        { en: "The right moment to intervene is the moment you notice the concern, not the moment you're certain it's serious" },
+        { en: "Presence during departure is not passive — your attention during a routine manoeuvre is what makes a sudden intervention possible when it matters" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e1-l1" }],
+    },
+
+    navigation: {
+      overview: { en: "During navigation, the Chief Engineer typically does not stand a routine watch — that responsibility belongs to the Fourth, Third, and Second Engineers — but sets the standing orders and technical standards within which every watch and every system is managed. The Chief Engineer's presence during navigation is felt through this framework, through periodic review of departmental performance, and through decisive intervention when called, rather than through constant personal involvement." },
+      responsibilities: [
+        { en: "Issue clear, specific standing orders and technical standards that leave no genuine ambiguity about when an officer must call the Chief Engineer" },
+        { en: "Respond immediately and fully to any call from an officer, treating every call as legitimate rather than questioning the officer's judgment in calling" },
+        { en: "Review departmental performance periodically during the voyage — maintenance progress, officer development, recurring issues — rather than waiting for a problem to surface" },
+        { en: "Maintain awareness of the Second Engineer's departmental coordination, intervening personally only where a departmental-level correction proves insufficient" },
+        { en: "Set the department's overall risk tolerance and priorities for the voyage, which the Second Engineer and other officers then apply" },
+      ],
+      equipment: [
+        { en: "Standing orders and night order book (engine room)" },
+        { en: "Departmental performance and maintenance overview" },
+        { en: "Bridge/engine room communication equipment for being called at any hour" },
+      ],
+      risks: [
+        { en: "Standing orders vague enough that officers remain uncertain about when a call is genuinely required" },
+        { en: "Creating, even unintentionally, a culture where officers hesitate to call due to visible fatigue or irritation at being disturbed" },
+        { en: "Losing track of the department's overall condition by remaining too detached from routine operations" },
+        { en: "Undermining the Second Engineer's departmental coordination by intervening in matters that should be resolved at that level" },
+      ],
+      bestPractices: [
+        { en: "Write standing orders and technical standards with genuine specificity — vague thresholds produce hesitant officers" },
+        { en: "Respond to every call as if it were legitimate, regardless of how it turns out — this sustains a culture of calling early" },
+        { en: "Review the department's overall condition periodically, not only when prompted by an officer's call" },
+        { en: "Trust the Second Engineer's departmental coordination, intervening personally only when genuinely necessary" },
+      ],
+      commonMistakes: [
+        { en: "Writing standing orders vague enough to leave officers uncertain about when to call" },
+        { en: "Reacting to a call with visible frustration, teaching officers to delay or avoid calling next time" },
+        { en: "Becoming so detached from routine operations that a developing departmental issue is caught too late" },
+        { en: "Micromanaging departmental coordination that the Second Engineer is already handling appropriately" },
+      ],
+      professionalTips: [
+        { en: "The quality of your standing orders is measured by how confidently an officer can decide, alone at 3 a.m., whether to call you" },
+        { en: "How you respond to being called shapes whether you're called again when it truly matters" },
+        { en: "Trusting the Second Engineer's coordination is not distance from the department — it's how your standards scale across the whole voyage" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }, { kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    anchoring: {
+      overview: { en: "For routine anchoring, the Chief Engineer typically delegates oversight to the Second Engineer, who coordinates departmental readiness and maintenance opportunities as already established. The Chief Engineer's distinct role emerges when an anchorage becomes extended, unplanned, or carries genuine strategic implications — deciding whether significant maintenance can safely proceed, or whether a prolonged stay creates a departmental risk exceeding the Second Engineer's authority to manage alone." },
+      responsibilities: [
+        { en: "Decide whether an extended or unplanned anchor period justifies significant maintenance work, weighing departmental benefit against readiness risk" },
+        { en: "Be informed and personally engaged when the Second Engineer reports a readiness concern or a maintenance opportunity with genuine strategic implications" },
+        { en: "Make the final call on any major maintenance decision during anchoring that exceeds departmental-level authority" },
+        { en: "Coordinate with the Master on the commercial and operational implications of an extended anchorage affecting the engine department" },
+        { en: "Escalate to the company (technical superintendent, DPA) if an anchorage-related decision has significant compliance or resource implications" },
+      ],
+      equipment: [
+        { en: "Departmental maintenance and readiness overview" },
+        { en: "Company/DPA communication channels for significant anchoring decisions" },
+        { en: "Standing orders reference" },
+      ],
+      risks: [
+        { en: "Treating every anchorage as routine, missing the specific conditions that actually warrant Chief Engineer involvement" },
+        { en: "Allowing commercial pressure to influence a significant maintenance decision made during an extended anchorage" },
+        { en: "Being informed too late of a maintenance opportunity or readiness concern that genuinely required earlier involvement" },
+        { en: "Underestimating the resource or compliance implications of a major maintenance decision made opportunistically" },
+      ],
+      bestPractices: [
+        { en: "Define, through standing orders, which anchoring-related decisions require the Chief Engineer's personal involvement" },
+        { en: "Weigh the department's genuine benefit from an extended anchorage against readiness risk, explicitly and transparently" },
+        { en: "Engage the company proactively when an anchorage-related decision has significant commercial or compliance weight" },
+        { en: "Trust the Second Engineer's routine anchor-period coordination, reserving personal involvement for genuinely significant decisions" },
+      ],
+      commonMistakes: [
+        { en: "Leaving a significant maintenance decision to the Second Engineer alone when it genuinely required Chief Engineer authority" },
+        { en: "Allowing commercial pressure to override a genuine readiness or compliance concern during an extended anchorage" },
+        { en: "Being informed of a major decision only after it was effectively made at the departmental level" },
+        { en: "Underestimating the resource implications of an opportunistic maintenance decision" },
+      ],
+      professionalTips: [
+        { en: "Most anchorages are genuinely routine — your judgment is in recognizing quickly which ones carry real strategic weight" },
+        { en: "A major maintenance opportunity during an extended anchorage is a decision, not an automatic yes — weigh it as such" },
+        { en: "Engaging the company early on a significant anchorage-related decision protects both the department and your own accountability" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    port_operations: {
+      overview: { en: "While alongside, the Chief Engineer becomes the engine department's primary representative to the outside world — class surveyors, Port State Control, shore-based technical support, and the company's technical superintendent — while the Second Engineer manages the department's daily port workload. The Chief Engineer's distinct contribution in port is protecting the department's compliance standing, technical reputation, and relationship with the parties who can grant or withhold operational freedom." },
+      responsibilities: [
+        { en: "Receive and personally engage with Port State Control inspections, class surveys, or major technical audits, rather than delegating entirely to the Second Engineer" },
+        { en: "Authorize significant maintenance, repair, or dry-dock-related decisions during the port stay, weighing technical necessity against commercial and schedule pressure" },
+        { en: "Maintain the primary relationship with the company's technical superintendent or DPA on matters affecting the department's compliance or strategic condition" },
+        { en: "Make the final decision on any dispute or discrepancy with a surveyor, contractor, or authority that the Second Engineer cannot resolve at an operational level" },
+        { en: "Confirm with the Master and Second Engineer that the department's overall readiness to depart is genuinely sound before authorizing departure preparations" },
+      ],
+      equipment: [
+        { en: "Certificates, class documentation, and PSC deficiency records" },
+        { en: "Company/DPA and technical superintendent communication channels" },
+        { en: "Departmental readiness and maintenance overview" },
+      ],
+      risks: [
+        { en: "Delegating a Port State Control or class survey interaction entirely to the Second Engineer when the Chief Engineer's personal engagement was actually required or expected" },
+        { en: "Allowing commercial pressure to influence a significant technical or compliance decision during the port stay" },
+        { en: "Losing track of a dispute with a surveyor or contractor because it was assumed to be operational and left to the Second Engineer" },
+        { en: "Authorizing departure preparations without personally confirming the department's genuine readiness" },
+      ],
+      bestPractices: [
+        { en: "Be personally present and engaged for inspections or interactions that carry genuine legal, technical, or commercial weight" },
+        { en: "Treat commercial or schedule pressure as a factor to weigh, never as the deciding factor over a genuine compliance concern" },
+        { en: "Maintain direct, proactive contact with the company's technical superintendent or DPA rather than relying solely on the Second Engineer's updates" },
+        { en: "Verify departmental readiness personally before authorizing departure, rather than assuming the Second Engineer's report is sufficient" },
+      ],
+      commonMistakes: [
+        { en: "Assuming a Port State Control or class survey matter is purely operational and delegating it away from personal engagement" },
+        { en: "Allowing schedule or commercial pressure from the company or charterer to quietly influence a compliance or safety decision" },
+        { en: "Being unaware of a significant dispute or discrepancy handled at the departmental level that exceeded that authority" },
+        { en: "Authorizing departure without personally verifying the department's overall condition" },
+      ],
+      professionalTips: [
+        { en: "Port State Control and class surveyors don't just inspect the vessel — they form an impression of its Chief Engineer; be present and engaged, not just compliant" },
+        { en: "The relationships you maintain with the technical superintendent and DPA outside of any crisis are what make navigating an actual one with them possible" },
+        { en: "Every external representation of the department is also a representation of the company — know the difference between what is yours to decide and what is not" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    ship_to_ship_operations: {
+      overview: { en: "During STS operations, the Chief Engineer authorizes the operation from the engine department's perspective, confirming the department's genuine readiness and technical suitability before it proceeds, and holds final authority over whether the department's contribution continues, pauses, or aborts if conditions deteriorate. The Second Engineer coordinates the department's operational execution; the Chief Engineer's role is the authorization and the final call under genuinely elevated risk." },
+      responsibilities: [
+        { en: "Authorize the engine department's participation in the STS operation, confirming technical readiness and any condition affecting the department's contribution" },
+        { en: "Be informed and available throughout the operation, given its elevated risk relative to routine manoeuvring" },
+        { en: "Make the final decision to continue, pause, or abort the department's contribution if a development exceeds the Second Engineer's departmental authority" },
+        { en: "Coordinate with the Master on any decision affecting the vessel's overall participation in the operation" },
+        { en: "Ensure the company is informed of the operation's outcome if it was aborted, delayed, or encountered a significant technical issue" },
+      ],
+      equipment: [
+        { en: "Departmental readiness and technical suitability documentation" },
+        { en: "Communication equipment for coordination with the Master and Second Engineer" },
+        { en: "Company communication channels for authorization and reporting" },
+      ],
+      risks: [
+        { en: "Authorizing the department's participation without genuinely verifying technical readiness for this specific operation" },
+        { en: "Being insufficiently engaged during the operation, leaving a genuinely elevated risk decision to be made without Chief Engineer authority" },
+        { en: "Allowing commercial pressure to influence the decision to proceed or continue under marginal technical conditions" },
+        { en: "Delaying a decision to abort or pause because significant departmental resources have already been committed" },
+      ],
+      bestPractices: [
+        { en: "Treat authorization of departmental participation as a genuine decision, not a formality — verify technical readiness personally" },
+        { en: "Remain available throughout the operation, given its elevated risk compared to routine operations" },
+        { en: "Treat commercial pressure as an input to weigh, never as the deciding factor over a genuine technical or safety concern" },
+        { en: "Coordinate closely with the Master so departmental and vessel-level decisions about the operation remain aligned" },
+      ],
+      commonMistakes: [
+        { en: "Authorizing departmental participation as a routine formality without genuinely assessing technical readiness" },
+        { en: "Being unavailable or insufficiently engaged during the operation despite its elevated risk profile" },
+        { en: "Allowing commercial pressure (cargo value, schedule) to influence a decision that should rest on technical and safety grounds" },
+        { en: "Hesitating to abort or pause due to resources already committed to the operation" },
+      ],
+      professionalTips: [
+        { en: "Authorization is not a formality — your technical judgment on departmental readiness is what makes the operation safe from the engine side" },
+        { en: "The commercial value of maintaining the operation is never a reason to accept a technical risk you would not otherwise accept" },
+        { en: "Coordinating closely with the Master ensures the vessel's overall decision reflects genuine departmental input, not just operational momentum" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l7" }],
+    },
+
+    maintenance: {
+      overview: { en: "Maintenance is where the Chief Engineer's strategic responsibility is most fully exercised — not coordinating day-to-day priorities as the Second Engineer does, but making the long-term decisions that determine the department's material condition for months and years: what can wait for dry-dock, what requires immediate attention, and what budget and resources the department genuinely needs. This is the phase where 'departmental management' becomes 'departmental stewardship.'" },
+      responsibilities: [
+        { en: "Make strategic decisions on deferring, prioritizing, or authorizing major maintenance, weighing technical necessity against budget, schedule, and dry-dock planning" },
+        { en: "Review the Second Engineer's departmental maintenance oversight periodically, verifying that PMS records genuinely reflect the department's condition" },
+        { en: "Plan and negotiate dry-dock and major survey timing with the company, balancing the department's actual material condition against commercial considerations" },
+        { en: "Ensure any deferred maintenance decision is formally documented, communicated, and reviewed until resolved" },
+        { en: "Escalate to the company any resource shortfall (budget, spare parts, technical support) that genuinely threatens the department's material condition" },
+      ],
+      equipment: [
+        { en: "Departmental PMS overview and long-term maintenance planning tools" },
+        { en: "Class survey schedule and dry-dock planning documentation" },
+        { en: "Company budget and technical support communication channels" },
+      ],
+      risks: [
+        { en: "Deferring a repair repeatedly under commercial pressure until deferral becomes the default rather than a conscious, documented decision" },
+        { en: "Trusting the Second Engineer's departmental PMS oversight without periodically verifying it personally" },
+        { en: "Discovering a significant material deficiency only during an external inspection because it was not proactively reported to the company" },
+        { en: "Allowing dry-dock or major survey planning to be driven primarily by commercial schedule rather than the department's genuine material condition" },
+      ],
+      bestPractices: [
+        { en: "Treat every significant deferral decision as a conscious, documented choice, not a default outcome of competing pressures" },
+        { en: "Periodically verify departmental PMS records personally, rather than assuming the Second Engineer's oversight is sufficient" },
+        { en: "Report the department's genuine material condition to the company proactively, before an external inspection forces the issue" },
+        { en: "Negotiate dry-dock and major survey timing based on the department's actual condition, using commercial factors as one input among several" },
+      ],
+      commonMistakes: [
+        { en: "Letting repeated deferrals of significant repairs become an unconscious pattern rather than an explicit decision" },
+        { en: "Trusting departmental PMS records without any personal verification" },
+        { en: "Being surprised by a material deficiency during an external inspection that internal reporting should have already surfaced" },
+        { en: "Allowing commercial schedule to dictate dry-dock timing without genuinely weighing the department's material condition" },
+      ],
+      professionalTips: [
+        { en: "The company trusts your account of the department's condition more than any report — make sure that trust is earned through honesty, not convenience" },
+        { en: "A deferred repair is a decision, not a default — treat it that way every time" },
+        { en: "Dry-dock timing is one of the most consequential decisions you make for the department's long-term condition — protect it from being driven by schedule alone" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l6" }],
+    },
+
+    emergency_situations: {
+      overview: { en: "When a major emergency is declared, the Chief Engineer sets the engine department's overall technical strategy — priorities, resource allocation, and the fundamental technical judgment behind the department's response — which the Second Engineer translates into coordinated direction across the Third and Fourth Engineers' stations. The Chief Engineer does not personally command an individual station, but is accountable for the strategy that determines whether the department's response succeeds, coordinating directly with the Master on the vessel's overall emergency strategy." },
+      responsibilities: [
+        { en: "Set the engine department's overall technical strategy for the emergency, communicating it clearly to the Second Engineer for departmental coordination" },
+        { en: "Receive the Second Engineer's integrated departmental picture, incorporating it into the vessel's overall emergency strategy alongside the Master" },
+        { en: "Make the final departmental-level technical decisions (e.g. prioritizing which system to save, whether continued operation is safe) within the Master's overall strategy" },
+        { en: "Communicate directly and promptly with the Master throughout the emergency, providing an accurate and updated technical picture" },
+        { en: "Ensure accountability for all engine department personnel throughout the emergency, confirming the muster is complete and accurate" },
+      ],
+      equipment: [
+        { en: "Full engine room and emergency communication equipment" },
+        { en: "Departmental emergency organization reference" },
+        { en: "Direct communication link with the Master" },
+      ],
+      risks: [
+        { en: "Becoming personally absorbed in a single station's tactical response instead of setting departmental strategy and trusting the Second Engineer to execute it" },
+        { en: "Making a departmental technical decision that conflicts with the Master's overall vessel strategy due to incomplete communication" },
+        { en: "Acting on the Second Engineer's integrated picture without verifying it, missing a critical detail from an individual station" },
+        { en: "Underestimating how quickly a technical emergency can escalate, continuing with an initial strategy after conditions have fundamentally changed" },
+      ],
+      bestPractices: [
+        { en: "Set departmental technical strategy clearly and let the Second Engineer coordinate execution — resist the pull toward personal tactical involvement at a single station" },
+        { en: "Communicate proactively and continuously with the Master, ensuring departmental strategy remains aligned with the vessel's overall response" },
+        { en: "Reassess departmental strategy explicitly and regularly as the emergency evolves, rather than assuming the initial plan remains correct" },
+        { en: "Maintain personal, continuous accountability for all engine department personnel throughout the emergency" },
+      ],
+      commonMistakes: [
+        { en: "Becoming personally absorbed in tactical detail at a single station at the expense of overall departmental strategy" },
+        { en: "Making a technical decision that conflicts with the Master's overall strategy because communication was insufficient" },
+        { en: "Trusting an integrated departmental picture without verifying it during a fast-moving emergency" },
+        { en: "Continuing an initial departmental strategy without adapting it as the emergency's nature or severity changes" },
+      ],
+      professionalTips: [
+        { en: "Your job in a major emergency is to set technical strategy, not to fight the fire yourself — the moment you take over a station, no one is setting departmental strategy" },
+        { en: "The Master relies on your technical judgment to make sound overall decisions — communicate it clearly and continuously, not just when asked" },
+        { en: "How you led during routine departmental operations is what your officers draw on when they lead their stations through a real emergency" },
+      ],
+      mapReferences: [{ kind: "lesson", lessonId: "e1-l8" }, { kind: "lesson", lessonId: "s4-l7" }, { kind: "lesson", lessonId: "s6-l2" }],
+    },
+  },
+
+  // ─────────────────────────────────────────────
+  // IDENTITÉ PROFESSIONNELLE
+  // ─────────────────────────────────────────────
+  practicalScenarios: [
+    {
+      situation: { en: "The Second Engineer reports a developing issue on a major system that would benefit from repair at the next port call, but doing so would extend the port stay by two days. The company's operations team contacts you directly, expressing strong preference for staying on schedule." },
+      mission: { en: "Decide whether to authorize the repair or defer it to preserve the schedule." },
+      expectedActions: [
+        { en: "Acknowledge the company's commercial interest without allowing it to substitute for your own technical assessment" },
+        { en: "Make the repair decision based on the department's genuine technical condition and safety implications first" },
+        { en: "Communicate the decision and its reasoning clearly and professionally to the company, rather than avoiding the conversation" },
+        { en: "Document the decision and the technical data supporting it" },
+      ],
+      why: [{ en: "The Chief Engineer's authority over the department's technical condition cannot be delegated to commercial interests, however legitimate those interests are — the company's preference is an input to communicate around, never a factor that overrides a genuine technical judgment." }],
+      commonMistakes: [
+        { en: "Allowing the company's direct contact to create pressure that influences the technical decision" },
+        { en: "Avoiding a difficult conversation with the company by simply deferring" },
+        { en: "Failing to document the technical reasoning behind the decision" },
+      ],
+      safetyPoints: [{ en: "A significant repair deferred too readily under commercial pressure risks a more serious and more disruptive failure later — deciding early and communicating clearly is safer and, ultimately, more commercially sound than deferring reactively." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "Reviewing departmental records, you notice a specific system deficiency has been recorded and resolved with the same temporary fix across several previous Chief Engineers' tenures, according to the maintenance history." },
+      mission: { en: "Decide whether to continue the established practice or investigate further." },
+      expectedActions: [
+        { en: "Recognize the recurrence across tenures as a pattern worth investigating, not a validated long-term solution" },
+        { en: "Commission a proper technical assessment of the underlying cause rather than continuing the established temporary fix" },
+        { en: "Document the investigation and any resulting change in approach clearly for future Chief Engineers" },
+        { en: "Report the finding and planned resolution to the company if it affects budget or dry-dock planning" },
+      ],
+      why: [{ en: "A practice repeated across multiple Chief Engineers' tenures is not evidence that it is correct — it may simply mean the underlying cause was never properly investigated, and the Chief Engineer's stewardship responsibility includes questioning inherited practices rather than perpetuating them by default." }],
+      commonMistakes: [
+        { en: "Assuming an inherited practice must be correct because previous Chief Engineers used it" },
+        { en: "Failing to document a new investigation clearly enough for a future Chief Engineer to build on it" },
+        { en: "Treating the historical pattern as reassurance rather than as a signal worth investigating" },
+      ],
+      safetyPoints: [{ en: "A 'standard' temporary fix repeated indefinitely can mask a developing structural or systemic issue — questioning inherited practice, however established, is part of genuine long-term stewardship." }],
+      mapReferences: [],
+    },
+    {
+      situation: { en: "The company proposes a dry-dock date based primarily on commercial scheduling. Your own assessment of the department's material condition suggests some deferred items may not comfortably wait that long." },
+      mission: { en: "Decide how to respond to the proposed dry-dock timing." },
+      expectedActions: [
+        { en: "Present your technical assessment of the department's condition clearly to the company, distinct from their commercial scheduling rationale" },
+        { en: "Propose a specific alternative or interim measure if the timing genuinely cannot be moved" },
+        { en: "Document the technical reasoning behind your position, regardless of the final outcome" },
+        { en: "Escalate the disagreement through proper channels if the company insists on a timeline you believe is technically unsound" },
+      ],
+      why: [{ en: "Dry-dock timing decided purely on commercial grounds, without genuine technical input, risks the department's material condition — the Chief Engineer's responsibility is to ensure the technical perspective is heard clearly, even when it doesn't ultimately determine the final decision." }],
+      commonMistakes: [
+        { en: "Accepting a commercially-driven dry-dock date without presenting the technical counter-argument" },
+        { en: "Failing to propose an interim measure if the timing can't be moved" },
+        { en: "Not documenting your position, leaving no record of the technical concern if an issue develops before dry-dock" },
+      ],
+      safetyPoints: [{ en: "A dry-dock delayed beyond what the department's condition genuinely supports increases the risk of a more serious failure in the interim — presenting this clearly protects both the vessel and your own professional accountability." }],
+      mapReferences: [],
+    },
+  ],
+
+  professionalTips: [
+    { en: "Commercial pressure will always argue for the schedule — your job is to make sure the department's genuine technical condition gets an equally clear voice in every decision that matters." },
+    { en: "A practice inherited from previous Chief Engineers is not evidence it's correct — question it, especially when it keeps recurring." },
+    { en: "Your signature on departmental readiness carries legal weight no departmental report can substitute for — question before you commit." },
+    { en: "Dry-dock and major maintenance timing are some of the most consequential decisions you make for the department's long-term condition — protect them from being driven by schedule alone." },
+    { en: "The company trusts your account of the department's condition more than any report — that trust is earned through honesty, not convenience." },
+    { en: "The relationships you maintain with surveyors, the technical superintendent, and the DPA outside of any crisis are what make navigating an actual one with them possible." },
+    { en: "Your legacy as Chief Engineer is often the condition in which the next Chief Engineer inherits the department — document and communicate accordingly." },
+    { en: "Setting departmental strategy, not personally fighting every fire, is what makes your department capable of responding well when you're not there to do it yourself." },
+  ],
+
+  professionalMindset: [
+    { en: "Think in terms of years, not just the current voyage. A repair deferred today, a dry-dock scheduled six months from now, a practice inherited from a previous Chief Engineer — your decisions shape the department's condition over a timeframe no other rank in the department is accountable for." },
+    { en: "Treat inherited practice as a claim to verify, not a tradition to preserve. The fact that something has 'always been done this way' tells you it survived, not that it was ever actually correct." },
+    { en: "See commercial pressure as a permanent feature of the environment, not an obstacle to overcome. The company will always have a schedule; your judgment exists precisely to weigh that schedule against genuine technical and safety requirements, not to wish the pressure away." },
+    { en: "Recognize that your accountability never transfers, no matter how much authority is properly delegated. The Second Engineer coordinates the department daily; your accountability for its condition and compliance has nowhere further to be delegated aboard the vessel." },
+    { en: "Understand that documentation is evidence of stewardship, not administrative overhead. A department's PMS records, defect history, and compliance files are the only account a future Chief Engineer, a surveyor, or an investigator will ever see of what you actually did." },
+    { en: "Hold multiple time horizons simultaneously. Today's watch, this quarter's maintenance priorities, and the next dry-dock all compete for attention — you manage the present without mortgaging the department's future condition." },
+    { en: "Accept that your credibility with the company is built through consistent honesty, not through never delivering bad news. A Chief Engineer who reports problems before they're discovered externally is trusted more than one who only reports good news." },
+  ],
+
+  professionalDocumentation: [
+    { en: "Certificates and statutory documentation — The Chief Engineer holds final personal responsibility for the engine department's certificates (class, flag State, statutory) being genuinely valid relative to the department's actual condition, not merely present on file." },
+    { en: "PMS and long-term maintenance records — The Chief Engineer ensures departmental PMS records reflect genuine long-term condition and decision history — including deferred items and the reasoning behind them — since these records are what a future Chief Engineer, a surveyor, or an investigator will rely on entirely." },
+    { en: "Engine room logbook oversight — While officers make their own watch entries, the Chief Engineer bears ultimate responsibility for the accuracy and completeness of the department's official record." },
+    { en: "Oil Record Book and MARPOL compliance records — The Chief Engineer carries personal legal accountability for the truthfulness of these records — falsification is a criminal matter in most jurisdictions, and the Chief Engineer's oversight carries that weight." },
+    { en: "Incident, casualty, and near-miss reporting — The Chief Engineer ensures any reportable engine department incident is accurately and promptly reported to the Master, company, and flag State as required, resisting any pressure to minimize or delay a report." },
+    { en: "Why this matters: The Chief Engineer's documentation responsibility carries personal legal and criminal liability under flag State and international law (MARPOL, SOLAS, class requirements) — not only commercial or professional consequence. A Chief Engineer who treats the department's documentary record with the same seriousness as any strategic decision protects the department, the company, and their own personal legal standing, because in an investigation, the record is very often the only account of events anyone outside the vessel will ever see." },
+  ],
+
+  environmentalResponsibilities: [
+    { en: "Final legal accountability for MARPOL compliance — The Chief Engineer carries personal legal and often criminal liability for the engine department's compliance with MARPOL, distinct from the Second Engineer's day-to-day departmental oversight of the same practices." },
+    { en: "Environmental incident command — When a pollution incident occurs or is imminent, the Chief Engineer takes command of the technical response, coordinating with the Master's overall strategy and ensuring the company and authorities are notified without delay." },
+    { en: "Authorizing exceptional environmental decisions — The Chief Engineer makes or ratifies any decision that departs from standard environmental procedure under exceptional circumstances, ensuring any departure remains strictly within the limits permitted by international law and is fully documented." },
+    { en: "Balancing environmental compliance against commercial pressure — The Chief Engineer ensures schedule, cost, or company pressure never compromises a genuine environmental safeguard, personally resolving any situation where departmental judgment and commercial pressure are in conflict." },
+    { en: "Company and regulatory relationship on environmental matters — The Chief Engineer represents the department in environmental matters with Port State Control, class, and the company's DPA, ensuring the department's environmental standing is protected and accurately represented externally." },
+    { en: "Why this matters: Environmental compliance failures in the engine department carry among the most severe legal, financial, and reputational consequences a Chief Engineer and company can face — criminal liability, vessel detention, and significant financial penalties are all realistic outcomes of a poorly managed environmental incident or a falsified record. The Chief Engineer who ensures genuine compliance, decisive incident command, and an honest relationship with authorities protects not only the department and company, but their own personal legal standing and professional future." },
+  ],
+
+  authorityLimits: {
+    youCan: [
+      { en: "Make the final decision on any matter affecting the engine department's technical condition, safety, or compliance, overriding any officer's decision within the department when necessary" },
+      { en: "Deviate from standing procedures or company instructions when the safety or compliance of the engine department genuinely requires it, reporting the deviation and its reasoning to the Master afterward" },
+      { en: "Authorize emergency technical actions that would not be permitted under normal circumstances, provided they remain within the bounds of international law" },
+      { en: "Set and modify the department's standing orders and technical standards" },
+      { en: "Make strategic decisions on maintenance deferral, dry-dock planning, and resource allocation within delegated budget authority" },
+      { en: "Discipline officers and ratings within the engine department, within maritime law and company policy" },
+      { en: "Refuse an instruction from the company that you judge would compromise the safety or compliance of the engine department" },
+    ],
+    youCannot: [
+      { en: "Direct the department to act in violation of international law (MARPOL, SOLAS, class requirements) or flag State requirements, regardless of company or commercial pressure to do so" },
+      { en: "Falsify, omit, or authorize the falsification of any official record (logbook, Oil Record Book, certificates) to misrepresent what actually occurred" },
+      { en: "Delegate personal accountability for the engine department's overall safety and compliance, even where operational authority is properly delegated to the Second Engineer" },
+      { en: "Override the Master's overall command of the vessel or authority in a matter affecting the vessel as a whole" },
+      { en: "Withhold or delay a legally required report of an incident, casualty, or environmental event to the Master, company, or flag State" },
+      { en: "Allow commercial or company pressure to override a genuine safety, technical, or environmental concern" },
+      { en: "Bypass the Master when a decision affects the vessel's overall safety, another department, or company policy" },
+    ],
+  },
+
+  commonMistakes: [
+    { en: "Treating the Second Engineer's report as a substitute for personal judgment — Accepting a consolidated departmental report at face value rather than questioning it as an input to your own final decision." },
+    { en: "Letting commercial or schedule pressure quietly shift the safety threshold — Allowing company or schedule pressure to gradually lower what counts as an acceptable technical risk, without ever making that shift a conscious, examined decision." },
+    { en: "Perpetuating an inherited practice without questioning it — Continuing a 'standard' fix or approach across tenures simply because previous Chief Engineers used it, rather than investigating whether it was ever actually correct." },
+    { en: "Trusting documentation without verifying reality — Assuming PMS records, certificates, and departmental reports accurately reflect the department's actual condition, without periodically confirming this personally." },
+    { en: "Deferring maintenance decisions without conscious documentation — Allowing repeated deferrals to become the default pattern rather than an explicit, recorded decision each time." },
+    { en: "Letting dry-dock or major survey timing be driven purely by commercial schedule — Accepting a company-proposed timeline without presenting a genuine technical counter-assessment when the department's condition warrants it." },
+    { en: "Becoming personally absorbed in tactical detail during an emergency — Taking over a single station's response instead of setting departmental strategy and trusting officers to execute it." },
+    { en: "Treating official documentation as administrative rather than personal legal exposure — Signing off on records without recognizing they may become the primary evidence of your own judgment in a future investigation." },
+  ],
+
+  careerProgression: [
+    { en: "Next steps: The Chief Engineer rank has no higher position within the engine department hierarchy — it is the culmination of the seagoing career progression from Engine Cadet through Second Engineer. Further progression typically takes one of several directions: command of larger or more complex vessel types, senior/fleet Chief Engineer roles within a company, or a transition ashore into roles such as technical superintendent, DPA, fleet technical manager, or maritime training." },
+    { en: "Skills to develop for continued growth: Deeper specialization in complex vessel types or high-value/high-risk trades (LNG, chemical, deep-sea offshore); company-level fleet technical management and policy-setting if moving toward a superintendent or DPA role; mentorship and formal development of future Chief Engineers, extending the technical and strategic judgment built over a career to shaping the next generation of officers; broader business and regulatory literacy if a shore-based transition is anticipated." },
+    { en: "Recommended experience: A demonstrated record of sound strategic technical judgment across a range of vessel types, operating conditions, and situations — including managing at least one genuinely challenging technical or compliance situation well — builds the professional reputation on which further senior opportunities or a shore-based transition are typically built." },
+    { en: "Certificates typically required: Requirements vary by flag State, company policy, and the specific next step. Command of a larger or more complex vessel type may require additional certification or endorsements. A transition to a superintendent or DPA role typically requires demonstrated seagoing Chief Engineer experience together with company-specific or shore-based management training, rather than an additional STCW certificate." },
+    { en: "Recommended MAP courses: Fleet & Technical Management; Marine Superintendency & Shore-Based Roles; Mentorship & Command Development (training future Second Engineers and Chief Engineers); Specialized Vessel Type Certification (as relevant); Career Navigator (career progression planning)." },
+    { en: "Mindset for continued growth: Reaching Chief Engineer does not mean professional development stops — it means the terrain changes. Continued growth means deepening judgment across more complex vessels and situations, and eventually deciding whether your greatest value lies in running one more department well, or in shaping how an entire fleet, company, or the next generation of engineers operates theirs. Either path continues the same core work: building systems, people, and judgment that keep vessels safe long after any single decision has been made." },
+  ],
+
+  mapResources: [
+    { kind: "lesson", lessonId: "e1-l1", label: { en: "Main Engine" } },
+    { kind: "lesson", lessonId: "e1-l2", label: { en: "Auxiliaries & Electricity" } },
+    { kind: "lesson", lessonId: "e1-l3", label: { en: "Stability & Loading" } },
+    { kind: "lesson", lessonId: "e1-l4", label: { en: "Fire Safety & CO2 System" } },
+    { kind: "lesson", lessonId: "e1-l5", label: { en: "Survival & EPIRB" } },
+    { kind: "lesson", lessonId: "e1-l6", label: { en: "Maintenance & Troubleshooting" } },
+    { kind: "lesson", lessonId: "e1-l7", label: { en: "Engine Watchkeeping" } },
+    { kind: "lesson", lessonId: "e1-l8", label: { en: "Emergency Procedures" } },
+    { kind: "lesson", lessonId: "e2-l1", label: { en: "Generators & Power Generation" } },
+    { kind: "lesson", lessonId: "e2-l2", label: { en: "Switchboards & Distribution" } },
+    { kind: "lesson", lessonId: "e2-l3", label: { en: "Pumps & Hydraulic Systems" } },
+    { kind: "lesson", lessonId: "e2-l4", label: { en: "Compressors & Compressed Air" } },
+    { kind: "lesson", lessonId: "e2-l5", label: { en: "Purifiers & Separators" } },
+    { kind: "lesson", lessonId: "e2-l6", label: { en: "Heat Exchangers" } },
+    { kind: "lesson", lessonId: "e2-l7", label: { en: "Electrical Troubleshooting" } },
+    { kind: "lesson", lessonId: "e3-l1", label: { en: "Marine Boiler Types" } },
+    { kind: "lesson", lessonId: "e3-l2", label: { en: "Combustion & Burners" } },
+    { kind: "lesson", lessonId: "e3-l3", label: { en: "Boiler Water Treatment" } },
+    { kind: "lesson", lessonId: "e3-l4", label: { en: "Steam Systems & Distribution" } },
+    { kind: "lesson", lessonId: "e3-l5", label: { en: "Boiler Safety & Alarms" } },
+    { kind: "lesson", lessonId: "e3-l6", label: { en: "Boiler Maintenance & Inspection" } },
+    { kind: "lesson", lessonId: "e4-l1", label: { en: "MARPOL & Environment" } },
+    { kind: "lesson", lessonId: "e4-l2", label: { en: "Annex I - Oil Pollution" } },
+    { kind: "lesson", lessonId: "e4-l3", label: { en: "Annex V - Garbage Management" } },
+    { kind: "lesson", lessonId: "e4-l4", label: { en: "Annex VI - Air Pollution" } },
+    { kind: "lesson", lessonId: "e4-l5", label: { en: "Environmental Compliance" } },
+    { kind: "lesson", lessonId: "e4-l6", label: { en: "Environmental Leadership" } },
+    { kind: "lesson", lessonId: "e5-l1", label: { en: "Why Energy Efficiency Matters" } },
+    { kind: "lesson", lessonId: "e5-l2", label: { en: "The SEEMP" } },
+    { kind: "lesson", lessonId: "e5-l3", label: { en: "The EEXI" } },
+    { kind: "lesson", lessonId: "e5-l4", label: { en: "The CII & A-E Ratings" } },
+    { kind: "lesson", lessonId: "e5-l5", label: { en: "Practical Energy Efficiency" } },
+    { kind: "lesson", lessonId: "e6-l1", label: { en: "Cargo Pumps" } },
+    { kind: "lesson", lessonId: "e6-l2", label: { en: "Ballast System" } },
+    { kind: "lesson", lessonId: "e6-l3", label: { en: "Inert Gas System (IGS)" } },
+    { kind: "lesson", lessonId: "e6-l4", label: { en: "COW & Tank Cleaning" } },
+    { kind: "lesson", lessonId: "e6-l5", label: { en: "Cargo Heating" } },
+    { kind: "lesson", lessonId: "e6-l6", label: { en: "Gauging & Measurements" } },
+    { kind: "lesson", lessonId: "e7-l1", label: { en: "UMS — Unattended Machinery Space" } },
+    { kind: "lesson", lessonId: "e7-l2", label: { en: "Alarm Systems & Monitoring" } },
+    { kind: "lesson", lessonId: "e7-l3", label: { en: "PLC & Programmable Controllers" } },
+    { kind: "lesson", lessonId: "e7-l4", label: { en: "SCADA & Human-Machine Interfaces" } },
+    { kind: "lesson", lessonId: "e7-l5", label: { en: "Embedded Systems Cybersecurity" } },
+    { kind: "lesson", lessonId: "s6-l1", label: { en: "Safety Patrol & Hazard Recognition" } },
+    { kind: "lesson", lessonId: "s6-l3", label: { en: "PPE, Safe Behaviour & Human Factors" } },
+    { kind: "lesson", lessonId: "s6-l6", label: { en: "Safety Culture & Professional Responsibility" } },
+    { kind: "lesson", lessonId: "s4-l7", label: { en: "Fire Command, Teams & Damage Control" } },
+    { kind: "external", externalCode: "MARITIME_LEXICON", label: { en: "Maritime Lexicon — engine room, machinery, and regulatory terminology" } },
+    { kind: "external", externalCode: "CERTIFICATION_GUIDE", label: { en: "Guide to Certifications — for details on Chief Engineer certification requirements by flag State" } },
+    { kind: "external", externalCode: "SHIPS_LIBRARY", label: { en: "Ships Library — explore vessel types and machinery layouts across different ships" } },
+    { kind: "external", externalCode: "AI_ASSISTANT", label: { en: "Maritime AI Assistant — for questions on strategic technical decisions, regulatory compliance, or certification requirements" } },
+    { kind: "external", externalCode: "CAREER_ROADMAP", label: { en: "Career Roadmap — to visualize post-command career paths (fleet technical management, shore-based roles, superintendency)" } },
+    { kind: "external", externalCode: "CV_BUILDER", label: { en: "CV Builder — to document command experience, certificates, and leadership achievements as Chief Engineer" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_SECOND_ENGINEER", label: { en: "Role On Board — Second Engineer" } },
+    { kind: "external", externalCode: "ROLE_ON_BOARD_MASTER", label: { en: "Role On Board — Master" } },
+  ],
+
+  responsibilityMatrix: {
+    iExecute: [
+      { en: "The final decision on any matter affecting the engine department's technical condition, safety, or compliance" },
+      { en: "Strategic technical decisions (maintenance deferral, dry-dock planning, resource allocation) within delegated authority" },
+      { en: "Direct command of the department's technical response during a major emergency, in coordination with the Master" },
+    ],
+    iMonitor: [
+      { en: "The engine department's overall material condition, certification, and compliance status relative to what documentation claims" },
+      { en: "The Second Engineer's departmental coordination and reporting, verifying rather than assuming its accuracy" },
+      { en: "Company and external pressure relative to the department's genuine technical and compliance needs" },
+    ],
+    iReport: [
+      { en: "A reconciled, whole-department assessment to the Master, never an unresolved collection of separate officer reports" },
+      { en: "Any reportable incident, casualty, or environmental event, accurately, promptly, and distinguishing confirmed facts from matters under investigation" },
+      { en: "My own uncertainty when a situation cannot be fully resolved with the information and resources available" },
+    ],
+    iDoNotAuthorize: [
+      { en: "Any action that violates international law (MARPOL, SOLAS, class requirements) or flag State requirements, regardless of commercial or company pressure" },
+      { en: "Falsification, omission, or alteration of any official record to misrepresent what actually occurred" },
+      { en: "Delegation of my own accountability for the department's overall safety and compliance, even where operational authority is properly delegated" },
+    ],
+  },
+
+  media: [
+    { kind: "diagram", caption: { en: "Engine department organization chart showing the Chief Engineer's position relative to the Master, company (DPA), and departmental officers." } },
+    { kind: "diagram", caption: { en: "Strategic maintenance decision flow (deferral vs. immediate repair vs. dry-dock planning)." } },
+    { kind: "image", caption: { en: "Example of a documented deferred maintenance decision with technical reasoning." } },
+    { kind: "video", caption: { en: "Demonstration of a Chief Engineer presenting a technical assessment to company technical management." } },
+    { kind: "document", caption: { en: "Sample incident report format for company (DPA) and flag State notification (engine department)." } },
+  ],
+};
+
 // ── REGISTRY ──────────────────────────────────────────────────
 // Indexed by RankId (rankRegistry.ts is the source of truth for valid ids).
 // Partial: currently populated for "ab", "bosun", "oow", "chief_officer",
 // "master", "deck_cadet", "os", "engine_cadet", "wiper", "motorman", "oiler",
-// "fourth_engineer", "third_engineer" and "second_engineer" — remaining ranks are still pending content.
+// "fourth_engineer", "third_engineer", "second_engineer" and "chief_engineer"
+// — the entire engine department hierarchy is now populated; remaining
+// deck/safety ranks are still pending content.
 export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = {
   ab: AB_CARD,
   bosun: BOSUN_CARD,
@@ -8936,6 +9538,7 @@ export const ROLE_ON_BOARD_REGISTRY: Partial<Record<RankId, RoleOnBoardCard>> = 
   fourth_engineer: FOURTH_ENGINEER_CARD,
   third_engineer: THIRD_ENGINEER_CARD,
   second_engineer: SECOND_ENGINEER_CARD,
+  chief_engineer: CHIEF_ENGINEER_CARD,
 };
 
 export function getRoleOnBoardCard(rankId: RankId): RoleOnBoardCard | undefined {
