@@ -1,0 +1,2412 @@
+{
+  "engine": "google-cloud-tts",
+  "voice": {
+    "en": "en-US-Neural2-D",
+    "fr": null,
+    "es": null,
+    "pt": null
+  },
+  "generationVersion": 1,
+  "entries": {
+    "en/role_on_board/ab/pre_departure_preparation/overview": {
+      "textHash": "sha256:d0e233fd5d834b5a07d1a2d19d1b7af767bc671700e74fe67f7ea99a1b6d3979",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:58f544b3a8f8027da3e989ef14394cc4a76c10404cbae86eb8e0fd317e58482b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:b861ac1f7841ca38eff1fcc79dd24359083836d3bdea4001b684e1eb7e234b30",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:0f597da0c8156e71c70d5991625358618d78e6f4cf7805322c3dc926610cf4ca",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/departure_manoeuvres/overview": {
+      "textHash": "sha256:277a852991ddd763f57e4629e6021f5f9e56513d676a9a249678d155f1773520",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:98d34b11a28c9dccbdfc972f8e49c68d5e2989785aae8fa464ef1f91aecd94b1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:4baa093a5f74f5431370919085a8cdce79054b215b8e5fd7ae840bd25adafed8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:6e53f8dc6e105721a50bd899f1fb397d329a502ea7a598c73a818fa3688870e0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/navigation/overview": {
+      "textHash": "sha256:b949b94eb836e1416f7ffb3eea188449a0c3ecab0648db9588d23bee7866f9f7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/navigation/responsibilities": {
+      "textHash": "sha256:9e859f3892969e8c6d8be18454532056c3bbd4a75f7dd09cb1454259e60bd989",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/navigation/common_mistakes": {
+      "textHash": "sha256:7537efb5a54a0311a6594ee60c00eaf0d38ebee3de65222206f46931be928f84",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/navigation/professional_tips": {
+      "textHash": "sha256:99f8990ed9f6bcae514865d5068ae4f606794aa055eb5878a76bae2c2aed8a37",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/anchoring/overview": {
+      "textHash": "sha256:68a91f1b005536e93f13e5dbf262809bfe20c36404f03e469c8309fd1aeb51c9",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/anchoring/responsibilities": {
+      "textHash": "sha256:6b732d2c16e925da7a3d8f1e0ebf119a51a51bf48402abe050aa9b38c7a278d4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/anchoring/common_mistakes": {
+      "textHash": "sha256:fe734dd0164cd645b876a627434696a36ffb64418cd6165aec956027c5dfe14f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/anchoring/professional_tips": {
+      "textHash": "sha256:78b055971761e9b82daed395ad65e855bc14fe30a69bfc1e04222784aef1f23e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/port_operations/overview": {
+      "textHash": "sha256:580e3a520b92ab923a151f0f0bb8f72770a2587614405897488c84efeb9d1677",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/port_operations/responsibilities": {
+      "textHash": "sha256:90eb66024afc1fde69e01816db369b9dd2c2fb37044ec097b35d7e0d26677681",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/port_operations/common_mistakes": {
+      "textHash": "sha256:c1d0c016d3675ca533f96f480e2028ebe7613d75f644fa8f9fdf47a22f3e3fab",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/port_operations/professional_tips": {
+      "textHash": "sha256:942c2615fd36fdeeff96136be0a8b82f3a99670880b29674a64ffe8185a309e4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/ship_to_ship_operations/overview": {
+      "textHash": "sha256:24971fbf13c66cb47001cb644a86b4134c9a909686414ee33e74e5c54c60260a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:b1c69174b3c29b875ea3d4d0ac5b617b9727cef815112346057e4dc0dc983927",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:1a57f854e09c4925b8b3a8d44f34b934bfb1b456a8753bf90d216d869592bedf",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:304199124490bac09a73859e54ed2f4615ef241473fac1e4d0094610d57d7cb4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/maintenance/overview": {
+      "textHash": "sha256:d5e07055b7267dc22a67c024d9f2c33e3592e5948e98a4ccab07433c6ba8af1d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/maintenance/responsibilities": {
+      "textHash": "sha256:8a1d4f0998b95aaa2a0b3af508b0c0b561f974f3e26c84339cc045d3212e7f19",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/maintenance/common_mistakes": {
+      "textHash": "sha256:4ef6fe8d956ae3b3c9c699a845d621cec91de24d78517a1c386533953941ba21",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/maintenance/professional_tips": {
+      "textHash": "sha256:1c7ef0405032628b74e08e8e216bf71902df922a4707baf9b1e19c74bdbde83d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/emergency_situations/overview": {
+      "textHash": "sha256:8ad1bbeab29f3b85adcc98b995a1dc7a176df8f3f2a4a30d34085c2c14fce56c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/emergency_situations/responsibilities": {
+      "textHash": "sha256:2b935ddc94bf801d1553a7a1778fcffd950af090f726a9d6b775944cc9465a4d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/emergency_situations/common_mistakes": {
+      "textHash": "sha256:8caf42b62aaa1e2155e01be94ef1b9cc4893fcfe8ffebdb0257adbc6ea53c847",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/ab/emergency_situations/professional_tips": {
+      "textHash": "sha256:acef90c6c221bd3fe752a02ec37cb83d5bce3f6d08856ba31c32cff205a18432",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/pre_departure_preparation/overview": {
+      "textHash": "sha256:38ab093fc2a8e7eb142886754be90fd606d02cd43cc867fec73e4a37f7928930",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:d5815dd111df988abf70c5122aeff8b307da770a3eee21d315eabe8e850cd2d8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:2b32d109c42ae82c87c914a648f5afe24361247bdd34977de664b6c19d7ae99f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:7fcfbc632a558a5d3368920cf805398670f483d2bff1e70f251cefabc9267ca6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/departure_manoeuvres/overview": {
+      "textHash": "sha256:16b090770fb146781802864bd5b817b3b463b1ae185df5d5c046439fd824ed54",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:6c502735fe9866b91744a24ca2bb1d69fbdac22a0c4b645452f57ead2ab7cd0d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:067224c28f7671831c55af6ef59a9e742e009f6acb78478b93086fe2591b1cb2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:3ee3d748971c02dab12e91a4d8c8e2dd47aac0807bba17885e10c0ba7ed703ab",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/navigation/overview": {
+      "textHash": "sha256:a955831f01076ccf870c2ac3267c87e47aa1d54f84fe6b1937cdfaf319e002df",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/navigation/responsibilities": {
+      "textHash": "sha256:a8d47867a22388a583939be63e89fbcd81e3d1717e1151d01c854c350981695b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/navigation/common_mistakes": {
+      "textHash": "sha256:77a454a0c441b302874217eef850c059f78a84eedbe9d5d99adb8f0a44482687",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/navigation/professional_tips": {
+      "textHash": "sha256:14bc8440d857ed4ddf4c53d90f528a25b7d541762f4cda30b2423bfda505b0d0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/anchoring/overview": {
+      "textHash": "sha256:d0332fac4296c13dfdd0060e432d160885b966d3042a8bd4c46bd2968c2bac2c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/anchoring/responsibilities": {
+      "textHash": "sha256:f357dc39dcf4e7c1c78628fc49a84f995df176b96d9cae535bbcbe084eb93911",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/anchoring/common_mistakes": {
+      "textHash": "sha256:5b9c0277985a166885fe161946f7843e7c96a0687b2f8ef4b9028393049c5816",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/anchoring/professional_tips": {
+      "textHash": "sha256:637efb43edc42c3c071309763936f505d335e2c3844be2aa2335c56e9829a391",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/port_operations/overview": {
+      "textHash": "sha256:855b154e2fc63a8a17faa56f8a881ee4c022717898e936cde81c0f0e58004478",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/port_operations/responsibilities": {
+      "textHash": "sha256:4abc253f1fe477405c1bfff01b0be2b25d4a0726c73e990eae55d47be20e744d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/port_operations/common_mistakes": {
+      "textHash": "sha256:c6c9c0deecffa1ffaa1b54f8e3c3670389c8102ebdc4c542641bad8310056c95",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/port_operations/professional_tips": {
+      "textHash": "sha256:7b025cf5d405587c592a8b8be64c4ccf761334d22fff0ea7cac9dbdd47749b46",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/ship_to_ship_operations/overview": {
+      "textHash": "sha256:2d3f7b12e896c1d88f52b83f9dc728d4f55d9a3e836d80c9d8dd8fec5215a67f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:90cd95114bc4d41a3dcc669682db1836f09ea4299b9aea5e448e5dca1fa2d856",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:1a635c7a3f66b16be15496bdc968b2d104f8ba667aba37e27534658113b70ad3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:48a80acc624366b98d27da2a814dec0a1e96775dcf9da27ad013739d3665b955",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/maintenance/overview": {
+      "textHash": "sha256:5845b8f1e5054822aebcb5064a78d4366f4bd2dbcdc51a74974edf2c3ca54429",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/maintenance/responsibilities": {
+      "textHash": "sha256:51a4f1c266b7aecafc407c579684540da2f9e0bbe8ead27d63cb6f9e6232e42a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/maintenance/common_mistakes": {
+      "textHash": "sha256:b0cc645ab01a903291632b9b2d22aa81137d2a119ade002c3a3a7ba15d04bc14",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/maintenance/professional_tips": {
+      "textHash": "sha256:5995021b177dbe7179f20864626ea8ead425f9e6655f2cd00be8d63a17d9dfa1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/emergency_situations/overview": {
+      "textHash": "sha256:3ada49fd9c6b1e306e8666402a258e1411370adb401a02e549bf2aa868225020",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/emergency_situations/responsibilities": {
+      "textHash": "sha256:fc0233e5e8692ccfd1f569298f78f94535bf05e33ebf57508d6db4ff58e16f4b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/emergency_situations/common_mistakes": {
+      "textHash": "sha256:6d76b9755f1a0c8c8f7aa185894f348529844b466ba6f0ad7878a5739b4d213b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/bosun/emergency_situations/professional_tips": {
+      "textHash": "sha256:3e2b75a3cd376074cbaf64ec0f94bb88fee83673b9a94e453600a7633c3c8669",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/pre_departure_preparation/overview": {
+      "textHash": "sha256:798a320707a677faf36d25529cfc9ca9f062f5c9c3a6835ae29be87a49bfe2ce",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:e078e205e57269b026087782f52d52b16d1b9f94665fee82b156c4945a01933c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:f98705e987125b9d83092ac97bc335ecf0ef2ac41753ab92e2da6f0ade6c0e97",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:875dc53bd838b8340b2cd3d6c631a5627dea9650d42511626fd14302088acf38",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/departure_manoeuvres/overview": {
+      "textHash": "sha256:3a5c994469ee9fe17d222765941668a3bb793fbc581d07b66648c8936ae094ad",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:b8dd370384ae1aa220cfe6812ee26efc3b1a1cb19a393aaab80693accce71a6c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:3a7ae01acdf05358a6ec33114414255708115fa9a948bf681efcf4a15716eb70",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:38e1f1c9e48da003d3d0b00fd82cf45da11bae1c02a1b784b93ee76ced954001",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/navigation/overview": {
+      "textHash": "sha256:a681ab5a0d4c1d5dd8223e407580f0e53aee8590dedfd6d2153246b52b54a1a9",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/navigation/responsibilities": {
+      "textHash": "sha256:acc401f51a2055ba00a5eb91fad9d38e98e38c6f3abc57532c882bb6df2f5492",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/navigation/common_mistakes": {
+      "textHash": "sha256:3d143b5295845509f353b4af49d0d8fb8d580bc8de6bda99beb635c217648c60",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/navigation/professional_tips": {
+      "textHash": "sha256:70f3bc95df9c76ddca25c054cb279815a5530049e0d08b15a9a3a5e45f1c807b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/anchoring/overview": {
+      "textHash": "sha256:e89b77bc32622abd753bbefe45da1601cbd070ed12e5e9120465a3ea2774d1de",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/anchoring/responsibilities": {
+      "textHash": "sha256:af6e64ebbca0da9300c675bafae410cd9856e2298c4d087eb2d0e4259dd4c84b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/anchoring/common_mistakes": {
+      "textHash": "sha256:13ee80bfa6956ebb223e69bab6b3d10674637a6f3e304df8b841b6844ec3e312",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/anchoring/professional_tips": {
+      "textHash": "sha256:534666e13d759deb24682444b8b60ce609b042943479931dcada7a6f9c984456",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/port_operations/overview": {
+      "textHash": "sha256:f5d0ca2948d3efb3b4dac74c1f7715a37e45c4e5a3d899629f48bec093a095bc",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/port_operations/responsibilities": {
+      "textHash": "sha256:16a8586c5f440808b4bc4c1ab141c0c50b3b86649425a721321610fbc9c9d32f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/port_operations/common_mistakes": {
+      "textHash": "sha256:8225285de5e4622416a92803078e7b45791311e6aaec21207e616078192a8b58",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/port_operations/professional_tips": {
+      "textHash": "sha256:48ffcfc1c84875ccbc1b4d65a0fe327a83450d47a52621b3e871c031df546e46",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/ship_to_ship_operations/overview": {
+      "textHash": "sha256:1c0f8b975405b4ad4c66b5bb1ec6725cc90ea674d400ed2add736cd494a57834",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:a47fb23d83e4e999a860b89cf5a97829294711643b7ee20aeb3081f310202ed1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:3e579cf2dd55fdb88a1de635ec314762f86472b31f23150ad738f8cac93e0789",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:726168df17933cd8ad173312e09c30cdd75a1cb9b7acb3948067bba014adb1a6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/maintenance/overview": {
+      "textHash": "sha256:897edcf2949362c07c0c2fc95d32e2c6f48d70475aafb9ee88df3bc3680103b1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/maintenance/responsibilities": {
+      "textHash": "sha256:64a5b19a0d4f5679fcd611c04815269a5bc21cdb0fc5d0f442bcf8553d19d242",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/maintenance/common_mistakes": {
+      "textHash": "sha256:90c73ebbfe03a2a0426384333592bd5b270b78dee71448371a7ed04d013058ec",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/maintenance/professional_tips": {
+      "textHash": "sha256:0e9e2d41e13809992b1d697fbf935dc4c7f72d2367a9c0dfe0755a3f5974f160",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/emergency_situations/overview": {
+      "textHash": "sha256:00d4dc90ec179f8bde13abb9bc36d07a6fa7804cae875a5811f107e69bc6a3fc",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/emergency_situations/responsibilities": {
+      "textHash": "sha256:21afa9e5353f6dec9a57e0c1ca124796e299c4da9d3297a7feb81c096c1cb044",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/emergency_situations/common_mistakes": {
+      "textHash": "sha256:dcc628d66a81f8e0f1efe7f83659184caec998726377a450ee89a3cb92c84e15",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oow/emergency_situations/professional_tips": {
+      "textHash": "sha256:dfe55c7b46d3e01b92b0cbb24de6c9566193c54cf0f7f4cf85eaabb290181285",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/pre_departure_preparation/overview": {
+      "textHash": "sha256:9eab498de1d4d92793b1064c86f5e7d95664fbdc2375b564864a5c0a4f49f8f6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:22ff0b9c05a27136a6b905a4e646d86974334b59cc5bd55a76cf78293737a3d1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:6597808b6f7cb29ded31f3bdaa8d45487ca8fe687b26163345c327bc573e0246",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:89c535059d623367aefe5e3f62c47a8490e5fae03c51a15a4e3e22178d4bd663",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/departure_manoeuvres/overview": {
+      "textHash": "sha256:4d7310a1c47545e7bd8c9f627c6dd69ae2028aa515fcee4c376113b2ae2cd700",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:2ac4bd98e6c439003b1a64e4c926a0d3432ba629054a9a04d91ff6626d3c48be",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:59460abe0deddf624f617eb5a6a056b51972e5fa7e52b7e09424c8059cca6987",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:2e88426e2960999562c95cd4f45a5e3c925e81458019363d3611da5e22ad04b2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/navigation/overview": {
+      "textHash": "sha256:86ba57ecacbde3a6bb36b31e0fd588f551a8789d9e5bfac0427b3c3294b7a1ee",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/navigation/responsibilities": {
+      "textHash": "sha256:ffa7996b1364fbb474804466a9ace203e62f892dc2d1a98ddf49e70fab702ee2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/navigation/common_mistakes": {
+      "textHash": "sha256:f676a43893309505514f880c00afa8567b5bb0afd48cb37e748281f6a4f577d4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/navigation/professional_tips": {
+      "textHash": "sha256:049dd42ecb4b43b3e2a978b6a787148f0d5e6cd209db5d15f7139d178b46b9f0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/anchoring/overview": {
+      "textHash": "sha256:77300473f6a64f426d1b80ad46bff3adb2910629dbb1c3e6046cb7c31312dd7d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/anchoring/responsibilities": {
+      "textHash": "sha256:c962a6de733e5faa942805f90f474af4d6b583a2c208af9e9a382e66f9cb0928",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/anchoring/common_mistakes": {
+      "textHash": "sha256:57c71cf5e64c17253f73cbfd759701f61448c88a4a6407772d694baacbee4ffa",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/anchoring/professional_tips": {
+      "textHash": "sha256:f551cbbe5775ab00064ef8f8a5ce1dfe9abd443301dbc67fca2c21cf16b9acad",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/port_operations/overview": {
+      "textHash": "sha256:3ad70b818b7606281393525622eaf89d29acc8028064ec61161168e554fd2bd7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/port_operations/responsibilities": {
+      "textHash": "sha256:46b767297ee73e8eafb70c1bc74472dd4ad84fdc86f039c65530998b9653d044",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/port_operations/common_mistakes": {
+      "textHash": "sha256:0eef287b5d99bb397b10292899126f0fd61d1736144f5e3179e965a18978772d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/port_operations/professional_tips": {
+      "textHash": "sha256:d4bb8f0439556cc72a5684d0a06dd261dc487dde8c22f1ca6ac7a9ce22660846",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/ship_to_ship_operations/overview": {
+      "textHash": "sha256:249c402e3bc3ce111fb983332e6c09095ccf4cff269ab28e8375edfef3329b1c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:45489bd2956ba7337c346e8ee62d7d7af882a16d817320c1d1e8125c20c795b6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:b2d8c42b1a51fe81d863479f24952d49dee508e4fb51bf7d9aef7856b3125589",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:4dd7dd39b44a99018be7446ceea497299be25dafbd23dcbd07e9d01056951cf6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/maintenance/overview": {
+      "textHash": "sha256:98cb196bd2ef0ff8f303030da13ec70fee2dd42a1055439e74dbc95b0d518656",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/maintenance/responsibilities": {
+      "textHash": "sha256:a53af200b0ed66caa4191944640c7834742146e92a3df32c96c9011efcedf897",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/maintenance/common_mistakes": {
+      "textHash": "sha256:56b80133e393ef02df7971a46ed1bbca8d49a19ddaae0248e8799466cc945ff3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/maintenance/professional_tips": {
+      "textHash": "sha256:c0a9d600fdead62a15a48de710b69f63a9b7f386a8d14eaee1006b3e33603be4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/emergency_situations/overview": {
+      "textHash": "sha256:9ed0bd3ab7f6477d8cf13d3304acabc5a62c0e280b55fe592c6d16f5a978417d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/emergency_situations/responsibilities": {
+      "textHash": "sha256:79199d6a467f8675d857961b0032d6a61fb880ae9cfff0ee16affcf6bc2ff86e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/emergency_situations/common_mistakes": {
+      "textHash": "sha256:dc47f4c3ac5c52f1b27fb6cc475d159ee3c65dec5b05bed858fe693644b959fd",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_officer/emergency_situations/professional_tips": {
+      "textHash": "sha256:cc7da2ec7f3deb6a09a701dda2a19f7959770ecc4e83bedc8dbba759a30799a0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/pre_departure_preparation/overview": {
+      "textHash": "sha256:8c94a7fe8b8ef8140c20c00be51833fe9e5c527e7766630e52b12f8be1d69068",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:068413071f5e615a3f03691f723ef41bb9616801bc563329f523a27ae009e94e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:e683a1fefcfa3bbcb50ba9c73c2d1d016e9a57f8c1e033ee3d80a0cc321bd572",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:d40927d68f7138dec4bc11a6f1118c8c686a608c730c3fbe159dd8fd9fc7e7b7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/departure_manoeuvres/overview": {
+      "textHash": "sha256:b6bbee90536571ed418554258c99d5cead21fe6b63498eb61ad61195fa9bc5c0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:68dec419b9c7fb3f5e81d51c497c225f8caa6f97187cf2ccc33eb5f638b23062",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:11d31fb5b8bee403a517ffc88e45fc63f601e8556824e3d290d8cdc90067ceac",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:53886289a64bb922955b3381110699bfaa190ab38c3b7d8de0bc96a50569cac3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/navigation/overview": {
+      "textHash": "sha256:6ded2edb33c6b151ddb2de14abf5b32175d9db576af2ff2551bf459f7fd2c1a9",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/navigation/responsibilities": {
+      "textHash": "sha256:a30e0d6a609e8a2e47f03f4edda05e520f521d8f17b7824e188bbf674a111300",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/navigation/common_mistakes": {
+      "textHash": "sha256:178241d59a381dfcd9961ba1e636857b792eceb45537783a6d762eac8a2e16c8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/navigation/professional_tips": {
+      "textHash": "sha256:919e059cbdcc3dac513446fa237c9e51169b0719061a92cf1d58316e637a775f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/anchoring/overview": {
+      "textHash": "sha256:05a2deaa5d287da339bffc7d6f8f9c83a916db4b097bb8bbbb11b267c52ec214",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/anchoring/responsibilities": {
+      "textHash": "sha256:f149afe71a5be1c3644b13abe6ecc389355187c0df3be7b845d5241519f3bbe4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/anchoring/common_mistakes": {
+      "textHash": "sha256:6ce935a70cc2094e1d9c679238baa18c1a626a952bd60bb73a0c2945b23366a0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/anchoring/professional_tips": {
+      "textHash": "sha256:1a3394ae10dd029d5ef8e935f9e005de1bfdb32a74a2975c1ccf608afc95b9ab",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/port_operations/overview": {
+      "textHash": "sha256:e1f5bd69ab1d7542b5c1ec4fef3514781deb7344f2df2918098f63e3e8669e40",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/port_operations/responsibilities": {
+      "textHash": "sha256:08c6127c0d6d28142831f7dc3567b1ae51ba091163eb6b431f4b8a11ca89c1f0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/port_operations/common_mistakes": {
+      "textHash": "sha256:3b6f476085ae06de1fe90837a0caee1f0825b3cb9a781ca2de9fbbeddbc71b77",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/port_operations/professional_tips": {
+      "textHash": "sha256:f573778215f5dfa7823328c5a3f3f766c1e3ea142bfa6d752fa1e5ba6f57f019",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/ship_to_ship_operations/overview": {
+      "textHash": "sha256:990ad5688d9e949aca164d9a85052901c91e77421cc1b2fc52c0f97dffe10db8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:5cfe6a55bcea93416d4f14a58bdcaf3d8481e26c9b6cfd4ec1043d20de1c635d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:4a98e3f4f4e7aeb2783e241b1ec9869ab3cd2e7f03c4e84b8bb3aa3546ecb5da",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:dd5296095cd6fb290838116dca3469b9cefac9736d563e860959d49279953953",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/maintenance/overview": {
+      "textHash": "sha256:c45c6e803516126543a8f0416a56b0299044805c116faa013f98b637865f95f6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/maintenance/responsibilities": {
+      "textHash": "sha256:583973e8121ebb1c175090d419a976c35694a526ba274426d47348cdb1595ec3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/maintenance/common_mistakes": {
+      "textHash": "sha256:ceb8c028c1fb8397192011d4624967ff81e4475827ba684d5353abc39740e533",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/maintenance/professional_tips": {
+      "textHash": "sha256:0f326296a01327ecb98c44c7c1bf723fb81ea4bcb446b3410cd65423b046bf6e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/emergency_situations/overview": {
+      "textHash": "sha256:95de75159b0aeda2c314f86ee521b982f410d35ebb900c564a5cdafa0a04d4ec",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/emergency_situations/responsibilities": {
+      "textHash": "sha256:3ede613abe0c718299b9ec44e891395c51c0a8caf42c87ec5ac69a864855080b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/emergency_situations/common_mistakes": {
+      "textHash": "sha256:2e8575bab5dff41ade2e3cc245ee700bb27960ad60a4c28efc528cc5e6316a58",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/master/emergency_situations/professional_tips": {
+      "textHash": "sha256:b6616ad5f85714fabbc4be2a4d6783928d34ad94724cfd4f9f38c819dc2aa285",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/pre_departure_preparation/overview": {
+      "textHash": "sha256:258c43f0e71feeacfd6b81eac4c7588c912fc34cf47216c2d6a090c5063009ed",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:92f8620c5f2d54c3512319a981b918b6b946ace2f0acba2ee6d1d4162fd56c12",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:0fb9f34c7cf8ffd14ed8370d00f154d097116c9f4f1d91efb44f98e88044f7bf",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:a3dfc5ff9bf4d44467f0219ca32a80207a7fdfcf1b4ba2756e1a22ce5bc34f1e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/departure_manoeuvres/overview": {
+      "textHash": "sha256:70631c6cb32b092540c5de8e3990c85c71b8e8139a2154ade484585fe4f6aa1b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:a674ebfd86b79b4897b5c490e046bf38d7e39718199aaced43a908ef7d56bb22",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:247b7bd4dfe8dfc62568546cd65258bc636b38b43d9541f93d376d57d5159c9d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:d362299ade193fa88c7bbac3cc3214ab0c8abb3fd53d49145379eefdb806544f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/navigation/overview": {
+      "textHash": "sha256:d6b442aaad532c31a14be675bd134ae0a7511ebf20350690da38d2f8415572dc",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/navigation/responsibilities": {
+      "textHash": "sha256:febc7204af702e9d2ec5f0ae7d366d2525064786b2c2b2d4faea1c37d74a3ad8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/navigation/common_mistakes": {
+      "textHash": "sha256:1f85c2eb0a36cd2250e4839b3badb6e8d02ea294638c7d1970e7431e8d5bbc27",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/navigation/professional_tips": {
+      "textHash": "sha256:38f02222abde4c584569a290f4a962c89b1852e6c660b5cb7161457b30f3fc4e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/anchoring/overview": {
+      "textHash": "sha256:52cb1eff74d0127de30058e550160c67cd8c9eead533ce20f8c3275f30fb0f6a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/anchoring/responsibilities": {
+      "textHash": "sha256:c232d071c1e340b19d62f38dba0334c01986a7ef020eddc1c2e47e71b60e7fe3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/anchoring/common_mistakes": {
+      "textHash": "sha256:c12c40b9952c37c87b6416a2d94bc7183543d3c5298822313e21ca5b330f1e03",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/anchoring/professional_tips": {
+      "textHash": "sha256:29b92caf851eacc356cc4aff82c14602eb8134be98a6e8c7ac5324fef50af6a6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/port_operations/overview": {
+      "textHash": "sha256:ad2965552d80e74c21479ac76c5a091804782399ced79b182e6a0e9d4a504188",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/port_operations/responsibilities": {
+      "textHash": "sha256:b0dc9f174f4a6d7434edaf7b84d55519808bf1a07aa0984f00adec0383a22465",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/port_operations/common_mistakes": {
+      "textHash": "sha256:0536075bd13372f872ef3e6db74542170b6efd37dbc8901d851b0bca0b0bf7ad",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/port_operations/professional_tips": {
+      "textHash": "sha256:421d5d29fe4e7c1a8f817f182b761a765ba2e56c796507c33cc57f3de37bf678",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/ship_to_ship_operations/overview": {
+      "textHash": "sha256:8e66b7132e737484adbaa81aa9ae606f145caf8924e3641ed53a403521f9286d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:12e5ceec6f06f9c2d433a78ead879d844c8dec2565350797a35d027a4acf9640",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:cf1a5e5362d980d4d59586f158b1ca767d0038891adf563e3b65b202b7e46c39",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:43cbe0f549e2912a618f9db7bbb548eada48e2ae9fbaa40ab22d7fd890a4dfd5",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/maintenance/overview": {
+      "textHash": "sha256:067a6cc4017d0ead20897d6f012128288db753a933bf370a8b616e61664a9023",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/maintenance/responsibilities": {
+      "textHash": "sha256:c055766d49ddf800c282dfce565ef44e76adc3dfa8933a15579b5242f4c47fe7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/maintenance/common_mistakes": {
+      "textHash": "sha256:4bf82aff3263bfa98cadacb5bf1164e7918b534c4e0aa727adaef980830e1768",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/maintenance/professional_tips": {
+      "textHash": "sha256:61c20a722de6ebeea4ccfbd1dc325f4bd772e1bb93b1c9b7232762417079bcf2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/emergency_situations/overview": {
+      "textHash": "sha256:cda56dce67b318e57b3985fec3d95533affb8c4ac2fb52e9354e28282ba93dc5",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/emergency_situations/responsibilities": {
+      "textHash": "sha256:cb0a42a12218b30d3ada7cee970ef98744cbf8f00b58ed6f51623d19393e479b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/emergency_situations/common_mistakes": {
+      "textHash": "sha256:85a82b63b36072da3db930baee8bbd1117169d1ede35566494d4ea493de6de4e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/deck_cadet/emergency_situations/professional_tips": {
+      "textHash": "sha256:37a7b69924aa2e0fb9a7e2e9d61af147e2eadda581a25fc57665df599b8f4a96",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/pre_departure_preparation/overview": {
+      "textHash": "sha256:5a83bfa0d18edb6a2573cbe630bb054f65d785ec091c4c87cad1f5e3436b880a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:f2badc9af63e8bc231233ac28831cba9662f0a9553af216325ce27aad1b70c61",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:06638ddfead92b784f60c29cfd49d38b601ec1b971faf7c4ea1233f12a0d685c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:a21a9ea5232cc5233828ed166787eb40fe2102dd2b87032db0d9b0e881e4160a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/departure_manoeuvres/overview": {
+      "textHash": "sha256:903f56b24bfaa76e153b5ba5a73ff31467fb7979852e0df083febccf40950b26",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:7e3b9565abe6fecb66c80b15435bf89ee0d85358791ada2228b5d7d52cf935f1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:fba191a5743c414ca80efebecd448d30b66252254d00ee903190aa1e662a4d7f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:720fcaa7fd79ef820b70172815967e29d731055f7af736642bca09c549adfd99",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/navigation/overview": {
+      "textHash": "sha256:0b25d04a38a1ca649877ba0881d3fd7e521e912afb6d86edfb990a1669ceb237",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/navigation/responsibilities": {
+      "textHash": "sha256:cb97809fc6005087319629626f68308ed44e48c0b94c59c84aa7b40adc3221ab",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/navigation/common_mistakes": {
+      "textHash": "sha256:92c5b1b22a2cddacde7a248ec0d07095da0f1c897ffad09f895f71ccbca6e04b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/navigation/professional_tips": {
+      "textHash": "sha256:11dccb902cb92e6bb00ca9aa0b9399ed63fbcb103b42adcc38aafd1d6a54d591",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/anchoring/overview": {
+      "textHash": "sha256:0be924e2b2bfcf83bf39c77f1da17e799ca9a49e9dedae03237e7b0ca7d913c0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/anchoring/responsibilities": {
+      "textHash": "sha256:6ca7ab96724afdf40d783715c308155a4c0e71b9cd80babdb18d0a9f4164cc1b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/anchoring/common_mistakes": {
+      "textHash": "sha256:f2c45a189fb980636a8bf60ffb44abe07607e129c3e27dc3d6bf40403335c845",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/anchoring/professional_tips": {
+      "textHash": "sha256:f15173e30d106d3d36a1296658b2b10b0382067f0f8277895d7f3ede92c98f9e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/port_operations/overview": {
+      "textHash": "sha256:448c340ba9ace182aad297d308a0f0e41f0682fcaaf59bcdf02ba9c970021db2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/port_operations/responsibilities": {
+      "textHash": "sha256:c0d4cdf3df444505fe9526f06065e713dcf9340bcf3037c494ca4086a1e3a1a6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/port_operations/common_mistakes": {
+      "textHash": "sha256:265de7a1b8c3b1f0686e643fe69e4eeefd4739e6f71d6807275547877fb2fb8d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/port_operations/professional_tips": {
+      "textHash": "sha256:36b70bb55cede1a4dff2fc061a334b80517ff6223bba0b3dfe0feb5b0ac8c3dd",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/ship_to_ship_operations/overview": {
+      "textHash": "sha256:a053db7ca7c306d5deb14b69318cabee695282442fdc6e04622e1ad1596f5085",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:c0cf5da6f86457f1a7360cff743b7f1a4101689a0adc1f03967f195488f6d379",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:11c0e6b120c37409bb39f8dd525ffc847db21fe6fdbaee34228ffc01f7a1d848",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:a6fad354208d9374bfb95f9a7f1fae253858a225bc5b693af11c1453e990b4a7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/maintenance/overview": {
+      "textHash": "sha256:e6535e4e042294f67aa947e0badf10d479979666324c532f5f9c0a9eafc0506b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/maintenance/responsibilities": {
+      "textHash": "sha256:fd3ef182a92221a0fadc1081b06c5c46faf84bd109cd6957546301009a37bbf5",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/maintenance/common_mistakes": {
+      "textHash": "sha256:8a7988d6bcd1a8270c861e28770ed44581861812dc0d4daaf9f5f4178c0927d9",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/maintenance/professional_tips": {
+      "textHash": "sha256:faa6efdeb1ab957a3e4e8ffbc7a21d0813c5aa5d6e885f3126e8a81e61b1be68",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/emergency_situations/overview": {
+      "textHash": "sha256:53185aceb77a9d5cc461c99831933a83ee637bd3cb776e86f7773781d8b3bb4b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/emergency_situations/responsibilities": {
+      "textHash": "sha256:5bdfb8759093e2bc1087f8c48273c5848c7d92cce8571f612270dbf125036b4c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/emergency_situations/common_mistakes": {
+      "textHash": "sha256:3cb873484bdbfd3ce488133ed76417c59e0f4be1a7a3a08b1eeac0c9b23f3652",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/os/emergency_situations/professional_tips": {
+      "textHash": "sha256:1ea136d2c2f6b35fdc27e100120e7d979b7fd42a9ac2e79b4e24d94388ca5529",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/pre_departure_preparation/overview": {
+      "textHash": "sha256:104822301b14caa1730903a66fb3cf0c14c7f2596844134129a759b953dd6a6f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:231c398ced0f8acb78670c91d59dfb1032e6ab396413537c8034c02f0649c1a1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:bef354476d398e9a482428c9bc94669ce86d2731a6a73e8a9b0105503176d8fe",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:b2194834605f0b3690a1633e018d9bcedb4f2a2ef7ee181960978e9993b3dfa8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/departure_manoeuvres/overview": {
+      "textHash": "sha256:f8f423add84ae8d7facabf1b47a5243f358521e2495dd0173667eb255282270a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:16544f86de3698ac00eac5438bab363162557e8d4440ae1fd8859c5341452ffb",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:247b7bd4dfe8dfc62568546cd65258bc636b38b43d9541f93d376d57d5159c9d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:69da06de6f3243bbbe9cb4f0ef56a583bf572670fdfba1824af10c955166459e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/navigation/overview": {
+      "textHash": "sha256:783d58b78fd746dd282aae7abddcc06f0fa8db22e7b26e3471db1afeebf0d8e3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/navigation/responsibilities": {
+      "textHash": "sha256:4a5e2a40d6170414774a7ad743c910c2732f0d29e4864b71e747f89dd8addefe",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/navigation/common_mistakes": {
+      "textHash": "sha256:7eee6b1e9cf7e8ee6815ff8b4cba53dd889ae837fec22293a643692fb0186a43",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/navigation/professional_tips": {
+      "textHash": "sha256:4ba1ced3a66dc3d532c21c751ab46ed10ffe62762f0946b363545d83844ca67a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/anchoring/overview": {
+      "textHash": "sha256:4e6de4f7104fa70a70832ae51805be97871e10ae56b7460142f6e58890711704",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/anchoring/responsibilities": {
+      "textHash": "sha256:45b1660f96c5ef248927531b3c1eb491767b6ce3134cdf7de53ecf3392aba9e4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/anchoring/common_mistakes": {
+      "textHash": "sha256:d63a66d48a90197387688ba4d109a498b31110c0e9762e4548e988b4f360f7d5",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/anchoring/professional_tips": {
+      "textHash": "sha256:41c8d88ef2a05642afde210ea156c3f3ecd78b8dad88467eeaf9d1f29c394a95",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/port_operations/overview": {
+      "textHash": "sha256:3dfc8742c64b1cebaed36c207fd1f7ada0cc458c167f5ba1b6cf2adc676580a8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/port_operations/responsibilities": {
+      "textHash": "sha256:07d0113c8df5e93ec902649ce1206a6eb14a7ea200849865593b9141da5a2f18",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/port_operations/common_mistakes": {
+      "textHash": "sha256:294666b8caa175afc87c95d80fa2c1fd2f88c9a60cdb52f2eb18b1f1ad88229b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/port_operations/professional_tips": {
+      "textHash": "sha256:03ef1040a9c1d97cff36a78ec8198c562d80703cabbed8c47771579cfa14361e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/ship_to_ship_operations/overview": {
+      "textHash": "sha256:b9ffeac83a5121fdcffbd2a5410f5724c3c4c37983b024232492b4abf2faa45e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:b01983f5f82e5a63ccb40d16a037317244ee2a3ba568a10c0fe9aadf1cb2e174",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:5b4a2dca48aafa7c9744520a513ddeae098cbc4f14d5fcc0de8b4b8f25e09205",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:f3ba1d8e9977307be345ce191764bd5c1f44d25c4c2ffa64449852ea88ee65c3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/maintenance/overview": {
+      "textHash": "sha256:49b43f6d12cc81b1c34e78756665de5f87ce718e5a7e1d6383f77c11ffcd1a52",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/maintenance/responsibilities": {
+      "textHash": "sha256:fecfaa42f80814d073b67f90c41270d5ee0a4b9b2ccbf0ca848a15dd67b767f7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/maintenance/common_mistakes": {
+      "textHash": "sha256:4bf82aff3263bfa98cadacb5bf1164e7918b534c4e0aa727adaef980830e1768",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/maintenance/professional_tips": {
+      "textHash": "sha256:c844e28071310a3bab829ef4aaae8838b2ea248a31d3cf692b6c30d317502e76",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/emergency_situations/overview": {
+      "textHash": "sha256:f96765416f257ea97c7d5c98eda716c83d037b1f4b79e4c19060187e081a7d59",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/emergency_situations/responsibilities": {
+      "textHash": "sha256:cb0a42a12218b30d3ada7cee970ef98744cbf8f00b58ed6f51623d19393e479b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/emergency_situations/common_mistakes": {
+      "textHash": "sha256:85a82b63b36072da3db930baee8bbd1117169d1ede35566494d4ea493de6de4e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/engine_cadet/emergency_situations/professional_tips": {
+      "textHash": "sha256:37a7b69924aa2e0fb9a7e2e9d61af147e2eadda581a25fc57665df599b8f4a96",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/pre_departure_preparation/overview": {
+      "textHash": "sha256:76ebda9338f2ecd06260fd10f493e2a2a42ac2857364e144317060f62e1238d3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:3d78bc44310d6de0bd280b3b2d6b3d1478ba09b7edf1245c5a3f961479360fd2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:c61a2803b99d89832fd986bf443642b415ff3cf5c98940cd57e76e5a8a395d68",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:807a52dc4b880c7975f7cf16e3d6e8ef41867e01bbe78b77471d36fc77b4e940",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/departure_manoeuvres/overview": {
+      "textHash": "sha256:0ae4b205712696e17161be7490c98810bc48c4c3e10b7613afada9d222cde647",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:b81af2b8d35e824d3ba61a06cc9a74d8634bcf1717959de4fddb716a9387ac0a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:5a70b437fb9a56383f6f8e329888697ad02fe3b94be8f0ea4a6a20bf70df2b2b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:8705871d6e838014e26eb9897e8fd422450b608efbc329b7892913b8c3d04931",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/navigation/overview": {
+      "textHash": "sha256:2563bb32fe3646d702bbaf7da89844606032562e83d9460db53b29a768c9518b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/navigation/responsibilities": {
+      "textHash": "sha256:c775eab323c8b657ab01a7aae79067221dbe82575a3db18c41ee80f06183d574",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/navigation/common_mistakes": {
+      "textHash": "sha256:60ffb4a792d68d0eeb1b6a7215c63aa8e5704f54df5e6ffd7d651d5529b5e158",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/navigation/professional_tips": {
+      "textHash": "sha256:66ebd4c3a25b2803af1435210045343201a745a86573e8e2459530b70652f9bc",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/anchoring/overview": {
+      "textHash": "sha256:30210331aee53c9689e5e81f5375f4d07abdfd7ba8f34d9a16fdcd3b7240f12c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/anchoring/responsibilities": {
+      "textHash": "sha256:c4ed450aa7b9ccab45ab6274710d8d8039281438c065cc8c1aa516aa6dbc2f1e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/anchoring/common_mistakes": {
+      "textHash": "sha256:1ffa3d8419c1b1d1d41ae2d4d7f9b42b91ebf2f7fe9736f35ae02f1379597155",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/anchoring/professional_tips": {
+      "textHash": "sha256:dbb4d1f112c25b45a401672915b223db03c8d451ccd6c5b792b57cb650e197c0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/port_operations/overview": {
+      "textHash": "sha256:9366816696c1ceb12e01c15a083adc132297d432b29e8ce1c79849591bce7f15",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/port_operations/responsibilities": {
+      "textHash": "sha256:40838d8c53842905730738a6c658701f2cc641c22cfe6c82466db5e5b09373de",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/port_operations/common_mistakes": {
+      "textHash": "sha256:2f4f93bce8317d4f384f6d88d7327dfd02ad7ccf059fafdb77d4ec3d5400d72b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/port_operations/professional_tips": {
+      "textHash": "sha256:f98bfae52a627597710a7bb02c0b703359303d97ed4a54ba9911fa140291ecd1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/ship_to_ship_operations/overview": {
+      "textHash": "sha256:195390ff36a3056e1c43063272864eb0cc11b0afd9fe23a546e345a0ed64b528",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:db3cf7efd12f7c6dd480f31b6412001a1bc85fec51e32f883a8cdab956b59245",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:c4849da3589a09e962bfae3e14d36607109c5321ae71dc07494e7625a87fccd2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:74daeb6f114d4ead6308caf4831e9b7eb3147f3efb8aebcd6d5fa3fdba764b05",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/maintenance/overview": {
+      "textHash": "sha256:c460e3e213d7310716d5761b21d690b371730d76fc85927ad1f615c9336ed1f7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/maintenance/responsibilities": {
+      "textHash": "sha256:8aa8e154ad5918f5d3c578729ebe98b2a2f896922f424e65fef4c4f96e92944c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/maintenance/common_mistakes": {
+      "textHash": "sha256:4bf82aff3263bfa98cadacb5bf1164e7918b534c4e0aa727adaef980830e1768",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/maintenance/professional_tips": {
+      "textHash": "sha256:ebad806ecee7b87bbcee82ca3eb36e7a68760977b8807661ac9f521092fd0554",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/emergency_situations/overview": {
+      "textHash": "sha256:6e95f205b71116f236dc35eae9f17d4192f293aa74d91303fd0a3decbf66e626",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/emergency_situations/responsibilities": {
+      "textHash": "sha256:8678e04d473e24f8fab2bf85c878593471ea9c6e8fc7189c9db70d33542c902f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/emergency_situations/common_mistakes": {
+      "textHash": "sha256:3cb873484bdbfd3ce488133ed76417c59e0f4be1a7a3a08b1eeac0c9b23f3652",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/wiper/emergency_situations/professional_tips": {
+      "textHash": "sha256:1ea136d2c2f6b35fdc27e100120e7d979b7fd42a9ac2e79b4e24d94388ca5529",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/pre_departure_preparation/overview": {
+      "textHash": "sha256:a54b62edafd1c462c3f5b97ca20ae6872a2bf4056d4ead605e03be2a98e63253",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:d8777620795ef1cf58418b0acb14afc834c0f415a65ef500fb72b960562fd786",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:1c561138f02826aa5441d164ab9dad5e5c65d22bd6d4b67d8f7e283c7cfffef7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:9f77638f3d4406cda7b8abe4532dc6e7d8b54efe3514c103383b37f4bc314c37",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/departure_manoeuvres/overview": {
+      "textHash": "sha256:f0f1f8a8d27870d1038fa50fdc8df81465905f4a1c150c86d766bc60f43fba4e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:2080d651eac797c3d55ae1bf2676bb1fa157a24d29d3e8ba207e621846328d62",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:c6276eb4f7c32bfcadc73e594a1f833234481c807ce61f0eabf2e6fe1e9032e4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:688418111fd95c334627845cdd739e1aa639aaccc46c92621c30e5117b5af5d3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/navigation/overview": {
+      "textHash": "sha256:b3a2c9128900b5b9de36361bb481366c05105f01b35a875823a8f9c50bcafed4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/navigation/responsibilities": {
+      "textHash": "sha256:c718174f998233184152595e86a007329170a92be95cc0c03d7bb56972cb95df",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/navigation/common_mistakes": {
+      "textHash": "sha256:5a4bf4261f054d6d01444ea200166da53764d14d5d81f5032d7580ae767f0fc6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/navigation/professional_tips": {
+      "textHash": "sha256:01fd70df423d1e0deaaa09df18af72fc6d70121382bbdb65fa5e4fab38678445",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/anchoring/overview": {
+      "textHash": "sha256:85d28c9c7787455840870425722d35e35383bd65a740ea3c3d52c088f78ae140",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/anchoring/responsibilities": {
+      "textHash": "sha256:5dbb8e9f33eeb8b051db33e788c6fa509c3cdc717aed8c2a716279045e1a041d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/anchoring/common_mistakes": {
+      "textHash": "sha256:340c4b5d2617d4de55291badad42ada34fa670edadc2583e2ad8ce289223e1ac",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/anchoring/professional_tips": {
+      "textHash": "sha256:4599073976286257d607037641e03a7bca13ddc06b6f13f6f8b6aeb191c69cef",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/port_operations/overview": {
+      "textHash": "sha256:53c03f4a8456e8494af331d5536e82c84ac62683a73538d9c09424c8e329b13d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/port_operations/responsibilities": {
+      "textHash": "sha256:232a136b0c50d4a1b23fa41006240f4ac09e78fa95e36300c3a4e1c74a331cc8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/port_operations/common_mistakes": {
+      "textHash": "sha256:904899bd83322dd64b0102a919884d53c12e0e220baeb69a6d178ff8563ca05e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/port_operations/professional_tips": {
+      "textHash": "sha256:ee4cef351076f55823978459790eb69af3ee04be4519f1bddd3c13ddbb0a9240",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/ship_to_ship_operations/overview": {
+      "textHash": "sha256:22e5f4ed465140090d3dc3818b82cc82532c7aac94512de49e1b8ef7a06b6436",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:255b8c14cc0b5de64ee9e1e3af3bd324878f7dc86ef3441c67248f69f5160a25",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:a85248058e9769faa51bc0b0bf28dd2f31c7ccd5cae66d62186625a71e29e435",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:e77bf8dc0f39bed98b4b2da6254fefb3046dd5da4ad9b4aac4ff6068011cc21d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/maintenance/overview": {
+      "textHash": "sha256:68af031063f229ae6d5e378b8b3d5dbfa3c55950c9a6155f0e3403238121855b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/maintenance/responsibilities": {
+      "textHash": "sha256:e36ac97845bbfe2e2d5f48db2430be0aa481b0d6126ead6cd2f9f4ba351ab8aa",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/maintenance/common_mistakes": {
+      "textHash": "sha256:22cf2dc625b64d002b5b93e2e5ac4f77575000438b5b2a10d2823d9ac7496cec",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/maintenance/professional_tips": {
+      "textHash": "sha256:28e9e4214ca427b3be0618d6297595d27df7f2fb9d365be7acfea686dbdb74e7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/emergency_situations/overview": {
+      "textHash": "sha256:7da8e06c2e9547e1b2f482fc372eb5badfb09a80430df7df6b94791ca2135f26",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/emergency_situations/responsibilities": {
+      "textHash": "sha256:fc1c64cc3eb8209bcef4bfbe0ab4bad15a6c4d42f82a75484e17284ca0e2a57f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/emergency_situations/common_mistakes": {
+      "textHash": "sha256:1ffd943287ac570d36af276dd0b7f61774ed88a6a1cf66de3627fb59b5d43ba1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/motorman/emergency_situations/professional_tips": {
+      "textHash": "sha256:29df4c3d0046eb191fddcb5c40506f44420b61d95c3737e9594fb2c6a34c896f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/pre_departure_preparation/overview": {
+      "textHash": "sha256:24ae054c8e1282f3658e6e3a7aee7dcb543109d1e37f685ae3bd960b7b5c2d93",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:157af0e1a4a5c5ed7610dfd2901481e5cf7a571ab489a08b4358289d1b53917c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:0adf2e8c7934173b43ac4c97411d3f76d362c9a3a61a272811f421da20867f62",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:260c0d87d145f5bd547eb19de26c25ee59c414a45361bbf4c42818aed75019a2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/departure_manoeuvres/overview": {
+      "textHash": "sha256:ae9fdee8206ec0836109857d8e2020001b26adb86b895956dcd883050cf9f01d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:39492da5be7a8224a97d303976ad6fd665cf2cb8c0df6e9f27054cf495a3f010",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:2b1486c039552354d69a719f2be5b7d30c047ca7dc8fb397bc369ad46c6f136b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:fa4df2ed8f30336a12beadc20487aa9360577f0516f7d001457e6adb946aac94",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/navigation/overview": {
+      "textHash": "sha256:dbb7a3145a9151c53b340ddbe22a75e09dc8aea09f69735b15038af3bc62d1e6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/navigation/responsibilities": {
+      "textHash": "sha256:b875e804e222f9aa1a9be2707a249e3ee65b233b1e118ecebb33525d0bdf4bcf",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/navigation/common_mistakes": {
+      "textHash": "sha256:cfbe0995855c18b3adfe7da4048c704976a92443ad24a31ebd6e36fb5827329e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/navigation/professional_tips": {
+      "textHash": "sha256:30c24686bfdaf8098f9a553fc37e2dbbfcc866a7b7e2ffdb599f6ac80b7f7da7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/anchoring/overview": {
+      "textHash": "sha256:2f9e1a8505781c71268037aeb1870f7b83e482aedf7cb541111c90d24217ab9c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/anchoring/responsibilities": {
+      "textHash": "sha256:97c0e04b3855644c4be4259618e1985c5937c26127f42d0f009280e045103ba0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/anchoring/common_mistakes": {
+      "textHash": "sha256:17a3e317eef27c6ab474b20b814d9ca3d899d7f15075369c7e9df6ed19660382",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/anchoring/professional_tips": {
+      "textHash": "sha256:ff4441214c2bb9ef13a746d0e0a7c9a704a1508563ebee29b4f91c460a45087d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/port_operations/overview": {
+      "textHash": "sha256:b7bb2b77e3960f52fd381592455667d3a4b54e6f13d5ef28a6dc4cc2ce9e3bd6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/port_operations/responsibilities": {
+      "textHash": "sha256:a662b2350e80fb62bb365d8d11a293ca69e4c58a67824be403a80887c8b78968",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/port_operations/common_mistakes": {
+      "textHash": "sha256:9b77f5119d67e92bbf3aa991695754718cf0e531b824d7a538971222e64e56fa",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/port_operations/professional_tips": {
+      "textHash": "sha256:a85b74b50ca54185c7c76876e97f1ff5c04eece655714264f717b0c903b78344",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/ship_to_ship_operations/overview": {
+      "textHash": "sha256:74b5861df96b4a4abac8f41178d930f82df9040e326fa7ed8a76f60a2a0dd289",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:184aa69bbd0aa20c3cf1f751b513dd16b2186888eb779524c242c2db99a37d84",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:4a3dd0acf95432b5b11f03f1c5488ec712cbe025ea19c80ff19e71e5d7615cac",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:6d0398146447632086f029a9eaba4737ec043c75478447d880c53c8bb6ef763c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/maintenance/overview": {
+      "textHash": "sha256:342e0efdc82bd3192568420a2bbb2d49af612d712c7b9946c1afa5394fd8aabe",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/maintenance/responsibilities": {
+      "textHash": "sha256:20257b6e4b3296aed3ad5b79c4af3f304c4abfbb21bdaf9857ba452df74a5f7a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/maintenance/common_mistakes": {
+      "textHash": "sha256:9652dca4450309c1c29fbb924b73e1e6f30e138c9439a04b8e6cc8f47b5c3e33",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/maintenance/professional_tips": {
+      "textHash": "sha256:7d4631c872701d1224bd5ac734e78110e886e0bd3f3d09e4ccf4ed1f9f7eda0f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/emergency_situations/overview": {
+      "textHash": "sha256:15079b652253b87f0aea1071cb0eddd7e4795af4b89f46cec3c4169768756a86",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/emergency_situations/responsibilities": {
+      "textHash": "sha256:df870008d07bede9b22a6c505fa170c4a6016e5abe2f4ad1c47b35e58da4aa07",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/emergency_situations/common_mistakes": {
+      "textHash": "sha256:e0854c9eba218ee26f7c0c95df09ed2e684d61e79d1de53d0d262d229ec2a83c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/oiler/emergency_situations/professional_tips": {
+      "textHash": "sha256:ca5ac2da66a3c685b3aced79285e12d4e0a69064252419f86d118750da787edc",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/pre_departure_preparation/overview": {
+      "textHash": "sha256:2d41d632cddaa25edefd4f105773f543ff4a4b78b47026f4209eaa711c78f1d2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:4e8b45395c016d797ef60289f24f215a3f97471356c3f57ccab3be4797112779",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:ff399da53c04b7d8a7c621d1c98ac446b3e14a071a4aa6ad873209389ccdfaef",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:42faf4948fec8efea0c7167c17a5eccbdd1eec473081ae1ed04dd8a413b69851",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/departure_manoeuvres/overview": {
+      "textHash": "sha256:3e0f1166b56857eaa0039b5bbd00aba1bfc663238d46be8783bd18e9ca419920",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:a42717990e837bc618e4dfa23bd9923ed06c3be4e57a4562e09fe81138f865f3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:11d004f728e2cb9370069fac136d7afd8aabaa016d3dc1428e7399f58e2ba61c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:ac3c7368e6214f43d472426f6e8c7893c56d8f6150fdc113d0d327a67d45c114",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/navigation/overview": {
+      "textHash": "sha256:e528fb3e956e62e14539e3749edc0a5394cf068501a928597d3b3cb16e683ec7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/navigation/responsibilities": {
+      "textHash": "sha256:45c2600eb6d893943b681a0510dad17b1c316db30ca6c4e4e58a125d4319d0c2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/navigation/common_mistakes": {
+      "textHash": "sha256:53fb817879eb068a13ac2aa5a7252b987e4ce8b15daa0e0d1d3ba8ab63ba1c1f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/navigation/professional_tips": {
+      "textHash": "sha256:b9ae6b6b3f4cd4ec49b0c169fd6ef5bb9fee53803085a0ef7ce79c67e56c7782",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/anchoring/overview": {
+      "textHash": "sha256:70d8c99417a01c87917318324b9bffad37ba0253a515c3a49dcce72917922e35",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/anchoring/responsibilities": {
+      "textHash": "sha256:69ed6f20f15112d75f0a16c12f6cfdcfa8fa6e732cf240dc6beb2d795af6b718",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/anchoring/common_mistakes": {
+      "textHash": "sha256:b06a284a1a56a261f0c824a9713830a3ce83a525eab7cba4213ddd0c3ba1e49d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/anchoring/professional_tips": {
+      "textHash": "sha256:2820ac0305b0fa3cf76a7f96b78058a6471e7a2de997ad7e9a04d7075ab93662",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/port_operations/overview": {
+      "textHash": "sha256:0d5cbbdcfdee4811768c260ae5adf5d6fa9b389a6675e5c4a0235d9467bdf6b2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/port_operations/responsibilities": {
+      "textHash": "sha256:cca93721519d810b89a75cd0c7d0e2afb06a92ac7648746f42ae46451e2139f1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/port_operations/common_mistakes": {
+      "textHash": "sha256:226bd2ecf4a555496b02fb46f24f9775ee1e244eaea95ca1d019ff5dd3cbcff2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/port_operations/professional_tips": {
+      "textHash": "sha256:3464be21f624aa608a41a234081a07a0a9f565562121ab37176dfbb2ceb23762",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/ship_to_ship_operations/overview": {
+      "textHash": "sha256:f59bcaf57237e1002fa88b19e7125c0b2e1f2cc0da1ae9b043561d8e63e4dd81",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:35d95f56147ef09cdf000e737f6e4784cfceccf50f66b486fab98c52f235ac02",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:53af3c34ce8db8571b6cf7d3805b12ea69bc90912122ab23a2a544aaecbc0a1f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:ca8bf2523c1c7518f26951905518b175881795f5b7c8b4e52c14d705c183d2e2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/maintenance/overview": {
+      "textHash": "sha256:38f853990c682c2160cdf81b238ef7ba48d25991e141cf0ee904132d6f58265c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/maintenance/responsibilities": {
+      "textHash": "sha256:112ff7b619470aa36323e3c9da3bbb5042b10acef18172c0681e67b61c0d91b8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/maintenance/common_mistakes": {
+      "textHash": "sha256:d7adfcddd206b5da4d6f7a99f5b0c70d991bfab587f27521fc2cd91d646cd347",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/maintenance/professional_tips": {
+      "textHash": "sha256:b58c26351cdb642b2eea836fe1f1bbe32118a94f97418b4007b8d72117700d26",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/emergency_situations/overview": {
+      "textHash": "sha256:619c074a4392f6f9cfd8099e30fbbf823ad6e050e8d55f72eadbc609152c4641",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/emergency_situations/responsibilities": {
+      "textHash": "sha256:1b656a48fdd318f3257e8c2f4ea4cca69ac48e97b6ba2da6d7798c18a6942303",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/emergency_situations/common_mistakes": {
+      "textHash": "sha256:99c02a3b7364e1111443d418e6f2887b3e27a252b98e967a8109086731558f8b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/fourth_engineer/emergency_situations/professional_tips": {
+      "textHash": "sha256:be879edae8294d9cab3cebaa46d0e24a2c2894db1592522d04f97400aa1910d5",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/pre_departure_preparation/overview": {
+      "textHash": "sha256:e96ab2247425389cb3b02e94774914afd2567ea72724881403d2eb7d3ca238a2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:14ba74802ec96a28df84cc8a7cc6ca56d531da90dfb163c8a99307f00d3f57aa",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:f39a3244e21bd9cc6045aae6d6d4363b1955c172e486aab861235b5a35b8242b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:1be89b47b59fa397ac7e3b987ee7d628390a29eb3d11d4232f636a547afe9227",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/departure_manoeuvres/overview": {
+      "textHash": "sha256:d607b3dc9bd962ad6583ecc51d3a13774bed38f30bd1c13d6a012f325b72f0a6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:af51028a5c2f70da2c568feba502269dd822a38b79cb6d7d6f43f768c8f746c8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:dc57c58ff472e98531854835cbf621321263fb8ec448a85165f65315057576e1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:9a72a1c596ac5d3083d9409869925b375847f10d4dd953c62b44d72d8f0214f3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/navigation/overview": {
+      "textHash": "sha256:3b45993ed89b10e9ca7bcedb41845069bd345a1a584a71fb4308c04bf8713aad",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/navigation/responsibilities": {
+      "textHash": "sha256:11182043f252002544fd27f6b66192b32b019faa8277c87342dd10df5f157a8c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/navigation/common_mistakes": {
+      "textHash": "sha256:1f3aa59555b9c23ab5b7a0195977732d202c5af4ddb3799de967595bb4ae2558",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/navigation/professional_tips": {
+      "textHash": "sha256:18d7b0bbb11578f85a9020fc7617c1d11ad1d772a05df289206f0bd613fa3238",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/anchoring/overview": {
+      "textHash": "sha256:0a652ab1e2a4e3bc74c35109c1b98ae9d4c4834a33f713269c0e0497b55cbb4e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/anchoring/responsibilities": {
+      "textHash": "sha256:afe11a84b5cf5e1244a567a99684be3bf92df21350c3a4612ab3632568306999",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/anchoring/common_mistakes": {
+      "textHash": "sha256:d33b8951ebbaa2eeeeed9bdf3572282cd394bb4cb9bb9af496179afe1d3bb697",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/anchoring/professional_tips": {
+      "textHash": "sha256:cfd79990f38ef46929399ce4407535ca497f75de27a7e58a6ff1d5d71194d8b1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/port_operations/overview": {
+      "textHash": "sha256:7835d3b23f29a368074eaf62f3d46668c0196fb7b67d342dc81f66a495900e13",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/port_operations/responsibilities": {
+      "textHash": "sha256:9f6288cc4b65ebc78dbccaf8d5213cd2daf1cbcc798fa465ce45880d93cfad22",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/port_operations/common_mistakes": {
+      "textHash": "sha256:417657279dce8cac5a477d3732859df276073364c92ebfa3c2a8470ceea65b1d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/port_operations/professional_tips": {
+      "textHash": "sha256:5360a7b4684674685a17b93c075f95049ca6c552d472d0a8a85ca17279bcb5ab",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/ship_to_ship_operations/overview": {
+      "textHash": "sha256:3ee1bc7190d38002d81e78c208e317f6ef978dfa1832df6322e6df8da5ffb132",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:5895ec0207aa8961dce5c0e1d36adcd7603d0c5109a97336fbdd95611f16f17a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:12d0d8488d2b4ebc1f98119515834e6f8578fe947f6e5133b7eefb0b52c9eb7c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:b22f3e0d77bd8d7c39d484e8141733cf40a1293c5c159da12295f98045136f2b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/maintenance/overview": {
+      "textHash": "sha256:8c606de7c894abfa2efcc433350936e34b2817cf65727d9a1107dc1b57cbb08c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/maintenance/responsibilities": {
+      "textHash": "sha256:b1ac7369e0c14053e0b24d96c0befb713883f2c22110987a6dbc9046aed491a6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/maintenance/common_mistakes": {
+      "textHash": "sha256:e3a75421e8edaf2d8d77a0f88c25960d13d0c84952dcd5c76bc4c5b2f1509e59",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/maintenance/professional_tips": {
+      "textHash": "sha256:b71575178ef5e365d45697de7d7b0757c580ff7414937729ab5d060f896bd1e5",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/emergency_situations/overview": {
+      "textHash": "sha256:f8dc8603f61d2b0207e9b0229562ff3c0edf7a9e6a74219d94b5f1ea5708a610",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/emergency_situations/responsibilities": {
+      "textHash": "sha256:b3fc1ebedc14048e0506b7dbc00517fc37f6e96eab2a18d11e532bdfa856d7f0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/emergency_situations/common_mistakes": {
+      "textHash": "sha256:4854ddf417ab4a3e4dd8891f6dfa44a86419dc041938b1fdc99a1670fcd318c4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/third_engineer/emergency_situations/professional_tips": {
+      "textHash": "sha256:20a94ba591b9c0d33b1d72bfcb19fcc6c27e314942b2939f2b0cc826f2d8ebf6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/pre_departure_preparation/overview": {
+      "textHash": "sha256:d04b79ccaadf186363d312d1132b24d95dd565ff5e86046358ec147426fa6e3b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:035ba36bf78f2e2c69dfd073792e597ae85480850be92a3f73b3a81daa9cf37d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:d1972f18ae2ae3a4ac78dffb944474e3e1b99f23837433bebd2d6fcf2d0fbed9",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:7bffae065264ad8e0dd0163776177ce7bec74bc5f1fea44cec3b9f31fab95fca",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/departure_manoeuvres/overview": {
+      "textHash": "sha256:96575d8151fd3b8a459d0c03b16df9d21c436128ae9a528a598796a9d9a010b5",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:454e92740069f2b04ec3c54760dd4b85f7c72189fd513bb0cca2f301d91ea4a6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:d1e1600128b2a4b981cf03292475216831a00eee81f7959b816a02c6d71651e9",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:60fa800f828df3056f83c23bb77b89ec872fad19cc27c845d156b93c07efc0a4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/navigation/overview": {
+      "textHash": "sha256:ecc17fbee5a6b1a428b622b08a4f89921b2b173cc8fc04c26764003797517dbb",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/navigation/responsibilities": {
+      "textHash": "sha256:4479b24468b3ba7a57058c8e4e1bb67b0df6342eff6ea0238c356f541fb7670e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/navigation/common_mistakes": {
+      "textHash": "sha256:e30d5e7ec613d474985a51c0be2deaa15c352e454f8638f3692fad99b7ce573d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/navigation/professional_tips": {
+      "textHash": "sha256:c4da6c748f312ff2e6db585051154e17248b13520c5c3109debf81056d3bd131",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/anchoring/overview": {
+      "textHash": "sha256:63a6d50bec8afcbc4d511aa7648d6c31f009c3f9d20d409254b3c5b5974ff92e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/anchoring/responsibilities": {
+      "textHash": "sha256:990117c95c75e50194e319030ce25eab765335532d80ec663a04697eaaa30267",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/anchoring/common_mistakes": {
+      "textHash": "sha256:888cd1525a16bdf1504d21aa9805aeb130e30291c7c9c1829623c0497fbe6251",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/anchoring/professional_tips": {
+      "textHash": "sha256:025591d96fe9b948db1ac8443ea182f415e3f4b3b9292e08dd7557d4b9d2e1a1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/port_operations/overview": {
+      "textHash": "sha256:31ae1561a89fe1356d4effa24df65c30bb796dabe29b6494d27b86effe4361d0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/port_operations/responsibilities": {
+      "textHash": "sha256:5eed39c1b056a4c0f6d1c291fb1fb5eed170cea918403b85d02b53cc2d04897c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/port_operations/common_mistakes": {
+      "textHash": "sha256:d22716983e7a3921510bfaad0f56ea0266e8ced3dea6a743502dd53d128f7d90",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/port_operations/professional_tips": {
+      "textHash": "sha256:f240f110eda7cbffd18d1db75540b1d191b96711b592d513cfaf673a6ae69612",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/ship_to_ship_operations/overview": {
+      "textHash": "sha256:86021fc95b489c0482b4854b9dd2dd233fbed7fb34a19f0f2a04616ca1fb8709",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:f4b4cdc59ee43605fce381dde9ec99b5cff4ebd0113d997ed27158543062bfdb",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:f97a454a1e82eef257ec15b9e5805d4551b66344454e1f213724801fa3158d7e",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:0e156c990f17faa9f593ba29fe5c16bb2e48f334dd5ad8ce998464a44775914b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/maintenance/overview": {
+      "textHash": "sha256:1135ddf289e56f4027ef625f2588ecfc0eae39b74fafbcbc4fa9c9a30362c184",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/maintenance/responsibilities": {
+      "textHash": "sha256:dac100c67b65cbd36f1c414a316d8ce8f0e58ee7bec92f9ded303651eb6821b7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/maintenance/common_mistakes": {
+      "textHash": "sha256:944d102fa749362d13a4afded50e6cb36e462c2587c6d91e3c2f14fad185126b",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/maintenance/professional_tips": {
+      "textHash": "sha256:cf5b072bcdd7bb671eec2baad0ce5100ebfc388ec51304bd649cf92dc09beefc",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/emergency_situations/overview": {
+      "textHash": "sha256:06a7de17950058a056aa30af35657024191bbfb06577d685f99373d567b1901f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/emergency_situations/responsibilities": {
+      "textHash": "sha256:2af14dc4cd3f352bb006df08e5094369d6e52e3c7a6c27d88bdb40b09619e42a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/emergency_situations/common_mistakes": {
+      "textHash": "sha256:1126d697740811125fbc6bb7ee764c171024613fa3a221ec7d1c94fa6d6737a4",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/second_engineer/emergency_situations/professional_tips": {
+      "textHash": "sha256:b216619597a4ff637b0ad4f7e3e6da0a4fd40ec6e27074b1dedbcf96dee892a0",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/pre_departure_preparation/overview": {
+      "textHash": "sha256:de6ab72c3640310bb5e6e2cbbd9c83dd34cf81420953e1a58d318e3f72dcfa5d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/pre_departure_preparation/responsibilities": {
+      "textHash": "sha256:aae513f52b952ac91498590317775eb115f1f7c2874150503491958cbbd7fa02",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/pre_departure_preparation/common_mistakes": {
+      "textHash": "sha256:292c9700f6bdb2231607336c33dc7a8bd08d5f2f98f786e3554c3ade3ffa758d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/pre_departure_preparation/professional_tips": {
+      "textHash": "sha256:97707a94eee60c3ddf2a6a8e12d56b3b1ca163883b1690ce7ff974fef51ae1c7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/departure_manoeuvres/overview": {
+      "textHash": "sha256:57cc387e5e99a953bdce7edc4486445ed14ef1261fee2c9e01e41e8d08de94fd",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/departure_manoeuvres/responsibilities": {
+      "textHash": "sha256:13ce85da5a218cc66a8c1e82049ef7bf04e227ddcf65d3928c6814a45a80371d",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/departure_manoeuvres/common_mistakes": {
+      "textHash": "sha256:41c8e31d5e656a6e85e6a1d10cae583e2d297eeded8a1e9ec4294b5b16f4de91",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/departure_manoeuvres/professional_tips": {
+      "textHash": "sha256:dc63e93affe0786680e37d99541e9c67ba1a6fb05be17671a65c1035b28eecb6",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/navigation/overview": {
+      "textHash": "sha256:59259447e713b705d1f36da2632dd1bad9e522ce6f8627bfbc47fec0208b684a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/navigation/responsibilities": {
+      "textHash": "sha256:9d162256c7f380da16490e2bb9cb07a8bdf141d1515391528f17610e9b3a503a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/navigation/common_mistakes": {
+      "textHash": "sha256:1c88d5e970afc4018d526198942a68fa5eb3c01ab8cb717140b64cb4cd59ac98",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/navigation/professional_tips": {
+      "textHash": "sha256:3b7cb7fc88dee6b1a68aaa69278012e0ce3dafcb62dcf43cd95da2e893c5c981",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/anchoring/overview": {
+      "textHash": "sha256:dfece8b4c5ab3b32f31d0aa1f6d4449da52dc30153bab3d25b278d2bc4e6ef4a",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/anchoring/responsibilities": {
+      "textHash": "sha256:5208a5bf3edfb9c8fa2e8981cd7cac9e46284e3854dcec1af2f022b418c842a9",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/anchoring/common_mistakes": {
+      "textHash": "sha256:62858c38b640b7bb3f82995b647ed528652a454f6a2fdc801eeb4f59ca3923e5",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/anchoring/professional_tips": {
+      "textHash": "sha256:dcdf027ea3857c4a37064dd50f9951b567fedbfbcd7b8e2e858ee0aa69c43057",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/port_operations/overview": {
+      "textHash": "sha256:1b7ed1280215988ff9eb07aedd4fd5283cbdc92b960a567ee1f119f994196d98",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/port_operations/responsibilities": {
+      "textHash": "sha256:efd0e95d1930ee8ecc54990ef70e4464145e62c031205c7bd7a22d4ea459037f",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/port_operations/common_mistakes": {
+      "textHash": "sha256:0692c9717ab2a608bc2552ce57933e66cbaa4bfbf903acaa2410f370e1945405",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/port_operations/professional_tips": {
+      "textHash": "sha256:8f1023a4b350fa26286e42bee52f857296b0f46dfa5c7ca88975d61732e2ec39",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/ship_to_ship_operations/overview": {
+      "textHash": "sha256:aa0267a0058ca5e328b504f4895e225bcef37e3bb72bc14768db469c0c1ecbb2",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/ship_to_ship_operations/responsibilities": {
+      "textHash": "sha256:beaaa982a6b7f88a16251ec7d722ae6fcdad9e7b7aad8c102756723cc1b979ad",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/ship_to_ship_operations/common_mistakes": {
+      "textHash": "sha256:170f8ed9e34c179238425f856075cc6bd1a89bb422f1fc0f1f7a96ab4052f817",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/ship_to_ship_operations/professional_tips": {
+      "textHash": "sha256:c7822412c2fd59cc464c59c50810b0f1fdbe7a824e78fadd0dd56dded749235c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/maintenance/overview": {
+      "textHash": "sha256:2882fbce1f75da7547435ebdd1fe92898b5180723e22035a03a5f8e95b7aa0d7",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/maintenance/responsibilities": {
+      "textHash": "sha256:b08ade5b78c93c362cc9e2ccb3cf21301a69337dc66202411e50e9b133c100e1",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/maintenance/common_mistakes": {
+      "textHash": "sha256:ee8de79af9756dce883a3c7f1ffa308f555b24d6464bc64c56e99c511ed79ad3",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/maintenance/professional_tips": {
+      "textHash": "sha256:1fbe9be4c2a316086b924755b815dac8aa77b40d53548e3701e6f196ab3c5ae8",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/emergency_situations/overview": {
+      "textHash": "sha256:07072bfedf0811858752821a80de88c53f27bc759350e1b406bccb336818f052",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/emergency_situations/responsibilities": {
+      "textHash": "sha256:7b740f2496cb4dc35735cd59243a0adb12b001600711323936bab913d8c86590",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/emergency_situations/common_mistakes": {
+      "textHash": "sha256:766e0c62c4fbf2ef1efb6d10dffb47f336487d676537c5ea23a131d1b68ab19c",
+      "status": "missing",
+      "generatedAt": null
+    },
+    "en/role_on_board/chief_engineer/emergency_situations/professional_tips": {
+      "textHash": "sha256:363e482e07277416de0cbe41d4b6b35d5c1f77d5dbb520b92758101bd9551cab",
+      "status": "missing",
+      "generatedAt": null
+    }
+  }
+}
