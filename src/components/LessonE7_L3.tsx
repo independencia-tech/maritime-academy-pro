@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   bg0:"#03070f", bg1:"#060e1a", bg2:"#0a1628", bg3:"#0d1f3c",
@@ -533,8 +534,9 @@ function QuestionBank({ lang }) {
       ans:1,expl:lbl("SOLAS V/20 : le VDR enregistre tous les ordres telegraph avec horodatage sur 48h minimum. En cas d'accident ou d'enquete, permet de reconstituer exactement la sequence des manoeuvres.","SOLAS V/20: VDR records all telegraph orders with timestamp for 48h minimum. In case of accident or investigation, allows exact reconstruction of maneuvering sequence.","SOLAS V/20: el VDR registra todas las ordenes de telegrafo con marca horaria durante 48h minimo.","SOLAS V/20: o VDR registra todas as ordens de telegrafo com carimbo de hora por 48h minimo.")},
   ];
 
+  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q,"ans")));
   const total=qs.length;
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===qs[idx].ans)setScore(s=>s+1);};
+  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
   const handleNext=()=>{if(idx===total-1){setDone(true);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
 
@@ -579,7 +581,7 @@ function QuestionBank({ lang }) {
     );
   }
 
-  const q=qs[idx];
+  const q=shuffled[idx];
   return (
     <div>
       <div style={{marginBottom:14}}>
@@ -733,12 +735,13 @@ const QUIZ={
 };
 
 function QuizComp({ questions, t, lang, onComplete }) {
+  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
   const [idx,setIdx]=useState(0);
   const [sel,setSel]=useState(null);
   const [answered,setAnswered]=useState(false);
   const [score,setScore]=useState(0);
   const total=questions.length; const isLast=idx===total-1;
-  const q=questions[idx];
+  const q=shuffled[idx];
   const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
   const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   return (

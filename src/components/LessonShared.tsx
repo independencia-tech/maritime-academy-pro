@@ -22,10 +22,17 @@ export function Card({children,style={}}){return <div style={{background:"rgba(1
 export function GLine(){return <div style={{height:1,margin:"14px 0",background:`linear-gradient(90deg,transparent,${C.gold}33,${C.blue2}33,transparent)`}}/>;}
 export function SL({icon,text,color}){return <div style={{display:"flex",alignItems:"center",gap:10,margin:"20px 0 12px"}}><span style={{fontSize:20}}>{icon}</span><div style={{fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:color||C.gold,letterSpacing:2}}>{text}</div><div style={{flex:1,height:1,background:`linear-gradient(90deg,${color||C.gold}44,transparent)`}}/></div>;}
 
+// Fisher-Yates shuffle - returns a new array, never mutates the input
+function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+// Shuffles a question's options and remaps the correct-answer index to match - explanation/text untouched
+// key defaults to "correct" (most lessons); pass "ans" for lessons whose data uses that key name instead
+export function shuffleQuestionOptions(q,key="correct"){const order=shuffleArray(q.opts.map((_,i)=>i));return {...q,opts:order.map(i=>q.opts[i]),[key]:order.indexOf(q[key])};}
+
 // FINAL QUIZ ENGINE - questions passed as prop, zero content baked in
 export function QuizComp({questions,t,onComplete}){
+  const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [answers,setAnswers]=useState([]);const [done,setDone]=useState(false);
-  const q=questions[cur];const isOk=sel===q.correct;
+  const q=shuffled[cur];const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);setAnswers(a=>[...a,{i,ok:i===q.correct}]);};
   const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else{setDone(true);onComplete(score+(isOk?1:0));}};
   if(done){const fs=score;const pct=Math.round(fs/questions.length*100);const xp=fs>=4?200:fs===3?120:60;const msg=pct===100?t.scorePerf:pct>=80?t.scoreGreat:t.scoreGood;return(<Card style={{textAlign:"center"}}><div style={{fontSize:52,marginBottom:8}}>{pct===100?"🏆":pct>=80?"🎖️":"📚"}</div><div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,color:C.white,marginBottom:4}}>{fs}/{questions.length}</div><div style={{fontSize:13,color:C.gold2,marginBottom:12}}>{msg}</div><div style={{display:"inline-block",padding:"6px 16px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}44`,fontSize:14,color:C.gold2,fontWeight:700}}>+{xp} {t.xp} ⭐</div><GLine/><div style={{display:"flex",justifyContent:"center",gap:8,marginTop:8}}>{answers.map((a,i)=><div key={i} style={{width:32,height:32,borderRadius:"50%",background:a.ok?C.green:C.red,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:C.white}}>{a.ok?"✓":"✗"}</div>)}</div></Card>);}
@@ -34,9 +41,10 @@ export function QuizComp({questions,t,onComplete}){
 
 // QUESTION BANK ENGINE - questions passed as prop (was a hardcoded BANK constant before), with COMMENCER gate
 export function QuestionBank({ lang, t, questions }) {
+  const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));
   const [started,setStarted]=useState(false);
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [done,setDone]=useState(false);
-  const q=questions[cur];const isOk=sel===q?.correct;
+  const q=shuffled[cur];const isOk=sel===q?.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
   const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
   if(!started) return (

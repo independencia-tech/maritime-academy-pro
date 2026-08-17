@@ -2537,17 +2537,34 @@ function getQuiz() {
   ];
 }
 
+// Shuffles a lexicon question's parallel per-language option arrays with ONE shared permutation,
+// so opts_fr/opts_en/opts_es/opts_pt stay aligned and correct_idx remains valid for all of them.
+function shuffleLexiconQuestion(q: any) {
+  const n = q.opts_fr.length;
+  const order = Array.from({length:n}, (_,i) => i);
+  for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+  return {
+    ...q,
+    opts_fr: order.map(i => q.opts_fr[i]),
+    opts_en: order.map(i => q.opts_en[i]),
+    opts_es: order.map(i => q.opts_es[i]),
+    opts_pt: order.map(i => q.opts_pt[i]),
+    correct_idx: order.indexOf(q.correct_idx),
+  };
+}
+
 // ── QUIZ TAB ──────────────────────────────────────────────────
 function QuizTab({ lang, onComplete }: { lang: string; onComplete: (xp: number) => void }) {
   const t = T[lang]||T.fr;
   const quiz = getQuiz();
+  const [shuffled]=useState(()=>quiz.map(shuffleLexiconQuestion));
   const [cur,setCur]=useState(0);
   const [selected,setSelected]=useState<number|null>(null);
   const [confirmed,setConfirmed]=useState(false);
   const [score,setScore]=useState(0);
   const [done,setDone]=useState(false);
 
-  const q=quiz[cur];
+  const q=shuffled[cur];
   const opts=lang==="fr"?q.opts_fr:lang==="es"?q.opts_es:lang==="pt"?q.opts_pt:q.opts_en;
   const exp=lang==="fr"?q.exp_fr:q.exp_en;
   const isCorrect=selected===q.correct_idx;

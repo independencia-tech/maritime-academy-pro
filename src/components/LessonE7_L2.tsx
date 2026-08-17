@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   bg0:"#03070f", bg1:"#060e1a", bg2:"#0a1628", bg3:"#0d1f3c",
@@ -915,8 +916,9 @@ function QuestionBank({ lang }) {
   };
 
   const list=qs[lang]||qs.fr;
+  const [shuffled]=useState(()=>list.map(q=>shuffleQuestionOptions(q,"ans")));
   const total=list.length;
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===list[idx].ans)setScore(s=>s+1);};
+  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
   const handleNext=()=>{if(idx===total-1){setDone(true);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
 
@@ -964,7 +966,7 @@ function QuestionBank({ lang }) {
     );
   }
 
-  const q=list[idx];
+  const q=shuffled[idx];
   return (
     <div>
       <div style={{marginBottom:14}}>
@@ -1081,13 +1083,14 @@ const QUIZ={
 };
 
 function QuizComp({ questions, t, lang, onComplete }) {
+  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
   const [idx,setIdx]=useState(0);
   const [sel,setSel]=useState(null);
   const [answered,setAnswered]=useState(false);
   const [score,setScore]=useState(0);
   const total=questions.length;
   const isLast=idx===total-1;
-  const q=questions[idx];
+  const q=shuffled[idx];
   const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
   const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   return (

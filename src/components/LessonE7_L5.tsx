@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   bg0:"#03070f", bg1:"#060e1a", bg2:"#0a1628", bg3:"#0d1f3c",
@@ -722,8 +723,9 @@ function QuestionBank({ lang }) {
       ans:1,expl:lbl("Depuis 2021, les inspecteurs PSC (Port State Control) verifient que la gestion des risques cyber est integree dans le Document de conformite ISM. Ils examinent le Cyber SMS : politiques, procedures incident, formation equipage, audit cyber annuel, backups. Non conforme = retenue du navire.","Since 2021, PSC (Port State Control) inspectors verify that cyber risk management is integrated in the ISM compliance document. They review the Cyber SMS: policies, incident procedures, crew training, annual cyber audit, backups. Non-compliant = vessel detention.","Desde 2021, los inspectores PSC verifican que la gestion cyber esta integrada en el Documento de conformidad ISM.","Desde 2021, os inspetores PSC verificam que a gestao cyber esta integrada no Documento de conformidade ISM.")},
   ];
 
+  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q,"ans")));
   const total=qs.length;
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===qs[idx].ans)setScore(s=>s+1);};
+  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
   const handleNext=()=>{if(idx===total-1){setDone(true);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
 
@@ -768,7 +770,7 @@ function QuestionBank({ lang }) {
     );
   }
 
-  const q=qs[idx];
+  const q=shuffled[idx];
   return (
     <div>
       <div style={{marginBottom:14}}>
@@ -963,12 +965,13 @@ const QUIZ={
 };
 
 function QuizComp({ questions, t, lang, onComplete }) {
+  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
   const [idx,setIdx]=useState(0);
   const [sel,setSel]=useState(null);
   const [answered,setAnswered]=useState(false);
   const [score,setScore]=useState(0);
   const total=questions.length; const isLast=idx===total-1;
-  const q=questions[idx];
+  const q=shuffled[idx];
   const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
   const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   return (

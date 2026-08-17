@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -671,6 +672,7 @@ const BANK = {
 function QuestionBank({ lang }) {
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [started,setStarted]=useState(false);const [done,setDone]=useState(false);
   const questions=BANK[lang]||BANK.fr;const total=questions.length;
+  const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));
   if(!started) return(
     <Card style={{marginBottom:12,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}>
       <div style={{fontSize:11,color:C.gold,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>📝 {lang==="fr"?"BANQUE DE 15 QUESTIONS":lang==="en"?"15-QUESTION BANK":lang==="es"?"BANCO DE 15 PREGUNTAS":"BANCO DE 15 QUESTÕES"}</div>
@@ -690,7 +692,7 @@ function QuestionBank({ lang }) {
       </Card>
     );
   }
-  const q=questions[cur];const isOk=sel===q.correct;
+  const q=shuffled[cur];const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
   const next=()=>{if(cur<total-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
   return(
@@ -1006,6 +1008,7 @@ function ContentBlock({ block, lang }) {
 
 // ── QUIZ ──────────────────────────────────────
 function Quiz({ questions, lang, t, onComplete }) {
+  const [shuffled] = useState(() => questions.map(shuffleQuestionOptions));
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [answered, setAnswered] = useState(false);
@@ -1013,7 +1016,7 @@ function Quiz({ questions, lang, t, onComplete }) {
   const [answers, setAnswers] = useState([]);
   const [finished, setFinished] = useState(false);
 
-  const q = questions[current];
+  const q = shuffled[current];
   const isCorrect = selected === q.correct;
 
   const handleSelect = (idx) => {

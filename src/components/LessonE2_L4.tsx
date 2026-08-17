@@ -1,5 +1,6 @@
 // LessonE2_L4 - Generateurs & Production electrique | PART 1
 import { useState } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   cyan:   "#00e5ff",
@@ -598,6 +599,8 @@ export default function LessonE2_L4({ lang="fr", onBack, onComplete }:{ lang?:st
 
   const quiz = t.quiz;
   const bank = t.bankQuestions;
+  const [shuffledQuiz]=useState(()=>quiz.map(shuffleQuestionOptions));
+  const [shuffledBank]=useState(()=>bank.map(shuffleQuestionOptions));
   const xpFinal = qScore>=5?250:qScore>=4?200:qScore>=3?150:100;
   const optColors = [C.cyan, C.amber, C.green, C.purple];
   const progress = phase==="content"?60:phase==="quiz"?85:100;
@@ -612,9 +615,9 @@ export default function LessonE2_L4({ lang="fr", onBack, onComplete }:{ lang?:st
   );
 
   const startBank=()=>{setBankIdx(0);setBankCur(0);setBankSel(null);setBankScore(0);setBankDone(false);};
-  const pickBank=(i:number)=>{if(bankSel!==null)return;setBankSel(i);if(i===bank[bankCur].correct)setBankScore(s=>s+1);};
+  const pickBank=(i:number)=>{if(bankSel!==null)return;setBankSel(i);if(i===shuffledBank[bankCur].correct)setBankScore(s=>s+1);};
   const bankNext=()=>{if(bankCur+1>=bank.length){setBankDone(true);return;}setBankCur(c=>c+1);setBankSel(null);};
-  const handleQConf=()=>{if(qSel===null)return;setQConf(true);if(qSel===quiz[qCur].correct)setQScore(s=>s+1);};
+  const handleQConf=()=>{if(qSel===null)return;setQConf(true);if(qSel===shuffledQuiz[qCur].correct)setQScore(s=>s+1);};
   const handleQNext=()=>{if(qCur+1>=quiz.length){setPhase("done");if(onComplete)onComplete(xpFinal);return;}setQCur(c=>c+1);setQSel(null);setQConf(false);};
 
   const header=(sub:string)=>(
@@ -696,18 +699,18 @@ export default function LessonE2_L4({ lang="fr", onBack, onComplete }:{ lang?:st
               <div>
                 <div style={{display:"flex",justifyContent:"space-between",marginBottom:10,fontSize:11,color:C.dim,fontFamily:"Courier New"}}><span>Q{bankCur+1}/{bank.length}</span><span style={{color:C.cyan}}>✦ {bankScore}</span></div>
                 <div style={{height:3,borderRadius:2,background:"rgba(255,255,255,0.08)",marginBottom:12}}><div style={{height:"100%",borderRadius:2,background:`linear-gradient(90deg,${C.cyan},${C.blue})`,width:`${(bankCur/bank.length)*100}%`,transition:"width 0.3s"}}/></div>
-                <div style={{fontSize:13,color:C.text,lineHeight:1.6,fontFamily:"Courier New",marginBottom:12,padding:12,borderRadius:10,background:`${C.navy2}cc`,border:`1px solid ${C.blue}22`}}>{bank[bankCur].q}</div>
+                <div style={{fontSize:13,color:C.text,lineHeight:1.6,fontFamily:"Courier New",marginBottom:12,padding:12,borderRadius:10,background:`${C.navy2}cc`,border:`1px solid ${C.blue}22`}}>{shuffledBank[bankCur].q}</div>
                 <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:10}}>
-                  {bank[bankCur].opts.map((opt:string,oi:number)=>{
+                  {shuffledBank[bankCur].opts.map((opt:string,oi:number)=>{
                     let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.12)",col="rgba(240,244,255,0.6)";
                     if(bankSel!==null){
-                      if(oi===bank[bankCur].correct){bg="rgba(76,175,80,0.15)";bd=C.green;col=C.green;}
+                      if(oi===shuffledBank[bankCur].correct){bg="rgba(76,175,80,0.15)";bd=C.green;col=C.green;}
                       else if(oi===bankSel){bg="rgba(239,83,80,0.15)";bd=C.red;col=C.red;}
                     }
                     return(<button key={oi} onClick={()=>pickBank(oi)} disabled={bankSel!==null} style={{textAlign:"left",padding:"10px 12px",borderRadius:10,border:`1.5px solid ${bd}`,background:bg,color:col,fontSize:12,fontFamily:"Courier New",cursor:bankSel===null?"pointer":"default",lineHeight:1.4}}>{opt}</button>);
                   })}
                 </div>
-                {bankSel!==null&&(<div><div style={{padding:12,borderRadius:10,background:`${C.navy3}cc`,borderLeft:`3px solid ${bankSel===bank[bankCur].correct?C.green:C.red}`,fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.7,fontFamily:"Courier New",marginBottom:10}}>{bank[bankCur].expl}</div><button onClick={bankNext} style={{width:"100%",padding:"12px 0",borderRadius:12,background:`linear-gradient(135deg,${C.cyan},${C.blue})`,border:"none",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,color:C.navy,cursor:"pointer",letterSpacing:2}}>{bankCur+1>=bank.length?t.bankTrophy:t.bankNext}</button></div>)}
+                {bankSel!==null&&(<div><div style={{padding:12,borderRadius:10,background:`${C.navy3}cc`,borderLeft:`3px solid ${bankSel===shuffledBank[bankCur].correct?C.green:C.red}`,fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.7,fontFamily:"Courier New",marginBottom:10}}>{shuffledBank[bankCur].expl}</div><button onClick={bankNext} style={{width:"100%",padding:"12px 0",borderRadius:12,background:`linear-gradient(135deg,${C.cyan},${C.blue})`,border:"none",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,color:C.navy,cursor:"pointer",letterSpacing:2}}>{bankCur+1>=bank.length?t.bankTrophy:t.bankNext}</button></div>)}
               </div>
             )}
             {bankDone&&(<div style={{textAlign:"center",padding:16}}><div style={{fontSize:36,marginBottom:8}}>🏆</div><div style={{fontFamily:"'Cinzel',serif",fontSize:16,color:C.cyan,marginBottom:6}}>{t.bankTrophy}</div><div style={{fontSize:13,color:C.dim,fontFamily:"Courier New"}}>{t.bankScore} : {bankScore}/{bank.length}</div></div>)}
@@ -727,7 +730,7 @@ export default function LessonE2_L4({ lang="fr", onBack, onComplete }:{ lang?:st
 
   // ══ QUIZ ═════════════════════════════════════════════════════
   if(phase==="quiz"){
-    const q=quiz[qCur];
+    const q=shuffledQuiz[qCur];
     const isCorrect=qSel===q.correct;
     const submitLabel={fr:"Valider",en:"Submit",es:"Validar",pt:"Validar"}[lang]||"Valider";
     const nextLabel={fr:"Suivant =>",en:"Next =>",es:"Siguiente =>",pt:"Seguinte =>"}[lang]||"Suivant =>";

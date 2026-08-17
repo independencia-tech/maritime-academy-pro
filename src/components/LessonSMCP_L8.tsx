@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -319,6 +320,7 @@ const BANK_SMCP8 = {
 function QuestionBank({ lang }) {
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [started,setStarted]=useState(false);const [done,setDone]=useState(false);
   const questions=BANK_SMCP8[lang]||BANK_SMCP8.en;const total=questions.length;
+  const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));
   if(!started) return(
     <Card style={{marginBottom:12,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}>
       <div style={{fontSize:12,color:C.white,lineHeight:1.6,marginBottom:12}}>{lang==="fr"?"Entraîne-toi avec 15 questions de révision transversale avant l'examen final.":lang==="en"?"Practice with 15 cross-module review questions before the final exam.":lang==="es"?"Practica con 15 preguntas de repaso transversal antes del examen final.":"Pratique com 15 perguntas de revisão transversal antes do exame final."}</div>
@@ -335,7 +337,7 @@ function QuestionBank({ lang }) {
       <div style={{fontSize:13,color:C.gold2}}>{pct}%</div>
     </Card>);
   }
-  const q=questions[cur];const isOk=sel===q.correct;
+  const q=shuffled[cur];const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
   const next=()=>{if(cur<total-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
   return(
@@ -544,8 +546,9 @@ function GLine(){return<div style={{height:1,margin:"14px 0",background:`linear-
 function SL({icon,text,color}){return<div style={{display:"flex",alignItems:"center",gap:10,margin:"20px 0 12px"}}><span style={{fontSize:20}}>{icon}</span><div style={{fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:color||C.gold,letterSpacing:2}}>{text}</div><div style={{flex:1,height:1,background:`linear-gradient(90deg,${color||C.gold}44,transparent)`}}/></div>;}
 
 function FinalExamComp({questions,t,lang,onComplete}){
+  const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [answers,setAnswers]=useState([]);const [done,setDone]=useState(false);
-  const q=questions[cur];const isOk=sel===q.correct;
+  const q=shuffled[cur];const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);setAnswers(a=>[...a,{i,ok:i===q.correct,module:q.module}]);};
   const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else{setDone(true);onComplete(score+(isOk?1:0));}};
   if(done){

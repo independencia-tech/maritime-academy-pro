@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { C, T, Stars, Card, GLine, SL, QuizComp, QuestionBank } from "./LessonShared";
+import { C, T, Stars, Card, GLine, SL, QuizComp, QuestionBank, shuffleQuestionOptions } from "./LessonShared";
 
 // ══════════════════════════════════════
 // SVG 1 — BRIDGE TEAM ROLES SIMULATOR
@@ -352,7 +352,8 @@ function WatchRolesVocabQuiz({ lang }) {
     { q: { fr: "Qui évalue si un contact radar constitue un risque de collision ?", en: "Who assesses whether a radar contact is a collision risk?", es: "¿Quién evalúa si un contacto de radar constituye un riesgo de colisión?", pt: "Quem avalia se um contacto de radar constitui um risco de colisão?" }, opts: [R.lookout, R.oow, R.helm], correct: 1 },
   ];
 
-  const q = qs[qIdx];
+  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q)));
+  const q = shuffled[qIdx];
   const pick = (i) => { if (ans !== null) return; setAns(i); if (i === q.correct) setScore(s => s + 1); };
   const next = () => { if (qIdx < qs.length - 1) { setQIdx(v => v + 1); setAns(null); } else setDone(true); };
 

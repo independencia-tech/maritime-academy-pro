@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -601,7 +602,8 @@ function QuizComp({ questions, t, onComplete }: any) {
   const [confirmed, setConfirmed] = useState(false);
   const [score, setScore] = useState(0);
   const optColors = [C.cargo, C.pump, C.pipe, C.pressure];
-  const q = questions[cur];
+  const [shuffled] = useState(() => questions.map(shuffleQuestionOptions));
+  const q = shuffled[cur];
   const isCorrect = selected === q.correct;
 
   const handleConfirm = () => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { C, T, Stars, Card, GLine, SL, QuizComp, QuestionBank } from "./LessonShared";
+import { C, T, Stars, Card, GLine, SL, QuizComp, QuestionBank, shuffleQuestionOptions } from "./LessonShared";
 
 // ══════════════════════════════════════
 // SVG 1 — STEERING ORDERS SIMULATOR
@@ -381,7 +381,8 @@ function SteeringVocabQuiz({ lang }) {
     { order: STEERING_ORDERS[6].order, opts: [M(0), M(6), M(2)], correct: 1 },
   ];
 
-  const q = qs[qIdx];
+  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q)));
+  const q = shuffled[qIdx];
   const pick = (i) => { if (ans !== null) return; setAns(i); if (i === q.correct) setScore(s => s + 1); };
   const next = () => { if (qIdx < qs.length - 1) { setQIdx(v => v + 1); setAns(null); } else setDone(true); };
 

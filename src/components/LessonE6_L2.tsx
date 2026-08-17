@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -770,7 +771,8 @@ function QuizComp({ questions, t, onComplete }) {
   const [answered, setAnswered] = useState(false);
   const [score, setScore] = useState(0);
 
-  const q = questions[idx];
+  const [shuffled] = useState(() => questions.map(shuffleQuestionOptions));
+  const q = shuffled[idx];
   const isLast = idx === questions.length - 1;
 
   const handleAnswer = (i) => {

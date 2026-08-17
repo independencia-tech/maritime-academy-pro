@@ -1,5 +1,6 @@
 // LessonShipCareer_L2 - Ta feuille de route
 import { useState } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   primary:"#8b5cf6", secondary:"#6366f1",
@@ -616,6 +617,7 @@ function Exercises({ lang }:{ lang:string }) {
 
 function QuestionBank({ lang }:{ lang:string }) {
   const bank=BANK[lang]||BANK.fr;
+  const [shuffled]=useState(()=>bank.map(shuffleQuestionOptions));
   const [bankIdx,setBankIdx]=useState<number|null>(null);
   const [bankCur,setBankCur]=useState(0);
   const [bankSel,setBankSel]=useState<number|null>(null);
@@ -624,7 +626,7 @@ function QuestionBank({ lang }:{ lang:string }) {
   const L:any={fr:{title:"Banque de questions",start:"COMMENCER =>",next:"SUIVANT =>",trophy:"TERMINER"},en:{title:"Question Bank",start:"START =>",next:"NEXT =>",trophy:"FINISH"},es:{title:"Banco de preguntas",start:"COMENZAR =>",next:"SIGUIENTE =>",trophy:"TERMINAR"},pt:{title:"Banco de questoes",start:"COMECAR =>",next:"PROXIMO =>",trophy:"TERMINAR"}};
   const l=L[lang]||L.fr;
   const startBank=()=>{setBankIdx(0);setBankCur(0);setBankSel(null);setBankScore(0);setBankDone(false);};
-  const pickBank=(i:number)=>{if(bankSel!==null)return;setBankSel(i);if(i===bank[bankCur].correct)setBankScore(s=>s+1);};
+  const pickBank=(i:number)=>{if(bankSel!==null)return;setBankSel(i);if(i===shuffled[bankCur].correct)setBankScore(s=>s+1);};
   const bankNext=()=>{if(bankCur+1>=bank.length){setBankDone(true);return;}setBankCur(c=>c+1);setBankSel(null);};
   return (
     <div>
@@ -641,12 +643,12 @@ function QuestionBank({ lang }:{ lang:string }) {
           <div style={{height:3,borderRadius:2,background:"rgba(255,255,255,0.08)",marginBottom:12}}>
             <div style={{height:"100%",borderRadius:2,background:`linear-gradient(90deg,${C.primary},${C.gold})`,width:`${(bankCur/bank.length)*100}%`,transition:"width 0.3s"}}/>
           </div>
-          <div style={{fontSize:13,color:"#e0e8ff",lineHeight:1.6,fontFamily:"Courier New",marginBottom:12,padding:12,borderRadius:10,background:"rgba(10,22,40,0.8)",border:`1px solid ${C.primary}22`}}>{bank[bankCur].q}</div>
+          <div style={{fontSize:13,color:"#e0e8ff",lineHeight:1.6,fontFamily:"Courier New",marginBottom:12,padding:12,borderRadius:10,background:"rgba(10,22,40,0.8)",border:`1px solid ${C.primary}22`}}>{shuffled[bankCur].q}</div>
           <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:10}}>
-            {bank[bankCur].opts.map((opt:string,oi:number)=>{
+            {shuffled[bankCur].opts.map((opt:string,oi:number)=>{
               let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.12)",col="rgba(240,244,255,0.6)";
               if(bankSel!==null){
-                if(oi===bank[bankCur].correct){bg="rgba(76,175,80,0.15)";bd="#4ade80";col="#4ade80";}
+                if(oi===shuffled[bankCur].correct){bg="rgba(76,175,80,0.15)";bd="#4ade80";col="#4ade80";}
                 else if(oi===bankSel){bg="rgba(239,68,68,0.15)";bd="#ef4444";col="#ef4444";}
               }
               return(<button key={oi} onClick={()=>pickBank(oi)} disabled={bankSel!==null} style={{textAlign:"left",padding:"10px 12px",borderRadius:10,border:`1.5px solid ${bd}`,background:bg,color:col,fontSize:12,fontFamily:"Courier New",cursor:bankSel===null?"pointer":"default",lineHeight:1.4}}>{opt}</button>);
@@ -654,7 +656,7 @@ function QuestionBank({ lang }:{ lang:string }) {
           </div>
           {bankSel!==null&&(
             <div>
-              <div style={{padding:12,borderRadius:10,background:"rgba(13,31,60,0.8)",borderLeft:`3px solid ${bankSel===bank[bankCur].correct?"#4ade80":"#ef4444"}`,fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.7,fontFamily:"Courier New",marginBottom:10}}>{bank[bankCur].expl}</div>
+              <div style={{padding:12,borderRadius:10,background:"rgba(13,31,60,0.8)",borderLeft:`3px solid ${bankSel===shuffled[bankCur].correct?"#4ade80":"#ef4444"}`,fontSize:12,color:"rgba(240,244,255,0.82)",lineHeight:1.7,fontFamily:"Courier New",marginBottom:10}}>{shuffled[bankCur].expl}</div>
               <button onClick={bankNext} style={{width:"100%",padding:"12px 0",borderRadius:12,background:`linear-gradient(135deg,${C.primary},${C.gold})`,border:"none",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,color:"#060e1a",cursor:"pointer",letterSpacing:2}}>{bankCur+1>=bank.length?l.trophy:l.next}</button>
             </div>
           )}
@@ -673,6 +675,7 @@ function QuestionBank({ lang }:{ lang:string }) {
 
 function QuizTab({ lang, onComplete }:{ lang:string; onComplete:(xp:number)=>void }) {
   const quiz=QUIZ[lang]||QUIZ.fr;
+  const [shuffledQuiz]=useState(()=>quiz.map(shuffleQuestionOptions));
   const t=T[lang]||T.fr;
   const [cur,setCur]=useState(0);
   const [selected,setSelected]=useState<number|null>(null);
@@ -705,7 +708,7 @@ function QuizTab({ lang, onComplete }:{ lang:string; onComplete:(xp:number)=>voi
     </div>
   );
 
-  const q=quiz[cur];
+  const q=shuffledQuiz[cur];
   const isCorrect=selected===q.correct;
   const handleConfirm=()=>{if(selected===null)return;setConfirmed(true);if(isCorrect)setScore(s=>s+1);};
   const handleNext=()=>{if(cur+1>=quiz.length){setDone(true);return;}setCur(c=>c+1);setSelected(null);setConfirmed(false);};

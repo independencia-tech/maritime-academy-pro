@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   bg0:"#03070f", bg1:"#060e1a", bg2:"#0a1628", bg3:"#0d1f3c",
@@ -655,8 +656,9 @@ function QuestionBank({ lang }) {
       ans:1,expl:lbl("L'angle de chavirement (vanishing stability angle) est l'angle de gite auquel GZ redevient nul apres son maximum positif. Au-dela, le navire ne peut plus se redresser seul - il chavire. Pour un navire de charge conventionnel, l'IMO IS Code 2008 exige que cet angle soit d'au moins 25 degres apres le maximum de GZ. Un angle de chavirement eleve (> 60-70 deg) indique un navire tres sur, avec une grande reserve de stabilite. La courbe GZ et cet angle sont calcules par le logiciel de stabilite pour chaque condition de chargement.","The angle of vanishing stability is the heel angle at which GZ returns to zero after its positive maximum. Beyond this, the vessel can no longer right itself — it capsizes. For a conventional cargo vessel, IMO IS Code 2008 requires this angle to be at least 25 degrees past the GZ maximum. A high vanishing angle (> 60-70 deg) indicates a very safe vessel with large stability reserve. The GZ curve and this angle are calculated by stability software for each loading condition.","El angulo de zozobra es el angulo al que GZ vuelve a cero. Mas alla, el buque no puede adrizar. IS Code OMI: angulo >= 25 grados tras el maximo GZ. Angulo alto (> 60-70 grados) = buque muy seguro.","O angulo de tombamento e o angulo em que GZ volta a zero. Alem disto, o navio nao pode endireitar. IS Code IMO: angulo >= 25 graus apos o maximo GZ. Angulo alto (> 60-70 graus) = navio muito seguro.")},
   ];
 
+  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q,"ans")));
   const total=qs.length;
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===qs[idx].ans)setScore(s=>s+1);};
+  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
   const handleNext=()=>{if(idx===total-1){setDone(true);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
 
@@ -701,7 +703,7 @@ function QuestionBank({ lang }) {
     );
   }
 
-  const q=qs[idx];
+  const q=shuffled[idx];
   return (
     <div>
       <div style={{marginBottom:14}}>
@@ -832,12 +834,13 @@ const QUIZ={
 };
 
 function QuizComp({ questions, t, lang, onComplete }) {
+  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
   const [idx,setIdx]=useState(0);
   const [sel,setSel]=useState(null);
   const [answered,setAnswered]=useState(false);
   const [score,setScore]=useState(0);
   const total=questions.length; const isLast=idx===total-1;
-  const q=questions[idx];
+  const q=shuffled[idx];
   const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
   const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   return (

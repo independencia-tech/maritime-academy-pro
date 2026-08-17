@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   bg0:"#03070f", bg1:"#060e1a", bg2:"#0a1628", bg3:"#0d1f3c",
@@ -843,8 +844,9 @@ function QuestionBank({ lang }) {
       ans:1,expl:lbl("Un nuisance alarm se declenche regulierement pour une condition non dangereuse (seuil trop sensible). Cree un bruit de fond et risque de desensibiliser l'operateur — danger majeur reconnu par IMO.","A nuisance alarm triggers regularly for a non-dangerous condition (threshold too sensitive). Creates background noise and risks desensitizing operator — major hazard recognized by IMO.","Un nuisance alarm se activa para una condicion no peligrosa. Crea ruido de fondo y desensibiliza al operador.","Um nuisance alarm aciona para uma condicao nao perigosa. Cria ruido de fundo e dessensibiliza o operador.")},
   ];
 
+  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q,"ans")));
   const total=qs.length;
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===qs[idx].ans)setScore(s=>s+1);};
+  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
   const handleNext=()=>{if(idx===total-1){setDone(true);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
 
@@ -889,7 +891,7 @@ function QuestionBank({ lang }) {
     );
   }
 
-  const q=qs[idx];
+  const q=shuffled[idx];
   return (
     <div>
       <div style={{marginBottom:14}}>
@@ -952,6 +954,7 @@ function QuestionBank({ lang }) {
 // QUIZ — 5 QCM
 // ══════════════════════════════════════
 function QuizComp({ questions, t, lang, onComplete }) {
+  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
   const [idx,setIdx]=useState(0);
   const [sel,setSel]=useState(null);
   const [answered,setAnswered]=useState(false);
@@ -960,7 +963,7 @@ function QuizComp({ questions, t, lang, onComplete }) {
   const amber="#ffb300"; const amber2="#ffd54f"; const gold2="#e8b94f";
   const white="#f0f4ff"; const border="rgba(0,229,255,0.18)"; const steel3="#b0bec5";
   const total=questions.length; const isLast=idx===total-1;
-  const q=questions[idx];
+  const q=shuffled[idx];
   const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
   const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   return (

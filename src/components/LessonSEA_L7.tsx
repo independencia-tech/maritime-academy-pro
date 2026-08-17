@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { C, T, Stars, Card, GLine, SL, QuizComp, QuestionBank } from "./LessonShared";
+import { C, T, Stars, Card, GLine, SL, QuizComp, QuestionBank, shuffleQuestionOptions } from "./LessonShared";
 
 // ══════════════════════════════════════
 // SVG 1 — SURFACE PREPARATION & PAINTING SIMULATOR
@@ -316,7 +316,8 @@ function PaintingVocabQuiz({ lang }) {
     { situation: situations[6], opts: [M(3), M(1), M(6)], correct: 2 },
   ];
 
-  const q = qs[qIdx];
+  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q)));
+  const q = shuffled[qIdx];
   const pick = (i) => { if (ans !== null) return; setAns(i); if (i === q.correct) setScore(s => s + 1); };
   const next = () => { if (qIdx < qs.length - 1) { setQIdx(v => v + 1); setAns(null); } else setDone(true); };
 

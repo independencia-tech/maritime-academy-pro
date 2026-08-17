@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { shuffleQuestionOptions } from "./LessonShared";
 
 const C = {
   bg0:"#03070f", bg1:"#060e1a", bg2:"#0a1628", bg3:"#0d1f3c",
@@ -776,8 +777,9 @@ function QuestionBank({ lang }) {
       ans:1,expl:lbl("Renforcer les amarres si : (1) Vent > force 6 — ajouter des spring doublants. (2) Houle ou clapot entrant — toutes les amarres peuvent se fatiguer rapidement. (3) Fort courant de maree — amarres longitudinales a doubler. (4) Passage de navires rapides (wash) — chocs soudains. (5) Maree extremes — amarres trop courtes ou trop longues selon le sens. Regle : en cas de doute, doubler les amarres.","Reinforce mooring lines if: (1) Wind > force 6 — add doubling springs. (2) Swell or chop — all lines can fatigue quickly. (3) Strong tidal current — double longitudinal lines. (4) Fast vessel wash — sudden shocks. (5) Extreme tides — lines too short or too long. Rule: when in doubt, double up.","Reforzar amarras si: (1) Viento > fuerza 6. (2) Marejada o rizado. (3) Fuerte corriente de marea. (4) Paso de buques rapidos. (5) Mareas extremas. Regla: ante la duda, doblar las amarras.","Reforcar amarras se: (1) Vento > forca 6. (2) Ondulacao ou marola. (3) Forte corrente de mare. (4) Passagem de navios rapidos. (5) Mares extremas. Regra: na duvida, dobrar as amarras.")},
   ];
 
+  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q,"ans")));
   const total=qs.length;
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===qs[idx].ans)setScore(s=>s+1);};
+  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
   const handleNext=()=>{if(idx===total-1){setDone(true);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
 
@@ -822,7 +824,7 @@ function QuestionBank({ lang }) {
     );
   }
 
-  const q=qs[idx];
+  const q=shuffled[idx];
   return (
     <div>
       <div style={{marginBottom:14}}>
@@ -951,12 +953,13 @@ const QUIZ={
 };
 
 function QuizComp({ questions, t, lang, onComplete }) {
+  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
   const [idx,setIdx]=useState(0);
   const [sel,setSel]=useState(null);
   const [answered,setAnswered]=useState(false);
   const [score,setScore]=useState(0);
   const total=questions.length; const isLast=idx===total-1;
-  const q=questions[idx];
+  const q=shuffled[idx];
   const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
   const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   return (
