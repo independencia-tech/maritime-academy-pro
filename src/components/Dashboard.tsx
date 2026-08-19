@@ -1012,11 +1012,20 @@ userStreak=1,
   onChangeDepartment=()=>{},
   onResetProfile=()=>{},
   onSignOut=()=>{},
+  activeTab: activeTabProp,
+  onActiveTabChange,
 }) {
   const t=T[lang]||T.fr;
-  const [activeTab,setActiveTab]=useState(
+  // Lifted to the parent (MaritimeApp) when activeTab/onActiveTabChange are provided, so the
+  // selected tab (deck/engine/safety/tools) survives this component unmounting and remounting
+  // every time the user leaves the dashboard page and comes back (e.g. after finishing a
+  // module) — previously this local useState reset to profile.dept on every remount, which
+  // read as "always dumped back on Deck" regardless of which tab was open before leaving.
+  const [localActiveTab,setLocalActiveTab]=useState(
     profile?.dept==="engine"?"engine":"deck"
   );
+  const activeTab = activeTabProp ?? localActiveTab;
+  const setActiveTab = onActiveTabChange ?? setLocalActiveTab;
   const [vis,setVis]=useState(false);
   const [unlockModal,setUnlockModal]=useState(null);
   const [stats]=useState({lessons:0,certs:0});

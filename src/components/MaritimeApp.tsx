@@ -2211,6 +2211,7 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
           setProfile((p: any) => ({ ...p, ...data }));
           if (data.lang) setLang(data.lang);
           if (data.tier) setUserPlan(data.tier);
+          if (data.dept) setDashboardTab(data.dept);
           try {
             const raw = localStorage.getItem("map_status_card");
             const saved = raw ? JSON.parse(raw) : {};
@@ -2301,6 +2302,7 @@ useEffect(() => {
       if (saved && typeof saved === "object") {
         setProfile(saved);
         if (saved.lang) setLang(saved.lang);
+        if (saved.dept) setDashboardTab(saved.dept);
       }
     }
   } catch {}
@@ -2308,6 +2310,10 @@ useEffect(() => {
   const [userPlan, setUserPlan] = useState<"free"|"premium"|"premium_plus">("free");
 const [userXP, setUserXP] = useState(0);
 const [userStreak, setUserStreak] = useState(1);
+  // Lifted out of Dashboard so the selected tab (deck/engine/safety/tools) survives leaving
+  // and returning to the dashboard page (Dashboard unmounts/remounts on every page change,
+  // which used to reset this to profile.dept and always land back on Deck).
+  const [dashboardTab, setDashboardTab] = useState<"deck"|"engine"|"safety"|"tools">("deck");
 
 const persistProfile = async (p: any) => {
   setProfile(p);
@@ -2598,6 +2604,8 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
             userXP={userXP}
             userStreak={userStreak}
             completedLessons={completedLessons}
+            activeTab={dashboardTab}
+            onActiveTabChange={setDashboardTab}
             onViewStatus={() => setPage("status")}
             onEditProfile={() => setPage("questionnaire")}
             onStartModule={(m:any) => {
