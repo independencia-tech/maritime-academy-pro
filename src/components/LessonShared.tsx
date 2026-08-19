@@ -43,13 +43,15 @@ export function QuizComp({questions,t,onComplete}){
 }
 
 // QUESTION BANK ENGINE - questions passed as prop (was a hardcoded BANK constant before), with COMMENCER gate
-export function QuestionBank({ lang, t, questions }) {
+// onComplete is optional and fires once, the moment the user finishes the last question -
+// lets a parent lesson require the practice bank before unlocking its final quiz.
+export function QuestionBank({ lang, t, questions, onComplete }) {
   const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));
   const [started,setStarted]=useState(false);
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [done,setDone]=useState(false);
   const q=shuffled[cur];const isOk=sel===q?.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
-  const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
+  const next=()=>{if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else{setDone(true);if(onComplete)onComplete();}};
   if(!started) return (
     <div style={{textAlign:"center",padding:"10px 0"}}>
       <div style={{fontSize:12,color:C.muted,marginBottom:14,lineHeight:1.6}}>{lang==="fr"?`${questions.length} questions, une a la fois. Prends ton temps.`:lang==="en"?`${questions.length} questions, one at a time. Take your time.`:lang==="es"?`${questions.length} preguntas, una a la vez. Tomate tu tiempo.`:`${questions.length} perguntas, uma de cada vez. Leva o teu tempo.`}</div>

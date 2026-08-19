@@ -656,6 +656,7 @@ export default function LessonSEA_L7({ lang = "en", onBack = () => {}, onComplet
   const quiz = buildQuiz(lang);
   const lc = getContent(lang);
   const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [vis, setVis] = useState(false);
   useEffect(() => { setTimeout(() => setVis(true), 80); }, []);
@@ -724,14 +725,14 @@ export default function LessonSEA_L7({ lang = "en", onBack = () => {}, onComplet
             <Card style={{ marginBottom: 14, border: `1px solid ${C.gold}44`, background: "linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))" }}><Exercise1 lang={lang} t={t} /></Card>
 
             <SL icon="📚" text={lc.p7} color={C.blue2} />
-            <Card style={{ marginBottom: 14, border: `1px solid ${C.blue2}44`, background: "linear-gradient(135deg,rgba(26,111,212,0.08),rgba(13,31,60,0.8))" }}><QuestionBank lang={lang} t={t} questions={bank} /></Card>
+            <Card style={{ marginBottom: 14, border: `1px solid ${C.blue2}44`, background: "linear-gradient(135deg,rgba(26,111,212,0.08),rgba(13,31,60,0.8))" }}><QuestionBank lang={lang} t={t} questions={bank} onComplete={()=>setBankDone(true)} /></Card>
 
             <Card style={{ marginBottom: 14, background: `${C.purple}08`, border: `1px solid ${C.purple}22` }}>
               <div style={{ fontSize: 11, color: C.purple, letterSpacing: 3, fontFamily: "'Cinzel',serif", marginBottom: 12 }}>{lc.sumT}</div>
               {lc.sumP.map((pt, i) => <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "5px 0", borderBottom: i < lc.sumP.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none", fontSize: 11, color: C.white }}><span style={{ color: C.purple, fontWeight: 700, fontFamily: "'Courier New',monospace" }}>✓</span>{pt}</div>)}
             </Card>
 
-            <button onClick={() => setPhase("quiz")} style={{ width: "100%", padding: "17px 0", border: "none", borderRadius: 16, background: `linear-gradient(135deg,${C.purple},${C.gold})`, fontFamily: "'Cinzel',serif", fontSize: 15, fontWeight: 700, letterSpacing: 2, color: C.white, cursor: "pointer", boxShadow: `0 10px 36px ${C.purple}33`, marginTop: 8 }}>{t.startQuiz}</button>
+            <button disabled={!bankDone} onClick={() => { if (bankDone) setPhase("quiz"); }} style={{ opacity: bankDone ? 1 : 0.45, cursor: bankDone ? "pointer" : "not-allowed", width: "100%", padding: "17px 0", border: "none", borderRadius: 16, background: `linear-gradient(135deg,${C.purple},${C.gold})`, fontFamily: "'Cinzel',serif", fontSize: 15, fontWeight: 700, letterSpacing: 2, color: C.white,  boxShadow: `0 10px 36px ${C.purple}33`, marginTop: 8 }}>{t.startQuiz}</button>
             <div style={{ textAlign: "center", fontSize: 11, color: C.muted, marginTop: 8 }}>{t.readFirst}</div>
           </>}
 
