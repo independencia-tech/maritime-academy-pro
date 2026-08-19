@@ -593,7 +593,7 @@ const getContent = lang => {
   return d[lang]||d.en;
 };
 
-export default function LessonE2_L7({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonE2_L7({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t=T[lang]||T.en;const quiz=QUIZ[lang]||QUIZ.en;const lc=getContent(lang);
   const [phase,setPhase]=useState("content");const [quizScore,setQuizScore]=useState(0);const [vis,setVis]=useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
@@ -681,7 +681,7 @@ export default function LessonE2_L7({ lang="fr", onBack=()=>{}, onComplete=()=>{
             <div style={{textAlign:"center",fontSize:12,color:C.gold2,marginBottom:12,fontFamily:"'Cinzel',serif"}}>
               {lang==="fr"?"🎉 MODULE ENGINE E2 TERMINE !":lang==="en"?"🎉 ENGINE MODULE E2 COMPLETE!":lang==="es"?"🎉 ¡MODULO ENGINE E2 COMPLETADO!":"🎉 MODULO ENGINE E2 CONCLUIDO!"}
             </div>
-            <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.ember},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 8px 28px ${C.ember}33`,marginBottom:10}}>
+            <button onClick={onNext} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.ember},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 8px 28px ${C.ember}33`,marginBottom:10}}>
               {lang==="fr"?"MODULE E3 - CHAUDIERES & VAPEUR →":lang==="en"?"MODULE E3 - BOILERS & STEAM →":lang==="es"?"MODULO E3 - CALDERAS Y VAPOR →":"MODULO E3 - CALDEIRAS E VAPOR →"}
             </button>
             <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:"1px solid rgba(255,255,255,0.15)",borderRadius:14,background:"transparent",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>

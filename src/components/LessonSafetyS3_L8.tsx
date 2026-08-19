@@ -445,7 +445,7 @@ const mindsetLabel = {
 };
 
 // MAIN
-export default function LessonSafetyS3_L8({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonSafetyS3_L8({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const bank = BANK[lang]||BANK.fr;
@@ -584,7 +584,7 @@ export default function LessonSafetyS3_L8({ lang="fr", onBack=()=>{}, onComplete
               <div style={{fontSize:11,color:C.gold2,fontStyle:"italic"}}>{lang==="fr"?"MAP Medical Mindset débloqué":lang==="en"?"Medical Mindset Unlocked":lang==="es"?"MAP Medical Mindset desbloqueado":"MAP Medical Mindset desbloqueado"}</div>
             </Card>
 
-            <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.red},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(192,57,43,0.4)",marginBottom:10}}>
+            <button onClick={onNext} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.red},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(192,57,43,0.4)",marginBottom:10}}>
               {t.backDash}
             </button>
           </div>}

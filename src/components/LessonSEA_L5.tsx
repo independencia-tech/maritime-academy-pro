@@ -1026,7 +1026,7 @@ const getContent=(lang)=>{
   return d[lang]||d.fr;
 };
 
-export default function LessonSEA_L5({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonSEA_L5({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   useEffect(()=>{if(typeof window!=="undefined")window.__MAP_LANG__=lang;},[lang]);
   const t=T[lang]||T.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
@@ -1225,7 +1225,7 @@ export default function LessonSEA_L5({ lang="fr", onBack=()=>{}, onComplete=()=>
                 </div>
               ))}
             </div>
-            <button onClick={onComplete}
+            <button onClick={onNext}
               style={{width:"100%",padding:"16px 0",border:"none",borderRadius:18,
                 background:`linear-gradient(135deg,${C.gold},${C.amber})`,
                 fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:900,letterSpacing:2,

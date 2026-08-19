@@ -540,7 +540,7 @@ const getContent = lang => {
   return d[lang]||d.fr;
 };
 
-export default function LessonArbitration({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonArbitration({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t=T[lang]||T.fr;const quiz=QUIZ[lang]||QUIZ.fr;const lc=getContent(lang);
   const [phase,setPhase]=useState("content");const [quizScore,setQuizScore]=useState(0);const [vis,setVis]=useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
@@ -635,7 +635,7 @@ export default function LessonArbitration({ lang="fr", onBack=()=>{}, onComplete
                 {lang==="fr"?"SOLAS · MARPOL · STCW · MLC · COLREG · UNCLOS\nResponsabilité · Ports · Piraterie · Arbitrage":"SOLAS · MARPOL · STCW · MLC · COLREG · UNCLOS\nLiability · Ports · Piracy · Arbitration"}
               </div>
             </div>
-            <button onClick={onComplete} style={{width:"100%",padding:"18px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.gold},${C.gold2})`,fontFamily:"'Cinzel',serif",fontSize:16,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:"0 10px 40px rgba(201,146,42,0.5)",marginBottom:10}}>
+            <button onClick={onNext} style={{width:"100%",padding:"18px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.gold},${C.gold2})`,fontFamily:"'Cinzel',serif",fontSize:16,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:"0 10px 40px rgba(201,146,42,0.5)",marginBottom:10}}>
               🏆 {lang==="fr"?"VOIR MON CERTIFICAT":lang==="en"?"VIEW MY CERTIFICATE":lang==="es"?"VER MI CERTIFICADO":"VER MEU CERTIFICADO"} 🏆
             </button>
             <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>

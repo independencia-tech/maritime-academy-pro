@@ -1015,7 +1015,7 @@ const getContent = (lang) => {
 // ══════════════════════════════════════
 // MAIN EXPORT
 // ══════════════════════════════════════
-export default function LessonE6_L5({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonE6_L5({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const lc = getContent(lang);
@@ -1166,7 +1166,7 @@ export default function LessonE6_L5({ lang="fr", onBack=()=>{}, onComplete=()=>{
                 </div>
               ))}
             </Card>
-            <button onClick={onComplete}
+            <button onClick={onNext}
               style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.hot},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(229,57,53,0.35)",marginBottom:10}}>
               {lang==="fr"?"LECON 6 - JAUGEAGE =>":lang==="en"?"LESSON 6 - GAUGING =>":lang==="es"?"LECCION 6 - AFORO =>":"LICAO 6 - SONDAGEM =>"}
             </button>

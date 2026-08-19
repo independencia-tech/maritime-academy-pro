@@ -650,7 +650,7 @@ const getContent = lang => {
   return d[lang] || d.en;
 };
 
-export default function LessonSEA_L7({ lang = "en", onBack = () => {}, onComplete = () => {} }) {
+export default function LessonSEA_L7({ lang = "en", onBack = () => {}, onComplete = () => {}, onNext = () => {} }) {
   const t = T[lang] || T.en;
   const bank = BANK[lang] || BANK.en;
   const quiz = buildQuiz(lang);
@@ -769,7 +769,7 @@ export default function LessonSEA_L7({ lang = "en", onBack = () => {}, onComplet
               {lc.learnedP.map((pt, i) => <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: i < lc.learnedP.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none", fontSize: 12, color: C.white }}><span style={{ color: C.purple, fontWeight: 700 }}>✓</span>{pt}</div>)}
             </Card>
 
-            <button onClick={onComplete} style={{ width: "100%", padding: "16px 0", border: "none", borderRadius: 16, background: `linear-gradient(135deg,${C.gold},${C.blue})`, fontFamily: "'Cinzel',serif", fontSize: 14, fontWeight: 700, letterSpacing: 2, color: C.white, cursor: "pointer", boxShadow: "0 8px 28px rgba(201,146,42,0.4)", marginBottom: 10 }}>
+            <button onClick={onNext} style={{ width: "100%", padding: "16px 0", border: "none", borderRadius: 16, background: `linear-gradient(135deg,${C.gold},${C.blue})`, fontFamily: "'Cinzel',serif", fontSize: 14, fontWeight: 700, letterSpacing: 2, color: C.white, cursor: "pointer", boxShadow: "0 8px 28px rgba(201,146,42,0.4)", marginBottom: 10 }}>
               {lang === "fr" ? "🎯 EXPLORER LES AUTRES MODULES →" : lang === "en" ? "🎯 EXPLORE OTHER MODULES →" : lang === "es" ? "🎯 EXPLORAR OTROS MÓDULOS →" : "🎯 EXPLORAR OUTROS MÓDULOS →"}
             </button>
             <button onClick={onBack} style={{ width: "100%", padding: "12px 0", border: `1px solid rgba(255,255,255,0.15)`, borderRadius: 14, background: "transparent", fontFamily: "'Nunito',sans-serif", fontSize: 13, fontWeight: 600, color: C.muted, cursor: "pointer" }}>{t.backDash}</button>

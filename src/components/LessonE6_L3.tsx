@@ -951,7 +951,7 @@ const getContent = (lang) => {
 // ══════════════════════════════════════
 // MAIN EXPORT
 // ══════════════════════════════════════
-export default function LessonE6_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonE6_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const lc = getContent(lang);
@@ -1105,7 +1105,7 @@ export default function LessonE6_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{
                 </div>
               ))}
             </Card>
-            <button onClick={onComplete}
+            <button onClick={onNext}
               style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.orange},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(230,126,34,0.4)",marginBottom:10}}>
               {lang==="fr"?"LEÇON 4 — COW →":lang==="en"?"LESSON 4 — COW →":lang==="es"?"LECCIÓN 4 — COW →":"LIÇÃO 4 — COW →"}
             </button>

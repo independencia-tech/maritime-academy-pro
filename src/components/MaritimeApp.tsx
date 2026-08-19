@@ -2813,6 +2813,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l1"); setPage("s1_lessons"); }}
+          onNext={() => { markLessonCompleted("s1-l1"); setPage("lesson_s1_l2"); }}
         />
       )}
       {page === "lesson_s1_l2" && (
@@ -2820,6 +2821,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l2"); setPage("s1_lessons"); }}
+          onNext={() => { markLessonCompleted("s1-l2"); setPage("lesson_s1_l3"); }}
         />
       )}
       {page === "lesson_s1_l3" && (
@@ -2827,6 +2829,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l3"); setPage("s1_lessons"); }}
+          onNext={() => { markLessonCompleted("s1-l3"); setPage("lesson_s1_l4"); }}
         />
       )}
       {page === "lesson_s1_l4" && (
@@ -2834,6 +2837,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l4"); setPage("s1_lessons"); }}
+          onNext={() => { markLessonCompleted("s1-l4"); setPage("lesson_s1_l5"); }}
         />
       )}
       {page === "lesson_s1_l5" && (
@@ -2841,6 +2845,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l5"); setPage("s1_lessons"); }}
+          onNext={() => { markLessonCompleted("s1-l5"); setPage("lesson_s1_l6"); }}
         />
       )}
       {page === "lesson_s1_l6" && (
@@ -2848,6 +2853,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l6"); setPage("s1_lessons"); }}
+          onNext={() => { markLessonCompleted("s1-l6"); setPage("s1_lessons"); }}
         />
       )} 
    {page === "s2_lessons" && (
@@ -2869,6 +2875,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l1"); setPage("s2_lessons"); }}
+          onNext={() => { markLessonCompleted("s2-l1"); setPage("lesson_s2_l2"); }}
         />
       )}
       {page === "lesson_s2_l2" && (
@@ -2876,6 +2883,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l2"); setPage("s2_lessons"); }}
+          onNext={() => { markLessonCompleted("s2-l2"); setPage("lesson_s2_l3"); }}
         />
       )}
       {page === "lesson_s2_l3" && (
@@ -2883,6 +2891,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l3"); setPage("s2_lessons"); }}
+          onNext={() => { markLessonCompleted("s2-l3"); setPage("lesson_s2_l4"); }}
         />
       )}
       {page === "lesson_s2_l4" && (
@@ -2890,6 +2899,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l4"); setPage("s2_lessons"); }}
+          onNext={() => { markLessonCompleted("s2-l4"); setPage("lesson_s2_l5"); }}
         />
       )}
       {page === "lesson_s2_l5" && (
@@ -2897,6 +2907,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l5"); setPage("s2_lessons"); }}
+          onNext={() => { markLessonCompleted("s2-l5"); setPage("s2_lessons"); }}
         />
       )}
       {page === "s3_lessons" && (
@@ -2921,6 +2932,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l1"); setPage("s3_lessons"); }}
+    onNext={() => { markLessonCompleted("s3-l1"); setPage("lesson_safety_s3_l2"); }}
   />
 )}
 {page === "lesson_safety_s3_l2" && (
@@ -2928,6 +2940,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l2"); setPage("s3_lessons"); }}
+    onNext={() => { markLessonCompleted("s3-l2"); setPage("lesson_safety_s3_l3"); }}
   />
 )}
 {page === "lesson_safety_s3_l3" && (
@@ -2935,6 +2948,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l3"); setPage("s3_lessons"); }}
+    onNext={() => { markLessonCompleted("s3-l3"); setPage("lesson_safety_s3_l4"); }}
   />
 )}
 {page === "lesson_safety_s3_l4" && (
@@ -2942,6 +2956,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l4"); setPage("s3_lessons"); }}
+    onNext={() => { markLessonCompleted("s3-l4"); setPage("lesson_safety_s3_l5"); }}
   />
 )}
 {page === "lesson_safety_s3_l5" && (
@@ -2949,6 +2964,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l5"); setPage("s3_lessons"); }}
+    onNext={() => { markLessonCompleted("s3-l5"); setPage("lesson_safety_s3_l6"); }}
   />
 )}
 {page === "lesson_safety_s3_l6" && (
@@ -2956,6 +2972,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l6"); setPage("s3_lessons"); }}
+    onNext={() => { markLessonCompleted("s3-l6"); setPage("lesson_safety_s3_l7"); }}
   />
 )}
 {page === "lesson_safety_s3_l7" && (
@@ -2963,6 +2980,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l7"); setPage("s3_lessons"); }}
+    onNext={() => { markLessonCompleted("s3-l7"); setPage("lesson_safety_s3_l8"); }}
   />
 )}
 {page === "lesson_safety_s3_l8" && (
@@ -2970,6 +2988,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l8"); setPage("dashboard"); }}
+    onNext={() => { markLessonCompleted("s3-l8"); setPage("dashboard"); }}
   />
 )}
     {page === "s4_lessons" && (
@@ -2990,31 +3009,38 @@ else if (m?.id === "e7") setPage("e7_lessons");
 )}
 {page === "lesson_safety_s4_l1" && (
   <LessonSafetyS4_L1 lang={lang} onBack={() => setPage("s4_lessons")}
-    onComplete={() => { markLessonCompleted("s4-l1"); setPage("s4_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s4-l1"); setPage("s4_lessons"); }}
+    onNext={() => { markLessonCompleted("s4-l1"); setPage("lesson_safety_s4_l2"); }}/>
 )}
 {page === "lesson_safety_s4_l2" && (
   <LessonSafetyS4_L2 lang={lang} onBack={() => setPage("s4_lessons")}
-    onComplete={() => { markLessonCompleted("s4-l2"); setPage("s4_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s4-l2"); setPage("s4_lessons"); }}
+    onNext={() => { markLessonCompleted("s4-l2"); setPage("lesson_safety_s4_l3"); }}/>
 )}
 {page === "lesson_safety_s4_l3" && (
   <LessonSafetyS4_L3 lang={lang} onBack={() => setPage("s4_lessons")}
-    onComplete={() => { markLessonCompleted("s4-l3"); setPage("s4_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s4-l3"); setPage("s4_lessons"); }}
+    onNext={() => { markLessonCompleted("s4-l3"); setPage("lesson_safety_s4_l4"); }}/>
 )}
 {page === "lesson_safety_s4_l4" && (
   <LessonSafetyS4_L4 lang={lang} onBack={() => setPage("s4_lessons")}
-    onComplete={() => { markLessonCompleted("s4-l4"); setPage("s4_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s4-l4"); setPage("s4_lessons"); }}
+    onNext={() => { markLessonCompleted("s4-l4"); setPage("lesson_safety_s4_l5"); }}/>
 )}
 {page === "lesson_safety_s4_l5" && (
   <LessonSafetyS4_L5 lang={lang} onBack={() => setPage("s4_lessons")}
-    onComplete={() => { markLessonCompleted("s4-l5"); setPage("s4_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s4-l5"); setPage("s4_lessons"); }}
+    onNext={() => { markLessonCompleted("s4-l5"); setPage("lesson_safety_s4_l6"); }}/>
 )}
 {page === "lesson_safety_s4_l6" && (
   <LessonSafetyS4_L6 lang={lang} onBack={() => setPage("s4_lessons")}
-    onComplete={() => { markLessonCompleted("s4-l6"); setPage("s4_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s4-l6"); setPage("s4_lessons"); }}
+    onNext={() => { markLessonCompleted("s4-l6"); setPage("lesson_safety_s4_l7"); }}/>
 )}
 {page === "lesson_safety_s4_l7" && (
   <LessonSafetyS4_L7 lang={lang} onBack={() => setPage("s4_lessons")}
-    onComplete={() => { markLessonCompleted("s4-l7"); setPage("dashboard"); }}/>
+    onComplete={() => { markLessonCompleted("s4-l7"); setPage("dashboard"); }}
+    onNext={() => { markLessonCompleted("s4-l7"); setPage("dashboard"); }}/>
 )}
 {page === "s5_lessons" && (
   <S5LessonsPage
@@ -3031,19 +3057,23 @@ else if (m?.id === "e7") setPage("e7_lessons");
 )}
 {page === "lesson_safety_s5_l1" && (
   <LessonSafetyS5_L1 lang={lang} onBack={() => setPage("s5_lessons")}
-    onComplete={() => { markLessonCompleted("s5-l1"); setPage("s5_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s5-l1"); setPage("s5_lessons"); }}
+    onNext={() => { markLessonCompleted("s5-l1"); setPage("lesson_safety_s5_l2"); }}/>
 )}
 {page === "lesson_safety_s5_l2" && (
   <LessonSafetyS5_L2 lang={lang} onBack={() => setPage("s5_lessons")}
-    onComplete={() => { markLessonCompleted("s5-l2"); setPage("s5_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s5-l2"); setPage("s5_lessons"); }}
+    onNext={() => { markLessonCompleted("s5-l2"); setPage("lesson_safety_s5_l3"); }}/>
 )}
 {page === "lesson_safety_s5_l3" && (
   <LessonSafetyS5_L3 lang={lang} onBack={() => setPage("s5_lessons")}
-    onComplete={() => { markLessonCompleted("s5-l3"); setPage("s5_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s5-l3"); setPage("s5_lessons"); }}
+    onNext={() => { markLessonCompleted("s5-l3"); setPage("lesson_safety_s5_l4"); }}/>
 )}
 {page === "lesson_safety_s5_l4" && (
   <LessonSafetyS5_L4 lang={lang} onBack={() => setPage("s5_lessons")}
-    onComplete={() => { markLessonCompleted("s5-l4"); setPage("dashboard"); }}/>
+    onComplete={() => { markLessonCompleted("s5-l4"); setPage("dashboard"); }}
+    onNext={() => { markLessonCompleted("s5-l4"); setPage("dashboard"); }}/>
 )}
     {page === "s6_lessons" && (
   <S6LessonsPage
@@ -3062,27 +3092,33 @@ else if (m?.id === "e7") setPage("e7_lessons");
 )}
 {page === "lesson_safety_s6_l1" && (
   <LessonSafetyS6_L1 lang={lang} onBack={() => setPage("s6_lessons")}
-    onComplete={() => { markLessonCompleted("s6-l1"); setPage("s6_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s6-l1"); setPage("s6_lessons"); }}
+    onNext={() => { markLessonCompleted("s6-l1"); setPage("lesson_safety_s6_l2"); }}/>
 )}
 {page === "lesson_safety_s6_l2" && (
   <LessonSafetyS6_L2 lang={lang} onBack={() => setPage("s6_lessons")}
-    onComplete={() => { markLessonCompleted("s6-l2"); setPage("s6_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s6-l2"); setPage("s6_lessons"); }}
+    onNext={() => { markLessonCompleted("s6-l2"); setPage("lesson_safety_s6_l3"); }}/>
 )}
 {page === "lesson_safety_s6_l3" && (
   <LessonSafetyS6_L3 lang={lang} onBack={() => setPage("s6_lessons")}
-    onComplete={() => { markLessonCompleted("s6-l3"); setPage("s6_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s6-l3"); setPage("s6_lessons"); }}
+    onNext={() => { markLessonCompleted("s6-l3"); setPage("lesson_safety_s6_l4"); }}/>
 )}
 {page === "lesson_safety_s6_l4" && (
   <LessonSafetyS6_L4 lang={lang} onBack={() => setPage("s6_lessons")}
-    onComplete={() => { markLessonCompleted("s6-l4"); setPage("s6_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s6-l4"); setPage("s6_lessons"); }}
+    onNext={() => { markLessonCompleted("s6-l4"); setPage("lesson_safety_s6_l5"); }}/>
 )}
 {page === "lesson_safety_s6_l5" && (
   <LessonSafetyS6_L5 lang={lang} onBack={() => setPage("s6_lessons")}
-    onComplete={() => { markLessonCompleted("s6-l5"); setPage("s6_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("s6-l5"); setPage("s6_lessons"); }}
+    onNext={() => { markLessonCompleted("s6-l5"); setPage("lesson_safety_s6_l6"); }}/>
 )}
 {page === "lesson_safety_s6_l6" && (
   <LessonSafetyS6_L6 lang={lang} onBack={() => setPage("s6_lessons")}
-    onComplete={() => { markLessonCompleted("s6-l6"); setPage("dashboard"); }}/>
+    onComplete={() => { markLessonCompleted("s6-l6"); setPage("dashboard"); }}
+    onNext={() => { markLessonCompleted("s6-l6"); setPage("dashboard"); }}/>
 )} 
       {page === "e2_lessons" && (
 
@@ -3141,6 +3177,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l6"); setPage("e2_lessons"); }}
+    onNext={() => { markLessonCompleted("e2-l6"); setPage("lesson_e2_l7"); }}
   />
 )}
       {page === "lesson_e2_l7" && (
@@ -3148,6 +3185,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l7"); setPage("e2_lessons"); }}
+    onNext={() => { markLessonCompleted("e2-l7"); setPage("lesson_e3_l1"); }}
   />
 )}
 {page === "e3_lessons" && (
@@ -3205,6 +3243,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l1"); setPage("e6_lessons"); }}
+    onNext={() => { markLessonCompleted("e6-l1"); setPage("lesson_e6_l2"); }}
   />
 )}
       {page === "lesson_e3_l6" && (
@@ -3219,6 +3258,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l2"); setPage("e6_lessons"); }}
+    onNext={() => { markLessonCompleted("e6-l2"); setPage("lesson_e6_l3"); }}
   />
 )}
       {page === "lesson_e6_l3" && (
@@ -3226,6 +3266,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l3"); setPage("e6_lessons"); }}
+    onNext={() => { markLessonCompleted("e6-l3"); setPage("lesson_e6_l4"); }}
   />
 )}
       {page === "lesson_e6_l4" && (
@@ -3233,6 +3274,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l4"); setPage("e6_lessons"); }}
+    onNext={() => { markLessonCompleted("e6-l4"); setPage("lesson_e6_l5"); }}
   />
 )}
       {page === "lesson_e6_l5" && (
@@ -3240,6 +3282,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l5"); setPage("e6_lessons"); }}
+    onNext={() => { markLessonCompleted("e6-l5"); setPage("lesson_e6_l6"); }}
   />
 )}
       {page === "lesson_e6_l6" && (
@@ -3247,6 +3290,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l6"); setPage("e6_lessons"); }}
+    onNext={() => { markLessonCompleted("e6-l6"); setPage("lesson_e7_l1"); }}
   />
 )}
 {page === "e6_lessons" && (
@@ -3269,23 +3313,28 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("e7_lessons")}
     onComplete={() => { markLessonCompleted("e7-l1"); setPage("e7_lessons"); }}
+    onNext={() => { markLessonCompleted("e7-l1"); setPage("lesson_e7_l2"); }}
   />
 )}
       {page === "lesson_e7_l2" && (
   <LessonE7_L2 lang={lang} onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l2"); setPage("e7_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("e7-l2"); setPage("e7_lessons"); }}
+    onNext={() => { markLessonCompleted("e7-l2"); setPage("lesson_e7_l3"); }}/>
 )}
       {page === "lesson_e7_l3" && (
   <LessonE7_L3 lang={lang} onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l3"); setPage("e7_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("e7-l3"); setPage("e7_lessons"); }}
+    onNext={() => { markLessonCompleted("e7-l3"); setPage("lesson_e7_l4"); }}/>
 )}
       {page === "lesson_e7_l4" && (
   <LessonE7_L4 lang={lang} onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l4"); setPage("e7_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("e7-l4"); setPage("e7_lessons"); }}
+    onNext={() => { markLessonCompleted("e7-l4"); setPage("lesson_e7_l5"); }}/>
 )}
       {page === "lesson_e7_l5" && (
   <LessonE7_L5 lang={lang} onBack={() => setPage("e7_lessons")}
-    onComplete={() => { markLessonCompleted("e7-l5"); setPage("e7_lessons"); }}/>
+    onComplete={() => { markLessonCompleted("e7-l5"); setPage("e7_lessons"); }}
+    onNext={() => { markLessonCompleted("e7-l5"); setPage("e7_lessons"); }}/>
 )}
 {page === "e7_lessons" && (
   <E7LessonsPage
@@ -3359,6 +3408,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l1"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l1"); setPage("lesson_marpol_legal"); }}
         />
       )}
       {page === "lesson_marpol_legal" && (
@@ -3366,6 +3416,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l2"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l2"); setPage("lesson_stcw"); }}
         />
       )}
       {page === "lesson_stcw" && (
@@ -3373,6 +3424,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l3"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l3"); setPage("lesson_mlc"); }}
         />
       )}
       {page === "lesson_mlc" && (
@@ -3380,6 +3432,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l4"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l4"); setPage("lesson_colreg_legal"); }}
         />
       )}
       {page === "lesson_colreg_legal" && (
@@ -3387,6 +3440,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l5"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l5"); setPage("lesson_unclos"); }}
         />
       )}
       {page === "lesson_unclos" && (
@@ -3394,6 +3448,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l6"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l6"); setPage("lesson_liability_insurance"); }}
         />
       )}
       {page === "lesson_liability_insurance" && (
@@ -3401,6 +3456,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l7"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l7"); setPage("lesson_ports_flag_states"); }}
         />
       )}
       {page === "lesson_ports_flag_states" && (
@@ -3408,6 +3464,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l8"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l8"); setPage("lesson_piracy"); }}
         />
       )}
       {page === "lesson_piracy" && (
@@ -3415,6 +3472,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l9"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l9"); setPage("lesson_arbitration"); }}
         />
       )}
       {page === "lesson_arbitration" && (
@@ -3422,6 +3480,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l10"); setPage("iml_lessons"); }}
+          onNext={() => { markLessonCompleted("d2-l10"); setPage("iml_lessons"); }}
         />
       )}
       {page === "lesson_iala" && (
@@ -3429,6 +3488,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l1"); setPage("sb_lessons"); }}
+          onNext={() => { markLessonCompleted("d3-l1"); setPage("lesson_lights_shapes"); }}
         />
       )}
       {page === "lesson_lights_shapes" && (
@@ -3436,6 +3496,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l2"); setPage("sb_lessons"); }}
+          onNext={() => { markLessonCompleted("d3-l2"); setPage("lesson_sound_signals"); }}
         />
       )}
       {page === "lesson_sound_signals" && (
@@ -3443,6 +3504,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l3"); setPage("sb_lessons"); }}
+          onNext={() => { markLessonCompleted("d3-l3"); setPage("lesson_flags"); }}
         />
       )}
       {page === "lesson_flags" && (
@@ -3450,6 +3512,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l4"); setPage("sb_lessons"); }}
+          onNext={() => { markLessonCompleted("d3-l4"); setPage("lesson_vhf"); }}
         />
       )}
       {page === "lesson_vhf" && (
@@ -3457,6 +3520,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l5"); setPage("sb_lessons"); }}
+          onNext={() => { markLessonCompleted("d3-l5"); setPage("lesson_ais"); }}
         />
       )}
       {page === "lesson_ais" && (
@@ -3464,6 +3528,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l6"); setPage("sb_lessons"); }}
+          onNext={() => { markLessonCompleted("d3-l6"); setPage("lesson_gmdss"); }}
         />
       )}
       {page === "lesson_gmdss" && (
@@ -3471,6 +3536,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
+          onNext={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
         />
       )}
       {page === "lesson_sea_l1" && (
@@ -3478,6 +3544,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("seamanship_lessons")}
           onComplete={() => { markLessonCompleted("d6-l1"); setPage("seamanship_lessons"); }}
+          onNext={() => { markLessonCompleted("d6-l1"); setPage("lesson_sea_l2"); }}
         />
       )}
       {page === "lesson_sea_l2" && (
@@ -3485,6 +3552,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("seamanship_lessons")}
           onComplete={() => { markLessonCompleted("d6-l2"); setPage("seamanship_lessons"); }}
+          onNext={() => { markLessonCompleted("d6-l2"); setPage("lesson_sea_l3"); }}
         />
       )} 
      {page === "lexique" && (
@@ -3499,6 +3567,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l3"); setPage("seamanship_lessons"); }}
+    onNext={() => { markLessonCompleted("d6-l3"); setPage("lesson_sea_l4"); }}
   />
 )}
 {page === "lesson_sea_l4" && (
@@ -3506,6 +3575,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l4"); setPage("seamanship_lessons"); }}
+    onNext={() => { markLessonCompleted("d6-l4"); setPage("lesson_sea_l5"); }}
   />
 )}
 {page === "lesson_sea_l5" && (
@@ -3513,6 +3583,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
+    onNext={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
   />
 )}
 {page === "lesson_sea_l6" && (
@@ -3520,6 +3591,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
+    onNext={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
   />
 )}
 {page === "lesson_sea_l7" && (
@@ -3527,6 +3599,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l7"); setPage("seamanship_lessons"); }}
+    onNext={() => { markLessonCompleted("d6-l7"); setPage("seamanship_lessons"); }}
   />
 )}
 {page === "lesson_meteo_l1" && (
@@ -3534,6 +3607,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l1"); setPage("meteorology_lessons"); }}
+    onNext={() => { markLessonCompleted("d7-l1"); setPage("lesson_meteo_l2"); }}
   />
 )}
 {page === "lesson_meteo_l2" && (
@@ -3541,6 +3615,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l2"); setPage("meteorology_lessons"); }}
+    onNext={() => { markLessonCompleted("d7-l2"); setPage("lesson_meteo_l3"); }}
   />
 )}
 {page === "lesson_meteo_l3" && (
@@ -3548,6 +3623,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l3"); setPage("meteorology_lessons"); }}
+    onNext={() => { markLessonCompleted("d7-l3"); setPage("lesson_meteo_l4"); }}
   />
 )}
 {page === "lesson_meteo_l4" && (
@@ -3555,6 +3631,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l4"); setPage("meteorology_lessons"); }}
+    onNext={() => { markLessonCompleted("d7-l4"); setPage("lesson_meteo_l5"); }}
   />
 )}
 {page === "lesson_meteo_l5" && (
@@ -3562,6 +3639,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l5"); setPage("meteorology_lessons"); }}
+    onNext={() => { markLessonCompleted("d7-l5"); setPage("lesson_meteo_l6"); }}
   />
 )}
 {page === "lesson_meteo_l6" && (
@@ -3569,6 +3647,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l6"); setPage("meteorology_lessons"); }}
+    onNext={() => { markLessonCompleted("d7-l6"); setPage("lesson_meteo_l7"); }}
   />
 )}
 {page === "lesson_meteo_l7" && (
@@ -3576,6 +3655,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l7"); setPage("meteorology_lessons"); }}
+    onNext={() => { markLessonCompleted("d7-l7"); setPage("meteorology_lessons"); }}
   />
 )}
    {page === "lesson_shipcareer_l1" && (
@@ -3618,6 +3698,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l1"); setPage("smcp_lessons"); }}
+          onNext={() => { markLessonCompleted("d4-l1"); setPage("lesson_smcp_l2"); }}
         />
       )}
       {page === "lesson_smcp_l2" && (
@@ -3625,6 +3706,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l2"); setPage("smcp_lessons"); }}
+          onNext={() => { markLessonCompleted("d4-l2"); setPage("lesson_smcp_l3"); }}
         />
       )}
       {page === "lesson_smcp_l3" && (
@@ -3632,6 +3714,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l3"); setPage("smcp_lessons"); }}
+          onNext={() => { markLessonCompleted("d4-l3"); setPage("lesson_smcp_l4"); }}
         />
       )}
       {page === "lesson_smcp_l4" && (
@@ -3639,6 +3722,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l4"); setPage("smcp_lessons"); }}
+          onNext={() => { markLessonCompleted("d4-l4"); setPage("lesson_smcp_l5"); }}
         />
       )}
       {page === "lesson_smcp_l5" && (
@@ -3646,6 +3730,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l5"); setPage("smcp_lessons"); }}
+          onNext={() => { markLessonCompleted("d4-l5"); setPage("lesson_smcp_l6"); }}
         />
       )}
       {page === "lesson_smcp_l6" && (
@@ -3653,6 +3738,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l6"); setPage("smcp_lessons"); }}
+          onNext={() => { markLessonCompleted("d4-l6"); setPage("lesson_smcp_l7"); }}
         />
       )}
       {page === "lesson_smcp_l7" && (
@@ -3660,6 +3746,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l7"); setPage("smcp_lessons"); }}
+          onNext={() => { markLessonCompleted("d4-l7"); setPage("lesson_smcp_l8"); }}
         />
       )}
       {page === "lesson_smcp_l8" && (
@@ -3667,6 +3754,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l8"); setPage("smcp_lessons"); }}
+          onNext={() => { markLessonCompleted("d4-l8"); setPage("smcp_lessons"); }}
         />
       )}
       {page === "lesson_navigation" && (
@@ -3674,6 +3762,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l1"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l1"); setPage("lesson_navire"); }}
         />
       )}
       {page === "lesson_navire" && (
@@ -3681,6 +3770,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l2"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l2"); setPage("lesson_coord"); }}
         />
       )}
       {page === "lesson_coord" && (
@@ -3688,6 +3778,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l3"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l3"); setPage("lesson_carte"); }}
         />
       )}
       {page === "lesson_carte" && (
@@ -3695,6 +3786,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l4"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l4"); setPage("lesson_compas"); }}
         />
       )}
       {page === "lesson_compas" && (
@@ -3702,6 +3794,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l5"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l5"); setPage("lesson_navpratique"); }}
         />
       )}
       {page === "lesson_navpratique" && (
@@ -3709,6 +3802,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l6"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l6"); setPage("lesson_marees"); }}
         />
       )}
       {page === "lesson_marees" && (
@@ -3716,6 +3810,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l7"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l7"); setPage("lesson_colreg"); }}
         />
       )}
       {page === "lesson_colreg" && (
@@ -3723,6 +3818,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_steering" && (
@@ -3730,6 +3826,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_watch_org" && (
@@ -3737,6 +3834,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l10"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l10"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_moteur" && (
@@ -3744,6 +3842,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l1"); setPage("engine_lessons"); }}
+          onNext={() => { markLessonCompleted("e1-l1"); setPage("lesson_auxiliaires"); }}
         />
       )}
       {page === "lesson_auxiliaires" && (
@@ -3751,6 +3850,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l2"); setPage("engine_lessons"); }}
+          onNext={() => { markLessonCompleted("e1-l2"); setPage("lesson_stabilite"); }}
         />
       )}
       {page === "lesson_stabilite" && (
@@ -3758,6 +3858,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l3"); setPage("engine_lessons"); }}
+          onNext={() => { markLessonCompleted("e1-l3"); setPage("lesson_incendie"); }}
         />
       )}
       {page === "lesson_incendie" && (
@@ -3765,6 +3866,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l4"); setPage("engine_lessons"); }}
+          onNext={() => { markLessonCompleted("e1-l4"); setPage("lesson_sauvetage"); }}
         />
       )}
       {page === "lesson_sauvetage" && (
@@ -3772,6 +3874,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l5"); setPage("engine_lessons"); }}
+          onNext={() => { markLessonCompleted("e1-l5"); setPage("lesson_marpol"); }}
         />
       )}
       {page === "lesson_marpol" && (
@@ -3779,6 +3882,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l1"); setPage("marpol_lessons"); }}
+          onNext={() => { markLessonCompleted("e4-l1"); setPage("lesson_solas"); }}
         />
       )}
       {page === "lesson_marpol_l2" && (
@@ -3786,6 +3890,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l2"); setPage("marpol_lessons"); }}
+          onNext={() => { markLessonCompleted("e4-l2"); setPage("lesson_marpol_l3"); }}
         />
       )}
       {page === "lesson_marpol_l3" && (
@@ -3793,6 +3898,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l3"); setPage("marpol_lessons"); }}
+          onNext={() => { markLessonCompleted("e4-l3"); setPage("lesson_marpol_l4"); }}
         />
       )}
       {page === "lesson_marpol_l4" && (
@@ -3800,6 +3906,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l4"); setPage("marpol_lessons"); }}
+          onNext={() => { markLessonCompleted("e4-l4"); setPage("lesson_marpol_l5"); }}
         />
       )}
       {page === "lesson_marpol_l5" && (
@@ -3807,6 +3914,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l5"); setPage("marpol_lessons"); }}
+          onNext={() => { markLessonCompleted("e4-l5"); setPage("lesson_marpol_l6"); }}
         />
       )}
       {page === "lesson_marpol_l6" && (
@@ -3814,6 +3922,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l6"); setPage("marpol_lessons"); }}
+          onNext={() => { markLessonCompleted("e4-l6"); setPage("marpol_lessons"); }}
         />
       )}
     {page === "lesson_seemp_l1" && (
@@ -3821,6 +3930,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("seemp_lessons")}
           onComplete={() => { markLessonCompleted("e5-l1"); setPage("seemp_lessons"); }}
+          onNext={() => { markLessonCompleted("e5-l1"); setPage("lesson_seemp_l2"); }}
         />
       )}
       {page === "lesson_seemp_l2" && (
@@ -3828,6 +3938,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("seemp_lessons")}
           onComplete={() => { markLessonCompleted("e5-l2"); setPage("seemp_lessons"); }}
+          onNext={() => { markLessonCompleted("e5-l2"); setPage("lesson_seemp_l3"); }}
         />
       )}
       {page === "lesson_seemp_l3" && (
@@ -3835,6 +3946,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("seemp_lessons")}
           onComplete={() => { markLessonCompleted("e5-l3"); setPage("seemp_lessons"); }}
+          onNext={() => { markLessonCompleted("e5-l3"); setPage("lesson_seemp_l4"); }}
         />
       )}
       {page === "lesson_seemp_l4" && (
@@ -3842,6 +3954,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("seemp_lessons")}
           onComplete={() => { markLessonCompleted("e5-l4"); setPage("seemp_lessons"); }}
+          onNext={() => { markLessonCompleted("e5-l4"); setPage("lesson_seemp_l5"); }}
         />
       )}
       {page === "lesson_seemp_l5" && (
@@ -3851,6 +3964,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           completedLessons={completedLessons}
           userXP={userXP}
           onComplete={() => { markLessonCompleted("e5-l5"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("e5-l5"); setPage("dashboard"); }}
         />
       )}
       {page === "lesson_watchkeeping" && (
@@ -3872,6 +3986,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l8"); setPage("engine_lessons"); }}
+          onNext={() => { markLessonCompleted("e1-l8"); setPage("engine_lessons"); }}
         />
       )}
       {showExitConfirm && (

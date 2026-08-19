@@ -205,7 +205,7 @@ const getContent = lang => {
 };
 
 // MAIN
-export default function LessonMETEO_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonMETEO_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const bank = BANK[lang]||BANK.fr;
@@ -319,7 +319,7 @@ export default function LessonMETEO_L3({ lang="fr", onBack=()=>{}, onComplete=()
 
             <div style={{textAlign:"center",fontSize:13,color:C.gold2,fontStyle:"italic",marginBottom:14,padding:"0 8px"}}>{lc.transition}</div>
 
-            <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.orange},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(230,126,34,0.35)",marginBottom:10}}>
+            <button onClick={onNext} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.orange},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(230,126,34,0.35)",marginBottom:10}}>
               {lang==="fr"?"LEÇON 4 - SYSTÈMES DE PRESSION →":lang==="en"?"LESSON 4 - PRESSURE SYSTEMS →":lang==="es"?"LECCIÓN 4 - SISTEMAS DE PRESIÓN →":"LIÇÃO 4 - SISTEMAS DE PRESSÃO →"}
             </button>
             <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>

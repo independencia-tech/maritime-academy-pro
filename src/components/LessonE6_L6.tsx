@@ -944,7 +944,7 @@ const getContent = (lang) => {
 // ══════════════════════════════════════
 // MAIN EXPORT
 // ══════════════════════════════════════
-export default function LessonE6_L6({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonE6_L6({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const lc = getContent(lang);
@@ -1116,7 +1116,7 @@ export default function LessonE6_L6({ lang="fr", onBack=()=>{}, onComplete=()=>{
                 </div>
               ))}
             </Card>
-            <button onClick={onComplete}
+            <button onClick={onNext}
               style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.gauge},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(38,198,218,0.3)",marginBottom:10}}>
               {lang==="fr"?"VERS MODULE e7 =>":lang==="en"?"TO MODULE e7 =>":lang==="es"?"AL MODULO e7 =>":"PARA MODULO e7 =>"}
             </button>

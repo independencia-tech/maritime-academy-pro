@@ -1224,7 +1224,7 @@ const getContent=(lang)=>{
 // ══════════════════════════════════════
 // MAIN EXPORT
 // ══════════════════════════════════════
-export default function LessonE7_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonE7_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t=T[lang]||T.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
   const lc=getContent(lang);
@@ -1406,7 +1406,7 @@ export default function LessonE7_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{
                 </div>
               ))}
             </div>
-            <button onClick={onComplete}
+            <button onClick={onNext}
               style={{width:"100%",padding:"16px 0",border:"none",borderRadius:18,
                 background:`linear-gradient(135deg,${C.cyan},${C.amber})`,
                 fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:900,letterSpacing:2,

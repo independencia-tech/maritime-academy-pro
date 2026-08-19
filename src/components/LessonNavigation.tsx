@@ -1277,6 +1277,7 @@ export default function LessonNavigation({
   lang = "fr",
   onBack = () => { },
   onComplete = () => { },
+  onNext = () => { },
 }) {
   const t = T[lang] || T.fr;
   const content = CONTENT[lang] || CONTENT.fr;
@@ -1482,7 +1483,7 @@ export default function LessonNavigation({
                 marginBottom: 10,
               }}>{t.download_memo}</button>
 
-              <button onClick={onComplete} style={{
+              <button onClick={onNext} style={{
                 width: "100%", padding: "16px 0", border: "none", borderRadius: 16,
                 background: `linear-gradient(135deg,${C.blue},${C.gold})`,
                 fontFamily: "'Cinzel',serif", fontSize: 14, fontWeight: 700,

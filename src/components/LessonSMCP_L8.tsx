@@ -648,7 +648,7 @@ const getContent = lang => {
   return d[lang]||d.en;
 };
 
-export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t=T[lang]||T.en;const exam=FINAL_EXAM[lang]||FINAL_EXAM.en;const lc=getContent(lang);
   const [phase,setPhase]=useState("content");const [examScore,setExamScore]=useState(0);const [vis,setVis]=useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
@@ -743,7 +743,7 @@ export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=
                lang==="es"?"Hoy completas el dominio del lenguaje marítimo estandarizado. Cada frase SMCP aprendida aquí no es un ejercicio académico — es lo que permitirá que tu tripulación, tus colegas y tú mismo seáis comprendidos a tiempo, en cualquier circunstancia, sin importar la lengua materna de cada uno. El mar no perdona los malentendidos: habla claro, habla SMCP.":
                "Hoje você conclui o domínio da linguagem marítima padronizada. Cada frase SMCP aprendida aqui não é um exercício acadêmico — é o que permitirá que sua tripulação, seus colegas e você mesmo sejam compreendidos a tempo, em qualquer circunstância, independentemente da língua materna de cada um. O mar não perdoa mal-entendidos: fale claro, fale SMCP."}
             </div>
-            <button onClick={onComplete} style={{width:"100%",padding:"18px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.exam},${C.gold2},${C.exam})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 10px 40px ${C.exam}44`,marginBottom:12,animation:"goldPulse 2s ease-in-out infinite"}}>
+            <button onClick={onNext} style={{width:"100%",padding:"18px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.exam},${C.gold2},${C.exam})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 10px 40px ${C.exam}44`,marginBottom:12,animation:"goldPulse 2s ease-in-out infinite"}}>
               🏆 {lang==="fr"?"RETOUR AU DASHBOARD":lang==="en"?"BACK TO DASHBOARD":lang==="es"?"VOLVER AL PANEL":"VOLTAR AO PAINEL"} 🏆
             </button>
           </div>}

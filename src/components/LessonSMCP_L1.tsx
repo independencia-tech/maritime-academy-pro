@@ -589,7 +589,7 @@ const getContent = lang => {
   return d[lang]||d.en;
 };
 
-export default function LessonSMCP_L1({ lang="en", onBack=()=>{}, onComplete=()=>{} }) {
+export default function LessonSMCP_L1({ lang="en", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t=T[lang]||T.en;const quiz=QUIZ[lang]||QUIZ.en;const lc=getContent(lang);
   const [phase,setPhase]=useState("content");const [quizScore,setQuizScore]=useState(0);const [vis,setVis]=useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
@@ -673,7 +673,7 @@ export default function LessonSMCP_L1({ lang="en", onBack=()=>{}, onComplete=()=
               <div style={{fontSize:11,color:C.muted,marginBottom:10,fontFamily:"'Cinzel',serif",letterSpacing:1}}>{t.youLearned}</div>
               {lc.learnedP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<lc.learnedP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.smcp,fontWeight:700}}>✓</span>{pt}</div>)}
             </Card>
-            <button onClick={onComplete} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.smcp},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 8px 28px ${C.smcp}33`,marginBottom:10}}>
+            <button onClick={onNext} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.smcp},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 8px 28px ${C.smcp}33`,marginBottom:10}}>
               {lang==="fr"?"LEÇON 2 — PORT & VTS →":lang==="en"?"LESSON 2 — PORT & VTS →":lang==="es"?"LECCIÓN 2 — PUERTO Y VTS →":"LIÇÃO 2 — PORTO E VTS →"}
             </button>
             <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>
