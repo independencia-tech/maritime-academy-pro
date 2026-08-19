@@ -12,15 +12,11 @@ const C = {
   border:"rgba(0,229,255,0.18)", borderA:"rgba(255,179,0,0.22)",
 };
 
-const lbl = (fr,en,es,pt) => {
-  const lang = (typeof window !== "undefined" && window.__MAP_LANG__) || "fr";
-  return {fr,en,es,pt}[lang]||fr;
-};
-
 // ─────────────────────────────────────────────
 //  SVG 1 — ARCHITECTURE AMS
 // ─────────────────────────────────────────────
-function AMSArchSVG() {
+function AMSArchSVG({ lang }) {
+  const lbl = (fr,en,es,pt) => ({fr,en,es,pt}[lang]||fr);
   const [selected, setSelected] = useState(null);
   const [flow, setFlow] = useState(0);
 
@@ -150,7 +146,8 @@ function AMSArchSVG() {
 // ─────────────────────────────────────────────
 //  SVG 2 — PANNEAU ALARMES INTERACTIF
 // ─────────────────────────────────────────────
-function AlarmPanelSVG() {
+function AlarmPanelSVG({ lang }) {
+  const lbl = (fr,en,es,pt) => ({fr,en,es,pt}[lang]||fr);
   const initAlarms = [
     {id:"A001",tag:"LO-LUB-PRESS",desc:lbl("Basse pression huile lubrif.","Lo lube oil pressure","Baja presion aceite lubric.","Baixa pressao oleo lubric."),
       priority:1,value:"1.2 bar",limit:"< 1.5",acked:false,active:true,time:"10:42:15",color:C.red},
@@ -312,7 +309,8 @@ function AlarmPanelSVG() {
 // ─────────────────────────────────────────────
 //  SVG 3 — INTEGRATION PASSERELLE
 // ─────────────────────────────────────────────
-function BridgeIntegrationSVG() {
+function BridgeIntegrationSVG({ lang }) {
+  const lbl = (fr,en,es,pt) => ({fr,en,es,pt}[lang]||fr);
   const [activeZone, setActiveZone] = useState(null);
   const [alarmRelay, setAlarmRelay] = useState(false);
   const [watchMode, setWatchMode] = useState("UMS"); // UMS | MANNED
@@ -449,7 +447,8 @@ function BridgeIntegrationSVG() {
   );
 }
 
-function TrendSVG() {
+function TrendSVG({ lang }) {
+  const lbl = (fr,en,es,pt) => ({fr,en,es,pt}[lang]||fr);
   const [selected, setSelected] = useState("lubTemp");
   const [showAlert, setShowAlert] = useState(false);
 
@@ -1190,7 +1189,6 @@ const QUIZ={
 // MAIN EXPORT — ARCHITECTURE L1 EXACTE
 // ══════════════════════════════════════
 export default function LessonE7_L4({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
-  useEffect(()=>{if(typeof window!=="undefined")window.__MAP_LANG__=lang;},[lang]);
   const t=T[lang]||T.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
   const lc=getContent(lang);
@@ -1268,16 +1266,16 @@ export default function LessonE7_L4({ lang="fr", onBack=()=>{}, onComplete=()=>{
 
             {[
               {icon:"🖥️",p:lc.p1,s:lc.s1t,content:lc.s1,color:cyan,
-                svg:<AMSArchSVG/>,
+                svg:<AMSArchSVG lang={lang}/>,
                 svgLabel:lang==="fr"?"ARCHITECTURE AMS — INTERACTIF":lang==="en"?"AMS ARCHITECTURE — INTERACTIVE":lang==="es"?"ARQUITECTURA AMS — INTERACTIVO":"ARQUITETURA AMS — INTERATIVO"},
               {icon:"🔔",p:lc.p2,s:lc.s2t,content:lc.s2,color:red,
-                svg:<AlarmPanelSVG/>,
+                svg:<AlarmPanelSVG lang={lang}/>,
                 svgLabel:lang==="fr"?"PANNEAU ALARMES — INTERACTIF":lang==="en"?"ALARM PANEL — INTERACTIVE":lang==="es"?"PANEL ALARMAS — INTERACTIVO":"PAINEL ALARMES — INTERATIVO"},
               {icon:"🛳️",p:lc.p3,s:lc.s3t,content:lc.s3,color:green,
-                svg:<BridgeIntegrationSVG/>,
+                svg:<BridgeIntegrationSVG lang={lang}/>,
                 svgLabel:lang==="fr"?"INTEGRATION PASSERELLE — INTERACTIF":lang==="en"?"BRIDGE INTEGRATION — INTERACTIVE":lang==="es"?"INTEGRACION PUENTE — INTERACTIVO":"INTEGRACAO PONTE — INTERATIVO"},
               {icon:"📈",p:lc.p4,s:lc.s4t,content:lc.s4,color:purple2,
-                svg:<TrendSVG/>,
+                svg:<TrendSVG lang={lang}/>,
                 svgLabel:lang==="fr"?"MAINTENANCE PREDICTIVE — INTERACTIF":lang==="en"?"PREDICTIVE MAINTENANCE — INTERACTIVE":lang==="es"?"MANTENIMIENTO PREDICTIVO — INTERACTIVO":"MANUTENCAO PREDITIVA — INTERATIVO"},
             ].map((sec,i)=>(
               <div key={i}>
