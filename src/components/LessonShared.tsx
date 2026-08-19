@@ -25,8 +25,11 @@ export function SL({icon,text,color}){return <div style={{display:"flex",alignIt
 // Fisher-Yates shuffle - returns a new array, never mutates the input
 function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 // Shuffles a question's options and remaps the correct-answer index to match - explanation/text untouched
-// key defaults to "correct" (most lessons); pass "ans" for lessons whose data uses that key name instead
-export function shuffleQuestionOptions(q,key="correct"){const order=shuffleArray(q.opts.map((_,i)=>i));return {...q,opts:order.map(i=>q.opts[i]),[key]:order.indexOf(q[key])};}
+// key defaults to "correct" (most lessons); pass "ans" for lessons whose data uses that key name instead.
+// Guarded against the classic `.map(shuffleQuestionOptions)` footgun: Array.prototype.map calls its
+// callback with (element, index, array), so a bare .map(shuffleQuestionOptions) silently passes the
+// array index as `key` - coercing any non-string key back to the default keeps that call form safe.
+export function shuffleQuestionOptions(q,key="correct"){if(typeof key!=="string")key="correct";const order=shuffleArray(q.opts.map((_,i)=>i));return {...q,opts:order.map(i=>q.opts[i]),[key]:order.indexOf(q[key])};}
 
 // FINAL QUIZ ENGINE - questions passed as prop, zero content baked in
 export function QuizComp({questions,t,onComplete}){
