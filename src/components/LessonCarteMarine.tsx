@@ -386,7 +386,7 @@ const BANK = {
 // ══════════════════════════════════════════
 // QUESTION BANK COMPONENT
 // ══════════════════════════════════════════
-function QuestionBank({ lang }) {
+function QuestionBank({ lang, onComplete }) {
   const [cur, setCur] = useState(0);
   const [sel, setSel] = useState(null);
   const [answered, setAnswered] = useState(false);
@@ -397,7 +397,7 @@ function QuestionBank({ lang }) {
   const q = shuffled[cur];
   const isOk = sel===q.correct;
   const pick = i => { if(answered)return; setSel(i); setAnswered(true); if(i===q.correct)setScore(s=>s+1); };
-  const next = () => { if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true); };
+  const next = () => { if(cur<questions.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else{setDone(true);if(onComplete)onComplete();} };
   if(done) return (
     <div style={{textAlign:"center",padding:"20px 0"}}>
       <div style={{fontSize:48,marginBottom:10}}>{score>=12?"🏆":score>=8?"🎖️":"📚"}</div>
@@ -461,6 +461,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [vis, setVis] = useState(false);
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
@@ -582,7 +583,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
       case "tss": return <Card key={i} style={{marginBottom:12,textAlign:"center"}}><div style={{fontSize:11,color:C.teal,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:10}}>🛳️ TSS — {lang==="fr"?"Dispositif de Séparation du Trafic":lang==="en"?"Traffic Separation Scheme":lang==="es"?"Dispositivo de Separación del Tráfico":"Dispositivo de Separação do Tráfego"}</div><TSS_SVG lang={lang} t={t}/></Card>;
       case "exercise": return <Card key={i} style={{marginBottom:12,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><div style={{fontSize:11,color:C.gold,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>{t.exerciseTitle}</div><Exercise1 lang={lang} t={t}/></Card>;
       case "accident": return <div key={i} style={{marginBottom:12}}><AccidentCase lang={lang}/></div>;
-      case "bank": return <Card key={i} style={{marginBottom:12,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}><div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>{t.bankTitle}</div><QuestionBank lang={lang}/></Card>;
+      case "bank": return <Card key={i} style={{marginBottom:12,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}><div style={{fontSize:11,color:C.purple,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>{t.bankTitle}</div><QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/></Card>;
       case "summary": return <Card key={i} style={{marginBottom:14,background:"linear-gradient(135deg,rgba(26,111,212,0.1),rgba(13,31,60,0.8))",border:`1px solid ${C.blue2}33`}}><div style={{fontSize:11,color:C.blue2,letterSpacing:3,fontFamily:"'Cinzel',serif",marginBottom:12}}>{lang==="fr"?"RÉSUMÉ — LEÇON 4":lang==="en"?"SUMMARY — LESSON 4":lang==="es"?"RESUMEN — LECCIÓN 4":"RESUMO — LIÇÃO 4"}</div>{block.points.map((pt,j)=><div key={j} style={{display:"flex",alignItems:"center",gap:8,padding:"5px 0",borderBottom:j<block.points.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.green,fontWeight:700}}>✓</span>{pt}</div>)}</Card>;
       default: return null;
     }
@@ -624,7 +625,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
           {phase==="content"&&(
             <>
               {sections.map((block,i)=>renderBlock(block,i))}
-              <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 10px 36px rgba(26,111,212,0.4)",marginTop:8}}>{t.startQuiz}</button>
+              <button disabled={!bankDone} onClick={()=>{if(bankDone)setPhase("quiz");}} style={{opacity:bankDone?1:0.45,cursor:bankDone?"pointer":"not-allowed",width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,boxShadow:"0 10px 36px rgba(26,111,212,0.4)",marginTop:8}}>{t.startQuiz}</button>
               <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
             </>
           )}

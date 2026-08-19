@@ -388,7 +388,7 @@ const BANK_ALL={
 // ══════════════════════════════════════
 // BANK COMPONENT
 // ══════════════════════════════════════
-function QuestionBank({ lang }) {
+function QuestionBank({ lang, onComplete }) {
   const BANK = BANK_ALL[lang] || BANK_ALL.fr;
   const finishLabel = lang==="fr"?"TERMINER":lang==="en"?"FINISH":lang==="es"?"TERMINAR":"TERMINAR";
   const nextLabel = lang==="fr"?"SUIVANT →":lang==="en"?"NEXT →":lang==="es"?"SIGUIENTE →":"PRÓXIMO →";
@@ -401,7 +401,7 @@ function QuestionBank({ lang }) {
   const q=shuffled[cur];
   const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
-  const next=()=>{if(cur<BANK.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
+  const next=()=>{if(cur<BANK.length-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else{setDone(true);if(onComplete)onComplete();}};
   if(done) return (
     <div style={{textAlign:"center",padding:"20px 0"}}>
       <div style={{fontSize:48,marginBottom:8}}>{score>=12?"🏆":score>=8?"🎖️":"📚"}</div>
@@ -488,6 +488,7 @@ export default function LessonCompas({ lang="fr", onBack=()=>{}, onComplete=()=>
   const quiz = QUIZ[lang]||QUIZ.fr;
   const lc = getContent(lang);
   const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [vis, setVis] = useState(false);
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
@@ -588,7 +589,7 @@ export default function LessonCompas({ lang="fr", onBack=()=>{}, onComplete=()=>
 
               <SL icon="📝" text={lc.p8} color={C.purple}/>
               <Card style={{marginBottom:14,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}>
-                <QuestionBank lang={lang}/>
+                <QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/>
               </Card>
 
               {/* Summary */}
@@ -601,7 +602,7 @@ export default function LessonCompas({ lang="fr", onBack=()=>{}, onComplete=()=>
                 ))}
               </Card>
 
-              <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 10px 36px rgba(26,111,212,0.4)",marginTop:8}}>{t.startQuiz}</button>
+              <button disabled={!bankDone} onClick={()=>{if(bankDone)setPhase("quiz");}} style={{opacity:bankDone?1:0.45,cursor:bankDone?"pointer":"not-allowed",width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,boxShadow:"0 10px 36px rgba(26,111,212,0.4)",marginTop:8}}>{t.startQuiz}</button>
               <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
             </>
           )}
