@@ -579,7 +579,7 @@ function getTrophy(score, total) {
 // ══════════════════════════════════════
 // QUESTION BANK — 15 QCM
 // ══════════════════════════════════════
-function QuestionBank({ lang }) {
+function QuestionBank({ lang, onComplete }) {
   const [idx, setIdx] = useState(0);
   const [sel, setSel] = useState(null);
   const [answered, setAnswered] = useState(false);
@@ -669,7 +669,7 @@ function QuestionBank({ lang }) {
     if (i===shuffled[idx].ans) setScore(s=>s+1);
   };
   const handleNext = () => {
-    if (idx===total-1) { setDone(true); return; }
+    if (idx === total-1) { setDone(true); if(onComplete)onComplete(); return; }
     setSel(null); setAnswered(false); setIdx(i=>i+1);
   };
   const handleRestart = () => {
@@ -949,6 +949,7 @@ export default function LessonE6_L6({ lang="fr", onBack=()=>{}, onComplete=()=>{
   const quiz = QUIZ[lang]||QUIZ.fr;
   const lc = getContent(lang);
   const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [vis, setVis] = useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
@@ -1043,7 +1044,7 @@ export default function LessonE6_L6({ lang="fr", onBack=()=>{}, onComplete=()=>{
 
             <SL icon="📝" text={lc.p7} color={C.purple}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}>
-              <QuestionBank lang={lang}/>
+              <QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/>
             </Card>
 
             <Card style={{marginBottom:14,background:"linear-gradient(135deg,rgba(38,198,218,0.06),rgba(13,31,60,0.9))",border:`1px solid ${C.gauge}22`}}>
@@ -1069,8 +1070,8 @@ export default function LessonE6_L6({ lang="fr", onBack=()=>{}, onComplete=()=>{
               </div>
             </div>
 
-            <button onClick={()=>setPhase("quiz")}
-              style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.gauge},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 10px 36px rgba(38,198,218,0.3)",marginTop:4}}>
+            <button disabled={!bankDone} onClick={()=>{if(bankDone)setPhase("quiz");}}
+              style={{opacity:bankDone?1:0.45,cursor:bankDone?"pointer":"not-allowed",width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.gauge},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,boxShadow:"0 10px 36px rgba(38,198,218,0.3)",marginTop:4}}>
               {t.startQuiz}
             </button>
             <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>

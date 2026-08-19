@@ -638,8 +638,9 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUESTION BANK — 15 QUESTIONS PREMIUM
 // ══════════════════════════════════════
-function QuestionBank({ lang }) {
+function QuestionBank({ lang, onComplete }) {
   const [open, setOpen] = useState(null);
+  const [opened, setOpened] = useState(new Set());
   const qs = {
     fr:[
       {q:"Quelle est la définition réglementaire de l'eau de ballast selon la Convention BWM 2004 ?",a:"L'eau embarquée à bord d'un navire pour contrôler l'assiette, la gîte, le tirant d'eau, la stabilité ou les contraintes d'un navire, y compris les sédiments qui y sont contenus. (Article 1, Convention BWM 2004)"},
@@ -715,7 +716,7 @@ function QuestionBank({ lang }) {
     <div>
       {list.map((q, i) => (
         <div key={i} style={{marginBottom:8,borderRadius:12,overflow:"hidden",border:`1px solid ${open===i?C.purple+"66":C.border}`}}>
-          <div style={{padding:"11px 14px",cursor:"pointer",display:"flex",alignItems:"center",gap:10}} onClick={()=>setOpen(open===i?null:i)}>
+          <div style={{padding:"11px 14px",cursor:"pointer",display:"flex",alignItems:"center",gap:10}} onClick={()=>{setOpen(open===i?null:i);setOpened(prev=>{if(prev.has(i))return prev;const next=new Set(prev);next.add(i);if(next.size>=list.length&&onComplete)onComplete();return next;});}}>
             <span style={{fontSize:11,fontWeight:700,color:C.purple,fontFamily:"'Cinzel',serif",minWidth:22}}>Q{i+1}</span>
             <span style={{fontSize:12,color:C.white,flex:1,lineHeight:1.4}}>{q.q}</span>
             <span style={{fontSize:12,color:C.muted}}>{open===i?"▲":"▼"}</span>
@@ -948,6 +949,7 @@ export default function LessonE6_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{
   const quiz = QUIZ[lang] || QUIZ.fr;
   const lc = getContent(lang);
   const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [vis, setVis] = useState(false);
   useEffect(() => { setTimeout(() => setVis(true), 80); }, []);
@@ -1062,7 +1064,7 @@ export default function LessonE6_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{
             {/* QUESTION BANK */}
             <SL icon="📝" text={lc.p7} color={C.purple}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}>
-              <QuestionBank lang={lang}/>
+              <QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/>
             </Card>
 
             {/* SUMMARY */}
@@ -1075,7 +1077,7 @@ export default function LessonE6_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{
               ))}
             </Card>
 
-            <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.teal})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 10px 36px rgba(26,111,212,0.4)",marginTop:8}}>
+            <button disabled={!bankDone} onClick={()=>{if(bankDone)setPhase("quiz");}} style={{opacity:bankDone?1:0.45,cursor:bankDone?"pointer":"not-allowed",width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.teal})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,boxShadow:"0 10px 36px rgba(26,111,212,0.4)",marginTop:8}}>
               {t.startQuiz}
             </button>
             <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>

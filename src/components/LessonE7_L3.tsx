@@ -477,7 +477,7 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUESTION BANK — 15 QCM PREMIUM+
 // ══════════════════════════════════════
-function QuestionBank({ lang }) {
+function QuestionBank({ lang, onComplete }) {
   const [idx,setIdx]=useState(0);
   const [sel,setSel]=useState(null);
   const [answered,setAnswered]=useState(false);
@@ -537,7 +537,7 @@ function QuestionBank({ lang }) {
   const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q,"ans")));
   const total=qs.length;
   const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
-  const handleNext=()=>{if(idx===total-1){setDone(true);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
+  const handleNext=()=>{if(idx===total-1){setDone(true);if(onComplete)onComplete();return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
 
   if(!started) return (
@@ -878,7 +878,8 @@ export default function LessonE7_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{
   const t=T[lang]||T.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
   const lc=getContent(lang);
-  const [phase,setPhase]=useState("content");
+  const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);
   const [quizScore,setQuizScore]=useState(0);
   const [vis,setVis]=useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
@@ -991,7 +992,7 @@ export default function LessonE7_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{
             <SL icon="📝" text={lc.p7} color={C.purple2}/>
             <div style={{background:"rgba(10,22,40,0.92)",border:`1px solid ${C.purple2}44`,
               borderRadius:20,padding:"16px",marginBottom:18}}>
-              <QuestionBank lang={lang}/>
+              <QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/>
             </div>
 
             {/* RESUME — toujours visible */}
@@ -1008,11 +1009,11 @@ export default function LessonE7_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{
               ))}
             </div>
 
-            <button onClick={()=>setPhase("quiz")}
-              style={{width:"100%",padding:"18px 0",border:"none",borderRadius:18,
+            <button disabled={!bankDone} onClick={()=>{if(bankDone)setPhase("quiz");}}
+              style={{opacity:bankDone?1:0.45,cursor:bankDone?"pointer":"not-allowed",width:"100%",padding:"18px 0",border:"none",borderRadius:18,
                 background:`linear-gradient(135deg,${C.cyan},${C.amber})`,
                 fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:900,letterSpacing:2,
-                color:C.bg0,cursor:"pointer",boxShadow:`0 10px 40px rgba(0,229,255,0.35)`,marginTop:4}}>
+                color:C.bg0,boxShadow:`0 10px 40px rgba(0,229,255,0.35)`,marginTop:4}}>
               {t.startQuiz}
             </button>
             <div style={{textAlign:"center",fontSize:11,color:C.dim,marginTop:10}}>{t.readFirst}</div>

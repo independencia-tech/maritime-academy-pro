@@ -507,8 +507,9 @@ function AccidentCase({ lang }: { lang: string }) {
 // ══════════════════════════════════════
 // QUESTION BANK
 // ══════════════════════════════════════
-function QuestionBank({ lang }: { lang: string }) {
+function QuestionBank({ lang, onComplete }: { lang: string; onComplete?: () => void }) {
   const [open, setOpen] = useState<number|null>(null);
+  const [opened, setOpened] = useState<Set<number>>(new Set());
   const qs: any = {
     fr:[
       { q:"Quelle est la différence entre une pompe deep well et un éjecteur ?", a:"Deep well : pompe centrifuge immergée, débit élevé (500–5000 m³/h), nécessite un niveau minimum, moteur en pont. Éjecteur : sans pièces mobiles, utilise un fluide moteur sous pression pour aspirer par effet Venturi, débit faible (5–30 m³/h), aspire les fonds jusqu'à quelques cm, très fiable." },
@@ -544,7 +545,7 @@ function QuestionBank({ lang }: { lang: string }) {
     <div>
       {list.map((item: any, i: number) => (
         <div key={i} style={{marginBottom:8,borderRadius:12,background:"rgba(10,22,40,0.8)",border:"1px solid rgba(232,185,79,0.15)",overflow:"hidden"}}>
-          <button onClick={()=>setOpen(open===i?null:i)} style={{width:"100%",padding:"12px 14px",background:"none",border:"none",display:"flex",justifyContent:"space-between",alignItems:"flex-start",cursor:"pointer",textAlign:"left",gap:10}}>
+          <button onClick={()=>{setOpen(open===i?null:i);setOpened(prev=>{if(prev.has(i))return prev;const next=new Set(prev);next.add(i);if(next.size>=list.length&&onComplete)onComplete();return next;});}} style={{width:"100%",padding:"12px 14px",background:"none",border:"none",display:"flex",justifyContent:"space-between",alignItems:"flex-start",cursor:"pointer",textAlign:"left",gap:10}}>
             <span style={{fontSize:12,color:C.white,fontFamily:"monospace",lineHeight:1.5}}>
               <span style={{color:C.cargo,fontWeight:700,marginRight:6}}>Q{i+1}.</span>{item.q}
             </span>
@@ -726,6 +727,7 @@ export default function LessonE6_L1({ lang="fr", onBack=()=>{}, onComplete=()=>{
   const quiz = QUIZ[lang]||QUIZ.fr;
   const lc = getContent(lang);
   const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [vis, setVis] = useState(false);
   useEffect(() => { setTimeout(() => setVis(true), 80); }, []);
@@ -816,7 +818,7 @@ export default function LessonE6_L1({ lang="fr", onBack=()=>{}, onComplete=()=>{
             {/* Question Bank */}
             <SL icon="📝" text={lc.p7} color={C.pressure}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.pressure}44`,background:`linear-gradient(135deg,rgba(192,132,252,0.08),rgba(13,31,60,0.8))`}}>
-              <QuestionBank lang={lang}/>
+              <QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/>
             </Card>
 
             {/* Summary */}
@@ -829,7 +831,7 @@ export default function LessonE6_L1({ lang="fr", onBack=()=>{}, onComplete=()=>{
               ))}
             </Card>
 
-            <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.cargo},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 10px 36px ${C.cargo}40`,marginTop:8}}>{t.startQuiz}</button>
+            <button disabled={!bankDone} onClick={()=>{if(bankDone)setPhase("quiz");}} style={{opacity:bankDone?1:0.45,cursor:bankDone?"pointer":"not-allowed",width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.cargo},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.navy,boxShadow:`0 10px 36px ${C.cargo}40`,marginTop:8}}>{t.startQuiz}</button>
             <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
           </>}
 
