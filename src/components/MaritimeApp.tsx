@@ -3980,6 +3980,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l7"); setPage("engine_lessons"); }}
+          onNext={() => { markLessonCompleted("e1-l7"); setPage("lesson_emergency"); }}
         />
       )}
       {page === "lesson_maintenance" && (
@@ -3987,6 +3988,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l6"); setPage("engine_lessons"); }}
+          onNext={() => { markLessonCompleted("e1-l6"); setPage("lesson_watchkeeping"); }}
         />
       )}
       {page === "lesson_emergency" && (
