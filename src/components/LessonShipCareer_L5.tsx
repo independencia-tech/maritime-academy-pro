@@ -748,7 +748,7 @@ function Exercise({ lang }:{ lang:string }) {
   );
 }
 
-function QuestionBank({ lang }:{ lang:string }) {
+function QuestionBank({ lang, onComplete }:{ lang:string; onComplete?:()=>void }) {
   const bank=BANK[lang]||BANK.fr;
   const [shuffled]=useState(()=>bank.map(shuffleQuestionOptions));
   const [bankIdx,setBankIdx]=useState<number|null>(null);
@@ -760,7 +760,7 @@ function QuestionBank({ lang }:{ lang:string }) {
   const l=L[lang]||L.fr;
   const startBank=()=>{setBankIdx(0);setBankCur(0);setBankSel(null);setBankScore(0);setBankDone(false);};
   const pickBank=(i:number)=>{if(bankSel!==null)return;setBankSel(i);if(i===shuffled[bankCur].correct)setBankScore(s=>s+1);};
-  const bankNext=()=>{if(bankCur+1>=bank.length){setBankDone(true);return;}setBankCur(c=>c+1);setBankSel(null);};
+  const bankNext=()=>{if(bankCur+1>=bank.length){setBankDone(true);if(onComplete)onComplete();return;}setBankCur(c=>c+1);setBankSel(null);};
   return (
     <div>
       <div style={{fontFamily:"'Cinzel',serif",fontSize:14,color:C.gold,margin:"20px 0 14px"}}>{l.title} (15)</div>
@@ -914,6 +914,7 @@ function QuizTab({ lang, onComplete }:{ lang:string; onComplete:(xp:number)=>voi
 }
 
 function ContentPhase({ lang, onStartQuiz, onBack }:{ lang:string; onStartQuiz:()=>void; onBack:()=>void }) {
+  const [practiceDone, setPracticeDone] = useState(false);
   const t=T[lang]||T.fr;
   return (
     <div style={{padding:"14px 14px 24px"}}>
@@ -927,7 +928,7 @@ function ContentPhase({ lang, onStartQuiz, onBack }:{ lang:string; onStartQuiz:(
       <ActionPlan lang={lang}/>
       <CareerInsight lang={lang}/>
       <Exercise lang={lang}/>
-      <QuestionBank lang={lang}/>
+      <QuestionBank lang={lang} onComplete={()=>setPracticeDone(true)}/>
 
       <div style={{borderRadius:14,background:"rgba(10,22,40,0.8)",border:`1px solid ${C.gold}44`,padding:14,margin:"20px 0"}}>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:11,color:C.gold,marginBottom:10}}>{t.keypoints}</div>
@@ -938,9 +939,9 @@ function ContentPhase({ lang, onStartQuiz, onBack }:{ lang:string; onStartQuiz:(
         ))}
       </div>
 
-      <button onClick={onStartQuiz} style={{width:"100%",padding:"15px 0",border:"none",borderRadius:14,
+      <button disabled={!practiceDone} onClick={()=>{if(practiceDone)onStartQuiz();}} style={{opacity:practiceDone?1:0.45,cursor:practiceDone?"pointer":"not-allowed",width:"100%",padding:"15px 0",border:"none",borderRadius:14,
         background:`linear-gradient(135deg,${C.primary},${C.secondary})`,fontFamily:"'Cinzel',serif",fontSize:14,
-        fontWeight:700,letterSpacing:2,color:"#fff",cursor:"pointer"}}>{t.startQuiz}</button>
+        fontWeight:700,letterSpacing:2,color:"#fff",}}>{t.startQuiz}</button>
     </div>
   );
 }
