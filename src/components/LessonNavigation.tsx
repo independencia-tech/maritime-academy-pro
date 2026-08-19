@@ -15,7 +15,7 @@ const C = {
 // ══════════════════════════════════════════════
 
 // ── COMPAS MAGNÉTIQUE ─────────────────────────
-function CompassSVG({ heading = 0 }) {
+function CompassSVG({ heading = 0, lang = "fr" }) {
   const [currentHeading, setCurrentHeading] = useState(heading);
   const [interactive, setInteractive] = useState(false);
 
@@ -126,17 +126,20 @@ function CompassSVG({ heading = 0 }) {
         fontFamily: "'Cinzel',serif", fontSize: 18, fontWeight: 700,
         color: C.white, marginTop: 4,
       }}>
-        Cap : {Math.round(currentHeading).toString().padStart(3, "0")}°
+        {lang === "fr" ? "Cap" : lang === "es" ? "Rumbo" : lang === "pt" ? "Rumo" : "Heading"} : {Math.round(currentHeading).toString().padStart(3, "0")}°
       </div>
       <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>
-        🧭 Compas magnétique — Ligne de foi ↑
+        {lang === "fr" ? "🧭 Compas magnétique — Ligne de foi ↑" :
+         lang === "es" ? "🧭 Compás magnético — Línea de fe ↑" :
+         lang === "pt" ? "🧭 Bússola magnética — Linha de fé ↑" :
+         "🧭 Magnetic compass — Lubber line ↑"}
       </div>
     </div>
   );
 }
 
 // ── RADAR ─────────────────────────────────────
-function RadarSVG() {
+function RadarSVG({ lang = "fr" }) {
   const [angle, setAngle] = useState(0);
   const echoes = [
     { dist: 0.55, bearing: 45, size: 6, label: "Navire A" },
@@ -258,14 +261,17 @@ function RadarSVG() {
         })}
       </svg>
       <div style={{ fontSize: 11, color: C.green, marginTop: 4 }}>
-        📡 Radar — Portée 12 mn · 4 échos détectés
+        {lang === "fr" ? "📡 Radar — Portée 12 mn · 4 échos détectés" :
+         lang === "es" ? "📡 Radar — Alcance 12 mn · 4 ecos detectados" :
+         lang === "pt" ? "📡 Radar — Alcance 12 mn · 4 ecos detetados" :
+         "📡 Radar — Range 12 nm · 4 echoes detected"}
       </div>
     </div>
   );
 }
 
 // ── GPS DISPLAY ───────────────────────────────
-function GPSDisplay() {
+function GPSDisplay({ lang = "fr" }) {
   const [blink, setBlink] = useState(true);
   const [sats, setSats] = useState(
     Array.from({ length: 8 }, (_, i) => ({
@@ -369,7 +375,12 @@ function GPSDisplay() {
         </div>
       </div>
       <div style={{ fontSize: 11, color: C.blue2, marginTop: 6 }}>
-        🛰️ GPS — {sats.filter(s => s.active).length} satellites actifs
+        🛰️ GPS — {sats.filter(s => s.active).length} {
+          lang === "fr" ? "satellites actifs" :
+          lang === "es" ? "satélites activos" :
+          lang === "pt" ? "satélites ativos" :
+          "active satellites"
+        }
       </div>
     </div>
   );
@@ -512,6 +523,216 @@ const CONTENT = {
       ]
     },
   ],
+  en: [
+    { type: "badge", text: "📚 Navigation & Cartography · Lesson 1 · ~15 min · ⭐ 150 XP" },
+    { type: "title", text: "History & Navigation Instruments" },
+    { type: "intro",
+      text: "Ever since humans first stood on the shores of the sea, they have wanted to cross it. At first out of necessity — fishing, trading, migrating. Then out of curiosity — to discover what lies on the other side. Today, as a profession.\n\nGlobal maritime trade accounts for 90% of world trade, with 50,000 vessels permanently at sea and 1.9 million active seafarers. As a seafarer, you are part of this vital chain." },
+    { type: "section_title", icon: "📜", text: "PART 1 — History of Navigation" },
+    { type: "content", icon: "🏛️", title: "The Phoenicians — 3000 BC",
+      text: "The Phoenicians, established on the coasts of present-day Lebanon, were history's first great commercial navigators. Their technique: coastal navigation — keeping the coast in sight and orienting themselves using landmarks (recognizable points along the shore).\n\nAt night, they used the North Star — Polaris — which remains nearly fixed in the sky and points precisely north.\n\n🔍 Fun fact: The Phoenicians reportedly circumnavigated Africa around 600 BC, some 2000 years before Vasco da Gama." },
+    { type: "content", icon: "🌊", title: "The Polynesians — The Pacific Feat",
+      text: "The most extraordinary feat of navigation in history: the Polynesians colonized the vastness of the Pacific — Hawaii, New Zealand, Easter Island — over 5,000 km, in canoes, WITHOUT any instrument.\n\nTheir know-how:\n• Over 150 stars memorized\n• Reading waves and currents\n• Observing seabirds\n• Bamboo stick charts\n\n💡 What this teaches us: Navigation is above all a science of observation. These skills remain valuable today." },
+    { type: "keypoint", icon: "🧲", title: "The Compass — 11th Century",
+      text: "Invented in China around 1100, it reached Europe via the Arabs around 1180.\n\nPrinciple: The Earth is a giant magnet. A magnetized needle, free to rotate, aligns with the Earth's magnetic field and points toward magnetic north.\n\n⚠️ Important point: Magnetic north ≠ true north. The difference is called magnetic variation. It varies by location on Earth and must be corrected by the navigator (Lesson 5)." },
+    { type: "content", icon: "🔭", title: "Sextant (1731) & Chronometer (1762)",
+      text: "The sextant measures the angle between a celestial body and the horizon, allowing latitude to be calculated.\n\nBut longitude remained a mystery until 1762, when John Harrison invented the H4 marine chronometer — a watch that kept exact time despite the ship's movements.\n\nBy combining sextant + chronometer: a complete position (lat + lon) could be calculated at sea for the first time.\n\n💡 The British Parliament offered £20,000 in 1714 to whoever solved the longitude problem. It took Harrison 40 years to convince the judges." },
+    { type: "timeline",
+      items: [
+        { year: "1100", text: "Magnetic compass (China → Europe)" },
+        { year: "1731", text: "Sextant — precise latitude calculation" },
+        { year: "1762", text: "Harrison's chronometer — longitude solved" },
+        { year: "1935", text: "Radar — seeing through fog" },
+        { year: "1978", text: "First GPS satellite launched" },
+        { year: "1983", text: "GPS opened to civilians (Reagan)" },
+        { year: "2012", text: "ECDIS mandatory > 500 GT (IMO)" },
+      ]
+    },
+    { type: "section_title", icon: "🎛️", text: "PART 2 — Modern Instruments" },
+    { type: "instrument_compass" },
+    { type: "content", icon: "🧭", title: "The Magnetic Compass — Mandatory Instrument",
+      text: "Composition: Compass card graduated from 0° to 360°, mounted on a pivot, immersed in a damping liquid.\n\nThe lubber line: a fixed reference aligned with the ship's centerline. The graduation facing it indicates the heading.\n\nCardinal points and their degrees:\n• North (N) = 000°\n• East (E) = 090°\n• South (S) = 180°\n• West (W) = 270°\n• Northeast (NE) = 045°\n• Southeast (SE) = 135°\n• Southwest (SW) = 225°\n• Northwest (NW) = 315°\n\n🔑 Golden rule: The only instrument that works without electricity. MANDATORY on every ship (SOLAS)." },
+    { type: "instrument_radar" },
+    { type: "content", icon: "📡", title: "Radar — Seeing the Invisible",
+      text: "Principle: The antenna (20-30 rpm) emits radio wave pulses. They reflect off obstacles and return. Return time × speed of light ÷ 2 = distance.\n\nTypical ranges:\n• 0.25 nm → port maneuvering\n• 6 nm → coastal navigation\n• 12 nm → ocean navigation\n• 96 nm → long-range surveillance\n\nARPA (Automatic Radar Plotting Aid):\nAutomatically calculates for each echo:\n• CPA — closest point of approach\n• TCPA — time to that critical point\n• Alarm if collision risk\n\n⚠️ COLREG rule: Never rely blindly on ARPA. A visual lookout remains mandatory." },
+    { type: "instrument_gps" },
+    { type: "content", icon: "🛰️", title: "GPS — Worldwide Position",
+      text: "Architecture: 31 active satellites at 20,200 km altitude. At least 4 satellites visible from any point on Earth.\n\nPrinciple: Each satellite broadcasts its identity, position and exact time. The receiver calculates the distance to each satellite → triangulation → exact position.\n\nAccuracy: ± 5 to 10 meters (standard civilian GPS)\n\nOther satellite systems:\n• GLONASS (Russia) — 24 sats\n• Galileo (Europe) — 30 sats\n• BeiDou (China) — 35 sats\n\n⚠️ Vulnerabilities: Jamming, spoofing, power failure. That's why the magnetic compass and dead reckoning remain mandatory STCW skills." },
+    { type: "content", icon: "🗺️", title: "ECDIS — The Official Electronic Chart",
+      text: "ECDIS combines: ENC (official vector chart) + real-time GPS + AIS data + safety alarms + route recording.\n\nIMO requirement:\n• Passenger ships > 500 GT → 1 July 2012\n• Tankers > 3,000 GT → 1 July 2012\n• Cargo ships > 10,000 GT → 1 July 2013\n• Cargo ships 3,000-10,000 GT → 1 July 2014\n• Cargo ships 500-3,000 GT → 1 July 2015\n\nTypes of electronic charts:\n• ENC (S-57): official, legally approved ✅\n• RNC: scanned paper chart, not approved alone ⚠️" },
+    { type: "content", icon: "📻", title: "AIS — Automatic Identification",
+      text: "Every AIS-equipped ship automatically broadcasts on VHF:\n\nStatic data: MMSI number (unique 9-digit identifier), name, type, dimensions\n\nDynamic data: GPS position, speed over ground (SOG), course over ground (COG), heading (HDG), rate of turn\n\nVoyage data: Draught, destination, ETA\n\nRange: 20-30 nm on the surface · Worldwide via satellite (AIS-SAT)\n\nRequirements:\n• Class A: All ships > 300 GT on international voyage\n• Class B: Non-SOLAS ships, pleasure craft > 15m" },
+    { type: "section_title", icon: "📏", text: "PART 3 — Units of Measurement" },
+    { type: "keypoint", icon: "📐", title: "The Nautical Mile",
+      text: "1 nautical mile (nm) = 1,852 meters\n\nOrigin: 1 minute of arc of latitude on the Earth's meridian. Brilliant for navigation: to measure a distance on a nautical chart, you transfer the segment onto the latitude scale. 1 minute of latitude = 1 nautical mile.\n\nComparisons:\n• 1 nm = 1,852 m\n• 1 km = 1,000 m\n• 1 statute mile = 1,609 m\n• 1 cable = 185.2 m (1/10 of a nm)" },
+    { type: "keypoint", icon: "⚓", title: "The Knot",
+      text: "1 knot (kn) = 1 nautical mile per hour\n\nHistorical origin: A log line with knots every 14.4 m. The line was paid out for 30 seconds. The number of knots that passed = speed in knots.\n\nTypical speeds:\n• VLCC tanker: 14-16 kn\n• Container ship: 18-24 kn\n• Bulk carrier: 12-15 kn\n• Cruise ship: 20-24 kn\n• Fast ferry: 30-40 kn\n\nDST formula: D = V × T" },
+    { type: "formula",
+      title: "The Fundamental DST Formula",
+      lines: [
+        "D = V × T",
+        "V = D ÷ T",
+        "T = D ÷ V",
+        "",
+        "Example: 16 kn × 4.5 h = 72 nm",
+      ]
+    },
+    { type: "exercise" },
+    { type: "bank" },
+    { type: "summary",
+      title: "LESSON SUMMARY",
+      points: [
+        "Phoenicians → coastal, by stars (3000 BC)",
+        "Polynesians → reading waves and stars",
+        "Compass → magnetic north (1100)",
+        "GPS → position ± 5m, minimum 4 satellites",
+        "ECDIS → mandatory > 500 GT since 2012",
+        "1 nautical mile = 1,852 m = 1' of latitude",
+        "1 knot = 1 nm/h · D = V × T",
+        "N=000° E=090° S=180° W=270°",
+      ]
+    },
+  ],
+  es: [
+    { type: "badge", text: "📚 Navegación y Cartografía · Lección 1 · ~15 min · ⭐ 150 XP" },
+    { type: "title", text: "Historia e Instrumentos de Navegación" },
+    { type: "intro",
+      text: "Desde que el hombre pisó las orillas del mar, ha querido cruzarlo. Primero por necesidad — pescar, comerciar, migrar. Luego por curiosidad — descubrir lo que hay al otro lado. Hoy, como profesión.\n\nEl comercio marítimo mundial representa el 90% de los intercambios comerciales mundiales, con 50 000 buques en circulación permanente y 1,9 millones de marinos en activo. Tú, como marino, formas parte de esta cadena vital." },
+    { type: "section_title", icon: "📜", text: "PARTE 1 — Historia de la Navegación" },
+    { type: "content", icon: "🏛️", title: "Los Fenicios — 3000 a.C.",
+      text: "Los fenicios, establecidos en las costas del actual Líbano, fueron los primeros grandes navegantes comerciales de la historia. Su técnica: la navegación costera — mantener la costa a la vista y orientarse mediante marcas terrestres (puntos destacados en la costa).\n\nDe noche, usaban la estrella polar — Polaris — que permanece casi fija en el cielo e indica el norte con precisión.\n\n🔍 Anécdota: Se dice que los fenicios circunnavegaron África hacia el 600 a.C., unos 2000 años antes que Vasco da Gama." },
+    { type: "content", icon: "🌊", title: "Los Polinesios — La hazaña del Pacífico",
+      text: "La hazaña de navegación más extraordinaria de la historia: los polinesios colonizaron la inmensidad del Pacífico — Hawái, Nueva Zelanda, Isla de Pascua — a lo largo de 5000 km, en piraguas, SIN ningún instrumento.\n\nSu saber hacer:\n• Más de 150 estrellas memorizadas\n• Lectura de olas y corrientes\n• Observación de aves marinas\n• Mapas de varillas de bambú\n\n💡 Lo que esto nos enseña: La navegación es ante todo una ciencia de la observación. Estas cualidades siguen siendo valiosas hoy en día." },
+    { type: "keypoint", icon: "🧲", title: "La Brújula — Siglo XI",
+      text: "Inventada en China hacia 1100, llegó a Europa a través de los árabes hacia 1180.\n\nPrincipio: La Tierra es un imán gigantesco. Una aguja imantada, libre de girar, se alinea con el campo magnético terrestre y apunta hacia el norte magnético.\n\n⚠️ Punto importante: El norte magnético ≠ norte geográfico. La diferencia se llama declinación magnética. Varía según el lugar en la Tierra y debe ser corregida por el marino (Lección 5)." },
+    { type: "content", icon: "🔭", title: "Sextante (1731) y Cronómetro (1762)",
+      text: "El sextante mide el ángulo entre un astro y el horizonte, permitiendo calcular la latitud.\n\nPero la longitud siguió siendo un misterio hasta 1762, cuando John Harrison inventó el cronómetro marino H4 — un reloj que mantenía la hora exacta a pesar de los movimientos del buque.\n\nCombinando sextante + cronómetro: por primera vez se podía calcular en el mar una posición completa (lat + lon).\n\n💡 El Parlamento británico ofreció 20 000 libras en 1714 a quien resolviera el problema de la longitud. A Harrison le llevó 40 años convencer a los jueces." },
+    { type: "timeline",
+      items: [
+        { year: "1100", text: "Brújula magnética (China → Europa)" },
+        { year: "1731", text: "Sextante — cálculo preciso de latitud" },
+        { year: "1762", text: "Cronómetro de Harrison — longitud resuelta" },
+        { year: "1935", text: "Radar — ver en la niebla" },
+        { year: "1978", text: "Lanzamiento del primer satélite GPS" },
+        { year: "1983", text: "GPS abierto a civiles (Reagan)" },
+        { year: "2012", text: "ECDIS obligatorio > 500 GT (OMI)" },
+      ]
+    },
+    { type: "section_title", icon: "🎛️", text: "PARTE 2 — Los Instrumentos Modernos" },
+    { type: "instrument_compass" },
+    { type: "content", icon: "🧭", title: "El Compás Magnético — Instrumento obligatorio",
+      text: "Composición: Rosa de los vientos graduada de 0° a 360°, montada sobre un pivote, sumergida en un líquido amortiguador.\n\nLa línea de fe: referencia fija alineada con el eje del buque. La graduación enfrente indica el rumbo.\n\nPuntos cardinales y sus grados:\n• Norte (N) = 000°\n• Este (E) = 090°\n• Sur (S) = 180°\n• Oeste (W) = 270°\n• Nordeste (NE) = 045°\n• Sudeste (SE) = 135°\n• Sudoeste (SW) = 225°\n• Noroeste (NW) = 315°\n\n🔑 Regla de oro: El único instrumento que funciona sin electricidad. OBLIGATORIO en todo buque (SOLAS)." },
+    { type: "instrument_radar" },
+    { type: "content", icon: "📡", title: "El Radar — Ver lo invisible",
+      text: "Principio: La antena (20-30 vueltas/minuto) emite impulsos de ondas de radio. Se reflejan en los obstáculos y regresan. Tiempo de retorno × velocidad de la luz ÷ 2 = distancia.\n\nAlcances típicos:\n• 0,25 mn → maniobra portuaria\n• 6 mn → navegación costera\n• 12 mn → navegación de altura\n• 96 mn → vigilancia de largo alcance\n\nARPA (Automatic Radar Plotting Aid):\nCalcula automáticamente para cada eco:\n• CPA — distancia mínima de paso\n• TCPA — tiempo hasta ese punto crítico\n• Alarma si hay riesgo de abordaje\n\n⚠️ Regla COLREG: Nunca confiar ciegamente en el ARPA. La vigilancia visual sigue siendo obligatoria." },
+    { type: "instrument_gps" },
+    { type: "content", icon: "🛰️", title: "El GPS — Posición mundial",
+      text: "Arquitectura: 31 satélites activos a 20 200 km de altitud. Al menos 4 satélites visibles desde cualquier punto de la Tierra.\n\nPrincipio: Cada satélite emite su identidad, posición y hora exacta. El receptor calcula la distancia a cada satélite → triangulación → posición exacta.\n\nPrecisión: ± 5 a 10 metros (GPS civil estándar)\n\nOtros sistemas de satélites:\n• GLONASS (Rusia) — 24 sats\n• Galileo (Europa) — 30 sats\n• BeiDou (China) — 35 sats\n\n⚠️ Vulnerabilidades: Jamming (interferencia), spoofing (suplantación), fallo eléctrico. Por eso la brújula magnética y la navegación estimada siguen siendo competencias STCW obligatorias." },
+    { type: "content", icon: "🗺️", title: "El ECDIS — La carta electrónica oficial",
+      text: "El ECDIS combina: ENC (carta oficial vectorial) + GPS en tiempo real + datos AIS + alarmas de seguridad + registro de ruta.\n\nObligación OMI:\n• Pasaje > 500 GT → 1 de julio de 2012\n• Petroleros > 3000 GT → 1 de julio de 2012\n• Carga > 10 000 GT → 1 de julio de 2013\n• Carga 3-10 000 GT → 1 de julio de 2014\n• Carga 500-3000 GT → 1 de julio de 2015\n\nTipos de cartas electrónicas:\n• ENC (S-57): oficial, legalmente aprobada ✅\n• RNC: escaneo de carta en papel, no aprobada por sí sola ⚠️" },
+    { type: "content", icon: "📻", title: "El AIS — Identificación automática",
+      text: "Todo buque equipado con AIS difunde automáticamente por VHF:\n\nDatos estáticos: Número MMSI (identificador único de 9 dígitos), nombre, tipo, dimensiones\n\nDatos dinámicos: Posición GPS, velocidad (SOG), rumbo sobre el fondo (COG), rumbo verdadero (HDG), tasa de giro\n\nDatos de viaje: Calado, destino, ETA\n\nAlcance: 20-30 mn en superficie · Mundial vía satélite (AIS-SAT)\n\nObligaciones:\n• Clase A: Todo buque > 300 GT en viaje internacional\n• Clase B: Buques no SOLAS, embarcaciones de recreo > 15m" },
+    { type: "section_title", icon: "📏", text: "PARTE 3 — Unidades de Medida" },
+    { type: "keypoint", icon: "📐", title: "La Milla Náutica",
+      text: "1 milla náutica (mn) = 1852 metros\n\nOrigen: 1 minuto de arco de latitud en el meridiano terrestre. Genial para la navegación: para medir una distancia en una carta náutica, se traslada el segmento a la escala de latitud. 1 minuto de latitud = 1 milla náutica.\n\nComparaciones:\n• 1 mn = 1852 m\n• 1 km = 1000 m\n• 1 milla terrestre = 1609 m\n• 1 cable = 185,2 m (1/10 de mn)" },
+    { type: "keypoint", icon: "⚓", title: "El Nudo",
+      text: "1 nudo (kn) = 1 milla náutica por hora\n\nOrigen histórico: Corredera de barquilla con nudos cada 14,4 m. Se soltaba la cuerda 30 segundos. El número de nudos que pasaban = velocidad en nudos.\n\nVelocidades típicas:\n• Petrolero VLCC: 14-16 kn\n• Portacontenedores: 18-24 kn\n• Granelero: 12-15 kn\n• Crucero: 20-24 kn\n• Ferry rápido: 30-40 kn\n\nFórmula DVT: D = V × T" },
+    { type: "formula",
+      title: "Fórmula Fundamental DVT",
+      lines: [
+        "D = V × T",
+        "V = D ÷ T",
+        "T = D ÷ V",
+        "",
+        "Ejemplo: 16 kn × 4,5 h = 72 mn",
+      ]
+    },
+    { type: "exercise" },
+    { type: "bank" },
+    { type: "summary",
+      title: "RESUMEN DE LA LECCIÓN",
+      points: [
+        "Fenicios → costera guiándose por estrellas (3000 a.C.)",
+        "Polinesios → lectura de olas y estrellas",
+        "Brújula → norte magnético (1100)",
+        "GPS → posición ± 5m, mínimo 4 satélites",
+        "ECDIS → obligatorio > 500 GT desde 2012",
+        "1 milla náutica = 1852 m = 1' de latitud",
+        "1 nudo = 1 mn/h · D = V × T",
+        "N=000° E=090° S=180° W=270°",
+      ]
+    },
+  ],
+  pt: [
+    { type: "badge", text: "📚 Navegação e Cartografia · Lição 1 · ~15 min · ⭐ 150 XP" },
+    { type: "title", text: "História e Instrumentos de Navegação" },
+    { type: "intro",
+      text: "Desde que o homem pisou as margens do mar, quis atravessá-lo. Primeiro por necessidade — pescar, comerciar, migrar. Depois por curiosidade — descobrir o que existe do outro lado. Hoje, por profissão.\n\nO comércio marítimo mundial representa 90% das trocas comerciais mundiais, com 50 000 navios em circulação permanente e 1,9 milhões de marítimos em atividade. Tu, como marítimo, fazes parte desta cadeia vital." },
+    { type: "section_title", icon: "📜", text: "PARTE 1 — História da Navegação" },
+    { type: "content", icon: "🏛️", title: "Os Fenícios — 3000 a.C.",
+      text: "Os fenícios, estabelecidos nas costas do atual Líbano, foram os primeiros grandes navegadores comerciais da história. A sua técnica: a navegação costeira — manter a costa à vista e orientar-se por amers (pontos notáveis da costa).\n\nÀ noite, usavam a estrela polar — Polaris — que permanece quase fixa no céu e indica o norte com precisão.\n\n🔍 Curiosidade: Os fenícios terão contornado a África por volta de 600 a.C., cerca de 2000 anos antes de Vasco da Gama." },
+    { type: "content", icon: "🌊", title: "Os Polinésios — O feito do Pacífico",
+      text: "O feito de navegação mais extraordinário da história: os polinésios colonizaram a imensidão do Pacífico — Havai, Nova Zelândia, Ilha de Páscoa — ao longo de 5000 km, em canoas, SEM qualquer instrumento.\n\nO seu saber-fazer:\n• Mais de 150 estrelas memorizadas\n• Leitura das ondas e correntes\n• Observação de aves marinhas\n• Mapas de varas de bambu\n\n💡 O que isto nos ensina: A navegação é acima de tudo uma ciência da observação. Estas qualidades continuam preciosas hoje." },
+    { type: "keypoint", icon: "🧲", title: "A Bússola — Século XI",
+      text: "Inventada na China por volta de 1100, chegou à Europa através dos árabes por volta de 1180.\n\nPrincípio: A Terra é um gigantesco íman. Uma agulha imantada, livre para girar, alinha-se com o campo magnético terrestre e aponta para o norte magnético.\n\n⚠️ Ponto importante: O norte magnético ≠ norte geográfico. A diferença chama-se declinação magnética. Varia consoante o local na Terra e deve ser corrigida pelo marítimo (Lição 5)." },
+    { type: "content", icon: "🔭", title: "Sextante (1731) e Cronómetro (1762)",
+      text: "O sextante mede o ângulo entre um astro e o horizonte, permitindo calcular a latitude.\n\nMas a longitude permaneceu um mistério até 1762, quando John Harrison inventou o cronómetro marítimo H4 — um relógio que mantinha a hora exata apesar dos movimentos do navio.\n\nCombinando sextante + cronómetro: pela primeira vez podia calcular-se no mar uma posição completa (lat + lon).\n\n💡 O Parlamento britânico ofereceu £20 000 em 1714 a quem resolvesse o problema da longitude. Harrison levou 40 anos a convencer os juízes." },
+    { type: "timeline",
+      items: [
+        { year: "1100", text: "Bússola magnética (China → Europa)" },
+        { year: "1731", text: "Sextante — cálculo preciso de latitude" },
+        { year: "1762", text: "Cronómetro de Harrison — longitude resolvida" },
+        { year: "1935", text: "Radar — ver no nevoeiro" },
+        { year: "1978", text: "Lançamento do primeiro satélite GPS" },
+        { year: "1983", text: "GPS aberto a civis (Reagan)" },
+        { year: "2012", text: "ECDIS obrigatório > 500 GT (OMI)" },
+      ]
+    },
+    { type: "section_title", icon: "🎛️", text: "PARTE 2 — Os Instrumentos Modernos" },
+    { type: "instrument_compass" },
+    { type: "content", icon: "🧭", title: "A Bússola Magnética — Instrumento obrigatório",
+      text: "Composição: Rosa dos ventos graduada de 0° a 360°, montada sobre um pivô, imersa num líquido amortecedor.\n\nA linha de fé: referência fixa alinhada com o eixo do navio. A graduação em frente indica o rumo.\n\nPontos cardeais e os seus graus:\n• Norte (N) = 000°\n• Este (E) = 090°\n• Sul (S) = 180°\n• Oeste (W) = 270°\n• Nordeste (NE) = 045°\n• Sudeste (SE) = 135°\n• Sudoeste (SW) = 225°\n• Noroeste (NW) = 315°\n\n🔑 Regra de ouro: Único instrumento que funciona sem eletricidade. OBRIGATÓRIA em todo o navio (SOLAS)." },
+    { type: "instrument_radar" },
+    { type: "content", icon: "📡", title: "O Radar — Ver o invisível",
+      text: "Princípio: A antena (20-30 voltas/minuto) emite impulsos de ondas de rádio. Refletem-se nos obstáculos e regressam. Tempo de retorno × velocidade da luz ÷ 2 = distância.\n\nAlcances típicos:\n• 0,25 mn → manobra portuária\n• 6 mn → navegação costeira\n• 12 mn → navegação oceânica\n• 96 mn → vigilância de longo alcance\n\nARPA (Automatic Radar Plotting Aid):\nCalcula automaticamente para cada eco:\n• CPA — distância mínima de passagem\n• TCPA — tempo até esse ponto crítico\n• Alarme se houver risco de abalroamento\n\n⚠️ Regra COLREG: Nunca confiar cegamente no ARPA. A vigia visual continua obrigatória." },
+    { type: "instrument_gps" },
+    { type: "content", icon: "🛰️", title: "O GPS — Posição mundial",
+      text: "Arquitetura: 31 satélites ativos a 20 200 km de altitude. Pelo menos 4 satélites visíveis a partir de qualquer ponto da Terra.\n\nPrincípio: Cada satélite emite a sua identidade, posição e hora exata. O recetor calcula a distância a cada satélite → triangulação → posição exata.\n\nPrecisão: ± 5 a 10 metros (GPS civil padrão)\n\nOutros sistemas de satélites:\n• GLONASS (Rússia) — 24 sats\n• Galileo (Europa) — 30 sats\n• BeiDou (China) — 35 sats\n\n⚠️ Vulnerabilidades: Jamming (interferência), spoofing (falsificação), falha elétrica. Por isso a bússola magnética e a navegação estimada continuam competências STCW obrigatórias." },
+    { type: "content", icon: "🗺️", title: "O ECDIS — A carta eletrónica oficial",
+      text: "O ECDIS combina: ENC (carta oficial vetorial) + GPS em tempo real + dados AIS + alarmes de segurança + registo de rota.\n\nObrigação OMI:\n• Passageiros > 500 GT → 1 de julho de 2012\n• Petroleiros > 3000 GT → 1 de julho de 2012\n• Carga > 10 000 GT → 1 de julho de 2013\n• Carga 3-10 000 GT → 1 de julho de 2014\n• Carga 500-3000 GT → 1 de julho de 2015\n\nTipos de cartas eletrónicas:\n• ENC (S-57): oficial, legalmente aprovada ✅\n• RNC: digitalização de carta em papel, não aprovada sozinha ⚠️" },
+    { type: "content", icon: "📻", title: "O AIS — Identificação automática",
+      text: "Todo o navio equipado com AIS transmite automaticamente em VHF:\n\nDados estáticos: Número MMSI (identificador único de 9 dígitos), nome, tipo, dimensões\n\nDados dinâmicos: Posição GPS, velocidade (SOG), rumo sobre o fundo (COG), rumo verdadeiro (HDG), taxa de guinada\n\nDados de viagem: Calado, destino, ETA\n\nAlcance: 20-30 mn à superfície · Mundial via satélite (AIS-SAT)\n\nObrigações:\n• Classe A: Todo o navio > 300 GT em viagem internacional\n• Classe B: Navios não SOLAS, embarcações de recreio > 15m" },
+    { type: "section_title", icon: "📏", text: "PARTE 3 — Unidades de Medida" },
+    { type: "keypoint", icon: "📐", title: "A Milha Náutica",
+      text: "1 milha náutica (mn) = 1852 metros\n\nOrigem: 1 minuto de arco de latitude no meridiano terrestre. Genial para a navegação: para medir uma distância numa carta náutica, transporta-se o segmento para a escala de latitude. 1 minuto de latitude = 1 milha náutica.\n\nComparações:\n• 1 mn = 1852 m\n• 1 km = 1000 m\n• 1 milha terrestre = 1609 m\n• 1 cabo = 185,2 m (1/10 de mn)" },
+    { type: "keypoint", icon: "⚓", title: "O Nó",
+      text: "1 nó (kn) = 1 milha náutica por hora\n\nOrigem histórica: Corrediça de barquinha com nós a cada 14,4 m. A linha era largada durante 30 segundos. O número de nós que passavam = velocidade em nós.\n\nVelocidades típicas:\n• Petroleiro VLCC: 14-16 kn\n• Porta-contentores: 18-24 kn\n• Graneleiro: 12-15 kn\n• Cruzeiro: 20-24 kn\n• Ferry rápido: 30-40 kn\n\nFórmula DVT: D = V × T" },
+    { type: "formula",
+      title: "Fórmula Fundamental DVT",
+      lines: [
+        "D = V × T",
+        "V = D ÷ T",
+        "T = D ÷ V",
+        "",
+        "Exemplo: 16 kn × 4,5 h = 72 mn",
+      ]
+    },
+    { type: "exercise" },
+    { type: "bank" },
+    { type: "summary",
+      title: "RESUMO DA LIÇÃO",
+      points: [
+        "Fenícios → costeira pelas estrelas (3000 a.C.)",
+        "Polinésios → leitura de ondas e estrelas",
+        "Bússola → norte magnético (1100)",
+        "GPS → posição ± 5m, mínimo 4 satélites",
+        "ECDIS → obrigatório > 500 GT desde 2012",
+        "1 milha náutica = 1852 m = 1' de latitude",
+        "1 nó = 1 mn/h · D = V × T",
+        "N=000° E=090° S=180° W=270°",
+      ]
+    },
+  ],
 };
 
 const QUIZ = {
@@ -545,6 +766,102 @@ const QUIZ = {
       opts: ["Il est plus précis que le GPS","Il est moins coûteux","Il fonctionne sans électricité et résiste au jamming et au spoofing","Il est requis par le MARPOL"],
       correct: 2,
       expl: "Le compas magnétique est le seul instrument opérationnel lors d'une panne électrique totale. Il ne peut pas être brouillé (jamming) ni leurré (spoofing). C'est l'instrument de dernier recours — SOLAS l'impose.",
+    },
+  ],
+  en: [
+    {
+      q: "Which people colonized the Pacific over 5,000 km with no instrument at all?",
+      opts: ["The Phoenicians","The Vikings","The Polynesians","The Arabs"],
+      correct: 2,
+      expl: "The Polynesians colonized Hawaii, New Zealand and Easter Island by reading stars, waves and birds — with no instrument at all.",
+    },
+    {
+      q: "Why was the invention of the marine chronometer (1762) revolutionary?",
+      opts: ["It measured the ship's speed","It gave the time in every port","It allowed longitude to be calculated","It replaced the sextant"],
+      correct: 2,
+      expl: "Knowing the exact time lets you calculate the difference from local time (sun), and therefore longitude. Before Harrison, longitude at sea was a mystery.",
+    },
+    {
+      q: "A ship sails at 18 knots for 3h30. What distance has it covered?",
+      opts: ["54 nautical miles","63 nautical miles","72 nautical miles","84 nautical miles"],
+      correct: 1,
+      expl: "D = V × T = 18 kn × 3.5 h = 63 nautical miles. Always convert hours to decimals (3h30 = 3.5 hours).",
+    },
+    {
+      q: "What does CPA mean in the context of ARPA radar?",
+      opts: ["Collision Probability Assessment","Closest Point of Approach — minimum passing distance","Automatic Position Control","Automated Piloting Center"],
+      correct: 1,
+      expl: "CPA = Closest Point of Approach. It's the minimum distance at which a detected ship will pass. ARPA also calculates TCPA — time to that point.",
+    },
+    {
+      q: "Why does the magnetic compass remain MANDATORY despite GPS and ECDIS?",
+      opts: ["It's more accurate than GPS","It's less expensive","It works without electricity and resists jamming and spoofing","It's required by MARPOL"],
+      correct: 2,
+      expl: "The magnetic compass is the only instrument that remains operational during a total power failure. It cannot be jammed or spoofed. It's the instrument of last resort — SOLAS requires it.",
+    },
+  ],
+  es: [
+    {
+      q: "¿Qué pueblo colonizó el Pacífico a lo largo de 5000 km sin ningún instrumento?",
+      opts: ["Los fenicios","Los vikingos","Los polinesios","Los árabes"],
+      correct: 2,
+      expl: "Los polinesios colonizaron Hawái, Nueva Zelanda y la Isla de Pascua leyendo estrellas, olas y aves — sin ningún instrumento.",
+    },
+    {
+      q: "¿Por qué fue revolucionaria la invención del cronómetro marino (1762)?",
+      opts: ["Medía la velocidad del buque","Daba la hora en cada puerto","Permitía calcular la longitud","Sustituía al sextante"],
+      correct: 2,
+      expl: "Conocer la hora exacta permite calcular la diferencia con la hora local (sol) y, por tanto, la longitud. Antes de Harrison, la longitud en el mar era un misterio.",
+    },
+    {
+      q: "Un buque navega a 18 nudos durante 3h30. ¿Qué distancia ha recorrido?",
+      opts: ["54 millas náuticas","63 millas náuticas","72 millas náuticas","84 millas náuticas"],
+      correct: 1,
+      expl: "D = V × T = 18 kn × 3,5 h = 63 millas náuticas. Convierte siempre las horas a decimales (3h30 = 3,5 horas).",
+    },
+    {
+      q: "¿Qué significa CPA en el contexto del radar ARPA?",
+      opts: ["Cap Probable de Abordaje","Closest Point of Approach — distancia mínima de paso","Control de Posición Automático","Centro de Pilotaje Automatizado"],
+      correct: 1,
+      expl: "CPA = Closest Point of Approach. Es la distancia mínima a la que pasará un buque detectado. El ARPA también calcula el TCPA — tiempo hasta ese punto.",
+    },
+    {
+      q: "¿Por qué la brújula magnética sigue siendo OBLIGATORIA a pesar del GPS y el ECDIS?",
+      opts: ["Es más precisa que el GPS","Es menos costosa","Funciona sin electricidad y resiste el jamming y el spoofing","Lo exige el MARPOL"],
+      correct: 2,
+      expl: "La brújula magnética es el único instrumento operativo en caso de fallo eléctrico total. No puede ser interferida (jamming) ni suplantada (spoofing). Es el instrumento de último recurso — lo impone el SOLAS.",
+    },
+  ],
+  pt: [
+    {
+      q: "Que povo colonizou o Pacífico ao longo de 5000 km sem qualquer instrumento?",
+      opts: ["Os fenícios","Os vikings","Os polinésios","Os árabes"],
+      correct: 2,
+      expl: "Os polinésios colonizaram o Havai, a Nova Zelândia e a Ilha de Páscoa lendo estrelas, ondas e aves — sem qualquer instrumento.",
+    },
+    {
+      q: "Por que foi revolucionária a invenção do cronómetro marítimo (1762)?",
+      opts: ["Media a velocidade do navio","Dava a hora em cada porto","Permitia calcular a longitude","Substituía o sextante"],
+      correct: 2,
+      expl: "Conhecer a hora exata permite calcular a diferença com a hora local (sol) e, portanto, a longitude. Antes de Harrison, a longitude no mar era um mistério.",
+    },
+    {
+      q: "Um navio navega a 18 nós durante 3h30. Que distância percorreu?",
+      opts: ["54 milhas náuticas","63 milhas náuticas","72 milhas náuticas","84 milhas náuticas"],
+      correct: 1,
+      expl: "D = V × T = 18 kn × 3,5 h = 63 milhas náuticas. Converte sempre as horas em decimais (3h30 = 3,5 horas).",
+    },
+    {
+      q: "O que significa CPA no contexto do radar ARPA?",
+      opts: ["Cap Provável de Abalroamento","Closest Point of Approach — distância mínima de passagem","Controlo de Posição Automático","Centro de Pilotagem Automatizado"],
+      correct: 1,
+      expl: "CPA = Closest Point of Approach. É a distância mínima a que um navio detetado vai passar. O ARPA também calcula o TCPA — tempo até esse ponto.",
+    },
+    {
+      q: "Por que a bússola magnética continua OBRIGATÓRIA apesar do GPS e do ECDIS?",
+      opts: ["É mais precisa do que o GPS","É menos dispendiosa","Funciona sem eletricidade e resiste ao jamming e ao spoofing","É exigida pelo MARPOL"],
+      correct: 2,
+      expl: "A bússola magnética é o único instrumento operacional em caso de falha elétrica total. Não pode ser interferida (jamming) nem falsificada (spoofing). É o instrumento de último recurso — imposto pela SOLAS.",
     },
   ],
 };
@@ -962,11 +1279,19 @@ function ContentBlock({ block, lang }) {
           <div style={{
             fontSize: 11, color: C.gold, letterSpacing: 2,
             fontFamily: "'Cinzel',serif", marginBottom: 14,
-          }}>🧭 COMPAS MAGNÉTIQUE — Interactif</div>
-          <CompassSVG />
+          }}>{
+            lang === "fr" ? "🧭 COMPAS MAGNÉTIQUE — Interactif" :
+            lang === "es" ? "🧭 COMPÁS MAGNÉTICO — Interactivo" :
+            lang === "pt" ? "🧭 BÚSSOLA MAGNÉTICA — Interativa" :
+            "🧭 MAGNETIC COMPASS — Interactive"
+          }</div>
+          <CompassSVG lang={lang} />
           <GLine />
           <div style={{ fontSize: 12, color: C.muted, textAlign: "left", marginTop: 8 }}>
-            L'aiguille rouge pointe toujours vers le nord magnétique. La graduation indique les caps de 0° à 360°. La ligne de foi ▲ en haut indique le cap suivi par le navire.
+            {lang === "fr" ? "L'aiguille rouge pointe toujours vers le nord magnétique. La graduation indique les caps de 0° à 360°. La ligne de foi ▲ en haut indique le cap suivi par le navire." :
+             lang === "es" ? "La aguja roja apunta siempre hacia el norte magnético. La graduación indica los rumbos de 0° a 360°. La línea de fe ▲ en la parte superior indica el rumbo seguido por el buque." :
+             lang === "pt" ? "A agulha vermelha aponta sempre para o norte magnético. A graduação indica os rumos de 0° a 360°. A linha de fé ▲ no topo indica o rumo seguido pelo navio." :
+             "The red needle always points to magnetic north. The graduation shows headings from 0° to 360°. The lubber line ▲ at the top shows the heading the vessel is steering."}
           </div>
         </Card>
       );
@@ -977,11 +1302,19 @@ function ContentBlock({ block, lang }) {
           <div style={{
             fontSize: 11, color: C.green, letterSpacing: 2,
             fontFamily: "'Cinzel',serif", marginBottom: 14,
-          }}>📡 RADAR — Balayage en temps réel</div>
-          <RadarSVG />
+          }}>{
+            lang === "fr" ? "📡 RADAR — Balayage en temps réel" :
+            lang === "es" ? "📡 RADAR — Barrido en tiempo real" :
+            lang === "pt" ? "📡 RADAR — Varrimento em tempo real" :
+            "📡 RADAR — Real-time sweep"
+          }</div>
+          <RadarSVG lang={lang} />
           <GLine />
           <div style={{ fontSize: 12, color: C.muted, textAlign: "left", marginTop: 8 }}>
-            La ligne verte balaye à 360°. Les taches lumineuses sont des échos (navires, côtes). Les cercles indiquent les distances. Le navire propre est au centre (●).
+            {lang === "fr" ? "La ligne verte balaye à 360°. Les taches lumineuses sont des échos (navires, côtes). Les cercles indiquent les distances. Le navire propre est au centre (●)." :
+             lang === "es" ? "La línea verde barre a 360°. Las manchas luminosas son ecos (buques, costas). Los círculos indican las distancias. El buque propio está en el centro (●)." :
+             lang === "pt" ? "A linha verde varre a 360°. As manchas luminosas são ecos (navios, costas). Os círculos indicam as distâncias. O navio próprio está no centro (●)." :
+             "The green line sweeps through 360°. The bright spots are echoes (ships, coastlines). The circles indicate distances. Own ship is at the center (●)."}
           </div>
         </Card>
       );
@@ -992,11 +1325,19 @@ function ContentBlock({ block, lang }) {
           <div style={{
             fontSize: 11, color: C.blue2, letterSpacing: 2,
             fontFamily: "'Cinzel',serif", marginBottom: 14,
-          }}>🛰️ GPS — Vue satellites et position</div>
-          <GPSDisplay />
+          }}>{
+            lang === "fr" ? "🛰️ GPS — Vue satellites et position" :
+            lang === "es" ? "🛰️ GPS — Vista de satélites y posición" :
+            lang === "pt" ? "🛰️ GPS — Vista de satélites e posição" :
+            "🛰️ GPS — Satellite view and position"
+          }</div>
+          <GPSDisplay lang={lang} />
           <GLine />
           <div style={{ fontSize: 12, color: C.muted, textAlign: "left", marginTop: 8 }}>
-            Vue du ciel : les cercles bleus sont les satellites visibles. Les satellites actifs (bleu brillant) participent au calcul de position. La position et la vitesse s'affichent en temps réel.
+            {lang === "fr" ? "Vue du ciel : les cercles bleus sont les satellites visibles. Les satellites actifs (bleu brillant) participent au calcul de position. La position et la vitesse s'affichent en temps réel." :
+             lang === "es" ? "Vista del cielo: los círculos azules son los satélites visibles. Los satélites activos (azul brillante) participan en el cálculo de posición. La posición y la velocidad se muestran en tiempo real." :
+             lang === "pt" ? "Vista do céu: os círculos azuis são os satélites visíveis. Os satélites ativos (azul brilhante) participam no cálculo de posição. A posição e a velocidade são apresentadas em tempo real." :
+             "Sky view: the blue circles are visible satellites. Active satellites (bright blue) contribute to the position fix. Position and speed are shown in real time."}
           </div>
         </Card>
       );
@@ -1057,7 +1398,10 @@ function Quiz({ questions, lang, t, onComplete }) {
           fontWeight: 900, color: C.white, marginBottom: 4,
         }}>{finalScore}/{questions.length}</div>
         <div style={{ fontSize: 13, color: C.gold2, marginBottom: 12 }}>
-          {pct === 100 ? "Parfait ! 🌟" : pct >= 80 ? "Excellent ! 💪" : "Continue ! 📚"}
+          {lang === "fr" ? (pct === 100 ? "Parfait ! 🌟" : pct >= 80 ? "Excellent ! 💪" : "Continue ! 📚") :
+           lang === "es" ? (pct === 100 ? "¡Perfecto! 🌟" : pct >= 80 ? "¡Excelente! 💪" : "¡Sigue así! 📚") :
+           lang === "pt" ? (pct === 100 ? "Perfeito! 🌟" : pct >= 80 ? "Excelente! 💪" : "Continua! 📚") :
+           (pct === 100 ? "Perfect! 🌟" : pct >= 80 ? "Excellent! 💪" : "Keep going! 📚")}
         </div>
         <div style={{
           display: "inline-block", padding: "6px 16px", borderRadius: 20,
@@ -1208,47 +1552,144 @@ function downloadMemo(lang) {
   ctx.strokeRect(10, 10, 580, 680);
 
   // Title
+  const TITLE = {
+    fr: "FICHE MÉMO — LEÇON 1", en: "QUICK REFERENCE — LESSON 1",
+    es: "FICHA RESUMEN — LECCIÓN 1", pt: "FICHA RESUMO — LIÇÃO 1",
+  };
+  const SUBTITLE = {
+    fr: "Navigation & Instruments · Maritime Academy Pro",
+    en: "Navigation & Instruments · Maritime Academy Pro",
+    es: "Navegación e Instrumentos · Maritime Academy Pro",
+    pt: "Navegação e Instrumentos · Maritime Academy Pro",
+  };
   ctx.fillStyle = "#e8b94f";
   ctx.font = "bold 20px serif";
   ctx.textAlign = "center";
-  ctx.fillText("FICHE MÉMO — LEÇON 1", 300, 50);
+  ctx.fillText(TITLE[lang] || TITLE.fr, 300, 50);
   ctx.fillStyle = "#4da6ff";
   ctx.font = "14px serif";
-  ctx.fillText("Navigation & Instruments · Maritime Academy Pro", 300, 75);
+  ctx.fillText(SUBTITLE[lang] || SUBTITLE.fr, 300, 75);
 
   // Divider
   ctx.strokeStyle = "#c9922a";
   ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(30, 90); ctx.lineTo(570, 90); ctx.stroke();
 
-  const lines = [
-    ["#c9922a", "bold 14px serif", "CHRONOLOGIE"],
-    ["#f0f4ff", "12px monospace", "3000 av.J.-C. → Phéniciens (côtière aux étoiles)"],
-    ["#f0f4ff", "12px monospace", "1100          → Boussole magnétique"],
-    ["#f0f4ff", "12px monospace", "1731          → Sextant (latitude)"],
-    ["#f0f4ff", "12px monospace", "1762          → Chronomètre (longitude)"],
-    ["#f0f4ff", "12px monospace", "1935          → Radar"],
-    ["#f0f4ff", "12px monospace", "1983          → GPS civil"],
-    ["#f0f4ff", "12px monospace", "2012          → ECDIS obligatoire"],
-    ["#c9922a", "bold 14px serif", ""],
-    ["#c9922a", "bold 14px serif", "INSTRUMENTS"],
-    ["#f0f4ff", "12px monospace", "Compas    → Cap sans électricité, OBLIGATOIRE"],
-    ["#f0f4ff", "12px monospace", "Gyrocomp. → Nord vrai, avec électricité"],
-    ["#f0f4ff", "12px monospace", "GPS       → Position ± 5m (4 sats min)"],
-    ["#f0f4ff", "12px monospace", "ECDIS     → Carte électronique officielle"],
-    ["#f0f4ff", "12px monospace", "Radar     → Détection, CPA/TCPA (ARPA)"],
-    ["#f0f4ff", "12px monospace", "AIS       → Identification (MMSI unique)"],
-    ["#c9922a", "bold 14px serif", ""],
-    ["#c9922a", "bold 14px serif", "UNITÉS"],
-    ["#f0f4ff", "12px monospace", "1 mn = 1 852 m = 1 minute d'arc latitude"],
-    ["#f0f4ff", "12px monospace", "1 nœud = 1 mn/heure"],
-    ["#4da6ff", "bold 14px monospace", "D = V × T  |  V = D÷T  |  T = D÷V"],
-    ["#f0f4ff", "12px monospace", "1 encablure = 185,2 m (1/10 mn)"],
-    ["#c9922a", "bold 14px serif", ""],
-    ["#c9922a", "bold 14px serif", "POINTS CARDINAUX"],
-    ["#f0f4ff", "12px monospace", "N=000° · E=090° · S=180° · W=270°"],
-    ["#f0f4ff", "12px monospace", "NE=045° · SE=135° · SW=225° · NW=315°"],
-  ];
+  const LINES = {
+    fr: [
+      ["#c9922a", "bold 14px serif", "CHRONOLOGIE"],
+      ["#f0f4ff", "12px monospace", "3000 av.J.-C. → Phéniciens (côtière aux étoiles)"],
+      ["#f0f4ff", "12px monospace", "1100          → Boussole magnétique"],
+      ["#f0f4ff", "12px monospace", "1731          → Sextant (latitude)"],
+      ["#f0f4ff", "12px monospace", "1762          → Chronomètre (longitude)"],
+      ["#f0f4ff", "12px monospace", "1935          → Radar"],
+      ["#f0f4ff", "12px monospace", "1983          → GPS civil"],
+      ["#f0f4ff", "12px monospace", "2012          → ECDIS obligatoire"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "INSTRUMENTS"],
+      ["#f0f4ff", "12px monospace", "Compas    → Cap sans électricité, OBLIGATOIRE"],
+      ["#f0f4ff", "12px monospace", "Gyrocomp. → Nord vrai, avec électricité"],
+      ["#f0f4ff", "12px monospace", "GPS       → Position ± 5m (4 sats min)"],
+      ["#f0f4ff", "12px monospace", "ECDIS     → Carte électronique officielle"],
+      ["#f0f4ff", "12px monospace", "Radar     → Détection, CPA/TCPA (ARPA)"],
+      ["#f0f4ff", "12px monospace", "AIS       → Identification (MMSI unique)"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "UNITÉS"],
+      ["#f0f4ff", "12px monospace", "1 mn = 1 852 m = 1 minute d'arc latitude"],
+      ["#f0f4ff", "12px monospace", "1 nœud = 1 mn/heure"],
+      ["#4da6ff", "bold 14px monospace", "D = V × T  |  V = D÷T  |  T = D÷V"],
+      ["#f0f4ff", "12px monospace", "1 encablure = 185,2 m (1/10 mn)"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "POINTS CARDINAUX"],
+      ["#f0f4ff", "12px monospace", "N=000° · E=090° · S=180° · W=270°"],
+      ["#f0f4ff", "12px monospace", "NE=045° · SE=135° · SW=225° · NW=315°"],
+    ],
+    en: [
+      ["#c9922a", "bold 14px serif", "TIMELINE"],
+      ["#f0f4ff", "12px monospace", "3000 BC       → Phoenicians (coastal, by stars)"],
+      ["#f0f4ff", "12px monospace", "1100          → Magnetic compass"],
+      ["#f0f4ff", "12px monospace", "1731          → Sextant (latitude)"],
+      ["#f0f4ff", "12px monospace", "1762          → Chronometer (longitude)"],
+      ["#f0f4ff", "12px monospace", "1935          → Radar"],
+      ["#f0f4ff", "12px monospace", "1983          → Civilian GPS"],
+      ["#f0f4ff", "12px monospace", "2012          → ECDIS mandatory"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "INSTRUMENTS"],
+      ["#f0f4ff", "12px monospace", "Compass   → Heading without electricity, MANDATORY"],
+      ["#f0f4ff", "12px monospace", "Gyrocomp. → True north, needs electricity"],
+      ["#f0f4ff", "12px monospace", "GPS       → Position ± 5m (4 sats min)"],
+      ["#f0f4ff", "12px monospace", "ECDIS     → Official electronic chart"],
+      ["#f0f4ff", "12px monospace", "Radar     → Detection, CPA/TCPA (ARPA)"],
+      ["#f0f4ff", "12px monospace", "AIS       → Identification (unique MMSI)"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "UNITS"],
+      ["#f0f4ff", "12px monospace", "1 nm = 1,852 m = 1 minute of latitude arc"],
+      ["#f0f4ff", "12px monospace", "1 knot = 1 nm/hour"],
+      ["#4da6ff", "bold 14px monospace", "D = V × T  |  V = D÷T  |  T = D÷V"],
+      ["#f0f4ff", "12px monospace", "1 cable = 185.2 m (1/10 nm)"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "CARDINAL POINTS"],
+      ["#f0f4ff", "12px monospace", "N=000° · E=090° · S=180° · W=270°"],
+      ["#f0f4ff", "12px monospace", "NE=045° · SE=135° · SW=225° · NW=315°"],
+    ],
+    es: [
+      ["#c9922a", "bold 14px serif", "CRONOLOGÍA"],
+      ["#f0f4ff", "12px monospace", "3000 a.C.     → Fenicios (costera, por estrellas)"],
+      ["#f0f4ff", "12px monospace", "1100          → Brújula magnética"],
+      ["#f0f4ff", "12px monospace", "1731          → Sextante (latitud)"],
+      ["#f0f4ff", "12px monospace", "1762          → Cronómetro (longitud)"],
+      ["#f0f4ff", "12px monospace", "1935          → Radar"],
+      ["#f0f4ff", "12px monospace", "1983          → GPS civil"],
+      ["#f0f4ff", "12px monospace", "2012          → ECDIS obligatorio"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "INSTRUMENTOS"],
+      ["#f0f4ff", "12px monospace", "Brújula   → Rumbo sin electricidad, OBLIGATORIA"],
+      ["#f0f4ff", "12px monospace", "Girocomp. → Norte verdadero, con electricidad"],
+      ["#f0f4ff", "12px monospace", "GPS       → Posición ± 5m (4 sats mín)"],
+      ["#f0f4ff", "12px monospace", "ECDIS     → Carta electrónica oficial"],
+      ["#f0f4ff", "12px monospace", "Radar     → Detección, CPA/TCPA (ARPA)"],
+      ["#f0f4ff", "12px monospace", "AIS       → Identificación (MMSI único)"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "UNIDADES"],
+      ["#f0f4ff", "12px monospace", "1 mn = 1852 m = 1 minuto de arco de latitud"],
+      ["#f0f4ff", "12px monospace", "1 nudo = 1 mn/hora"],
+      ["#4da6ff", "bold 14px monospace", "D = V × T  |  V = D÷T  |  T = D÷V"],
+      ["#f0f4ff", "12px monospace", "1 cable = 185,2 m (1/10 mn)"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "PUNTOS CARDINALES"],
+      ["#f0f4ff", "12px monospace", "N=000° · E=090° · S=180° · W=270°"],
+      ["#f0f4ff", "12px monospace", "NE=045° · SE=135° · SW=225° · NW=315°"],
+    ],
+    pt: [
+      ["#c9922a", "bold 14px serif", "CRONOLOGIA"],
+      ["#f0f4ff", "12px monospace", "3000 a.C.     → Fenícios (costeira, por estrelas)"],
+      ["#f0f4ff", "12px monospace", "1100          → Bússola magnética"],
+      ["#f0f4ff", "12px monospace", "1731          → Sextante (latitude)"],
+      ["#f0f4ff", "12px monospace", "1762          → Cronómetro (longitude)"],
+      ["#f0f4ff", "12px monospace", "1935          → Radar"],
+      ["#f0f4ff", "12px monospace", "1983          → GPS civil"],
+      ["#f0f4ff", "12px monospace", "2012          → ECDIS obrigatório"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "INSTRUMENTOS"],
+      ["#f0f4ff", "12px monospace", "Bússola   → Rumo sem eletricidade, OBRIGATÓRIA"],
+      ["#f0f4ff", "12px monospace", "Giroscóp. → Norte verdadeiro, com eletricidade"],
+      ["#f0f4ff", "12px monospace", "GPS       → Posição ± 5m (4 sats mín)"],
+      ["#f0f4ff", "12px monospace", "ECDIS     → Carta eletrónica oficial"],
+      ["#f0f4ff", "12px monospace", "Radar     → Deteção, CPA/TCPA (ARPA)"],
+      ["#f0f4ff", "12px monospace", "AIS       → Identificação (MMSI único)"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "UNIDADES"],
+      ["#f0f4ff", "12px monospace", "1 mn = 1852 m = 1 minuto de arco de latitude"],
+      ["#f0f4ff", "12px monospace", "1 nó = 1 mn/hora"],
+      ["#4da6ff", "bold 14px monospace", "D = V × T  |  V = D÷T  |  T = D÷V"],
+      ["#f0f4ff", "12px monospace", "1 cabo = 185,2 m (1/10 mn)"],
+      ["#c9922a", "bold 14px serif", ""],
+      ["#c9922a", "bold 14px serif", "PONTOS CARDEAIS"],
+      ["#f0f4ff", "12px monospace", "N=000° · E=090° · S=180° · W=270°"],
+      ["#f0f4ff", "12px monospace", "NE=045° · SE=135° · SW=225° · NW=315°"],
+    ],
+  };
+  const lines = LINES[lang] || LINES.fr;
 
   let y = 115;
   lines.forEach(([color, font, text]) => {
