@@ -2170,13 +2170,64 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
   } catch {}
 };
 
-  
+  // Loads xp/streak/completed_lessons + name/lang/dept/tier for a *confirmed* session user.
+  // Called only from spots where `user` comes straight off a session/auth event, never from
+  // a standalone getUser() call — that call can race the client's session-restore on a cold
+  // reload and resolve with a null user, silently skipping the load with nothing to retry it
+  // (this was the progression-reset-on-reconnect bug: local cache is cleared above, and if
+  // this fetch never runs, nothing ever repopulates completedLessons/userXP/userStreak).
+  // One retry on error/race covers a slow network without looping forever.
+  const loadUserProgress = (user: any, attempt = 0) => {
+    if (!user) return;
+    supabase
+      .from("user_progress")
+      .select("completed_lessons, xp, streak")
+      .eq("user_id", user.id)
+      .single()
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("[loadUserProgress] user_progress fetch failed:", error);
+          if (attempt < 1) setTimeout(() => loadUserProgress(user, attempt + 1), 1500);
+          return;
+        }
+        setCompletedLessons(data?.completed_lessons || []);
+        try { localStorage.setItem("map_completed_lessons", JSON.stringify(data?.completed_lessons || [])); } catch {}
+        if (data?.xp !== undefined) setUserXP(data.xp || 0);
+        if (data?.streak !== undefined) setUserStreak(data.streak || 1);
+      });
+
+    supabase
+      .from("user_profiles")
+      .select("name, lang, dept, tier")
+      .eq("user_id", user.id)
+      .single()
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("[loadUserProgress] user_profiles fetch failed:", error);
+          if (attempt < 1) setTimeout(() => loadUserProgress(user, attempt + 1), 1500);
+          return;
+        }
+        if (data) {
+          setProfile((p: any) => ({ ...p, ...data }));
+          if (data.lang) setLang(data.lang);
+          if (data.tier) setUserPlan(data.tier);
+          try {
+            const raw = localStorage.getItem("map_status_card");
+            const saved = raw ? JSON.parse(raw) : {};
+            localStorage.setItem("map_status_card", JSON.stringify({ ...saved, ...data }));
+          } catch {}
+        }
+      });
+  };
+
+
     if (window.location.hash.includes("access_token")) {
   setPage("reset_password");
 } else {
   supabase.auth.getSession().then(({ data: { session } }) => {
     if (session) {
       syncLocalProfile(session.user);
+      loadUserProgress(session.user);
       setPage(hasProfile() ? "dashboard" : "questionnaire");
     }
   });
@@ -2190,6 +2241,7 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
     }
     if (event === "SIGNED_IN" && session) {
       syncLocalProfile(session.user);
+      loadUserProgress(session.user);
       setPage(hasProfile() ? "dashboard" : "questionnaire");
     }
     if (event === "SIGNED_OUT") {
@@ -2256,42 +2308,7 @@ useEffect(() => {
   const [userPlan, setUserPlan] = useState<"free"|"premium"|"premium_plus">("free");
 const [userXP, setUserXP] = useState(0);
 const [userStreak, setUserStreak] = useState(1);
-  useEffect(() => {
-  supabase.auth.getUser().then(({ data: { user } }) => {
-    if (!user) return;
-    supabase
-      .from("user_progress")
-      .select("completed_lessons, xp, streak")
-      .eq("user_id", user.id)
-      .single()
-      .then(({ data }) => {
-        setCompletedLessons(data?.completed_lessons || []);
-try { localStorage.setItem("map_completed_lessons", JSON.stringify(data?.completed_lessons || [])); } catch {}
-if (data?.xp !== undefined) setUserXP(data.xp || 0);
-if (data?.streak !== undefined) setUserStreak(data.streak || 1);
-      });
 
-      supabase
-      .from("user_profiles")
-      .select("name, lang, dept, tier")
-      .eq("user_id", user.id)
-      .single()
-      .then(({ data }) => {
-        if (data) {
-          setProfile((p: any) => ({ ...p, ...data }));
-          if (data.lang) setLang(data.lang);
-          if (data.tier) setUserPlan(data.tier);
-  
-          try {
-            const raw = localStorage.getItem("map_status_card");
-            const saved = raw ? JSON.parse(raw) : {};
-            localStorage.setItem("map_status_card", JSON.stringify({ ...saved, ...data }));
-          } catch {}
-        }
-      });
-  });
-}, []);
-  
 const persistProfile = async (p: any) => {
   setProfile(p);
   try {
