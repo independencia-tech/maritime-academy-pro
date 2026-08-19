@@ -280,7 +280,7 @@ const BANK_NAV3 = {
   ],
 };
 
-function QuestionBankNav3({ lang }) {
+function QuestionBankNav3({ lang, onComplete }) {
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [started,setStarted]=useState(false);const [done,setDone]=useState(false);
   const questions=BANK_NAV3[lang]||BANK_NAV3.fr;const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));const total=questions.length;
   if(!started) return(
@@ -301,7 +301,7 @@ function QuestionBankNav3({ lang }) {
   }
   const q=shuffled[cur];const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
-  const next=()=>{if(cur<total-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
+  const next=()=>{if(cur<total-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else {setDone(true);if(onComplete)onComplete();}};
   return(
     <Card style={{marginBottom:12,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}>
       <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}><div style={{fontSize:10,color:C.muted}}>{cur+1}/{total}</div><div style={{fontSize:12,color:C.gold2,fontWeight:700}}>✓ {score}</div></div>
@@ -992,7 +992,8 @@ export default function LessonCoord({ lang="fr", onBack=()=>{}, onComplete=()=>{
   const t=T[lang]||T.fr;
   const sections=SECTIONS[lang]||SECTIONS.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
-  const [phase,setPhase]=useState("content");
+  const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);
   const [quizScore,setQuizScore]=useState(0);
   const [vis,setVis]=useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
@@ -1031,8 +1032,8 @@ export default function LessonCoord({ lang="fr", onBack=()=>{}, onComplete=()=>{
             <>
               {sections.map((block,i)=><Block key={i} block={block} lang={lang} t={t}/>)}
               <ExerciseScenario3 lang={lang}/>
-              <QuestionBankNav3 lang={lang}/>
-              <button onClick={()=>setPhase("quiz")} style={{width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 10px 36px rgba(26,111,212,0.4)",marginTop:8}}>{t.startQuiz}</button>
+              <QuestionBankNav3 lang={lang} onComplete={()=>setBankDone(true)}/>
+              <button disabled={!bankDone} onClick={()=>{if(bankDone)setPhase("quiz");}} style={{opacity:bankDone?1:0.45,cursor:bankDone?"pointer":"not-allowed",width:"100%",padding:"17px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.blue},${C.gold})`,fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:700,letterSpacing:2,color:C.white,boxShadow:"0 10px 36px rgba(26,111,212,0.4)",marginTop:8}}>{t.startQuiz}</button>
               <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
             </>
           )}

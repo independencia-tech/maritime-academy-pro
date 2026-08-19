@@ -317,7 +317,7 @@ const BANK_SMCP8 = {
   ],
 };
 
-function QuestionBank({ lang }) {
+function QuestionBank({ lang, onComplete }) {
   const [cur,setCur]=useState(0);const [sel,setSel]=useState(null);const [answered,setAnswered]=useState(false);const [score,setScore]=useState(0);const [started,setStarted]=useState(false);const [done,setDone]=useState(false);
   const questions=BANK_SMCP8[lang]||BANK_SMCP8.en;const total=questions.length;
   const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));
@@ -339,7 +339,7 @@ function QuestionBank({ lang }) {
   }
   const q=shuffled[cur];const isOk=sel===q.correct;
   const pick=i=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
-  const next=()=>{if(cur<total-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else setDone(true);};
+  const next=()=>{if(cur<total-1){setCur(c=>c+1);setSel(null);setAnswered(false);}else {setDone(true);if(onComplete)onComplete();}};
   return(
     <Card style={{marginBottom:12,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}>
       <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}><div style={{fontSize:10,color:C.muted}}>{cur+1}/{total}</div><div style={{fontSize:12,color:C.gold2,fontWeight:700}}>✓ {score}</div></div>
@@ -650,7 +650,8 @@ const getContent = lang => {
 
 export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
   const t=T[lang]||T.en;const exam=FINAL_EXAM[lang]||FINAL_EXAM.en;const lc=getContent(lang);
-  const [phase,setPhase]=useState("content");const [examScore,setExamScore]=useState(0);const [vis,setVis]=useState(false);
+  const [phase, setPhase] = useState("content");
+  const [bankDone, setBankDone] = useState(false);const [examScore,setExamScore]=useState(0);const [vis,setVis]=useState(false);
   useEffect(()=>{setTimeout(()=>setVis(true),80);},[]);
   const progress=phase==="content"?15:phase==="exam"?60:100;
   const pct=examScore>0?Math.round(examScore/exam.length*100):0;
@@ -697,7 +698,7 @@ export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=
               <RapidFireSVG lang={lang}/>
             </Card>
             <SL icon="📚" text={lang==="fr"?"BANQUE DE 15 QUESTIONS":lang==="en"?"15-QUESTION BANK":lang==="es"?"BANCO DE 15 PREGUNTAS":"BANCO DE 15 QUESTÕES"} color={C.purple}/>
-            <Card style={{marginBottom:14,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}><QuestionBank lang={lang}/></Card>
+            <Card style={{marginBottom:14,border:`1px solid ${C.purple}44`,background:"linear-gradient(135deg,rgba(142,68,173,0.08),rgba(13,31,60,0.8))"}}><QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/></Card>
             <SL icon="📝" text={lc.p4} color={C.gold}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><Exercise1 lang={lang} t={t}/></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.exam}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}><Exercise2 lang={lang} t={t}/></Card>
@@ -705,7 +706,7 @@ export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=
               <div style={{fontSize:11,color:C.exam,letterSpacing:3,fontFamily:"'Cinzel',serif",marginBottom:12}}>{lc.sumT}</div>
               {lc.sumP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<lc.sumP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:11,color:C.white}}><span style={{color:C.exam,fontWeight:700,fontFamily:"'Courier New',monospace"}}>✓</span>{pt}</div>)}
             </Card>
-            <button onClick={()=>setPhase("exam")} style={{width:"100%",padding:"18px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.l1},${C.l3},${C.l7},${C.exam},${C.gold2})`,fontFamily:"'Cinzel',serif",fontSize:16,fontWeight:700,letterSpacing:2,color:C.navy,cursor:"pointer",boxShadow:`0 12px 40px ${C.exam}44`,marginTop:8}}>{t.startQuiz}</button>
+            <button disabled={!bankDone} onClick={()=>{if(bankDone)setPhase("exam");}} style={{opacity:bankDone?1:0.45,cursor:bankDone?"pointer":"not-allowed",width:"100%",padding:"18px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.l1},${C.l3},${C.l7},${C.exam},${C.gold2})`,fontFamily:"'Cinzel',serif",fontSize:16,fontWeight:700,letterSpacing:2,color:C.navy,boxShadow:`0 12px 40px ${C.exam}44`,marginTop:8}}>{t.startQuiz}</button>
             <div style={{textAlign:"center",fontSize:11,color:C.muted,marginTop:8}}>{t.readFirst}</div>
           </>}
           {phase==="exam"&&<>
