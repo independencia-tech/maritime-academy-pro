@@ -268,15 +268,16 @@ function SoundSignals({ lang }) {
 // ══════════════════════════════════════
 // SVG 5 — COMPLETE OVERVIEW OF THE 38 COLREG RULES
 // ══════════════════════════════════════
-function MiniDiagram({ id }) {
+function MiniDiagram({ id, lang }) {
+  const lbl = (fr,en,es,pt) => ({fr,en,es,pt}[lang]||fr);
   if (id === "narrow") return (
-    <svg width="100%" height="60" viewBox="0 0 220 60"><rect x="10" y="10" width="200" height="40" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1"/><line x1="10" y1="30" x2="210" y2="30" stroke="rgba(255,255,255,0.1)" strokeDasharray="4,3"/><polygon points="40,42 55,38 55,46" fill={C.gold2}/><text x="100" y="55" fontSize="8" fill={C.muted} textAnchor="middle">tribord / starboard</text></svg>
+    <svg width="100%" height="60" viewBox="0 0 220 60"><rect x="10" y="10" width="200" height="40" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1"/><line x1="10" y1="30" x2="210" y2="30" stroke="rgba(255,255,255,0.1)" strokeDasharray="4,3"/><polygon points="40,42 55,38 55,46" fill={C.gold2}/><text x="100" y="55" fontSize="8" fill={C.muted} textAnchor="middle">{lbl("tribord","starboard","estribor","estibordo")}</text></svg>
   );
   if (id === "tss") return (
     <svg width="100%" height="60" viewBox="0 0 220 60"><rect x="10" y="5" width="200" height="20" fill="rgba(26,111,212,0.15)"/><rect x="10" y="35" width="200" height="20" fill="rgba(201,146,42,0.15)"/><line x1="30" y1="0" x2="140" y2="60" stroke={C.red} strokeWidth="2"/><text x="150" y="35" fontSize="16" fill={C.red}>~90°</text></svg>
   );
   if (id === "restricted") return (
-    <svg width="100%" height="60" viewBox="0 0 220 60"><circle cx="40" cy="30" r="26" fill="rgba(255,255,255,0.05)"/><circle cx="40" cy="30" r="3" fill={C.blue2}/><text x="40" y="12" fontSize="7" fill={C.muted} textAnchor="middle">distance visibilité</text><line x1="66" y1="30" x2="200" y2="30" stroke={C.orange} strokeDasharray="3,2"/><text x="130" y="24" fontSize="7" fill={C.orange} textAnchor="middle">vitesse de sécurité</text></svg>
+    <svg width="100%" height="60" viewBox="0 0 220 60"><circle cx="40" cy="30" r="26" fill="rgba(255,255,255,0.05)"/><circle cx="40" cy="30" r="3" fill={C.blue2}/><text x="40" y="12" fontSize="7" fill={C.muted} textAnchor="middle">{lbl("distance visibilité","visibility distance","distancia visibilidad","distância visibilidade")}</text><line x1="66" y1="30" x2="200" y2="30" stroke={C.orange} strokeDasharray="3,2"/><text x="130" y="24" fontSize="7" fill={C.orange} textAnchor="middle">{lbl("vitesse de sécurité","safe speed","velocidad de seguridad","velocidade de segurança")}</text></svg>
   );
   return null;
 }
@@ -369,7 +370,7 @@ function Rules38Overview({ lang }) {
                       <div style={{fontSize:10,color:C.green,fontStyle:"italic"}}>{coveredLabel[lang]||coveredLabel.fr}</div>
                     ):(<>
                       <div style={{fontSize:11,color:"rgba(240,244,255,0.8)",lineHeight:1.6}}>{r.sum[lang]||r.sum.fr}</div>
-                      {r.diagram&&<div style={{marginTop:8}}><MiniDiagram id={r.diagram}/></div>}
+                      {r.diagram&&<div style={{marginTop:8}}><MiniDiagram id={r.diagram} lang={lang}/></div>}
                     </>)}
                   </div>}
                 </div>
