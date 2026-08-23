@@ -3074,6 +3074,401 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  osv_crane_basket_malfunction_suspended: {
+    operationId: "osv_crane_basket_malfunction_suspended",
+    vesselTypeId: "osv",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "OSV — Crane/Basket Malfunction with Transferee Suspended" },
+    introduction: {
+      en: "This operation places a mechanical failure of the crane/basket system — jammed, stuck, or a crane malfunction — while the transferee is suspended mid-lift, caught between the OSV's deck and the platform, not in the water. This is deliberately not a generic Man Overboard scenario — MAP already covers that territory — it stays specific to this equipment and this exact suspended-in-transit moment. The transferee's role shifts from operation one's active, agency-holding participant to someone increasingly constrained by the malfunction itself: still able to communicate their own condition, but no longer able to act the way they could when the system worked normally. This operation's central tension — attempt to diagnose and restore normal crane function, or execute an emergency procedure to get the person down safely now — echoes the diagnose-vs-act decision every prior vessel's second operation has explored in its own equipment-specific way.",
+    },
+    objectives: [
+      { en: "Recognize a developing crane/basket malfunction as an emergency requiring immediate response, given a person is directly at risk while suspended." },
+      { en: "Describe the sequence of actions when the transfer device fails to operate normally mid-lift." },
+      { en: "Explain how the transferee's role shifts from operation one's active participant to someone constrained by the malfunction — still communicating their condition, but with reduced ability to act." },
+      { en: "Explain the tension between attempting to diagnose or restore normal crane function and executing an emergency lowering procedure." },
+      { en: "Recognize correct versus incorrect prioritization when the platform's own crew may need to be involved in the response." },
+    ],
+    context: {
+      en: "Second OSV operation, continuing directly from operation one's transfer setup. Deliberately not a generic overboard/water-rescue scenario — that territory is already covered elsewhere in MAP; this stays specific to the OSV's crane/basket equipment and the suspended, in-transit moment. The Chief Engineer shifts from operation one's routine readiness role to actively diagnosing the crane system specifically — the fourth occurrence of the same support-to-lead emergency-diagnosis archetype already established by AHTS Fire Response, PSV's DP-loss operation, and Tugboat's thruster-failure operation. Not asserting specific backup/manual-override mechanical details for this crane system — kept generic.",
+    },
+
+    operationPhaseOrder: [
+      "malfunction_detection_alert",
+      "immediate_communication_transferee_platform",
+      ["crane_diagnosis", "emergency_lowering_preparation", "platform_coordination"],
+      "decision_restore_or_emergency_lowering",
+      "execution",
+      "confirmation_stand_down",
+    ],
+    operationPhases: {
+      malfunction_detection_alert: {
+        id: "malfunction_detection_alert",
+        title: { en: "Malfunction Detection & Alert" },
+        steps: [
+          { en: "Whoever is operating or monitoring the crane notices it isn't responding normally — jammed, stuck, not moving as commanded." },
+          { en: "Immediate alert to the rest of the crew." },
+        ],
+      },
+      immediate_communication_transferee_platform: {
+        id: "immediate_communication_transferee_platform",
+        title: { en: "Immediate Communication to Transferee & Platform" },
+        steps: [
+          { en: "The transferee is immediately informed of the situation." },
+          { en: "The platform is notified, given their potential involvement in the response." },
+        ],
+        bestPractices: [
+          { en: "The transferee is told what's happening, not just monitored — silence in this moment would be far worse for someone who can no longer act on their own." },
+        ],
+      },
+      crane_diagnosis: {
+        id: "crane_diagnosis",
+        title: { en: "Crane Diagnosis" },
+        overview: { en: "Runs concurrently with Emergency Lowering Preparation and Platform Coordination." },
+        steps: [
+          { en: "The Chief Engineer attempts to diagnose and restore normal crane function." },
+          { en: "Reports status continuously to the bridge." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      emergency_lowering_preparation: {
+        id: "emergency_lowering_preparation",
+        title: { en: "Emergency Lowering Preparation" },
+        overview: { en: "Runs concurrently with Crane Diagnosis and Platform Coordination." },
+        steps: [
+          { en: "The deck team, led by the Bosun, stages the emergency/backup lowering procedure as a parallel option." },
+          { en: "The transferee is kept informed of what's being prepared." },
+        ],
+      },
+      platform_coordination: {
+        id: "platform_coordination",
+        title: { en: "Platform Coordination" },
+        overview: { en: "Runs concurrently with Crane Diagnosis and Emergency Lowering Preparation." },
+        steps: [
+          { en: "The Chief Officer coordinates with the platform on the situation, including whether their assistance may be needed." },
+        ],
+      },
+      decision_restore_or_emergency_lowering: {
+        id: "decision_restore_or_emergency_lowering",
+        title: { en: "Decision: Restore Normal Operation or Execute Emergency Lowering" },
+        steps: [
+          { en: "Based on the Chief Engineer's diagnosis status and the transferee's own reported condition, a decision is made: if the crane can be quickly restored, normal operation resumes; if not — or if the transferee's condition doesn't allow for further waiting — emergency lowering proceeds." },
+        ],
+        bestPractices: [
+          { en: "The transferee's own reported condition is weighed directly in this decision, not treated as secondary to the technical diagnosis." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      execution: {
+        id: "execution",
+        title: { en: "Execution" },
+        steps: [
+          { en: "If restored: the lift resumes under careful monitoring." },
+          { en: "If emergency lowering: the backup procedure is executed to safely bring the transferee down, coordinated with the platform if their involvement is needed." },
+        ],
+      },
+      confirmation_stand_down: {
+        id: "confirmation_stand_down",
+        title: { en: "Confirmation & Stand-Down" },
+        steps: [
+          { en: "The transferee is confirmed safe." },
+          { en: "Muster/headcount; incident documented." },
+          { en: "Assessment of crane system status; separate decision on whether operations can resume or need to pause for repair." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "internal_alert", phaseId: "malfunction_detection_alert", from: "bridge", to: "bridge", trigger: { en: "Malfunction noticed" }, content: { en: "Immediate internal alert." }, whyItMatters: { en: "Same urgency principle as every prior detection touchpoint." } },
+      { id: "transferee_notification", phaseId: "immediate_communication_transferee_platform", from: "deck_team", to: "transferee", trigger: { en: "Immediately" }, content: { en: "Informed of the situation." }, whyItMatters: { en: "Clear communication matters more here than in op 1, since the transferee can no longer act on their own." } },
+      { id: "platform_notification", phaseId: "immediate_communication_transferee_platform", from: "bridge", to: "installation", trigger: { en: "Immediately" }, content: { en: "Notification, including potential need for platform assistance." }, whyItMatters: { en: "Mirrors the reciprocal-notification pattern established for external parties across the catalog." } },
+      { id: "transferee_condition_reports", phaseId: "crane_diagnosis", from: "transferee", to: "deck_team", trigger: { en: "Continuous during the response" }, content: { en: "Reports on their own condition." }, whyItMatters: { en: "A status report feeding into someone else's decision, since the transferee's ability to act has been constrained by the malfunction itself — genuinely distinct from operation one's timing/readiness signals." } },
+      { id: "chief_engineer_status", phaseId: "crane_diagnosis", from: "engine", to: "bridge", trigger: { en: "Continuous" }, content: { en: "Crane diagnosis status." }, whyItMatters: { en: "Same reports-and-sustains-or-directs shape as every prior Engine touchpoint under this kind of emergency." } },
+      { id: "lowering_prep_updates", phaseId: "emergency_lowering_preparation", from: "deck_team", to: "transferee", trigger: { en: "Ongoing during preparation" }, content: { en: "Kept informed of what's being prepared." }, whyItMatters: { en: "Continues the immediate-communication principle — informed, even while unable to act." } },
+      { id: "platform_coordination_updates", phaseId: "platform_coordination", from: "bridge", to: "installation", trigger: { en: "Ongoing" }, content: { en: "Situation updates, potential assistance coordination." }, whyItMatters: { en: "The platform-coordination track's own communication." } },
+      { id: "decision_communication", phaseId: "decision_restore_or_emergency_lowering", from: "bridge", to: "bridge", trigger: { en: "Decision point" }, content: { en: "Restore normal operation or execute emergency lowering." }, whyItMatters: { en: "Explicitly informed by both the technical diagnosis and the transferee's own reported condition — neither one alone decides it." } },
+      { id: "stop_flag_call", from: "deck_team", to: "deck_team", trigger: { en: "Any unsafe development during execution" }, content: { en: "Stop/flag call." }, whyItMatters: { en: "The universal stop-work principle, adapted to this operation's actual moment — during the resolution itself, not a lift in progress." } },
+      { id: "transferee_safety_confirmation", phaseId: "confirmation_stand_down", from: "transferee", to: "deck_team", trigger: { en: "Once resolved" }, content: { en: "Confirmation of safety." }, whyItMatters: { en: "Closes the loop on the person directly, not just the equipment." } },
+      { id: "outcome_notification", phaseId: "confirmation_stand_down", from: "bridge", to: "installation", trigger: { en: "Once stood down" }, content: { en: "Outcome and status." }, whyItMatters: { en: "Same closing-the-loop pattern as every prior post-incident notification." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Holds overall emergency command, per the same general principle used across every emergency operation in the catalog. The ultimate restore-or-emergency-lower decision is theirs, informed by the Chief Engineer's diagnosis and the transferee's own reported condition." } },
+      { rankId: "chief_officer", identity: { en: "In operation one, directed the transfer sequence broadly. Here, the transfer itself has stalled, so the role narrows into specifically leading the platform-coordination track: communicating the situation and managing whether the platform's own crew need to be involved." } },
+      { rankId: "oow", identity: { en: "Continues the same DP-monitoring role as operation one. Position-keeping relative to the platform remains a precondition throughout this emergency, under more pressure but not fundamentally different in character." } },
+      { rankId: "bosun", identity: { en: "In operation one, operated the crane and led physical execution under normal conditions. Here, with the crane malfunctioning, that leadership redirects entirely to preparing and executing the emergency lowering procedure." } },
+      { rankId: "ab", identity: { en: "Assists the Bosun in preparing and executing the emergency lowering procedure — the same perform-under-the-Bosun's-direction shape as operation one, redirected to this operation's actual crisis." } },
+      { rankId: "chief_engineer", identity: { en: "In operation one, held routine crane and DP readiness in the reports-and-sustains mold. Here, shifts to actively diagnosing the crane system specifically — the fourth occurrence of the same support-to-lead emergency-diagnosis archetype already established by AHTS Fire Response, PSV's DP-loss operation, and Tugboat's thruster-failure operation." } },
+      { rankId: "second_engineer", identity: { en: "Shifts from operation one's routine monitoring toward hands-on execution under the Chief Engineer's active direction, following the same pattern AHTS and PSV both used for their own Second Engineers under this exact kind of emergency." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall emergency command; decides restore-or-emergency-lower at the convergence point; decides stand-down." }],
+        iMonitor: [{ en: "The Chief Engineer's diagnosis status, the Bosun's lowering-prep readiness, the Chief Officer's platform-coordination status, the transferee's reported condition." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on crane diagnosis, emergency lowering execution, or platform coordination — delegated to the Chief Engineer, Bosun, and Chief Officer respectively." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Leads platform coordination — communicates the situation, manages potential platform involvement." }],
+        iMonitor: [{ en: "The platform's own response and readiness to assist if needed." }],
+        iReport: [{ en: "Status to the Master; communicates with the installation." }],
+        iDoNotAuthorize: [{ en: "The restore-or-emergency-lower decision itself; directing the Chief Engineer's diagnosis or the Bosun's lowering preparation." }],
+      },
+      oow: {
+        iExecute: [{ en: "Continuous DP monitoring throughout the emergency." }],
+        iMonitor: [{ en: "DP position against tolerance." }],
+        iReport: [{ en: "Any deviation to the Master/Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Crane-response decisions." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Leads preparation and execution of the emergency lowering procedure; keeps the transferee informed throughout." }],
+        iMonitor: [{ en: "The transferee's condition and safety during preparation and execution." }],
+        iReport: [{ en: "Status to the Master; the transferee's reported condition, relayed onward." }],
+        iDoNotAuthorize: [{ en: "The restore-or-emergency-lower decision itself; directing the Chief Engineer's diagnosis." }],
+      },
+      ab: {
+        iExecute: [{ en: "Assists the Bosun in preparing and executing the emergency lowering procedure." }],
+        iMonitor: [{ en: "Immediate hazard conditions during preparation and execution." }],
+        iReport: [{ en: "Unsafe conditions to the Bosun." }],
+        iDoNotAuthorize: [{ en: "Independent action; lowering-procedure sequencing decisions." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Diagnoses and attempts to restore normal crane function." }],
+        iMonitor: [{ en: "Own diagnostic progress, continuously." }],
+        iReport: [{ en: "Continuous status to the bridge." }],
+        iDoNotAuthorize: [{ en: "The restore-or-emergency-lower decision itself; directing the Bosun's lowering preparation." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer's diagnosis directly, hands-on." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "lead",
+      second_engineer: "perform",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order_osv_crane",
+        targetRanks: ["deck_cadet", "ab", "bosun"],
+        prompt: { en: "Put the phases of this crane/basket malfunction response in the correct order. Three phases happen at the same time — the checker accepts any order between items that are genuinely concurrent." },
+        items: [
+          { id: "malfunction_detection_alert", label: { en: "Malfunction Detection & Alert" } },
+          { id: "immediate_communication_transferee_platform", label: { en: "Immediate Communication to Transferee & Platform" } },
+          { id: "crane_diagnosis", label: { en: "Crane Diagnosis" } },
+          { id: "emergency_lowering_preparation", label: { en: "Emergency Lowering Preparation" } },
+          { id: "platform_coordination", label: { en: "Platform Coordination" } },
+          { id: "decision_restore_or_emergency_lowering", label: { en: "Decision: Restore or Execute Emergency Lowering" } },
+          { id: "execution", label: { en: "Execution" } },
+          { id: "confirmation_stand_down", label: { en: "Confirmation & Stand-Down" } },
+        ],
+        correctOrder: [
+          "malfunction_detection_alert",
+          "immediate_communication_transferee_platform",
+          ["crane_diagnosis", "emergency_lowering_preparation", "platform_coordination"],
+          "decision_restore_or_emergency_lowering",
+          "execution",
+          "confirmation_stand_down",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_delayed_lowering_prep",
+        targetRanks: ["bosun", "chief_officer", "chief_engineer"],
+        scenario: { en: "The Bosun waits for the Chief Engineer's diagnosis to complete before beginning emergency lowering preparation. The Chief Officer coordinates with the platform on potential assistance while diagnosis and lowering prep continue. The Master weighs the transferee's own reported condition alongside the technical diagnosis before deciding." },
+        choices: [
+          { id: "c1", label: { en: "Bosun waiting for diagnosis to complete before beginning emergency lowering preparation" }, isError: true, explanation: { en: "Preparation is never delayed pending diagnosis's outcome — the tracks activate simultaneously." } },
+          { id: "c2", label: { en: "Chief Officer coordinating with the platform while diagnosis and lowering prep continue" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "Master weighing the transferee's reported condition alongside the technical diagnosis" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "readiness_standdown_osv_crane",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The transferee is confirmed safe. Review the readiness snapshot below before the Master declares stand-down and before any decision to resume operations." },
+        items: [
+          { id: "transferee_safe", label: { en: "Transferee confirmed safe" }, isSatisfied: true },
+          { id: "crew_mustered", label: { en: "Crew mustered and accounted for" }, isSatisfied: true },
+          { id: "platform_informed", label: { en: "Platform informed of the outcome" }, isSatisfied: true },
+          { id: "crane_status_assessed", label: { en: "Chief Engineer confirms crane system status fully assessed" }, isSatisfied: false },
+          { id: "resume_or_repair_decided", label: { en: "Decision made on whether transfer operations can resume or need to pause for repair" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The Chief Engineer's diagnosis looks promising early on; the Bosun considers holding off on preparing the emergency lowering procedure to avoid unnecessary work." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Bosun begins preparation immediately regardless of how promising the diagnosis looks." }],
+        why: [{ en: "Tests whether the no-delay rule holds precisely when skipping parallel preparation feels most reasonable." }],
+        commonMistakes: [{ en: "Reasoning that preparing the backup procedure while diagnosis seems to be working is wasted effort." }],
+        safetyPoints: [{ en: "If the diagnosis unexpectedly fails and preparation hasn't started, the person suspended loses exactly the time margin parallel activation exists to protect." }],
+      },
+      {
+        situation: { en: "The transferee reports they're uncomfortable but not in acute distress, and doesn't explicitly ask to be brought down immediately." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The crew treats the transferee's reported discomfort as a real, weighted input into the restore-or-lower decision — not requiring an explicit request before it counts." }],
+        why: [{ en: "Tests whether the transferee's condition reports are honored proactively, even though their agency here is more constrained than in operation one." }],
+        commonMistakes: [{ en: "Waiting for the transferee to explicitly demand immediate action before factoring their discomfort into the decision." }],
+        safetyPoints: [{ en: "A constrained transferee may not have the same ability to insist on their own behalf as in operation one." }],
+      },
+      {
+        situation: { en: "The platform offers to send personnel or equipment to assist, but it's unclear whether that assistance is actually necessary given the OSV's own response is progressing." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer gives the platform an honest, current assessment of whether assistance is needed, rather than reflexively accepting or declining." }],
+        why: [{ en: "Tests the platform-coordination track's own judgment." }],
+        commonMistakes: [{ en: "Declining assistance reflexively to appear self-sufficient, or accepting it reflexively without assessing whether it's actually needed." }],
+        safetyPoints: [{ en: "An honest assessment either way serves the transferee's safety better than a reflexive answer in either direction." }],
+      },
+      {
+        situation: { en: "Mid-diagnosis, the crane briefly starts responding to commands again; there's a temptation to declare the malfunction resolved and resume the lift immediately." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Engineer confirms the system is genuinely, reliably restored — not just momentarily responsive — before the Master authorizes resuming." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-before-resuming principle already established in Fire Response's Phase F, applied here to a mechanical system with a person's safety directly riding on it." }],
+        commonMistakes: [{ en: "Treating a single positive response from the crane as proof the malfunction is fully resolved." }],
+        safetyPoints: [{ en: "A malfunction that briefly clears and then recurs, with someone already resuming the lift, is worse than the original stall." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_uncertain_finding",
+        title: { en: "An Uncertain Finding During Diagnosis" },
+        seatRankId: "second_engineer",
+        root: {
+          id: "level_1",
+          situation: {
+            en: "You are the Second Engineer, working hands-on on the crane mechanism under the Chief Engineer's direction. During physical inspection, you discover something suggesting the problem might be more serious than initially assumed — not just a simple jam, but a sign involving the load-bearing mechanism itself.",
+          },
+          options: [
+            {
+              id: "a_wait",
+              label: { en: "Keep working the problem yourself a bit longer to be sure before saying anything." },
+              consequence: { en: "The finding stays with you, unreported, while the situation continues developing." },
+              feedback: { en: "Uncertainty is exactly the reason to report, not the reason to wait — the Chief Engineer's overall assessment is incomplete without what you've found." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The Bosun's emergency lowering preparation is ready, and the Master needs the Chief Engineer's full, current assessment to decide — the finding you're still sitting on could change that assessment significantly." },
+                options: [
+                  { id: "a1", label: { en: "Continue holding off since you still want to be sure." }, consequence: { en: "The decision proceeds without information that could have changed it." }, feedback: { en: "Compounds the original delay at the worst possible moment." } },
+                  { id: "a2", label: { en: "Report now, immediately, even though the decision point is imminent." }, consequence: { en: "The Chief Engineer's assessment is updated just in time." }, feedback: { en: "Correct — the approaching decision point doesn't reduce the need to report, it increases it." }, isRecommended: true },
+                  { id: "a3", label: { en: "Let it go since the decision seems to be happening without needing it." }, consequence: { en: "The decision is made without information that could have changed it." }, feedback: { en: "The finding's relevance doesn't disappear just because a decision is imminent." } },
+                ],
+              },
+            },
+            {
+              id: "b_report",
+              label: { en: "Immediately report the finding to the Chief Engineer, even though you're not certain what it means." },
+              consequence: { en: "The Chief Engineer's diagnosis now includes information they didn't have a moment ago." },
+              feedback: { en: "Correct — reporting uncertain findings promptly is what lets the person holding the diagnostic authority make a fully informed call." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The Chief Engineer asks you to help assess how serious the finding is before reporting further to the bridge." },
+                options: [
+                  { id: "b1", label: { en: "Give a confident-sounding answer despite genuine uncertainty, to seem helpful." }, consequence: { en: "The Chief Engineer reports to the bridge based on overstated confidence." }, feedback: { en: "Overstates certainty that isn't actually there." } },
+                  { id: "b2", label: { en: "Give an honest assessment of what you know and don't know." }, consequence: { en: "The Chief Engineer reports an accurate, appropriately qualified picture to the bridge." }, feedback: { en: "Correct — honest assessment with uncertainty acknowledged is what the situation actually needs." }, isRecommended: true },
+                  { id: "b3", label: { en: "Defer entirely, saying you don't know enough to say anything." }, consequence: { en: "The Chief Engineer gets no useful input despite your direct observation." }, feedback: { en: "Avoids contributing something genuinely useful, even if imperfect." } },
+                ],
+              },
+            },
+            {
+              id: "c_fix_independently",
+              label: { en: "Try to fix or address what you've found yourself, without necessarily interrupting the Chief Engineer's own work." },
+              consequence: { en: "You act independently on something outside your own authority to decide." },
+              feedback: { en: "Oversteps the established boundary — assisting hands-on under the Chief Engineer's direction doesn't include independently deciding how to respond to a new finding." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "Your attempt doesn't fully resolve the issue and may have changed something about the situation — the Chief Engineer is about to report a diagnosis to the bridge that no longer reflects current reality." },
+                options: [
+                  { id: "c1", label: { en: "Stay quiet since the attempt didn't work anyway." }, consequence: { en: "The Chief Engineer reports outdated information to the bridge." }, feedback: { en: "Compounds the original overstep with a second one." } },
+                  { id: "c2", label: { en: "Immediately tell the Chief Engineer what you did and how it may have changed things." }, consequence: { en: "The Chief Engineer's report to the bridge reflects current, accurate reality." }, feedback: { en: "Correct — the Chief Engineer needs accurate, current information before reporting outdated status." }, isRecommended: true },
+                  { id: "c3", label: { en: "Quietly undo the attempt without mentioning it." }, consequence: { en: "The Chief Engineer remains unaware of what actually happened." }, feedback: { en: "Leaves the Chief Engineer working from an incomplete picture." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Simultaneous Activation" },
+        bestPractices: [
+          { en: "All three response tracks activate the instant the emergency is declared, none waiting on the others." },
+          { en: "Emergency lowering preparation is never delayed pending diagnosis's outcome, even when diagnosis looks promising." },
+        ],
+        commonErrors: [
+          { en: "Reasoning that preparing the backup procedure while diagnosis seems to be working is wasted effort." },
+        ],
+      },
+      {
+        theme: { en: "Honoring the Transferee's Condition Reports" },
+        bestPractices: [
+          { en: "The transferee is kept informed throughout, even though they can no longer act on their own." },
+          { en: "Their reported condition is weighed directly in the restore-or-lower decision, not treated as secondary to the technical diagnosis." },
+        ],
+        commonErrors: [
+          { en: "Waiting for the transferee to explicitly demand immediate action before factoring their discomfort into the decision." },
+        ],
+      },
+      {
+        theme: { en: "Honest Platform Coordination" },
+        bestPractices: [
+          { en: "The platform receives an honest, current assessment of whether its assistance is actually needed." },
+        ],
+        commonErrors: [
+          { en: "Declining assistance reflexively to appear self-sufficient, or accepting it reflexively without assessing actual need." },
+        ],
+      },
+      {
+        theme: { en: "Confirming Genuine Restoration" },
+        bestPractices: [
+          { en: "The crane is confirmed genuinely, reliably restored — not just momentarily responsive — before normal operation resumes." },
+        ],
+        commonErrors: [
+          { en: "Treating a single positive response from the crane as proof the malfunction is fully resolved." },
+        ],
+      },
+      {
+        theme: { en: "Reporting Uncertain Findings" },
+        bestPractices: [
+          { en: "Uncertain findings are reported immediately, not held until confidence is higher." },
+          { en: "When asked for a judgment call under uncertainty, the honest answer is given, including what isn't known." },
+          { en: "Independent action taken outside one's own authority is disclosed immediately if it affects information others are about to rely on." },
+        ],
+        commonErrors: [
+          { en: "Waiting to be sure before reporting something uncertain." },
+          { en: "Acting independently on a finding instead of reporting it to whoever holds the diagnostic authority." },
+        ],
+      },
+      {
+        theme: { en: "Safety-Critical Moments" },
+        bestPractices: [
+          { en: "The approach of a decision point increases the urgency of reporting relevant information, not decreases it." },
+        ],
+        commonErrors: [
+          { en: "Letting an imminent decision become a reason to stay quiet rather than a reason to speak up." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
