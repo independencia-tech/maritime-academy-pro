@@ -1114,6 +1114,430 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  psv_multi_fluid_cargo_transfer: {
+    operationId: "psv_multi_fluid_cargo_transfer",
+    vesselTypeId: "psv",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "PSV — Multi-Fluid Cargo Transfer to a Platform" },
+    introduction: {
+      en: "The PSV's identity is logistics: regular, repetitive supply runs to offshore installations, carrying deck cargo and multiple different fluids simultaneously in separate tanks, each needing its own dedicated pumping system to avoid cross-contamination. This is a different kind of operation from anything in the AHTS content: not a single high-tension maneuver, but a disciplined, multi-stream logistics operation where the main hazard isn't a parting wire, it's getting something wrong across several simultaneous transfer lines at once, while holding position on DP the entire time with no anchor to fall back on. This module covers a full cargo/fluid transfer alongside a platform: deck cargo handling, connecting and running multiple simultaneous fluid transfer lines, and maintaining DP position throughout. Where AHTS's defining risk was catastrophic (a parted line, a capsizing pull), PSV's defining risk is procedural and compounding: cross-contamination between fluids, position-keeping discipline sustained over a long transfer, and coordination across several concurrent tasks rather than one sequential one.",
+    },
+    objectives: [
+      { en: "Describe the full sequence of a PSV cargo/fluid transfer alongside a platform, from approach and DP set-up through cargo/fluid transfer to disconnection and departure." },
+      { en: "Explain why cross-contamination between distinct fluid cargoes is this operation's signature risk, and identify the discipline (dedicated lines/pumps, verification before transfer) that prevents it." },
+      { en: "Explain the role DP plays in this operation — sustained position-keeping without anchoring, for the full duration of the transfer — and why that's a materially different demand from AHTS's anchor-handling maneuvers." },
+      { en: "Identify who does what during this operation on a PSV specifically, including how DP responsibility is distributed compared to AHTS's Mooring/Unmooring." },
+      { en: "Recognize correct versus incorrect handling of a developing cross-contamination risk or a DP position deviation during transfer." },
+    ],
+    context: {
+      en: "First Specialized Operations content for a vessel type other than AHTS. Deliberately does not reuse AHTS's anchor-handling shape — the signature risk (contamination discipline across simultaneous fluid streams) and the signature technology (sustained DP through an entire multi-stage operation, not just during positioning) are both new territory relative to anything AHTS covered. Extends Psv.tsx's Ships Library card the same way the AHTS modules extended Ahts.tsx. Deck cargo lifts are performed by the installation's crane (standard industry practice, though not explicitly stated in Psv.tsx's own text). Fluid connections are described generically as the vessel's dedicated transfer lines and pumping systems, rather than asserting hard-arm vs. hose specifics. Not assuming any specific DP class/redundancy for this vessel.",
+    },
+
+    operationPhaseOrder: [
+      "pre_transfer_planning",
+      "dp_approach_position_setup",
+      "deck_cargo_handling",
+      "fluid_transfer_setup_verification",
+      "fluid_transfer",
+      "disconnection_final_verification",
+      "departure",
+    ],
+    operationPhases: {
+      pre_transfer_planning: {
+        id: "pre_transfer_planning",
+        title: { en: "Pre-Transfer Planning" },
+        steps: [
+          { en: "Toolbox talk covering the specific cargo/fluid manifest for this call: what's being loaded/unloaded, which fluids, quantities." },
+          { en: "Review of the installation's transfer plan and requirements." },
+          { en: "Weather window check against this operation's DP and transfer limits." },
+          { en: "Deck equipment check: securing points, transfer lines, pumps, manifolds." },
+          { en: "Each fluid line is verified as correctly matched to its intended tank/pump before anything is connected — the first of two deliberate contamination-prevention checkpoints." },
+          { en: "DP system check: thrusters, position reference systems, DP alert limits set." },
+          { en: "Communication protocol with the installation confirmed." },
+        ],
+        bestPractices: [
+          { en: "The fluid-line-to-tank verification happens here, on paper, before the vessel is even alongside — not discovered as a problem once transfer is already underway." },
+        ],
+      },
+      dp_approach_position_setup: {
+        id: "dp_approach_position_setup",
+        title: { en: "DP Approach & Position Set-Up" },
+        overview: { en: "Continuous DP monitoring begins here and does not stop until disconnection is complete — a sustained background condition for the rest of the operation, not a one-off maneuver." },
+        steps: [
+          { en: "PSV maneuvers to station near the platform under DP control." },
+          { en: "DP position established and verified within the required tolerance." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      deck_cargo_handling: {
+        id: "deck_cargo_handling",
+        title: { en: "Deck Cargo Handling" },
+        steps: [
+          { en: "The installation's crane lifts containers/equipment on and off the PSV's deck." },
+          { en: "Deck crew guides loads using tag lines to control swing, and directs the lift visually/by radio." },
+          { en: "Cargo is secured to standard lashing points as it comes aboard, or as it's prepared for departure." },
+        ],
+        bestPractices: [
+          { en: "Deck crew never work directly under a suspended load — guided from the side via tag lines." },
+        ],
+      },
+      fluid_transfer_setup_verification: {
+        id: "fluid_transfer_setup_verification",
+        title: { en: "Fluid Transfer Set-Up & Verification" },
+        steps: [
+          { en: "The correct transfer line is connected to the corresponding tank/pump per the plan." },
+          { en: "A second, independent verification is completed before flow starts — the deliberate double-check on the operation's signature risk." },
+          { en: "Confirmation exchanged with the installation that both sides are ready to transfer." },
+        ],
+        bestPractices: [
+          { en: "The second verification is done by someone other than whoever made the connection — an independent check, not a self-check." },
+        ],
+      },
+      fluid_transfer: {
+        id: "fluid_transfer",
+        title: { en: "Fluid Transfer" },
+        steps: [
+          { en: "Transfer proceeds under continuous monitoring: flow rate, tank levels, line integrity." },
+          { en: "Multiple fluids may transfer across the call, but each stays isolated to its own dedicated line and pump throughout." },
+          { en: "DP position continuously held and monitored in parallel." },
+        ],
+        bestPractices: [
+          { en: "Any unplanned change in flow rate or pressure is treated as a potential line-integrity issue to be checked immediately, not something to note and revisit later." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      disconnection_final_verification: {
+        id: "disconnection_final_verification",
+        title: { en: "Disconnection & Final Verification" },
+        steps: [
+          { en: "Transfer lines disconnected and secured per fluid type." },
+          { en: "Final verification that no cross-contamination occurred during the operation." },
+          { en: "Deck cargo handling completes if not already finished." },
+          { en: "The DP continuous-monitoring condition ends here, once all connections to the platform are clear." },
+        ],
+      },
+      departure: {
+        id: "departure",
+        title: { en: "Departure" },
+        steps: [
+          { en: "Final checks completed; DP control released." },
+          { en: "PSV departs the installation and sets course." },
+          { en: "Documentation of the completed transfer (cargo/fluid manifest reconciliation)." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "engine_ready_confirmation", phaseId: "pre_transfer_planning", from: "engine", to: "bridge", trigger: { en: "Before the operation starts" }, content: { en: "Confirmation that DP thrusters and fluid transfer pump systems are available and nominal." }, whyItMatters: { en: "Two distinct systems depend on Engine here (position-keeping and cargo transfer), not just one as in AHTS — the combined readiness gate for both." } },
+      { id: "engine_status_ongoing", from: "engine", to: "bridge", trigger: { en: "Continuous, or on any deviation" }, content: { en: "Status of thruster/pump performance; any developing anomaly." }, whyItMatters: { en: "Same reports-and-sustains boundary as AHTS — an anomaly can affect either DP position or the transfer itself." } },
+      { id: "ab_reports_connection", phaseId: "fluid_transfer_setup_verification", from: "deck_team", to: "deck_team", trigger: { en: "Transfer line connected" }, content: { en: "AB reports the connection made to the Bosun." }, whyItMatters: { en: "First half of the operation's signature double-check." } },
+      { id: "bosun_verifies_to_co", phaseId: "fluid_transfer_setup_verification", from: "deck_team", to: "deck", trigger: { en: "Following the connection report" }, content: { en: "Bosun independently verifies the line-to-tank match and confirms to the Chief Officer." }, whyItMatters: { en: "The verification is done by someone other than whoever made the connection — an independent check, not a self-check." } },
+      { id: "crane_lift_coordination", phaseId: "deck_cargo_handling", from: "deck_team", to: "installation", trigger: { en: "During each crane lift" }, content: { en: "Bosun coordinates tag-line guidance and lift start/stop directly with the installation's crane operator." }, whyItMatters: { en: "Real-time coordination with an external operator controlling the load — a touchpoint type with no AHTS equivalent." } },
+      { id: "flow_anomaly_report", phaseId: "fluid_transfer", from: "deck_team", to: "deck", trigger: { en: "Any unplanned flow rate/pressure change" }, content: { en: "Deck crew reports immediately to the Chief Officer." }, whyItMatters: { en: "Treated as a potential line-integrity issue to check now, not note for later." } },
+      { id: "stop_work_call", from: "deck_team", to: "deck_team", trigger: { en: "Any unsafe observation" }, content: { en: "Universal stop-work call." }, whyItMatters: { en: "Not rank-gated, unchanged by vessel type." } },
+      { id: "installation_plan_confirmation", phaseId: "pre_transfer_planning", from: "bridge", to: "installation", trigger: { en: "Before the operation starts" }, content: { en: "Confirmation that the cargo/fluid manifest and transfer plan match." }, whyItMatters: { en: "Confirms both sides are working from the current plan, anchored to a manifest rather than an anchor pattern." } },
+      { id: "installation_on_station_confirmation", phaseId: "dp_approach_position_setup", from: "bridge", to: "installation", trigger: { en: "Once DP position is established" }, content: { en: "Bridge confirms on-station and within tolerance." }, whyItMatters: { en: "Cargo/fluid operations don't begin until this is confirmed both internally and to the installation." } },
+      { id: "installation_ready_to_transfer", phaseId: "fluid_transfer_setup_verification", from: "bridge", to: "installation", trigger: { en: "Once the independent line verification is complete" }, content: { en: "Chief Officer confirms ready-to-transfer to the installation." }, whyItMatters: { en: "Neither side unilaterally opens a line." } },
+      { id: "installation_completion_confirmation", phaseId: "disconnection_final_verification", from: "bridge", to: "installation", trigger: { en: "Transfer and disconnection complete" }, content: { en: "Chief Officer confirms completion and no cross-contamination to the installation." }, whyItMatters: { en: "Closes the loop opened at the ready-to-transfer confirmation." } },
+      { id: "departure_clearance", phaseId: "departure", from: "bridge", to: "installation", trigger: { en: "Ready to leave station" }, content: { en: "Bridge requests/receives departure clearance." }, whyItMatters: { en: "Final external touchpoint before DP control is released." } },
+      { id: "dp_deviation_alert", phaseId: "fluid_transfer", from: "bridge", to: "bridge", trigger: { en: "Any DP position deviation during the continuous monitoring window (Phase B through F)" }, content: { en: "OOW alerts the Master/Chief Officer immediately; a pause-or-continue decision follows from the Master." }, whyItMatters: { en: "Not a discrete phase-bound touchpoint but a standing one for the entire transfer window — the communication-layer expression of the sustained DP condition." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Overall command, with a distinctive PSV-specific dimension: collision-risk oversight for an operation where the vessel is never moored or anchored, only held in place by DP for its entire duration. Where the AHTS Master's authority centered on a handful of load-critical maneuvers, here it centers on sustained risk oversight over a position-keeping condition that runs continuously for hours, not minutes." } },
+      { rankId: "chief_officer", identity: { en: "Operational command of the cargo/fluid transfer sequence: owns the contamination-prevention discipline, receives the Bosun's independent verification, and gives the go before any line opens. The direct equivalent of the AHTS Chief Officer's anchor-handling command — but the judgment being exercised is procedural discipline and verification rigor, not tension/load calculation under physical force." } },
+      { rankId: "oow", identity: { en: "DP-qualified, and materially more central to this operation than the OOW's role in AHTS Mooring/Unmooring. There, OOW supported positioning during specific maneuvers; here, OOW holds standing responsibility for continuous DP monitoring across the entire cargo/fluid transfer window — a sustained watch responsibility rather than a supporting role during discrete moments." } },
+      { rankId: "bosun", identity: { en: "Deck cargo handling lead, and the independent verifier in the operation's contamination double-check chain. A different flavor of lead than the AHTS Bosun's high-tension physical execution role: here, leadership is as much about coordination (directing crane lifts with the installation's crane operator, running the verification discipline) as hands-on deck work." } },
+      { rankId: "ab", identity: { en: "Deck crew: cargo handling, connecting transfer lines (the first half of the double-check), tag-line guidance during crane lifts. Structurally the same perform-under-the-Bosun's-direction role as the AHTS AB, but the tasks are logistics and connection discipline rather than anchor-handling gear under load." } },
+      { rankId: "os", identity: { en: "Junior deck rating, supervised, non-critical tasks only — same restrictive principle carried over from AHTS, applied to this operation's own hazard profile: no role in fluid line connection or verification, no presence in an active crane-lift zone, under direct supervision throughout." } },
+      { rankId: "chief_engineer", identity: { en: "Owns dual-system readiness: DP thrusters and fluid transfer pumps, where AHTS's Chief Engineer owned a single system (winch hydraulics). In this operation the role stays in the reports-and-sustains mold established in AHTS Mooring/Unmooring." } },
+      { rankId: "second_engineer", identity: { en: "Hands-on monitoring and response under the Chief Engineer's direction, same shape as the AHTS equivalent." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Overall command; DP oversight authority; decides pause/abort on a reported DP deviation." }],
+        iMonitor: [{ en: "Overall operation status via the Chief Officer and OOW; DP deviation alerts." }],
+        iReport: [{ en: "To company/authorities per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on cargo/fluid transfer tasks — delegated to the Chief Officer and Bosun." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Operational command of the cargo/fluid transfer sequence; receives the Bosun's independent verification; gives the go before any line opens; confirms completion and no cross-contamination to the installation." }],
+        iMonitor: [{ en: "Transfer progress across all lines, deck cargo handling status, DP status as relayed." }],
+        iReport: [{ en: "Ready-to-transfer and completion confirmations to the installation; status to the Master." }],
+        iDoNotAuthorize: [{ en: "Overriding the Master's pause/abort authority on a DP deviation; directing Engine's internal system management." }],
+      },
+      oow: {
+        iExecute: [{ en: "Continuous DP monitoring throughout the transfer window; navigation and communications support." }],
+        iMonitor: [{ en: "DP position against tolerance, continuously, not just during approach." }],
+        iReport: [
+          { en: "Any deviation beyond tolerance immediately to the Master/Chief Officer." },
+          { en: "When asked, an informed recommendation on whether to pause or continue — while the pause/abort decision itself remains the Master's." },
+        ],
+        iDoNotAuthorize: [{ en: "The pause/abort decision itself (reports and may recommend, but the Master decides); cargo/fluid transfer sequencing." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Leads deck cargo handling; independently verifies the AB's fluid line connection against the plan; coordinates crane lifts directly with the installation's crane operator." }],
+        iMonitor: [{ en: "Deck team safety during lifts and connections; accuracy of the line-to-tank match." }],
+        iReport: [{ en: "Verification confirmation to the Chief Officer; unsafe conditions during lifts." }],
+        iDoNotAuthorize: [{ en: "The ready-to-transfer go (Chief Officer's call); self-certifying a line connection they made themselves." }],
+      },
+      ab: {
+        iExecute: [{ en: "Cargo handling; connects transfer lines; tag-line guidance during crane lifts." }],
+        iMonitor: [{ en: "Line condition, flow/pressure indicators at the working level during transfer." }],
+        iReport: [{ en: "Connection made, to the Bosun for independent verification; any unplanned flow/pressure change to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Verifying their own connection; the transfer go/no-go." }],
+      },
+      os: {
+        iExecute: [{ en: "Assigned supervised, non-critical tasks only, away from crane-lift zones and fluid connection points." }],
+        iMonitor: [{ en: "Status of their own assigned task only." }],
+        iReport: [{ en: "Task status to the supervising rank (AB/Bosun)." }],
+        iDoNotAuthorize: [{ en: "Any role in fluid line connection or verification; unsupervised presence in an active crane-lift zone; independent action." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Prepares and maintains DP thruster and fluid transfer pump system readiness." }],
+        iMonitor: [{ en: "Continuous thruster/pump performance throughout the operation." }],
+        iReport: [{ en: "Pre-operation readiness confirmation; any anomaly to the bridge immediately." }],
+        iDoNotAuthorize: [{ en: "Cargo/fluid transfer sequencing or DP pause/abort decisions; direction of the deck team." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Hands-on monitoring of and response to system anomalies, under the Chief Engineer's direction." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer, who consolidates and reports upward." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer, at a working level." }],
+      },
+    },
+    supervisionRequirements: {
+      os: { requiresDirectSupervision: true, supervisedBy: ["ab", "bosun"] },
+    },
+    // oow is "perform" here, diverging from "support" in both AHTS
+    // operations — confirmed deliberate, not an inconsistency. OOW's
+    // continuous DP monitoring is the actual core activity being executed
+    // for this operation's defining technology, not passive readiness/
+    // reporting like AHTS's Chief Engineer in Mooring/Unmooring. The
+    // divergence also encodes, as data, the "materially more central"
+    // contrast already stated in roleOnVessel's prose.
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      os: "supervised",
+      chief_engineer: "support",
+      second_engineer: "support",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order_psv",
+        targetRanks: ["deck_cadet", "os", "ab", "bosun"],
+        prompt: { en: "Put the seven phases of a PSV multi-fluid cargo transfer in the correct order." },
+        items: [
+          { id: "pre_transfer_planning", label: { en: "Pre-Transfer Planning" } },
+          { id: "dp_approach_position_setup", label: { en: "DP Approach & Position Set-Up" } },
+          { id: "deck_cargo_handling", label: { en: "Deck Cargo Handling" } },
+          { id: "fluid_transfer_setup_verification", label: { en: "Fluid Transfer Set-Up & Verification" } },
+          { id: "fluid_transfer", label: { en: "Fluid Transfer" } },
+          { id: "disconnection_final_verification", label: { en: "Disconnection & Final Verification" } },
+          { id: "departure", label: { en: "Departure" } },
+        ],
+        correctOrder: ["pre_transfer_planning", "dp_approach_position_setup", "deck_cargo_handling", "fluid_transfer_setup_verification", "fluid_transfer", "disconnection_final_verification", "departure"],
+      },
+      {
+        type: "error_identification",
+        id: "err_self_certified_connection",
+        targetRanks: ["bosun", "chief_officer", "ab"],
+        scenario: { en: "An AB connects a fluid transfer line and, since the Bosun is occupied elsewhere, verifies the connection themselves before flow starts. The Bosun separately coordinates a crane lift with the installation's crane operator. The OOW reports a DP deviation to the Master immediately upon detection." },
+        choices: [
+          { id: "c1", label: { en: "AB verifying their own fluid line connection before transfer" }, isError: true, explanation: { en: "The independent verification must come from someone other than whoever made the connection — self-certification defeats the entire purpose of the double-check." } },
+          { id: "c2", label: { en: "Bosun coordinating a crane lift directly with the installation's crane operator" }, isError: false, explanation: { en: "Correct — this real-time coordination is within the Bosun's own execute scope." } },
+          { id: "c3", label: { en: "OOW reporting a DP deviation to the Master immediately upon detection" }, isError: false, explanation: { en: "Correct — matches the standing DP-monitoring responsibility and the principle of reporting before a hard limit is breached." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "readiness_pretransfer_psv",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The deck team reports ready and weather is within limits. Review the readiness snapshot below before authorizing the operation to begin." },
+        items: [
+          { id: "weather_window", label: { en: "Weather window confirmed against DP and transfer limits" }, isSatisfied: true },
+          { id: "line_verification", label: { en: "Fluid line-to-tank verification completed at the manifold" }, isSatisfied: true },
+          { id: "plan_reviewed", label: { en: "Installation's transfer plan reviewed and confirmed current" }, isSatisfied: true },
+          { id: "engine_ready", label: { en: "Chief Engineer readiness confirmation received (thrusters, pumps)" }, isSatisfied: false },
+          { id: "dp_alert_limits", label: { en: "DP alert limits set" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The AB who just connected a fluid line offers to verify it themselves, since the Bosun is occupied elsewhere and the schedule is tight." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "Verification is never self-certified — the Chief Officer and deck team wait for the Bosun (or another qualified independent verifier), even if it costs time." }],
+        why: [{ en: "Tests whether the operation's signature discipline holds under the most realistic pressure to skip it: time, not recklessness." }],
+        commonMistakes: [{ en: "AB and a nearby colleague agree the connection 'looks right' and proceed without a genuine independent check from someone at the Bosun's level." }],
+        safetyPoints: [{ en: "Cross-contamination isn't always immediately visible — the entire point of an independent check is catching what the person who made the connection might miss precisely because they made it." }],
+      },
+      {
+        situation: { en: "Partway through fluid transfer, the OOW notices the vessel drifting slightly beyond the DP tolerance band." },
+        mission: { en: "Determine the correct response chain." },
+        expectedActions: [{ en: "OOW reports immediately to the Master; the Master decides whether to pause the transfer while the deviation is corrected — not the Chief Officer or deck team deciding unilaterally." }],
+        why: [{ en: "Tests the DP-deviation authority chain — a live hazard the moment lines are physically connected to a fixed installation." }],
+        commonMistakes: [{ en: "Chief Officer, focused on the transfer sequence, decides to keep going without waiting for the Master's call." }],
+        safetyPoints: [{ en: "A drifting vessel with fluid lines still connected to a platform is a real collision and line-parting risk." }],
+      },
+      {
+        situation: { en: "During a cargo lift, a swell causes the suspended load to swing unexpectedly close to deck crew positioned nearby." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "Bosun immediately calls for the lift to be paused via the crane operator; deck crew clears the immediate area; the lift resumes only once conditions are reassessed as safe." }],
+        why: [{ en: "Tests real-time coordination authority with an external operator under a developing hazard — a touchpoint type unique to this operation." }],
+        commonMistakes: [{ en: "Deck crew tries to physically fend off or redirect the swinging load instead of clearing the area and calling for the lift to pause." }],
+        safetyPoints: [{ en: "A swinging suspended load is one of the most common real-world causes of serious injury in this kind of operation." }],
+      },
+      {
+        situation: { en: "Short-handed on deck, someone suggests having the OS assist with connecting a fluid transfer line — 'it's just holding a hose in place.'" },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The OS is not assigned to fluid line connection or verification tasks under any circumstance in this operation, regardless of how minor the specific task seems; a qualified AB or Bosun handles it instead." }],
+        why: [{ en: "Continues the OS-boundary thread from every Specialized Operations module so far — tests whether a task category boundary can be bent by how minor a specific instance looks." }],
+        commonMistakes: [{ en: "Treating a task as basically safe is used to justify bending the boundary, rather than recognizing the boundary was never about how hard the task looks." }],
+        safetyPoints: [{ en: "The boundary exists specifically because fluid connection touches this operation's central risk — a mistaken connection could cost far more than being short-handed for a few minutes." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_dp_drift_response",
+        title: { en: "A Developing DP Drift During Transfer" },
+        seatRankId: "oow",
+        root: {
+          id: "level_1",
+          situation: {
+            en: "You are the OOW, DP-qualified, monitoring position continuously during fluid transfer. You notice the vessel has begun drifting — position is approaching the edge of the DP tolerance band, but hasn't exceeded it yet.",
+          },
+          options: [
+            {
+              id: "a_wait",
+              label: { en: "Wait and watch — it's still within tolerance, no need to alarm anyone yet." },
+              consequence: { en: "The drift continues. By the time it's reported, less time margin remains to respond." },
+              feedback: { en: "Technically within the letter of 'report on deviation beyond tolerance', but given the collision risk that exists the entire time lines are connected to the platform, the trend itself — not just the breach — is what should trigger a report." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The drift has continued and is now right at the edge of the tolerance limit." },
+                options: [
+                  { id: "a1", label: { en: "Continue waiting since it hasn't technically breached yet." }, consequence: { en: "The margin to respond keeps shrinking." }, feedback: { en: "Compounds the original delay." } },
+                  { id: "a2", label: { en: "Report now, immediately." }, consequence: { en: "The Master is informed, later than ideal but before an actual breach." }, feedback: { en: "Correct — the right action, just later than it should have been." }, isRecommended: true },
+                  { id: "a3", label: { en: "Report but downplay it as 'probably nothing'." }, consequence: { en: "The Master receives an unclear picture of the actual urgency." }, feedback: { en: "Reporting without an honest sense of urgency undermines the report's purpose." } },
+                ],
+              },
+            },
+            {
+              id: "b_report",
+              label: { en: "Report immediately to the Master, even though tolerance hasn't technically been exceeded yet." },
+              consequence: { en: "The Master is informed early, with time to assess before the situation becomes urgent." },
+              feedback: { en: "Correct — matches the pattern established across this content of proactive escalation before a hard limit is breached." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The Master, informed early, asks you directly for a recommendation on whether to pause the transfer or continue monitoring." },
+                options: [
+                  { id: "b1", label: { en: "Recommend continuing since tolerance is still technically fine." }, consequence: { en: "The transfer continues without addressing the developing trend." }, feedback: { en: "Underweights the trend that prompted the report in the first place." } },
+                  { id: "b2", label: { en: "Recommend pausing proactively given the trend." }, consequence: { en: "The Master pauses the transfer with the position issue addressed before it becomes critical." }, feedback: { en: "Correct — an informed recommendation, with the Master still holding the actual decision, is exactly the right shape of this authority relationship." }, isRecommended: true },
+                  { id: "b3", label: { en: "Decline to give a recommendation, deferring entirely to the Master." }, consequence: { en: "The Master has to decide without the input they explicitly asked for." }, feedback: { en: "Not unsafe, but unhelpful — when directly asked for input the Master needs, declining isn't a neutral choice." } },
+                ],
+              },
+            },
+            {
+              id: "c_self_correct",
+              label: { en: "Attempt to address the drift yourself first, without telling anyone, then report once resolved." },
+              consequence: { en: "The correction attempt doesn't behave predictably, and no one else is aware anything is developing." },
+              feedback: { en: "The most concerning option — modifying the vessel's position-keeping behavior without informing command, while connected to a platform, is exactly what the reporting structure exists to prevent." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The correction attempt hasn't stabilized things, and the Chief Officer — unaware anything is wrong — is about to open another fluid line per the transfer plan." },
+                options: [
+                  { id: "c1", label: { en: "Let the new line open as planned since you're still working on it and don't want to cause alarm." }, consequence: { en: "Another line opens while position is uncertain, compounding the risk." }, feedback: { en: "Allows a preventable risk to compound." } },
+                  { id: "c2", label: { en: "Immediately halt and report everything to the Master before the new line opens." }, consequence: { en: "The situation is disclosed and addressed before it compounds further." }, feedback: { en: "Correct — stop concealing the issue and report immediately, especially urgent before an action that would compound the risk." }, isRecommended: true },
+                  { id: "c3", label: { en: "Quietly stop the correction attempt and hope position stabilizes without saying anything." }, consequence: { en: "The Chief Officer proceeds with no knowledge of the unresolved issue." }, feedback: { en: "Leaves the real risk completely undisclosed." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Contamination-Prevention Discipline" },
+        bestPractices: [
+          { en: "Fluid line-to-tank verification happens on paper, at the manifold, before the vessel is even alongside." },
+          { en: "The verification before flow starts is independent — done by someone other than whoever made the connection, never self-certified." },
+          { en: "Any unplanned flow rate or pressure change is treated as a potential line-integrity issue to check immediately." },
+        ],
+        commonErrors: [
+          { en: "Agreeing a connection 'looks right' and skipping a genuine independent check under time pressure." },
+          { en: "Handing a fluid-connection task to an unqualified rating because it seems minor." },
+        ],
+      },
+      {
+        theme: { en: "DP Position-Keeping" },
+        bestPractices: [
+          { en: "DP monitoring is continuous from position set-up through disconnection — a sustained condition, not a one-off maneuver." },
+          { en: "A developing drift is reported before tolerance is technically breached." },
+          { en: "When asked for a recommendation, the OOW gives one — an informed input, with the Master still holding the actual decision." },
+        ],
+        commonErrors: [
+          { en: "Waiting to report a drift until tolerance is fully exceeded, losing response-time margin." },
+          { en: "Attempting to self-correct a position issue without informing command." },
+          { en: "Deciding to keep going on a DP deviation report without waiting for the Master's call." },
+        ],
+      },
+      {
+        theme: { en: "Deck / Engine Coordination" },
+        bestPractices: [
+          { en: "Chief Engineer's readiness confirmation covers both systems this operation depends on — DP thrusters and transfer pumps." },
+          { en: "Engine reports any anomaly in either system immediately; Deck decides how to respond." },
+        ],
+        commonErrors: [
+          { en: "Treating DP-thruster and pump-system readiness as separate gates instead of a combined one." },
+        ],
+      },
+      {
+        theme: { en: "Coordination with the Installation" },
+        bestPractices: [
+          { en: "Crane lift coordination with the installation's crane operator is real-time and direct." },
+          { en: "A swinging load is met with a paused lift and a cleared area, not physical intervention." },
+          { en: "Ready-to-transfer and completion confirmations are exchanged explicitly — neither side unilaterally opens or closes a line." },
+        ],
+        commonErrors: [
+          { en: "Trying to physically fend off or redirect a swinging suspended load instead of clearing and calling for a pause." },
+        ],
+      },
+      {
+        theme: { en: "Supervision & Rank Boundaries" },
+        bestPractices: [
+          { en: "The OS boundary is about task category, not the perceived difficulty of a specific instance." },
+        ],
+        commonErrors: [
+          { en: "Assigning a simple-looking fluid-connection task to an OS because the crew is short-handed." },
+        ],
+      },
+      {
+        theme: { en: "Safety-Critical Moments" },
+        bestPractices: [
+          { en: "The independent verification and the continuous DP watch are both treated as non-negotiable even under schedule pressure." },
+        ],
+        commonErrors: [
+          { en: "Letting schedule pressure justify skipping a check 'just this once.'" },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
