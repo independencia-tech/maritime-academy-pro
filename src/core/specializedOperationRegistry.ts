@@ -2329,6 +2329,372 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  tugboat_thruster_failure_emergency: {
+    operationId: "tugboat_thruster_failure_emergency",
+    vesselTypeId: "tugboat",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Tugboat — Thruster/Steering Failure During Close-Quarters Assist" },
+    introduction: {
+      en: "This operation places a thruster or steering failure during an active close-quarters push/pull assist — the tug's only means of controlling position and avoiding collision with the much larger assisted vessel degrades or fails, at exactly the moment proximity makes any loss of control immediately dangerous. Two genuinely new threads converge here. First: the single-engineer crew reality established in operation one means there may be no Second Engineer to share the diagnostic and response burden with — every AHTS/PSV Engine-department emergency so far has had two engineers, one directing and one executing; here it may be one person doing both, alone. Second: because the tug's own loss of control directly threatens the assisted vessel — not a fixed installation — this is the catalog's first genuinely reciprocal emergency. The other vessel isn't just notified and left waiting; it may need to actively maneuver away itself, in real time, based on what the tug tells it.",
+    },
+    objectives: [
+      { en: "Recognize a developing thruster/steering problem as requiring immediate notification to the assisted vessel, given the collision risk it creates for both vessels — not just the tug." },
+      { en: "Describe the sequence of actions required when propulsion or steering control degrades during an active close-quarters assist." },
+      { en: "Explain how the sole engineering officer diagnoses and responds to this emergency alone, without a Second Engineer to share the workload." },
+      { en: "Explain how command and execution authority shift when the Master's own ability to maneuver the vessel is directly compromised by the failure itself." },
+      { en: "Recognize correct versus incorrect prioritization between attempting to diagnose or restore propulsion and immediately alerting the assisted vessel to the danger." },
+    ],
+    context: {
+      en: "Second Tugboat operation, continuing directly from operation one's push/pull assist setup, mid-maneuver. Not a variation on operation one's adapting-to-unexpected-movement phase — that was about the assisted ship's movement changing; this is about the tug's own capability to respond failing, a different failure mode entirely. The sole engineering officer is modeled as both director and executor of their own diagnosis, the same reasoning already used for the Master's dual authority/execution role in operation one. The assisted vessel may need to take real evasive action based on what the tug reports — a two-sided emergency response, not a one-sided notification. Not assuming a specific technical failure mode (partial vs. total thruster loss, steering gear vs. power failure) — described generically as a developing thruster/steering problem. If outside assistance is needed, the request goes through the appropriate channel (port authority/VTS/another vessel) — kept generic rather than adding a third CommunicationParty value for what is a contingency branch, not this operation's core content.",
+    },
+
+    operationPhaseOrder: [
+      "failure_detection_alert",
+      "immediate_notification_assisted_vessel",
+      ["chief_engineer_diagnosis", "bridge_side_danger_management"],
+      "decision_regain_control_or_request_assistance",
+      "stabilization_clear_or_assisted_recovery",
+      "stand_down_post_incident",
+    ],
+    operationPhases: {
+      failure_detection_alert: {
+        id: "failure_detection_alert",
+        title: { en: "Failure Detection & Alert" },
+        steps: [
+          { en: "Whoever is at the controls notices thruster/steering response degrading — commands aren't translating into expected vessel movement." },
+          { en: "Immediate alert to the rest of the crew." },
+        ],
+        bestPractices: [
+          { en: "Given close proximity to the assisted vessel, this is treated as urgent from the first sign of degraded response, not gradually assessed before raising concern." },
+        ],
+      },
+      immediate_notification_assisted_vessel: {
+        id: "immediate_notification_assisted_vessel",
+        title: { en: "Immediate Notification to Assisted Vessel" },
+        steps: [
+          { en: "The assisted vessel is notified immediately — essentially simultaneous with internal alert, not after diagnostic attempts begin." },
+        ],
+        bestPractices: [
+          { en: "Notification is prioritized ahead of diagnosis. The other vessel's safety depends on knowing now, not once the tug has a clearer picture of what's wrong." },
+        ],
+      },
+      chief_engineer_diagnosis: {
+        id: "chief_engineer_diagnosis",
+        title: { en: "Chief Engineer Diagnosis" },
+        overview: { en: "Runs concurrently with Bridge-Side Danger Management." },
+        steps: [
+          { en: "The sole engineering officer attempts to diagnose and restore thruster/steering function, alone — no Second Engineer to share the workload or provide a second opinion." },
+          { en: "Reports status continuously to the bridge." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      bridge_side_danger_management: {
+        id: "bridge_side_danger_management",
+        title: { en: "Bridge-Side Danger Management" },
+        overview: { en: "Runs concurrently with Chief Engineer Diagnosis." },
+        steps: [
+          { en: "The bridge team communicates the developing situation to the assisted vessel as it evolves." },
+          { en: "Works with whatever control remains to minimize drift and closing distance." },
+          { en: "The AB's lookout becomes the primary real-time gauge of closing distance and drift." },
+        ],
+      },
+      decision_regain_control_or_request_assistance: {
+        id: "decision_regain_control_or_request_assistance",
+        title: { en: "Decision: Regain Control or Request Assistance" },
+        steps: [
+          { en: "Based on the Chief Engineer's diagnosis status and the drift/danger situation, a decision is made: if sufficient control can be regained, the crew continues managing the situation with the tug's own resources; if not, outside assistance is requested." },
+        ],
+        bestPractices: [
+          { en: "Outside assistance is treated as a legitimate, planned-for outcome, not an unexamined assumption that the crew always can resolve it alone." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      stabilization_clear_or_assisted_recovery: {
+        id: "stabilization_clear_or_assisted_recovery",
+        title: { en: "Stabilization & Clear (or Assisted Recovery)" },
+        steps: [
+          { en: "If control is regained: the tug moves to a safe distance under whatever control is available; the situation stabilizes." },
+          { en: "If outside assistance was requested: the tug maintains the safest possible position while awaiting help, managed collaboratively with the assisted vessel and whoever is responding." },
+        ],
+      },
+      stand_down_post_incident: {
+        id: "stand_down_post_incident",
+        title: { en: "Stand-Down & Post-Incident" },
+        steps: [
+          { en: "Muster/headcount; incident documented." },
+          { en: "Assessment of thruster system status." },
+          { en: "Separate, still-open decision: whether the tug can safely resume operations or needs to return to port." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "internal_alert", phaseId: "failure_detection_alert", from: "bridge", to: "bridge", trigger: { en: "Degraded response noticed" }, content: { en: "Immediate internal alert to the rest of the crew." }, whyItMatters: { en: "Same urgency principle as every prior detection touchpoint." } },
+      { id: "assisted_vessel_notification", phaseId: "immediate_notification_assisted_vessel", from: "bridge", to: "assisted_vessel", trigger: { en: "Immediately on detection" }, content: { en: "Notification of the developing thruster/steering problem." }, whyItMatters: { en: "Prioritized ahead of diagnosis — the other vessel's safety depends on knowing now." } },
+      { id: "assisted_vessel_response_report", phaseId: "bridge_side_danger_management", from: "assisted_vessel", to: "bridge", trigger: { en: "Continuous, as the situation evolves" }, content: { en: "The assisted vessel reports its own response — evasive action taken, intentions." }, whyItMatters: { en: "The catalog's first two-way emergency channel — every prior external touchpoint was one-directional; here the other party actively reports back what it's doing, because their response and the tug's are interdependent." } },
+      { id: "tug_status_updates", phaseId: "bridge_side_danger_management", from: "bridge", to: "assisted_vessel", trigger: { en: "Continuous" }, content: { en: "Updates on the tug's own status and drift." }, whyItMatters: { en: "The other half of the same two-way exchange." } },
+      { id: "chief_engineer_status", phaseId: "chief_engineer_diagnosis", from: "engine", to: "bridge", trigger: { en: "Continuous" }, content: { en: "Diagnosis and restoration status." }, whyItMatters: { en: "Same reports-and-sustains-or-directs shape as every prior Engine touchpoint, but from a single officer with no peer to coordinate with." } },
+      { id: "ab_lookout_reports", phaseId: "bridge_side_danger_management", from: "deck_team", to: "bridge", trigger: { en: "Continuous" }, content: { en: "Closing distance and drift observations." }, whyItMatters: { en: "The lookout role becomes the primary real-time gauge of danger during this emergency — its clearest load-bearing moment yet." } },
+      { id: "decision_communication", phaseId: "decision_regain_control_or_request_assistance", from: "bridge", to: "bridge", trigger: { en: "Decision point" }, content: { en: "Master communicates the decision to regain control internally or, if needed, to request outside assistance through the appropriate channel (port authority, VTS, or another vessel)." }, whyItMatters: { en: "The first operation where this decision genuinely has two legitimate branches, not one expected outcome. The exact external recipient of an assistance request is kept out of the party model deliberately — it isn't this operation's core content, and no existing CommunicationParty value fits it any better than \"installation\" fit the assisted vessel in operation one." } },
+      { id: "stop_flag_call", from: "deck_team", to: "deck_team", trigger: { en: "Any unsafe observation" }, content: { en: "Universal stop/flag call." }, whyItMatters: { en: "Same carried-forward principle as every prior operation." } },
+      { id: "outcome_notification", phaseId: "stand_down_post_incident", from: "bridge", to: "assisted_vessel", trigger: { en: "Once stood down" }, content: { en: "Outcome and resumption status." }, whyItMatters: { en: "Same closing-the-loop pattern as every prior operation's post-incident notification." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Continues attempting to work with whatever degraded thruster/steering control remains throughout the emergency. Holds overall command the entire time. Where operation one's Master combined hands-on execution with authority by design, here that combination continues under duress, not by choice but by necessity: there's no working system for anyone else to take over." } },
+      { rankId: "chief_officer", identity: { en: "In operation one, supported the Master and stood ready to take the conn. Here, with the Master fighting for whatever control remains and unable to split attention, the Chief Officer becomes the primary holder of the external coordination effort: running the two-way exchange with the assisted vessel, relaying the Chief Engineer's diagnosis status, holding the overall situational picture. A genuine shift from readiness-to-support toward autonomously running their own piece of the crisis." } },
+      { rankId: "ab", identity: { en: "The lookout role from operation one becomes this emergency's primary real-time danger gauge — closing distance and drift toward the assisted vessel. The stakes are far higher here, but the nature of the task doesn't change: still observation and reporting, not hands-on execution." } },
+      { rankId: "chief_engineer", identity: { en: "In operation one, owned thruster readiness in the reports-and-sustains mold. Here, alone — no Second Engineer — diagnosing and attempting to restore function is entirely this rank's own autonomous effort. The same shift AHTS's Fire Response and PSV's DP-loss operation both made under their own emergencies." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Continues working whatever degraded thruster/steering control remains; holds overall command throughout; decides regain-control-or-request-assistance at the convergence point." }],
+        iMonitor: [{ en: "The Chief Engineer's diagnosis status, the Chief Officer's coordination status, overall danger level (drift/proximity)." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Overriding the Chief Officer's judgment on communication content with the assisted vessel; directing the Chief Engineer's internal diagnostic approach." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Runs the two-way coordination with the assisted vessel — relaying updates, receiving their response actions; relays the Chief Engineer's diagnosis status; holds the overall situational picture." }],
+        iMonitor: [{ en: "The assisted vessel's own response and maneuvering; overall coordination status." }],
+        iReport: [{ en: "Continuous situational updates to the Master; communicates directly with the assisted vessel." }],
+        iDoNotAuthorize: [{ en: "The regain-control-or-request-assistance decision itself (the Master's call); directing the Chief Engineer's diagnostic work." }],
+      },
+      ab: {
+        iExecute: [{ en: "Continuous lookout — closing distance and drift toward the assisted vessel." }],
+        iMonitor: [{ en: "Proximity and collision risk in real time." }],
+        iReport: [{ en: "Immediate reports to the bridge on any change in distance or drift." }],
+        iDoNotAuthorize: [{ en: "Any hands-on maneuvering or communication role; independent action beyond the lookout/reporting role." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Diagnoses and attempts to restore thruster/steering function, alone." }],
+        iMonitor: [{ en: "Own diagnostic progress, continuously." }],
+        iReport: [{ en: "Continuous status to the bridge." }],
+        iDoNotAuthorize: [{ en: "The regain-control-or-request-assistance decision itself; directing the bridge team's coordination or positioning efforts." }],
+      },
+    },
+    // chief_officer and chief_engineer both shift "support" (op 1) -> "lead"
+    // here, confirmed deliberate. chief_officer: no longer just ready to
+    // take the conn -- autonomously runs the entire external coordination
+    // effort as their own domain. chief_engineer: the third occurrence of
+    // the support->lead emergency-diagnosis shift across the catalog
+    // (following AHTS Fire Response and PSV's DP-loss operation), now a
+    // genuinely established archetype rather than a one-off.
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      ab: "observe",
+      chief_engineer: "lead",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order_tugboat_thruster",
+        targetRanks: ["deck_cadet", "ab"],
+        prompt: { en: "Put the phases of this thruster/steering failure response in the correct order. Two phases happen at the same time — the checker accepts any order between items that are genuinely concurrent." },
+        items: [
+          { id: "failure_detection_alert", label: { en: "Failure Detection & Alert" } },
+          { id: "immediate_notification_assisted_vessel", label: { en: "Immediate Notification to Assisted Vessel" } },
+          { id: "chief_engineer_diagnosis", label: { en: "Chief Engineer Diagnosis" } },
+          { id: "bridge_side_danger_management", label: { en: "Bridge-Side Danger Management" } },
+          { id: "decision_regain_control_or_request_assistance", label: { en: "Decision: Regain Control or Request Assistance" } },
+          { id: "stabilization_clear_or_assisted_recovery", label: { en: "Stabilization & Clear (or Assisted Recovery)" } },
+          { id: "stand_down_post_incident", label: { en: "Stand-Down & Post-Incident" } },
+        ],
+        correctOrder: [
+          "failure_detection_alert",
+          "immediate_notification_assisted_vessel",
+          ["chief_engineer_diagnosis", "bridge_side_danger_management"],
+          "decision_regain_control_or_request_assistance",
+          "stabilization_clear_or_assisted_recovery",
+          "stand_down_post_incident",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_delayed_notification",
+        targetRanks: ["chief_officer", "master", "ab"],
+        scenario: { en: "The Chief Officer waits to notify the assisted vessel until after the Chief Engineer's diagnosis is complete. The AB continuously reports closing distance and drift to the bridge. The Chief Engineer diagnoses the thruster problem alone and reports status to the bridge." },
+        choices: [
+          { id: "c1", label: { en: "Chief Officer waiting to notify the assisted vessel until after diagnosis is complete" }, isError: true, explanation: { en: "Notification happens immediately, essentially simultaneous with internal alert, not after diagnostic attempts." } },
+          { id: "c2", label: { en: "AB continuously reporting closing distance and drift to the bridge" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "Chief Engineer diagnosing the thruster problem alone and reporting status to the bridge" }, isError: false, explanation: { en: "Correct — matches the established solo-diagnosis pattern." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "readiness_standdown_tugboat_thruster",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The vessel is stabilized and clear. Review the readiness snapshot below before the Master declares stand-down and before any decision to resume operations." },
+        items: [
+          { id: "vessel_stabilized", label: { en: "Vessel confirmed clear/stabilized at a safe distance" }, isSatisfied: true },
+          { id: "crew_mustered", label: { en: "Crew mustered and accounted for" }, isSatisfied: true },
+          { id: "assisted_vessel_informed", label: { en: "Assisted vessel informed of the outcome" }, isSatisfied: true },
+          { id: "thruster_status_assessed", label: { en: "Chief Engineer confirms thruster system status fully assessed" }, isSatisfied: false },
+          { id: "resume_or_port_decided", label: { en: "Decision made on whether the tug can resume operations or needs to return to port" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Immediately after noticing degraded thruster response, there's an instinct to quickly check what's wrong before radioing the assisted vessel, to avoid causing alarm over something that might be minor." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The assisted vessel is notified immediately, before any diagnostic attempt, regardless of how minor the problem might turn out to be." }],
+        why: [{ en: "Tests whether the notify-first principle holds against the instinct to know more before saying something." }],
+        commonMistakes: [{ en: "Delaying notification by even a short diagnostic check, reasoning a false alarm would be worse than a short delay." }],
+        safetyPoints: [{ en: "The other vessel's own safety depends on knowing as early as possible." }],
+      },
+      {
+        situation: { en: "The Chief Engineer's diagnosis reveals the problem isn't something they can resolve alone with what's aboard; requesting outside assistance means acknowledging it can't be handled internally." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master requests outside assistance once it's genuinely needed, without delaying to first exhaust every possible self-resolution attempt." }],
+        why: [{ en: "Tests whether outside-assistance-as-a-legitimate-outcome holds against the instinct to keep trying alone." }],
+        commonMistakes: [{ en: "Delaying the request for help out of a sense the crew should handle it themselves." }],
+        safetyPoints: [{ en: "A tug with a large vessel nearby and no propulsion is a developing hazard for as long as help is delayed." }],
+      },
+      {
+        situation: { en: "With the bridge team fully occupied, the AB's drift/distance reports become, for a period, the most current information anyone has about how dangerous the situation actually is." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The AB continues reporting distance and drift changes promptly and clearly, recognizing this may be the only real-time picture the bridge team has." }],
+        why: [{ en: "Tests whether the AB's reporting discipline holds when it's genuinely the most consequential information in the operation." }],
+        commonMistakes: [{ en: "Hesitating or under-communicating under pressure, exactly when clear, frequent reporting matters most." }],
+        safetyPoints: [{ en: "A role that looks minor on paper can become the single most important source of information in a genuine emergency." }],
+      },
+      {
+        situation: { en: "The tug reports its situation to the assisted vessel, but the assisted vessel's own response doesn't match what the tug's crew expected." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer continues the coordination exchange, seeking clarification rather than assuming the worst or acting unilaterally based on an assumption." }],
+        why: [{ en: "Tests the two-way coordination dynamic under its most stressful condition." }],
+        commonMistakes: [{ en: "Assuming the assisted vessel understands the danger and is responding appropriately without confirming it." }],
+        safetyPoints: [{ en: "In a reciprocal emergency, an assumption about the other vessel's actions is exactly the kind of gap that turns a manageable situation into a collision." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_ambiguous_reply",
+        title: { en: "An Ambiguous Reply From the Assisted Vessel" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "level_1",
+          situation: {
+            en: "You are the Chief Officer. The thruster/steering problem was just detected and you've sent the immediate notification to the assisted vessel. The Chief Engineer is beginning diagnosis alone. The assisted vessel's reply comes back — but it's incomplete, and doesn't clearly confirm they understood the danger or what they're doing about it.",
+          },
+          options: [
+            {
+              id: "a_assume",
+              label: { en: "Assume they understood and are handling it appropriately — move on to internal coordination." },
+              consequence: { en: "No further contact is made. The exchange is treated as resolved." },
+              feedback: { en: "Assuming the best from an ambiguous reply is exactly the failure mode this coordination role exists to prevent — a reciprocal emergency depends on confirmed understanding, not assumed understanding." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "It later becomes clear the assisted vessel did not understand the danger and has taken no evasive action." },
+                options: [
+                  { id: "a1", label: { en: "Continue as before since it seems too late to change anything." }, consequence: { en: "The situation continues developing without correction." }, feedback: { en: "It isn't too late — this compounds the original assumption." } },
+                  { id: "a2", label: { en: "Immediately re-contact the assisted vessel with a clearer, more explicit warning." }, consequence: { en: "The assisted vessel is now clearly informed and can respond appropriately." }, feedback: { en: "Correct — fixing a mistake in your own domain is your responsibility, not something to hand off." }, isRecommended: true },
+                  { id: "a3", label: { en: "Escalate to the Master to handle it directly instead." }, consequence: { en: "The Master becomes involved in fixing a coordination gap that was still directly resolvable." }, feedback: { en: "Avoidable — this remains resolvable within your own domain." } },
+                ],
+              },
+            },
+            {
+              id: "b_clarify",
+              label: { en: "Immediately follow up, seeking explicit clarification before considering the notification handled." },
+              consequence: { en: "The exchange continues until the situation is genuinely clear on both sides." },
+              feedback: { en: "Correct — this coordination channel is your own domain now, and resolving ambiguity in it directly is the job." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The assisted vessel clarifies they are taking appropriate action. Meanwhile, the Chief Engineer reports the diagnosis isn't going well — outside assistance may be needed soon." },
+                options: [
+                  { id: "b1", label: { en: "Wait for the Chief Engineer to fully exhaust diagnostic options before mentioning this to the Master." }, consequence: { en: "The Master is informed later than necessary." }, feedback: { en: "Delays information the Master needs for the upcoming decision." } },
+                  { id: "b2", label: { en: "Relay the Chief Engineer's status to the Master promptly, including the developing possibility outside assistance may be needed." }, consequence: { en: "The Master has a complete, timely picture for the upcoming decision." }, feedback: { en: "Correct — the Master's decision at the convergence point can't be well-informed without this." }, isRecommended: true },
+                  { id: "b3", label: { en: "Decide independently to request outside assistance without involving the Master first." }, consequence: { en: "A decision reserved for the Master is made without them." }, feedback: { en: "Oversteps the boundary between leading communication and making the assistance-request decision, which stays the Master's alone." } },
+                ],
+              },
+            },
+            {
+              id: "c_escalate",
+              label: { en: "Escalate directly to the Master, unsure whether the assisted vessel understood." },
+              consequence: { en: "The Master becomes involved in a coordination question that was still resolvable directly." },
+              feedback: { en: "Not wrong to eventually involve the Master if genuinely stuck, but premature here — you haven't yet tried to resolve the ambiguity yourself." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The Master, now involved, asks you directly what you think the assisted vessel's ambiguous reply meant, since the Master wasn't part of that exchange." },
+                options: [
+                  { id: "c1", label: { en: "Admit uncertainty and defer entirely back to the Master without offering an assessment." }, consequence: { en: "The Master is left to interpret an exchange they weren't part of." }, feedback: { en: "Avoids a responsibility that's genuinely yours to carry." } },
+                  { id: "c2", label: { en: "Give an honest, informed assessment of what's most likely happening, while noting the genuine uncertainty." }, consequence: { en: "The Master gets a useful, honest picture to work from." }, feedback: { en: "Correct — escalating didn't remove the responsibility to actually interpret an exchange you were part of." }, isRecommended: true },
+                  { id: "c3", label: { en: "Claim more confidence in the interpretation than actually exists to seem more helpful." }, consequence: { en: "The Master acts on a false sense of certainty." }, feedback: { en: "Overstates certainty that isn't actually there." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Notify Before Diagnose" },
+        bestPractices: [
+          { en: "The assisted vessel is notified immediately, essentially simultaneous with internal alert — before any diagnostic attempt." },
+        ],
+        commonErrors: [
+          { en: "Delaying notification by even a short diagnostic check, reasoning a false alarm would be worse than a short delay." },
+        ],
+      },
+      {
+        theme: { en: "Solo Diagnosis" },
+        bestPractices: [
+          { en: "The sole engineering officer diagnoses and reports status continuously, with no Second Engineer to share the workload or provide a second opinion." },
+        ],
+        commonErrors: [],
+      },
+      {
+        theme: { en: "Outside Assistance as a Legitimate Outcome" },
+        bestPractices: [
+          { en: "Requesting outside assistance is treated as legitimate once genuinely needed, not delayed to first exhaust every self-resolution attempt." },
+        ],
+        commonErrors: [
+          { en: "Delaying the request for help out of a sense the crew should handle it themselves." },
+        ],
+      },
+      {
+        theme: { en: "The Lookout Role at Its Highest Stakes" },
+        bestPractices: [
+          { en: "The AB continues reporting distance and drift promptly and clearly, recognizing this may be the only real-time picture the bridge team has." },
+        ],
+        commonErrors: [
+          { en: "Hesitating or under-communicating under pressure, exactly when clear, frequent reporting matters most." },
+        ],
+      },
+      {
+        theme: { en: "Two-Way Coordination Under Uncertainty" },
+        bestPractices: [
+          { en: "Ambiguous replies from the assisted vessel are resolved directly, not assumed favorably." },
+          { en: "The Chief Officer's coordination domain includes resolving its own ambiguity before escalating." },
+          { en: "Status is relayed to the Master promptly and completely, including developing possibilities not yet certain." },
+        ],
+        commonErrors: [
+          { en: "Assuming the assisted vessel understood and is responding appropriately without confirming it." },
+          { en: "Deciding independently on something that remains the Master's authority, even while autonomously leading the coordination effort." },
+        ],
+      },
+      {
+        theme: { en: "Safety-Critical Moments" },
+        bestPractices: [
+          { en: "The Master continues working whatever degraded control remains rather than stepping back to pure command, since there's no working system for anyone else to take over." },
+        ],
+        commonErrors: [
+          { en: "Treating the emergency's severity as a reason to skip the same coordination discipline that applies in calmer moments." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
