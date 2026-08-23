@@ -192,6 +192,29 @@ export interface BestPracticesTheme {
 // operation for Fire Response, later other vessel types). Every content
 // section beyond the required core is optional, matching the
 // block-independence principle already used in roleOnBoardRegistry.ts's
+// ── SUPERVISION REQUIREMENTS ──────────────────────────────────────
+// Formalizes the "participates under supervision" pattern (step 6,
+// industrialization decision) — it showed up independently in both AHTS
+// operations' OS entries, always as prose inside responsibilityMatrix's
+// iExecute/iDoNotAuthorize text. Two independent occurrences were treated
+// as enough evidence to generalize, per the same "derive from real need"
+// principle used throughout. Deliberately additive, not a replacement for
+// responsibilityMatrix: the prose still carries the "why" and the
+// operation-specific task list; this only makes the supervised/autonomous
+// distinction itself queryable as data instead of buried in text.
+//
+// Not merged into roleOnBoardRegistry.ts's shared ProfessionalResponsibilityMatrix
+// type — that type is reused as-is by both roleOnBoardRegistry.ts (career-wide
+// rank cards) and this file, and this concept is specific to a rank's
+// standing within one operation, not a career-wide property. Extending the
+// shared type would have been changing roleOnBoardRegistry.ts's own schema
+// for a need that only exists here.
+export interface SupervisionRequirement {
+  requiresDirectSupervision: boolean;
+  /** Which rank(s) must be providing that direct supervision, when requiresDirectSupervision is true. */
+  supervisedBy?: RankId[];
+}
+
 // RoleOnBoardCard — SpecializedLessonShared must render conditionally per
 // section rather than assuming full population.
 export interface SpecializedOperation {
@@ -211,6 +234,7 @@ export interface SpecializedOperation {
 
   roleOnVessel?: RoleOnVesselEntry[];
   responsibilityMatrix?: Partial<Record<RankId, ProfessionalResponsibilityMatrix>>;
+  supervisionRequirements?: Partial<Record<RankId, SupervisionRequirement>>;
 
   exercises?: SpecializedExercise[];
   practicalScenarios?: PracticalScenario[];
@@ -407,6 +431,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         iReport: [{ en: "Status to the Chief Engineer, who consolidates and reports upward." }],
         iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer — no anchor-handling decision authority." }],
       },
+    },
+    supervisionRequirements: {
+      os: { requiresDirectSupervision: true, supervisedBy: ["ab", "bosun"] },
     },
 
     exercises: [
@@ -819,6 +846,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         iReport: [{ en: "Status to the Chief Engineer, who consolidates and reports to the bridge." }],
         iDoNotAuthorize: [{ en: "Independent isolation decisions or any firefighting/rig decision — same boundary as the Chief Engineer, at a working level." }],
       },
+    },
+    supervisionRequirements: {
+      os: { requiresDirectSupervision: true, supervisedBy: ["ab", "bosun"] },
     },
 
     exercises: [

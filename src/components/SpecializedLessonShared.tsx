@@ -63,7 +63,7 @@ const UI = {
     continueBtn: "Continue", finishScenario: "Finish scenario", restartScenario: "Restart scenario",
     scenarioComplete: "Scenario complete", scenarioSeat: "Seat",
     markOutstanding: "Mark the items that are still outstanding", outstanding: "Outstanding", satisfied: "Satisfied",
-    concurrentPhases: "Happens at the same time",
+    concurrentPhases: "Happens at the same time", requiresSupervision: "Supervised only",
   },
   fr: {
     badge: "Opérations Spécialisées", illustrationPlanned: "Illustration prévue pour cette étape",
@@ -82,7 +82,7 @@ const UI = {
     continueBtn: "Continuer", finishScenario: "Terminer le scénario", restartScenario: "Recommencer le scénario",
     scenarioComplete: "Scénario terminé", scenarioSeat: "Poste",
     markOutstanding: "Coche les points qui restent à régler", outstanding: "À régler", satisfied: "Acquis",
-    concurrentPhases: "Se déroule en même temps",
+    concurrentPhases: "Se déroule en même temps", requiresSupervision: "Sous supervision uniquement",
   },
   es: {
     badge: "Operaciones Especializadas", illustrationPlanned: "Ilustración prevista para este paso",
@@ -101,7 +101,7 @@ const UI = {
     continueBtn: "Continuar", finishScenario: "Terminar escenario", restartScenario: "Reiniciar escenario",
     scenarioComplete: "Escenario completado", scenarioSeat: "Puesto",
     markOutstanding: "Marca los puntos que aún están pendientes", outstanding: "Pendiente", satisfied: "Cumplido",
-    concurrentPhases: "Ocurre al mismo tiempo",
+    concurrentPhases: "Ocurre al mismo tiempo", requiresSupervision: "Solo bajo supervisión",
   },
   pt: {
     badge: "Operações Especializadas", illustrationPlanned: "Ilustração planeada para esta etapa",
@@ -120,7 +120,7 @@ const UI = {
     continueBtn: "Continuar", finishScenario: "Terminar cenário", restartScenario: "Reiniciar cenário",
     scenarioComplete: "Cenário concluído", scenarioSeat: "Posto",
     markOutstanding: "Assinala os pontos que ainda estão pendentes", outstanding: "Pendente", satisfied: "Cumprido",
-    concurrentPhases: "Acontece ao mesmo tempo",
+    concurrentPhases: "Acontece ao mesmo tempo", requiresSupervision: "Apenas sob supervisão",
   },
 } as const;
 
@@ -305,15 +305,26 @@ function ResponsibilityMatrixSection({ op, lang }: { op: SpecializedOperation; l
   const entries = Object.entries(op.responsibilityMatrix) as [RankId, NonNullable<SpecializedOperation["responsibilityMatrix"]>[RankId]][];
   return (
     <>
-      {entries.map(([rankId, m]) => m ? (
+      {entries.map(([rankId, m]) => {
+        const supervision = op.supervisionRequirements?.[rankId];
+        return m ? (
         <Card key={rankId} style={{ marginBottom: 10 }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: C.gold, marginBottom: 6, textTransform: "uppercase", letterSpacing: 1 }}>{rankLabel(rankId, lang)}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: C.gold, textTransform: "uppercase", letterSpacing: 1 }}>{rankLabel(rankId, lang)}</div>
+            {supervision?.requiresDirectSupervision && (
+              <div style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 8, background: "rgba(230,126,34,0.15)", fontSize: 10, color: C.orange, fontWeight: 700 }}>
+                🔒 {ui("requiresSupervision", lang)}
+                {supervision.supervisedBy?.length ? ` — ${supervision.supervisedBy.map((r) => rankLabel(r, lang)).join(", ")}` : ""}
+              </div>
+            )}
+          </div>
           {m.iExecute?.length ? <><SubLabel text={ui("iExecute", lang)} color={C.blue2} /><BulletList items={m.iExecute.map(t)} /></> : null}
           {m.iMonitor?.length ? <><SubLabel text={ui("iMonitor", lang)} color={C.teal} /><BulletList items={m.iMonitor.map(t)} /></> : null}
           {m.iReport?.length ? <><SubLabel text={ui("iReport", lang)} color={C.orange} /><BulletList items={m.iReport.map(t)} /></> : null}
           {m.iDoNotAuthorize?.length ? <><SubLabel text={ui("iDoNotAuthorize", lang)} color={C.red} /><BulletList items={m.iDoNotAuthorize.map(t)} /></> : null}
         </Card>
-      ) : null)}
+        ) : null;
+      })}
     </>
   );
 }
