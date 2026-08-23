@@ -67,8 +67,15 @@ export interface OperationPhase {
 // The tug's external coordination party is a moving vessel's own
 // bridge/pilot team — not a fixed structure — so reusing "installation"
 // would have been a semantic stretch rather than a genuine fit.
+//
+// "transferee" added for the OSV Personnel Transfer operation: a visiting
+// individual being moved between vessel and platform, not a MAP crew rank
+// (RankId) and not any existing external party. Deliberately not folded
+// into an existing touchpoint the way a minor contingency branch would be
+// — the transferee's own hold authority is this operation's single most
+// repeated, load-bearing thread, not a one-off mention.
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -2691,6 +2698,378 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Treating the emergency's severity as a reason to skip the same coordination discipline that applies in calmer moments." },
+        ],
+      },
+    ],
+  },
+
+  osv_personnel_transfer_crane_basket: {
+    operationId: "osv_personnel_transfer_crane_basket",
+    vesselTypeId: "osv",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "OSV — Personnel Transfer via Crane-Basket" },
+    introduction: {
+      en: "Every operation in this catalog so far has centered on equipment, a fluid, a vessel's own position, or a vessel's relationship to something else — never on a person. This module covers personnel transfer between the OSV and an offshore platform via crane-basket, under DP station-keeping: moving a technician or crew member suspended in a basket, timed against wave motion, between two positions. The central hazard here — swing, fall, or crush injury to a person mid-transfer — is categorically different from every risk covered so far, which have all ultimately been about equipment, fluid, or vessel safety, never a person's physical safety during the operation itself. DP remains present, as stable positioning is a precondition for a safe transfer, but it isn't this operation's defining drama the way sustained DP monitoring was for PSV's first operation — the real content here is the transfer sequence itself and the judgment calls around it.",
+    },
+    objectives: [
+      { en: "Describe the sequence of a personnel transfer via crane-basket between the OSV and a platform, from pre-transfer checks through the transfer itself to completion." },
+      { en: "Explain why this operation's central hazard — human safety during transfer — is categorically different from every equipment or environmental risk covered by prior operations." },
+      { en: "Explain DP's role here as a precondition for safe transfer, not the operation's central technical challenge." },
+      { en: "Identify who does what during this operation on an OSV specifically." },
+      { en: "Recognize correct versus incorrect prioritization when weather or sea-state conditions are marginal for a safe transfer." },
+    ],
+    context: {
+      en: "First OSV operation, fourth vessel type in the catalog (grouped with PSV on the original roadmap but scoped separately, since OSV's Ships Library content closely mirrors PSV's on every point except personnel transfer). Deliberately not centered on DP loss/collision risk (already PSV op 2's territory) or deck cargo handling (already PSV op 1's territory). Crane-basket transfer is the primary method covered; gangway transfer is not covered in this operation, a real scope narrowing. The person being transferred is not modeled as a formal rank — RankId is a shared type across MAP's whole platform (career-progression positions, not visiting personnel) — their safety-relevant behavior is described as procedural content and, where genuinely load-bearing, as a dedicated CommunicationParty (\"transferee\"), not a responsibilityMatrix entry. Not asserting specific equipment technical detail (basket/net type, exact weight limits, motion-compensation technology).",
+    },
+
+    operationPhaseOrder: [
+      "pre_transfer_checks_weather_assessment",
+      "dp_position_setup",
+      "go_no_go_decision_marginal_conditions",
+      "transfer_execution",
+      "confirmation_sequence_completion",
+      "departure_documentation",
+    ],
+    operationPhases: {
+      pre_transfer_checks_weather_assessment: {
+        id: "pre_transfer_checks_weather_assessment",
+        title: { en: "Pre-Transfer Checks & Weather Assessment" },
+        steps: [
+          { en: "Toolbox talk covering the specific transfer: who's being moved, direction, sequence." },
+          { en: "Weather and sea-state assessed against this vessel's established transfer limits." },
+          { en: "Crane and basket equipment inspected." },
+          { en: "The transferee is briefed on the procedure, safety instructions, and timing method." },
+          { en: "Communication with the platform confirmed." },
+        ],
+      },
+      dp_position_setup: {
+        id: "dp_position_setup",
+        title: { en: "DP Position Set-Up" },
+        steps: [
+          { en: "OSV maneuvers to station near the platform under DP control." },
+          { en: "Position confirmed stable within the required tolerance before any transfer begins." },
+        ],
+        bestPractices: [
+          { en: "The transfer never begins on the assumption that position will stabilize once underway — it's confirmed stable first." },
+        ],
+      },
+      go_no_go_decision_marginal_conditions: {
+        id: "go_no_go_decision_marginal_conditions",
+        title: { en: "Go/No-Go Decision Under Marginal Conditions" },
+        steps: [
+          { en: "If conditions are clearly within limits, the transfer proceeds." },
+          { en: "If conditions are marginal, a deliberate go/no-go judgment is made rather than defaulting to either extreme." },
+        ],
+        bestPractices: [
+          { en: "Marginal conditions are treated as requiring an active decision, not resolved by inertia or automatic caution." },
+        ],
+      },
+      transfer_execution: {
+        id: "transfer_execution",
+        title: { en: "Transfer Execution (per person)" },
+        overview: { en: "Repeated for each transferee if multiple people require transfer." },
+        steps: [
+          { en: "The transferee boards the basket/net under crew supervision." },
+          { en: "The crane lifts and swings the basket from vessel deck to platform (or the reverse), timed against wave motion." },
+          { en: "The transferee's own judgment plays a real role in timing their own step-off, per the briefed procedure." },
+          { en: "The crew monitors the lift continuously, ready to signal a hold or stop if conditions change mid-lift." },
+        ],
+        bestPractices: [
+          { en: "Any crew member can call a hold on the lift at any point — the universal stop-work principle applied to a live human transfer." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      confirmation_sequence_completion: {
+        id: "confirmation_sequence_completion",
+        title: { en: "Confirmation & Sequence Completion" },
+        steps: [
+          { en: "The receiving party confirms safe arrival." },
+          { en: "If multiple people require transfer, the sequence repeats for each." },
+          { en: "Once all transfers are complete, the crane/basket is secured." },
+        ],
+      },
+      departure_documentation: {
+        id: "departure_documentation",
+        title: { en: "Departure & Documentation" },
+        steps: [
+          { en: "DP control released, or the vessel repositions for other work." },
+          { en: "Transfer(s) documented." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "plan_confirmation", phaseId: "pre_transfer_checks_weather_assessment", from: "bridge", to: "installation", trigger: { en: "Before the transfer" }, content: { en: "Confirmation of who's being transferred, direction, sequence." }, whyItMatters: { en: "Same confirm-the-plan pattern as every prior external channel." } },
+      { id: "transferee_briefing", phaseId: "pre_transfer_checks_weather_assessment", from: "deck_team", to: "transferee", trigger: { en: "Before the transfer" }, content: { en: "Safety briefing: procedure, timing method, what to expect." }, whyItMatters: { en: "The first briefing touchpoint in the catalog aimed at someone who isn't OSV crew at all." } },
+      { id: "transferee_readiness_confirmation", phaseId: "pre_transfer_checks_weather_assessment", from: "transferee", to: "deck_team", trigger: { en: "After briefing" }, content: { en: "Confirmation of understanding and readiness." }, whyItMatters: { en: "The transferee isn't just briefed and moved — their own confirmed readiness is part of the record." } },
+      { id: "on_station_confirmation", phaseId: "dp_position_setup", from: "bridge", to: "installation", trigger: { en: "DP position established" }, content: { en: "Confirmation on-station and within tolerance." }, whyItMatters: { en: "Same pattern as PSV op 1's equivalent." } },
+      { id: "joint_go_no_go", phaseId: "go_no_go_decision_marginal_conditions", from: "bridge", to: "installation", trigger: { en: "Marginal conditions" }, content: { en: "Joint go/no-go — both vessels have a stake, since the platform is receiving the person." }, whyItMatters: { en: "Mirrors the joint-decision pattern already established for AHTS/PSV external channels, extended here because the platform's own crew are the ones receiving a person under uncertain conditions." } },
+      { id: "transfer_signals", phaseId: "transfer_execution", from: "deck_team", to: "transferee", trigger: { en: "During the actual lift" }, content: { en: "Real-time signals — hold, proceed, stop — exchanged both ways." }, whyItMatters: { en: "The transferee's own signal counts, not just the crew's." } },
+      { id: "transferee_hold_call", phaseId: "transfer_execution", from: "transferee", to: "deck_team", trigger: { en: "Transferee is not ready or comfortable" }, content: { en: "The transferee can call a hold themselves." }, whyItMatters: { en: "Extends the universal stop-work principle to include the one person whose safety is most immediately at stake — the first operation where that principle applies to someone who isn't crew." } },
+      { id: "arrival_confirmation", phaseId: "confirmation_sequence_completion", from: "installation", to: "bridge", trigger: { en: "Transfer complete" }, content: { en: "Confirmation of safe arrival." }, whyItMatters: { en: "Standard closing-the-loop pattern." } },
+      { id: "outcome_documentation", phaseId: "departure_documentation", from: "bridge", to: "installation", trigger: { en: "Once complete" }, content: { en: "Documentation/outcome." }, whyItMatters: { en: "Same as every prior operation's post-operation notification." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Holds the go/no-go authority for marginal conditions, jointly with the platform. Closer to AHTS Mooring/Unmooring's Master identity (overall authority, joint decision-making with an external party) than to any emergency-command shift seen elsewhere in the catalog — this is a routine operation, and the Master's role reflects that." } },
+      { rankId: "chief_officer", identity: { en: "Directs the transfer sequence itself and communicates with the installation — this vessel's version of the pattern established across every first operation in the catalog: the Chief Officer owns the operation's signature activity." } },
+      { rankId: "oow", identity: { en: "DP-qualified, holds continuous position-keeping responsibility throughout the lift. Present and genuinely necessary, but DP here is a precondition for safety, not this operation's central technical drama." } },
+      { rankId: "bosun", identity: { en: "Operates and directs the crane and basket, leading the physical deck-level execution of the transfer. The hands-on execution lead, in the same shape as every prior operation's Bosun identity." } },
+      { rankId: "ab", identity: { en: "Assists with crane operation and physical rigging/positioning of the basket, executing under the Bosun's direction — the same perform shape as every prior AB." } },
+      { rankId: "chief_engineer", identity: { en: "Owns DP thruster and crane system readiness — the reports-and-sustains mold shared by every routine-operation Chief Engineer across the catalog." } },
+      { rankId: "second_engineer", identity: { en: "Hands-on monitoring and response under the Chief Engineer's direction, same shape as every prior operation's Second Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall command; decides go/no-go for marginal conditions jointly with the platform; decides whether the transfer proceeds or is deferred." }],
+        iMonitor: [{ en: "Weather/sea-state trend; overall operation status via the Chief Officer and OOW." }],
+        iReport: [{ en: "To company per standing orders; joint go/no-go communication with the installation." }],
+        iDoNotAuthorize: [{ en: "Hands-on crane operation or transfer execution — delegated to the Chief Officer and Bosun." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Directs the transfer sequence; communicates with the installation on plan, sequence, and completion." }],
+        iMonitor: [{ en: "Transfer progress, crew and transferee readiness, overall coordination." }],
+        iReport: [{ en: "Status to the Master; confirmations to the installation." }],
+        iDoNotAuthorize: [{ en: "The go/no-go decision on marginal conditions — the Master's call, jointly with the installation." }],
+      },
+      oow: {
+        iExecute: [{ en: "Continuous DP monitoring throughout the transfer window." }],
+        iMonitor: [{ en: "DP position against tolerance." }],
+        iReport: [{ en: "Any deviation to the Master/Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Transfer sequencing decisions." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Operates and directs the crane and basket; leads the physical transfer execution; briefs the transferee alongside the deck team." }],
+        iMonitor: [{ en: "Deck team and transferee safety during the lift; ready to call a hold." }],
+        iReport: [{ en: "Status to the Chief Officer; unsafe conditions." }],
+        iDoNotAuthorize: [{ en: "The go/no-go decision; overriding a hold called by the transferee themselves — their own signal stands regardless of what the Bosun observes." }],
+      },
+      ab: {
+        iExecute: [{ en: "Assists crane operation; physical rigging and positioning of the basket." }],
+        iMonitor: [{ en: "Immediate hazard conditions during the lift." }],
+        iReport: [{ en: "Unsafe conditions to the Bosun." }],
+        iDoNotAuthorize: [{ en: "Crane operation decisions; independent action." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Prepares and maintains DP thruster and crane system readiness." }],
+        iMonitor: [{ en: "Continuous system performance." }],
+        iReport: [{ en: "Pre-operation readiness confirmation; anomalies to the bridge." }],
+        iDoNotAuthorize: [{ en: "Transfer sequencing or go/no-go decisions." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Hands-on monitoring and response under the Chief Engineer's direction." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "support",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order_osv_personnel",
+        targetRanks: ["deck_cadet", "ab", "bosun"],
+        prompt: { en: "Put the six phases of an OSV personnel transfer in the correct order." },
+        items: [
+          { id: "pre_transfer_checks_weather_assessment", label: { en: "Pre-Transfer Checks & Weather Assessment" } },
+          { id: "dp_position_setup", label: { en: "DP Position Set-Up" } },
+          { id: "go_no_go_decision_marginal_conditions", label: { en: "Go/No-Go Decision Under Marginal Conditions" } },
+          { id: "transfer_execution", label: { en: "Transfer Execution" } },
+          { id: "confirmation_sequence_completion", label: { en: "Confirmation & Sequence Completion" } },
+          { id: "departure_documentation", label: { en: "Departure & Documentation" } },
+        ],
+        correctOrder: ["pre_transfer_checks_weather_assessment", "dp_position_setup", "go_no_go_decision_marginal_conditions", "transfer_execution", "confirmation_sequence_completion", "departure_documentation"],
+      },
+      {
+        type: "error_identification",
+        id: "err_override_transferee_hold",
+        targetRanks: ["bosun", "chief_officer", "ab"],
+        scenario: { en: "The Bosun overrides a hold called by the transferee, judging the situation to actually be safe. The Chief Officer communicates the transfer plan to the installation before the operation begins. The OOW reports a DP deviation to the Master immediately upon detection." },
+        choices: [
+          { id: "c1", label: { en: "Bosun overriding a hold called by the transferee" }, isError: true, explanation: { en: "The transferee's own signal stands regardless of what the Bosun observes — overriding it is never authorized." } },
+          { id: "c2", label: { en: "Chief Officer communicating the transfer plan to the installation before the operation begins" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "OOW reporting a DP deviation to the Master immediately upon detection" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "readiness_pretransfer_osv",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The deck team reports ready and the transferee has been briefed. Review the readiness snapshot below before authorizing the transfer to begin." },
+        items: [
+          { id: "plan_confirmed", label: { en: "Transfer plan confirmed with the installation" }, isSatisfied: true },
+          { id: "weather_assessed", label: { en: "Weather and sea-state assessed against transfer limits" }, isSatisfied: true },
+          { id: "transferee_briefed", label: { en: "Transferee briefed and confirmed readiness" }, isSatisfied: true },
+          { id: "engine_ready", label: { en: "Chief Engineer confirms DP thruster and crane system readiness" }, isSatisfied: false },
+          { id: "dp_on_station", label: { en: "DP position confirmed stable and on-station" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "During the lift, the transferee signals hesitation, but the crew's own assessment is that conditions look fine and the lift is nearly complete." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The crew honors the transferee's signal immediately — pausing or holding the lift — regardless of the crew's own read on conditions." }],
+        why: [{ en: "Tests whether the transferee's hold authority holds under exactly the pressure that makes it tempting to override." }],
+        commonMistakes: [{ en: "Continuing the lift because the crew's own assessment contradicts the transferee's signal." }],
+        safetyPoints: [{ en: "The transferee is the one person whose physical safety is most immediately at stake — their signal isn't just data to weigh, it's decisive." }],
+      },
+      {
+        situation: { en: "Conditions are right at the edge of the established transfer limits, and there's schedule pressure — the platform needs the person transferred urgently." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master makes a genuine go/no-go assessment based on conditions, not schedule pressure — deferring the transfer if conditions don't support it." }],
+        why: [{ en: "Tests whether the marginal-conditions judgment holds against external pressure that has nothing to do with the actual safety assessment." }],
+        commonMistakes: [{ en: "Letting the platform's stated urgency influence the go/no-go call itself." }],
+        safetyPoints: [{ en: "Schedule pressure from a legitimate operational need doesn't change what the weather is actually doing." }],
+      },
+      {
+        situation: { en: "The installation, eager to receive the technician, indicates they think conditions are fine; the OSV's own bridge team has a different read." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The joint go/no-go decision requires both parties' genuine agreement — the OSV doesn't defer to the installation's more optimistic read if its own assessment says otherwise." }],
+        why: [{ en: "Tests whether joint decision genuinely means both parties' independent judgment matters." }],
+        commonMistakes: [{ en: "Deferring to the installation's read because they're the ones needing the person." }],
+        safetyPoints: [{ en: "A joint decision is only meaningful if either party's genuine safety concern can hold the line." }],
+      },
+      {
+        situation: { en: "The transferee seems visibly nervous before the lift, but hasn't explicitly raised a concern or called a hold." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The crew proactively checks in with the transferee rather than waiting for them to explicitly speak up." }],
+        why: [{ en: "Tests whether the transferee's agency is actively supported, not just nominally available." }],
+        commonMistakes: [{ en: "Treating silence as equivalent to readiness, without actively checking." }],
+        safetyPoints: [{ en: "The hold authority only works if the transferee actually feels able to use it — the crew's active check-in is what makes that real." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_ambiguous_signal",
+        title: { en: "An Ambiguous Signal Mid-Lift" },
+        seatRankId: "bosun",
+        root: {
+          id: "level_1",
+          situation: {
+            en: "You are the Bosun, directing the crane-basket transfer. Mid-lift, the transferee gives an ambiguous signal — not a clear hold call, but a hesitation, a delayed movement, something that could mean they're not ready, or could just be normal caution.",
+          },
+          options: [
+            {
+              id: "a_continue",
+              label: { en: "Continue the lift smoothly — the signal wasn't a clear hold call, and stopping now might be more disruptive than continuing." },
+              consequence: { en: "The lift completes without incident, but the ambiguity was never actually resolved." },
+              feedback: { en: "Treats 'not a clear stop signal' as equivalent to 'safe to continue' — exactly the reasoning the transferee's hold authority exists to override." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "After the lift completes, the transferee reports they felt unsafe and weren't given a real chance to signal clearly." },
+                options: [
+                  { id: "a1", label: { en: "Note it as a minor issue since the transfer completed safely." }, consequence: { en: "The gap in the response goes unaddressed." }, feedback: { en: "A safe outcome doesn't validate a decision that ignored a real signal." } },
+                  { id: "a2", label: { en: "Treat it seriously — acknowledge the gap and reinforce the procedure for recognizing ambiguous signals." }, consequence: { en: "The gap is addressed before it recurs with someone less fortunate." }, feedback: { en: "Correct — the transfer completing safely doesn't retroactively validate ignoring the signal." }, isRecommended: true },
+                  { id: "a3", label: { en: "Attribute it to the transferee being overly cautious rather than a real gap in the response." }, consequence: { en: "The actual gap in the crew's response is never addressed." }, feedback: { en: "Shifts responsibility away from the decision that actually needs review." } },
+                ],
+              },
+            },
+            {
+              id: "b_hold",
+              label: { en: "Immediately hold the lift and check in with the transferee directly, even though it wasn't an unambiguous stop signal." },
+              consequence: { en: "The lift pauses safely, and you get a direct answer from the one person best positioned to give it." },
+              feedback: { en: "Correct — any ambiguous signal is treated as a reason to pause and check, not a reason to keep going and hope it resolves itself." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The transferee confirms clearly, once asked directly, that they're fine — it was just an awkward movement, not distress." },
+                options: [
+                  { id: "b1", label: { en: "Resume immediately without having actually obtained a clear confirmation." }, consequence: { en: "The lift resumes on an assumption rather than a real answer." }, feedback: { en: "Skips the actual confirmation the hold was meant to obtain." } },
+                  { id: "b2", label: { en: "Resume once the transferee has explicitly and clearly confirmed readiness." }, consequence: { en: "The lift resumes on a genuine, confirmed basis." }, feedback: { en: "Correct — acting on the transferee's genuine, explicit confirmation respects both safety and their own agency." }, isRecommended: true },
+                  { id: "b3", label: { en: "Abort the transfer entirely out of excess caution even though they've now clearly confirmed." }, consequence: { en: "The transferee's own clear confirmation is disregarded." }, feedback: { en: "Disrespects the confirmation once it's actually been given." } },
+                ],
+              },
+            },
+            {
+              id: "c_ask_without_stopping",
+              label: { en: "Ask the transferee to confirm whether they want to continue, without pausing the physical lift itself yet." },
+              consequence: { en: "The check-in happens, but the transferee is still in motion while it does." },
+              feedback: { en: "Well-intentioned, but insufficient — if the hesitation reflects genuine distress, continuing the physical motion during the check-in doesn't actually address it." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The lift continues while awaiting a reply; the transferee, still mid-motion, becomes visibly more distressed and unable to respond clearly." },
+                options: [
+                  { id: "c1", label: { en: "Continue since stopping now mid-lift seems more disruptive." }, consequence: { en: "The transferee's distress continues unaddressed." }, feedback: { en: "Compounds the original gap." } },
+                  { id: "c2", label: { en: "Immediately stop the lift despite being mid-motion." }, consequence: { en: "The lift stops, later and less smoothly than it would have at Level 1." }, feedback: { en: "Correct, though harder than it would have been — the direct cost of not pausing when the ambiguity first appeared." }, isRecommended: true },
+                  { id: "c3", label: { en: "Speed up the lift to get it over with quickly." }, consequence: { en: "The transferee's distress is compounded by the increased speed." }, feedback: { en: "Makes the situation worse, not better." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Honoring the Transferee's Agency" },
+        bestPractices: [
+          { en: "The transferee's own signal is decisive, not just data to weigh against the crew's judgment." },
+          { en: "Any ambiguous signal is treated as a reason to pause and check, not a reason to continue." },
+          { en: "Once the transferee explicitly confirms readiness, that confirmation is acted on." },
+        ],
+        commonErrors: [
+          { en: "Continuing because a signal wasn't a clear stop call, treating ambiguity as safe by default." },
+          { en: "Checking in without actually pausing the physical motion that's the real source of risk." },
+        ],
+      },
+      {
+        theme: { en: "Proactive Check-Ins" },
+        bestPractices: [
+          { en: "The crew proactively checks in with a visibly nervous transferee rather than waiting for them to explicitly raise a concern." },
+        ],
+        commonErrors: [
+          { en: "Treating silence as equivalent to readiness." },
+        ],
+      },
+      {
+        theme: { en: "Marginal Conditions Judgment" },
+        bestPractices: [
+          { en: "The go/no-go assessment is based on actual conditions, not schedule pressure from either side." },
+          { en: "Marginal conditions require an active decision, not resolution by inertia or automatic caution." },
+        ],
+        commonErrors: [
+          { en: "Letting the platform's stated urgency influence the safety assessment itself." },
+        ],
+      },
+      {
+        theme: { en: "Joint Decision-Making with the Installation" },
+        bestPractices: [
+          { en: "A joint go/no-go decision requires both parties' genuine, independent agreement." },
+        ],
+        commonErrors: [
+          { en: "Deferring to the installation's more optimistic read because they're the ones needing the person transferred." },
+        ],
+      },
+      {
+        theme: { en: "DP as a Precondition, Not the Drama" },
+        bestPractices: [
+          { en: "Position is confirmed stable before the transfer begins, never assumed to stabilize once underway." },
+        ],
+        commonErrors: [],
+      },
+      {
+        theme: { en: "Safety-Critical Moments" },
+        bestPractices: [
+          { en: "Stopping mid-motion, however disruptive, is always available and always used when genuinely needed." },
+        ],
+        commonErrors: [
+          { en: "Treating a transfer that completed safely as proof the process along the way was adequate." },
         ],
       },
     ],
