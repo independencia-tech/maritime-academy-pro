@@ -4268,6 +4268,369 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  lng_cargo_transfer_cooldown_to_loading: {
+    operationId: "lng_cargo_transfer_cooldown_to_loading",
+    vesselTypeId: "lng_carrier",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "LNG Carrier — Cargo Transfer: Tank Cooldown Through Loading" },
+    introduction: {
+      en: "This operation covers the LNG carrier's own defining task: transferring liquefied natural gas at -163°C between the vessel and a terminal. Unlike every prior cargo operation in the catalog, this one has a genuine mandatory precondition that must be satisfied before cargo transfer can even begin — the tanks must be cooled down first. Loading LNG into a tank that hasn't been properly cooled risks thermal shock to the containment system. No other operation built so far has this shape: every prior cargo operation begins once the crew is ready; this one has a distinct, hazardous preparatory phase that is itself part of the operation, not just a checklist gate. Once transfer begins, Boil-Off Gas — natural gas that evaporates from the cargo by its physical nature — must be continuously managed throughout, whether burned as fuel or reliquefied, adding a persistent background condition running alongside the transfer itself.",
+    },
+    objectives: [
+      { en: "Describe the sequence of an LNG cargo transfer, from tank cooldown through loading/discharge to disconnection." },
+      { en: "Explain why tank cooldown is a mandatory, hazardous precondition rather than a simple readiness check — and how that differs from every prior cargo operation in the catalog." },
+      { en: "Explain the continuous Boil-Off Gas management running throughout the operation." },
+      { en: "Identify who does what during this operation on an LNG carrier specifically." },
+      { en: "Recognize correct versus incorrect prioritization when temperature/pressure monitoring competes with schedule pressure." },
+    ],
+    context: {
+      en: "The vessel's own defining task, the same 'owns the signature activity' pattern established across every first operation in the catalog — but here that activity has a mandatory hazardous precondition no prior operation has had. The card's own 'Gas Engineer (gas systems specialist)' position — Boil-Off Gas management, cryogenic systems — is folded into the Second Engineer rather than added as a new RankId, per explicit confirmation: this maps onto the Engine Department's already-established Chief Engineer (overall readiness) / Second Engineer (hands-on technical execution) relationship. Roster is 7 ranks (Master, Chief Officer, OOW, AB, Chief Engineer, Second Engineer, Third Engineer) — no Bosun, confirmed absent from this vessel's own stated crew rather than an ambiguous omission. Not asserting specific cryogenic temperature thresholds, containment system engineering details, or Boil-Off Gas handling specifics — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "pre_cooldown_preparation",
+      "tank_cooldown",
+      "cryogenic_arm_connection_and_initial_loading",
+      "continuous_loading_with_bog_management",
+      "loading_complete_verification",
+      "disconnection_and_departure_preparation",
+    ],
+    operationPhases: {
+      pre_cooldown_preparation: {
+        id: "pre_cooldown_preparation",
+        title: { en: "Pre-Cooldown Preparation" },
+        steps: [
+          { en: "Cargo tanks inspected and confirmed ready." },
+          { en: "Cryogenic arm connection readiness confirmed with the terminal." },
+          { en: "Gas detection systems checked." },
+          { en: "Communication protocol confirmed with the terminal." },
+        ],
+      },
+      tank_cooldown: {
+        id: "tank_cooldown",
+        title: { en: "Tank Cooldown" },
+        steps: [
+          { en: "Tanks cooled gradually toward cargo temperature, avoiding thermal shock to the containment system." },
+          { en: "Continuous temperature monitoring throughout." },
+        ],
+        bestPractices: [
+          { en: "Cooldown rate is governed by the containment system's tolerance, not by how much time the terminal schedule would prefer it take." },
+        ],
+      },
+      cryogenic_arm_connection_and_initial_loading: {
+        id: "cryogenic_arm_connection_and_initial_loading",
+        title: { en: "Cryogenic Arm Connection and Initial Loading" },
+        steps: [
+          { en: "Cryogenic arms connected." },
+          { en: "Loading begins at a reduced rate to verify system integrity before ramping to full rate." },
+        ],
+      },
+      continuous_loading_with_bog_management: {
+        id: "continuous_loading_with_bog_management",
+        title: { en: "Continuous Loading with Boil-Off Gas Management" },
+        overview: { en: "An ongoing cycle for the duration of loading, not a one-time check: temperature, pressure, and Boil-Off Gas levels are monitored continuously as cargo is transferred." },
+        steps: [
+          { en: "Loading proceeds at full rate once initial verification is complete." },
+          { en: "Boil-Off Gas — naturally evaporating from the cargo — is continuously managed throughout, whether used as fuel or reliquefied." },
+          { en: "Temperature and pressure monitored continuously against safe limits." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      loading_complete_verification: {
+        id: "loading_complete_verification",
+        title: { en: "Loading Complete: Verification" },
+        steps: [
+          { en: "Final quantity confirmed and documentation completed." },
+          { en: "Confirmation exchanged with the terminal that transfer is complete." },
+        ],
+      },
+      disconnection_and_departure_preparation: {
+        id: "disconnection_and_departure_preparation",
+        title: { en: "Disconnection and Departure Preparation" },
+        steps: [
+          { en: "Cryogenic arms disconnected." },
+          { en: "Final checks completed." },
+          { en: "Departure preparations; schedule confirmed." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "terminal_readiness_confirmation", phaseId: "pre_cooldown_preparation", from: "terminal", to: "deck", trigger: { en: "Before cooldown begins" }, content: { en: "Terminal confirms cryogenic arm and berth readiness." }, whyItMatters: { en: "The plan/readiness originates externally, same confirm-before-starting pattern as every prior pre-operation channel." } },
+      { id: "engine_gas_systems_readiness", phaseId: "pre_cooldown_preparation", from: "engine", to: "deck", trigger: { en: "Before cooldown begins" }, content: { en: "Confirmation that gas systems, Boil-Off Gas equipment, and containment monitoring are ready." }, whyItMatters: { en: "Engine's readiness underpins the entire operation — the same dependency thread AHTS first established, here specific to gas systems." } },
+      { id: "cooldown_authorization", phaseId: "pre_cooldown_preparation", from: "deck", to: "terminal", trigger: { en: "Pre-cooldown checks complete" }, content: { en: "Vessel confirms readiness to begin cooldown." }, whyItMatters: { en: "Same confirm-before-starting pattern." } },
+      { id: "cooldown_status_ongoing", phaseId: "tank_cooldown", from: "deck", to: "bridge", trigger: { en: "Continuous during cooldown" }, content: { en: "Chief Officer reports cooldown progress and temperature readings to the Master." }, whyItMatters: { en: "The Master's overall awareness depends on this, echoing every prior operation's ongoing-status relationship." } },
+      { id: "cooldown_complete_confirmation", phaseId: "tank_cooldown", from: "deck", to: "terminal", trigger: { en: "Cooldown complete" }, content: { en: "Vessel confirms tanks are at cargo temperature, ready for arm connection." }, whyItMatters: { en: "Explicit confirmation, not assumed from elapsed time alone." } },
+      { id: "initial_loading_verification", phaseId: "cryogenic_arm_connection_and_initial_loading", from: "deck", to: "terminal", trigger: { en: "After reduced-rate loading begins" }, content: { en: "Confirmation that system integrity checks passed; ready to ramp to full rate." }, whyItMatters: { en: "The reduced-rate verification step exists specifically to catch a problem before committing to full-rate transfer." } },
+      { id: "bog_status_ongoing", phaseId: "continuous_loading_with_bog_management", from: "engine", to: "deck", trigger: { en: "Continuous during loading" }, content: { en: "Second Engineer reports Boil-Off Gas management status and any temperature/pressure deviation to the Chief Officer." }, whyItMatters: { en: "A real, ongoing Engine input to the Deck-owned cargo operation — continuous rather than a single report, unlike Container Ship's ballast/fuel touchpoint." } },
+      { id: "loading_status_to_bridge", phaseId: "continuous_loading_with_bog_management", from: "deck", to: "bridge", trigger: { en: "Continuous during loading" }, content: { en: "Chief Officer reports loading progress and any deviation to the Master." }, whyItMatters: { en: "Same ongoing-status relationship." } },
+      { id: "quantity_confirmation", phaseId: "loading_complete_verification", from: "terminal", to: "deck", trigger: { en: "Loading complete" }, content: { en: "Final quantity and documentation exchanged." }, whyItMatters: { en: "Closes the transfer with an explicit, mutual record." } },
+      { id: "departure_clearance", phaseId: "disconnection_and_departure_preparation", from: "bridge", to: "terminal", trigger: { en: "Ready to depart" }, content: { en: "Departure clearance." }, whyItMatters: { en: "Standard closing touchpoint, matches every prior operation's departure/closing touchpoint." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Overall command, oversight-focused rather than hands-on — the same background role as every routine first operation's Master except AHTS, where load-critical conning kept the Master more directly engaged. No equivalent physical maneuvering here." } },
+      { rankId: "chief_officer", identity: { en: "The signature role, explicitly named in the vessel's own content as responsible for cryogenic cargo operations. Owns the entire transfer discipline: authorizing cooldown, overseeing loading, coordinating with the terminal throughout." } },
+      { rankId: "oow", identity: { en: "The second occurrence of Container Ship op1's genuine departure. Alongside at a terminal with no navigation happening, the OOW's usual defining task doesn't apply here either — joins the deck-side operational support instead." } },
+      { rankId: "ab", identity: { en: "Assists with cryogenic arm connection and deck-level monitoring, reporting directly to the Chief Officer. The second occurrence of Tugboat's reduced-hierarchy shape — no Bosun intermediary here either." } },
+      { rankId: "chief_engineer", identity: { en: "Owns overall gas-systems and Boil-Off Gas readiness before and during the operation — reports and sustains rather than executes hands-on, the same support shape as every prior routine-operation Chief Engineer." } },
+      { rankId: "second_engineer", identity: { en: "Absorbs the card's 'Gas Engineer' specialist duties: continuous hands-on Boil-Off Gas management and cryogenic-systems monitoring throughout loading, not just assisting the Chief Engineer at working level. The fold changes the weight of this rank's role, not just its label." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness, supporting the Second Engineer's more specialized focus — the same lighter role as Container Ship's Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall command; authorizes cooldown to begin, informed by the Chief Officer's readiness assessment; grants final departure clearance." }],
+        iMonitor: [{ en: "Overall operation status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on cooldown/loading execution — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Confirms pre-cooldown readiness; authorizes cooldown; oversees loading; coordinates with the terminal throughout; confirms transfer complete." }],
+        iMonitor: [{ en: "Cooldown and loading progress continuously; Boil-Off Gas status as reported by the Second Engineer." }],
+        iReport: [{ en: "Status to the Master; confirmations to the terminal." }],
+        iDoNotAuthorize: [{ en: "Departure clearance itself — the Master's call." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Chief Officer's cargo-operation oversight directly, as part of the deck-side team." }],
+        iMonitor: [{ en: "Status alongside the rest of the deck-side team." }],
+        iReport: [{ en: "Observations to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Cooldown/loading decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Assists with cryogenic arm connection and deck-level monitoring, under the Chief Officer's direct direction." }],
+        iMonitor: [{ en: "Immediate deck-level indicators." }],
+        iReport: [{ en: "Observations directly to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Independent action; cooldown/loading decisions." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Ensures overall gas-systems and Boil-Off Gas readiness before and during the operation; directs the Second Engineer." }],
+        iMonitor: [{ en: "Overall system health throughout." }],
+        iReport: [{ en: "Readiness confirmation and any significant deviation to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation decisions themselves." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Owns continuous, hands-on Boil-Off Gas management and cryogenic-systems monitoring throughout loading — the absorbed specialist gas-systems role." }],
+        iMonitor: [{ en: "Temperature, pressure, and Boil-Off Gas levels continuously." }],
+        iReport: [{ en: "Status and any deviation directly to the Chief Officer, alongside the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation decisions themselves; overriding the Chief Engineer's overall system-readiness authority." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch, supporting the Second Engineer's specialized focus." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any cargo-operation or gas-systems decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "lead",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the six phases of the LNG cargo transfer in the correct order." },
+        items: [
+          { id: "pre_cooldown_preparation", label: { en: "Pre-Cooldown Preparation" } },
+          { id: "tank_cooldown", label: { en: "Tank Cooldown" } },
+          { id: "cryogenic_arm_connection_and_initial_loading", label: { en: "Cryogenic Arm Connection and Initial Loading" } },
+          { id: "continuous_loading_with_bog_management", label: { en: "Continuous Loading with Boil-Off Gas Management" } },
+          { id: "loading_complete_verification", label: { en: "Loading Complete: Verification" } },
+          { id: "disconnection_and_departure_preparation", label: { en: "Disconnection and Departure Preparation" } },
+        ],
+        correctOrder: ["pre_cooldown_preparation", "tank_cooldown", "cryogenic_arm_connection_and_initial_loading", "continuous_loading_with_bog_management", "loading_complete_verification", "disconnection_and_departure_preparation"],
+      },
+      {
+        type: "error_identification",
+        id: "err_cooldown_rate_over_schedule",
+        targetRanks: ["chief_officer", "oow", "ab"],
+        scenario: { en: "The Chief Officer accelerates tank cooldown to save time, despite temperature readings suggesting the faster rate risks thermal shock. The AB reports a deck-level anomaly immediately to the Chief Officer upon noticing it. The Second Engineer reports a Boil-Off Gas deviation as conditions change." },
+        choices: [
+          { id: "c1", label: { en: "Accelerating tank cooldown to save time despite temperature readings suggesting risk" }, isError: true, explanation: { en: "Violates the explicit rule that cooldown rate is governed by the containment system's tolerance, not by schedule pressure." } },
+          { id: "c2", label: { en: "The AB reporting a deck-level anomaly immediately to the Chief Officer" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "The Second Engineer reporting a Boil-Off Gas deviation as conditions change" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "precooldown_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The deck team is briefed and the terminal reports ready. Review the readiness snapshot below before authorizing cooldown to begin." },
+        items: [
+          { id: "terminal_berth_readiness", label: { en: "Cryogenic arm and berth readiness confirmed with the terminal" }, isSatisfied: true },
+          { id: "gas_detection_checked", label: { en: "Gas detection systems checked" }, isSatisfied: true },
+          { id: "terminal_confirms_readiness", label: { en: "Terminal confirms readiness to begin" }, isSatisfied: true },
+          { id: "engine_gas_systems_readiness", label: { en: "Engine confirms gas-systems and Boil-Off Gas equipment readiness" }, isSatisfied: false },
+          { id: "master_authorization", label: { en: "Master's authorization to begin cooldown completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Cooldown is behind the terminal's preferred schedule; temperature readings suggest a faster rate might still be within tolerance, but it's a genuine judgment call under time pressure." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer assesses the rate strictly against containment tolerance, not against the schedule, and only adjusts pace if genuinely safe to do so." }],
+        why: [{ en: "Tests whether the rate-governed-by-tolerance-not-schedule principle holds under real pressure." }],
+        commonMistakes: [{ en: "Accelerating cooldown primarily to satisfy the schedule." }],
+        safetyPoints: [{ en: "Thermal shock risk doesn't shrink because the terminal is in a hurry." }],
+      },
+      {
+        situation: { en: "Cooldown has been running for the expected duration, and there's a temptation to proceed to arm connection since 'enough time has passed.'" },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms cooldown complete based on actual temperature readings, not elapsed time alone." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle for a case where elapsed time is a misleading proxy." }],
+        commonMistakes: [{ en: "Treating elapsed time as sufficient confirmation without checking actual temperature." }],
+        safetyPoints: [{ en: "Cooldown progress depends on real conditions, not a fixed clock." }],
+      },
+      {
+        situation: { en: "The Second Engineer notices an ambiguous Boil-Off Gas reading during continuous loading — might be a sensor issue, might be a real deviation." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Second Engineer reports the ambiguous reading immediately rather than waiting to be sure." }],
+        why: [{ en: "Tests whether the elevated Second Engineer role still defers to reporting uncertainty immediately, rather than treating the expanded ownership as a reason to resolve it alone first." }],
+        commonMistakes: [{ en: "Waiting to independently diagnose before reporting, given the increased sense of ownership." }],
+        safetyPoints: [{ en: "Owning a domain doesn't mean resolving every uncertainty alone before it's shared." }],
+      },
+      {
+        situation: { en: "A reported Boil-Off Gas deviation triggers a response, but it later turns out to be a sensor error, not a real deviation." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Second Engineer reports the false alarm honestly and clearly, rather than downplaying the earlier report now that it's turned out to be nothing." }],
+        why: [{ en: "Echoes the established honest-reporting value already proven in the catalog — a call that turns out unnecessary in hindsight isn't the same as a wrong call." }],
+        commonMistakes: [{ en: "Downplaying or over-apologizing for a report that turned out to be unnecessary." }],
+        safetyPoints: [{ en: "A correctly reported false alarm keeps the reporting discipline intact regardless of outcome." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_ownership_versus_authority",
+        title: { en: "Expanded Ownership, Not Expanded Authority" },
+        seatRankId: "second_engineer",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Second Engineer. With the gas-systems specialist role now genuinely yours, you notice Boil-Off Gas pressure trending slightly outside the normal band during loading. It's within your growing expertise to judge, and you could adjust the reliquefaction/venting balance yourself to correct it." },
+          options: [
+            {
+              id: "a_adjust_unilaterally",
+              label: { en: "Adjust the settings yourself immediately, since this is now genuinely your domain to manage." },
+              consequence: { en: "The adjustment is made without the Chief Officer or Chief Engineer being aware it happened." },
+              feedback: { en: "Owning the technical domain doesn't extend to deciding a cargo-operation-relevant adjustment alone — that boundary doesn't move just because your expertise has grown." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The adjustment has a side effect that touches the loading rate itself — something the Chief Officer wasn't told was happening and now needs to account for." },
+                options: [
+                  { id: "a1", label: { en: "Don't mention it, since it was a technical engine-side matter." }, consequence: { en: "The Chief Officer manages the loading rate without knowing why it's behaving as it is." }, feedback: { en: "An effect that reaches the cargo operation isn't a purely engine-side matter anymore." } },
+                  { id: "a2", label: { en: "Immediately report what was done and its effect on the loading rate." }, consequence: { en: "The Chief Officer now has an accurate picture to manage the operation with." }, feedback: { en: "Correct — disclosing the action and its effect is what lets the Chief Officer actually account for it." }, isRecommended: true },
+                  { id: "a3", label: { en: "Quietly revert the adjustment without mentioning any of it." }, consequence: { en: "The trend returns, and no one else knows what happened in between." }, feedback: { en: "Leaves the Chief Officer working from an incomplete picture of what actually occurred." } },
+                ],
+              },
+            },
+            {
+              id: "b_report_before_acting",
+              label: { en: "Report the trend to the Chief Officer and Chief Engineer before making any adjustment, even though you could technically act." },
+              consequence: { en: "The cargo-operation authority is informed before anything changes." },
+              feedback: { en: "Correct — technical ownership of the gas systems doesn't include unilateral authority over something that touches the cargo operation." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "Informed, the Chief Officer asks you to proceed with the adjustment under your own technical judgment, given your expertise." },
+                options: [
+                  { id: "b1", label: { en: "Proceed with the adjustment, now explicitly authorized." }, consequence: { en: "The adjustment is made with the cargo-operation authority's knowledge and consent." }, feedback: { en: "Correct — this is exactly what reporting before acting was for." }, isRecommended: true },
+                  { id: "b2", label: { en: "Refuse to act at all, insisting on further approval even though it was just given." }, consequence: { en: "The correction is delayed by an unnecessary extra round of approval-seeking." }, feedback: { en: "The authorization just given is real — insisting on more adds friction without adding safety." } },
+                  { id: "b3", label: { en: "Proceed with the adjustment but don't report the outcome once it's done." }, consequence: { en: "The Chief Officer doesn't know whether the adjustment resolved the trend." }, feedback: { en: "Closing the loop on an authorized action is part of carrying it out properly, not optional." } },
+                ],
+              },
+            },
+            {
+              id: "c_wait_and_monitor",
+              label: { en: "Wait and monitor a bit longer before deciding anything, since it's only a slight trend so far." },
+              consequence: { en: "The trend continues developing while no one outside the engine room is aware of it." },
+              feedback: { en: "A developing trend during an active cargo operation is exactly the kind of thing that should be shared promptly, not watched quietly." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The trend has continued past the point where monitoring alone is enough, and the cargo operation has continued the whole time without anyone else aware of it." },
+                options: [
+                  { id: "c1", label: { en: "Continue waiting, since it's still framed as just a trend." }, consequence: { en: "The delay compounds at the point where it matters most." }, feedback: { en: "Compounds the original delay at the worst possible moment." } },
+                  { id: "c2", label: { en: "Report it now, even though you were hoping to have a fuller picture first." }, consequence: { en: "The Chief Officer is finally informed, later than ideal but before further delay." }, feedback: { en: "Correct, though the earlier wait already cost time that a prompt report would have saved." }, isRecommended: true },
+                  { id: "c3", label: { en: "Attempt to adjust it yourself now, since it's gone on long enough to justify acting." }, consequence: { en: "The same unilateral-authority boundary is crossed, just later." }, feedback: { en: "How long the trend has gone on doesn't change where the authority boundary sits." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Cooldown Rate Governed by Tolerance, Not Schedule" },
+        bestPractices: [
+          { en: "Cooldown proceeds at the rate the containment system tolerates, regardless of terminal schedule pressure." },
+        ],
+        commonErrors: [
+          { en: "Accelerating cooldown primarily to satisfy the schedule rather than the system's actual tolerance." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Confirmation, Not Elapsed Time" },
+        bestPractices: [
+          { en: "Cooldown completion is confirmed from actual temperature readings, not from how much time has passed." },
+        ],
+        commonErrors: [
+          { en: "Treating elapsed time as sufficient confirmation that cooldown is complete." },
+        ],
+      },
+      {
+        theme: { en: "Boil-Off Gas as a Continuous Background Condition" },
+        bestPractices: [
+          { en: "Boil-Off Gas is monitored continuously throughout loading, not checked periodically." },
+        ],
+        commonErrors: [
+          { en: "Treating Boil-Off Gas monitoring as a periodic check rather than a continuous one." },
+        ],
+      },
+      {
+        theme: { en: "Expanded Ownership, Not Expanded Authority" },
+        bestPractices: [
+          { en: "Technical ownership of the gas systems is reported to the cargo-operation authority before acting on anything that touches the operation itself, however confident the technical judgment." },
+          { en: "Once explicitly authorized, action proceeds — insisting on further approval past that point adds friction without adding safety." },
+        ],
+        commonErrors: [
+          { en: "Treating expanded technical ownership as unilateral authority over a cargo-operation-relevant decision." },
+          { en: "Refusing to act after authorization has already been explicitly given." },
+        ],
+      },
+      {
+        theme: { en: "Reporting Regardless of Outcome" },
+        bestPractices: [
+          { en: "A deviation is reported honestly whether or not it later turns out to matter." },
+        ],
+        commonErrors: [
+          { en: "Downplaying or over-apologizing for a report that turned out to be a false alarm." },
+        ],
+      },
+      {
+        theme: { en: "Roles Without Their Usual Anchor" },
+        bestPractices: [
+          { en: "When a rank's usual defining task doesn't apply in a given context — no navigation for the OOW, no Bosun layer for the AB — the rank's contribution shifts to what the operation actually needs, not diminished, just redirected." },
+        ],
+        commonErrors: [
+          { en: "Treating a rank's redirected role as a lesser one because it doesn't match its usual shape." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
