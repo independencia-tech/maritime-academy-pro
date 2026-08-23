@@ -215,6 +215,25 @@ export interface SupervisionRequirement {
   supervisedBy?: RankId[];
 }
 
+// ── RESPONSIBILITY LEVEL ──────────────────────────────────────────
+// CPLA closeout decision for Specialized Operations V1 (AHTS prototypes):
+// formalizes each rank's overall participation level in an operation as
+// structured data, not just prose — the same substance already existed in
+// every roleOnVessel/responsibilityMatrix entry written so far (e.g. "aft-
+// deck execution lead" for Bosun, "under the Bosun" for AB), just not in a
+// queryable shape. Deliberately not built to drive anything automatically
+// yet (no exercise filtering, no scoring) — that's an explicitly future
+// goal; this is only the data itself, kept minimal on purpose.
+//
+// Overlaps in substance with SupervisionRequirement.requiresDirectSupervision
+// for a rank marked "supervised" here — both now express the same underlying
+// fact two different ways (a category vs. a boolean). Left as two separate
+// fields rather than merged/deprecating SupervisionRequirement, since that
+// type still carries information this one doesn't (supervisedBy: which
+// rank(s) provide the supervision) and merging them wasn't part of this
+// request — flagging the duplication rather than resolving it unasked.
+export type ResponsibilityLevel = "lead" | "perform" | "supervised" | "support" | "observe";
+
 // RoleOnBoardCard — SpecializedLessonShared must render conditionally per
 // section rather than assuming full population.
 export interface SpecializedOperation {
@@ -235,6 +254,7 @@ export interface SpecializedOperation {
   roleOnVessel?: RoleOnVesselEntry[];
   responsibilityMatrix?: Partial<Record<RankId, ProfessionalResponsibilityMatrix>>;
   supervisionRequirements?: Partial<Record<RankId, SupervisionRequirement>>;
+  responsibilityLevels?: Partial<Record<RankId, ResponsibilityLevel>>;
 
   exercises?: SpecializedExercise[];
   practicalScenarios?: PracticalScenario[];
@@ -434,6 +454,16 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
     },
     supervisionRequirements: {
       os: { requiresDirectSupervision: true, supervisedBy: ["ab", "bosun"] },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "support",
+      bosun: "lead",
+      ab: "perform",
+      os: "supervised",
+      chief_engineer: "support",
+      second_engineer: "support",
     },
 
     exercises: [
@@ -849,6 +879,26 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
     },
     supervisionRequirements: {
       os: { requiresDirectSupervision: true, supervisedBy: ["ab", "bosun"] },
+    },
+    // chief_engineer/second_engineer differ from their Mooring/Unmooring
+    // level ("support" in both — "reports and sustains", no operational
+    // decisions) — confirmed deliberate, not an inconsistency. Here, per
+    // this operation's own text, the Chief Engineer "directs emergency
+    // isolation" and "coordinates with the bridge" — an active, directing
+    // role within the isolation domain, not a monitoring one — hence
+    // "lead" (of that domain, not of the operation as a whole). The Second
+    // Engineer "executes the isolation directly, under the Chief
+    // Engineer's direction" — the same shape as AB under the Bosun —
+    // hence "perform" rather than staying "support".
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "support",
+      bosun: "lead",
+      ab: "perform",
+      os: "supervised",
+      chief_engineer: "lead",
+      second_engineer: "perform",
     },
 
     exercises: [

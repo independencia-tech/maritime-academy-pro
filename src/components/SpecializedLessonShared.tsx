@@ -27,6 +27,7 @@ import type {
   CommunicationTouchpoint,
   CommunicationParty,
   RoleOnVesselEntry,
+  ResponsibilityLevel,
   SpecializedExercise,
   SequenceReorderingExercise,
   ErrorIdentificationExercise,
@@ -64,6 +65,7 @@ const UI = {
     scenarioComplete: "Scenario complete", scenarioSeat: "Seat",
     markOutstanding: "Mark the items that are still outstanding", outstanding: "Outstanding", satisfied: "Satisfied",
     concurrentPhases: "Happens at the same time", requiresSupervision: "Supervised only",
+    levelLead: "Lead", levelPerform: "Perform", levelSupervised: "Supervised", levelSupport: "Support", levelObserve: "Observe",
   },
   fr: {
     badge: "Opérations Spécialisées", illustrationPlanned: "Illustration prévue pour cette étape",
@@ -83,6 +85,7 @@ const UI = {
     scenarioComplete: "Scénario terminé", scenarioSeat: "Poste",
     markOutstanding: "Coche les points qui restent à régler", outstanding: "À régler", satisfied: "Acquis",
     concurrentPhases: "Se déroule en même temps", requiresSupervision: "Sous supervision uniquement",
+    levelLead: "Responsable", levelPerform: "Exécute", levelSupervised: "Sous supervision", levelSupport: "Soutien", levelObserve: "Observateur",
   },
   es: {
     badge: "Operaciones Especializadas", illustrationPlanned: "Ilustración prevista para este paso",
@@ -102,6 +105,7 @@ const UI = {
     scenarioComplete: "Escenario completado", scenarioSeat: "Puesto",
     markOutstanding: "Marca los puntos que aún están pendientes", outstanding: "Pendiente", satisfied: "Cumplido",
     concurrentPhases: "Ocurre al mismo tiempo", requiresSupervision: "Solo bajo supervisión",
+    levelLead: "Responsable", levelPerform: "Ejecuta", levelSupervised: "Bajo supervisión", levelSupport: "Apoyo", levelObserve: "Observador",
   },
   pt: {
     badge: "Operações Especializadas", illustrationPlanned: "Ilustração planeada para esta etapa",
@@ -121,6 +125,7 @@ const UI = {
     scenarioComplete: "Cenário concluído", scenarioSeat: "Posto",
     markOutstanding: "Assinala os pontos que ainda estão pendentes", outstanding: "Pendente", satisfied: "Cumprido",
     concurrentPhases: "Acontece ao mesmo tempo", requiresSupervision: "Apenas sob supervisão",
+    levelLead: "Responsável", levelPerform: "Executa", levelSupervised: "Sob supervisão", levelSupport: "Apoio", levelObserve: "Observador",
   },
 } as const;
 
@@ -147,6 +152,13 @@ function rankLabel(rankId: RankId, lang: SupportedLanguage): string {
   const meta = getRankMeta(rankId);
   return (meta ? resolveLocalizedText(meta.label, lang) : undefined) ?? rankId.replace(/_/g, " ");
 }
+
+const RESPONSIBILITY_LEVEL_KEY: Record<ResponsibilityLevel, keyof typeof UI.en> = {
+  lead: "levelLead", perform: "levelPerform", supervised: "levelSupervised", support: "levelSupport", observe: "levelObserve",
+};
+const RESPONSIBILITY_LEVEL_COLOR: Record<ResponsibilityLevel, string> = {
+  lead: C.gold, perform: C.blue2, supervised: C.orange, support: C.teal, observe: "rgba(240,244,255,0.5)",
+};
 
 // Compares a flat, learner-produced order against a correctOrder that may
 // contain concurrent groups (see OperationPhaseOrderEntry's header note) —
@@ -307,10 +319,16 @@ function ResponsibilityMatrixSection({ op, lang }: { op: SpecializedOperation; l
     <>
       {entries.map(([rankId, m]) => {
         const supervision = op.supervisionRequirements?.[rankId];
+        const level = op.responsibilityLevels?.[rankId];
         return m ? (
         <Card key={rankId} style={{ marginBottom: 10 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: C.gold, textTransform: "uppercase", letterSpacing: 1 }}>{rankLabel(rankId, lang)}</div>
+            {level && (
+              <div style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 8, background: `${RESPONSIBILITY_LEVEL_COLOR[level]}22`, fontSize: 10, color: RESPONSIBILITY_LEVEL_COLOR[level], fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5 }}>
+                {ui(RESPONSIBILITY_LEVEL_KEY[level], lang)}
+              </div>
+            )}
             {supervision?.requiresDirectSupervision && (
               <div style={{ display: "inline-flex", alignItems: "center", padding: "2px 8px", borderRadius: 8, background: "rgba(230,126,34,0.15)", fontSize: 10, color: C.orange, fontWeight: 700 }}>
                 🔒 {ui("requiresSupervision", lang)}
