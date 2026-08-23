@@ -1538,6 +1538,453 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  psv_dp_loss_emergency_disconnect: {
+    operationId: "psv_dp_loss_emergency_disconnect",
+    vesselTypeId: "psv",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "PSV — DP Loss & Emergency Disconnect During Transfer" },
+    introduction: {
+      en: "This module places a DP failure — the vessel losing reliable position-keeping — during an active multi-fluid transfer, while lines are still physically connected to the platform. This is the most PSV/OSV-specific emergency category possible: it exists only because this vessel type depends on DP rather than anchoring or mooring. Where AHTS's Fire Response emergency originated inside the vessel and threatened a physically loaded rig, this emergency originates in the vessel's relationship to an external fixed point via the one thing holding that relationship together — DP. If position isn't recovered or the vessel doesn't disconnect in time, the consequences chain directly back into operation one's own signature risk: a forced or uncontrolled disconnect risks spilled fluid and cross-contamination, on top of collision and parted-line risks.",
+    },
+    objectives: [
+      { en: "Recognize a developing DP problem as an emergency distinct from a routine deviation — the point at which position-keeping can no longer be trusted, not just watched." },
+      { en: "Describe the sequence of actions required to safely disconnect from a platform under time pressure while a position problem is actively developing." },
+      { en: "Explain how command authority is distributed during this specific emergency, including where it differs from AHTS Fire Response's single on-scene-commander model." },
+      { en: "Explain the Engine department's role in this emergency — attempting to diagnose and restore thruster/DP function, the mirror image of Fire Response's isolate-the-system role." },
+      { en: "Recognize correct versus incorrect prioritization between attempting to recover position and initiating emergency disconnect, when the two pull in different directions." },
+    ],
+    context: {
+      en: "Second PSV operation, continuing directly from operation one's fluid transfer setup. Command structure: the Master assumes overall emergency command instantly on declaration, the same general principle as AHTS Fire Response, but distributed across three simultaneous tracks rather than a single on-scene commander — the OOW takes the active technical lead on the DP problem itself, the Chief Officer directs deck-side emergency disconnect preparation, and the Chief Engineer diagnoses and attempts to restore thruster/DP function, all in parallel under the Master. Not assuming a specific DP failure mechanism (thruster failure vs. reference-system loss vs. environmental force) — described generically as a developing DP position problem. Emergency disconnect systems described generically as the vessel's emergency disconnect systems for fluid transfer lines, not a specific coupling technology.",
+    },
+
+    operationPhaseOrder: [
+      "dp_problem_detection_alert",
+      "command_split_activation",
+      ["dp_recovery_attempt", "disconnect_preparation", "thruster_diagnosis"],
+      "decision_recover_or_disconnect",
+      "emergency_disconnect_execution",
+      "clear_of_platform_stand_down",
+      "post_incident",
+    ],
+    operationPhases: {
+      dp_problem_detection_alert: {
+        id: "dp_problem_detection_alert",
+        title: { en: "DP Problem Detection & Alert" },
+        steps: [
+          { en: "OOW notices the developing DP position problem — not a routine deviation, but position control becoming genuinely unreliable." },
+          { en: "OOW immediately alerts the Master." },
+          { en: "Master assesses severity and declares an emergency if warranted." },
+        ],
+        bestPractices: [
+          { en: "The threshold for declaring this an emergency is deliberately lower than the routine 'report on any deviation' standard — this is about control itself becoming untrustworthy, not just position drifting." },
+        ],
+      },
+      command_split_activation: {
+        id: "command_split_activation",
+        title: { en: "Command Split & Response Activation" },
+        steps: [
+          { en: "Master assumes overall emergency command, regardless of the transfer's state." },
+          { en: "OOW takes the active technical lead on the DP problem itself, under the Master's command." },
+          { en: "Chief Officer begins directing deck-side preparation for emergency disconnect, in parallel." },
+          { en: "Chief Engineer begins diagnosing the thruster/DP system issue, in parallel." },
+        ],
+        bestPractices: [
+          { en: "All three tracks activate simultaneously — disconnect preparation is not delayed to see whether recovery succeeds first." },
+        ],
+      },
+      dp_recovery_attempt: {
+        id: "dp_recovery_attempt",
+        title: { en: "DP Recovery Attempt" },
+        overview: { en: "Runs concurrently with Disconnect Preparation and Thruster Diagnosis." },
+        steps: [
+          { en: "OOW works to diagnose and recover reliable DP control." },
+          { en: "Continuous reporting of recovery status to the Master." },
+          { en: "Direct coordination with the Chief Engineer on the shared technical problem." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      disconnect_preparation: {
+        id: "disconnect_preparation",
+        title: { en: "Disconnect Preparation" },
+        overview: { en: "Runs concurrently with DP Recovery Attempt and Thruster Diagnosis." },
+        steps: [
+          { en: "Chief Officer directs the deck team to stage the emergency disconnect systems and ready the fluid lines for rapid disconnection." },
+          { en: "Any active crane operation is halted and secured." },
+          { en: "Bosun and AB execute the preparation under the Chief Officer's direction." },
+        ],
+      },
+      thruster_diagnosis: {
+        id: "thruster_diagnosis",
+        title: { en: "Thruster Diagnosis" },
+        overview: { en: "Runs concurrently with DP Recovery Attempt and Disconnect Preparation." },
+        steps: [
+          { en: "Chief Engineer attempts to diagnose and restore thruster/DP function." },
+          { en: "Reports status continuously to the bridge." },
+          { en: "Direct coordination with the OOW on the shared technical problem." },
+        ],
+      },
+      decision_recover_or_disconnect: {
+        id: "decision_recover_or_disconnect",
+        title: { en: "Decision: Recover or Disconnect" },
+        steps: [
+          { en: "Based on the OOW's recovery status and the Chief Officer's disconnect readiness, the Master decides whether position has been sufficiently recovered to continue, or whether emergency disconnect must proceed." },
+          { en: "If recovered: the operation may resume from where it left off." },
+          { en: "If not recovered: emergency disconnect proceeds." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      emergency_disconnect_execution: {
+        id: "emergency_disconnect_execution",
+        title: { en: "Emergency Disconnect Execution" },
+        overview: { en: "Conditional — only proceeds if the decision phase calls for disconnect." },
+        steps: [
+          { en: "Fluid transfer lines disconnected via the vessel's emergency disconnect systems." },
+          { en: "Vessel moves clear of the platform using whatever propulsion/DP capability remains." },
+          { en: "Deck team clear of hazard areas during the move-off." },
+        ],
+      },
+      clear_of_platform_stand_down: {
+        id: "clear_of_platform_stand_down",
+        title: { en: "Clear of Platform & Stand-Down" },
+        steps: [
+          { en: "Vessel confirmed clear at a safe distance." },
+          { en: "Master stands down the emergency once satisfied." },
+          { en: "Muster/headcount confirms all crew accounted for." },
+        ],
+      },
+      post_incident: {
+        id: "post_incident",
+        title: { en: "Post-Incident" },
+        steps: [
+          { en: "Assessment of DP system status and what remains connected or disconnected." },
+          { en: "Incident documented." },
+          { en: "Separate, still-open decision: whether and how to resume the transfer operation, depending entirely on what state the connection was left in." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "initial_alert", phaseId: "dp_problem_detection_alert", from: "bridge", to: "bridge", trigger: { en: "DP problem detected" }, content: { en: "OOW immediately alerts the Master: nature and severity of the developing position problem." }, whyItMatters: { en: "Same proactive-reporting principle as operation one, now at a higher-stakes threshold — control itself, not just position drift." } },
+      { id: "master_activates_oow", phaseId: "command_split_activation", from: "bridge", to: "bridge", trigger: { en: "Emergency declared" }, content: { en: "Master activates the OOW as active technical lead on the DP problem." }, whyItMatters: { en: "Part of the simultaneous three-track activation, not a delayed handoff." } },
+      { id: "master_activates_co", phaseId: "command_split_activation", from: "bridge", to: "deck", trigger: { en: "Emergency declared" }, content: { en: "Master activates the Chief Officer to direct deck-side disconnect preparation." }, whyItMatters: { en: "Disconnect preparation begins immediately, not after the recovery attempt's outcome is known." } },
+      { id: "master_activates_ce", phaseId: "command_split_activation", from: "bridge", to: "engine", trigger: { en: "Emergency declared" }, content: { en: "Master activates the Chief Engineer to diagnose the thruster/DP issue." }, whyItMatters: { en: "The third simultaneous track — technical diagnosis begins alongside, not after, the other two." } },
+      { id: "oow_recovery_status", phaseId: "dp_recovery_attempt", from: "bridge", to: "bridge", trigger: { en: "Continuous during the response" }, content: { en: "OOW reports ongoing DP recovery status to the Master." }, whyItMatters: { en: "Feeds directly into the recover-or-disconnect decision." } },
+      { id: "co_disconnect_readiness_status", phaseId: "disconnect_preparation", from: "deck", to: "bridge", trigger: { en: "Continuous during the response" }, content: { en: "Chief Officer reports ongoing disconnect-readiness status to the Master." }, whyItMatters: { en: "The other half of the decision — is the deck actually ready to disconnect if ordered." } },
+      { id: "ce_diagnosis_status", phaseId: "thruster_diagnosis", from: "engine", to: "bridge", trigger: { en: "Continuous during the response" }, content: { en: "Chief Engineer reports ongoing thruster diagnosis status to the Master." }, whyItMatters: { en: "The technical basis for whether recovery is realistic." } },
+      { id: "oow_ce_direct_coordination", phaseId: "dp_recovery_attempt", from: "bridge", to: "engine", trigger: { en: "Throughout the concurrent response" }, content: { en: "OOW and Chief Engineer coordinate directly on the shared technical problem, in parallel with both separately reporting to the Master." }, whyItMatters: { en: "The one touchpoint in this operation with no equivalent in either prior module — peer coordination between two ranks working the same problem from opposite ends, not a hierarchical report." } },
+      { id: "oow_recommendation", phaseId: "decision_recover_or_disconnect", from: "bridge", to: "bridge", trigger: { en: "At the decision point" }, content: { en: "OOW gives an informed recommendation — recover or disconnect — alongside the raw status." }, whyItMatters: { en: "Mirrors the recommend-when-asked pattern already built into the OOW's responsibilityMatrix in operation one — the Master decides, but doesn't decide blind." } },
+      { id: "co_directs_disconnect_execution", phaseId: "emergency_disconnect_execution", from: "deck", to: "deck_team", trigger: { en: "Disconnect ordered" }, content: { en: "Chief Officer directs the Bosun/AB team through the disconnect sequence." }, whyItMatters: { en: "Real-time execution direction, same shape as operation one's deck-team coordination." } },
+      { id: "stop_work_call", from: "deck_team", to: "deck_team", trigger: { en: "Any unsafe observation" }, content: { en: "Universal stop-work / clear-the-area call." }, whyItMatters: { en: "Not rank-gated, unchanged by operation." } },
+      { id: "installation_emergency_notification", phaseId: "command_split_activation", from: "bridge", to: "installation", trigger: { en: "Emergency declared" }, content: { en: "Bridge notifies the installation of the developing DP problem and its potential impact." }, whyItMatters: { en: "More urgent than either prior operation's installation notification — the installation's own structure is what's potentially at risk." } },
+      { id: "installation_disconnect_confirmation", phaseId: "emergency_disconnect_execution", from: "bridge", to: "installation", trigger: { en: "Disconnect executing" }, content: { en: "Bridge confirms disconnect is underway/complete." }, whyItMatters: { en: "The installation needs to know its own side of the connection is clear too." } },
+      { id: "installation_clear_confirmation", phaseId: "clear_of_platform_stand_down", from: "bridge", to: "installation", trigger: { en: "Vessel confirmed clear" }, content: { en: "Bridge confirms safe distance reached." }, whyItMatters: { en: "Closes the immediate danger window for both parties." } },
+      { id: "installation_outcome_notification", phaseId: "post_incident", from: "bridge", to: "installation", trigger: { en: "Once stood down" }, content: { en: "Bridge informs the installation of the outcome and whether/when the transfer can resume." }, whyItMatters: { en: "Same closing-the-loop pattern as both prior operations' post-incident notifications." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Assumes overall emergency command instantly on declaration, the same general principle carried from Fire Response. But where Fire Response's Master delegated to a single on-scene commander, here the Master oversees three parallel response tracks at once and holds the convergence decision itself — a materially busier, more directly technical command role than either prior emergency." } },
+      { rankId: "oow", identity: { en: "The sharpest identity shift of any rank in this operation. In operation one, OOW held a standing monitoring responsibility. Here, OOW becomes the active technical lead attempting to diagnose and recover DP control itself. Same rank, same underlying domain, but the posture changes from watching to working the problem directly." } },
+      { rankId: "chief_officer", identity: { en: "In operation one, owned the cargo/fluid transfer sequence and its contamination discipline. Here, that authority is set aside, and the Chief Officer directs the deck-side emergency disconnect — a real parallel to the AHTS Chief Officer's shift in Fire Response, but as one of three simultaneous command tracks under the Master, not the sole on-scene commander." } },
+      { rankId: "bosun", identity: { en: "Executes the emergency disconnect under the Chief Officer's direction. Operation one's defining Bosun trait — the independent verification, the deliberate double-check — is not this operation's focus: a genuine emergency disconnect runs on speed and direction-following, not elaborate cross-checking, and that contrast is itself part of what this operation teaches." } },
+      { rankId: "ab", identity: { en: "Executes disconnect tasks under the Bosun's direction. Same perform identity as operation one and both AHTS operations — the task content changes, the shape of the role doesn't." } },
+      { rankId: "os", identity: { en: "With two simultaneous hazard fronts active, the restriction tightens further rather than staying at operation one's level: no role anywhere near the disconnect points, limited strictly to muster/support tasks under direct supervision." } },
+      { rankId: "chief_engineer", identity: { en: "In operation one, owned dual-system readiness in the reports-and-sustains mold. Here, shifts to active diagnosis and an attempted restoration of thruster/DP function — the mirror image of the AHTS Chief Engineer's Fire Response shift (isolate a system) rather than a repeat of it." } },
+      { rankId: "second_engineer", identity: { en: "Executes under the Chief Engineer's direction, same shape as every prior operation — but the work is assisting with diagnosis and restoration attempts, distinct from Fire Response's isolation execution and operation one's routine monitoring." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Assumes overall emergency command instantly; oversees the three concurrent response tracks; decides recover-or-disconnect at the convergence point; decides stand-down." }],
+        iMonitor: [{ en: "Status from all three tracks — the OOW's recovery attempt, the Chief Officer's disconnect readiness, the Chief Engineer's diagnosis; crew accounted for." }],
+        iReport: [{ en: "To company/authorities per standing orders; notifies the installation of the emergency and outcome via the bridge channel." }],
+        iDoNotAuthorize: [{ en: "Hands-on DP recovery work, deck disconnect execution, or thruster diagnosis — delegated to the OOW, Chief Officer, and Chief Engineer respectively." }],
+      },
+      oow: {
+        iExecute: [{ en: "Active technical lead diagnosing and attempting to recover DP control; direct coordination with the Chief Engineer on the shared technical problem." }],
+        iMonitor: [{ en: "DP recovery progress, continuously." }],
+        iReport: [{ en: "Continuous recovery status to the Master; an informed recover-or-disconnect recommendation at the decision point." }],
+        iDoNotAuthorize: [{ en: "The recover-or-disconnect decision itself (recommends, the Master decides); directing deck-side disconnect preparation." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Directs deck-side emergency disconnect preparation and execution; halts and secures any active crane operation." }],
+        iMonitor: [{ en: "Disconnect readiness and deck-team safety throughout." }],
+        iReport: [{ en: "Continuous disconnect-readiness status to the Master; confirms disconnect executing/complete to the bridge and installation." }],
+        iDoNotAuthorize: [{ en: "The recover-or-disconnect decision itself; directing the OOW's DP recovery work or the Chief Engineer's diagnosis." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Executes the emergency disconnect sequence under the Chief Officer's direction." }],
+        iMonitor: [{ en: "Deck-team safety during disconnect execution." }],
+        iReport: [{ en: "Status and developments to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "The disconnect-ordered decision itself (the Master's call); independent deviation from the Chief Officer's direction." }],
+      },
+      ab: {
+        iExecute: [{ en: "Physical disconnect tasks as directed by the Bosun." }],
+        iMonitor: [{ en: "Immediate hazard conditions in their own work area during disconnect." }],
+        iReport: [{ en: "Unsafe conditions to the Bosun." }],
+        iDoNotAuthorize: [{ en: "Disconnect sequencing decisions; independent action." }],
+      },
+      os: {
+        iExecute: [{ en: "Muster/support tasks only, under direct supervision, away from all disconnect points." }],
+        iMonitor: [{ en: "Status of their own assigned task only." }],
+        iReport: [{ en: "Task status to the supervising rank." }],
+        iDoNotAuthorize: [{ en: "Any role near disconnect points; any independent action during the emergency." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Diagnoses and attempts to restore thruster/DP function; direct coordination with the OOW on the shared technical problem." }],
+        iMonitor: [{ en: "Thruster/DP system status, continuously." }],
+        iReport: [{ en: "Continuous diagnosis status to the Master; direct coordination updates to the OOW." }],
+        iDoNotAuthorize: [{ en: "The recover-or-disconnect decision itself; directing deck-side disconnect actions." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer's diagnosis and restoration attempt directly." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer, who consolidates and reports upward." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer, at a working level." }],
+      },
+    },
+    supervisionRequirements: {
+      os: { requiresDirectSupervision: true, supervisedBy: ["ab", "bosun"] },
+    },
+    // Two divergences from PSV operation one, both confirmed deliberate,
+    // not inconsistencies:
+    // - oow: "lead" here vs "perform" in op 1. Here OOW autonomously
+    //   directs its own recovery effort as the domain expert (only
+    //   reporting/recommending upward, not executing under someone else's
+    //   direction) -- matching the "lead of a domain" pattern Fire
+    //   Response established (Chief Officer/Bosun/Chief Engineer can
+    //   simultaneously each be "lead" of their own track), not the
+    //   "perform under direction" shape op 1's OOW had.
+    // - bosun: "perform" here vs "lead" in op 1. Op 1's Bosun led deck
+    //   cargo handling AND was the independent verifier -- real decision-
+    //   adjacent authority. Here, per roleOnVessel's own text, the Bosun
+    //   purely executes the Chief Officer's disconnect direction; the
+    //   verification/lead trait is explicitly not this operation's focus.
+    responsibilityLevels: {
+      master: "lead",
+      oow: "lead",
+      chief_officer: "lead",
+      bosun: "perform",
+      ab: "perform",
+      os: "supervised",
+      chief_engineer: "lead",
+      second_engineer: "perform",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order_psv_dp_loss",
+        targetRanks: ["deck_cadet", "os", "ab", "bosun"],
+        prompt: { en: "Put the phases of this DP loss and emergency disconnect response in the correct order. Three phases happen at the same time — the checker accepts any order between items that are genuinely concurrent." },
+        items: [
+          { id: "dp_problem_detection_alert", label: { en: "DP Problem Detection & Alert" } },
+          { id: "command_split_activation", label: { en: "Command Split & Response Activation" } },
+          { id: "dp_recovery_attempt", label: { en: "DP Recovery Attempt" } },
+          { id: "disconnect_preparation", label: { en: "Disconnect Preparation" } },
+          { id: "thruster_diagnosis", label: { en: "Thruster Diagnosis" } },
+          { id: "decision_recover_or_disconnect", label: { en: "Decision: Recover or Disconnect" } },
+          { id: "emergency_disconnect_execution", label: { en: "Emergency Disconnect Execution" } },
+          { id: "clear_of_platform_stand_down", label: { en: "Clear of Platform & Stand-Down" } },
+          { id: "post_incident", label: { en: "Post-Incident" } },
+        ],
+        correctOrder: [
+          "dp_problem_detection_alert",
+          "command_split_activation",
+          ["dp_recovery_attempt", "disconnect_preparation", "thruster_diagnosis"],
+          "decision_recover_or_disconnect",
+          "emergency_disconnect_execution",
+          "clear_of_platform_stand_down",
+          "post_incident",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_delayed_disconnect_prep",
+        targetRanks: ["chief_officer", "master", "oow"],
+        scenario: { en: "The Chief Officer delays starting deck-side disconnect preparation to wait and see if the OOW's DP recovery attempt succeeds first. The Chief Engineer coordinates directly with the OOW on the thruster/DP problem while also reporting status to the Master. The Bosun executes the disconnect sequence exactly as directed by the Chief Officer." },
+        choices: [
+          { id: "c1", label: { en: "Chief Officer delaying disconnect preparation to wait on the recovery attempt's outcome" }, isError: true, explanation: { en: "All three tracks activate simultaneously — disconnect preparation is never delayed pending the recovery attempt's outcome, even when recovery looks likely to succeed." } },
+          { id: "c2", label: { en: "Chief Engineer coordinating directly with the OOW while also reporting to the Master" }, isError: false, explanation: { en: "Correct — matches the established direct-coordination-plus-reporting-up pattern unique to this operation." } },
+          { id: "c3", label: { en: "Bosun executing the disconnect sequence exactly as directed by the Chief Officer" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "readiness_standdown_psv_dp_loss",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The vessel is clear of the platform and the deck team is standing by. Review the readiness snapshot below before the Master declares stand-down and before any decision to resume the transfer." },
+        items: [
+          { id: "vessel_clear", label: { en: "Vessel confirmed clear at a safe distance" }, isSatisfied: true },
+          { id: "crew_mustered", label: { en: "Crew mustered and accounted for" }, isSatisfied: true },
+          { id: "installation_notified", label: { en: "Installation notified of the outcome" }, isSatisfied: true },
+          { id: "dp_status_confirmed", label: { en: "DP system status assessed and confirmed by the Chief Engineer" }, isSatisfied: false },
+          { id: "connection_state_documented", label: { en: "Connection/disconnection state fully documented to inform the resumption decision" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The OOW reports the DP problem seems minor and recovery looks likely. The Chief Officer considers holding off on deck-side disconnect preparation to avoid unnecessary work and crew alarm." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer begins disconnect preparation immediately regardless of how promising the recovery attempt looks, per the simultaneous-activation principle." }],
+        why: [{ en: "Tests whether the no-delay rule holds precisely when skipping parallel preparation feels most reasonable." }],
+        commonMistakes: [{ en: "Reasoning that preparing to disconnect while the OOW seems confident is wasted effort or an overreaction." }],
+        safetyPoints: [{ en: "If recovery unexpectedly fails and disconnect prep hasn't started, the vessel loses exactly the time margin that parallel activation exists to protect." }],
+      },
+      {
+        situation: { en: "The OOW's assessment of the DP problem's cause differs from the Chief Engineer's — their direct coordination has surfaced two different theories about what's wrong." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "Both continue reporting their own status and theory independently to the Master rather than forcing agreement between themselves first; the Master, informed of the disagreement itself, factors that uncertainty into the recover-or-disconnect decision." }],
+        why: [{ en: "Tests that the direct OOW/Chief Engineer coordination channel doesn't become a place where disagreement gets silently resolved before the Master ever sees it." }],
+        commonMistakes: [{ en: "OOW and Chief Engineer quietly settling on one theory to present a unified picture to the Master, hiding genuine uncertainty." }],
+        safetyPoints: [{ en: "The Master's decision is only as good as the information reaching them — a false consensus is more dangerous than visible disagreement." }],
+      },
+      {
+        situation: { en: "At the decision point, the OOW reports DP control has been recovered — but only barely, within tolerance with little margin." },
+        mission: { en: "Determine the correct recommendation and decision." },
+        expectedActions: [{ en: "The OOW's recommendation reflects the marginal nature of the recovery honestly; the Master weighs the thin margin against the readiness of the disconnect option before deciding whether to resume or disconnect anyway as a precaution." }],
+        why: [{ en: "Tests that recovered isn't treated as binary — a barely-adequate recovery is a different decision than a solid one, even though both technically clear the same threshold." }],
+        commonMistakes: [{ en: "Treating back-within-tolerance as equivalent to problem-solved and resuming without weighing the thin margin." }],
+        safetyPoints: [{ en: "A marginal recovery could revert — the decision should account for that possibility, not just the current instant's reading." }],
+      },
+      {
+        situation: { en: "During the emergency disconnect, the deck is short-handed and someone suggests the OS help hold or guide a line near a disconnect point." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The OS stays at assigned muster/support tasks, away from all disconnect points, regardless of how short-handed the deck team is." }],
+        why: [{ en: "Continues the OS-boundary thread across every Specialized Operations module — tests whether the boundary holds under the most acute time and hazard pressure yet." }],
+        commonMistakes: [{ en: "Treating the emergency itself as justification for bending the boundary, when the emergency is exactly why the boundary should hold hardest." }],
+        safetyPoints: [{ en: "The boundary was tightened for emergency conditions specifically — an emergency isn't an exception to it, it's the reason for it." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_marginal_recovery_decision",
+        title: { en: "A Marginal Recovery — Resume, Disconnect, or Wait?" },
+        seatRankId: "master",
+        root: {
+          id: "level_1",
+          situation: {
+            en: "You are the Master. The emergency was declared several minutes ago; all three response tracks are active. The OOW now reports that DP control has been recovered — but marginally, within tolerance with little margin to spare. The Chief Officer confirms disconnect preparation is staged and ready, unused so far.",
+          },
+          options: [
+            {
+              id: "a_resume",
+              label: { en: "Resume the transfer immediately — recovery is confirmed within tolerance, get back to schedule." },
+              consequence: { en: "The transfer resumes. Shortly after, the marginal recovery shows signs of degrading again." },
+              feedback: { en: "Treats 'within tolerance' as equivalent to 'solved.' A thin margin is a different situation than a solid one, even when both technically clear the same threshold." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The marginal recovery has degraded again — the position problem is redeveloping while the transfer is now actively running once more." },
+                options: [
+                  { id: "a1", label: { en: "Continue the transfer since stopping again seems disruptive." }, consequence: { en: "The position problem worsens while the transfer continues." }, feedback: { en: "Compounds the original miscalculation." } },
+                  { id: "a2", label: { en: "Immediately order disconnect given the redeveloping problem." }, consequence: { en: "The vessel disconnects and clears, later than it should have but before the situation worsened further." }, feedback: { en: "Correct — exactly what the thin margin at Level 1 should have anticipated; further hesitation would have compounded the original mistake." }, isRecommended: true },
+                  { id: "a3", label: { en: "Order another pause without disconnecting, to reassess." }, consequence: { en: "Valuable time passes without addressing an already-demonstrated problem." }, feedback: { en: "The problem has already shown itself twice now — further reassessment delays an already-clear answer." } },
+                ],
+              },
+            },
+            {
+              id: "b_disconnect",
+              label: { en: "Order the disconnect anyway, despite the technical recovery, given how thin the margin is." },
+              consequence: { en: "The vessel disconnects and clears safely. Once stood down, questions arise about whether disconnecting was necessary given DP was technically within tolerance." },
+              feedback: { en: "Not unsafe — a defensible precaution — but discards a recovery that might have held, at real cost, without first checking whether the thin margin was stable or actively failing." },
+              next: {
+                id: "level_2_b",
+                situation: { en: "The installation and company want to understand why disconnect was ordered when DP was technically within tolerance." },
+                options: [
+                  { id: "b1", label: { en: "Defend the decision as fully justified without qualification." }, consequence: { en: "The explanation reads as rigid rather than honest about the judgment call made." }, feedback: { en: "Overstates certainty that wasn't actually there at the time." } },
+                  { id: "b2", label: { en: "Explain the reasoning honestly — the margin was too thin to trust, a defensible precaution even if it turns out to have been avoidable." }, consequence: { en: "The installation and company receive a clear, honest account of the judgment call and its cost." }, feedback: { en: "Correct — the same value rewarded in both AHTS operations' interactive scenarios: own a conservative call, cost and all." }, isRecommended: true },
+                  { id: "b3", label: { en: "Deflect, downplaying that a judgment call was made at all." }, consequence: { en: "The installation and company are left without a real understanding of what happened." }, feedback: { en: "Undermines the trust the reporting relationship depends on." } },
+                ],
+              },
+            },
+            {
+              id: "c_hold",
+              label: { en: "Hold the current state — pause the transfer without disconnecting, and observe briefly before deciding either way." },
+              consequence: { en: "The brief observation window lets you see whether the marginal recovery is holding steady or continuing to degrade — and since disconnect preparation was already staged, it remains immediately available if needed." },
+              feedback: { en: "Correct — this is exactly why parallel activation mattered earlier: the option to observe first and decide with real evidence exists only because disconnect readiness was never delayed waiting on the recovery attempt." },
+              isRecommended: true,
+              next: {
+                id: "level_2_c",
+                situation: { en: "After a brief observation window, the OOW reports the marginal recovery is holding steady, not degrading." },
+                options: [
+                  { id: "c1", label: { en: "Resume the transfer now that stability is confirmed." }, consequence: { en: "The transfer resumes on the basis of a verified, stable recovery rather than an untested one." }, feedback: { en: "Correct — the observation window did exactly its job: confirming genuine stability rather than a fragile recovery about to fail." }, isRecommended: true },
+                  { id: "c2", label: { en: "Disconnect anyway out of continued caution despite the stable reading." }, consequence: { en: "A stable, verified recovery is discarded anyway." }, feedback: { en: "Ignores the evidence the observation window was specifically taken to gather." } },
+                  { id: "c3", label: { en: "Continue holding indefinitely without deciding either way." }, consequence: { en: "The operation stalls with no resolution despite having the evidence needed to decide." }, feedback: { en: "The observation window has already answered the question — further indecision serves no purpose now." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Simultaneous Activation" },
+        bestPractices: [
+          { en: "All three response tracks activate the instant the emergency is declared, none waiting on the others." },
+          { en: "Disconnect preparation is never delayed pending the recovery attempt's outcome, even when recovery looks likely to succeed." },
+        ],
+        commonErrors: [
+          { en: "Reasoning that preparing to disconnect while recovery seems confident is wasted effort or an overreaction." },
+        ],
+      },
+      {
+        theme: { en: "The OOW / Chief Engineer Technical Partnership" },
+        bestPractices: [
+          { en: "OOW and Chief Engineer coordinate directly on the shared technical problem, in parallel with both independently reporting to the Master." },
+          { en: "Disagreement between them is surfaced to the Master, not quietly resolved into a false consensus first." },
+        ],
+        commonErrors: [
+          { en: "Settling on one theory between themselves to present a unified picture, hiding genuine uncertainty from the Master." },
+        ],
+      },
+      {
+        theme: { en: "Judging a Marginal Recovery" },
+        bestPractices: [
+          { en: "Recovered is not treated as binary — a thin-margin recovery is a different decision than a solid one." },
+          { en: "A brief, deliberate observation window before committing either way costs nothing when disconnect readiness was never delayed." },
+        ],
+        commonErrors: [
+          { en: "Treating back-within-tolerance as equivalent to problem-solved and resuming without weighing the margin." },
+          { en: "Discarding a recovery that might have held without first checking whether it was stable or actively failing." },
+        ],
+      },
+      {
+        theme: { en: "Communication Under Pressure" },
+        bestPractices: [
+          { en: "A conservative call that turns out costlier than necessary is explained honestly afterward, not defended rigidly or downplayed." },
+        ],
+        commonErrors: [
+          { en: "Defending a judgment call without qualification, or deflecting to avoid acknowledging a judgment call was made at all." },
+        ],
+      },
+      {
+        theme: { en: "Supervision & Rank Boundaries" },
+        bestPractices: [
+          { en: "The OS boundary holds hardest precisely during the emergency it was tightened for." },
+        ],
+        commonErrors: [
+          { en: "Treating an active emergency as justification to bend the boundary, when the emergency is exactly why the boundary exists." },
+        ],
+      },
+      {
+        theme: { en: "Safety-Critical Moments" },
+        bestPractices: [
+          { en: "A redeveloping problem after a marginal recovery is met with immediate disconnect, not further hesitation." },
+          { en: "The resumption decision remains fully separate from the emergency-response decision, dependent on documented connection state." },
+        ],
+        commonErrors: [
+          { en: "Continuing a resumed transfer despite a redeveloping problem because stopping again feels disruptive." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
