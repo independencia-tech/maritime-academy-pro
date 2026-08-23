@@ -13,10 +13,13 @@ import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
-import { VESSEL_TYPE_REGISTRY } from "@/core/vesselTypeRegistry";
+import { VESSEL_TYPE_REGISTRY, type VesselTypeId } from "@/core/vesselTypeRegistry";
 import { SHIPS_LIBRARY_INDEX } from "@/core/shipsLibraryIndex";
 import { getRanksByDepartment } from "@/core/rankRegistry";
+import { getSpecializedOperationsByVesselType } from "@/core/specializedOperationRegistry";
+import type { SupportedLanguage } from "@/core/roleOnBoardRegistry";
 const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
+const SpecializedLessonShared = lazy(() => import("./SpecializedLessonShared"));
 
 
 // ── LAZY-LOADED LESSON COMPONENTS (code-split, only downloaded when opened) ──
@@ -1107,10 +1110,10 @@ function AdminPage({ setPage }) {
 
 // ── MODULES LIST & SHIPS PAGES ─────────────────────────────────
 const NAV_T:any = {
-  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine" },
-  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine" },
-  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas" },
-  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas" },
+  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine", specializedOps:"Opérations Spécialisées" },
+  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine", specializedOps:"Specialized Operations" },
+  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas", specializedOps:"Operaciones Especializadas" },
+  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas", specializedOps:"Operações Especializadas" },
 };
 
 function ModulesListPage({ lang, onBack, onStart }:{lang:string;onBack:()=>void;onStart:(m:any)=>void}) {
@@ -1142,15 +1145,47 @@ function ModulesListPage({ lang, onBack, onStart }:{lang:string;onBack:()=>void;
 function ShipsPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
   const t = NAV_T[lang] || NAV_T.fr;
   const [selected, setSelected] = useState<string | null>(null);
+  const [selectedOperationId, setSelectedOperationId] = useState<string | null>(null);
 
   const entries = Object.values(VESSEL_TYPE_REGISTRY).filter((v:any) => v.id !== "all" && SHIPS_LIBRARY_INDEX[v.id]);
 
   if (selected && SHIPS_LIBRARY_INDEX[selected]) {
+    const specializedOps = getSpecializedOperationsByVesselType(selected as VesselTypeId);
+    const selectedOp = selectedOperationId ? specializedOps.find(op => op.operationId === selectedOperationId) : null;
+
+    if (selectedOp) {
+      return (
+        <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
+          <TopBar onBack={() => setSelectedOperationId(null)} title={t.specializedOps} backLabel={t.back}/>
+          <Suspense fallback={null}>
+            <SpecializedLessonShared operation={selectedOp} lang={lang as SupportedLanguage} onBack={() => setSelectedOperationId(null)}/>
+          </Suspense>
+        </div>
+      );
+    }
+
     const ShipCard = SHIPS_LIBRARY_INDEX[selected] as any;
     return (
       <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
         <TopBar onBack={() => setSelected(null)} title={t.ships} backLabel={t.back}/>
         <ShipCard lang={lang}/>
+        {specializedOps.length > 0 && (
+          <div style={{padding:"0 16px 40px",maxWidth:480,margin:"0 auto"}}>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",margin:"8px 0 12px"}}>{t.specializedOps}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+              {specializedOps.map((op) => (
+                <button key={op.operationId} onClick={() => setSelectedOperationId(op.operationId)} style={{
+                  display:"flex",alignItems:"center",gap:12,padding:"14px",
+                  background:"rgba(13,31,60,0.8)",border:"1px solid rgba(201,146,42,0.35)",
+                  borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
+                }}>
+                  <div style={{width:36,height:36,borderRadius:10,background:"rgba(201,146,42,0.15)",border:"1px solid rgba(201,146,42,0.35)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>⚓</div>
+                  <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{op.title?.[lang] || op.title?.en}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
