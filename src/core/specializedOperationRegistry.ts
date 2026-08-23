@@ -82,8 +82,17 @@ export interface OperationPhase {
 // the counterparty in this operation's signature stop-authority moment
 // (the vessel halting equipment it doesn't itself operate) — genuinely
 // load-bearing, not a one-off.
+//
+// "shore_fire_brigade" added for the Container Ship cargo fire operation:
+// shore-side professional fire/emergency responders, distinct from
+// "terminal" (a different organization and authority — crane/planning
+// staff don't fight fires). Recurs across four communication touchpoints
+// and is the counterparty in this operation's own architecturally new
+// moment — firefighting command itself passing to an external party,
+// unlike every prior emergency, which kept the vessel's own crew in
+// command throughout.
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -3855,6 +3864,406 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Treating the final stability confirmation as a stowage-plan-only check, without the Chief Engineer's ballast and fuel input." },
+        ],
+      },
+    ],
+  },
+
+  container_cargo_fire_undeclared_dg: {
+    operationId: "container_cargo_fire_undeclared_dg",
+    vesselTypeId: "container_ship",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Container Ship — Cargo Fire (Undeclared Dangerous Goods) During Loading/Discharge" },
+    introduction: {
+      en: "During loading or discharge at the terminal, a fire breaks out in the container stack — most often traced to undeclared or mis-declared dangerous goods reacting inside a sealed box. This is a fundamentally different fire hazard from anything built so far: AHTS Fire Response was an open-deck fire the crew could see, approach, and fight directly with extinguishers and hoses. A container fire is largely inaccessible — the crew cannot open a sealed box of unknown contents to fight what's inside, and doing so without knowing whether it holds something explosive, toxic, or water-reactive is itself a hazard. The operational discipline here is detection, exclusion, and external cooling/isolation — not direct attack — combined with the genuine uncertainty of not knowing exactly what's burning. This directly interrupts op1's own operational context: the loading/discharge operation halts the instant the fire is confirmed, the same terminal and \"terminal\" party from op1 carries forward, and the vessel's response now runs alongside — and depends on — external shore-based emergency services in a way no prior operation has needed.",
+    },
+    objectives: [
+      { en: "Describe the sequence of detecting and responding to a container fire during loading/discharge, particularly one linked to undeclared dangerous goods." },
+      { en: "Explain why this operation's central hazard is fundamentally different from AHTS Fire Response — a sealed, inaccessible fire under genuine content-uncertainty, met with exclusion and external cooling rather than direct attack." },
+      { en: "Explain the vessel's and terminal's shared response, including when and why the vessel halts loading/discharge and engages external shore-based emergency services." },
+      { en: "Identify who does what during this operation on a container ship specifically." },
+      { en: "Recognize correct versus incorrect action under uncertainty about a container's actual contents — including the boundary against approaching or opening a container without knowing what's inside, and against assuming a fire is fully resolved just because visible flame is gone." },
+    ],
+    context: {
+      en: "This operation is the stress test interrupting op1's own activity — the fire breaks out during the same loading/discharge operation, at the same terminal, not in a separate underway scenario, following the same routine-then-emergency pairing confirmed for every prior vessel. AHTS Fire Response is a directly-fought, visible, open-deck fire; this is a sealed-container fire the crew cannot get inside of, compounded by not reliably knowing what's actually burning — a different hazard shape, not a reskin. A container fire of this severity brings in shore-side fire brigade / port emergency services, a different party from the terminal's crane operators/planning office already in the schema — represented by a new \"shore_fire_brigade\" CommunicationParty, confirmed load-bearing across the communication, practical-case, and interactive-scenario content. Same 8-rank roster as op1 (Master, Chief Officer, OOW, Bosun, AB, Chief Engineer, Second Engineer, Third Engineer). Not asserting specific firefighting agents, IMDG classes, or extinguishing system specifics — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "detection_and_alert",
+      ["command_transfer_and_terminal_halt", "exclusion_zone_and_muster", "external_cooling_response"],
+      "shore_fire_brigade_engagement",
+      "continuous_monitoring_under_uncertainty",
+      "fire_out_and_reignition_watch",
+      "resumption_decision",
+    ],
+    operationPhases: {
+      detection_and_alert: {
+        id: "detection_and_alert",
+        title: { en: "Detection and Alert" },
+        steps: [
+          { en: "Smoke or fire is observed in the container stack — often by the deck team conducting the loading/discharge verification work, sometimes by the terminal." },
+          { en: "Immediate alert raised: location, what's observed, any visible markings suggesting dangerous goods." },
+        ],
+      },
+      command_transfer_and_terminal_halt: {
+        id: "command_transfer_and_terminal_halt",
+        title: { en: "Command Transfer and Terminal Halt" },
+        steps: [
+          { en: "Command transfers explicitly to the Chief Officer as on-scene commander." },
+          { en: "The terminal's loading/discharge operation is halted immediately and unconditionally." },
+          { en: "Shore-side fire brigade is called in." },
+        ],
+      },
+      exclusion_zone_and_muster: {
+        id: "exclusion_zone_and_muster",
+        title: { en: "Exclusion Zone and Muster" },
+        steps: [
+          { en: "An exclusion zone is established around the affected stack." },
+          { en: "Non-essential personnel are mustered clear." },
+        ],
+      },
+      external_cooling_response: {
+        id: "external_cooling_response",
+        title: { en: "External Cooling Response" },
+        steps: [
+          { en: "Fire main/water spray directed onto the affected and adjacent containers from a safe distance." },
+          { en: "No attempt made to open or access the source container — content and hazard are unknown." },
+        ],
+      },
+      shore_fire_brigade_engagement: {
+        id: "shore_fire_brigade_engagement",
+        title: { en: "Shore Fire Brigade Engagement" },
+        steps: [
+          { en: "On arrival, shore-side fire brigade assumes the primary firefighting role; the Chief Officer coordinates with them on-scene." },
+          { en: "Handover of what's known so far: location, behavior observed, any cargo documentation available on the affected container(s)." },
+        ],
+      },
+      continuous_monitoring_under_uncertainty: {
+        id: "continuous_monitoring_under_uncertainty",
+        title: { en: "Continuous Monitoring Under Uncertainty" },
+        overview: { en: "An ongoing cycle for the duration of the response, not a one-time check." },
+        steps: [
+          { en: "Fire behavior and spread to adjacent containers monitored continuously." },
+          { en: "Exclusion zone reassessed and adjusted as conditions change." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      fire_out_and_reignition_watch: {
+        id: "fire_out_and_reignition_watch",
+        title: { en: "Fire Confirmed Out and Re-Ignition Watch" },
+        steps: [
+          { en: "Fire declared out, jointly assessed by shore fire brigade and the vessel — not assumed from the absence of visible flame." },
+          { en: "Transition to re-ignition watch." },
+        ],
+      },
+      resumption_decision: {
+        id: "resumption_decision",
+        title: { en: "Resumption Decision" },
+        steps: [
+          { en: "Joint decision — vessel, terminal, and shore authorities as relevant — on whether and when loading/discharge can resume." },
+          { en: "Any affected container(s) addressed per applicable procedure before resumption." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "initial_alert", phaseId: "detection_and_alert", from: "deck_team", to: "bridge", trigger: { en: "Fire/smoke observed in the container stack" }, content: { en: "Immediate alert: location, what's observed, any visible dangerous-goods markings." }, whyItMatters: { en: "Everything downstream depends on this reaching the bridge without delay." } },
+      { id: "command_transfer_confirmation", phaseId: "command_transfer_and_terminal_halt", from: "bridge", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Explicit assumption of emergency command by the Master; Chief Officer's role confirmed as on-scene commander." }, whyItMatters: { en: "An authority handoff, mirroring every prior emergency operation's command-transfer touchpoint." } },
+      { id: "terminal_halt_notification", phaseId: "command_transfer_and_terminal_halt", from: "deck", to: "terminal", trigger: { en: "Immediately on alert" }, content: { en: "Loading/discharge operation halted unconditionally." }, whyItMatters: { en: "Unlike op1's discretionary halt, this one requires no judgment call — immediate and unconditional the instant a fire is confirmed." } },
+      { id: "shore_fire_brigade_called", phaseId: "command_transfer_and_terminal_halt", from: "deck", to: "shore_fire_brigade", trigger: { en: "Immediately on alert" }, content: { en: "Shore-side fire brigade called in." }, whyItMatters: { en: "The vessel's own resources are for containment and cooling, not full resolution of an unknown-contents fire." } },
+      { id: "onscene_status_to_bridge", phaseId: "continuous_monitoring_under_uncertainty", from: "deck", to: "bridge", trigger: { en: "Continuous during the incident" }, content: { en: "Chief Officer reports fire status, exclusion zone status, and crew status to the Master." }, whyItMatters: { en: "Same relationship as every prior emergency — the Master's overall command still depends on continuous on-scene reporting." } },
+      { id: "shore_fire_brigade_handover", phaseId: "shore_fire_brigade_engagement", from: "deck", to: "shore_fire_brigade", trigger: { en: "On shore fire brigade's arrival" }, content: { en: "Handover of what's known: location, behavior observed, any available cargo documentation." }, whyItMatters: { en: "The vessel's account is the best available information about a hazard whose exact nature isn't confirmed." } },
+      { id: "shore_fire_brigade_command", phaseId: "shore_fire_brigade_engagement", from: "shore_fire_brigade", to: "deck", trigger: { en: "Once on-scene" }, content: { en: "Shore fire brigade assumes primary firefighting role, coordinating ongoing action with the Chief Officer." }, whyItMatters: { en: "Architecturally distinctive — firefighting command itself passes to the external party; the vessel's on-scene commander coordinates rather than retains command, unlike every prior emergency." } },
+      { id: "fire_out_confirmation", phaseId: "fire_out_and_reignition_watch", from: "shore_fire_brigade", to: "deck", trigger: { en: "Fire appears out" }, content: { en: "Joint confirmation the fire is out." }, whyItMatters: { en: "Not assumed from the absence of visible flame — the same explicit-confirmation discipline as AHTS Fire Response." } },
+      { id: "fire_out_report_to_master", phaseId: "fire_out_and_reignition_watch", from: "deck", to: "bridge", trigger: { en: "Fire confirmed out" }, content: { en: "Chief Officer reports fire out, transitioning to re-ignition watch." }, whyItMatters: { en: "The Master's stand-down decision depends on this being reported explicitly." } },
+      { id: "resumption_go_no_go", phaseId: "resumption_decision", from: "bridge", to: "terminal", trigger: { en: "Re-ignition watch period elapsed without incident" }, content: { en: "Joint go/no-go decision on resuming loading/discharge." }, whyItMatters: { en: "Echoes the joint go/no-go pattern already established for the installation relationship in AHTS — here between vessel and terminal." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "In op1, a background, oversight-focused role, backing the Chief Officer's halt authority with command weight. Here, assumes overall emergency command the instant the alarm is raised — the same authority-assumption shape as every prior emergency operation's Master — directs the ship's overall response, and holds the stand-down and resumption decisions." } },
+      { rankId: "chief_officer", identity: { en: "In op1, owned the entire verification discipline outright. Here, becomes on-scene commander the instant command transfers — the same authority shift as AHTS Fire Response's Chief Officer — but with a further narrowing no prior operation has had: once shore fire brigade arrives, firefighting command itself passes to them, and the Chief Officer coordinates rather than retains command." } },
+      { rankId: "oow", identity: { en: "In op1, already a genuine departure — no navigation to attach to, so the OOW joined the deck team's verification work instead. Here, that departure compounds: supporting the Master's emergency command (communications, tracking the exclusion zone) with no navigation or DP thread to have departed from in the first place, unlike every prior emergency operation's OOW." } },
+      { rankId: "bosun", identity: { en: "In op1, led the deck team's observation and verification work. Here, leads the deck team into mustering clear of the exclusion zone and supporting its enforcement — a more restrained execution role than any prior emergency Bosun; direct attack on the fire itself is explicitly not the deck team's role at all." } },
+      { rankId: "ab", identity: { en: "In op1, assisted with verification checks under the Bosun. Here, follows the Bosun into exclusion-zone compliance and may assist with external cooling equipment under direction — supporting containment, not attacking the fire itself." } },
+      { rankId: "chief_engineer", identity: { en: "In op1, a narrow ballast/fuel reporting role. Here, a different narrow role: ensuring the vessel's fire main and water supply capability is available to support the external cooling response — a genuine engine-department input to this operation's containment effort." } },
+      { rankId: "second_engineer", identity: { en: "Assists the Chief Engineer with fire main/water supply support — the same \"perform\" shape as every prior Second Engineer, redirected to this operation's specific technical need." } },
+      { rankId: "third_engineer", identity: { en: "In op1, \"observe\" level, routine watchkeeping with no direct role. Here, continues engine room watch and readiness — a genuine if minimal contribution; machinery space operation and standby readiness still matter even during an on-deck emergency." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Assumes overall emergency command; directs the ship's overall response; holds the stand-down and resumption decisions jointly with the terminal/shore authorities." }],
+        iMonitor: [{ en: "Overall incident status via the Chief Officer; shore fire brigade's assessment." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on firefighting/containment actions — delegated to the Chief Officer and shore fire brigade." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Assumes on-scene command; directs the deck team's exclusion-zone and cooling response; coordinates with shore fire brigade once on-scene; confirms fire-out status jointly with them." }],
+        iMonitor: [{ en: "Fire status and exclusion-zone integrity continuously; shore fire brigade's assessment and instructions." }],
+        iReport: [{ en: "Fire status to the Master continuously; handover information to shore fire brigade." }],
+        iDoNotAuthorize: [{ en: "Overriding shore fire brigade's firefighting decisions once they've assumed command of that effort; the Master's overall stand-down/resumption authority." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Master's emergency command — communications, tracking exclusion-zone status." }],
+        iMonitor: [{ en: "Communications flow and exclusion-zone reporting." }],
+        iReport: [{ en: "Status updates as directed by the Master." }],
+        iDoNotAuthorize: [{ en: "Independent command decisions." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Leads the deck team into mustering clear of the exclusion zone; supports its enforcement; directs the AB in supporting the external cooling response as instructed." }],
+        iMonitor: [{ en: "Deck team compliance and safety within the exclusion zone." }],
+        iReport: [{ en: "Status to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Any direct attack on the fire itself; independent communication with shore fire brigade." }],
+      },
+      ab: {
+        iExecute: [{ en: "Complies with muster/exclusion-zone direction; assists with external cooling equipment under the Bosun's direction." }],
+        iMonitor: [{ en: "Own immediate safety and exclusion-zone compliance." }],
+        iReport: [{ en: "Observations to the Bosun." }],
+        iDoNotAuthorize: [{ en: "Independent action; approaching the source container." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Ensures fire main and water supply capability is available to support the external cooling response; directs the Second Engineer accordingly." }],
+        iMonitor: [{ en: "Fire main/water supply system status throughout the incident." }],
+        iReport: [{ en: "System status and any degradation to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Firefighting or exclusion-zone decisions themselves." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer with fire main/water supply support." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains engine room watch and machinery readiness throughout the incident." }],
+        iMonitor: [{ en: "Routine engine room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any fire response or exclusion-zone decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "lead",
+      second_engineer: "support",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the phases of the cargo fire response in the correct order." },
+        items: [
+          { id: "detection_and_alert", label: { en: "Detection and Alert" } },
+          { id: "command_transfer_and_terminal_halt", label: { en: "Command Transfer and Terminal Halt" } },
+          { id: "exclusion_zone_and_muster", label: { en: "Exclusion Zone and Muster" } },
+          { id: "external_cooling_response", label: { en: "External Cooling Response" } },
+          { id: "shore_fire_brigade_engagement", label: { en: "Shore Fire Brigade Engagement" } },
+          { id: "continuous_monitoring_under_uncertainty", label: { en: "Continuous Monitoring Under Uncertainty" } },
+          { id: "fire_out_and_reignition_watch", label: { en: "Fire Confirmed Out and Re-Ignition Watch" } },
+          { id: "resumption_decision", label: { en: "Resumption Decision" } },
+        ],
+        correctOrder: [
+          "detection_and_alert",
+          ["command_transfer_and_terminal_halt", "exclusion_zone_and_muster", "external_cooling_response"],
+          "shore_fire_brigade_engagement",
+          "continuous_monitoring_under_uncertainty",
+          "fire_out_and_reignition_watch",
+          "resumption_decision",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_container_approach",
+        targetRanks: ["ab", "bosun", "chief_officer"],
+        scenario: { en: "The AB, closest to the fire, opens the container door slightly to see what's burning. The Chief Officer coordinates with shore fire brigade rather than independently directing how to attack the fire once they've assumed command. The Chief Engineer proactively reports fire main/water supply status as conditions develop." },
+        choices: [
+          { id: "c1", label: { en: "Opening the container door slightly to see what's burning" }, isError: true, explanation: { en: "Violates the explicit boundary against approaching or opening a container of unknown contents, given the possible explosive, toxic, or water-reactive hazard inside." } },
+          { id: "c2", label: { en: "The Chief Officer coordinating with shore fire brigade rather than independently directing the firefighting once they've assumed command" }, isError: false, explanation: { en: "Correct — matches the established boundary that firefighting command passes to shore fire brigade on arrival." } },
+          { id: "c3", label: { en: "The Chief Engineer proactively reporting fire main/water supply status as conditions develop" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "resumption_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The fire appears out and the re-ignition watch period has elapsed. Review the readiness snapshot below before authorizing loading/discharge to resume." },
+        items: [
+          { id: "fire_out_joint_confirmation", label: { en: "Fire jointly confirmed out by shore fire brigade and the vessel" }, isSatisfied: true },
+          { id: "reignition_watch_elapsed", label: { en: "Re-ignition watch period elapsed without incident" }, isSatisfied: true },
+          { id: "shore_fire_brigade_signoff", label: { en: "Shore fire brigade's sign-off received" }, isSatisfied: true },
+          { id: "terminal_area_inspected", label: { en: "Terminal's own equipment and adjacent stack area inspected and cleared" }, isSatisfied: false },
+          { id: "master_resumption_decision", label: { en: "Master's final resumption decision completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "A crew member nearest to the fire feels the urge to open or approach the container to understand what's happening, especially with shore fire brigade not yet on-scene and minutes feeling critical." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The crew member maintains distance and continues exclusion-zone/cooling work; does not attempt to open or approach the source container, regardless of the urgency felt." }],
+        why: [{ en: "Tests whether the explicit no-approach boundary holds under the pressure of feeling like doing something more direct would help." }],
+        commonMistakes: [{ en: "Acting on the instinct to help faster by approaching the container." }],
+        safetyPoints: [{ en: "An unknown-contents container fire carries a hazard that outweighs the instinct to act faster." }],
+      },
+      {
+        situation: { en: "Shore fire brigade arrives and takes a different tactical approach than the Chief Officer would have chosen." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer coordinates with shore fire brigade's approach rather than pushing for the vessel's own preferred method, since firefighting command has passed to them." }],
+        why: [{ en: "Tests whether the authority handoff is honored even when the vessel's own commander disagrees with the specific tactic." }],
+        commonMistakes: [{ en: "Second-guessing or pushing back on shore fire brigade's decisions once they've assumed command of the firefighting effort." }],
+        safetyPoints: [{ en: "The authority handoff to shore fire brigade isn't conditional on the vessel agreeing with every tactical choice." }],
+      },
+      {
+        situation: { en: "Visible flame is gone and the situation looks resolved, but shore fire brigade hasn't yet given joint confirmation." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer waits for an explicit joint confirmation with shore fire brigade before declaring the fire out and moving toward re-ignition watch." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle for a case where appearance is especially misleading — smoldering dangerous-goods cargo can reignite invisibly." }],
+        commonMistakes: [{ en: "Treating the absence of visible flame as sufficient confirmation without the actual joint sign-off." }],
+        safetyPoints: [{ en: "A sealed or smoldering container fire can look resolved while still active inside." }],
+      },
+      {
+        situation: { en: "The instant the fire is confirmed, the terminal's crane operators — mid-lift elsewhere in the stack — hesitate, treating the halt like op1's usual discretionary, justified stop." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer makes clear this halt is unconditional and immediate — not a stability-relevance judgment call — and expects compliance without the back-and-forth appropriate to op1's scenario." }],
+        why: [{ en: "Tests whether the crew recognizes and communicates the difference between this operation's unconditional emergency halt and op1's discretionary one, even though both rest on the same underlying stop-authority relationship with the terminal." }],
+        commonMistakes: [{ en: "Treating this halt with the same discretionary back-and-forth communication style as op1's stability-relevance calls." }],
+        safetyPoints: [{ en: "An active fire emergency requires an immediate, unconditional halt — not a negotiated one." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_watch_discipline_during_the_emergency",
+        title: { en: "Standing Watch Below While the Emergency Unfolds Above" },
+        seatRankId: "third_engineer",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Third Engineer, on watch in the engine control room during the fire emergency. Your role has simply been to maintain machinery readiness and watch continuity while everything else happens above, out of your sight. Informal word reaches you through engine-room chatter that the fire might already be handled." },
+          options: [
+            {
+              id: "a_ease_off",
+              label: { en: "Quietly ease off full readiness, since it sounds like it's probably fine." },
+              consequence: { en: "Machinery readiness is reduced on the basis of unofficial word, without anyone above being aware of it." },
+              feedback: { en: "Unofficial word isn't a confirmation — readiness stays at the level instructed until it's actually relayed through the proper channel." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "A complication develops — a re-ignition concern is still being assessed above — and machinery readiness is now not what it should be, because it was quietly eased off without authorization." },
+                options: [
+                  { id: "a1", label: { en: "Continue as is, hoping it still resolves fine." }, consequence: { en: "Readiness stays compromised through a moment that may need it most." }, feedback: { en: "Compounds the original problem at the worst possible moment." } },
+                  { id: "a2", label: { en: "Immediately restore full readiness and disclose that it had been eased off." }, consequence: { en: "Readiness is corrected, and whoever's coordinating the response now has an accurate picture." }, feedback: { en: "Correct — restoring readiness matters, but so does disclosing that it had lapsed, so the response isn't relying on a false assumption." }, isRecommended: true },
+                  { id: "a3", label: { en: "Quietly restore full readiness without mentioning it had been eased off." }, consequence: { en: "Readiness is corrected, but no one else knows it had ever lapsed." }, feedback: { en: "Leaves whoever's coordinating the response working from an incomplete picture of what actually happened." } },
+                ],
+              },
+            },
+            {
+              id: "b_maintain_readiness",
+              label: { en: "Maintain full readiness exactly as instructed until official confirmation comes through the proper channel." },
+              consequence: { en: "Readiness stays exactly where it needs to be, regardless of informal word." },
+              feedback: { en: "Correct — the instruction stands until it's actually changed through the proper channel, not because of what's overheard." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "Official confirmation that the fire is out is relayed through the Second Engineer: readiness can now be stepped down per instruction." },
+                options: [
+                  { id: "b1", label: { en: "Comply immediately and step down readiness per the instruction." }, consequence: { en: "Readiness is adjusted correctly, on the correct basis." }, feedback: { en: "Correct — this is exactly what the proper channel is for." }, isRecommended: true },
+                  { id: "b2", label: { en: "Refuse to step down without independently double-checking through your own unofficial channel first." }, consequence: { en: "The instruction is delayed while an unnecessary independent check is carried out." }, feedback: { en: "The proper channel is what makes an instruction trustworthy — independently second-guessing it adds friction without adding safety." } },
+                  { id: "b3", label: { en: "Step down readiness but don't confirm receipt of the instruction back up the chain." }, consequence: { en: "Readiness is adjusted, but whoever gave the instruction doesn't know it was received and acted on." }, feedback: { en: "Closing the loop is part of the instruction being properly carried out, not an optional extra." } },
+                ],
+              },
+            },
+            {
+              id: "c_leave_post",
+              label: { en: "Leave your post briefly to see for yourself what's happening on deck." },
+              consequence: { en: "The watch station is unattended for a period." },
+              feedback: { en: "Watch continuity is the one thing this role owns outright during the incident — leaving it unattended isn't yours to decide, however understandable the concern." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "While away from the station, a routine machinery parameter needing attention was missed." },
+                options: [
+                  { id: "c1", label: { en: "Return and say nothing, since nothing serious actually happened." }, consequence: { en: "The lapse in watch coverage goes unreported." }, feedback: { en: "Misses the point — leaving the post was the actual problem, regardless of how it turned out this time." } },
+                  { id: "c2", label: { en: "Return immediately and report having left the post and what may have been missed while away." }, consequence: { en: "Whoever's responsible for the engine room has an accurate picture and can check what was missed." }, feedback: { en: "Correct — disclosing the lapse is what lets it actually be checked, rather than just hoped it didn't matter." }, isRecommended: true },
+                  { id: "c3", label: { en: "Explain the lapse by pointing to needing to check on the situation above." }, consequence: { en: "The explanation shifts focus to justification rather than the missed parameter itself." }, feedback: { en: "Deflects rather than owns the lapse — the reason for leaving doesn't change what needs to be reported and checked." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "The No-Approach Boundary" },
+        bestPractices: [
+          { en: "A container of unknown contents is never opened or approached directly, regardless of urgency or proximity." },
+          { en: "Response stays limited to exclusion, containment, and external cooling until the hazard is actually known." },
+        ],
+        commonErrors: [
+          { en: "Acting on the instinct to help faster by approaching or opening the source container." },
+        ],
+      },
+      {
+        theme: { en: "An Unconditional Halt, Not a Discretionary One" },
+        bestPractices: [
+          { en: "Once a fire is confirmed, the terminal's operation halts immediately and unconditionally — no stability-relevance assessment required." },
+        ],
+        commonErrors: [
+          { en: "Treating this halt with the same discretionary back-and-forth communication appropriate to a stability-relevance judgment call." },
+        ],
+      },
+      {
+        theme: { en: "Honoring the Authority Handoff to Shore Fire Brigade" },
+        bestPractices: [
+          { en: "Once shore fire brigade assumes command of the firefighting effort, the vessel coordinates with their approach rather than pushing its own." },
+        ],
+        commonErrors: [
+          { en: "Second-guessing or pushing back on shore fire brigade's tactical decisions once they've assumed command." },
+        ],
+      },
+      {
+        theme: { en: "Joint Confirmation, Not Assumed From Appearance" },
+        bestPractices: [
+          { en: "The fire is declared out only once shore fire brigade and the vessel jointly confirm it, not from the absence of visible flame alone." },
+        ],
+        commonErrors: [
+          { en: "Treating a lack of visible flame as sufficient confirmation on its own." },
+        ],
+      },
+      {
+        theme: { en: "Watch Discipline on a Peripheral Role" },
+        bestPractices: [
+          { en: "Instructed readiness levels are maintained exactly as given until changed through the proper channel — not adjusted based on informal word." },
+          { en: "The watch station is not left unattended, however understandable the concern about what's happening elsewhere." },
+        ],
+        commonErrors: [
+          { en: "Easing off instructed readiness because informal word suggests the situation is resolved." },
+          { en: "Leaving a watch post to check on an emergency happening elsewhere." },
+        ],
+      },
+      {
+        theme: { en: "Disclosing Lapses and Independent Action" },
+        bestPractices: [
+          { en: "Any lapse — readiness eased without authorization, a post left unattended — is disclosed immediately, not just quietly corrected." },
+        ],
+        commonErrors: [
+          { en: "Quietly correcting a lapse without disclosing that it happened, leaving others working from an incomplete picture." },
+        ],
+      },
+      {
+        theme: { en: "Engine Department's Containment Role" },
+        bestPractices: [
+          { en: "Fire main and water supply capability is actively ensured and reported by the engine department throughout the incident, not treated as automatically available." },
+        ],
+        commonErrors: [
+          { en: "Assuming fire main/water supply capability is available without it being actively confirmed and maintained." },
         ],
       },
     ],
