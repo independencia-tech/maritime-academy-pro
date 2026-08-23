@@ -23,13 +23,14 @@ import { getRankMeta, type RankId } from "@/core/rankRegistry";
 import type {
   SpecializedOperation,
   OperationPhase,
+  OperationPhaseOrderEntry,
   CommunicationTouchpoint,
   CommunicationParty,
   RoleOnVesselEntry,
   SpecializedExercise,
   SequenceReorderingExercise,
   ErrorIdentificationExercise,
-  PreOperationCheckExercise,
+  ReadinessChecklistExercise,
   InteractiveScenario,
   ScenarioDecisionNode,
 } from "@/core/specializedOperationRegistry";
@@ -62,6 +63,7 @@ const UI = {
     continueBtn: "Continue", finishScenario: "Finish scenario", restartScenario: "Restart scenario",
     scenarioComplete: "Scenario complete", scenarioSeat: "Seat",
     markOutstanding: "Mark the items that are still outstanding", outstanding: "Outstanding", satisfied: "Satisfied",
+    concurrentPhases: "Happens at the same time",
   },
   fr: {
     badge: "Opérations Spécialisées", illustrationPlanned: "Illustration prévue pour cette étape",
@@ -80,6 +82,7 @@ const UI = {
     continueBtn: "Continuer", finishScenario: "Terminer le scénario", restartScenario: "Recommencer le scénario",
     scenarioComplete: "Scénario terminé", scenarioSeat: "Poste",
     markOutstanding: "Coche les points qui restent à régler", outstanding: "À régler", satisfied: "Acquis",
+    concurrentPhases: "Se déroule en même temps",
   },
   es: {
     badge: "Operaciones Especializadas", illustrationPlanned: "Ilustración prevista para este paso",
@@ -98,6 +101,7 @@ const UI = {
     continueBtn: "Continuar", finishScenario: "Terminar escenario", restartScenario: "Reiniciar escenario",
     scenarioComplete: "Escenario completado", scenarioSeat: "Puesto",
     markOutstanding: "Marca los puntos que aún están pendientes", outstanding: "Pendiente", satisfied: "Cumplido",
+    concurrentPhases: "Ocurre al mismo tiempo",
   },
   pt: {
     badge: "Operações Especializadas", illustrationPlanned: "Ilustração planeada para esta etapa",
@@ -116,6 +120,7 @@ const UI = {
     continueBtn: "Continuar", finishScenario: "Terminar cenário", restartScenario: "Reiniciar cenário",
     scenarioComplete: "Cenário concluído", scenarioSeat: "Posto",
     markOutstanding: "Assinala os pontos que ainda estão pendentes", outstanding: "Pendente", satisfied: "Cumprido",
+    concurrentPhases: "Acontece ao mesmo tempo",
   },
 } as const;
 
@@ -141,6 +146,25 @@ function partyLabel(party: CommunicationParty, lang: SupportedLanguage): string 
 function rankLabel(rankId: RankId, lang: SupportedLanguage): string {
   const meta = getRankMeta(rankId);
   return (meta ? resolveLocalizedText(meta.label, lang) : undefined) ?? rankId.replace(/_/g, " ");
+}
+
+// Compares a flat, learner-produced order against a correctOrder that may
+// contain concurrent groups (see OperationPhaseOrderEntry's header note) —
+// a group slot accepts any permutation of its ids at that position.
+function matchesCorrectOrder(order: string[], correctOrder: (string | string[])[]): boolean {
+  let pos = 0;
+  for (const slot of correctOrder) {
+    if (Array.isArray(slot)) {
+      const chunk = order.slice(pos, pos + slot.length);
+      const chunkSet = new Set(chunk);
+      if (chunkSet.size !== slot.length || !slot.every((id) => chunkSet.has(id))) return false;
+      pos += slot.length;
+    } else {
+      if (order[pos] !== slot) return false;
+      pos += 1;
+    }
+  }
+  return pos === order.length;
 }
 
 // ── shared primitives ─────────────────────────────────────────────
@@ -210,12 +234,29 @@ function PhaseCard({ phase, lang }: { phase: OperationPhase; lang: SupportedLang
   );
 }
 
+// A concurrentGroup entry (array of phase ids) renders those phases
+// together in a labeled group instead of as separate numbered-feeling
+// cards — see OperationPhaseOrderEntry's header note in
+// specializedOperationRegistry.ts (architecture audit round 3, finding 1).
 function WalkthroughSection({ op, lang }: { op: SpecializedOperation; lang: SupportedLanguage }) {
+  const concurrentLabel = ui("concurrentPhases", lang);
   return (
     <>
-      {op.operationPhaseOrder.map((id) => {
-        const phase = op.operationPhases[id];
-        return phase ? <PhaseCard key={id} phase={phase} lang={lang} /> : null;
+      {op.operationPhaseOrder.map((entry: OperationPhaseOrderEntry, i) => {
+        if (Array.isArray(entry)) {
+          const phases = entry.map((id) => op.operationPhases[id]).filter((p): p is OperationPhase => Boolean(p));
+          if (!phases.length) return null;
+          return (
+            <div key={`group-${i}`} style={{ marginBottom: 10, padding: 10, borderRadius: 14, border: `1px dashed ${C.border}` }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: "rgba(240,244,255,0.55)", textTransform: "uppercase", marginBottom: 8 }}>
+                {concurrentLabel}
+              </div>
+              {phases.map((phase) => <PhaseCard key={phase.id} phase={phase} lang={lang} />)}
+            </div>
+          );
+        }
+        const phase = op.operationPhases[entry];
+        return phase ? <PhaseCard key={entry} phase={phase} lang={lang} /> : null;
       })}
     </>
   );
@@ -298,8 +339,7 @@ function SequenceReorderingCard({ ex, lang, onAttempt }: { ex: SequenceReorderin
   }
 
   function check() {
-    const isCorrect = order.every((id, i) => id === ex.correctOrder[i]);
-    setChecked(isCorrect);
+    setChecked(matchesCorrectOrder(order, ex.correctOrder));
     onAttempt();
   }
 
@@ -380,7 +420,7 @@ function ErrorIdentificationCard({ ex, lang, onAttempt }: { ex: ErrorIdentificat
 // Mathematically equivalent scoring either way, but the instruction and
 // checkbox semantics now match what the learner is meant to practice:
 // gap-detection, not completion-confirmation.
-function PreOperationCheckCard({ ex, lang, onAttempt }: { ex: PreOperationCheckExercise; lang: SupportedLanguage; onAttempt: () => void }) {
+function ReadinessChecklistCard({ ex, lang, onAttempt }: { ex: ReadinessChecklistExercise; lang: SupportedLanguage; onAttempt: () => void }) {
   const t = (x: LocalizedText | undefined) => tx(x, lang);
   const [flagged, setFlagged] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState(false);
@@ -435,7 +475,7 @@ function ExercisesSection({ op, lang, onAttempt }: { op: SpecializedOperation; l
       {op.exercises.map((ex) => {
         if (ex.type === "sequence_reordering") return <SequenceReorderingCard key={ex.id} ex={ex} lang={lang} onAttempt={() => onAttempt(ex.type)} />;
         if (ex.type === "error_identification") return <ErrorIdentificationCard key={ex.id} ex={ex} lang={lang} onAttempt={() => onAttempt(ex.type)} />;
-        if (ex.type === "pre_operation_check") return <PreOperationCheckCard key={ex.id} ex={ex} lang={lang} onAttempt={() => onAttempt(ex.type)} />;
+        if (ex.type === "readiness_checklist") return <ReadinessChecklistCard key={ex.id} ex={ex} lang={lang} onAttempt={() => onAttempt(ex.type)} />;
         return null;
       })}
     </>
@@ -465,7 +505,7 @@ function PracticalScenariosSection({ op, lang }: { op: SpecializedOperation; lan
 }
 
 // ── Interactive Scenario ──────────────────────────────────────────
-function InteractiveScenarioPlayer({ scenario, lang, onReachEnd }: { scenario: InteractiveScenario; lang: SupportedLanguage; onReachEnd: () => void }) {
+function InteractiveScenarioPlayer({ scenario, lang, onReachEnd }: { scenario: InteractiveScenario; lang: SupportedLanguage; onReachEnd: (scenarioId: string) => void }) {
   const t = (x: LocalizedText | undefined) => tx(x, lang);
   const [node, setNode] = useState<ScenarioDecisionNode>(scenario.root);
   const [chosenId, setChosenId] = useState<string | null>(null);
@@ -484,7 +524,7 @@ function InteractiveScenarioPlayer({ scenario, lang, onReachEnd }: { scenario: I
       setChosenId(null);
     } else {
       setEnded(true);
-      onReachEnd();
+      onReachEnd(scenario.id);
     }
   }
 
@@ -540,7 +580,7 @@ function InteractiveScenarioPlayer({ scenario, lang, onReachEnd }: { scenario: I
   );
 }
 
-function InteractiveScenarioSection({ op, lang, onReachEnd }: { op: SpecializedOperation; lang: SupportedLanguage; onReachEnd: () => void }) {
+function InteractiveScenarioSection({ op, lang, onReachEnd }: { op: SpecializedOperation; lang: SupportedLanguage; onReachEnd: (scenarioId: string) => void }) {
   if (!op.interactiveScenarios?.length) return null;
   return <>{op.interactiveScenarios.map((sc) => <InteractiveScenarioPlayer key={sc.id} scenario={sc} lang={lang} onReachEnd={onReachEnd} />)}</>;
 }
@@ -581,19 +621,28 @@ export default function SpecializedLessonShared({ operation, lang = "en", onComp
   const backLabel = (T[lang] || T.en).back;
   const L = (key: keyof typeof UI.en) => ui(key, lang);
   const [attemptedTypes, setAttemptedTypes] = useState<Set<SpecializedExercise["type"]>>(new Set());
-  const [scenarioReachedEnd, setScenarioReachedEnd] = useState(false);
+  // Tracks completion per interactiveScenarios entry by id, not a single
+  // boolean — a single boolean would mark completion after just one
+  // scenario even if an operation defines several (architecture audit
+  // round 3, finding 5). Untriggered by either AHTS operation today (each
+  // defines exactly one scenario), but correct for when that changes.
+  const [completedScenarioIds, setCompletedScenarioIds] = useState<Set<string>>(new Set());
   const [fired, setFired] = useState(false);
 
   const requiredTypes = useMemo(
     () => new Set((operation.exercises ?? []).map((e) => e.type)),
     [operation.exercises]
   );
+  const requiredScenarioIds = useMemo(
+    () => new Set((operation.interactiveScenarios ?? []).map((s) => s.id)),
+    [operation.interactiveScenarios]
+  );
 
-  function checkCompletion(nextAttempted: Set<SpecializedExercise["type"]>, nextScenarioDone: boolean) {
+  function checkCompletion(nextAttempted: Set<SpecializedExercise["type"]>, nextCompletedScenarios: Set<string>) {
     if (fired || !onComplete) return;
     const allTypesAttempted = [...requiredTypes].every((ty) => nextAttempted.has(ty));
-    const scenarioOk = (operation.interactiveScenarios?.length ?? 0) === 0 || nextScenarioDone;
-    if (allTypesAttempted && scenarioOk) {
+    const allScenariosDone = [...requiredScenarioIds].every((id) => nextCompletedScenarios.has(id));
+    if (allTypesAttempted && allScenariosDone) {
       setFired(true);
       onComplete();
     }
@@ -602,14 +651,17 @@ export default function SpecializedLessonShared({ operation, lang = "en", onComp
   function handleExerciseAttempt(type: SpecializedExercise["type"]) {
     setAttemptedTypes((prev) => {
       const next = new Set(prev).add(type);
-      checkCompletion(next, scenarioReachedEnd);
+      checkCompletion(next, completedScenarioIds);
       return next;
     });
   }
 
-  function handleScenarioEnd() {
-    setScenarioReachedEnd(true);
-    checkCompletion(attemptedTypes, true);
+  function handleScenarioEnd(scenarioId: string) {
+    setCompletedScenarioIds((prev) => {
+      const next = new Set(prev).add(scenarioId);
+      checkCompletion(attemptedTypes, next);
+      return next;
+    });
   }
 
   return (

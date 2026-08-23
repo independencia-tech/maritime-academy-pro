@@ -37,6 +37,15 @@ export type SpecializedOperationId = string;
 // isn't reused here.
 export type OperationPhaseId = string;
 
+// An entry in the phase order is either a single phase id, or an array of
+// ids that run concurrently — surfaced by the AHTS Fire Response
+// specification (Phases B/C/D there start simultaneously; a flat
+// OperationPhaseId[] would misrepresent that as a strict sequence, both in
+// the rendered walkthrough and in a sequence-reordering exercise's
+// correctOrder). Only one level of grouping — nothing in either AHTS
+// specification needs more.
+export type OperationPhaseOrderEntry = OperationPhaseId | OperationPhaseId[];
+
 export interface OperationPhase {
   id: OperationPhaseId;
   title: LocalizedText;
@@ -81,7 +90,7 @@ export interface RoleOnVesselEntry {
 // its richer form) are net-new interaction patterns relative to MAP's
 // existing linear QuestionBank engine (LessonShared.tsx) — SpecializedLessonShared
 // implements them directly rather than routing through QuestionBank.
-export type ExerciseType = "sequence_reordering" | "error_identification" | "pre_operation_check";
+export type ExerciseType = "sequence_reordering" | "error_identification" | "readiness_checklist";
 
 export interface SequenceReorderingItem {
   id: string;
@@ -94,8 +103,12 @@ export interface SequenceReorderingExercise {
   targetRanks: RankId[];
   prompt: LocalizedText;
   items: SequenceReorderingItem[];
-  /** Item ids in correct order. */
-  correctOrder: string[];
+  /**
+   * Item ids in correct order. An entry that is itself an array means those
+   * item ids may appear in any order relative to each other at that
+   * position — same concurrency need as OperationPhaseOrderEntry above.
+   */
+  correctOrder: (string | string[])[];
 }
 
 export interface ErrorIdentificationChoice {
@@ -113,25 +126,30 @@ export interface ErrorIdentificationExercise {
   choices: ErrorIdentificationChoice[];
 }
 
-export interface PreOperationCheckItem {
+// Renamed from PreOperationCheckItem/Exercise (architecture audit round 3,
+// finding 2): the mechanic — identify which items are still outstanding —
+// generalized to a stand-down/resumption readiness gate in the AHTS Fire
+// Response specification, not just a pre-operation gate. The name now
+// matches both uses.
+export interface ReadinessChecklistItem {
   id: string;
   label: LocalizedText;
   /** Whether this readiness item is already satisfied in the given scenario snapshot. */
   isSatisfied: boolean;
 }
 
-export interface PreOperationCheckExercise {
-  type: "pre_operation_check";
+export interface ReadinessChecklistExercise {
+  type: "readiness_checklist";
   id: string;
   targetRanks: RankId[];
   scenario: LocalizedText;
-  items: PreOperationCheckItem[];
+  items: ReadinessChecklistItem[];
 }
 
 export type SpecializedExercise =
   | SequenceReorderingExercise
   | ErrorIdentificationExercise
-  | PreOperationCheckExercise;
+  | ReadinessChecklistExercise;
 
 // ── INTERACTIVE SCENARIO ──────────────────────────────────────────
 // Nested tree, not a flat node-id graph — deliberate for now: the
@@ -186,7 +204,7 @@ export interface SpecializedOperation {
   objectives: LocalizedText[];
   context: LocalizedText;
 
-  operationPhaseOrder: OperationPhaseId[];
+  operationPhaseOrder: OperationPhaseOrderEntry[];
   operationPhases: Record<OperationPhaseId, OperationPhase>;
 
   communicationTouchpoints?: CommunicationTouchpoint[];
@@ -419,7 +437,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
       },
       {
-        type: "pre_operation_check",
+        type: "readiness_checklist",
         id: "preop_readiness_snapshot",
         targetRanks: ["chief_officer", "master"],
         scenario: { en: "The deck team reports ready and weather is within limits. Review the readiness snapshot below before authorizing the operation to begin." },
@@ -636,8 +654,9 @@ export function getSpecializedOperationsByVesselType(vesselTypeId: VesselTypeId)
 function checkOperationPhaseIntegrity(op: SpecializedOperation): string[] {
   const problems: string[] = [];
   const phaseKeys = new Set(Object.keys(op.operationPhases));
-  const orderedIds = new Set(op.operationPhaseOrder);
-  for (const id of op.operationPhaseOrder) {
+  const flatIds = op.operationPhaseOrder.flat();
+  const orderedIds = new Set(flatIds);
+  for (const id of flatIds) {
     if (!phaseKeys.has(id)) problems.push(`operationPhaseOrder references "${id}", which has no entry in operationPhases.`);
   }
   for (const key of phaseKeys) {
