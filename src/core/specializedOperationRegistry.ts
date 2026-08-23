@@ -4631,6 +4631,386 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  lng_cargo_leak_containment_failure: {
+    operationId: "lng_cargo_leak_containment_failure",
+    vesselTypeId: "lng_carrier",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "LNG Carrier — Cargo Leak During Transfer (Containment/Connection Failure)" },
+    introduction: {
+      en: "During cargo transfer — mid-loading, the Continuous Loading with Boil-Off Gas Management phase of op1 — a connection or containment issue develops, causing a cryogenic LNG leak. This is a genuinely multi-faceted hazard, not a single one: immediate cold-injury risk to anyone near the leak (frostbite, cryogenic burns), a flammable vapor cloud forming as the leaked LNG vaporizes (explosion risk if it reaches an ignition source), and an open structural question about the containment system's integrity. The operational discipline here is escalation prevention, not direct response to an already-realized hazard: immediate stop-transfer, personnel evacuation from the affected area, ignition-source elimination, and continuous vapor monitoring — the goal is to resolve the leak before it becomes a fire or an injury, not to fight one that's already happened. This is fundamentally different from AHTS Fire Response and Container Ship's cargo fire, both of which begin with a fire already burning; this operation's entire discipline is built around never reaching that point.",
+    },
+    objectives: [
+      { en: "Describe the sequence of responding to a cryogenic leak during cargo transfer, from detection through stand-down." },
+      { en: "Explain why this operation's central discipline is escalation prevention — stop transfer, isolate, eliminate ignition sources, manage vapor — rather than direct fire response, and how that differs from AHTS Fire Response and Container Ship's cargo fire." },
+      { en: "Explain the combined cold-injury and explosion-risk hazard a cryogenic leak presents, and how the response addresses both simultaneously." },
+      { en: "Identify who does what during this operation on an LNG carrier specifically." },
+      { en: "Recognize correct versus incorrect prioritization under a developing hazard whose full extent — structural, thermal, explosive — isn't immediately known." },
+    ],
+    context: {
+      en: "This operation interrupts op1's own activity directly — the leak develops mid-loading, at the same terminal, following the same routine-then-emergency pairing confirmed across every vessel so far. AHTS Fire Response and Container Ship's cargo fire are both post-ignition response operations; this one is pre-ignition prevention. Carries forward op1's 7-rank roster (Master, Chief Officer, OOW, AB, Chief Engineer, Second Engineer, Third Engineer, no Bosun) unchanged. No new CommunicationParty needed — unlike Container Ship's fire, leak isolation here is inherently the vessel's own systems work, the same expanded Second Engineer ownership established in op1; the terminal remains the only external party, and the halt is a coordinated joint action rather than a unilateral stop-work order, since LNG transfer runs through both ship and terminal cryogenic systems together. Not asserting specific gas detection thresholds, vapor dispersal modeling, or cryogenic injury treatment protocols — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "leak_detection_and_alert",
+      ["command_transfer_and_transfer_halt", "exclusion_zone_and_evacuation", "ignition_source_elimination"],
+      "vapor_monitoring_and_leak_assessment",
+      "leak_isolation",
+      "confirmed_contained_and_standdown",
+      "resumption_decision",
+    ],
+    operationPhases: {
+      leak_detection_and_alert: {
+        id: "leak_detection_and_alert",
+        title: { en: "Leak Detection and Alert" },
+        steps: [
+          { en: "Leak detected — via gas detection alarm, visual observation (vapor or frost), or a crew member noticing an anomaly." },
+          { en: "Immediate alert raised: location, what's observed." },
+        ],
+      },
+      command_transfer_and_transfer_halt: {
+        id: "command_transfer_and_transfer_halt",
+        title: { en: "Command Transfer and Transfer Halt" },
+        steps: [
+          { en: "Command transfers explicitly to the Chief Officer as on-scene commander." },
+          { en: "Cargo transfer halted immediately, coordinated with the terminal." },
+        ],
+      },
+      exclusion_zone_and_evacuation: {
+        id: "exclusion_zone_and_evacuation",
+        title: { en: "Exclusion Zone and Evacuation" },
+        steps: [
+          { en: "An exclusion zone established around the affected area." },
+          { en: "Non-essential personnel evacuated clear." },
+        ],
+      },
+      ignition_source_elimination: {
+        id: "ignition_source_elimination",
+        title: { en: "Ignition-Source Elimination" },
+        steps: [
+          { en: "All potential ignition sources in the affected area secured or shut down." },
+        ],
+      },
+      vapor_monitoring_and_leak_assessment: {
+        id: "vapor_monitoring_and_leak_assessment",
+        title: { en: "Vapor Monitoring and Leak Assessment" },
+        overview: { en: "An ongoing cycle for the duration of the response, not a one-time check." },
+        steps: [
+          { en: "Gas detection readings monitored continuously." },
+          { en: "Leak behavior assessed: contained, growing, or stable." },
+          { en: "Vapor cloud direction and dispersal monitored." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      leak_isolation: {
+        id: "leak_isolation",
+        title: { en: "Leak Isolation" },
+        steps: [
+          { en: "Once assessed, the affected connection or system is isolated (valves closed, system isolated) to stop the leak." },
+          { en: "The Second Engineer's cryogenic-systems expertise — the same expanded ownership established in op1 — directly informs this action." },
+        ],
+      },
+      confirmed_contained_and_standdown: {
+        id: "confirmed_contained_and_standdown",
+        title: { en: "Confirmed Contained and Stand-Down" },
+        steps: [
+          { en: "Leak confirmed stopped and area confirmed safe — not assumed from the absence of visible vapor." },
+          { en: "Transition to reduced-alert monitoring." },
+        ],
+      },
+      resumption_decision: {
+        id: "resumption_decision",
+        title: { en: "Resumption Decision" },
+        steps: [
+          { en: "Joint decision — vessel and terminal — on whether and when cargo transfer can resume." },
+          { en: "The affected connection or system addressed per applicable procedure before resumption." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "leak_alert", phaseId: "leak_detection_and_alert", from: "deck_team", to: "bridge", trigger: { en: "Leak detected" }, content: { en: "Immediate alert: location, what's observed." }, whyItMatters: { en: "Everything downstream depends on this reaching the bridge without delay." } },
+      { id: "command_transfer_confirmation", phaseId: "command_transfer_and_transfer_halt", from: "bridge", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Explicit assumption of emergency command by the Master; Chief Officer confirmed as on-scene commander." }, whyItMatters: { en: "An authority handoff, mirroring every prior emergency operation's command-transfer touchpoint." } },
+      { id: "transfer_halt_notification", phaseId: "command_transfer_and_transfer_halt", from: "deck", to: "terminal", trigger: { en: "Immediately on alert" }, content: { en: "Cargo transfer halted immediately." }, whyItMatters: { en: "A coordinated joint action, not a unilateral stop-work order — LNG transfer runs through both ship and terminal systems together." } },
+      { id: "engine_isolation_readiness", phaseId: "command_transfer_and_transfer_halt", from: "engine", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Second Engineer confirms readiness to assess and isolate the affected system." }, whyItMatters: { en: "Grounds Engine's role in this specific emergency, echoing every prior operation's Engine-readiness touchpoint." } },
+      { id: "onscene_status_to_bridge", phaseId: "vapor_monitoring_and_leak_assessment", from: "deck", to: "bridge", trigger: { en: "Continuous during the incident" }, content: { en: "Chief Officer reports leak status, exclusion zone status, and crew status to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior emergency." } },
+      { id: "leak_assessment_to_terminal", phaseId: "vapor_monitoring_and_leak_assessment", from: "deck", to: "terminal", trigger: { en: "Continuous during the incident" }, content: { en: "Vessel keeps the terminal informed of leak status and vapor dispersal direction." }, whyItMatters: { en: "The terminal's own personnel and equipment may be affected by vapor dispersal — a shared-risk situation, not vessel-only." } },
+      { id: "isolation_authorization", phaseId: "leak_isolation", from: "deck", to: "engine", trigger: { en: "Leak assessed" }, content: { en: "Chief Officer authorizes the Second Engineer to isolate the affected system." }, whyItMatters: { en: "Directly echoes op1's authority-boundary lesson: expanded technical ownership still isolates the system once authorized, not unilaterally." } },
+      { id: "isolation_confirmation", phaseId: "leak_isolation", from: "engine", to: "deck", trigger: { en: "Isolation complete" }, content: { en: "Second Engineer confirms the affected system is isolated and the leak has stopped." }, whyItMatters: { en: "Closes the loop on the authorized action." } },
+      { id: "contained_confirmation", phaseId: "confirmed_contained_and_standdown", from: "deck", to: "bridge", trigger: { en: "Leak confirmed contained" }, content: { en: "Chief Officer reports leak contained and area confirmed safe, transitioning to reduced-alert monitoring." }, whyItMatters: { en: "Not assumed from the absence of visible vapor — the same explicit-confirmation discipline as every prior emergency." } },
+      { id: "resumption_go_no_go", phaseId: "resumption_decision", from: "bridge", to: "terminal", trigger: { en: "Reduced-alert monitoring period elapsed without incident" }, content: { en: "Joint go/no-go decision on resuming cargo transfer." }, whyItMatters: { en: "Echoes the joint go/no-go pattern established across the catalog." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "In op1, a background, oversight-focused role. Here, assumes overall emergency command the instant the alarm is raised — the same authority-assumption shape as every prior emergency operation's Master." } },
+      { rankId: "chief_officer", identity: { en: "In op1, owned the transfer discipline outright. Here, becomes on-scene commander: directing the exclusion zone and evacuation, coordinating the joint halt with the terminal, and authorizing the Second Engineer's isolation action." } },
+      { rankId: "oow", identity: { en: "The second occurrence of Container Ship op2's compounded departure: already had no navigation to depart from in op1, and here supports the Master's emergency command (communications, exclusion-zone tracking) the same way." } },
+      { rankId: "ab", identity: { en: "In op1, worked directly under the Chief Officer with no Bosun intermediary. Here, follows into evacuation and exclusion-zone compliance the same way — the no-Bosun structure carries into the emergency unchanged." } },
+      { rankId: "chief_engineer", identity: { en: "Oversees and coordinates the engine department's overall response and readiness — but the actual isolation work is executed by the Second Engineer, not the Chief Engineer directly, since that domain is already the Second Engineer's per op1." } },
+      { rankId: "second_engineer", identity: { en: "Directly executes leak isolation once authorized by the Chief Officer — the emergency application of the exact domain ownership established in op1's lead level. The authority-boundary lesson from op1's interactive scenario applies literally here." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness during the incident — the same lighter role as op1 and as Container Ship's Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Assumes overall emergency command; directs the ship's overall response; holds the stand-down and resumption decisions jointly with the terminal." }],
+        iMonitor: [{ en: "Overall incident status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on leak response actions — delegated to the Chief Officer and Second Engineer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Assumes on-scene command; directs the exclusion zone and evacuation; coordinates the joint transfer halt with the terminal; authorizes the Second Engineer's isolation action; confirms leak contained." }],
+        iMonitor: [{ en: "Leak status and exclusion-zone integrity continuously; isolation progress as reported by the Second Engineer." }],
+        iReport: [{ en: "Status to the Master continuously; status to the terminal." }],
+        iDoNotAuthorize: [{ en: "The Master's overall stand-down/resumption authority." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Master's emergency command — communications, tracking exclusion-zone status." }],
+        iMonitor: [{ en: "Communications flow and exclusion-zone reporting." }],
+        iReport: [{ en: "Status updates as directed by the Master." }],
+        iDoNotAuthorize: [{ en: "Independent command decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Complies with evacuation/exclusion-zone direction under the Chief Officer's direct direction." }],
+        iMonitor: [{ en: "Own immediate safety and exclusion-zone compliance." }],
+        iReport: [{ en: "Observations directly to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Independent action; approaching the affected area." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Oversees and coordinates the engine department's overall response; confirms readiness to support the Second Engineer's isolation work." }],
+        iMonitor: [{ en: "Overall engine-department status throughout the incident." }],
+        iReport: [{ en: "Status to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation decisions themselves." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Directly executes leak isolation once authorized by the Chief Officer — the emergency application of the cryogenic-systems domain already owned from op1." }],
+        iMonitor: [{ en: "Isolation progress and system status continuously." }],
+        iReport: [{ en: "Status directly to the Chief Officer, alongside the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Acting before the Chief Officer's authorization — the same boundary established in op1's interactive scenario, holding under emergency conditions too." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch and readiness throughout the incident." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any leak-response decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "lead",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the phases of the LNG cargo leak response in the correct order." },
+        items: [
+          { id: "leak_detection_and_alert", label: { en: "Leak Detection and Alert" } },
+          { id: "command_transfer_and_transfer_halt", label: { en: "Command Transfer and Transfer Halt" } },
+          { id: "exclusion_zone_and_evacuation", label: { en: "Exclusion Zone and Evacuation" } },
+          { id: "ignition_source_elimination", label: { en: "Ignition-Source Elimination" } },
+          { id: "vapor_monitoring_and_leak_assessment", label: { en: "Vapor Monitoring and Leak Assessment" } },
+          { id: "leak_isolation", label: { en: "Leak Isolation" } },
+          { id: "confirmed_contained_and_standdown", label: { en: "Confirmed Contained and Stand-Down" } },
+          { id: "resumption_decision", label: { en: "Resumption Decision" } },
+        ],
+        correctOrder: [
+          "leak_detection_and_alert",
+          ["command_transfer_and_transfer_halt", "exclusion_zone_and_evacuation", "ignition_source_elimination"],
+          "vapor_monitoring_and_leak_assessment",
+          "leak_isolation",
+          "confirmed_contained_and_standdown",
+          "resumption_decision",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_unauthorized_isolation",
+        targetRanks: ["ab", "oow", "chief_officer"],
+        scenario: { en: "The Second Engineer isolates the affected system immediately upon noticing the leak, without waiting for the Chief Officer's authorization. The AB complies with the evacuation direction immediately upon being told to move clear. The Chief Officer authorizes the Second Engineer's isolation only after the leak has been assessed." },
+        choices: [
+          { id: "c1", label: { en: "The Second Engineer isolating the system immediately without waiting for authorization" }, isError: true, explanation: { en: "Violates the explicit boundary established in op1 and carried into this emergency: technical ownership doesn't include unilateral authority over an action that affects the cargo operation." } },
+          { id: "c2", label: { en: "The AB complying with the evacuation direction immediately" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "The Chief Officer authorizing isolation only after the leak has been assessed" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "resumption_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The leak appears contained and the reduced-alert monitoring period has elapsed. Review the readiness snapshot below before authorizing cargo transfer to resume." },
+        items: [
+          { id: "leak_confirmed_stopped", label: { en: "Leak confirmed stopped and area confirmed safe" }, isSatisfied: true },
+          { id: "monitoring_period_elapsed", label: { en: "Reduced-alert monitoring period elapsed without incident" }, isSatisfied: true },
+          { id: "system_inspected", label: { en: "Affected connection/system inspected and cleared" }, isSatisfied: false },
+          { id: "terminal_equipment_inspected", label: { en: "Terminal's own equipment inspected and cleared" }, isSatisfied: false },
+          { id: "master_resumption_decision", label: { en: "Master's final resumption decision completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The Second Engineer, closest to the affected system and most qualified to assess it, feels the urge to isolate it immediately rather than wait for the Chief Officer's authorization, given how time-sensitive a leak feels." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Second Engineer reports the assessment to the Chief Officer and waits for authorization before isolating, even under the urgency." }],
+        why: [{ en: "Tests whether the authority boundary from op1 holds under the added pressure of an actual emergency, not just a slow trend." }],
+        commonMistakes: [{ en: "Acting immediately given technical confidence and the sense that this situation is more urgent than the routine lesson it echoes." }],
+        safetyPoints: [{ en: "The person best positioned to act correctly isn't always the person authorized to decide when to act." }],
+      },
+      {
+        situation: { en: "Visible vapor is gone and the situation looks resolved." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms the leak contained based on gas detection readings and the Second Engineer's system confirmation, not visual appearance alone." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, adapted from 'not assumed from absence of visible flame' to gas detection readings." }],
+        commonMistakes: [{ en: "Treating the absence of visible vapor as sufficient confirmation." }],
+        safetyPoints: [{ en: "A cryogenic leak can stop being visible before it's actually stopped." }],
+      },
+      {
+        situation: { en: "Unlike Container Ship's unilateral halt over equipment the vessel doesn't operate, this transfer halt needs both ship and terminal systems to actually stop." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer coordinates explicitly with the terminal to confirm both sides have actually halted, not just announcing the vessel's own halt and assuming the terminal follows." }],
+        why: [{ en: "Tests whether the crew recognizes this halt's genuinely different shape from Container Ship's precedent, even though both involve halting a cargo operation during an emergency." }],
+        commonMistakes: [{ en: "Treating this halt with the same 'announced and done' framing as Container Ship's unilateral stop-authority moment." }],
+        safetyPoints: [{ en: "A halt depending on two parties' equipment isn't complete until both sides have confirmed." }],
+      },
+      {
+        situation: { en: "Early in the response, the actual severity of the leak isn't yet clear — could be minor, could be more serious." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer reports the genuinely uncertain picture honestly to the Master, rather than downplaying or overstating it to seem more in control." }],
+        why: [{ en: "Echoes the established honest-assessment-under-uncertainty value already proven in the catalog." }],
+        commonMistakes: [{ en: "Overstating confidence to seem in control, or downplaying the situation to avoid alarming the Master." }],
+        safetyPoints: [{ en: "An honest, appropriately uncertain report is what lets the Master make a genuinely informed decision." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_deferring_to_owned_expertise",
+        title: { en: "Senior Rank, Junior Domain" },
+        seatRankId: "chief_engineer",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Chief Engineer. The Second Engineer is executing the leak isolation — the domain that's genuinely theirs, established back when the gas-systems specialist role was folded into their position. You have deep technical experience too, and as the senior engine authority, part of you wants to step in and take over directly." },
+          options: [
+            {
+              id: "a_take_over",
+              label: { en: "Step in and take over the isolation work directly, since you're the senior authority with deep experience." },
+              consequence: { en: "Two people are now effectively working the same system without clear coordination." },
+              feedback: { en: "Seniority doesn't override domain ownership that's already been deliberately established — that ownership doesn't move just because you technically could act." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The overlap creates real confusion — the Chief Officer had specifically authorized the Second Engineer, and now it's unclear who's actually directing the isolation." },
+                options: [
+                  { id: "a1", label: { en: "Continue directing the work yourself, since you are more experienced." }, consequence: { en: "The confusion persists through the isolation itself." }, feedback: { en: "Experience doesn't resolve a coordination problem that experience itself created." } },
+                  { id: "a2", label: { en: "Step back, and clearly explain to the Chief Officer and Second Engineer why." }, consequence: { en: "Clear ownership is restored, and both understand what happened." }, feedback: { en: "Correct — stepping back matters, but so does explaining it, so the moment doesn't just quietly resolve without anyone understanding what went wrong." }, isRecommended: true },
+                  { id: "a3", label: { en: "Quietly disengage without saying anything about it." }, consequence: { en: "The confusion is no longer visible, but neither is what actually caused it." }, feedback: { en: "Leaves the Chief Officer and Second Engineer without the context to avoid the same overlap next time." } },
+                ],
+              },
+            },
+            {
+              id: "b_stay_in_oversight",
+              label: { en: "Stay in the coordination/oversight role, supporting the Second Engineer's ownership of this domain rather than stepping in." },
+              consequence: { en: "The isolation proceeds with clear, single ownership." },
+              feedback: { en: "Correct — the Second Engineer's ownership of this domain doesn't need your seniority added on top of it to be legitimate." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The Second Engineer flags something they're not fully sure about during the isolation — a moment where your experience could genuinely help." },
+                options: [
+                  { id: "b1", label: { en: "Take over the isolation yourself, given the flagged uncertainty." }, consequence: { en: "The Second Engineer's ownership of the task is set aside." }, feedback: { en: "A flagged uncertainty is a request for input, not an invitation to take over." } },
+                  { id: "b2", label: { en: "Offer your input and expertise directly, without taking over the actual execution." }, consequence: { en: "The Second Engineer gets the benefit of your experience while retaining ownership of the task." }, feedback: { en: "Correct — this is exactly what supporting the domain, rather than overriding it, looks like." }, isRecommended: true },
+                  { id: "b3", label: { en: "Stay silent, since it's still technically the Second Engineer's domain." }, consequence: { en: "Useful expertise goes unshared at the moment it was actually asked for." }, feedback: { en: "Offering input when it's genuinely sought isn't the same as taking over — withholding it isn't the correct read of the boundary either." } },
+                ],
+              },
+            },
+            {
+              id: "c_watch_silently",
+              label: { en: "Watch closely and only intervene if something seems to go wrong, without saying anything either way in the meantime." },
+              consequence: { en: "You continue observing without engaging." },
+              feedback: { en: "Silent monitoring isn't really support — if something is worth watching for, it's worth being available to discuss, not just privately tracked." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "Something does start to look concerning, but having stayed silent the whole time, the moment to flag it early has largely passed." },
+                options: [
+                  { id: "c1", label: { en: "Continue watching, still without saying anything." }, consequence: { en: "The concerning sign goes unaddressed." }, feedback: { en: "Compounds the original silence at the point it matters most." } },
+                  { id: "c2", label: { en: "Speak up now, even though it's later than it should have been." }, consequence: { en: "The concern is finally shared, later than ideal." }, feedback: { en: "Correct, though the earlier silence already cost time that speaking up sooner would have saved." }, isRecommended: true },
+                  { id: "c3", label: { en: "Take over directly now, since silent watching hasn't resolved anything." }, consequence: { en: "The same ownership boundary is crossed, just by a different route." }, feedback: { en: "How long you've been silently watching doesn't change where the ownership boundary sits." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Escalation Prevention, Not Fire Response" },
+        bestPractices: [
+          { en: "Every action during a leak is aimed at preventing ignition and injury before they happen, not responding to them after the fact." },
+        ],
+        commonErrors: [
+          { en: "Treating the leak response as a smaller version of a fire response, rather than a genuinely different, prevention-first discipline." },
+        ],
+      },
+      {
+        theme: { en: "The Authority Boundary Holds Under Real Pressure" },
+        bestPractices: [
+          { en: "The Second Engineer reports an assessment and waits for authorization before isolating the system, even under the urgency of an actual emergency." },
+        ],
+        commonErrors: [
+          { en: "Treating technical confidence and time pressure as sufficient reason to act before authorization." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Confirmation, Not Visual Appearance" },
+        bestPractices: [
+          { en: "The leak is confirmed contained from gas detection readings and system confirmation, not from the absence of visible vapor." },
+        ],
+        commonErrors: [
+          { en: "Treating the absence of visible vapor as sufficient confirmation that the leak has stopped." },
+        ],
+      },
+      {
+        theme: { en: "A Coordinated Halt, Not a Unilateral One" },
+        bestPractices: [
+          { en: "The transfer halt is confirmed explicitly with the terminal, since it depends on both ship and terminal systems actually stopping." },
+        ],
+        commonErrors: [
+          { en: "Announcing the vessel's own halt and assuming the terminal has stopped without confirming it." },
+        ],
+      },
+      {
+        theme: { en: "Honest Reporting Under Real Uncertainty" },
+        bestPractices: [
+          { en: "The leak's severity is reported honestly, including what isn't yet known, rather than rounded up or down to seem more in control." },
+        ],
+        commonErrors: [
+          { en: "Overstating confidence or downplaying the situation to manage how it's perceived rather than to inform the decision." },
+        ],
+      },
+      {
+        theme: { en: "Seniority Doesn't Override Established Domain Ownership" },
+        bestPractices: [
+          { en: "A senior rank supports a junior rank's legitimately owned technical domain rather than stepping in over it, offering expertise when it's sought rather than taking over execution." },
+        ],
+        commonErrors: [
+          { en: "Treating seniority as grounds to take over a domain that's already been deliberately established as someone else's." },
+          { en: "Silently monitoring without engaging, rather than being available to genuinely support." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
