@@ -135,10 +135,10 @@ function ui(key: keyof typeof UI.en, lang: SupportedLanguage): string {
 
 // Communication-party labels — same fixed-UI-chrome convention as UI above.
 const PARTY_LABEL: Record<SupportedLanguage, Record<CommunicationParty, string>> = {
-  en: { deck: "Deck", engine: "Engine", bridge: "Bridge", installation: "Installation", deck_team: "Deck Team" },
-  fr: { deck: "Pont", engine: "Machine", bridge: "Passerelle", installation: "Installation", deck_team: "Équipe de pont" },
-  es: { deck: "Cubierta", engine: "Máquinas", bridge: "Puente de mando", installation: "Instalación", deck_team: "Equipo de cubierta" },
-  pt: { deck: "Convés", engine: "Máquinas", bridge: "Ponte de comando", installation: "Instalação", deck_team: "Equipa de convés" },
+  en: { deck: "Deck", engine: "Engine", bridge: "Bridge", installation: "Installation", deck_team: "Deck Team", assisted_vessel: "Assisted Vessel" },
+  fr: { deck: "Pont", engine: "Machine", bridge: "Passerelle", installation: "Installation", deck_team: "Équipe de pont", assisted_vessel: "Navire assisté" },
+  es: { deck: "Cubierta", engine: "Máquinas", bridge: "Puente de mando", installation: "Instalación", deck_team: "Equipo de cubierta", assisted_vessel: "Buque asistido" },
+  pt: { deck: "Convés", engine: "Máquinas", bridge: "Ponte de comando", installation: "Instalação", deck_team: "Equipa de convés", assisted_vessel: "Navio assistido" },
 };
 
 function partyLabel(party: CommunicationParty, lang: SupportedLanguage): string {

@@ -61,8 +61,14 @@ export interface OperationPhase {
 // ── COMMUNICATION TOUCHPOINTS ─────────────────────────────────────
 // Scoped deliberately: only interactions that directly influence the
 // operation, not general bridge/engine-room communication.
+//
+// "assisted_vessel" added for the Tugboat operation (architecture audit):
+// distinct from "installation", which represents a fixed platform/rig.
+// The tug's external coordination party is a moving vessel's own
+// bridge/pilot team — not a fixed structure — so reusing "installation"
+// would have been a semantic stretch rather than a genuine fit.
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -1981,6 +1987,344 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Continuing a resumed transfer despite a redeveloping problem because stopping again feels disruptive." },
+        ],
+      },
+    ],
+  },
+
+  tugboat_ship_assist_maneuvering: {
+    operationId: "tugboat_ship_assist_maneuvering",
+    vesselTypeId: "tugboat",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Tugboat — Close-Quarters Ship-Assist Maneuvering" },
+    introduction: {
+      en: "Every operation in this catalog so far has been about a vessel managing its own systems and position. This module is different in shape: a tug's entire operational challenge during a ship-assist maneuver is reactive and relational — continuously adapting push/pull force and position in response to a large vessel under pilotage that is itself moving, turning, and adjusting speed in confined port waters. The tug doesn't control the situation; it responds to it, in real time, at close quarters, with collision as the immediate consequence of a slow or wrong response. The tug's defining technology is azimuth (Z-drive) thrusters — 360°-steerable propulsion giving disproportionate agility and pulling force. This module is deliberately built around that maneuvering precision, not around towline tension — Tugboat.tsx's stated risks (towline rupture, whiplash, girding capsize) closely mirror AHTS's own signature risk profile, and centering this operation there would earn no genuinely new ground.",
+    },
+    objectives: [
+      { en: "Describe the sequence of a tug's push/pull assist maneuver alongside a large vessel in a confined port area, from approach through the assist itself to release and departure." },
+      { en: "Explain why this operation's central challenge is reactive and relational — continuously adapting to the assisted ship's own movements — rather than managing the tug's own internal systems." },
+      { en: "Explain the role azimuth thrusters play in enabling precise, rapidly-adjustable push/pull force." },
+      { en: "Identify who does what during this operation on a tug specifically, including how the smaller, more hands-on Master role differs from AHTS/PSV's larger command structures." },
+      { en: "Recognize correct versus incorrect coordination when the assisted ship's movements change unexpectedly mid-maneuver." },
+    ],
+    context: {
+      en: "Third vessel type in the catalog, first outside offshore support (AHTS/PSV). Deliberately not centered on towline tension or girding risk, despite that being Tugboat.tsx's most prominent stated hazard — that territory is already AHTS's. Crew roster reflects Tugboat.tsx's own stated positions (Master, Chief Officer, Able Seaman, Chief Engineer) rather than the 8-rank template used in every prior operation — no OOW, Bosun, OS, or Second Engineer, because this vessel type's own established content doesn't place them here. Line-free model: pure position/thrust coordination, no connecting line, to keep the operation's angle clean of AHTS's tension-based territory. Not asserting specific tug-handling technique vocabulary beyond generic positioning and thrust application.",
+    },
+
+    operationPhaseOrder: [
+      "pre_assist_briefing",
+      "approach_initial_positioning",
+      "active_push_pull_assistance",
+      "adapting_unexpected_movement",
+      "release_departure",
+    ],
+    operationPhases: {
+      pre_assist_briefing: {
+        id: "pre_assist_briefing",
+        title: { en: "Pre-Assist Briefing & Positioning Plan" },
+        steps: [
+          { en: "Toolbox talk covering the specific assist plan: which vessel, which maneuver (berthing or unberthing), expected push/pull positions." },
+          { en: "Communication with the assisted ship's pilot to confirm the plan." },
+          { en: "Review of port/waterway constraints — confined space, other traffic." },
+          { en: "Chief Engineer confirms thruster readiness." },
+        ],
+      },
+      approach_initial_positioning: {
+        id: "approach_initial_positioning",
+        title: { en: "Approach & Initial Positioning" },
+        steps: [
+          { en: "Tug maneuvers to its assigned position relative to the assisted ship under azimuth thruster control." },
+          { en: "Position is confirmed with the pilot before any push/pull force is applied." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      active_push_pull_assistance: {
+        id: "active_push_pull_assistance",
+        title: { en: "Active Push/Pull Assistance" },
+        overview: { en: "Not a one-time step — an ongoing control loop for the duration of the assist: read the assisted ship's movement, adjust position and thrust, repeat." },
+        steps: [
+          { en: "Tug applies push or pull force as directed by the pilot." },
+          { en: "Position and thrust are continuously adjusted as the assisted ship moves." },
+          { en: "Constant real-time communication with the pilot (generic commands — push, ease, stop)." },
+          { en: "Continuous collision-avoidance vigilance given close proximity." },
+        ],
+        bestPractices: [
+          { en: "Thrust is adjusted incrementally in response to the assisted ship's actual movement, not applied and left static — the tug is always reading and reacting, never just holding a fixed setting." },
+        ],
+      },
+      adapting_unexpected_movement: {
+        id: "adapting_unexpected_movement",
+        title: { en: "Adapting to Unexpected Movement" },
+        steps: [
+          { en: "If the assisted ship's movement changes unexpectedly, the tug rapidly repositions and adjusts force to match." },
+          { en: "If the situation becomes genuinely unsafe, the tug disengages and backs off rather than continuing to try to compensate." },
+        ],
+        bestPractices: [
+          { en: "Disengaging is treated as a legitimate, non-failure outcome — not a last resort to be avoided at the cost of pushing a losing position." },
+        ],
+      },
+      release_departure: {
+        id: "release_departure",
+        title: { en: "Release & Departure" },
+        steps: [
+          { en: "Pilot releases the tug from the assist once the maneuver is complete." },
+          { en: "Tug backs off to a safe distance." },
+          { en: "Assist documented — vessel, duration, any incidents." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "assist_plan_confirmation", phaseId: "pre_assist_briefing", from: "bridge", to: "assisted_vessel", trigger: { en: "Before the assist starts" }, content: { en: "Confirmation of the assist plan — which maneuver, expected positions." }, whyItMatters: { en: "Same confirm-the-current-plan pattern as every prior operation's external channel." } },
+      { id: "engine_ready_confirmation", phaseId: "pre_assist_briefing", from: "engine", to: "bridge", trigger: { en: "Before the assist starts" }, content: { en: "Confirmation thruster systems are available and nominal." }, whyItMatters: { en: "The single readiness gate this operation needs — no dual-system complexity like PSV's DP-plus-pumps." } },
+      { id: "position_confirmation", phaseId: "approach_initial_positioning", from: "bridge", to: "assisted_vessel", trigger: { en: "Position established" }, content: { en: "Confirmation the tug is in position and ready to apply force." }, whyItMatters: { en: "Force is never applied before this is confirmed both internally and externally." } },
+      { id: "ongoing_push_pull_coordination", phaseId: "active_push_pull_assistance", from: "assisted_vessel", to: "bridge", trigger: { en: "Continuous for the duration of the assist" }, content: { en: "Real-time push/ease/stop commands from the pilot; continuous position/status feedback from the tug." }, whyItMatters: { en: "Not a discrete, phase-bound touchpoint but the operation's primary channel throughout — the communication-layer expression of the reactive control loop." } },
+      { id: "disengage_notification", phaseId: "adapting_unexpected_movement", from: "bridge", to: "assisted_vessel", trigger: { en: "Tug initiates disengagement" }, content: { en: "Explicit communication that the tug is backing off due to an unsafe developing situation." }, whyItMatters: { en: "The pilot needs to know immediately that assist force is being withdrawn." } },
+      { id: "stop_flag_call", from: "deck_team", to: "deck_team", trigger: { en: "Any unsafe observation" }, content: { en: "Universal stop/flag call." }, whyItMatters: { en: "Same carried-forward principle as every prior operation — not rank-gated." } },
+      { id: "release_confirmation", phaseId: "release_departure", from: "assisted_vessel", to: "bridge", trigger: { en: "Maneuver complete" }, content: { en: "Pilot releases the tug from the assist." }, whyItMatters: { en: "The tug doesn't withdraw force unilaterally — release is confirmed, not assumed." } },
+      { id: "departure_confirmation", phaseId: "release_departure", from: "bridge", to: "assisted_vessel", trigger: { en: "Clear of the assisted ship" }, content: { en: "Confirmation of departure." }, whyItMatters: { en: "Closes the loop." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "The most distinctive command identity in the catalog. On every prior operation, the Master held authority and oversight while others executed. Here, given the tug's small crew and the precision-maneuvering nature of the work, the Master personally conns the tug during the push/pull assist — operating the azimuth thruster controls directly, not delegating execution while retaining only decision authority. Command authority and hands-on execution are the same person, at the same moment." } },
+      { rankId: "chief_officer", identity: { en: "Direct support to the Master throughout the maneuver: handling pilot communications, monitoring proximity and collision risk, maintaining situational awareness the Master — occupied with the controls — can't fully hold alone. Ready to take the conn if required. A tighter, more continuously-engaged support role than any prior operation's second-in-command, a direct consequence of the crew's small size." } },
+      { rankId: "ab", identity: { en: "A genuinely lighter role than any prior operation's AB. With no line work in this line-free model and no cargo handling, the AB's role here is visual lookout and general deck readiness — present and ready if a deck-level task arises, but this operation's core challenge doesn't route through the AB the way AHTS's and PSV's did." } },
+      { rankId: "chief_engineer", identity: { en: "Owns thruster system readiness and continuous monitoring throughout the assist — the same reports-and-sustains identity as AHTS's and PSV's Chief Engineers in their own routine operations. Given some tugs run with a single engineering officer, this role also carries more weight per-person than on a larger vessel, though the shape of the responsibility doesn't change." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Personally conns the tug during the push/pull assist, operating the azimuth thrusters directly; holds overall command and the disengage decision." }],
+        iMonitor: [{ en: "The assisted ship's movement and position continuously; proximity and collision risk." }],
+        iReport: [{ en: "To company per standing orders; communicates disengagement to the pilot when initiated." }],
+        iDoNotAuthorize: [{ en: "Departing from the pilot's directed maneuver without communicating the change — even hands-on, coordination isn't unilateral." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Handles pilot communications; monitors proximity and collision risk; ready to take the conn if required." }],
+        iMonitor: [{ en: "Situational awareness the Master, occupied with the controls, can't fully hold alone." }],
+        iReport: [{ en: "Status to the Master; relays pilot commands." }],
+        iDoNotAuthorize: [{ en: "Operating the thrusters unless actually taking the conn; the disengage decision, unless the conn has been formally handed over." }],
+      },
+      ab: {
+        iExecute: [{ en: "Visual lookout; general deck readiness for any task that arises." }],
+        iMonitor: [{ en: "Deck-level conditions." }],
+        iReport: [{ en: "Any observation to the bridge." }],
+        iDoNotAuthorize: [{ en: "Maneuvering decisions; independent action beyond the assigned lookout/readiness role." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Prepares and maintains thruster system readiness throughout the assist." }],
+        iMonitor: [{ en: "Continuous thruster performance." }],
+        iReport: [{ en: "Pre-assist readiness confirmation; any anomaly to the bridge immediately." }],
+        iDoNotAuthorize: [{ en: "Maneuvering decisions; direction of the bridge team." }],
+      },
+    },
+    // No supervisionRequirements entry: this vessel's own established crew
+    // (Tugboat.tsx) has no junior/cadet rating on this roster at all — not
+    // an oversight, a genuine difference from every AHTS/PSV operation.
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "support",
+      ab: "observe",
+      chief_engineer: "support",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order_tugboat",
+        targetRanks: ["deck_cadet", "ab"],
+        prompt: { en: "Put the five phases of a tugboat ship-assist maneuver in the correct order." },
+        items: [
+          { id: "pre_assist_briefing", label: { en: "Pre-Assist Briefing & Positioning Plan" } },
+          { id: "approach_initial_positioning", label: { en: "Approach & Initial Positioning" } },
+          { id: "active_push_pull_assistance", label: { en: "Active Push/Pull Assistance" } },
+          { id: "adapting_unexpected_movement", label: { en: "Adapting to Unexpected Movement" } },
+          { id: "release_departure", label: { en: "Release & Departure" } },
+        ],
+        correctOrder: ["pre_assist_briefing", "approach_initial_positioning", "active_push_pull_assistance", "adapting_unexpected_movement", "release_departure"],
+      },
+      {
+        type: "error_identification",
+        id: "err_informal_conn_transfer",
+        targetRanks: ["chief_officer", "master", "ab"],
+        scenario: { en: "The Chief Officer takes independent maneuvering action without the conn being formally handed over by the Master. The AB reports an observed hazard to the bridge. The Master communicates a course deviation to the pilot before acting on it." },
+        choices: [
+          { id: "c1", label: { en: "Chief Officer taking independent maneuvering action without a formal conn handover" }, isError: true, explanation: { en: "Operating the thrusters requires actually taking the conn, not just being ready to — an informal takeover isn't authorized regardless of intent." } },
+          { id: "c2", label: { en: "AB reporting an observed hazard to the bridge" }, isError: false, explanation: { en: "Correct — matches the assigned lookout/readiness role." } },
+          { id: "c3", label: { en: "Master communicating a course deviation to the pilot before acting on it" }, isError: false, explanation: { en: "Correct — even hands-on, coordination isn't unilateral." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "readiness_preassist_tugboat",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The tug is standing by and the assist is scheduled to begin shortly. Review the readiness snapshot below before starting." },
+        items: [
+          { id: "assist_plan_confirmed", label: { en: "Assist plan confirmed with the pilot" }, isSatisfied: true },
+          { id: "waterway_reviewed", label: { en: "Waterway and traffic conditions reviewed" }, isSatisfied: true },
+          { id: "position_plan_confirmed", label: { en: "Initial position plan confirmed" }, isSatisfied: true },
+          { id: "engine_ready", label: { en: "Chief Engineer thruster readiness confirmed" }, isSatisfied: false },
+          { id: "lookout_briefed", label: { en: "AB briefed on lookout duties for this specific assist" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "During a busy moment, the Chief Officer notices the Master seems to be struggling to react fast enough to the assisted ship's movement and considers just taking over the thruster controls directly to help." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer explicitly requests and receives a formal handover of the conn from the Master before touching the controls — never takes over informally, even with good intentions." }],
+        why: [{ en: "Tests whether the conn-transfer boundary holds under exactly the pressure that makes it most tempting to skip." }],
+        commonMistakes: [{ en: "Reasoning that grabbing the controls to help is obviously fine given the circumstances, without a formal handover." }],
+        safetyPoints: [{ en: "Two people making uncoordinated inputs to the same thrusters at the same critical moment is more dangerous than one person reacting a beat slower." }],
+      },
+      {
+        situation: { en: "Mid-assist, conditions deteriorate to the point where disengaging is the correct call, but the assist is nearly complete." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master disengages when the situation is genuinely unsafe, regardless of how close the assist is to completion." }],
+        why: [{ en: "Tests whether disengaging-is-not-a-failure holds at the moment it's hardest to accept." }],
+        commonMistakes: [{ en: "Pushing to complete the assist because backing off so close to the end feels like an avoidable failure." }],
+        safetyPoints: [{ en: "The assist can always be re-attempted; a collision cannot be undone." }],
+      },
+      {
+        situation: { en: "The assist is proceeding smoothly. The AB, on lookout, notices something developing that isn't yet clearly dangerous." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The AB reports the observation to the bridge immediately, even though it's not yet clearly an emergency and the maneuver is going smoothly." }],
+        why: [{ en: "Tests whether the AB's genuinely lighter lookout role still gets treated as real and load-bearing, since it's this operation's only deck-level coverage while the bridge team is fully occupied with the maneuver." }],
+        commonMistakes: [{ en: "Hesitating to report something uncertain, not wanting to interrupt a maneuver that's going well." }],
+        safetyPoints: [{ en: "The bridge team's attention is entirely consumed by the maneuver — the AB's lookout is genuinely the only coverage for anything outside that focus." }],
+      },
+      {
+        situation: { en: "The assisted ship makes a slightly larger-than-expected turn; the instinct is to apply a strong, large correction rather than a proportionate one." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "Adjustments are made incrementally and proportionately to the actual movement observed, not with large, reactive over-corrections." }],
+        why: [{ en: "Tests the failure mode in the opposite direction from under-reacting." }],
+        commonMistakes: [{ en: "Treating any unexpected movement as cause for a dramatic correction, which can itself create a new close-quarters hazard." }],
+        safetyPoints: [{ en: "An overcorrection in tight quarters can put the tug somewhere more dangerous than the original deviation would have." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_uncertain_observation",
+        title: { en: "An Uncertain Observation During a Smooth Assist" },
+        seatRankId: "ab",
+        root: {
+          id: "level_1",
+          situation: {
+            en: "You are the AB, on lookout during a smooth-going assist. You notice something developing — not clearly dangerous yet, could be nothing. The bridge team is fully occupied with the maneuver itself.",
+          },
+          options: [
+            {
+              id: "a_silent",
+              label: { en: "Say nothing for now — it's probably nothing, and the bridge team is clearly busy." },
+              consequence: { en: "Nobody else is watching that area. What you noticed continues developing without anyone aware of it." },
+              feedback: { en: "Silence isn't a neutral choice here — your lookout is genuinely the only coverage for anything outside the maneuver itself, precisely because the bridge team's attention is fully consumed." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "What you noticed has become clearly more concerning. You're the only one who's known about it from the start." },
+                options: [
+                  { id: "a1", label: { en: "Report now, but downplay how long you've known." }, consequence: { en: "The bridge gets an incomplete picture of how long this has been developing." }, feedback: { en: "Understates something the bridge team actually needs to know." } },
+                  { id: "a2", label: { en: "Report now, fully honest that you noticed it earlier and didn't say anything." }, consequence: { en: "The bridge team gets an accurate picture of how long this has been developing." }, feedback: { en: "Correct — full, honest disclosure, including the delay, is what's actually needed to assess the situation." }, isRecommended: true },
+                  { id: "a3", label: { en: "Stay quiet a bit longer, unsure how the delay will be received." }, consequence: { en: "The situation continues developing with still nobody else aware." }, feedback: { en: "Compounds the original delay further." } },
+                ],
+              },
+            },
+            {
+              id: "b_report",
+              label: { en: "Report it immediately to the bridge, even though it's not clearly dangerous yet." },
+              consequence: { en: "The bridge team is informed early, while the situation is still manageable." },
+              feedback: { en: "Correct — a junior rank's job with uncertain information is to escalate it, not privately decide it isn't worth mentioning." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The bridge team, occupied with the maneuver, simply says 'keep an eye on it' without acting further." },
+                options: [
+                  { id: "b1", label: { en: "Consider the job done since it was reported and acknowledged." }, consequence: { en: "Active monitoring stops even though nothing has actually changed." }, feedback: { en: "Treats a single report as satisfying an ongoing responsibility." } },
+                  { id: "b2", label: { en: "Continue actively monitoring and report again if anything changes." }, consequence: { en: "Any further development gets caught and reported promptly." }, feedback: { en: "Correct — reporting once doesn't end the lookout responsibility, it's ongoing for the whole assist." }, isRecommended: true },
+                  { id: "b3", label: { en: "Stop watching that area now that it's the bridge's responsibility." }, consequence: { en: "The only coverage for that area is withdrawn." }, feedback: { en: "The bridge's acknowledgment doesn't replace the lookout — it was never redundant coverage." } },
+                ],
+              },
+            },
+            {
+              id: "c_self_monitor",
+              label: { en: "Keep watching closely yourself for a bit longer, and only report if it clearly gets worse." },
+              consequence: { en: "You continue monitoring alone. The bridge team has no idea anything is being watched." },
+              feedback: { en: "Not the same situation as hold-and-verify seen elsewhere in this content — those involved someone with full information deciding how to act. Here, the decision is whether to report at all, and uncertain information from a lookout should be escalated, not privately managed." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The bridge team, fully occupied, never had any independent chance to notice what you're still quietly watching. It's now clearly a real hazard." },
+                options: [
+                  { id: "c1", label: { en: "Report now, immediately." }, consequence: { en: "The bridge is finally informed, later than it should have been." }, feedback: { en: "Correct, though late — this is the direct cost of the earlier delay: the bridge had zero independent chance to catch this." }, isRecommended: true },
+                  { id: "c2", label: { en: "Keep monitoring a bit more to be fully sure first." }, consequence: { en: "The delay continues even as the hazard has already become clear." }, feedback: { en: "There's nothing left to verify — the hazard is already confirmed." } },
+                  { id: "c3", label: { en: "Report now, but treat it as no big deal since it hasn't become dangerous yet." }, consequence: { en: "The bridge receives a misleadingly casual account of a real hazard." }, feedback: { en: "Understates a situation that's already been confirmed as a real hazard." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Reactive & Relational Maneuvering" },
+        bestPractices: [
+          { en: "Thrust is adjusted incrementally in response to the assisted ship's actual movement, never applied and left static." },
+          { en: "Adjustments are proportionate to the actual movement observed — over-correction is its own hazard." },
+        ],
+        commonErrors: [
+          { en: "Treating any unexpected movement as cause for a dramatic correction, which can create a new close-quarters hazard." },
+        ],
+      },
+      {
+        theme: { en: "Conn Authority & Transfer" },
+        bestPractices: [
+          { en: "The conn is formally handed over before anyone but the current holder touches the thrusters." },
+        ],
+        commonErrors: [
+          { en: "Grabbing the controls to help during a busy moment without a formal handover." },
+        ],
+      },
+      {
+        theme: { en: "Disengagement as a Legitimate Outcome" },
+        bestPractices: [
+          { en: "Disengaging is a legitimate response to a genuinely unsafe situation, regardless of how close the assist is to completion." },
+        ],
+        commonErrors: [
+          { en: "Pushing to complete a nearly-finished assist because backing off feels like an avoidable failure." },
+        ],
+      },
+      {
+        theme: { en: "The Lookout Role" },
+        bestPractices: [
+          { en: "The AB's lookout is treated as genuine, load-bearing coverage — the only observation outside the maneuver itself." },
+          { en: "Uncertain observations are escalated, not privately managed by the person who noticed them." },
+        ],
+        commonErrors: [
+          { en: "Hesitating to report something uncertain, not wanting to interrupt a maneuver that's going well." },
+          { en: "Treating a single report as satisfying an ongoing responsibility." },
+        ],
+      },
+      {
+        theme: { en: "Reporting Uncertain Information" },
+        bestPractices: [
+          { en: "A junior rank's role with ambiguous information is to escalate it — the judgment of whether it matters belongs to whoever receives the report." },
+          { en: "When a report was delayed, the delay itself is disclosed honestly, not downplayed." },
+        ],
+        commonErrors: [
+          { en: "Deciding uncertain information probably isn't worth mentioning before anyone senior has had the chance to judge that." },
+        ],
+      },
+      {
+        theme: { en: "Safety-Critical Moments" },
+        bestPractices: [
+          { en: "Coordination stays two-way even when one person is hands-on executing — a deviation is communicated before acting on it, not after." },
+        ],
+        commonErrors: [
+          { en: "Treating the Master's hands-on control of the maneuver as license to act unilaterally without communicating changes." },
         ],
       },
     ],
