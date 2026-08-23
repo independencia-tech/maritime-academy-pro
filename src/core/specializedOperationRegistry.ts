@@ -74,8 +74,16 @@ export interface OperationPhase {
 // into an existing touchpoint the way a minor contingency branch would be
 // — the transferee's own hold authority is this operation's single most
 // repeated, load-bearing thread, not a one-off mention.
+//
+// "terminal" added for the Container Ship stowage plan verification
+// operation: a land-based shore crane operator/planning office, distinct
+// from "installation" (a fixed offshore platform/rig) and from every other
+// existing party. Recurs across all nine communication touchpoints and is
+// the counterparty in this operation's signature stop-authority moment
+// (the vessel halting equipment it doesn't itself operate) — genuinely
+// load-bearing, not a one-off.
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -3465,6 +3473,388 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Letting an imminent decision become a reason to stay quiet rather than a reason to speak up." },
+        ],
+      },
+    ],
+  },
+
+  container_stowage_plan_verification: {
+    operationId: "container_stowage_plan_verification",
+    vesselTypeId: "container_ship",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Container Ship — Stowage Plan Verification During Loading/Discharge" },
+    introduction: {
+      en: "This operation centers on verifying a stowage plan against what's actually being loaded during cargo operations at a terminal — catching discrepancies between the plan and reality (wrong container, wrong position, wrong weight) before they compound into a stability problem. This is a genuinely different operational shape from everything built so far: not a physical hazard to manage or a system to operate, but a verification discipline to maintain under commercial schedule pressure. The vessel's own crew doesn't operate the lifting equipment at all — that belongs entirely to the terminal's shore crane operators — making this the catalog's first operation where the vessel's role is purely supervisory, and the first coordinating with a land-based party rather than a platform or another vessel. Deliberately not re-teaching stability theory, already covered elsewhere in MAP — this is about the operational discipline of catching a plan discrepancy before it becomes a stability problem, not the underlying physics.",
+    },
+    objectives: [
+      { en: "Describe the sequence of verifying a stowage plan against actual cargo operations during loading and discharge at a terminal." },
+      { en: "Explain why this operation's central tension is a plan-versus-reality verification discipline, not a physical hazard response — and how that differs from every prior operation in the catalog." },
+      { en: "Explain the vessel's purely supervisory relationship to the terminal's own lifting equipment and crew." },
+      { en: "Identify who does what during this operation on a container ship specifically." },
+      { en: "Recognize correct versus incorrect prioritization when schedule pressure competes with verification thoroughness." },
+    ],
+    context: {
+      en: "Deliberately not re-teaching stability theory — this operation applies it, the same theory-vs-application split that made AHTS Fire Response legitimate against the generic Safety firefighting lessons. The terminal's shore crane operators are neither an offshore installation, a moving assisted vessel, nor an individual transferee — a land-based cargo operator with no prior analog in the catalog, represented by a new \"terminal\" CommunicationParty. Every prior operation's time pressure came from a developing hazard or emergency; here the pressure is commercial and routine, competing directly with verification thoroughness in an otherwise normal operation. Roster follows ContainerShip.tsx's own stated positions: Master, Chief Officer, OOW, Bosun, AB, Chief Engineer, Second/Third Engineer — no OS mentioned in the vessel's own content, so none assumed here. Not asserting specific stability calculation methods or numeric thresholds — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "pre_loading_plan_review",
+      "loading_discharge_sequence_begins",
+      "continuous_verification",
+      "discrepancy_response_under_schedule_pressure",
+      "stability_confirmation",
+      "departure_clearance",
+    ],
+    operationPhases: {
+      pre_loading_plan_review: {
+        id: "pre_loading_plan_review",
+        title: { en: "Pre-Loading Plan Review" },
+        steps: [
+          { en: "The Chief Officer reviews the stowage plan received from the terminal/planning office before loading begins." },
+          { en: "Confirms the plan aligns with the vessel's known stability and structural constraints." },
+          { en: "Briefs the deck team on the plan and what to watch for during loading." },
+        ],
+      },
+      loading_discharge_sequence_begins: {
+        id: "loading_discharge_sequence_begins",
+        title: { en: "Loading/Discharge Sequence Begins" },
+        steps: [
+          { en: "Terminal crane operators begin lifting containers per the plan's sequence." },
+          { en: "Vessel crew is positioned to observe and verify each lift against the plan." },
+        ],
+        bestPractices: [
+          { en: "Verification begins with the first lift, not after some initial trust-building period — the plan is checked from container one." },
+        ],
+      },
+      continuous_verification: {
+        id: "continuous_verification",
+        title: { en: "Continuous Verification" },
+        overview: { en: "An ongoing cycle for the duration of loading/discharge, not a one-time check: each container's position, weight, and sequence is verified against the plan as it's loaded." },
+        steps: [
+          { en: "Each lift is checked against the plan as it happens." },
+          { en: "Discrepancies — wrong container in the wrong slot, unexpected weight, out-of-sequence loading — are caught and flagged immediately, not batched for later review." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      discrepancy_response_under_schedule_pressure: {
+        id: "discrepancy_response_under_schedule_pressure",
+        title: { en: "Discrepancy Response Under Schedule Pressure" },
+        steps: [
+          { en: "When a discrepancy is caught, the Chief Officer assesses whether it's a minor correction (re-sequence, note and continue) or something requiring the operation to pause." },
+          { en: "Communication with the terminal to correct or clarify." },
+        ],
+        bestPractices: [
+          { en: "The assessment is made on the discrepancy's actual stability relevance, not on how much it would cost the schedule to address properly." },
+        ],
+      },
+      stability_confirmation: {
+        id: "stability_confirmation",
+        title: { en: "Stability Confirmation" },
+        steps: [
+          { en: "Once loading/discharge is complete, final stability is confirmed against the plan — verifying what was actually loaded matches what was planned, not assuming it does because no major discrepancy was flagged." },
+        ],
+      },
+      departure_clearance: {
+        id: "departure_clearance",
+        title: { en: "Departure Clearance" },
+        steps: [
+          { en: "Final checks completed." },
+          { en: "Departure preparations; schedule confirmed." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "terminal_provides_plan", phaseId: "pre_loading_plan_review", from: "terminal", to: "deck", trigger: { en: "Before loading begins" }, content: { en: "The stowage plan itself." }, whyItMatters: { en: "The plan originates externally — the vessel doesn't design it, it verifies it." } },
+      { id: "plan_confirmed_to_terminal", phaseId: "pre_loading_plan_review", from: "deck", to: "terminal", trigger: { en: "Plan reviewed" }, content: { en: "Confirmation the plan is acceptable and operations may begin." }, whyItMatters: { en: "Same confirm-before-starting pattern as every prior pre-operation channel." } },
+      { id: "chief_engineer_ballast_report", phaseId: "pre_loading_plan_review", from: "engine", to: "deck", trigger: { en: "Before loading begins" }, content: { en: "Current ballast and fuel state." }, whyItMatters: { en: "A real input to the stability picture alongside cargo weight — grounds the Chief Engineer's involvement in this operation genuinely, not arbitrarily." } },
+      { id: "lift_by_lift_coordination", phaseId: "continuous_verification", from: "terminal", to: "deck_team", trigger: { en: "Continuous through loading/discharge" }, content: { en: "Lift-by-lift coordination and verification." }, whyItMatters: { en: "The operation's primary channel — real-time, not checkpoint-based." } },
+      { id: "discrepancy_flagged_to_terminal", phaseId: "continuous_verification", from: "deck", to: "terminal", trigger: { en: "Discrepancy caught" }, content: { en: "Immediate flag of the mismatch." }, whyItMatters: { en: "Not batched for later review — flagged the instant it's caught." } },
+      { id: "correction_clarification_exchange", phaseId: "discrepancy_response_under_schedule_pressure", from: "terminal", to: "deck", trigger: { en: "Discrepancy flagged" }, content: { en: "Correction or clarification exchanged." }, whyItMatters: { en: "Resolving the specific mismatch before proceeding." } },
+      { id: "halt_terminal_operation", phaseId: "discrepancy_response_under_schedule_pressure", from: "deck", to: "terminal", trigger: { en: "Discrepancy assessed as stability-relevant" }, content: { en: "The vessel halts the terminal's loading operation." }, whyItMatters: { en: "Architecturally distinctive — the vessel has final authority over what affects its own stability, even though it doesn't operate the equipment doing the lifting. A different shape of stop-work than any prior operation: halting someone else's equipment, not one's own." } },
+      { id: "stability_confirmed_to_master", phaseId: "stability_confirmation", from: "deck", to: "bridge", trigger: { en: "Loading/discharge complete" }, content: { en: "Final stability confirmed against the plan." }, whyItMatters: { en: "Explicit confirmation, not assumed from the absence of major flagged discrepancies." } },
+      { id: "departure_clearance_to_terminal", phaseId: "departure_clearance", from: "bridge", to: "terminal", trigger: { en: "Ready to depart" }, content: { en: "Departure clearance." }, whyItMatters: { en: "Standard closing touchpoint." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Holds overall command and backs the Chief Officer's authority to halt the terminal's operation with the full weight of command, but delegates the actual verification work entirely to the Chief Officer, who owns it per the vessel's own stated content. A more background, oversight-focused role than most first operations' Masters — appropriate to a routine, non-emergency operation." } },
+      { rankId: "chief_officer", identity: { en: "The signature role for this operation, explicitly named in the vessel's own content as responsible for the loading plan and stability. Owns the entire verification discipline: pre-loading plan review, continuous verification oversight, discrepancy assessment, and the authority to halt the terminal's loading operation. This vessel's version of the pattern already established across every first operation in the catalog — but here, \"owning the signature activity\" means owning a verification and judgment discipline, not a physical coordination task." } },
+      { rankId: "oow", identity: { en: "A genuine departure from every prior operation. Every previous OOW identity centered on navigation or DP. Here, alongside at a terminal with no navigation happening, that role has nothing to attach to — the OOW instead becomes part of the deck team directly supporting the Chief Officer's verification work, lift by lift. Not a diminished OOW, but a genuinely different application of the rank to a context where its usual defining task simply doesn't apply." } },
+      { rankId: "bosun", identity: { en: "Leads the physical deck team positioned to observe and verify lifts. The hands-on execution lead in the same shape as every prior operation's Bosun, except here \"execution\" means verification and observation, not physical handling — the terminal's crane does the actual lifting." } },
+      { rankId: "ab", identity: { en: "Assists with verification: physically checking container markings and positions against the plan, executing under the Bosun's direction — the same \"perform\" shape as every prior AB, redirected to a checking task rather than a handling one." } },
+      { rankId: "chief_engineer", identity: { en: "A narrower role than in most operations: reports current ballast and fuel state as a real input to the overall stability picture, alongside cargo weight. Not \"owns crane or DP readiness\" the way other operations' Chief Engineers do — specifically the ballast/fuel component of stability." } },
+      { rankId: "second_engineer", identity: { en: "Assists the Chief Engineer with ballast/fuel management — the same \"perform\" shape as every prior Second Engineer, in a lighter role given this operation's Deck-centric focus." } },
+      { rankId: "third_engineer", identity: { en: "Continues normal engine room watchkeeping and stands by on engine controls during the port stay, alongside the Second Engineer. Unlike the Second Engineer, the Third Engineer has no direct external reporting role in the stability verification process itself." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall command; backs the Chief Officer's halt authority with command weight; grants final departure clearance." }],
+        iMonitor: [{ en: "Overall operation status via the Chief Officer; any escalated discrepancy." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on verification work or discrepancy assessment — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Reviews and confirms the stowage plan; oversees continuous verification; assesses discrepancies; authorizes halting the terminal's operation if stability-relevant; confirms final stability against the plan." }],
+        iMonitor: [{ en: "Every lift against the plan, continuously; ballast/fuel state as reported by the Chief Engineer." }],
+        iReport: [{ en: "Plan confirmation and discrepancy flags to the terminal; stability confirmation to the Master." }],
+        iDoNotAuthorize: [{ en: "Departure clearance itself — the Master's call, informed by the Chief Officer's stability confirmation." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Chief Officer's verification work directly, as part of the deck team checking lifts against the plan." }],
+        iMonitor: [{ en: "Lift-by-lift accuracy alongside the rest of the deck team." }],
+        iReport: [{ en: "Any discrepancy noticed to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Discrepancy assessment or the halt decision." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Leads the physical deck team positioned to observe and verify lifts." }],
+        iMonitor: [{ en: "The deck team's verification accuracy and safety during loading/discharge." }],
+        iReport: [{ en: "Status and discrepancies to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "The halt decision; direct communication with the terminal on operational decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Physically checks container markings and positions against the plan, under the Bosun's direction." }],
+        iMonitor: [{ en: "Immediate accuracy of the containers they're checking." }],
+        iReport: [{ en: "Discrepancies to the Bosun." }],
+        iDoNotAuthorize: [{ en: "Independent action; discrepancy assessment." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Reports current ballast and fuel state to the Chief Officer." }],
+        iMonitor: [{ en: "Ballast/fuel state throughout loading/discharge as it may shift." }],
+        iReport: [{ en: "Updates to the Chief Officer as the loading condition changes." }],
+        iDoNotAuthorize: [{ en: "Stowage or discrepancy decisions." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer with ballast/fuel management." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains engine room watch during loading/discharge, standing by on engine controls." }],
+        iMonitor: [{ en: "Routine engine room parameters during the port stay." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any stowage or discrepancy decision; direct reporting to the Chief Officer on stability matters — that channel runs through the Chief Engineer." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "support",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the six phases of the stowage plan verification operation in the correct order." },
+        items: [
+          { id: "pre_loading_plan_review", label: { en: "Pre-Loading Plan Review" } },
+          { id: "loading_discharge_sequence_begins", label: { en: "Loading/Discharge Sequence Begins" } },
+          { id: "continuous_verification", label: { en: "Continuous Verification" } },
+          { id: "discrepancy_response_under_schedule_pressure", label: { en: "Discrepancy Response Under Schedule Pressure" } },
+          { id: "stability_confirmation", label: { en: "Stability Confirmation" } },
+          { id: "departure_clearance", label: { en: "Departure Clearance" } },
+        ],
+        correctOrder: ["pre_loading_plan_review", "loading_discharge_sequence_begins", "continuous_verification", "discrepancy_response_under_schedule_pressure", "stability_confirmation", "departure_clearance"],
+      },
+      {
+        type: "error_identification",
+        id: "err_schedule_over_stability",
+        targetRanks: ["chief_officer", "oow", "bosun"],
+        scenario: { en: "The Chief Officer notes a stability-relevant discrepancy but decides to let loading continue to stay on schedule, planning to address it later. The AB reports a discrepancy immediately to the Bosun upon noticing it. The Chief Engineer reports updated ballast state as the loading condition changes." },
+        choices: [
+          { id: "c1", label: { en: "Letting loading continue to stay on schedule, planning to address a stability-relevant discrepancy later" }, isError: true, explanation: { en: "Violates the explicit rule that the assessment is made on actual stability relevance, not on what addressing it properly would cost the schedule." } },
+          { id: "c2", label: { en: "The AB reporting a discrepancy immediately to the Bosun upon noticing it" }, isError: false, explanation: { en: "Correct — discrepancies are reported the instant they're caught, not batched." } },
+          { id: "c3", label: { en: "The Chief Engineer reporting updated ballast state as the loading condition changes" }, isError: false, explanation: { en: "Correct — ballast/fuel state is a real, ongoing input to the stability picture." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "preloading_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The deck team is briefed and the terminal reports ready to begin. Review the readiness snapshot below before authorizing loading to start." },
+        items: [
+          { id: "plan_reviewed", label: { en: "Stowage plan reviewed and confirmed against vessel constraints" }, isSatisfied: true },
+          { id: "deck_team_briefed", label: { en: "Deck team briefed on the plan and verification procedure" }, isSatisfied: true },
+          { id: "terminal_readiness", label: { en: "Terminal confirms readiness to begin per the plan" }, isSatisfied: true },
+          { id: "ballast_fuel_report", label: { en: "Chief Engineer reports current ballast and fuel state" }, isSatisfied: false },
+          { id: "master_final_review", label: { en: "Master's final review of the plan completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Late in the loading sequence, with the terminal moving quickly to stay on schedule, a discrepancy is noticed that looks minor but hasn't been fully assessed." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer takes the time to properly assess the discrepancy's actual stability relevance before deciding to continue or pause, regardless of how close to schedule the operation is running." }],
+        why: [{ en: "Tests whether the stability-relevance-not-schedule-cost principle holds at exactly the moment schedule pressure is highest." }],
+        commonMistakes: [{ en: "Rushing the assessment or assuming it's minor because addressing it properly would risk the schedule." }],
+        safetyPoints: [{ en: "A discrepancy that looks minor under time pressure is exactly the kind that gets waved through incorrectly." }],
+      },
+      {
+        situation: { en: "A discrepancy is assessed as genuinely stability-relevant, requiring the terminal's loading operation to pause — but the terminal's own crew pushes back, wanting to continue." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer holds the halt, communicating clearly why, even though the vessel doesn't control the terminal's equipment or crew." }],
+        why: [{ en: "Tests the vessel's genuine authority over its own stability even when it has no operational control over the equipment causing the situation." }],
+        commonMistakes: [{ en: "Deferring to the terminal's pushback because the vessel doesn't actually operate the crane." }],
+        safetyPoints: [{ en: "Authority over what affects the vessel's own stability doesn't depend on who's operating the equipment." }],
+      },
+      {
+        situation: { en: "Loading completes with no significant discrepancies having been flagged during the process; there's a temptation to skip the final stability confirmation as a formality." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The final stability confirmation against the plan is performed explicitly, not skipped because nothing significant came up during loading." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle already established across the catalog, applied here to a verification-heavy operation where it's especially tempting to treat a clean process as proof of a clean outcome." }],
+        commonMistakes: [{ en: "Treating the absence of flagged discrepancies during loading as equivalent to confirmed final stability." }],
+        safetyPoints: [{ en: "A clean loading process and confirmed final stability are two different facts — the second one still needs to be explicitly checked." }],
+      },
+      {
+        situation: { en: "After halting the terminal's operation over a discrepancy, it turns out the correction needed was more minor than first assessed — but the halt still cost real time." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer explains the reasoning honestly to the terminal — the discrepancy warranted the check, even if the actual correction needed was smaller than initially feared." }],
+        why: [{ en: "Tests whether a costly-in-hindsight but reasonable-at-the-time call gets explained honestly, echoing the established value from earlier operations' interactive scenarios." }],
+        commonMistakes: [{ en: "Downplaying or over-apologizing for the halt once it turns out to have been more cautious than strictly necessary." }],
+        safetyPoints: [{ en: "A halt that turns out to have cost more than it needed to isn't the same as a halt that was wrong to call — being clear about that distinction to the terminal protects the discipline for next time." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_discrepancy_under_schedule_pressure",
+        title: { en: "A Discrepancy Late in a Fast-Moving Loading Operation" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Chief Officer. Loading is well underway and the terminal is moving quickly to hold the schedule. During continuous verification, you notice a discrepancy between what's being loaded and the stowage plan. It doesn't look serious at first glance, but you haven't actually assessed it yet." },
+          options: [
+            {
+              id: "a_assume_minor",
+              label: { en: "Assume it's minor and let loading continue at pace, to avoid slowing the terminal down." },
+              consequence: { en: "Loading continues without the discrepancy having actually been assessed." },
+              feedback: { en: "An unassessed discrepancy that 'looks minor' is exactly the kind that gets waved through incorrectly — appearance under time pressure isn't assessment." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "Further into the operation, the discrepancy turns out to be more significant than it looked — it has real stability relevance. Stopping now, later than it should have been caught, will cost more schedule time than it would have earlier, and the terminal is not expecting a halt at this stage." },
+                options: [
+                  { id: "a1", label: { en: "Let loading continue anyway, since stopping now is even more disruptive than it would have been earlier." }, consequence: { en: "The vessel proceeds with an unresolved, genuine stability-relevant discrepancy." }, feedback: { en: "The cost of stopping late doesn't change whether stopping is necessary." } },
+                  { id: "a2", label: { en: "Halt now and address it, even though it's later and costlier than it should have been." }, consequence: { en: "The discrepancy is resolved, later than it needed to be." }, feedback: { en: "Correct, though the earlier assumption already cost time that a prompt assessment would have saved." }, isRecommended: true },
+                  { id: "a3", label: { en: "Defer to the terminal's schedule and quietly flag it for review only after loading finishes." }, consequence: { en: "The discrepancy remains unresolved throughout the rest of loading." }, feedback: { en: "A stability-relevant discrepancy doesn't wait for a convenient moment to be addressed." } },
+                ],
+              },
+            },
+            {
+              id: "b_assess_properly",
+              label: { en: "Take the time to properly assess the discrepancy's actual stability relevance before deciding anything." },
+              consequence: { en: "The discrepancy is now genuinely understood, not just estimated by appearance." },
+              feedback: { en: "Correct — the assessment needs the same rigor regardless of how much schedule pressure is on the operation." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The assessment confirms the discrepancy is genuinely stability-relevant and loading needs to pause. The terminal's crew pushes back, wanting to continue rather than stop their crane." },
+                options: [
+                  { id: "b1", label: { en: "Defer to the terminal's pushback, since the vessel doesn't operate their crane." }, consequence: { en: "Loading continues despite a confirmed stability-relevant discrepancy." }, feedback: { en: "Authority over what affects the vessel's own stability doesn't depend on who operates the equipment causing it." } },
+                  { id: "b2", label: { en: "Hold the halt and clearly communicate to the terminal why it's necessary." }, consequence: { en: "Loading pauses while the discrepancy is corrected." }, feedback: { en: "Correct — the vessel's stability authority stands even over equipment it doesn't control, and explaining why keeps the terminal's cooperation." }, isRecommended: true },
+                  { id: "b3", label: { en: "Halt the operation without explaining the reason, to avoid a discussion." }, consequence: { en: "Loading stops, but the terminal is left without a reason for the delay." }, feedback: { en: "The halt itself is correct, but withholding the reason undermines the terminal's ability to cooperate and erodes trust for next time." } },
+                ],
+              },
+            },
+            {
+              id: "c_delegate_to_ab",
+              label: { en: "Ask the AB, who is closest to the discrepancy, to assess it and report back." },
+              consequence: { en: "The AB reports back with an observation, but not a stability judgment." },
+              feedback: { en: "The AB's role is to report discrepancies accurately, not to judge their stability relevance — that judgment belongs to you." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The AB's report is useful but inconclusive — it doesn't tell you whether the discrepancy is actually stability-relevant. The terminal is waiting to know whether to continue." },
+                options: [
+                  { id: "c1", label: { en: "Treat the AB's report as sufficient and let loading continue on that basis." }, consequence: { en: "A decision with real stability consequences is made without an actual stability assessment." }, feedback: { en: "The AB's observation was never a substitute for your own assessment." } },
+                  { id: "c2", label: { en: "Thank the AB for the report and personally assess the discrepancy's stability relevance before deciding." }, consequence: { en: "The discrepancy is now genuinely assessed at the right level." }, feedback: { en: "Correct — the AB's report is useful input, but the stability judgment itself is yours to make." }, isRecommended: true },
+                  { id: "c3", label: { en: "Disregard the AB's report since it wasn't the assessment you needed." }, consequence: { en: "Useful firsthand information about the discrepancy goes unused." }, feedback: { en: "The report was incomplete for the decision, not worthless — it should inform your own assessment, not be thrown out." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Verification Discipline Under Schedule Pressure" },
+        bestPractices: [
+          { en: "Every discrepancy is assessed for its actual stability relevance, regardless of how close to schedule the operation is running." },
+          { en: "The rigor of the assessment doesn't shrink as schedule pressure grows." },
+        ],
+        commonErrors: [
+          { en: "Assuming a discrepancy is minor because a proper assessment would cost time the schedule doesn't have." },
+          { en: "Letting how late in the operation a discrepancy is caught change whether it gets addressed." },
+        ],
+      },
+      {
+        theme: { en: "Stop Authority Over Equipment the Vessel Doesn't Operate" },
+        bestPractices: [
+          { en: "The vessel's authority to halt a stability-relevant loading operation holds even though the terminal, not the vessel, operates the crane." },
+          { en: "A halt is communicated to the terminal with a clear reason, preserving cooperation for the rest of the operation." },
+        ],
+        commonErrors: [
+          { en: "Deferring to the terminal's pushback because the vessel doesn't control the equipment causing the issue." },
+          { en: "Halting without explaining why, leaving the terminal unable to cooperate effectively." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Confirmation, Not Assumed Correctness" },
+        bestPractices: [
+          { en: "Final stability confirmation against the plan is performed explicitly at the end of loading, every time." },
+        ],
+        commonErrors: [
+          { en: "Treating an absence of flagged discrepancies during loading as equivalent to confirmed final stability." },
+          { en: "Skipping the final confirmation as a formality because the process looked clean." },
+        ],
+      },
+      {
+        theme: { en: "Honest Terminal Communication" },
+        bestPractices: [
+          { en: "When a halt turns out to have cost more than the eventual correction needed, the reasoning behind the original call is explained honestly." },
+        ],
+        commonErrors: [
+          { en: "Downplaying or over-apologizing for a halt that turns out, in hindsight, to have been more cautious than strictly necessary." },
+        ],
+      },
+      {
+        theme: { en: "The Right Level for a Stability Judgment" },
+        bestPractices: [
+          { en: "Discrepancies are reported accurately by whoever is closest to them; whether a discrepancy is actually stability-relevant is judged by the Chief Officer." },
+        ],
+        commonErrors: [
+          { en: "Treating a crew member's firsthand report as a substitute for the Chief Officer's own stability assessment." },
+          { en: "Disregarding a firsthand report as unhelpful just because it doesn't itself resolve the stability question." },
+        ],
+      },
+      {
+        theme: { en: "OOW's Role During a Port Stay" },
+        bestPractices: [
+          { en: "With no navigation content applicable during the port stay, the OOW's watchkeeping attention shifts to supporting the deck team's verification work." },
+        ],
+        commonErrors: [
+          { en: "Treating the OOW's role during loading as idle or secondary because it doesn't resemble underway watchkeeping." },
+        ],
+      },
+      {
+        theme: { en: "Ballast and Fuel as Stability Inputs" },
+        bestPractices: [
+          { en: "The Chief Engineer's ballast and fuel status reports are factored into the stability picture directly, alongside the stowage plan itself." },
+        ],
+        commonErrors: [
+          { en: "Treating the final stability confirmation as a stowage-plan-only check, without the Chief Engineer's ballast and fuel input." },
         ],
       },
     ],
