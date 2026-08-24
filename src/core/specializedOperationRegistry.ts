@@ -5363,6 +5363,383 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  oil_tanker_igs_malfunction_during_loading: {
+    operationId: "oil_tanker_igs_malfunction_during_loading",
+    vesselTypeId: "oil_tanker",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Oil Tanker — Inert Gas System Malfunction During Loading" },
+    introduction: {
+      en: "During active loading — Phase C of op1, Continuous Loading with IGS and Ullage Monitoring — the inert gas system malfunctions: the plant stops reliably supplying inert gas, or oxygen content in the tanks begins rising toward the level that could support combustion. Unlike LNG's cargo leak, nothing is escaping here — the normal vapor displacement that loading always produces continues exactly as op1 describes; what's failing is the protective system that keeps that vapor from becoming an explosive atmosphere. This directly interrupts the discipline op1 established: continuous IGS monitoring exists specifically to catch exactly this kind of developing problem. The operational response centers on pausing the vapor-generating activity itself — loading — rather than isolating an escaping leak, assessing and attempting to restore IGS function or engage backup measures, and not resuming normal-rate loading until atmosphere safety is genuinely confirmed. This gives the operation a different shape from LNG's leak-isolation emergency: a critical support system failing mid-operation, closer to PSV's DP-loss, Tugboat's thruster failure, and OSV's crane malfunction than to a containment breach.",
+    },
+    objectives: [
+      { en: "Describe the sequence of responding to an inert gas system malfunction during active loading." },
+      { en: "Explain why this operation's central discipline is pausing the vapor-generating activity itself, rather than isolating an escaping leak — and how that differs from LNG's cargo leak operation." },
+      { en: "Explain the assessment and restoration/backup process for the inert gas system." },
+      { en: "Identify who does what during this operation on an oil tanker specifically." },
+      { en: "Recognize correct versus incorrect prioritization when schedule pressure competes with the pause-and-assess discipline." },
+    ],
+    context: {
+      en: "This operation interrupts op1's own activity directly — the malfunction develops mid-loading, at the same terminal, following the same routine-then-emergency pairing confirmed across every vessel so far. LNG's leak was a containment/connection failure requiring isolation of something escaping; this is a protective-system failure during otherwise-normal operation — the same archetype as PSV's DP-loss, Tugboat's thruster failure, and OSV's crane malfunction, applied to a system genuinely new to the catalog. Carries forward op1's 7-rank roster (Master, Chief Officer, OOW, AB, Chief Engineer, Second Engineer, Third Engineer, no Bosun) unchanged. No new CommunicationParty needed — this emergency stays entirely internal (deck, engine, terminal), the same resolution LNG op2 reached. Not asserting specific IGS equipment failure modes or exact oxygen percentage thresholds — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "malfunction_detection_and_alert",
+      ["command_transfer_and_loading_pause", "ignition_source_precautions", "igs_assessment_initiated"],
+      "continuous_atmosphere_monitoring",
+      "igs_restoration_or_backup_engagement",
+      "confirmed_safe_and_standdown",
+      "resumption_decision",
+    ],
+    operationPhases: {
+      malfunction_detection_and_alert: {
+        id: "malfunction_detection_and_alert",
+        title: { en: "Malfunction Detection and Alert" },
+        steps: [
+          { en: "IGS malfunction detected — via continuous monitoring readings (oxygen content rising), a plant alarm, or a crew member noticing an anomaly." },
+          { en: "Immediate alert raised: system affected, what's observed." },
+        ],
+      },
+      command_transfer_and_loading_pause: {
+        id: "command_transfer_and_loading_pause",
+        title: { en: "Command Transfer and Loading Pause" },
+        steps: [
+          { en: "Command transfers explicitly to the Chief Officer as on-scene commander." },
+          { en: "Loading paused or reduced immediately, coordinated with the terminal." },
+        ],
+      },
+      ignition_source_precautions: {
+        id: "ignition_source_precautions",
+        title: { en: "Ignition-Source Precautions" },
+        steps: [
+          { en: "Precautionary ignition-source elimination around the affected tanks while atmosphere safety is uncertain." },
+        ],
+      },
+      igs_assessment_initiated: {
+        id: "igs_assessment_initiated",
+        title: { en: "IGS Assessment Initiated" },
+        steps: [
+          { en: "The Second Engineer begins assessing the cause of the malfunction." },
+        ],
+      },
+      continuous_atmosphere_monitoring: {
+        id: "continuous_atmosphere_monitoring",
+        title: { en: "Continuous Atmosphere Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of the response, not a one-time check." },
+        steps: [
+          { en: "Oxygen content and pressure monitored continuously." },
+          { en: "Trend assessed: stable, worsening, or improving." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      igs_restoration_or_backup_engagement: {
+        id: "igs_restoration_or_backup_engagement",
+        title: { en: "IGS Restoration or Backup Engagement" },
+        steps: [
+          { en: "Once assessed, the Second Engineer attempts to restore normal IGS function under the Chief Engineer's direction, or engages a backup inerting measure if restoration isn't immediately possible." },
+        ],
+      },
+      confirmed_safe_and_standdown: {
+        id: "confirmed_safe_and_standdown",
+        title: { en: "Confirmed Safe and Stand-Down" },
+        steps: [
+          { en: "Atmosphere confirmed within safe limits, restoration verified — not assumed from a single improved reading." },
+          { en: "Transition to reduced-alert monitoring." },
+        ],
+      },
+      resumption_decision: {
+        id: "resumption_decision",
+        title: { en: "Resumption Decision" },
+        steps: [
+          { en: "Joint decision — vessel and terminal — on whether and when loading can resume at full rate." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "malfunction_alert", phaseId: "malfunction_detection_and_alert", from: "engine", to: "deck", trigger: { en: "IGS malfunction detected" }, content: { en: "Immediate alert: system affected, what's observed." }, whyItMatters: { en: "Everything downstream depends on this reaching the Chief Officer without delay — adapted to a system-level detection rather than a visible hazard." } },
+      { id: "command_transfer_confirmation", phaseId: "command_transfer_and_loading_pause", from: "bridge", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Explicit assumption of emergency command by the Master; Chief Officer confirmed as on-scene commander." }, whyItMatters: { en: "An authority handoff, mirroring every prior emergency operation's command-transfer touchpoint." } },
+      { id: "loading_pause_notification", phaseId: "command_transfer_and_loading_pause", from: "deck", to: "terminal", trigger: { en: "Immediately on alert" }, content: { en: "Loading paused or reduced immediately." }, whyItMatters: { en: "A coordinated joint action, mirroring LNG's transfer halt — oil cargo flows through both ship and terminal systems together." } },
+      { id: "igs_assessment_direction", phaseId: "igs_assessment_initiated", from: "engine", to: "engine", trigger: { en: "Immediately on alert" }, content: { en: "Chief Engineer directs the Second Engineer to begin assessing the malfunction." }, whyItMatters: { en: "Same internal engine-department reporting relationship established since AHTS Fire Response's isolation-direction touchpoint." } },
+      { id: "onscene_status_to_bridge", phaseId: "continuous_atmosphere_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during the incident" }, content: { en: "Chief Officer reports atmosphere status and loading-pause status to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior emergency." } },
+      { id: "atmosphere_status_to_terminal", phaseId: "continuous_atmosphere_monitoring", from: "deck", to: "terminal", trigger: { en: "Continuous during the incident" }, content: { en: "Vessel keeps the terminal informed of atmosphere status and expected pause duration." }, whyItMatters: { en: "The terminal needs this to manage its own side of a paused operation." } },
+      { id: "restoration_authorization", phaseId: "igs_restoration_or_backup_engagement", from: "deck", to: "engine", trigger: { en: "Malfunction assessed" }, content: { en: "Chief Officer authorizes the Second Engineer to proceed with restoration or backup measures." }, whyItMatters: { en: "Mirrors the authorization discipline established across the catalog — technical execution proceeds once authorized." } },
+      { id: "restoration_confirmation", phaseId: "igs_restoration_or_backup_engagement", from: "engine", to: "deck", trigger: { en: "Restoration or backup measure complete" }, content: { en: "Second Engineer confirms IGS function restored or backup measure engaged." }, whyItMatters: { en: "Closes the loop on the authorized action." } },
+      { id: "safe_confirmation", phaseId: "confirmed_safe_and_standdown", from: "deck", to: "bridge", trigger: { en: "Atmosphere confirmed safe" }, content: { en: "Chief Officer reports atmosphere confirmed safe, transitioning to reduced-alert monitoring." }, whyItMatters: { en: "Not assumed from a single improved reading — the same explicit-confirmation discipline as every prior emergency." } },
+      { id: "resumption_go_no_go", phaseId: "resumption_decision", from: "bridge", to: "terminal", trigger: { en: "Reduced-alert monitoring period elapsed without incident" }, content: { en: "Joint go/no-go decision on resuming loading at full rate." }, whyItMatters: { en: "Echoes the joint go/no-go pattern established across the catalog." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "In op1, a background, oversight-focused role. Here, assumes overall emergency command the instant the alarm is raised — the same authority-assumption shape as every prior emergency operation's Master." } },
+      { rankId: "chief_officer", identity: { en: "In op1, owned the loading discipline outright. Here, becomes on-scene commander: directing the loading pause, coordinating with the terminal, and authorizing the Second Engineer's restoration action." } },
+      { rankId: "oow", identity: { en: "The same compounded departure shape as Container Ship op2 and LNG op2: already had no navigation to depart from in op1, and here supports the Master's emergency command the same way." } },
+      { rankId: "ab", identity: { en: "In op1, worked directly under the Chief Officer with no Bosun intermediary. Here, complies with the loading-pause direction and supports ignition-source precautions the same way — the no-Bosun structure carries into the emergency unchanged." } },
+      { rankId: "chief_engineer", identity: { en: "Becomes the senior technical authority directing the emergency IGS assessment and restoration response — the now-established default shift, applying cleanly here since op1 created no exception." } },
+      { rankId: "second_engineer", identity: { en: "Directly executes the IGS malfunction assessment and restoration work under the Chief Engineer's direction — active, hands-on technical execution, not the passive assisting role held in op1." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness during the incident — the same lighter role as op1 and every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Assumes overall emergency command; directs the ship's overall response; holds the stand-down and resumption decisions jointly with the terminal." }],
+        iMonitor: [{ en: "Overall incident status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on IGS response actions — delegated to the Chief Officer and Chief Engineer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Assumes on-scene command; directs the loading pause and ignition-source precautions; coordinates with the terminal; authorizes the Second Engineer's restoration action; confirms atmosphere safe." }],
+        iMonitor: [{ en: "Atmosphere status and loading-pause status continuously; restoration progress as reported by Engine." }],
+        iReport: [{ en: "Status to the Master continuously; status to the terminal." }],
+        iDoNotAuthorize: [{ en: "The Master's overall stand-down/resumption authority." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Master's emergency command — communications, tracking status." }],
+        iMonitor: [{ en: "Communications flow and status reporting." }],
+        iReport: [{ en: "Status updates as directed by the Master." }],
+        iDoNotAuthorize: [{ en: "Independent command decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Complies with the loading-pause direction; supports ignition-source precautions under the Chief Officer's direction." }],
+        iMonitor: [{ en: "Own immediate safety and precaution compliance." }],
+        iReport: [{ en: "Observations directly to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Independent action." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Directs the emergency IGS assessment and restoration response; oversees the Second Engineer's work." }],
+        iMonitor: [{ en: "Restoration progress and overall engine-department status throughout the incident." }],
+        iReport: [{ en: "Status to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation decisions themselves — loading pause/resumption remains the Chief Officer's/Master's call." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assesses the IGS malfunction and executes restoration or backup measures under the Chief Engineer's direction." }],
+        iMonitor: [{ en: "IGS status continuously during assessment and restoration." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Acting before assessment is directed; cargo-operation decisions." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch and readiness throughout the incident." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any IGS-response decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the phases of the IGS malfunction response in the correct order." },
+        items: [
+          { id: "malfunction_detection_and_alert", label: { en: "Malfunction Detection and Alert" } },
+          { id: "command_transfer_and_loading_pause", label: { en: "Command Transfer and Loading Pause" } },
+          { id: "ignition_source_precautions", label: { en: "Ignition-Source Precautions" } },
+          { id: "igs_assessment_initiated", label: { en: "IGS Assessment Initiated" } },
+          { id: "continuous_atmosphere_monitoring", label: { en: "Continuous Atmosphere Monitoring" } },
+          { id: "igs_restoration_or_backup_engagement", label: { en: "IGS Restoration or Backup Engagement" } },
+          { id: "confirmed_safe_and_standdown", label: { en: "Confirmed Safe and Stand-Down" } },
+          { id: "resumption_decision", label: { en: "Resumption Decision" } },
+        ],
+        correctOrder: [
+          "malfunction_detection_and_alert",
+          ["command_transfer_and_loading_pause", "ignition_source_precautions", "igs_assessment_initiated"],
+          "continuous_atmosphere_monitoring",
+          "igs_restoration_or_backup_engagement",
+          "confirmed_safe_and_standdown",
+          "resumption_decision",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_unassessed_fix",
+        targetRanks: ["ab", "oow", "chief_officer"],
+        scenario: { en: "The Second Engineer attempts a quick fix to the IGS system without completing the assessment first, hoping to resolve it before anyone notices. The AB complies with the loading-pause direction immediately. The Chief Officer authorizes restoration only after the malfunction has been properly assessed." },
+        choices: [
+          { id: "c1", label: { en: "Attempting a quick fix before the assessment is complete" }, isError: true, explanation: { en: "Violates the explicit rule that restoration proceeds once properly assessed and authorized, not rushed ahead of that." } },
+          { id: "c2", label: { en: "The AB complying with the loading-pause direction immediately" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "The Chief Officer authorizing restoration only after proper assessment" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "resumption_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The atmosphere appears safe and the reduced-alert monitoring period has elapsed. Review the readiness snapshot below before authorizing loading to resume." },
+        items: [
+          { id: "atmosphere_confirmed_safe", label: { en: "Atmosphere confirmed safe by continuous monitoring" }, isSatisfied: true },
+          { id: "monitoring_period_elapsed", label: { en: "Reduced-alert monitoring period elapsed without incident" }, isSatisfied: true },
+          { id: "igs_restoration_verified", label: { en: "IGS restoration or backup measure verified functioning" }, isSatisfied: false },
+          { id: "terminal_equipment_inspected", label: { en: "Terminal's own equipment inspected and cleared" }, isSatisfied: false },
+          { id: "master_resumption_decision", label: { en: "Master's final resumption decision completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The Second Engineer, under pressure to get loading resumed quickly, feels the urge to attempt a fix before finishing the full assessment." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Second Engineer completes the assessment and waits for the Chief Officer's authorization before attempting restoration, regardless of the pressure to resume quickly." }],
+        why: [{ en: "Tests whether the assessment-before-action discipline holds under real schedule pressure." }],
+        commonMistakes: [{ en: "Attempting a quick fix before the assessment is complete, hoping to resolve it faster." }],
+        safetyPoints: [{ en: "An unassessed fix risks masking the actual problem or creating a new one." }],
+      },
+      {
+        situation: { en: "One reading shows oxygen content back within safe limits; there's a temptation to declare the atmosphere safe immediately." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms atmosphere safe based on sustained, verified readings, not a single data point." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, adapted to this operation's own atmosphere-safety measurement." }],
+        commonMistakes: [{ en: "Treating one improved reading as sufficient confirmation." }],
+        safetyPoints: [{ en: "A single reading can be a fluctuation, not a genuine resolution." }],
+      },
+      {
+        situation: { en: "The terminal's pump operators are mid-transfer and hesitate to actually stop, given the pause request came suddenly." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms explicitly with the terminal that the pause is actually in effect on their side too, not just announced." }],
+        why: [{ en: "Tests whether the crew recognizes this pause's coordinated, joint character, echoing LNG's precedent, rather than assuming a one-sided announcement is sufficient." }],
+        commonMistakes: [{ en: "Announcing the pause and assuming the terminal has complied without confirming it." }],
+        safetyPoints: [{ en: "A pause depending on two parties' equipment isn't complete until both sides have confirmed." }],
+      },
+      {
+        situation: { en: "The IGS restoration seems to have worked, but the Second Engineer isn't fully certain it will hold under full-rate loading again." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Second Engineer reports the genuine uncertainty honestly to the Chief Engineer/Chief Officer, rather than presenting the restoration as fully certain." }],
+        why: [{ en: "Echoes the established honest-assessment-under-uncertainty value already proven in the catalog." }],
+        commonMistakes: [{ en: "Overstating confidence in the restoration to move things along faster." }],
+        safetyPoints: [{ en: "An honest, appropriately uncertain report is what lets the decision-makers make a genuinely informed resumption call." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_relay_accuracy_under_pressure",
+        title: { en: "Relaying Accurately, Not Just Quickly" },
+        seatRankId: "oow",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the OOW, relaying communications between the Chief Officer and the Master/terminal during the emergency. A message comes through with a detail — a timing, a status — that you're not fully certain you caught correctly." },
+          options: [
+            {
+              id: "a_relay_as_heard",
+              label: { en: "Relay it exactly as heard, even though you're not fully sure you caught it correctly, to avoid causing a delay." },
+              consequence: { en: "The uncertain detail is passed along as if it were confirmed." },
+              feedback: { en: "Relaying something you're not sure you heard correctly, without flagging that uncertainty, passes the risk downstream instead of resolving it." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The imprecise detail leads to real confusion downstream — someone prepares for the wrong timing based on what you relayed." },
+                options: [
+                  { id: "a1", label: { en: "Let it play out, hoping it resolves itself." }, consequence: { en: "The confusion continues affecting the response." }, feedback: { en: "Compounds the original uncertainty by leaving it unaddressed." } },
+                  { id: "a2", label: { en: "Immediately flag that the original relay might have been inaccurate." }, consequence: { en: "The confusion is traced back to its source and can be corrected." }, feedback: { en: "Correct — flagging it now, even late, is what lets the actual mismatch get fixed." }, isRecommended: true },
+                  { id: "a3", label: { en: "Point out that the original message itself was unclear, without addressing your own uncertain relay of it." }, consequence: { en: "The confusion's real cause — an unflagged uncertain relay — stays hidden." }, feedback: { en: "Deflects from the part of the problem that was actually yours to flag." } },
+                ],
+              },
+            },
+            {
+              id: "b_confirm_before_relaying",
+              label: { en: "Confirm or clarify before relaying, even though that takes a moment longer." },
+              consequence: { en: "The relay is delayed slightly while you confirm." },
+              feedback: { en: "Correct — a moment's delay to confirm is a small cost against passing along something you're not sure of during an active emergency." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "While you're still confirming, the Chief Officer — unaware clarification is pending — is about to act on an assumption about what the message meant." },
+                options: [
+                  { id: "b1", label: { en: "Let the Chief Officer continue on the assumption, planning to correct it only if it turns out wrong." }, consequence: { en: "A decision proceeds on an unconfirmed assumption you already knew was in question." }, feedback: { en: "You already knew the assumption was unconfirmed — staying quiet about that isn't the same as it being fine." } },
+                  { id: "b2", label: { en: "Immediately tell the Chief Officer that clarification is still pending, before they act on the assumption." }, consequence: { en: "The Chief Officer waits for confirmed information before deciding." }, feedback: { en: "Correct — flagging that confirmation is still in progress is exactly what prevents a decision on shaky ground." }, isRecommended: true },
+                  { id: "b3", label: { en: "Rush the confirmation and relay something not fully verified, just to give an answer." }, consequence: { en: "The Chief Officer gets an answer that isn't actually confirmed." }, feedback: { en: "Undermines the entire reason for confirming in the first place." } },
+                ],
+              },
+            },
+            {
+              id: "c_relay_polished_guess",
+              label: { en: "Relay your best guess at what was probably meant, adjusting it slightly to sound more complete and confident." },
+              consequence: { en: "A guess is passed along, presented as if it were the actual message." },
+              feedback: { en: "Polishing a guess to sound confident doesn't make it accurate — it just hides that it was ever a guess." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The guess turns out to be wrong in a way that affects the response." },
+                options: [
+                  { id: "c1", label: { en: "Don't mention that it was a guess, since correcting it now would look bad." }, consequence: { en: "The response continues to be shaped by information that's known to be wrong." }, feedback: { en: "Leaves the response built on information you now know is inaccurate." } },
+                  { id: "c2", label: { en: "Immediately correct the record, disclosing it was an adjusted guess, not confirmed fact." }, consequence: { en: "The response is corrected based on accurate information." }, feedback: { en: "Correct — disclosing it was a guess is what lets it actually be fixed, not just quietly worked around." }, isRecommended: true },
+                  { id: "c3", label: { en: "Adjust the guess again to try to align with what's actually happening now, without disclosing the original guess." }, consequence: { en: "The inaccuracy compounds rather than resolves." }, feedback: { en: "Layering a second guess on the first compounds the original problem instead of fixing it." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Assessment Before Action, Even Under Pressure" },
+        bestPractices: [
+          { en: "The IGS malfunction is fully assessed and restoration authorized before any corrective action is attempted, regardless of schedule pressure to resume loading." },
+        ],
+        commonErrors: [
+          { en: "Attempting a quick fix before the assessment is complete, hoping to resolve it faster." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Confirmation, Not a Single Reading" },
+        bestPractices: [
+          { en: "The atmosphere is confirmed safe from sustained, verified readings, not from one improved data point." },
+        ],
+        commonErrors: [
+          { en: "Treating a single improved reading as sufficient confirmation." },
+        ],
+      },
+      {
+        theme: { en: "A Coordinated Pause, Not a Unilateral One" },
+        bestPractices: [
+          { en: "The loading pause is confirmed explicitly with the terminal, since it depends on both ship and terminal equipment actually stopping." },
+        ],
+        commonErrors: [
+          { en: "Announcing the pause and assuming the terminal has complied without confirming it." },
+        ],
+      },
+      {
+        theme: { en: "Honest Reporting of Restoration Uncertainty" },
+        bestPractices: [
+          { en: "Genuine uncertainty about whether a restoration will hold is reported honestly, not smoothed over to move things along faster." },
+        ],
+        commonErrors: [
+          { en: "Overstating confidence in a restoration to speed up the resumption decision." },
+        ],
+      },
+      {
+        theme: { en: "Relay Accuracy Over Relay Speed" },
+        bestPractices: [
+          { en: "An uncertain or unclear message is confirmed before being relayed, or flagged as unconfirmed if relayed under time pressure." },
+          { en: "A relay that turns out to have been wrong is corrected immediately and disclosed as having been a guess, not quietly worked around." },
+        ],
+        commonErrors: [
+          { en: "Relaying an uncertain detail without flagging the uncertainty, to avoid causing a delay." },
+          { en: "Polishing a guess to sound confident rather than disclosing it as a guess." },
+        ],
+      },
+      {
+        theme: { en: "Engine's Emergency Authority" },
+        bestPractices: [
+          { en: "The Chief Engineer directs the emergency technical response, with the Second Engineer executing the hands-on assessment and restoration work under that direction." },
+        ],
+        commonErrors: [
+          { en: "Treating the Chief Engineer's routine support-level involvement as unchanged once an emergency response is actually underway." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
