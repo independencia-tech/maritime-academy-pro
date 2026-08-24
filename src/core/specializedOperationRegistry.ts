@@ -6099,6 +6099,385 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  chemical_tanker_in_tank_reaction: {
+    operationId: "chemical_tanker_in_tank_reaction",
+    vesselTypeId: "chemical_tanker",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Chemical Tanker — In-Tank Chemical Reaction (Cross-Contamination Breach)" },
+    introduction: {
+      en: "During active loading — Phase D of op1, Continuous Loading with Compatibility and Contamination Monitoring — a cross-contamination breach that got through despite the verification process causes an active chemical reaction inside a tank: heat generation, gas evolution, possible pressure buildup, and toxic vapor as the acute hazard. This is a genuinely new hazard shape for the catalog: not a fire already burning (AHTS, Container Ship), not a containment leak (LNG), not a protective system degrading while the underlying activity continues normally (PSV, Tugboat, OSV, Oil Tanker) — this is the thing op1's entire verification discipline exists to prevent, actually happening inside a contained space. The operational discipline centers on detecting the reaction from its early signs, protecting personnel from toxic vapor exposure with an absolute no-approach-without-protection boundary, and managing the reaction itself — venting or cooling where genuinely safe to do so — without making it worse.",
+    },
+    objectives: [
+      { en: "Describe the sequence of detecting and responding to an in-tank chemical reaction during loading." },
+      { en: "Explain why this operation's central hazard is a genuinely different emergency shape from every prior operation — not a fire, not a leak, not a system failure, but the thing verification exists to prevent actually occurring." },
+      { en: "Explain the toxic vapor exposure protection discipline and the no-approach-without-protection boundary." },
+      { en: "Identify who does what during this operation on a chemical tanker specifically." },
+      { en: "Recognize correct versus incorrect prioritization under a developing reaction whose full extent isn't immediately known." },
+    ],
+    context: {
+      en: "This operation interrupts op1's own activity directly — the reaction develops mid-loading, at the same terminal, following the same routine-then-emergency pairing confirmed across every vessel so far. Fire (AHTS, Container Ship), containment leak (LNG), and protective-system failure (PSV, Tugboat, OSV, Oil Tanker) are the three emergency shapes built so far; an active in-tank reaction is a fourth. Carries forward op1's 7-rank roster (Master, Chief Officer, OOW, AB, Chief Engineer, Second Engineer, Third Engineer, no Bosun) unchanged. No new CommunicationParty needed — the operation stays scoped to prevention/protection rather than response to an exposure that already happened, the same resolution LNG and Oil Tanker's op2s reached. Unlike every prior op2, this emergency genuinely isn't Engine's domain — compatibility verification is Deck's own discipline, so the response is Deck-led throughout, with Engine playing a supporting rather than central role. Not asserting specific chemical reaction mechanisms, exact toxic exposure thresholds, or treatment protocols — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "reaction_detection_and_alert",
+      ["command_transfer_and_loading_pause", "exclusion_zone_and_evacuation", "ppe_and_vapor_protection_readiness"],
+      "reaction_assessment_and_vapor_monitoring",
+      "reaction_management_venting_or_cooling",
+      "confirmed_stable_and_standdown",
+      "resumption_decision",
+    ],
+    operationPhases: {
+      reaction_detection_and_alert: {
+        id: "reaction_detection_and_alert",
+        title: { en: "Reaction Detection and Alert" },
+        steps: [
+          { en: "Reaction detected — via temperature/pressure anomaly, unusual odor or vapor, or a crew member noticing something." },
+          { en: "Immediate alert raised: location, what's observed." },
+        ],
+      },
+      command_transfer_and_loading_pause: {
+        id: "command_transfer_and_loading_pause",
+        title: { en: "Command Transfer and Loading Pause" },
+        steps: [
+          { en: "Command transfers explicitly to the Chief Officer as on-scene commander." },
+          { en: "Loading paused immediately, coordinated with the terminal." },
+        ],
+      },
+      exclusion_zone_and_evacuation: {
+        id: "exclusion_zone_and_evacuation",
+        title: { en: "Exclusion Zone and Evacuation" },
+        steps: [
+          { en: "An exclusion zone established around the affected tank." },
+          { en: "Non-essential personnel evacuated clear, given the toxic vapor risk." },
+        ],
+      },
+      ppe_and_vapor_protection_readiness: {
+        id: "ppe_and_vapor_protection_readiness",
+        title: { en: "PPE and Vapor Protection Readiness" },
+        steps: [
+          { en: "Respiratory and vapor protection equipment distributed and readied for anyone who may need to approach." },
+        ],
+      },
+      reaction_assessment_and_vapor_monitoring: {
+        id: "reaction_assessment_and_vapor_monitoring",
+        title: { en: "Reaction Assessment and Vapor Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of the response, not a one-time check." },
+        steps: [
+          { en: "Temperature, pressure, and vapor levels monitored continuously." },
+          { en: "Reaction trend assessed: stable, worsening, or subsiding." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      reaction_management_venting_or_cooling: {
+        id: "reaction_management_venting_or_cooling",
+        title: { en: "Reaction Management (Venting or Cooling)" },
+        steps: [
+          { en: "Once assessed, the Chief Officer authorizes venting or cooling measures if genuinely safe to do so." },
+          { en: "The AB executes the authorized action under the Chief Officer's direction, wearing appropriate protection." },
+        ],
+      },
+      confirmed_stable_and_standdown: {
+        id: "confirmed_stable_and_standdown",
+        title: { en: "Confirmed Stable and Stand-Down" },
+        steps: [
+          { en: "Reaction confirmed stable or resolved and area confirmed safe — not assumed from a single improved reading." },
+          { en: "Transition to reduced-alert monitoring." },
+        ],
+      },
+      resumption_decision: {
+        id: "resumption_decision",
+        title: { en: "Resumption Decision" },
+        steps: [
+          { en: "Joint decision — vessel and terminal — on whether and when loading can resume." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "reaction_alert", phaseId: "reaction_detection_and_alert", from: "deck_team", to: "bridge", trigger: { en: "Reaction detected" }, content: { en: "Immediate alert: location, what's observed." }, whyItMatters: { en: "Everything downstream depends on this reaching the bridge without delay." } },
+      { id: "command_transfer_confirmation", phaseId: "command_transfer_and_loading_pause", from: "bridge", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Explicit assumption of emergency command by the Master; Chief Officer confirmed as on-scene commander." }, whyItMatters: { en: "An authority handoff, mirroring every prior emergency operation's command-transfer touchpoint." } },
+      { id: "loading_pause_notification", phaseId: "command_transfer_and_loading_pause", from: "deck", to: "terminal", trigger: { en: "Immediately on alert" }, content: { en: "Loading paused immediately." }, whyItMatters: { en: "Same coordinated-halt shape as every prior cargo-transfer emergency." } },
+      { id: "engine_vapor_protection", phaseId: "command_transfer_and_loading_pause", from: "engine", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Engine confirms engine-room air intakes protected from vapor and any auxiliary system support available if needed." }, whyItMatters: { en: "Engine's role here is genuinely supporting, not central — grounded honestly rather than manufactured to match the emergency-Chief-Engineer pattern by default." } },
+      { id: "onscene_status_to_bridge", phaseId: "reaction_assessment_and_vapor_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during the incident" }, content: { en: "Chief Officer reports reaction status, exclusion zone status, and crew status to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior emergency." } },
+      { id: "reaction_status_to_terminal", phaseId: "reaction_assessment_and_vapor_monitoring", from: "deck", to: "terminal", trigger: { en: "Continuous during the incident" }, content: { en: "Vessel keeps the terminal informed of reaction status and vapor risk." }, whyItMatters: { en: "The terminal's own personnel may be affected by vapor dispersal — a shared-risk situation." } },
+      { id: "venting_authorization", phaseId: "reaction_management_venting_or_cooling", from: "deck", to: "deck_team", trigger: { en: "Reaction assessed" }, content: { en: "Chief Officer authorizes the AB to proceed with venting or cooling measures, with appropriate protection." }, whyItMatters: { en: "Mirrors the authorization discipline established across the catalog." } },
+      { id: "venting_confirmation", phaseId: "reaction_management_venting_or_cooling", from: "deck_team", to: "deck", trigger: { en: "Venting or cooling measure complete" }, content: { en: "AB confirms the measure was carried out." }, whyItMatters: { en: "Closes the loop on the authorized action." } },
+      { id: "stable_confirmation", phaseId: "confirmed_stable_and_standdown", from: "deck", to: "bridge", trigger: { en: "Reaction confirmed stable" }, content: { en: "Chief Officer reports reaction confirmed stable/resolved, transitioning to reduced-alert monitoring." }, whyItMatters: { en: "Not assumed from a single improved reading — the same explicit-confirmation discipline as every prior emergency." } },
+      { id: "resumption_go_no_go", phaseId: "resumption_decision", from: "bridge", to: "terminal", trigger: { en: "Reduced-alert monitoring period elapsed without incident" }, content: { en: "Joint go/no-go decision on resuming loading." }, whyItMatters: { en: "Echoes the joint go/no-go pattern established across the catalog." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "In op1, a background, oversight-focused role. Here, assumes overall emergency command the instant the alarm is raised — the same authority-assumption shape as every prior emergency operation's Master." } },
+      { rankId: "chief_officer", identity: { en: "In op1, owned the entire compatibility-verification discipline outright. Here, becomes on-scene commander: directing the exclusion zone and evacuation, coordinating the loading pause with the terminal, and authorizing the AB's venting or cooling action." } },
+      { rankId: "oow", identity: { en: "The same compounded departure shape as Container Ship op2, LNG op2, and Oil Tanker op2: already had no navigation to depart from in op1, and here supports the Master's emergency command the same way." } },
+      { rankId: "ab", identity: { en: "In op1, executed dedicated-system operation under the Chief Officer's direction, no Bosun intermediary. Here, executes the authorized venting or cooling measure the same way, now with respiratory/vapor protection — the same execution-under-direction shape, applied to the emergency." } },
+      { rankId: "chief_engineer", identity: { en: "Genuinely peripheral here, unlike every prior emergency operation's Chief Engineer. This isn't a machinery failure — it's a cargo-chemistry event within Deck's own domain — so the Chief Engineer's role stays supporting: protecting engine-room air intakes from vapor, standing by for auxiliary system support if requested, without directing the emergency response itself." } },
+      { rankId: "second_engineer", identity: { en: "Similarly peripheral, assisting the Chief Engineer with any auxiliary system support needed — no elevation from op1's role." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness during the incident — the same lighter role as op1 and every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Assumes overall emergency command; directs the ship's overall response; holds the stand-down and resumption decisions jointly with the terminal." }],
+        iMonitor: [{ en: "Overall incident status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on reaction-response actions — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Assumes on-scene command; directs the exclusion zone and evacuation; coordinates the loading pause with the terminal; assesses the reaction; authorizes the AB's venting or cooling action; confirms reaction stable." }],
+        iMonitor: [{ en: "Reaction status and exclusion-zone integrity continuously." }],
+        iReport: [{ en: "Status to the Master continuously; status to the terminal." }],
+        iDoNotAuthorize: [{ en: "The Master's overall stand-down/resumption authority." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Master's emergency command — communications, tracking status." }],
+        iMonitor: [{ en: "Communications flow and status reporting." }],
+        iReport: [{ en: "Status updates as directed by the Master." }],
+        iDoNotAuthorize: [{ en: "Independent command decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Executes the authorized venting or cooling measure under the Chief Officer's direction, wearing appropriate protection." }],
+        iMonitor: [{ en: "Immediate conditions during the authorized action." }],
+        iReport: [{ en: "Confirmation directly to the Chief Officer once complete." }],
+        iDoNotAuthorize: [{ en: "Acting before authorization; approaching without protection." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Protects engine-room air intakes from vapor; stands by for auxiliary system support if requested." }],
+        iMonitor: [{ en: "Engine-department status and any vapor-related impact throughout the incident." }],
+        iReport: [{ en: "Status to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Directing the reaction response itself — that stays with the Chief Officer." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer with any auxiliary system support needed." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch and readiness throughout the incident." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any reaction-response decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "support",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the phases of the in-tank chemical reaction response in the correct order." },
+        items: [
+          { id: "reaction_detection_and_alert", label: { en: "Reaction Detection and Alert" } },
+          { id: "command_transfer_and_loading_pause", label: { en: "Command Transfer and Loading Pause" } },
+          { id: "exclusion_zone_and_evacuation", label: { en: "Exclusion Zone and Evacuation" } },
+          { id: "ppe_and_vapor_protection_readiness", label: { en: "PPE and Vapor Protection Readiness" } },
+          { id: "reaction_assessment_and_vapor_monitoring", label: { en: "Reaction Assessment and Vapor Monitoring" } },
+          { id: "reaction_management_venting_or_cooling", label: { en: "Reaction Management (Venting or Cooling)" } },
+          { id: "confirmed_stable_and_standdown", label: { en: "Confirmed Stable and Stand-Down" } },
+          { id: "resumption_decision", label: { en: "Resumption Decision" } },
+        ],
+        correctOrder: [
+          "reaction_detection_and_alert",
+          ["command_transfer_and_loading_pause", "exclusion_zone_and_evacuation", "ppe_and_vapor_protection_readiness"],
+          "reaction_assessment_and_vapor_monitoring",
+          "reaction_management_venting_or_cooling",
+          "confirmed_stable_and_standdown",
+          "resumption_decision",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_approach_without_protection",
+        targetRanks: ["ab", "oow", "chief_officer"],
+        scenario: { en: "The AB approaches the affected tank to check on it directly without waiting for PPE/protection readiness to be confirmed. The OOW relays status updates as directed by the Master. The Chief Officer authorizes venting only after the reaction has been properly assessed." },
+        choices: [
+          { id: "c1", label: { en: "Approaching the affected tank without waiting for protection readiness to be confirmed" }, isError: true, explanation: { en: "Violates the explicit boundary against approaching without protection, given the toxic vapor risk." } },
+          { id: "c2", label: { en: "The OOW relaying status updates as directed by the Master" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "The Chief Officer authorizing venting only after proper assessment" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "resumption_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The reaction appears stable and the reduced-alert monitoring period has elapsed. Review the readiness snapshot below before authorizing loading to resume." },
+        items: [
+          { id: "reaction_confirmed_stable", label: { en: "Reaction confirmed stable by continuous monitoring" }, isSatisfied: true },
+          { id: "monitoring_period_elapsed", label: { en: "Reduced-alert monitoring period elapsed without incident" }, isSatisfied: true },
+          { id: "tank_inspected", label: { en: "Affected tank inspected and cleared" }, isSatisfied: false },
+          { id: "terminal_equipment_inspected", label: { en: "Terminal's own equipment inspected and cleared" }, isSatisfied: false },
+          { id: "master_resumption_decision", label: { en: "Master's final resumption decision completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The AB feels the urge to quickly check on the tank directly, since PPE readiness is taking a moment and the situation feels urgent." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The AB waits for protection readiness to be confirmed before approaching, regardless of the urgency felt." }],
+        why: [{ en: "Tests whether the no-approach-without-protection boundary holds under the pressure of feeling like checking quickly would help." }],
+        commonMistakes: [{ en: "Approaching briefly \"just to check\" before protection is actually ready." }],
+        safetyPoints: [{ en: "Toxic vapor exposure risk doesn't wait for good intentions — the protection has to actually be in place first." }],
+      },
+      {
+        situation: { en: "One reading shows the reaction trend improving; there's a temptation to declare it stable immediately." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms the reaction stable from sustained, verified readings, not a single data point." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, adapted to this operation's own reaction-monitoring measurement." }],
+        commonMistakes: [{ en: "Treating one improved reading as sufficient confirmation." }],
+        safetyPoints: [{ en: "A single reading can be a fluctuation in an ongoing reaction, not genuine resolution." }],
+      },
+      {
+        situation: { en: "The Chief Engineer, with real technical experience, feels the pull to weigh in more directly on the reaction-response decision, even though it's outside their actual domain here." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Engineer stays in the supporting role — protecting engine-room systems, standing by for auxiliary support — without directing or overriding the Chief Officer's reaction-response decisions." }],
+        why: [{ en: "Tests whether the just-confirmed exception holds in a concrete moment — this domain was never Engine's to begin with." }],
+        commonMistakes: [{ en: "The Chief Engineer inserting themselves into the reaction-response decision because of genuine technical confidence." }],
+        safetyPoints: [{ en: "Technical confidence in a different domain doesn't transfer authority into this one." }],
+      },
+      {
+        situation: { en: "Early in the response, the Chief Officer isn't fully certain how serious the reaction actually is." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer reports the genuinely uncertain picture honestly to the Master, rather than downplaying or overstating it." }],
+        why: [{ en: "Echoes the established honest-assessment-under-uncertainty value already proven in the catalog." }],
+        commonMistakes: [{ en: "Overstating confidence to seem in control, or downplaying the situation to avoid alarming the Master." }],
+        safetyPoints: [{ en: "An honest, appropriately uncertain report is what lets the Master make a genuinely informed decision." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_a_domain_that_was_never_yours",
+        title: { en: "A Domain That Was Never Yours" },
+        seatRankId: "chief_engineer",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Chief Engineer. The reaction response is fully underway, directed by the Chief Officer, executed by the AB. From your engine-room vantage point, your technical instincts suggest a different approach to managing the reaction than what's being done." },
+          options: [
+            {
+              id: "a_step_in_directly",
+              label: { en: "Step in directly and suggest a different approach, given your genuine technical confidence." },
+              consequence: { en: "The Chief Officer now has to reconcile a competing input in the middle of an active emergency." },
+              feedback: { en: "This domain was never Engine's — genuine technical confidence in a different field doesn't transfer authority into the Chief Officer's own." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The Chief Officer, focused on directing the response, now has two potentially conflicting inputs to reconcile mid-emergency." },
+                options: [
+                  { id: "a1", label: { en: "Continue pressing the point, since you believe you're right." }, consequence: { en: "The Chief Officer's attention is split between managing the reaction and managing the disagreement." }, feedback: { en: "Compounds the original overstep at the worst possible moment." } },
+                  { id: "a2", label: { en: "Step back and let the Chief Officer's authority stand, clearly acknowledging you overstepped." }, consequence: { en: "The Chief Officer's full attention returns to directing the response." }, feedback: { en: "Correct — stepping back matters, but acknowledging it clearly is what actually resolves the confusion, not just quietly dropping it." }, isRecommended: true },
+                  { id: "a3", label: { en: "Quietly stop pushing but don't acknowledge anything." }, consequence: { en: "It's unclear to the Chief Officer whether the disagreement is actually resolved." }, feedback: { en: "Leaves ambiguity about who's actually directing the response, right when clarity matters most." } },
+                ],
+              },
+            },
+            {
+              id: "b_offer_without_pushing",
+              label: { en: "Stay in your supporting role, offering the observation to the Chief Officer if it seems useful, without pushing to redirect the response." },
+              consequence: { en: "The Chief Officer has your observation available, without the response's direction being contested." },
+              feedback: { en: "Correct — offering a genuine observation is different from pushing to redirect someone else's decision." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The Chief Officer, hearing the observation, asks a clarifying technical question back." },
+                options: [
+                  { id: "b1", label: { en: "Give a full, honest technical answer to help inform their decision." }, consequence: { en: "The Chief Officer's decision is now better informed, while the decision itself stays theirs." }, feedback: { en: "Correct — this is exactly what offering input well looks like." }, isRecommended: true },
+                  { id: "b2", label: { en: "Downplay your own observation now that it's being taken seriously, to avoid the responsibility of having suggested it." }, consequence: { en: "The Chief Officer gets a less useful answer than you're actually able to give." }, feedback: { en: "Having the observation taken seriously isn't a reason to now retreat from it." } },
+                  { id: "b3", label: { en: "Use the question as an opening to push harder for your original suggestion." }, consequence: { en: "The exchange shifts from informing the Chief Officer's decision to contesting it again." }, feedback: { en: "A clarifying question is a request for information, not an invitation to redirect the decision." } },
+                ],
+              },
+            },
+            {
+              id: "c_say_nothing",
+              label: { en: "Say nothing at all, since it's not your domain and raising it might seem like overstepping." },
+              consequence: { en: "The Chief Officer proceeds without an observation that might have been useful." },
+              feedback: { en: "Staying out of someone else's decision doesn't mean withholding a genuinely useful observation — those are different things." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The response proceeds without your observation, and afterward it turns out your instinct might have mattered." },
+                options: [
+                  { id: "c1", label: { en: "Still say nothing, since the moment has passed." }, consequence: { en: "The Chief Officer never learns the observation existed at all." }, feedback: { en: "The moment for it to matter in real time has passed, but the moment to share it honestly hasn't." } },
+                  { id: "c2", label: { en: "Mention it afterward, honestly, as something worth considering for next time." }, consequence: { en: "The Chief Officer gets the benefit of the observation for future situations, even though this one is already resolved." }, feedback: { en: "Correct — sharing it honestly after the fact still has real value, even though it's later than ideal." }, isRecommended: true },
+                  { id: "c3", label: { en: "Claim you would have said something if asked." }, consequence: { en: "The actual choice that was made — staying silent without being asked — goes unacknowledged." }, feedback: { en: "Deflects from the actual choice made in the moment." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "No Approach Without Protection" },
+        bestPractices: [
+          { en: "Protection readiness is confirmed before anyone approaches the affected area, regardless of the urgency felt." },
+        ],
+        commonErrors: [
+          { en: "Approaching briefly \"just to check\" before protection is actually confirmed ready." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Confirmation, Not a Single Reading" },
+        bestPractices: [
+          { en: "The reaction is confirmed stable from sustained, verified readings, not from one improved data point." },
+        ],
+        commonErrors: [
+          { en: "Treating one improved reading as sufficient confirmation." },
+        ],
+      },
+      {
+        theme: { en: "Offering Input Without Redirecting the Decision" },
+        bestPractices: [
+          { en: "A genuine technical observation from outside the decision-maker's domain is offered, not pushed to redirect the decision itself." },
+          { en: "When asked a clarifying question, a full and honest answer is given, even after having stepped back once already." },
+        ],
+        commonErrors: [
+          { en: "Stepping into a decision that belongs to someone else's domain, however genuine the technical confidence." },
+          { en: "Withholding a useful observation entirely out of concern about overstepping." },
+        ],
+      },
+      {
+        theme: { en: "Honest Reporting Under Real Uncertainty" },
+        bestPractices: [
+          { en: "The reaction's severity is reported honestly, including what isn't yet known, rather than rounded up or down to manage perception." },
+        ],
+        commonErrors: [
+          { en: "Overstating confidence or downplaying the situation to avoid alarming the Master." },
+        ],
+      },
+      {
+        theme: { en: "Sharing Honestly, Even Late" },
+        bestPractices: [
+          { en: "An observation not shared in the moment is still shared honestly afterward, rather than left unspoken because the moment has passed." },
+        ],
+        commonErrors: [
+          { en: "Treating a passed moment as a reason to never share an observation at all." },
+        ],
+      },
+      {
+        theme: { en: "Engine's Genuinely Peripheral Role" },
+        bestPractices: [
+          { en: "Engine's contribution during this specific emergency stays supporting — protecting its own systems, standing by — since the failure itself sits entirely within Deck's own compatibility-verification discipline." },
+        ],
+        commonErrors: [
+          { en: "Assuming Engine automatically takes a leading technical role in every emergency, regardless of whose domain actually failed." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
