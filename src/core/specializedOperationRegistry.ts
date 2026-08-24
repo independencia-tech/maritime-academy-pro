@@ -5011,6 +5011,358 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  oil_tanker_cargo_loading_inert_gas_management: {
+    operationId: "oil_tanker_cargo_loading_inert_gas_management",
+    vesselTypeId: "oil_tanker",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Oil Tanker — Cargo Loading Operations with Inert Gas System Management" },
+    introduction: {
+      en: "This operation covers the oil tanker's own defining task: loading crude oil or refined product cargo through the manifold and cargo pumps, with the vessel's central safety discipline — inert gas system (IGS) management — running throughout. The card's own stated risks are explicit: explosion and fire from hydrocarbon vapors, and static electricity hazard specifically during loading. The IGS exists precisely to prevent that explosive atmosphere from forming in the tanks in the first place, by keeping oxygen content below the level that could support combustion. No prior operation in the catalog covers this kind of proactive atmosphere-control discipline — AHTS Fire Response and Container Ship's cargo fire both begin after ignition; this operation's entire purpose is making sure that moment never arrives.",
+    },
+    objectives: [
+      { en: "Describe the sequence of a cargo loading operation via manifold and cargo pumps, from pre-loading preparation through completion." },
+      { en: "Explain the role of the inert gas system in preventing an explosive tank atmosphere, and why this is a continuous discipline rather than a one-time check." },
+      { en: "Explain the static electricity precautions specific to loading operations." },
+      { en: "Identify who does what during this operation on an oil tanker specifically." },
+      { en: "Recognize correct versus incorrect prioritization when schedule pressure competes with IGS/ullage monitoring discipline." },
+    ],
+    context: {
+      en: "The vessel's own defining task, the same 'owns the signature activity' pattern established across every first operation in the catalog. Scoped to loading specifically (not discharge) — discharge introduces Crude Oil Washing, a distinct technique using the cargo itself to clean tanks, which doesn't apply to loading and is left out rather than conflating two different cargo flows into one operation. The card's own 'Pumpman (cargo pump specialist)' position is folded into AB rather than a new RankId, per confirmed decision — Deck-side per the card's own wording, unlike LNG's Engine-side Gas Engineer. Roster is 7 ranks (Master, Chief Officer, OOW, AB, Chief Engineer, Second Engineer, Third Engineer) — no Bosun, confirmed absent from this vessel's own stated crew, read the same way as LNG's clean list. Not asserting specific IGS oxygen thresholds, static electricity engineering specifics, or Crude Oil Washing procedural details — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "pre_loading_preparation",
+      "manifold_connection_and_initial_loading",
+      "continuous_loading_with_igs_and_ullage_monitoring",
+      "loading_complete_verification",
+      "disconnection_and_departure_preparation",
+    ],
+    operationPhases: {
+      pre_loading_preparation: {
+        id: "pre_loading_preparation",
+        title: { en: "Pre-Loading Preparation" },
+        steps: [
+          { en: "Manifold connection readiness confirmed with the terminal." },
+          { en: "Inert gas system checked and confirmed the tank atmosphere is already within safe limits." },
+          { en: "Static electricity precautions briefed to the deck team." },
+          { en: "Ballast plan reviewed." },
+          { en: "Communication protocol confirmed with the terminal." },
+        ],
+      },
+      manifold_connection_and_initial_loading: {
+        id: "manifold_connection_and_initial_loading",
+        title: { en: "Manifold Connection and Initial Loading" },
+        steps: [
+          { en: "Manifold connected." },
+          { en: "Loading begins at a reduced rate to verify system integrity before ramping to full rate." },
+        ],
+      },
+      continuous_loading_with_igs_and_ullage_monitoring: {
+        id: "continuous_loading_with_igs_and_ullage_monitoring",
+        title: { en: "Continuous Loading with IGS and Ullage Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of loading, not a one-time check: the tank atmosphere, cargo levels, and static electricity precautions are all monitored continuously as cargo is transferred." },
+        steps: [
+          { en: "Loading proceeds at full rate once initial verification is complete." },
+          { en: "Inert gas system continuously monitored — oxygen content and pressure kept within safe limits throughout." },
+          { en: "Ullage and sounding measurements taken continuously against the loading plan." },
+          { en: "Static electricity precautions maintained throughout." },
+          { en: "Ballasting coordinated in parallel to maintain trim and stability as cargo is loaded." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      loading_complete_verification: {
+        id: "loading_complete_verification",
+        title: { en: "Loading Complete: Verification" },
+        steps: [
+          { en: "Final ullage and quantity confirmed and documentation completed." },
+          { en: "Confirmation exchanged with the terminal that loading is complete." },
+        ],
+      },
+      disconnection_and_departure_preparation: {
+        id: "disconnection_and_departure_preparation",
+        title: { en: "Disconnection and Departure Preparation" },
+        steps: [
+          { en: "Manifold disconnected." },
+          { en: "Final checks completed." },
+          { en: "Departure preparations; schedule confirmed." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "terminal_readiness_confirmation", phaseId: "pre_loading_preparation", from: "terminal", to: "deck", trigger: { en: "Before loading begins" }, content: { en: "Terminal confirms manifold and berth readiness." }, whyItMatters: { en: "The plan/readiness originates externally, same confirm-before-starting pattern as every prior pre-operation channel." } },
+      { id: "engine_igs_plant_readiness", phaseId: "pre_loading_preparation", from: "engine", to: "deck", trigger: { en: "Before loading begins" }, content: { en: "Confirmation that the inert gas plant is operating normally and available throughout loading." }, whyItMatters: { en: "Echoes AHTS's original ownership/dependency framing — Deck owns the cargo operation, Engine supplies the critical inerting equipment it depends on." } },
+      { id: "loading_authorization", phaseId: "pre_loading_preparation", from: "deck", to: "terminal", trigger: { en: "Pre-loading checks complete" }, content: { en: "Vessel confirms readiness to begin loading." }, whyItMatters: { en: "Same confirm-before-starting pattern." } },
+      { id: "initial_loading_verification", phaseId: "manifold_connection_and_initial_loading", from: "deck", to: "terminal", trigger: { en: "After reduced-rate loading begins" }, content: { en: "Confirmation that system integrity checks passed; ready to ramp to full rate." }, whyItMatters: { en: "The reduced-rate verification step exists specifically to catch a problem before committing to full-rate transfer." } },
+      { id: "igs_status_ongoing", phaseId: "continuous_loading_with_igs_and_ullage_monitoring", from: "engine", to: "deck", trigger: { en: "Continuous during loading" }, content: { en: "Engine reports inert gas plant status and any deviation to the Chief Officer." }, whyItMatters: { en: "A real, ongoing Engine input to the Deck-owned cargo operation, mirroring LNG's Boil-Off Gas touchpoint but specific to the inerting plant." } },
+      { id: "loading_status_to_bridge", phaseId: "continuous_loading_with_igs_and_ullage_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during loading" }, content: { en: "Chief Officer reports loading progress, ullage readings, and any deviation to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior operation." } },
+      { id: "quantity_confirmation", phaseId: "loading_complete_verification", from: "terminal", to: "deck", trigger: { en: "Loading complete" }, content: { en: "Final ullage/quantity and documentation exchanged." }, whyItMatters: { en: "Closes the transfer with an explicit, mutual record." } },
+      { id: "departure_clearance", phaseId: "disconnection_and_departure_preparation", from: "bridge", to: "terminal", trigger: { en: "Ready to depart" }, content: { en: "Departure clearance." }, whyItMatters: { en: "Standard closing touchpoint." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Overall command, oversight-focused rather than hands-on — the same background role as every routine first operation's Master except AHTS." } },
+      { rankId: "chief_officer", identity: { en: "The signature role, explicitly named in the vessel's own content as responsible for cargo operations. Owns the entire loading discipline: manifold connection oversight, continuous IGS and ullage monitoring, ballasting coordination, coordinating with the terminal throughout." } },
+      { rankId: "oow", identity: { en: "The third confirmed occurrence of the no-navigation-to-attach-to departure (after Container Ship, LNG). At a terminal with no navigation happening, joins the deck-side operational support instead." } },
+      { rankId: "ab", identity: { en: "Absorbs the card's 'Pumpman' cargo-pump specialist duties. Operates cargo pumps under the Chief Officer's direction, working directly without a Bosun intermediary — the third confirmed occurrence of that structural shape (after Tugboat, LNG)." } },
+      { rankId: "chief_engineer", identity: { en: "Owns the inert gas plant's readiness and maintenance before and during the operation — reports and sustains rather than executes hands-on, the same support shape as every prior routine-operation Chief Engineer." } },
+      { rankId: "second_engineer", identity: { en: "Assists the Chief Engineer with the inert gas plant at working level — the standard perform/support template, not elevated the way LNG's Second Engineer was, since the specialist duty folded in here (Pumpman) is Deck-side, not Engine-side." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness, supporting the Second Engineer — the same lighter role as Container Ship's and LNG's Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall command; authorizes loading to begin, informed by the Chief Officer's readiness assessment; grants final departure clearance." }],
+        iMonitor: [{ en: "Overall operation status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on loading execution — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Confirms pre-loading readiness; authorizes loading; oversees IGS and ullage monitoring and ballasting; coordinates with the terminal throughout; confirms loading complete." }],
+        iMonitor: [{ en: "Loading progress, IGS status, and ullage readings continuously." }],
+        iReport: [{ en: "Status to the Master; confirmations to the terminal." }],
+        iDoNotAuthorize: [{ en: "Departure clearance itself — the Master's call." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Chief Officer's cargo-operation oversight directly, as part of the deck-side team." }],
+        iMonitor: [{ en: "Status alongside the rest of the deck-side team." }],
+        iReport: [{ en: "Observations to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Loading decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Operates cargo pumps and manifold equipment under the Chief Officer's direction, applying the absorbed Pumpman specialization." }],
+        iMonitor: [{ en: "Immediate pump/manifold-level indicators." }],
+        iReport: [{ en: "Observations directly to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Independent action; loading rate or sequencing decisions." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Ensures the inert gas plant's readiness before and during the operation; directs the Second Engineer." }],
+        iMonitor: [{ en: "Overall plant health throughout." }],
+        iReport: [{ en: "Readiness confirmation and any significant deviation to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation decisions themselves." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer with the inert gas plant at working level." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch, supporting the Second Engineer." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any cargo-operation or IGS-plant decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "support",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the five phases of the oil tanker cargo loading operation in the correct order." },
+        items: [
+          { id: "pre_loading_preparation", label: { en: "Pre-Loading Preparation" } },
+          { id: "manifold_connection_and_initial_loading", label: { en: "Manifold Connection and Initial Loading" } },
+          { id: "continuous_loading_with_igs_and_ullage_monitoring", label: { en: "Continuous Loading with IGS and Ullage Monitoring" } },
+          { id: "loading_complete_verification", label: { en: "Loading Complete: Verification" } },
+          { id: "disconnection_and_departure_preparation", label: { en: "Disconnection and Departure Preparation" } },
+        ],
+        correctOrder: ["pre_loading_preparation", "manifold_connection_and_initial_loading", "continuous_loading_with_igs_and_ullage_monitoring", "loading_complete_verification", "disconnection_and_departure_preparation"],
+      },
+      {
+        type: "error_identification",
+        id: "err_skipped_monitoring",
+        targetRanks: ["chief_officer", "ab", "oow"],
+        scenario: { en: "The Chief Officer skips a scheduled ullage check to save time since loading seems to be going smoothly. The AB reports an inert gas system reading deviation immediately to the Chief Officer upon noticing it. Engine reports inert gas plant status as conditions change." },
+        choices: [
+          { id: "c1", label: { en: "Skipping a scheduled ullage check since loading seems to be going smoothly" }, isError: true, explanation: { en: "Violates the explicit rule that atmosphere and cargo-level monitoring is continuous, not conditional on how smoothly things appear to be going." } },
+          { id: "c2", label: { en: "The AB reporting an inert gas system deviation immediately upon noticing it" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "Engine reporting inert gas plant status as conditions change" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "preloading_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The deck team is briefed and the terminal reports ready. Review the readiness snapshot below before authorizing loading to begin." },
+        items: [
+          { id: "terminal_berth_readiness", label: { en: "Manifold and berth readiness confirmed with the terminal" }, isSatisfied: true },
+          { id: "igs_checked", label: { en: "Inert gas system checked, tank atmosphere confirmed within safe limits" }, isSatisfied: true },
+          { id: "static_electricity_briefed", label: { en: "Static electricity precautions briefed to the deck team" }, isSatisfied: true },
+          { id: "engine_igs_plant_readiness", label: { en: "Engine confirms inert gas plant readiness" }, isSatisfied: false },
+          { id: "ballast_plan_reviewed", label: { en: "Ballast plan reviewed and confirmed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Loading is running smoothly and ahead of schedule; there's a temptation to skip or space out ullage checks since everything seems fine." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer maintains the full monitoring schedule regardless of how smoothly things appear to be going." }],
+        why: [{ en: "Tests whether continuous monitoring holds when there's no apparent problem yet." }],
+        commonMistakes: [{ en: "Reducing monitoring frequency because nothing has gone wrong so far." }],
+        safetyPoints: [{ en: "Monitoring exists precisely to catch a problem before it's visible — skipping it because things look fine defeats the purpose." }],
+      },
+      {
+        situation: { en: "A minor task unrelated to cargo operations seems like it could be done quickly during active loading, technically outside the precise precaution zone." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "Static electricity precautions are maintained strictly for the full duration of loading, without exceptions for tasks that seem minor or unrelated." }],
+        why: [{ en: "Tests whether the precaution discipline holds for something that doesn't feel directly related to cargo handling." }],
+        commonMistakes: [{ en: "Making an exception for a task that seems unrelated or low-risk." }],
+        safetyPoints: [{ en: "The explosive atmosphere risk doesn't care whether the ignition source was cargo-related or not." }],
+      },
+      {
+        situation: { en: "The AB, using their absorbed Pumpman expertise, notices something suggesting a faster loading rate would still be safe, and considers adjusting the pump rate directly." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The AB reports the observation to the Chief Officer rather than adjusting the rate independently." }],
+        why: [{ en: "Tests whether the deliberately-not-elevated AB level holds in a concrete moment — skilled execution doesn't come with independent decision authority here, unlike LNG's Second Engineer." }],
+        commonMistakes: [{ en: "Adjusting the rate independently given genuine technical confidence." }],
+        safetyPoints: [{ en: "Skilled execution and decision authority are two different things — this operation's own responsibility structure established that boundary explicitly." }],
+      },
+      {
+        situation: { en: "Loading appears complete based on pump behavior, but final ullage confirmation hasn't yet been formally taken." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms loading complete from the actual final ullage/quantity measurement, not from pump behavior alone." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, adapted to this operation's own signature measurement." }],
+        commonMistakes: [{ en: "Treating apparent pump behavior as sufficient confirmation without taking the final measurement." }],
+        safetyPoints: [{ en: "Confirmed completion depends on the actual measurement, not an inference from how the process looked." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_skilled_execution_bounded_authority",
+        title: { en: "Confident Judgment, Not Independent Authority" },
+        seatRankId: "ab",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the AB, operating the cargo pumps under the Chief Officer's direction. Your absorbed Pumpman training lets you read the pump and ullage trends clearly, and you notice the loading rate could safely go faster than currently instructed." },
+          options: [
+            {
+              id: "a_increase_unilaterally",
+              label: { en: "Increase the pump rate yourself, since your technical read is confident and this is your area of skill." },
+              consequence: { en: "The rate changes without the Chief Officer's knowledge." },
+              feedback: { en: "Skilled execution and rate/sequencing authority are two different things — your confidence in the read doesn't extend to deciding the rate independently." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The inert gas system readings shift as a result — faster loading affects vapor displacement — in a way the Chief Officer wasn't tracking for a rate they didn't know had changed." },
+                options: [
+                  { id: "a1", label: { en: "Continue at the faster rate, since it still seems fine." }, consequence: { en: "The Chief Officer keeps monitoring against a rate that no longer matches what's actually happening." }, feedback: { en: "Compounds the original problem — the Chief Officer's whole monitoring picture is now built on wrong information." } },
+                  { id: "a2", label: { en: "Immediately report the change and revert to the instructed rate." }, consequence: { en: "The Chief Officer's monitoring picture is corrected." }, feedback: { en: "Correct — disclosing and reverting is what lets the Chief Officer's oversight actually mean something again." }, isRecommended: true },
+                  { id: "a3", label: { en: "Quietly revert to the instructed rate without mentioning any of it." }, consequence: { en: "The rate is correct again, but the IGS deviation the Chief Officer noticed is never explained." }, feedback: { en: "Leaves the Chief Officer without the context to understand what actually happened to the readings." } },
+                ],
+              },
+            },
+            {
+              id: "b_report_and_wait",
+              label: { en: "Report the observation to the Chief Officer and wait for their decision." },
+              consequence: { en: "The Chief Officer now has your technical read to inform the rate decision." },
+              feedback: { en: "Correct — your skilled observation is valuable input; the rate decision itself still belongs to the Chief Officer." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "Informed, the Chief Officer decides to increase the rate based on your input, and explicitly directs the new rate." },
+                options: [
+                  { id: "b1", label: { en: "Proceed at the newly directed rate." }, consequence: { en: "The rate changes with the Chief Officer's explicit direction and knowledge." }, feedback: { en: "Correct — this is exactly what reporting first was for." }, isRecommended: true },
+                  { id: "b2", label: { en: "Still hesitate to increase, second-guessing the explicit direction just given." }, consequence: { en: "The correction is delayed by unnecessary hesitation." }, feedback: { en: "The direction just given is real — hesitating past that point adds friction without adding safety." } },
+                  { id: "b3", label: { en: "Increase the rate, but push it further than what was actually directed, given your continued confidence." }, consequence: { en: "The rate now exceeds what the Chief Officer actually authorized." }, feedback: { en: "Oversteps the explicit direction given — confidence doesn't extend the authorization beyond what was actually granted." } },
+                ],
+              },
+            },
+            {
+              id: "c_increase_and_mention_later",
+              label: { en: "Increase the rate slightly, planning to mention it to the Chief Officer afterward if asked." },
+              consequence: { en: "The rate changes quietly, with disclosure deferred to a later, uncertain moment." },
+              feedback: { en: "Planning to explain only if asked isn't the same as reporting — it leaves the decision about whether this matters entirely up to chance." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "Before you've mentioned anything, the Chief Officer notices the rate is different than instructed during a routine check and asks about it." },
+                options: [
+                  { id: "c1", label: { en: "Downplay it, framing it as basically the same as what was instructed." }, consequence: { en: "The Chief Officer is given an inaccurate picture of what actually happened." }, feedback: { en: "Minimizing what happened compounds the original lack of disclosure with an inaccurate account." } },
+                  { id: "c2", label: { en: "Explain fully and honestly what was done and why, now that it's been noticed." }, consequence: { en: "The Chief Officer gets an accurate account, later than it should have come." }, feedback: { en: "Correct, though disclosing only once asked is still later than the moment actually called for." }, isRecommended: true },
+                  { id: "c3", label: { en: "Describe it as a small necessary correction rather than acknowledging it was an independent judgment call." }, consequence: { en: "The Chief Officer doesn't get an accurate picture of what actually happened or why." }, feedback: { en: "Reframing an independent decision as a minor correction misrepresents what actually occurred." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Continuous Monitoring, Regardless of How Smoothly Things Look" },
+        bestPractices: [
+          { en: "Inert gas system and ullage monitoring continue on schedule regardless of how smoothly the loading appears to be going." },
+        ],
+        commonErrors: [
+          { en: "Reducing monitoring frequency because nothing has gone wrong so far." },
+        ],
+      },
+      {
+        theme: { en: "Static Electricity Precautions Hold for Everything" },
+        bestPractices: [
+          { en: "Static electricity precautions apply for the full duration of loading, without exceptions for tasks that seem minor or unrelated to cargo handling." },
+        ],
+        commonErrors: [
+          { en: "Making an exception for a task that seems low-risk or unrelated to the cargo itself." },
+        ],
+      },
+      {
+        theme: { en: "Skilled Execution, Not Independent Authority" },
+        bestPractices: [
+          { en: "A skilled technical observation is reported to the Chief Officer; the rate or sequencing decision itself stays with the Chief Officer." },
+          { en: "Once explicitly directed, the AB proceeds exactly at the rate given — not beyond it, whatever the underlying confidence." },
+        ],
+        commonErrors: [
+          { en: "Acting on a confident technical read without reporting it first." },
+          { en: "Exceeding an explicit direction because of continued personal confidence in the judgment." },
+        ],
+      },
+      {
+        theme: { en: "Proactive Disclosure, Not Disclosure-If-Asked" },
+        bestPractices: [
+          { en: "An independent judgment call is disclosed proactively, not held back until someone happens to notice and ask." },
+        ],
+        commonErrors: [
+          { en: "Planning to explain an independent action only if it's noticed, rather than reporting it at the time." },
+          { en: "Downplaying or reframing an independent decision once it's been noticed, rather than describing it accurately." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Confirmation, Not Inferred From Appearance" },
+        bestPractices: [
+          { en: "Loading completion is confirmed from the actual final ullage/quantity measurement, not inferred from pump behavior." },
+        ],
+        commonErrors: [
+          { en: "Treating apparent pump behavior as sufficient confirmation without taking the final measurement." },
+        ],
+      },
+      {
+        theme: { en: "Engine's Dependency Role" },
+        bestPractices: [
+          { en: "The inert gas plant's readiness is actively confirmed and monitored by Engine throughout, not assumed to simply be available." },
+        ],
+        commonErrors: [
+          { en: "Assuming inert gas plant readiness without it being actively confirmed and maintained." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
