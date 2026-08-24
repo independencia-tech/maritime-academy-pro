@@ -5740,6 +5740,365 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  chemical_tanker_compatibility_verification_loading: {
+    operationId: "chemical_tanker_compatibility_verification_loading",
+    vesselTypeId: "chemical_tanker",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Chemical Tanker — Multi-Cargo Loading with Chemical Compatibility Verification" },
+    introduction: {
+      en: "This operation covers the chemical tanker's own defining task: loading multiple distinct liquid chemical cargoes, each verified for chemical compatibility before it goes into a tank. Unlike Oil Tanker's single homogeneous cargo, a chemical tanker routinely carries dozens of different products simultaneously in separate tanks — the central discipline is confirming, before each cargo is loaded, that it won't react dangerously with residue from that tank's previous cargo or interact through shared systems with cargo in adjacent tanks, governed by the IBC Code's compatibility framework. No prior operation in the catalog covers this: Oil Tanker's inert gas discipline prevents an explosive atmosphere; this prevents a dangerous reaction between two substances — a different mechanism entirely. It's also genuinely distinct from PSV's multi-fluid operation: PSV's core discipline is sustained DP-station-keeping while delivering supply fluids logistically, in open water alongside a platform; this operation is terminal-based loading with a chemistry-verification core and no positioning component at all.",
+    },
+    objectives: [
+      { en: "Describe the sequence of verifying chemical compatibility and loading a new cargo into a chemical tanker's tank." },
+      { en: "Explain why chemical compatibility verification is a genuinely different discipline from atmosphere-control (Oil Tanker) or DP-sustained fluid delivery (PSV) — and why cross-contamination here means a dangerous chemical reaction, not just mixing." },
+      { en: "Explain the role of dedicated per-product loading systems in preventing cross-contact between cargoes." },
+      { en: "Identify who does what during this operation on a chemical tanker specifically." },
+      { en: "Recognize correct versus incorrect prioritization when schedule pressure competes with compatibility verification and tank cleaning discipline." },
+    ],
+    context: {
+      en: "The vessel's own defining task, the same 'owns the signature activity' pattern established across every first operation in the catalog. The card's own 'Pumpman' position is folded into AB, Deck-side per its own wording (same fold as Oil Tanker) — checked independently, not assumed: the compatibility judgment is explicitly the Chief Officer's, the AB's dedicated-system operation is skilled execution under that direction, so responsibilityLevels match Oil Tanker's without elevation. Roster is 7 ranks (Master, Chief Officer, OOW, AB, Chief Engineer, Second Engineer, Third Engineer) — no Bosun, the fourth vessel in a row without one, read the same way as Tugboat/LNG/Oil Tanker's clean lists. Phases A-E repeat for each distinct cargo in the loading sequence, the same 'repeated per leg' overview pattern AHTS's Anchor Deployment phase first established. Not asserting specific IBC Code compatibility charts, chemical reaction specifics, or tank coating engineering details — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "pre_loading_compatibility_verification",
+      "tank_cleaning_verification",
+      "dedicated_system_connection_and_initial_loading",
+      "continuous_loading_with_compatibility_and_contamination_monitoring",
+      "cargo_loading_complete_verification",
+      "disconnection_and_departure_preparation",
+    ],
+    operationPhases: {
+      pre_loading_compatibility_verification: {
+        id: "pre_loading_compatibility_verification",
+        title: { en: "Pre-Loading Compatibility Verification" },
+        overview: { en: "Repeated for each cargo in the loading sequence." },
+        steps: [
+          { en: "The next cargo's compatibility checked against the tank's cleaned state (or previous cargo residue) and against any cargo in adjacent tanks sharing systems, using the vessel's compatibility reference." },
+          { en: "Tank material suitability confirmed for the specific chemical." },
+        ],
+      },
+      tank_cleaning_verification: {
+        id: "tank_cleaning_verification",
+        title: { en: "Tank Cleaning Verification" },
+        steps: [
+          { en: "Tank cleaning confirmed to the standard required for this specific cargo — different chemicals require different cleaning rigor." },
+          { en: "No trace residue remaining that could react with the incoming cargo." },
+        ],
+      },
+      dedicated_system_connection_and_initial_loading: {
+        id: "dedicated_system_connection_and_initial_loading",
+        title: { en: "Dedicated System Connection and Initial Loading" },
+        steps: [
+          { en: "The dedicated loading system for this specific product connected — a separate line per product, physically preventing cross-contact with other cargoes." },
+          { en: "Loading begins at a reduced rate to verify system integrity before ramping to full rate." },
+        ],
+      },
+      continuous_loading_with_compatibility_and_contamination_monitoring: {
+        id: "continuous_loading_with_compatibility_and_contamination_monitoring",
+        title: { en: "Continuous Loading with Compatibility and Contamination Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of this cargo's loading, not a one-time check." },
+        steps: [
+          { en: "Continuous monitoring for any sign of unexpected reaction — temperature change, unusual odor or vapor, pressure change." },
+          { en: "Continuous verification that the dedicated system is functioning correctly, with no cross-contact via shared vents or lines." },
+          { en: "Ullage measurements taken continuously against the loading plan." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      cargo_loading_complete_verification: {
+        id: "cargo_loading_complete_verification",
+        title: { en: "Cargo Loading Complete: Verification" },
+        overview: { en: "Phases A-E repeat for each remaining cargo in the loading sequence." },
+        steps: [
+          { en: "Final quantity confirmed and documentation completed for this cargo." },
+          { en: "Tank sealed/segregated per its compatibility requirements before the next cargo's cycle begins." },
+        ],
+      },
+      disconnection_and_departure_preparation: {
+        id: "disconnection_and_departure_preparation",
+        title: { en: "Disconnection and Departure Preparation" },
+        steps: [
+          { en: "All dedicated systems disconnected once every cargo is loaded." },
+          { en: "Final checks completed." },
+          { en: "Departure preparations; schedule confirmed." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "terminal_provides_cargo_sequence", phaseId: "pre_loading_compatibility_verification", from: "terminal", to: "deck", trigger: { en: "Before loading sequence begins" }, content: { en: "Terminal provides the cargo loading sequence and product specifications." }, whyItMatters: { en: "The vessel doesn't decide what to carry — it verifies each cargo's compatibility before accepting it." } },
+      { id: "compatibility_confirmed_to_terminal", phaseId: "pre_loading_compatibility_verification", from: "deck", to: "terminal", trigger: { en: "Compatibility verified for this cargo" }, content: { en: "Chief Officer confirms this cargo is cleared to load into the designated tank." }, whyItMatters: { en: "Same confirm-before-starting pattern as every prior pre-operation channel, but per-cargo rather than once." } },
+      { id: "tank_cleaning_confirmation", phaseId: "tank_cleaning_verification", from: "deck_team", to: "deck", trigger: { en: "Cleaning complete" }, content: { en: "Deck team confirms tank cleaning meets the standard required for this cargo." }, whyItMatters: { en: "The specific standard varies by chemical — this isn't a single generic cleaning check." } },
+      { id: "engine_system_readiness", phaseId: "dedicated_system_connection_and_initial_loading", from: "engine", to: "deck", trigger: { en: "Before each cargo's loading begins" }, content: { en: "Confirmation that the dedicated system for this product is operating normally." }, whyItMatters: { en: "Echoes the established ownership/dependency framing — Deck owns compatibility verification, Engine maintains the systems involved." } },
+      { id: "initial_loading_verification", phaseId: "dedicated_system_connection_and_initial_loading", from: "deck", to: "terminal", trigger: { en: "After reduced-rate loading begins" }, content: { en: "Confirmation that system integrity checks passed; ready to ramp to full rate." }, whyItMatters: { en: "The reduced-rate verification step exists specifically to catch a problem before committing to full-rate transfer." } },
+      { id: "loading_status_to_bridge", phaseId: "continuous_loading_with_compatibility_and_contamination_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during each cargo's loading" }, content: { en: "Chief Officer reports loading progress and any deviation to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior operation." } },
+      { id: "cargo_complete_confirmation", phaseId: "cargo_loading_complete_verification", from: "deck", to: "terminal", trigger: { en: "Each cargo's loading complete" }, content: { en: "Final quantity and documentation exchanged; tank sealed/segregated." }, whyItMatters: { en: "Closes each cargo's cycle with an explicit, mutual record before the next begins." } },
+      { id: "all_cargo_complete_to_master", phaseId: "disconnection_and_departure_preparation", from: "deck", to: "bridge", trigger: { en: "All cargoes loaded" }, content: { en: "Chief Officer confirms all cargoes loaded and compatibility-verified to the Master." }, whyItMatters: { en: "Explicit confirmation that the full multi-cargo sequence is complete, not assumed once the last line disconnects." } },
+      { id: "departure_clearance", phaseId: "disconnection_and_departure_preparation", from: "bridge", to: "terminal", trigger: { en: "Ready to depart" }, content: { en: "Departure clearance." }, whyItMatters: { en: "Standard closing touchpoint." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Overall command, oversight-focused rather than hands-on — the same background role as every routine first operation's Master except AHTS." } },
+      { rankId: "chief_officer", identity: { en: "The signature role, explicitly named in the vessel's own content as responsible for the multi-product cargo plan. Owns the entire compatibility-verification discipline across the full multi-cargo sequence: per-cargo compatibility checks, tank cleaning verification, dedicated system oversight, coordinating with the terminal throughout." } },
+      { rankId: "oow", identity: { en: "The fourth confirmed occurrence of the no-navigation-to-attach-to departure (after Container Ship, LNG, Oil Tanker) — now a fully mature, expected shape for terminal-loading operations specifically." } },
+      { rankId: "ab", identity: { en: "Absorbs the card's 'Pumpman' cargo-pump specialist duties, the same fold decision as Oil Tanker. Connects and operates the dedicated per-product loading system under the Chief Officer's direction, working directly without a Bosun intermediary — the fourth confirmed occurrence of that structural shape." } },
+      { rankId: "chief_engineer", identity: { en: "Owns the dedicated loading systems' readiness and maintenance across all cargo types — reports and sustains rather than executes hands-on, the same support shape as every prior routine-operation Chief Engineer." } },
+      { rankId: "second_engineer", identity: { en: "Assists the Chief Engineer with the dedicated systems at working level — the standard template." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness, supporting the Second Engineer — the same lighter role as every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall command; authorizes the loading sequence to begin, informed by the Chief Officer's compatibility assessments; grants final departure clearance." }],
+        iMonitor: [{ en: "Overall operation status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on compatibility verification or loading execution — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Verifies compatibility for each cargo before loading; confirms tank cleaning meets the required standard; oversees dedicated system connections and continuous monitoring; coordinates with the terminal throughout the full multi-cargo sequence." }],
+        iMonitor: [{ en: "Compatibility status, tank cleaning status, and loading progress continuously, cargo by cargo." }],
+        iReport: [{ en: "Status to the Master; confirmations to the terminal, cargo by cargo." }],
+        iDoNotAuthorize: [{ en: "Departure clearance itself — the Master's call." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Chief Officer's cargo-operation oversight directly, as part of the deck-side team." }],
+        iMonitor: [{ en: "Status alongside the rest of the deck-side team." }],
+        iReport: [{ en: "Observations to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Compatibility or loading decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Connects and operates the dedicated per-product loading system under the Chief Officer's direction, applying the absorbed Pumpman specialization." }],
+        iMonitor: [{ en: "Immediate dedicated-system-level indicators." }],
+        iReport: [{ en: "Observations directly to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Independent action; compatibility judgment calls." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Ensures the dedicated loading systems' readiness across all cargo types; directs the Second Engineer." }],
+        iMonitor: [{ en: "Overall system health throughout." }],
+        iReport: [{ en: "Readiness confirmation and any significant deviation to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation or compatibility decisions themselves." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer with the dedicated loading systems at working level." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch, supporting the Second Engineer." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any cargo-operation or compatibility decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "support",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the six phases of the chemical tanker compatibility-verification loading cycle in the correct order." },
+        items: [
+          { id: "pre_loading_compatibility_verification", label: { en: "Pre-Loading Compatibility Verification" } },
+          { id: "tank_cleaning_verification", label: { en: "Tank Cleaning Verification" } },
+          { id: "dedicated_system_connection_and_initial_loading", label: { en: "Dedicated System Connection and Initial Loading" } },
+          { id: "continuous_loading_with_compatibility_and_contamination_monitoring", label: { en: "Continuous Loading with Compatibility and Contamination Monitoring" } },
+          { id: "cargo_loading_complete_verification", label: { en: "Cargo Loading Complete: Verification" } },
+          { id: "disconnection_and_departure_preparation", label: { en: "Disconnection and Departure Preparation" } },
+        ],
+        correctOrder: ["pre_loading_compatibility_verification", "tank_cleaning_verification", "dedicated_system_connection_and_initial_loading", "continuous_loading_with_compatibility_and_contamination_monitoring", "cargo_loading_complete_verification", "disconnection_and_departure_preparation"],
+      },
+      {
+        type: "error_identification",
+        id: "err_skipped_compatibility_check",
+        targetRanks: ["chief_officer", "ab", "oow"],
+        scenario: { en: "The Chief Officer skips the compatibility check for a cargo since it seems similar enough to what was loaded before. The AB reports an unusual odor immediately to the Chief Officer upon noticing it. Engine reports dedicated system status as conditions change." },
+        choices: [
+          { id: "c1", label: { en: "Skipping the compatibility check since the cargo seems similar to a previous one" }, isError: true, explanation: { en: "Violates the explicit rule that every cargo is verified individually, since apparent similarity isn't the same as confirmed chemical compatibility." } },
+          { id: "c2", label: { en: "The AB reporting an unusual odor immediately upon noticing it" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "Engine reporting dedicated system status as conditions change" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "percargo_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The next cargo is queued and the deck team is standing by. Review the readiness snapshot below before authorizing this cargo's loading to begin." },
+        items: [
+          { id: "compatibility_verified", label: { en: "Cargo compatibility verified against tank state and adjacent tanks" }, isSatisfied: true },
+          { id: "tank_cleaning_confirmed", label: { en: "Tank cleaning confirmed to the required standard for this cargo" }, isSatisfied: true },
+          { id: "dedicated_system_connected", label: { en: "Dedicated system connected" }, isSatisfied: true },
+          { id: "engine_system_readiness", label: { en: "Engine confirms dedicated system readiness" }, isSatisfied: false },
+          { id: "terminal_specs_confirmed", label: { en: "Terminal confirms cargo specifications match the loading sequence" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "A new cargo is chemically similar to one loaded many times before, and there's a temptation to skip the full compatibility check since 'it's basically the same as always.'" },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer verifies compatibility for this specific cargo, regardless of how similar it seems to previous ones." }],
+        why: [{ en: "Tests whether the per-cargo verification discipline holds against the assumption that familiarity substitutes for verification." }],
+        commonMistakes: [{ en: "Skipping or abbreviating the check because the cargo seems familiar." }],
+        safetyPoints: [{ en: "A cargo that's 'basically the same' can still differ in a way that matters for compatibility." }],
+      },
+      {
+        situation: { en: "Using a shared or improvised connection would save time, given the dedicated line for this specific product isn't immediately available." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer insists on the dedicated system for this specific product, even if it costs more time." }],
+        why: [{ en: "Tests whether the dedicated-system discipline holds under a practical time-pressure temptation." }],
+        commonMistakes: [{ en: "Using a shared or improvised connection to save time." }],
+        safetyPoints: [{ en: "Dedicated systems exist specifically to prevent cross-contact — a shortcut here defeats their entire purpose." }],
+      },
+      {
+        situation: { en: "A tank looks visually clean after cleaning, and there's a temptation to proceed without confirming against the full standard specific to the next cargo." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms tank cleaning meets the specific standard required for the next cargo, not just visual cleanliness." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, adapted to this operation's own tank-cleaning verification." }],
+        commonMistakes: [{ en: "Treating visual cleanliness as sufficient confirmation without checking the cargo-specific standard." }],
+        safetyPoints: [{ en: "Different chemicals require different cleaning rigor — visual cleanliness doesn't confirm the trace-residue standard a specific next cargo actually needs." }],
+      },
+      {
+        situation: { en: "The Chief Officer isn't fully certain whether a specific compatibility question has a clear answer, given the ambiguity of this particular product combination." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer reports the genuine uncertainty and seeks clarification rather than making a confident-sounding call on ambiguous information." }],
+        why: [{ en: "Echoes the established honest-assessment-under-uncertainty value already proven in the catalog." }],
+        commonMistakes: [{ en: "Making a confident-sounding compatibility call despite genuine ambiguity in the reference material." }],
+        safetyPoints: [{ en: "A compatibility question genuinely unresolved by available reference material needs escalation, not a confident guess." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_pattern_versus_verification",
+        title: { en: "Relying on Pattern, or Verifying Again" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Chief Officer. The next cargo to load is chemically similar to one loaded many times before on this route, and the crew is moving efficiently through the pre-loading sequence. Something makes you pause: is this specific combination actually verified, or are you relying on memory of prior loads?" },
+          options: [
+            {
+              id: "a_proceed_on_pattern",
+              label: { en: "Proceed based on the established pattern from prior loads, since it's essentially the same combination as always." },
+              consequence: { en: "Loading proceeds without this specific cargo having actually been verified." },
+              feedback: { en: "A pattern from prior loads isn't the same as verification of this specific cargo — the rule exists precisely because a detail can differ without being obvious." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "Partway through loading, a temperature anomaly develops — a detail about this specific cargo turned out to differ from what was assumed based on the pattern." },
+                options: [
+                  { id: "a1", label: { en: "Continue, since it's probably fine." }, consequence: { en: "Loading proceeds with an unresolved, genuine compatibility concern." }, feedback: { en: "The anomaly is exactly the kind of signal the skipped verification exists to catch." } },
+                  { id: "a2", label: { en: "Immediately halt and properly verify now, however late." }, consequence: { en: "The compatibility question is finally resolved, later than it should have been." }, feedback: { en: "Correct, though the earlier assumption already cost time and risk that verification up front would have avoided." }, isRecommended: true },
+                  { id: "a3", label: { en: "Keep going but watch more closely without pausing loading." }, consequence: { en: "Loading continues while the actual compatibility question remains unresolved." }, feedback: { en: "Closer watching doesn't answer the compatibility question — only the verification itself does." } },
+                ],
+              },
+            },
+            {
+              id: "b_full_verification",
+              label: { en: "Perform the full compatibility verification for this specific cargo, even though it takes extra time." },
+              consequence: { en: "The cargo's actual compatibility is genuinely established, not assumed from pattern." },
+              feedback: { en: "Correct — the extra time is exactly what per-cargo verification is for." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The verification reveals a genuine ambiguity in the reference material — this specific combination isn't clearly resolved either way." },
+                options: [
+                  { id: "b1", label: { en: "Make a confident-sounding call anyway, to keep things moving." }, consequence: { en: "A decision is made on a compatibility question that was never actually resolved." }, feedback: { en: "Sounding confident doesn't resolve a genuinely ambiguous question." } },
+                  { id: "b2", label: { en: "Report the genuine uncertainty and seek clarification or escalate before proceeding." }, consequence: { en: "The ambiguity is addressed through the proper channel before loading proceeds." }, feedback: { en: "Correct — genuine ambiguity in the reference material needs escalation, not a confident guess." }, isRecommended: true },
+                  { id: "b3", label: { en: "Default to proceeding since nothing definitively said the cargo was incompatible." }, consequence: { en: "Loading proceeds on the absence of a clear \"no,\" not the presence of a clear \"yes.\"" }, feedback: { en: "The absence of a definitive \"incompatible\" finding isn't the same as a confirmed compatible one." } },
+                ],
+              },
+            },
+            {
+              id: "c_abbreviated_check",
+              label: { en: "Do a partial, abbreviated check, splitting the difference between speed and thoroughness." },
+              consequence: { en: "A check is performed, but not the full verification the operation calls for." },
+              feedback: { en: "An abbreviated check isn't a smaller version of verification — it's a gap dressed up as one." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The abbreviated check missed something the full check would have caught." },
+                options: [
+                  { id: "c1", label: { en: "Continue, since the abbreviated check technically didn't turn anything up." }, consequence: { en: "Loading proceeds on a check that was never actually complete." }, feedback: { en: "An incomplete check turning up nothing isn't the same as a complete check confirming compatibility." } },
+                  { id: "c2", label: { en: "Recognize the check was incomplete and go back to complete it properly." }, consequence: { en: "The verification is actually completed, later than it should have been." }, feedback: { en: "Correct — recognizing the gap and closing it is what the discipline actually requires." }, isRecommended: true },
+                  { id: "c3", label: { en: "Treat the abbreviated check as sufficient going forward for similar cases too." }, consequence: { en: "The shortcut becomes a habit rather than a one-time lapse." }, feedback: { en: "Compounds a single shortcut into a standing bad practice." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Per-Cargo Verification, Not Pattern Recognition" },
+        bestPractices: [
+          { en: "Every cargo is verified for compatibility individually, regardless of how similar it appears to a cargo loaded many times before." },
+        ],
+        commonErrors: [
+          { en: "Relying on the pattern from prior loads instead of verifying this specific cargo." },
+          { en: "Performing an abbreviated check as a compromise between speed and full verification." },
+        ],
+      },
+      {
+        theme: { en: "Dedicated System Integrity" },
+        bestPractices: [
+          { en: "The dedicated per-product loading system is used for its specific cargo, even when a shared or improvised connection would be faster." },
+        ],
+        commonErrors: [
+          { en: "Using a shared or improvised connection to save time, defeating the purpose of the dedicated system." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Tank-Cleaning Confirmation, Not Visual Appearance" },
+        bestPractices: [
+          { en: "Tank cleaning is confirmed against the specific standard required for the next cargo, not judged by visual cleanliness alone." },
+        ],
+        commonErrors: [
+          { en: "Treating visual cleanliness as sufficient confirmation without checking the cargo-specific standard." },
+        ],
+      },
+      {
+        theme: { en: "Honest Escalation of Genuine Ambiguity" },
+        bestPractices: [
+          { en: "A compatibility question genuinely unresolved by the reference material is escalated or clarified, not resolved with a confident-sounding guess." },
+        ],
+        commonErrors: [
+          { en: "Making a confident compatibility call despite genuine ambiguity in the reference material." },
+          { en: "Treating the absence of a definitive 'incompatible' finding as equivalent to a confirmed compatible one." },
+        ],
+      },
+      {
+        theme: { en: "Catching a Skipped Verification Before It Compounds" },
+        bestPractices: [
+          { en: "A skipped or incomplete verification is corrected the moment it's recognized, even mid-loading, rather than allowed to continue." },
+        ],
+        commonErrors: [
+          { en: "Continuing loading on an unresolved compatibility question because stopping mid-process feels disruptive." },
+        ],
+      },
+      {
+        theme: { en: "Compatibility Judgment Stays With the Chief Officer" },
+        bestPractices: [
+          { en: "Compatibility verification and the judgment calls it requires stay with the Chief Officer, informed by — but not delegated to — execution-level observations from the rest of the deck team." },
+        ],
+        commonErrors: [
+          { en: "Treating execution-level familiarity with a cargo type as a substitute for the Chief Officer's own verification." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
