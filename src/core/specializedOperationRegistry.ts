@@ -6478,6 +6478,346 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  lpg_cargo_loading_pressurized_containment: {
+    operationId: "lpg_cargo_loading_pressurized_containment",
+    vesselTypeId: "lpg_carrier",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "LPG Carrier — Cargo Loading Under Pressurized Containment" },
+    introduction: {
+      en: "This operation covers the LPG carrier's own defining task: loading liquefied petroleum gas into pressurized Type C tanks, with the central discipline being verifying and maintaining tank pressure within safe limits throughout — a genuinely different physical regime from anything built so far. Unlike LNG's cryogenic refrigeration (a temperature-driven containment discipline) or Oil Tanker/Chemical Tanker's atmospheric-pressure tanks (inerting- or compatibility-driven disciplines), LPG's pressurized mode relies on the tank's own structural pressure rating to keep the gas liquid at near-ambient temperature. Before loading, tanks are inerted and purged to establish the correct starting gas purity and pressure conditions. No prior operation in the catalog covers pressure-vessel integrity as its central discipline.",
+    },
+    objectives: [
+      { en: "Describe the sequence of loading LPG into pressurized Type C tanks, from pre-loading inerting/purging through completion." },
+      { en: "Explain why pressure verification, not temperature management, is this operation's central discipline — and how that differs from LNG's cryogenic cooldown." },
+      { en: "Explain the role of tank inerting/purging in establishing correct starting conditions before loading." },
+      { en: "Identify who does what during this operation on an LPG carrier specifically." },
+      { en: "Recognize correct versus incorrect prioritization when schedule pressure competes with pressure/gas-detection monitoring discipline." },
+    ],
+    context: {
+      en: "The vessel's own defining task, the same 'owns the signature activity' pattern established across every first operation in the catalog. Genuinely distinct physical regime from every prior operation: pressure-vessel integrity (LPG) vs. cryogenic thermal management (LNG) vs. inert atmosphere (Oil Tanker) vs. chemical compatibility (Chemical Tanker). The card's own 'Gas Engineer/Cargo Engineer' position folds into Second Engineer, the same fold and literal naming as LNG, but resolved to responsibilityLevel 'support' rather than LNG's 'lead' — checked independently, not assumed to match by name alone. Roster is 7 ranks (Master, Chief Officer, OOW, AB, Chief Engineer, Second Engineer, Third Engineer), no Bosun, per the confirmed generic-summary reading of this card's vaguer phrasing style. 'HSE personnel' folds into the Chief Officer's existing safety ownership, not a separate rank. Not asserting specific pressure thresholds, Type C tank engineering specifics, or exact inerting/purging procedures — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "pre_loading_inerting_and_purging",
+      "loading_arm_connection_and_initial_loading",
+      "continuous_loading_with_pressure_and_gas_detection_monitoring",
+      "loading_complete_verification",
+      "disconnection_and_departure_preparation",
+    ],
+    operationPhases: {
+      pre_loading_inerting_and_purging: {
+        id: "pre_loading_inerting_and_purging",
+        title: { en: "Pre-Loading Inerting and Purging" },
+        steps: [
+          { en: "Tank inerted and purged to establish correct starting gas purity and pressure conditions." },
+          { en: "Gas detection systems checked." },
+          { en: "Loading arm connection readiness confirmed with the terminal." },
+          { en: "Communication protocol confirmed with the terminal." },
+        ],
+      },
+      loading_arm_connection_and_initial_loading: {
+        id: "loading_arm_connection_and_initial_loading",
+        title: { en: "Loading Arm Connection and Initial Loading" },
+        steps: [
+          { en: "Loading arm connected." },
+          { en: "Loading begins at a reduced rate to verify system integrity before ramping to full rate." },
+        ],
+      },
+      continuous_loading_with_pressure_and_gas_detection_monitoring: {
+        id: "continuous_loading_with_pressure_and_gas_detection_monitoring",
+        title: { en: "Continuous Loading with Pressure and Gas Detection Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of loading, not a one-time check: tank pressure, gas detection readings, and cargo quality are all monitored continuously as cargo is transferred." },
+        steps: [
+          { en: "Loading proceeds at full rate once initial verification is complete." },
+          { en: "Tank pressure continuously monitored against safe limits — the central discipline here, distinct from LNG's temperature focus." },
+          { en: "Gas detection systems monitored continuously for any leak indication." },
+          { en: "Sampling and quality verification conducted per plan." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      loading_complete_verification: {
+        id: "loading_complete_verification",
+        title: { en: "Loading Complete: Verification" },
+        steps: [
+          { en: "Final quantity and pressure confirmed and documentation completed." },
+          { en: "Confirmation exchanged with the terminal that loading is complete." },
+        ],
+      },
+      disconnection_and_departure_preparation: {
+        id: "disconnection_and_departure_preparation",
+        title: { en: "Disconnection and Departure Preparation" },
+        steps: [
+          { en: "Loading arm disconnected." },
+          { en: "Final checks completed." },
+          { en: "Departure preparations; schedule confirmed." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "terminal_readiness_confirmation", phaseId: "pre_loading_inerting_and_purging", from: "terminal", to: "deck", trigger: { en: "Before inerting/purging begins" }, content: { en: "Terminal confirms loading arm and berth readiness." }, whyItMatters: { en: "The plan/readiness originates externally, same confirm-before-starting pattern as every prior pre-operation channel." } },
+      { id: "engine_pressure_system_readiness", phaseId: "pre_loading_inerting_and_purging", from: "engine", to: "deck", trigger: { en: "Before loading begins" }, content: { en: "Confirmation that pressure/refrigeration systems and gas detection equipment are operating normally." }, whyItMatters: { en: "Echoes the established ownership/dependency framing — Deck owns the cargo operation, Engine supplies the critical systems it depends on." } },
+      { id: "loading_authorization", phaseId: "pre_loading_inerting_and_purging", from: "deck", to: "terminal", trigger: { en: "Pre-loading checks complete" }, content: { en: "Vessel confirms readiness to begin loading." }, whyItMatters: { en: "Same confirm-before-starting pattern." } },
+      { id: "initial_loading_verification", phaseId: "loading_arm_connection_and_initial_loading", from: "deck", to: "terminal", trigger: { en: "After reduced-rate loading begins" }, content: { en: "Confirmation that system integrity checks passed; ready to ramp to full rate." }, whyItMatters: { en: "The reduced-rate verification step exists specifically to catch a problem before committing to full-rate transfer." } },
+      { id: "pressure_status_ongoing", phaseId: "continuous_loading_with_pressure_and_gas_detection_monitoring", from: "engine", to: "deck", trigger: { en: "Continuous during loading" }, content: { en: "Engine reports pressure/refrigeration system status and any deviation to the Chief Officer." }, whyItMatters: { en: "A real, ongoing Engine input to the Deck-owned cargo operation." } },
+      { id: "loading_status_to_bridge", phaseId: "continuous_loading_with_pressure_and_gas_detection_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during loading" }, content: { en: "Chief Officer reports loading progress, pressure readings, and any deviation to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior operation." } },
+      { id: "quantity_confirmation", phaseId: "loading_complete_verification", from: "terminal", to: "deck", trigger: { en: "Loading complete" }, content: { en: "Final quantity and pressure documentation exchanged." }, whyItMatters: { en: "Closes the transfer with an explicit, mutual record." } },
+      { id: "departure_clearance", phaseId: "disconnection_and_departure_preparation", from: "bridge", to: "terminal", trigger: { en: "Ready to depart" }, content: { en: "Departure clearance." }, whyItMatters: { en: "Standard closing touchpoint." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Overall command, oversight-focused rather than hands-on — the same background role as every routine first operation's Master except AHTS." } },
+      { rankId: "chief_officer", identity: { en: "The signature role, Cargo Officer duties folded in per the card's own 'Chief Officer/Cargo Officer' naming. Owns the entire pressure-verification discipline: pre-loading inerting/purging oversight, continuous pressure and gas-detection monitoring, coordinating with the terminal throughout. HSE safety ownership folds in here too." } },
+      { rankId: "oow", identity: { en: "The fifth confirmed occurrence of the no-navigation-to-attach-to departure (after Container Ship, LNG, Oil Tanker, Chemical Tanker) — mapped from the card's 'specialized gas cargo officers' phrasing." } },
+      { rankId: "ab", identity: { en: "Mapped from the card's 'qualified cargo ratings' phrasing. Works directly under the Chief Officer's direction, no Bosun intermediary — the fifth confirmed occurrence of that structural shape." } },
+      { rankId: "chief_engineer", identity: { en: "Owns overall pressure/refrigeration system readiness before and during the operation — reports and sustains rather than executes hands-on, the same support shape as every prior routine-operation Chief Engineer." } },
+      { rankId: "second_engineer", identity: { en: "Absorbs the card's 'Gas Engineer/Cargo Engineer' specialist duties, the same fold decision and literal naming as LNG — but confirmed at the standard support level here, not LNG's elevated lead." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness, supporting the Second Engineer — the same lighter role as every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall command; authorizes loading to begin, informed by the Chief Officer's readiness assessment; grants final departure clearance." }],
+        iMonitor: [{ en: "Overall operation status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on loading execution — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Oversees pre-loading inerting/purging; authorizes loading; oversees continuous pressure and gas-detection monitoring; coordinates with the terminal throughout; confirms loading complete." }],
+        iMonitor: [{ en: "Tank pressure, gas detection readings, and loading progress continuously." }],
+        iReport: [{ en: "Status to the Master; confirmations to the terminal." }],
+        iDoNotAuthorize: [{ en: "Departure clearance itself — the Master's call." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Chief Officer's cargo-operation oversight directly, as part of the deck-side team." }],
+        iMonitor: [{ en: "Status alongside the rest of the deck-side team." }],
+        iReport: [{ en: "Observations to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Loading decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Assists with loading arm connection and deck-level monitoring, under the Chief Officer's direction." }],
+        iMonitor: [{ en: "Immediate deck-level indicators." }],
+        iReport: [{ en: "Observations directly to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Independent action; loading rate or sequencing decisions." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Ensures pressure/refrigeration system readiness before and during the operation; directs the Second Engineer." }],
+        iMonitor: [{ en: "Overall system health throughout." }],
+        iReport: [{ en: "Readiness confirmation and any significant deviation to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation decisions themselves." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer with pressure/refrigeration system maintenance at working level." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch, supporting the Second Engineer." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any cargo-operation or pressure-system decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "support",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the five phases of the LPG cargo loading operation in the correct order." },
+        items: [
+          { id: "pre_loading_inerting_and_purging", label: { en: "Pre-Loading Inerting and Purging" } },
+          { id: "loading_arm_connection_and_initial_loading", label: { en: "Loading Arm Connection and Initial Loading" } },
+          { id: "continuous_loading_with_pressure_and_gas_detection_monitoring", label: { en: "Continuous Loading with Pressure and Gas Detection Monitoring" } },
+          { id: "loading_complete_verification", label: { en: "Loading Complete: Verification" } },
+          { id: "disconnection_and_departure_preparation", label: { en: "Disconnection and Departure Preparation" } },
+        ],
+        correctOrder: ["pre_loading_inerting_and_purging", "loading_arm_connection_and_initial_loading", "continuous_loading_with_pressure_and_gas_detection_monitoring", "loading_complete_verification", "disconnection_and_departure_preparation"],
+      },
+      {
+        type: "error_identification",
+        id: "err_skipped_pressure_check",
+        targetRanks: ["chief_officer", "ab", "oow"],
+        scenario: { en: "The Chief Officer skips a scheduled pressure check to save time since loading seems to be going smoothly. The AB reports a gas detection deviation immediately to the Chief Officer upon noticing it. Engine reports pressure/refrigeration system status as conditions change." },
+        choices: [
+          { id: "c1", label: { en: "Skipping a scheduled pressure check since loading seems to be going smoothly" }, isError: true, explanation: { en: "Violates the explicit rule that pressure and gas-detection monitoring is continuous, not conditional on how smoothly things appear to be going." } },
+          { id: "c2", label: { en: "The AB reporting a gas detection deviation immediately upon noticing it" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "Engine reporting pressure/refrigeration system status as conditions change" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "preloading_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The tank has been inerted and purged and the terminal reports ready. Review the readiness snapshot below before authorizing loading to begin." },
+        items: [
+          { id: "tank_inerted_purged", label: { en: "Tank inerted and purged, correct starting conditions confirmed" }, isSatisfied: true },
+          { id: "gas_detection_checked", label: { en: "Gas detection systems checked" }, isSatisfied: true },
+          { id: "terminal_arm_readiness", label: { en: "Loading arm and berth readiness confirmed with the terminal" }, isSatisfied: true },
+          { id: "engine_pressure_readiness", label: { en: "Engine confirms pressure/refrigeration system readiness" }, isSatisfied: false },
+          { id: "terminal_confirms_readiness", label: { en: "Terminal confirms readiness to begin loading" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Loading is running smoothly and ahead of schedule; there's a temptation to reduce the frequency of pressure checks since everything seems fine." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer maintains the full monitoring schedule regardless of how smoothly things appear to be going." }],
+        why: [{ en: "Tests whether continuous pressure monitoring holds when there's no apparent problem yet." }],
+        commonMistakes: [{ en: "Reducing monitoring frequency because nothing has gone wrong so far." }],
+        safetyPoints: [{ en: "Monitoring exists precisely to catch a problem before it's visible." }],
+      },
+      {
+        situation: { en: "The tank appears ready and there's a temptation to skip or abbreviate the inerting/purging step to save time before loading begins." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer ensures the tank is properly inerted and purged to the required standard before loading begins, regardless of how ready it appears." }],
+        why: [{ en: "Tests whether the pre-loading discipline holds against the assumption that a tank looking ready means it's actually ready." }],
+        commonMistakes: [{ en: "Skipping or abbreviating inerting/purging because the tank appears ready." }],
+        safetyPoints: [{ en: "Correct starting gas purity and pressure conditions can't be assumed from appearance — they need to be established and confirmed." }],
+      },
+      {
+        situation: { en: "Loading appears complete based on flow behavior, but final quantity/pressure confirmation hasn't yet been formally taken." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms loading complete from the actual final quantity/pressure measurement, not from flow behavior alone." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, adapted to this operation's own signature measurement." }],
+        commonMistakes: [{ en: "Treating apparent flow behavior as sufficient confirmation without taking the final measurement." }],
+        safetyPoints: [{ en: "Confirmed completion depends on the actual measurement, not an inference from how the process looked." }],
+      },
+      {
+        situation: { en: "A pressure or gas-detection reading shows something slightly off, and there's uncertainty about whether it's significant." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The anomaly is reported honestly and immediately, including the genuine uncertainty about its significance, rather than waiting to be sure or downplaying it." }],
+        why: [{ en: "Echoes the established honest-reporting-under-uncertainty value already proven in the catalog." }],
+        commonMistakes: [{ en: "Waiting to be certain before reporting, or downplaying the anomaly to avoid causing unnecessary concern." }],
+        safetyPoints: [{ en: "An honestly reported, appropriately uncertain observation is what lets the Chief Officer make an informed call." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_calibrated_reporting",
+        title: { en: "Reporting It Accurately, Not Just Reporting It" },
+        seatRankId: "ab",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the AB. During continuous loading, you notice a gas detection reading that's slightly elevated — not clearly alarming, but not obviously nothing either. You need to report it to the Chief Officer." },
+          options: [
+            {
+              id: "a_overstate_as_confirmed",
+              label: { en: "Report it as a confirmed problem, to make sure it's taken seriously." },
+              consequence: { en: "The Chief Officer treats it as a confirmed issue rather than an ambiguous reading." },
+              feedback: { en: "Overstating an ambiguous reading as confirmed doesn't make the report more useful — it makes the response based on it inaccurate from the start." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The Chief Officer responds at full emergency level — halting loading, alerting the Master — based on the overstated report, more than the actual situation may have warranted." },
+                options: [
+                  { id: "a1", label: { en: "Let the response continue at that level, since it's already in motion." }, consequence: { en: "The response proceeds on a picture that was never accurate." }, feedback: { en: "Leaving an inaccurate picture uncorrected doesn't get more accurate just because a response is already underway." } },
+                  { id: "a2", label: { en: "Immediately clarify that the reading was ambiguous, not confirmed, to right-size the response." }, consequence: { en: "The Chief Officer can now calibrate the response to what's actually known." }, feedback: { en: "Correct — correcting the record lets the response match the actual situation, whatever that turns out to be." }, isRecommended: true },
+                  { id: "a3", label: { en: "Double down on the confirmed-problem framing, to avoid looking like you overreacted." }, consequence: { en: "The Chief Officer continues responding to a picture that isn't accurate." }, feedback: { en: "Protects appearances at the cost of the Chief Officer having an accurate picture to work from." } },
+                ],
+              },
+            },
+            {
+              id: "b_report_calibrated",
+              label: { en: "Report it accurately as an ambiguous, slightly elevated reading, including what you don't know." },
+              consequence: { en: "The Chief Officer has an accurate picture, including its genuine uncertainty." },
+              feedback: { en: "Correct — an accurate, appropriately calibrated report is what lets the Chief Officer judge the situation correctly." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "Given the accurate picture, the Chief Officer asks you to keep monitoring closely and report any change." },
+                options: [
+                  { id: "b1", label: { en: "Comply, continuing to monitor and report changes accurately." }, consequence: { en: "The Chief Officer continues to get an accurate, up-to-date picture." }, feedback: { en: "Correct — this is exactly what the calibrated report was meant to support." }, isRecommended: true },
+                  { id: "b2", label: { en: "Pay less attention now that the initial report has been filed." }, consequence: { en: "A real change in the reading might go unnoticed." }, feedback: { en: "Undermines the ongoing monitoring the Chief Officer specifically asked for." } },
+                  { id: "b3", label: { en: "Escalate the framing further now that it's being taken seriously, to seem more diligent." }, consequence: { en: "The report drifts away from accuracy again, just in a different direction." }, feedback: { en: "Being taken seriously isn't a reason to overstate the reading — accuracy is what earned that seriousness in the first place." } },
+                ],
+              },
+            },
+            {
+              id: "c_decide_probably_nothing",
+              label: { en: "Decide it's probably nothing and keep an eye on it without reporting yet." },
+              consequence: { en: "The reading isn't reported, based on your own unconfirmed judgment that it's likely nothing." },
+              feedback: { en: "An ambiguous reading is exactly the kind of thing the Chief Officer should be the one to judge, not something to be quietly decided at the observation level." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The reading develops further and is now more clearly concerning." },
+                options: [
+                  { id: "c1", label: { en: "Continue treating it as probably nothing, since the earlier read seemed reasonable." }, consequence: { en: "The developing reading continues unreported." }, feedback: { en: "Compounds the original unreported observation as the situation actually develops." } },
+                  { id: "c2", label: { en: "Report it now, including that it had been developing for a while." }, consequence: { en: "The Chief Officer gets the full picture, including the earlier unreported trend." }, feedback: { en: "Correct — the full history, including the earlier delay, is part of an accurate report now." }, isRecommended: true },
+                  { id: "c3", label: { en: "Report only the current state, without mentioning it had been developing unreported for a while." }, consequence: { en: "The Chief Officer gets an incomplete picture of how the situation actually developed." }, feedback: { en: "Withholding the earlier trend leaves out context that's actually relevant to judging the situation now." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Continuous Pressure Monitoring, Regardless of How Smoothly Things Look" },
+        bestPractices: [
+          { en: "Pressure and gas-detection monitoring continue on schedule regardless of how smoothly the loading appears to be going." },
+        ],
+        commonErrors: [
+          { en: "Reducing monitoring frequency because nothing has gone wrong so far." },
+        ],
+      },
+      {
+        theme: { en: "Inerting and Purging Discipline" },
+        bestPractices: [
+          { en: "Tank inerting and purging is completed to the required standard before loading begins, regardless of how ready the tank appears." },
+        ],
+        commonErrors: [
+          { en: "Skipping or abbreviating inerting/purging because the tank looks ready." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Confirmation, Not Inferred From Flow Behavior" },
+        bestPractices: [
+          { en: "Loading completion is confirmed from the actual final quantity/pressure measurement, not inferred from flow behavior." },
+        ],
+        commonErrors: [
+          { en: "Treating apparent flow behavior as sufficient confirmation without taking the final measurement." },
+        ],
+      },
+      {
+        theme: { en: "Calibrated Reporting, Not Overstated or Understated" },
+        bestPractices: [
+          { en: "An ambiguous reading is reported accurately as ambiguous, including what isn't known — not upgraded to a confirmed problem or downgraded to nothing worth mentioning." },
+          { en: "A reading's full developing history, including any earlier unreported trend, is included once it is reported." },
+        ],
+        commonErrors: [
+          { en: "Overstating an ambiguous reading as a confirmed problem to ensure it's taken seriously." },
+          { en: "Deciding an ambiguous reading is probably nothing and not reporting it at all." },
+        ],
+      },
+      {
+        theme: { en: "Engine's Dependency Role" },
+        bestPractices: [
+          { en: "Pressure and refrigeration system readiness is actively confirmed and monitored by Engine throughout, not assumed to simply be available." },
+        ],
+        commonErrors: [
+          { en: "Assuming pressure/refrigeration system readiness without it being actively confirmed and maintained." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
