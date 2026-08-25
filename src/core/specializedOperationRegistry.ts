@@ -6818,6 +6818,385 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  lpg_containment_failure_pressurized_leak: {
+    operationId: "lpg_containment_failure_pressurized_leak",
+    vesselTypeId: "lpg_carrier",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "LPG Carrier — Pressurized Containment Failure (Valve/Fitting Leak)" },
+    introduction: {
+      en: "During active loading — Phase C of op1, Continuous Loading with Pressure and Gas Detection Monitoring — a Type C tank valve or fitting fails, releasing LPG under pressure. Unlike LNG's cargo leak, this isn't primarily a cold-injury event: the card's own 'extreme cold' risk is tied specifically to refrigerated-mode leaks, and op1 established this vessel's signature operation as the pressurized mode, at near-ambient temperature. The genuinely distinctive hazard here is physical: LPG vapor is heavier than air and pools in low-lying and confined spaces, rather than rising or dispersing the way a cryogenic vapor cloud does — the acute personnel risk is asphyxiation from oxygen displacement in low areas, combined with the escaping gas's flammability. The operational discipline centers on immediate isolation, establishing an exclusion zone that genuinely accounts for where the vapor will actually collect, eliminating ignition sources, and confirming genuine dispersal or containment before resuming — not fighting a fire that's already happening.",
+    },
+    objectives: [
+      { en: "Describe the sequence of detecting and responding to a pressurized containment failure during loading." },
+      { en: "Explain why LPG's heavier-than-air vapor behavior creates a genuinely different exclusion-zone and asphyxiation-risk profile than LNG's leak — and why this isn't a cold-injury event given the pressurized, not refrigerated, mode." },
+      { en: "Explain the ignition-source elimination and flammability-management discipline." },
+      { en: "Identify who does what during this operation on an LPG carrier specifically." },
+      { en: "Recognize correct versus incorrect prioritization under a developing leak whose full extent isn't immediately known." },
+    ],
+    context: {
+      en: "This operation interrupts op1's own activity directly — the failure develops mid-loading, at the same terminal, following the same routine-then-emergency pairing confirmed across every vessel so far. LNG's vapor behavior and cold-injury risk drove that operation's exclusion-zone and PPE discipline; here, the vapor's heavier-than-air pooling behavior and the asphyxiation (not cold-injury) risk drive a different spatial and protective discipline entirely. Carries forward op1's 7-rank roster (Master, Chief Officer, OOW, AB, Chief Engineer, Second Engineer, Third Engineer, no Bosun) unchanged. No new CommunicationParty needed — the vessel's own crew and systems handle detection, isolation, and exclusion, the same resolution every prior gas/chemical emergency reached. Unlike Chemical Tanker op2's exception, this failure genuinely is Engine's domain — the containment system Engine already maintains in op1 — so the established emergency default applies cleanly: Chief Engineer shifts to lead, Second Engineer elevates support to perform. Not asserting specific vapor dispersal modeling, exact asphyxiation thresholds, or valve/fitting engineering specifics — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "leak_detection_and_alert",
+      ["command_transfer_and_loading_pause", "low_lying_exclusion_zone_and_evacuation", "ignition_source_elimination"],
+      "vapor_assessment_and_monitoring",
+      "leak_isolation",
+      "confirmed_contained_and_standdown",
+      "resumption_decision",
+    ],
+    operationPhases: {
+      leak_detection_and_alert: {
+        id: "leak_detection_and_alert",
+        title: { en: "Leak Detection and Alert" },
+        steps: [
+          { en: "Leak detected — via gas detection alarm, pressure drop, or a crew member noticing something." },
+          { en: "Immediate alert raised: location, what's observed." },
+        ],
+      },
+      command_transfer_and_loading_pause: {
+        id: "command_transfer_and_loading_pause",
+        title: { en: "Command Transfer and Loading Pause" },
+        steps: [
+          { en: "Command transfers explicitly to the Chief Officer as on-scene commander." },
+          { en: "Loading paused immediately, coordinated with the terminal." },
+        ],
+      },
+      low_lying_exclusion_zone_and_evacuation: {
+        id: "low_lying_exclusion_zone_and_evacuation",
+        title: { en: "Low-Lying Exclusion Zone and Evacuation" },
+        steps: [
+          { en: "An exclusion zone established specifically accounting for low-lying and confined areas where the heavier-than-air vapor will collect — not a generic radius." },
+          { en: "Non-essential personnel evacuated clear." },
+        ],
+      },
+      ignition_source_elimination: {
+        id: "ignition_source_elimination",
+        title: { en: "Ignition-Source Elimination" },
+        steps: [
+          { en: "All potential ignition sources in the affected area secured or shut down." },
+        ],
+      },
+      vapor_assessment_and_monitoring: {
+        id: "vapor_assessment_and_monitoring",
+        title: { en: "Vapor Assessment and Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of the response, not a one-time check." },
+        steps: [
+          { en: "Gas detection readings monitored continuously, specifically at low-lying and confined points where vapor is expected to collect." },
+          { en: "Leak severity trend assessed: contained, growing, or stable." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      leak_isolation: {
+        id: "leak_isolation",
+        title: { en: "Leak Isolation" },
+        steps: [
+          { en: "Once assessed, the Chief Officer authorizes the Second Engineer to isolate the affected valve or fitting." },
+          { en: "The Second Engineer executes the isolation under the Chief Officer's authorization." },
+        ],
+      },
+      confirmed_contained_and_standdown: {
+        id: "confirmed_contained_and_standdown",
+        title: { en: "Confirmed Contained and Stand-Down" },
+        steps: [
+          { en: "Leak confirmed stopped and area confirmed safe — gas detection readings at low-lying points specifically confirmed clear, not assumed from a single reading." },
+          { en: "Transition to reduced-alert monitoring." },
+        ],
+      },
+      resumption_decision: {
+        id: "resumption_decision",
+        title: { en: "Resumption Decision" },
+        steps: [
+          { en: "Joint decision — vessel and terminal — on whether and when loading can resume." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "leak_alert", phaseId: "leak_detection_and_alert", from: "deck_team", to: "bridge", trigger: { en: "Leak detected" }, content: { en: "Immediate alert: location, what's observed." }, whyItMatters: { en: "Everything downstream depends on this reaching the bridge without delay." } },
+      { id: "command_transfer_confirmation", phaseId: "command_transfer_and_loading_pause", from: "bridge", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Explicit assumption of emergency command by the Master; Chief Officer confirmed as on-scene commander." }, whyItMatters: { en: "An authority handoff, mirroring every prior emergency operation's command-transfer touchpoint." } },
+      { id: "loading_pause_notification", phaseId: "command_transfer_and_loading_pause", from: "deck", to: "terminal", trigger: { en: "Immediately on alert" }, content: { en: "Loading paused immediately." }, whyItMatters: { en: "Same coordinated-halt shape as every prior cargo-transfer emergency." } },
+      { id: "engine_isolation_readiness", phaseId: "command_transfer_and_loading_pause", from: "engine", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Second Engineer confirms readiness to assess and isolate the affected valve/fitting." }, whyItMatters: { en: "Grounds Engine's role in this specific emergency." } },
+      { id: "onscene_status_to_bridge", phaseId: "vapor_assessment_and_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during the incident" }, content: { en: "Chief Officer reports leak status, exclusion zone status, and crew status to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior emergency." } },
+      { id: "leak_status_to_terminal", phaseId: "vapor_assessment_and_monitoring", from: "deck", to: "terminal", trigger: { en: "Continuous during the incident" }, content: { en: "Vessel keeps the terminal informed of leak status and vapor risk." }, whyItMatters: { en: "The terminal's own personnel may be affected — a shared-risk situation." } },
+      { id: "isolation_authorization", phaseId: "leak_isolation", from: "deck", to: "engine", trigger: { en: "Leak assessed" }, content: { en: "Chief Officer authorizes the Second Engineer to isolate the affected valve or fitting." }, whyItMatters: { en: "Mirrors the authorization discipline established across the catalog." } },
+      { id: "isolation_confirmation", phaseId: "leak_isolation", from: "engine", to: "deck", trigger: { en: "Isolation complete" }, content: { en: "Second Engineer confirms the affected valve/fitting is isolated and the leak has stopped." }, whyItMatters: { en: "Closes the loop on the authorized action." } },
+      { id: "contained_confirmation", phaseId: "confirmed_contained_and_standdown", from: "deck", to: "bridge", trigger: { en: "Leak confirmed contained" }, content: { en: "Chief Officer reports leak contained and area confirmed safe, transitioning to reduced-alert monitoring." }, whyItMatters: { en: "Not assumed from a single reading — the same explicit-confirmation discipline as every prior emergency." } },
+      { id: "resumption_go_no_go", phaseId: "resumption_decision", from: "bridge", to: "terminal", trigger: { en: "Reduced-alert monitoring period elapsed without incident" }, content: { en: "Joint go/no-go decision on resuming loading." }, whyItMatters: { en: "Echoes the joint go/no-go pattern established across the catalog." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "In op1, a background, oversight-focused role. Here, assumes overall emergency command the instant the alarm is raised — the same authority-assumption shape as every prior emergency operation's Master." } },
+      { rankId: "chief_officer", identity: { en: "In op1, owned the pressure-verification discipline outright. Here, becomes on-scene commander: directing the exclusion zone and evacuation, coordinating the loading pause with the terminal, and authorizing the Second Engineer's isolation action." } },
+      { rankId: "oow", identity: { en: "The sixth confirmed occurrence of the compounded departure shape: already had no navigation to depart from in op1, and here supports the Master's emergency command the same way." } },
+      { rankId: "ab", identity: { en: "In op1, worked directly under the Chief Officer with no Bosun intermediary. Here, complies with evacuation and exclusion-zone direction and supports ignition-source elimination the same way — the no-Bosun structure carries into the emergency unchanged." } },
+      { rankId: "chief_engineer", identity: { en: "Becomes the senior technical authority directing the emergency isolation response — the established default applying cleanly here, since this genuinely is Engine's own domain and wasn't already handed to Second Engineer." } },
+      { rankId: "second_engineer", identity: { en: "Directly executes the valve/fitting isolation under the Chief Engineer's direction — active, hands-on technical execution, not the passive assisting role held in op1." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness during the incident — the same lighter role as op1 and every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Assumes overall emergency command; directs the ship's overall response; holds the stand-down and resumption decisions jointly with the terminal." }],
+        iMonitor: [{ en: "Overall incident status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on leak response actions — delegated to the Chief Officer and Chief Engineer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Assumes on-scene command; directs the exclusion zone and evacuation; coordinates the loading pause with the terminal; authorizes the Second Engineer's isolation action; confirms leak contained." }],
+        iMonitor: [{ en: "Leak status and exclusion-zone integrity continuously; isolation progress as reported by Engine." }],
+        iReport: [{ en: "Status to the Master continuously; status to the terminal." }],
+        iDoNotAuthorize: [{ en: "The Master's overall stand-down/resumption authority." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Master's emergency command — communications, tracking status." }],
+        iMonitor: [{ en: "Communications flow and status reporting." }],
+        iReport: [{ en: "Status updates as directed by the Master." }],
+        iDoNotAuthorize: [{ en: "Independent command decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Complies with evacuation/exclusion-zone direction; supports ignition-source elimination under the Chief Officer's direction." }],
+        iMonitor: [{ en: "Own immediate safety and precaution compliance." }],
+        iReport: [{ en: "Observations directly to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Independent action; approaching the affected area." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Directs the emergency isolation response; oversees the Second Engineer's work." }],
+        iMonitor: [{ en: "Isolation progress and overall engine-department status throughout the incident." }],
+        iReport: [{ en: "Status to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation decisions themselves — loading pause/resumption remains the Chief Officer's/Master's call." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Executes the valve/fitting isolation under the Chief Engineer's direction." }],
+        iMonitor: [{ en: "Isolation progress continuously." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Acting before authorization; cargo-operation decisions." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch and readiness throughout the incident." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any leak-response decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the phases of the LPG containment failure response in the correct order." },
+        items: [
+          { id: "leak_detection_and_alert", label: { en: "Leak Detection and Alert" } },
+          { id: "command_transfer_and_loading_pause", label: { en: "Command Transfer and Loading Pause" } },
+          { id: "low_lying_exclusion_zone_and_evacuation", label: { en: "Low-Lying Exclusion Zone and Evacuation" } },
+          { id: "ignition_source_elimination", label: { en: "Ignition-Source Elimination" } },
+          { id: "vapor_assessment_and_monitoring", label: { en: "Vapor Assessment and Monitoring" } },
+          { id: "leak_isolation", label: { en: "Leak Isolation" } },
+          { id: "confirmed_contained_and_standdown", label: { en: "Confirmed Contained and Stand-Down" } },
+          { id: "resumption_decision", label: { en: "Resumption Decision" } },
+        ],
+        correctOrder: [
+          "leak_detection_and_alert",
+          ["command_transfer_and_loading_pause", "low_lying_exclusion_zone_and_evacuation", "ignition_source_elimination"],
+          "vapor_assessment_and_monitoring",
+          "leak_isolation",
+          "confirmed_contained_and_standdown",
+          "resumption_decision",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_generic_exclusion_zone",
+        targetRanks: ["ab", "oow", "chief_engineer"],
+        scenario: { en: "The AB establishes the exclusion zone using a generic radius, without accounting for low-lying or confined areas where the heavier-than-air vapor would actually pool. The OOW relays status updates as directed by the Master. The Second Engineer isolates the valve only after the Chief Engineer's authorization." },
+        choices: [
+          { id: "c1", label: { en: "Establishing the exclusion zone using a generic radius without accounting for low-lying/confined areas" }, isError: true, explanation: { en: "Violates the explicit rule that the exclusion zone reflects where the vapor will genuinely collect, not a generic radius." } },
+          { id: "c2", label: { en: "The OOW relaying status updates as directed by the Master" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "The Second Engineer isolating the valve only after the Chief Engineer's authorization" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "resumption_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The leak appears contained and the reduced-alert monitoring period has elapsed. Review the readiness snapshot below before authorizing loading to resume." },
+        items: [
+          { id: "leak_confirmed_stopped", label: { en: "Leak confirmed stopped and area confirmed safe, including low-lying points" }, isSatisfied: true },
+          { id: "monitoring_period_elapsed", label: { en: "Reduced-alert monitoring period elapsed without incident" }, isSatisfied: true },
+          { id: "valve_inspected", label: { en: "Isolated valve/fitting inspected and cleared" }, isSatisfied: false },
+          { id: "terminal_equipment_inspected", label: { en: "Terminal's own equipment inspected and cleared" }, isSatisfied: false },
+          { id: "master_resumption_decision", label: { en: "Master's final resumption decision completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Under pressure to move quickly, there's a temptation to establish a generic-radius exclusion zone rather than taking the extra moment to assess which low-lying or confined areas the vapor will actually reach." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The exclusion zone is established based on where the heavier-than-air vapor will actually collect, even if it takes a moment longer than a generic radius would." }],
+        why: [{ en: "Tests whether the spatial discipline holds under time pressure." }],
+        commonMistakes: [{ en: "Defaulting to a generic radius without accounting for low-lying or confined areas." }],
+        safetyPoints: [{ en: "A generic radius can miss exactly the low-lying spaces where the vapor actually accumulates." }],
+      },
+      {
+        situation: { en: "One gas detection reading at a low-lying point shows clear; there's a temptation to declare the area safe immediately." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms the area safe from sustained readings across all relevant low-lying and confined points, not a single data point." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, adapted to this operation's own multi-point verification need." }],
+        commonMistakes: [{ en: "Treating one clear reading as sufficient confirmation without checking other low-lying points." }],
+        safetyPoints: [{ en: "Vapor pooling can be uneven — one clear point doesn't confirm every low-lying area is clear." }],
+      },
+      {
+        situation: { en: "The Second Engineer, having identified the affected valve, feels the urge to isolate it immediately given how straightforward the fix seems, without waiting for the Chief Officer's explicit authorization." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Second Engineer reports the assessment and waits for authorization before isolating, even though the fix seems straightforward." }],
+        why: [{ en: "Tests whether the authorization discipline holds when the technical action itself seems simple and low-risk." }],
+        commonMistakes: [{ en: "Acting immediately because the fix seems simple, rather than waiting for authorization." }],
+        safetyPoints: [{ en: "The simplicity of a technical fix doesn't change who holds the authority to direct when it happens." }],
+      },
+      {
+        situation: { en: "The Chief Officer isn't fully certain which specific valve or fitting is the actual source of the leak." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer reports the genuine uncertainty honestly to the Master, rather than naming a specific source before it's actually confirmed." }],
+        why: [{ en: "Echoes the established honest-assessment-under-uncertainty value already proven in the catalog." }],
+        commonMistakes: [{ en: "Naming a specific source with more confidence than the assessment actually supports." }],
+        safetyPoints: [{ en: "An honest, appropriately uncertain report is what lets the Master make a genuinely informed decision." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_simple_fix_same_boundary",
+        title: { en: "A Simple Fix Doesn't Move the Boundary" },
+        seatRankId: "second_engineer",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Second Engineer. You've identified the affected valve, and the fix looks genuinely straightforward — a simple isolation you've done many times in routine maintenance. It feels almost unnecessary to wait for formal authorization for something this simple." },
+          options: [
+            {
+              id: "a_isolate_immediately",
+              label: { en: "Isolate it now, since it's clearly simple and waiting seems unnecessary." },
+              consequence: { en: "The isolation is carried out without the Chief Officer's authorization or knowledge." },
+              feedback: { en: "How simple a fix looks doesn't change who holds the authority to direct when it happens — that boundary doesn't shrink with the size of the task." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The isolation, done without authorization, has an unexpected side effect the Chief Officer wasn't tracking for as part of the overall assessment." },
+                options: [
+                  { id: "a1", label: { en: "Don't mention it, since the fix worked anyway." }, consequence: { en: "The Chief Officer's assessment doesn't account for an effect that actually occurred." }, feedback: { en: "The fix working doesn't mean its effects don't need to be known." } },
+                  { id: "a2", label: { en: "Immediately report what was done and its effect." }, consequence: { en: "The Chief Officer's assessment is now accurate and complete." }, feedback: { en: "Correct — disclosing the action and its effect is what lets the Chief Officer actually account for it." }, isRecommended: true },
+                  { id: "a3", label: { en: "Quietly note it in your own log without telling anyone." }, consequence: { en: "A private record exists, but the Chief Officer's actual assessment remains incomplete." }, feedback: { en: "A private log doesn't inform the person who actually needs the information now." } },
+                ],
+              },
+            },
+            {
+              id: "b_report_and_wait_idle",
+              label: { en: "Report the assessment and wait for authorization, without doing anything further in the meantime." },
+              consequence: { en: "No unauthorized action is taken, but the waiting time isn't used for anything." },
+              feedback: { en: "Correct not to act before authorization — though the waiting time itself could have been used without crossing that line." },
+              next: {
+                id: "level_2_b",
+                situation: { en: "Authorization arrives, but no preparation was done in advance, so the isolation now starts from scratch." },
+                options: [
+                  { id: "b1", label: { en: "Begin preparing properly now, before executing, accepting the additional time this takes." }, consequence: { en: "The isolation is carried out correctly, just later than it could have been." }, feedback: { en: "Correct — proper preparation still matters, even though starting it earlier would have saved time." }, isRecommended: true },
+                  { id: "b2", label: { en: "Rush the execution without proper preparation, to make up for the lost time." }, consequence: { en: "The isolation is carried out with less care than the situation calls for." }, feedback: { en: "Cutting corners now doesn't recover the earlier lost time safely — it just adds a new risk." } },
+                  { id: "b3", label: { en: "Point out that authorization should have come sooner, as the reason for the delay." }, consequence: { en: "Attention shifts to assigning blame rather than completing the isolation properly." }, feedback: { en: "The choice not to prepare in advance was yours to make differently — the delay isn't only about when authorization arrived." } },
+                ],
+              },
+            },
+            {
+              id: "c_report_and_prepare",
+              label: { en: "Report the assessment and begin preparing (tools, positioning) while waiting, ready to execute the instant authorization arrives, without touching the valve until then." },
+              consequence: { en: "No unauthorized action is taken, and the waiting time is used productively." },
+              feedback: { en: "Correct — this respects the authorization boundary while using the waiting time well, rather than treating waiting and readiness as opposites." },
+              isRecommended: true,
+              next: {
+                id: "level_2_c",
+                situation: { en: "Authorization arrives." },
+                options: [
+                  { id: "c1", label: { en: "Execute immediately, since preparation is already done." }, consequence: { en: "The isolation is carried out promptly and correctly." }, feedback: { en: "Correct — this is exactly what the preparation was for." }, isRecommended: true },
+                  { id: "c2", label: { en: "Still wait further or second-guess, even after receiving authorization." }, consequence: { en: "The correction is delayed for no clear reason." }, feedback: { en: "The authorization just given is real — hesitating past that point adds delay without adding safety." } },
+                  { id: "c3", label: { en: "Execute quickly, but skip a step from the already-prepared safe process to go even faster." }, consequence: { en: "The isolation is carried out with a step skipped that the preparation time was meant to preserve." }, feedback: { en: "Having time to prepare properly is exactly what removes any reason to skip a step now." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Exclusion Zone Based on Where Vapor Actually Collects" },
+        bestPractices: [
+          { en: "The exclusion zone is established based on where the heavier-than-air vapor will actually pool — low-lying and confined areas — not a generic radius." },
+        ],
+        commonErrors: [
+          { en: "Defaulting to a generic-radius exclusion zone without accounting for low-lying or confined areas." },
+        ],
+      },
+      {
+        theme: { en: "Multi-Point Confirmation, Not a Single Reading" },
+        bestPractices: [
+          { en: "The area is confirmed safe from sustained readings across every relevant low-lying and confined point, not from one clear reading." },
+        ],
+        commonErrors: [
+          { en: "Treating one clear reading as sufficient confirmation without checking other low-lying points." },
+        ],
+      },
+      {
+        theme: { en: "Authorization Discipline Regardless of How Simple the Fix Looks" },
+        bestPractices: [
+          { en: "A technical fix is authorized before it's carried out, however straightforward it appears." },
+          { en: "Waiting time is used productively — preparing to act — without crossing into acting before authorization." },
+        ],
+        commonErrors: [
+          { en: "Acting immediately because a fix seems too simple to need permission." },
+          { en: "Treating waiting for authorization and preparing to act as mutually exclusive." },
+        ],
+      },
+      {
+        theme: { en: "Honest Reporting Under Source Uncertainty" },
+        bestPractices: [
+          { en: "A leak's source is reported honestly, including genuine uncertainty about exactly which valve or fitting is responsible." },
+        ],
+        commonErrors: [
+          { en: "Naming a specific source with more confidence than the assessment actually supports." },
+        ],
+      },
+      {
+        theme: { en: "Disclosing an Unauthorized Action's Effects" },
+        bestPractices: [
+          { en: "An action taken without authorization is disclosed immediately, along with its effects, if it happens at all." },
+        ],
+        commonErrors: [
+          { en: "Not mentioning an unauthorized action because it happened to work out." },
+        ],
+      },
+      {
+        theme: { en: "Preparation Doesn't Substitute for Authorization" },
+        bestPractices: [
+          { en: "Preparation (tools, positioning) proceeds during the wait for authorization, but execution itself waits for the authorization to actually arrive." },
+        ],
+        commonErrors: [
+          { en: "Treating advance preparation as license to execute slightly ahead of actual authorization." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
