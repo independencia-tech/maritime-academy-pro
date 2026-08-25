@@ -7957,6 +7957,371 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  bulk_carrier_moisture_liquefaction_loading: {
+    operationId: "bulk_carrier_moisture_liquefaction_loading",
+    vesselTypeId: "bulk_carrier",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Bulk Carrier — Cargo Loading with Moisture/Liquefaction Verification and Hold Weight Distribution" },
+    introduction: {
+      en: "This operation covers the bulk carrier's own defining task: loading solid bulk cargo — ore, coal, grain, and similar materials — with moisture and liquefaction verification as the central pre-loading discipline, combined with hold-by-hold weight distribution monitoring to avoid excessive hull stress. Unlike every prior operation, the hazard here isn't a chemical reaction, an explosive atmosphere, or cargo escaping containment — it's the cargo's own physical state changing dangerously: a cargo that's too wet can behave like a liquid under the ship's motion, shifting suddenly inside the hold and risking capsizing. This is explicitly named as one of the leading causes of bulk carrier losses at sea, with real regulatory grounding (IMSBC Code moisture testing requirements before loading). Combined with hold-by-hold weight distribution monitoring — a structural, hull-stress concern distinct from Container Ship's stability-focused stowage verification — this operation's discipline is genuinely new territory for the catalog.",
+    },
+    objectives: [
+      { en: "Describe the sequence of testing cargo moisture and loading solid bulk cargo with hold-by-hold weight distribution monitoring." },
+      { en: "Explain why cargo liquefaction is a genuinely different hazard mechanism from anything built so far — the cargo's own physical state changing dangerously, not a chemical reaction or explosive atmosphere." },
+      { en: "Explain the role of hold-by-hold weight distribution monitoring in preventing excessive hull stress." },
+      { en: "Identify who does what during this operation on a bulk carrier specifically." },
+      { en: "Recognize correct versus incorrect prioritization when schedule pressure competes with moisture testing and distribution monitoring discipline." },
+    ],
+    context: {
+      en: "The vessel's own defining task, the same 'owns the signature activity' pattern established across every first operation in the catalog. A genuinely new hazard mechanism: cargo liquefaction is the cargo's own physical state changing dangerously under moisture and motion — distinct from every chemical reactivity, explosive atmosphere, or containment-escape hazard built so far. Roster is 8 ranks (Master, Chief Officer, OOW, Bosun, AB, Chief Engineer, Second Engineer, Third Engineer) — a clean, explicit list matching Container Ship's exact shape, no roster ambiguity. Not asserting specific IMSBC Code moisture thresholds (Transportable Moisture Limit specifics), exact liquefaction mechanics, or precise hold-stress calculation methods — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "pre_loading_moisture_testing",
+      "loading_plan_review_and_hold_sequencing",
+      "initial_loading_and_verification",
+      "continuous_weight_distribution_and_moisture_monitoring",
+      "loading_complete_verification",
+      "hold_closure_and_departure_preparation",
+    ],
+    operationPhases: {
+      pre_loading_moisture_testing: {
+        id: "pre_loading_moisture_testing",
+        title: { en: "Pre-Loading Moisture Testing" },
+        steps: [
+          { en: "Cargo moisture content tested against safe limits before being accepted for loading." },
+          { en: "Shipper's moisture certificate/documentation reviewed and verified." },
+        ],
+      },
+      loading_plan_review_and_hold_sequencing: {
+        id: "loading_plan_review_and_hold_sequencing",
+        title: { en: "Loading Plan Review and Hold Sequencing" },
+        steps: [
+          { en: "Chief Officer reviews the loading plan, confirming the hold-by-hold sequence maintains acceptable weight distribution and hull stress throughout loading, not just at completion." },
+          { en: "Communication protocol confirmed with the terminal." },
+        ],
+      },
+      initial_loading_and_verification: {
+        id: "initial_loading_and_verification",
+        title: { en: "Initial Loading and Verification" },
+        steps: [
+          { en: "Loading begins per the planned sequence." },
+          { en: "Initial verification that actual loading matches the planned hold sequence." },
+        ],
+      },
+      continuous_weight_distribution_and_moisture_monitoring: {
+        id: "continuous_weight_distribution_and_moisture_monitoring",
+        title: { en: "Continuous Weight Distribution and Moisture Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of loading, not a one-time check: hold-by-hold weight distribution, hull stress indicators, and moisture conditions are all monitored continuously as cargo is loaded." },
+        steps: [
+          { en: "Weight distribution monitored continuously against the loading plan, hold by hold." },
+          { en: "Hull stress indicators monitored continuously." },
+          { en: "Moisture conditions monitored, including any weather exposure during loading that could add moisture to the cargo." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      loading_complete_verification: {
+        id: "loading_complete_verification",
+        title: { en: "Loading Complete: Verification" },
+        steps: [
+          { en: "Final weight distribution and hull stress confirmed within limits." },
+          { en: "Documentation completed." },
+        ],
+      },
+      hold_closure_and_departure_preparation: {
+        id: "hold_closure_and_departure_preparation",
+        title: { en: "Hold Closure and Departure Preparation" },
+        steps: [
+          { en: "Hatches closed and secured." },
+          { en: "Final checks completed." },
+          { en: "Departure preparations; schedule confirmed." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "shipper_moisture_certificate", phaseId: "pre_loading_moisture_testing", from: "terminal", to: "deck", trigger: { en: "Before loading begins" }, content: { en: "Shipper provides cargo moisture certificate/documentation." }, whyItMatters: { en: "The moisture data originates externally — the vessel doesn't produce it, it verifies it before accepting the cargo." } },
+      { id: "moisture_testing_confirmation", phaseId: "pre_loading_moisture_testing", from: "deck", to: "terminal", trigger: { en: "Moisture testing complete" }, content: { en: "Chief Officer confirms cargo moisture verified within safe limits, cargo accepted for loading." }, whyItMatters: { en: "Same confirm-before-starting pattern as every prior pre-operation channel." } },
+      { id: "loading_plan_confirmation", phaseId: "loading_plan_review_and_hold_sequencing", from: "terminal", to: "deck", trigger: { en: "Before loading begins" }, content: { en: "Terminal confirms the hold sequence and loading rate plan." }, whyItMatters: { en: "The plan originates externally — the vessel verifies it maintains acceptable distribution throughout." } },
+      { id: "engine_stress_monitoring_readiness", phaseId: "loading_plan_review_and_hold_sequencing", from: "engine", to: "deck", trigger: { en: "Before loading begins" }, content: { en: "Confirmation that hull stress monitoring systems are operating normally." }, whyItMatters: { en: "Echoes the established ownership/dependency framing." } },
+      { id: "initial_loading_verification", phaseId: "initial_loading_and_verification", from: "deck", to: "terminal", trigger: { en: "After initial loading begins" }, content: { en: "Confirmation that the actual sequence matches the planned hold sequence." }, whyItMatters: { en: "The initial verification step exists specifically to catch a deviation before it compounds." } },
+      { id: "distribution_status_ongoing", phaseId: "continuous_weight_distribution_and_moisture_monitoring", from: "engine", to: "deck", trigger: { en: "Continuous during loading" }, content: { en: "Engine reports hull stress readings to the Chief Officer." }, whyItMatters: { en: "A real, ongoing Engine input to the Deck-owned cargo operation." } },
+      { id: "loading_status_to_bridge", phaseId: "continuous_weight_distribution_and_moisture_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during loading" }, content: { en: "Chief Officer reports loading progress, weight distribution, and any deviation to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior operation." } },
+      { id: "sequence_deviation_flag", phaseId: "continuous_weight_distribution_and_moisture_monitoring", from: "deck", to: "terminal", trigger: { en: "Deviation from planned hold sequence observed" }, content: { en: "Immediate flag of the deviation for correction." }, whyItMatters: { en: "Not batched for later review — flagged the instant it's caught." } },
+      { id: "quantity_confirmation", phaseId: "loading_complete_verification", from: "terminal", to: "deck", trigger: { en: "Loading complete" }, content: { en: "Final weight distribution and documentation exchanged." }, whyItMatters: { en: "Closes the transfer with an explicit, mutual record." } },
+      { id: "departure_clearance", phaseId: "hold_closure_and_departure_preparation", from: "bridge", to: "terminal", trigger: { en: "Ready to depart" }, content: { en: "Departure clearance." }, whyItMatters: { en: "Standard closing touchpoint." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Overall command, oversight-focused rather than hands-on — the same background role as every routine first operation's Master except AHTS." } },
+      { rankId: "chief_officer", identity: { en: "The signature role, explicitly named in the vessel's own content as responsible for the loading plan and stability. Owns the entire moisture-verification and hold-distribution discipline: confirming moisture testing, reviewing the loading plan and hold sequencing, overseeing continuous distribution and stress monitoring, coordinating with the terminal throughout." } },
+      { rankId: "oow", identity: { en: "The sixth confirmed occurrence of the no-navigation-to-attach-to departure. At a terminal with no navigation happening, joins the deck-side operational support instead." } },
+      { rankId: "bosun", identity: { en: "Leads the deck team's observation and verification work during loading — the returning execution-lead role matching AHTS/PSV/Container Ship/OSV/RoRo's Bosun pattern." } },
+      { rankId: "ab", identity: { en: "Assists with verification — checking hold conditions and loading progress — under the Bosun's direction." } },
+      { rankId: "chief_engineer", identity: { en: "Owns the hull stress monitoring system's readiness before and during the operation — reports and sustains rather than executes hands-on, the same support shape as every prior routine-operation Chief Engineer." } },
+      { rankId: "second_engineer", identity: { en: "Assists the Chief Engineer with the monitoring systems at working level — the standard template." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness, supporting the Second Engineer — the same lighter role as every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall command; authorizes loading to begin, informed by the Chief Officer's moisture/loading-plan assessment; grants final departure clearance." }],
+        iMonitor: [{ en: "Overall operation status via the Chief Officer." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on loading execution — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Confirms moisture testing results; reviews and confirms the loading plan and hold sequencing; oversees continuous weight distribution and stress monitoring; coordinates with the terminal throughout; confirms loading complete." }],
+        iMonitor: [{ en: "Weight distribution, hull stress, and moisture conditions continuously." }],
+        iReport: [{ en: "Status to the Master; confirmations to the terminal." }],
+        iDoNotAuthorize: [{ en: "Departure clearance itself — the Master's call." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Chief Officer's cargo-operation oversight directly, as part of the deck-side team." }],
+        iMonitor: [{ en: "Status alongside the rest of the deck-side team." }],
+        iReport: [{ en: "Observations to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Loading decisions." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Leads the deck team's observation and verification of loading and hold conditions." }],
+        iMonitor: [{ en: "Deck team safety and verification accuracy throughout." }],
+        iReport: [{ en: "Status and any deviation to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "The halt decision or direct communication with the terminal on operational decisions." }],
+      },
+      ab: {
+        iExecute: [{ en: "Checks hold conditions and loading progress under the Bosun's direction." }],
+        iMonitor: [{ en: "Immediate accuracy of the holds they're checking." }],
+        iReport: [{ en: "Discrepancies to the Bosun." }],
+        iDoNotAuthorize: [{ en: "Independent action; discrepancy assessment." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Ensures hull stress monitoring system readiness before and during the operation; directs the Second Engineer." }],
+        iMonitor: [{ en: "Overall system health throughout." }],
+        iReport: [{ en: "Readiness confirmation and any significant deviation to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo-operation decisions themselves." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer with the monitoring systems at working level." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch, supporting the Second Engineer." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any cargo-operation or monitoring-system decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "support",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the six phases of the bulk carrier cargo loading operation in the correct order." },
+        items: [
+          { id: "pre_loading_moisture_testing", label: { en: "Pre-Loading Moisture Testing" } },
+          { id: "loading_plan_review_and_hold_sequencing", label: { en: "Loading Plan Review and Hold Sequencing" } },
+          { id: "initial_loading_and_verification", label: { en: "Initial Loading and Verification" } },
+          { id: "continuous_weight_distribution_and_moisture_monitoring", label: { en: "Continuous Weight Distribution and Moisture Monitoring" } },
+          { id: "loading_complete_verification", label: { en: "Loading Complete: Verification" } },
+          { id: "hold_closure_and_departure_preparation", label: { en: "Hold Closure and Departure Preparation" } },
+        ],
+        correctOrder: ["pre_loading_moisture_testing", "loading_plan_review_and_hold_sequencing", "initial_loading_and_verification", "continuous_weight_distribution_and_moisture_monitoring", "loading_complete_verification", "hold_closure_and_departure_preparation"],
+      },
+      {
+        type: "error_identification",
+        id: "err_unverified_moisture",
+        targetRanks: ["chief_officer", "ab", "bosun"],
+        scenario: { en: "The Chief Officer accepts cargo for loading without confirming the moisture certificate, assuming it's probably fine since the shipper is a regular supplier. The AB reports a hold-sequence deviation immediately to the Bosun upon noticing it. Engine reports hull stress readings as conditions change." },
+        choices: [
+          { id: "c1", label: { en: "Accepting cargo without confirming the moisture certificate, assuming a regular shipper is probably fine" }, isError: true, explanation: { en: "Violates the explicit rule that moisture is verified for every cargo, regardless of the shipper's track record." } },
+          { id: "c2", label: { en: "The AB reporting a hold-sequence deviation immediately upon noticing it" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "Engine reporting hull stress readings as conditions change" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "preloading_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The deck team is briefed and the terminal reports ready. Review the readiness snapshot below before authorizing loading to begin." },
+        items: [
+          { id: "moisture_verified", label: { en: "Cargo moisture verified within safe limits" }, isSatisfied: true },
+          { id: "loading_plan_confirmed", label: { en: "Loading plan and hold sequence confirmed" }, isSatisfied: true },
+          { id: "terminal_readiness", label: { en: "Terminal confirms readiness to begin" }, isSatisfied: true },
+          { id: "engine_stress_monitoring_readiness", label: { en: "Engine confirms hull stress monitoring system readiness" }, isSatisfied: false },
+          { id: "master_final_review", label: { en: "Master's final review of the plan completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The cargo comes from a shipper the vessel has worked with many times before, and there's a temptation to accept the moisture certificate without the usual level of scrutiny." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer verifies moisture testing to the same standard regardless of the shipper's history." }],
+        why: [{ en: "Tests whether the verification discipline holds against the assumption that familiarity with a supplier substitutes for verification." }],
+        commonMistakes: [{ en: "Accepting a moisture certificate with less scrutiny because the shipper is familiar or trusted." }],
+        safetyPoints: [{ en: "A trusted shipper's cargo can still exceed safe moisture limits — trust in the supplier isn't the same as verified moisture content for this specific cargo." }],
+      },
+      {
+        situation: { en: "One hull stress reading shows values within limits; there's a temptation to treat that as sufficient confirmation for the whole loading sequence." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms hull stress remains within limits from sustained, continuous readings throughout loading, not a single point-in-time check." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, adapted to this operation's own hull-stress measurement." }],
+        commonMistakes: [{ en: "Treating one favorable reading as sufficient confirmation for the remainder of loading." }],
+        safetyPoints: [{ en: "Hull stress changes as loading progresses — a favorable reading at one point doesn't confirm favorable conditions throughout." }],
+      },
+      {
+        situation: { en: "A minor deviation from the planned hold sequence occurs, and there's a temptation to let it go since it seems like it probably won't matter." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The deviation is flagged immediately to the terminal for correction, regardless of how minor it seems." }],
+        why: [{ en: "Tests whether the immediate-flagging discipline holds against the assumption that a minor deviation is inconsequential." }],
+        commonMistakes: [{ en: "Letting a seemingly minor sequence deviation go unflagged." }],
+        safetyPoints: [{ en: "Hold sequence directly affects weight distribution and hull stress — a 'minor' deviation can still compound into a real structural problem." }],
+      },
+      {
+        situation: { en: "A brief period of rain during loading raises a question about whether the cargo's moisture content might have changed, but the Chief Officer isn't fully certain how significant the exposure was." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer reports the genuine uncertainty honestly and has the cargo re-tested or reassessed rather than assuming the brief exposure was inconsequential." }],
+        why: [{ en: "Echoes the established honest-reporting-under-uncertainty value, applied to this operation's own signature moisture concern." }],
+        commonMistakes: [{ en: "Assuming a brief weather exposure was inconsequential without actually reassessing." }],
+        safetyPoints: [{ en: "The whole reason moisture testing exists is because visual or assumed judgments aren't reliable — a brief exposure genuinely needs reassessment, not a guess." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_minor_deviation_judgment",
+        title: { en: "Deciding What Counts as Minor" },
+        seatRankId: "bosun",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Bosun. During loading, you notice the terminal has loaded a hold slightly out of the planned sequence — a small deviation that doesn't look dramatic, but isn't exactly what the plan called for either." },
+          options: [
+            {
+              id: "a_let_it_go",
+              label: { en: "Let it go, since it looks minor and probably won't matter." },
+              consequence: { en: "The deviation continues unflagged." },
+              feedback: { en: "Hold sequence directly affects weight distribution and hull stress — deciding on your own that a deviation is inconsequential isn't the same as it actually being inconsequential." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The deviation compounds as loading continues, now showing up as an actual hull stress reading anomaly." },
+                options: [
+                  { id: "a1", label: { en: "Continue, since it might still resolve on its own." }, consequence: { en: "The anomaly continues to develop unaddressed." }, feedback: { en: "Hoping it resolves on its own doesn't change the underlying weight distribution." } },
+                  { id: "a2", label: { en: "Immediately flag it now, including that it was first noticed earlier and not flagged." }, consequence: { en: "The Chief Officer has an accurate picture, including how long the deviation has actually been developing." }, feedback: { en: "Correct — flagging it now matters, but so does disclosing that it started earlier and went unflagged." }, isRecommended: true },
+                  { id: "a3", label: { en: "Flag only the current reading, without mentioning the earlier deviation." }, consequence: { en: "The Chief Officer gets an incomplete picture of how the situation actually developed." }, feedback: { en: "Leaves out context that's directly relevant to understanding the current reading." } },
+                ],
+              },
+            },
+            {
+              id: "b_flag_immediately",
+              label: { en: "Flag it immediately to the Chief Officer, even though it looks minor." },
+              consequence: { en: "The Chief Officer has the observation and can judge its significance." },
+              feedback: { en: "Correct — deciding whether a deviation matters is the Chief Officer's judgment call, not something to be settled at the observation level." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "Informed, the Chief Officer asks you to keep monitoring that specific hold closely and report any further change." },
+                options: [
+                  { id: "b1", label: { en: "Comply, continuing to monitor and report changes." }, consequence: { en: "The Chief Officer continues to get an accurate, up-to-date picture." }, feedback: { en: "Correct — this is exactly what the flag was meant to support." }, isRecommended: true },
+                  { id: "b2", label: { en: "Consider the matter closed now that it's been flagged once, without further monitoring." }, consequence: { en: "A change in the hold's condition might go unnoticed." }, feedback: { en: "Doesn't actually fulfill the monitoring request the Chief Officer just made." } },
+                  { id: "b3", label: { en: "Escalate further findings even without any genuine new development, to seem thorough." }, consequence: { en: "The Chief Officer receives reports that don't reflect a real change." }, feedback: { en: "Adds noise rather than the accurate monitoring that was actually asked for." } },
+                ],
+              },
+            },
+            {
+              id: "c_watch_without_flagging",
+              label: { en: "Keep a closer eye on it yourself for now, without flagging yet, to see if it develops into something more significant." },
+              consequence: { en: "The deviation is being watched, but the Chief Officer doesn't know about it yet." },
+              feedback: { en: "Watching for a development doesn't substitute for letting the Chief Officer know it's happening — the judgment about significance is theirs to make." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "The deviation develops further while unflagged, and by the time it's noticed as more serious, addressing it is more complicated." },
+                options: [
+                  { id: "c1", label: { en: "Continue watching, still without flagging." }, consequence: { en: "The situation continues to develop unaddressed." }, feedback: { en: "Compounds the original delay at the point it matters most." } },
+                  { id: "c2", label: { en: "Flag it now, including that it had been developing for a while." }, consequence: { en: "The Chief Officer gets an accurate account, later than it should have come." }, feedback: { en: "Correct, though flagging it at the start would have avoided the situation becoming more complicated." }, isRecommended: true },
+                  { id: "c3", label: { en: "Flag only the current state, without mentioning it had been developing for a while." }, consequence: { en: "The Chief Officer doesn't get the full context of how the situation actually developed." }, feedback: { en: "Withholds relevant history that's directly useful for judging what to do now." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Moisture Verification Regardless of Supplier History" },
+        bestPractices: [
+          { en: "Every cargo's moisture is verified to the same standard, regardless of how familiar or trusted the shipper is." },
+        ],
+        commonErrors: [
+          { en: "Accepting a moisture certificate with less scrutiny because the shipper is familiar." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Hull-Stress Confirmation, Not a Single Reading" },
+        bestPractices: [
+          { en: "Hull stress is confirmed within limits from sustained, continuous readings throughout loading, not a single point-in-time check." },
+        ],
+        commonErrors: [
+          { en: "Treating one favorable reading as sufficient confirmation for the remainder of loading." },
+        ],
+      },
+      {
+        theme: { en: "Flagging, Not Judging, at the Observation Level" },
+        bestPractices: [
+          { en: "A hold-sequence deviation is flagged immediately when observed — deciding whether it's significant enough to matter is the Chief Officer's judgment, not the observer's." },
+        ],
+        commonErrors: [
+          { en: "Deciding independently that a deviation is too minor to flag." },
+          { en: "Watching a deviation privately instead of flagging it, waiting to see if it becomes more significant." },
+        ],
+      },
+      {
+        theme: { en: "Honest Reassessment Under Weather-Exposure Uncertainty" },
+        bestPractices: [
+          { en: "A brief weather exposure that might have affected cargo moisture is reassessed, not assumed inconsequential." },
+        ],
+        commonErrors: [
+          { en: "Assuming a brief exposure was inconsequential without actually reassessing the cargo." },
+        ],
+      },
+      {
+        theme: { en: "Disclosing the Full History When Flagging Late" },
+        bestPractices: [
+          { en: "When something is finally flagged after going unflagged for a while, the full history — including that it went unflagged — is disclosed, not just the current state." },
+        ],
+        commonErrors: [
+          { en: "Reporting only the current reading without mentioning that a deviation was noticed earlier and not flagged." },
+        ],
+      },
+      {
+        theme: { en: "Monitoring Requests Are Fulfilled With Real Updates" },
+        bestPractices: [
+          { en: "When asked to keep monitoring something specific, updates reflect genuine changes, not manufactured findings to appear thorough." },
+        ],
+        commonErrors: [
+          { en: "Escalating reports without a genuine new development, just to seem responsive." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
