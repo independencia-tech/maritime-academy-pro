@@ -91,8 +91,17 @@ export interface OperationPhase {
 // moment — firefighting command itself passing to an external party,
 // unlike every prior emergency, which kept the vessel's own crew in
 // command throughout.
+//
+// "shore_authorities" added for the RoRo Passenger Ferry water-ingress
+// operation: the first underway emergency in the catalog. Every prior
+// party addition represented a counterparty the vessel was alongside or
+// coordinating a task with (a terminal, an installation, a fire brigade).
+// This one is different in kind — a standing regulatory notification
+// obligation for a developing emergency at sea, not a commercial or
+// task-based relationship, and there is no "terminal" available in this
+// underway context at all.
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -7559,6 +7568,391 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Rushing again once schedule pressure has just been relieved, undermining the reason it was relieved in the first place." },
+        ],
+      },
+    ],
+  },
+
+  roro_vehicle_deck_water_ingress: {
+    operationId: "roro_vehicle_deck_water_ingress",
+    vesselTypeId: "roro_passenger",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "RoRo Passenger Ferry — Vehicle Deck Water Ingress (Post-Departure Closure Failure)" },
+    introduction: {
+      en: "Shortly after departure clearance is granted and the vessel gets underway — interrupting op1's own final phase — a watertight closure that was properly verified nonetheless fails: a mechanical or structural failure, or the closure compromised as the vessel meets open water. Water begins entering the vehicle deck. This is the vessel category's own most catastrophic historical risk, explicitly named on its own Ships Library card, with SOLAS regulation written specifically in response to it. Unlike op1's discipline — verification before departure — this operation tests what happens when the whole system is challenged by a failure occurring despite correct process: detection, activating the watertight subdivision/pumping response, assessing the stability impact, and taking corrective action before it becomes catastrophic. This is a genuinely new hazard shape for the catalog: progressive stability loss from free water on a large open deck, distinct from every gas leak, chemical reaction, or system malfunction built so far, and the most severe consequence category the catalog has addressed.",
+    },
+    objectives: [
+      { en: "Describe the sequence of detecting and responding to water ingress on the vehicle deck shortly after departure." },
+      { en: "Explain why progressive stability loss from free water on the vehicle deck is a genuinely different and especially severe hazard shape from anything built so far." },
+      { en: "Explain the detection, watertight subdivision/pumping response, and stability assessment discipline." },
+      { en: "Identify who does what during this operation on a RoRo passenger ferry specifically." },
+      { en: "Recognize correct versus incorrect prioritization under a developing stability threat whose full severity isn't immediately known." },
+    ],
+    context: {
+      en: "This operation interrupts op1's own final phase directly — the failure develops shortly after departure clearance, following the same routine-then-emergency pairing confirmed across every vessel so far. Progressive stability loss from free water on an open deck is distinct from every prior emergency archetype (fire, leak, system failure, in-tank reaction) — the most safety-critical consequence category the catalog has addressed. Carries forward op1's 8-rank roster unchanged. Confirmed scope: this operation stays narrowly focused on the technical stability response, the same domain discipline op1 established; passenger notification is a real parallel process but not this operation's own detailed content. A new CommunicationParty, 'shore_authorities', is needed — the first underway emergency in the catalog, with no terminal relationship in this context and a standing notification obligation distinct from any commercial counterparty relationship. Two structural firsts: a shared-command structure (Master directs vessel navigation, Chief Officer directs the vehicle deck response, neither delegating fully to the other) rather than a single on-scene commander, and the final decision (continue voyage or return to port) rather than a resumption-with-terminal decision. Not asserting specific stability calculation methods, pumping system engineering specifics, or exact freeboard/list thresholds — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "water_ingress_detection_and_alert",
+      ["command_and_speed_course_adjustment", "watertight_subdivision_closure", "pumping_system_activation"],
+      "stability_assessment_and_water_level_monitoring",
+      "source_isolation",
+      "confirmed_stable_and_standdown",
+      "continuation_or_return_to_port_decision",
+    ],
+    operationPhases: {
+      water_ingress_detection_and_alert: {
+        id: "water_ingress_detection_and_alert",
+        title: { en: "Water Ingress Detection and Alert" },
+        steps: [
+          { en: "Water ingress detected — via bilge/deck water alarm, an unexpected list or trim change, or a crew member noticing." },
+          { en: "Immediate alert raised: location, what's observed." },
+        ],
+      },
+      command_and_speed_course_adjustment: {
+        id: "command_and_speed_course_adjustment",
+        title: { en: "Command and Speed/Course Adjustment" },
+        steps: [
+          { en: "Command transfers explicitly to the Chief Officer as on-scene commander for the vehicle deck response." },
+          { en: "The Master, retaining direct control of the vessel's navigation, adjusts speed and course to minimize further ingress and reduce the vessel's motion." },
+        ],
+      },
+      watertight_subdivision_closure: {
+        id: "watertight_subdivision_closure",
+        title: { en: "Watertight Subdivision Closure" },
+        steps: [
+          { en: "Remaining watertight doors closed to contain the ingress to the affected area." },
+        ],
+      },
+      pumping_system_activation: {
+        id: "pumping_system_activation",
+        title: { en: "Pumping System Activation" },
+        steps: [
+          { en: "Dewatering/pumping systems activated to begin removing water from the affected area." },
+        ],
+      },
+      stability_assessment_and_water_level_monitoring: {
+        id: "stability_assessment_and_water_level_monitoring",
+        title: { en: "Stability Assessment and Water Level Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of the response, not a one-time check." },
+        steps: [
+          { en: "Water level on the vehicle deck, list, and trim monitored continuously." },
+          { en: "Severity trend assessed: stable, worsening, or improving." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      source_isolation: {
+        id: "source_isolation",
+        title: { en: "Source Isolation" },
+        steps: [
+          { en: "Once assessed, the source of ingress is isolated or sealed if it's safe and possible to reach." },
+          { en: "Executed under the Chief Officer's authorization." },
+        ],
+      },
+      confirmed_stable_and_standdown: {
+        id: "confirmed_stable_and_standdown",
+        title: { en: "Confirmed Stable and Stand-Down" },
+        steps: [
+          { en: "Water ingress stopped or brought fully under control, stability confirmed within safe limits — not assumed from a single reading." },
+          { en: "Transition to reduced-alert monitoring." },
+        ],
+      },
+      continuation_or_return_to_port_decision: {
+        id: "continuation_or_return_to_port_decision",
+        title: { en: "Continuation or Return-to-Port Decision" },
+        steps: [
+          { en: "The Master, informed by the Chief Officer's assessment, decides whether to continue the voyage or return to the nearest port for full inspection and repair." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "water_ingress_alert", phaseId: "water_ingress_detection_and_alert", from: "deck_team", to: "bridge", trigger: { en: "Water ingress detected" }, content: { en: "Immediate alert: location, what's observed." }, whyItMatters: { en: "Everything downstream depends on this reaching the bridge without delay." } },
+      { id: "command_transfer_confirmation", phaseId: "command_and_speed_course_adjustment", from: "bridge", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Explicit assumption of emergency command by the Master; Chief Officer confirmed as on-scene commander for the vehicle deck response." }, whyItMatters: { en: "An authority handoff, mirroring every prior emergency operation's command-transfer touchpoint." } },
+      { id: "shore_authorities_notification", phaseId: "command_and_speed_course_adjustment", from: "bridge", to: "shore_authorities", trigger: { en: "Immediately on alert" }, content: { en: "Master notifies shore authorities of the developing situation, per standard practice for an emergency underway." }, whyItMatters: { en: "The vessel is underway, not alongside a terminal — this is the first operation where the standing notification obligation to shore authorities is the relevant external channel." } },
+      { id: "watertight_closure_confirmation", phaseId: "watertight_subdivision_closure", from: "deck_team", to: "deck", trigger: { en: "Closure complete" }, content: { en: "Bosun confirms remaining watertight doors closed." }, whyItMatters: { en: "Closes the loop on this concurrent response track." } },
+      { id: "pumping_status", phaseId: "pumping_system_activation", from: "engine", to: "deck", trigger: { en: "Pumping activated" }, content: { en: "Engine confirms dewatering/pumping systems activated and reports capacity." }, whyItMatters: { en: "Grounds Engine's role in this specific emergency." } },
+      { id: "onscene_status_to_bridge", phaseId: "stability_assessment_and_water_level_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during the incident" }, content: { en: "Chief Officer reports water level, list/trim, and stability assessment to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior emergency." } },
+      { id: "shore_authorities_status_update", phaseId: "stability_assessment_and_water_level_monitoring", from: "bridge", to: "shore_authorities", trigger: { en: "Continuous or on significant change" }, content: { en: "Master keeps shore authorities updated on the vessel's status." }, whyItMatters: { en: "Standard practice for a developing emergency underway." } },
+      { id: "isolation_authorization", phaseId: "source_isolation", from: "deck", to: "deck_team", trigger: { en: "Situation assessed" }, content: { en: "Chief Officer authorizes the Bosun/deck team to attempt isolating the source, if safe to do so." }, whyItMatters: { en: "Mirrors the authorization discipline established across the catalog." } },
+      { id: "stable_confirmation", phaseId: "confirmed_stable_and_standdown", from: "deck", to: "bridge", trigger: { en: "Situation confirmed stable" }, content: { en: "Chief Officer reports stability confirmed within safe limits." }, whyItMatters: { en: "Not assumed from a single reading — the same explicit-confirmation discipline as every prior emergency." } },
+      { id: "continuation_decision_to_shore", phaseId: "continuation_or_return_to_port_decision", from: "bridge", to: "shore_authorities", trigger: { en: "Decision made" }, content: { en: "Master informs shore authorities of the decision to continue or return to port." }, whyItMatters: { en: "Closes the loop on the incident with the notified authority." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "In op1, already a departure from the tanker-family background pattern (actively conning through rapid port maneuvers). Here, becomes the most actively engaged Master in the whole catalog: directly conning the vessel's speed and course as a hazard-mitigation action, notifying shore authorities, and making the final continue-or-return-to-port decision." } },
+      { rankId: "chief_officer", identity: { en: "In op1, owned the loading discipline outright. Here, becomes on-scene commander specifically for the vehicle deck's technical response — directing watertight closure, pumping activation, and source isolation — while the Master retains full navigation authority in parallel. Neither commands the other's domain." } },
+      { rankId: "oow", identity: { en: "The first case in the catalog where an OOW's op2 role is a direct extension of their op1 role, not a further departure from it. In op1, already retained real navigation duties. Here, supports the Master's active speed/course response the same way." } },
+      { rankId: "bosun", identity: { en: "In op1, led the vehicle deck crew through loading and lashing. Here, leads the deck team's watertight closure and source isolation actions." } },
+      { rankId: "ab", identity: { en: "In op1, executed lashing under the Bosun. Here, executes watertight closure and supports source isolation under the Bosun's direction — the same execution-under-direction shape, applied to the emergency." } },
+      { rankId: "chief_engineer", identity: { en: "Becomes the senior technical authority directing the pumping/dewatering response — the established default applying cleanly here, since this genuinely is Engine's own domain and wasn't already elevated in op1." } },
+      { rankId: "second_engineer", identity: { en: "Directly executes pumping system operation under the Chief Engineer's direction — active, hands-on technical execution, not the passive assisting role held in op1." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness during the incident — the same lighter role as op1 and every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Assumes overall emergency command; directly conns the vessel's speed and course to minimize further ingress; notifies shore authorities; makes the final continue-or-return-to-port decision." }],
+        iMonitor: [{ en: "Overall incident status via the Chief Officer; vessel motion and navigation status directly." }],
+        iReport: [{ en: "To shore authorities; to company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on vehicle deck response actions — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Assumes on-scene command of the vehicle deck response; directs watertight closure, pumping activation, and source isolation; assesses stability continuously." }],
+        iMonitor: [{ en: "Water level, list/trim, and stability continuously; pumping progress as reported by Engine." }],
+        iReport: [{ en: "Status to the Master continuously." }],
+        iDoNotAuthorize: [{ en: "The Master's navigation authority or the final continuation/return decision." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Master's active speed/course response — navigation and watchkeeping support." }],
+        iMonitor: [{ en: "Navigation and vessel motion status." }],
+        iReport: [{ en: "Observations to the Master." }],
+        iDoNotAuthorize: [{ en: "Independent navigation decisions." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Leads the deck team's watertight closure and source isolation actions." }],
+        iMonitor: [{ en: "Deck team safety and closure/isolation progress." }],
+        iReport: [{ en: "Progress and deviations to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "The stability assessment itself or the final response decisions — the Chief Officer's call." }],
+      },
+      ab: {
+        iExecute: [{ en: "Executes watertight closure and supports source isolation under the Bosun's direction." }],
+        iMonitor: [{ en: "Immediate conditions during the assigned action." }],
+        iReport: [{ en: "Observations directly to the Bosun." }],
+        iDoNotAuthorize: [{ en: "Independent action." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Directs the pumping/dewatering response; oversees the Second Engineer's work." }],
+        iMonitor: [{ en: "Pumping capacity and progress throughout the incident." }],
+        iReport: [{ en: "Status to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Vehicle deck response decisions themselves — the Chief Officer's call." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Operates the pumping/dewatering systems under the Chief Engineer's direction." }],
+        iMonitor: [{ en: "Pumping system status continuously." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Acting before authorization; vehicle deck response decisions." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch and readiness throughout the incident." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any incident-response decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "lead",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the phases of the vehicle deck water ingress response in the correct order." },
+        items: [
+          { id: "water_ingress_detection_and_alert", label: { en: "Water Ingress Detection and Alert" } },
+          { id: "command_and_speed_course_adjustment", label: { en: "Command and Speed/Course Adjustment" } },
+          { id: "watertight_subdivision_closure", label: { en: "Watertight Subdivision Closure" } },
+          { id: "pumping_system_activation", label: { en: "Pumping System Activation" } },
+          { id: "stability_assessment_and_water_level_monitoring", label: { en: "Stability Assessment and Water Level Monitoring" } },
+          { id: "source_isolation", label: { en: "Source Isolation" } },
+          { id: "confirmed_stable_and_standdown", label: { en: "Confirmed Stable and Stand-Down" } },
+          { id: "continuation_or_return_to_port_decision", label: { en: "Continuation or Return-to-Port Decision" } },
+        ],
+        correctOrder: [
+          "water_ingress_detection_and_alert",
+          ["command_and_speed_course_adjustment", "watertight_subdivision_closure", "pumping_system_activation"],
+          "stability_assessment_and_water_level_monitoring",
+          "source_isolation",
+          "confirmed_stable_and_standdown",
+          "continuation_or_return_to_port_decision",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_chief_officer_overrides_navigation",
+        targetRanks: ["ab", "bosun", "second_engineer"],
+        scenario: { en: "The Chief Officer attempts to direct the vessel's course and speed directly, bypassing the Master's navigation authority, in the urgency of the moment. The Bosun reports watertight closure completion immediately to the Chief Officer. The Second Engineer operates the pumping system only after the Chief Engineer's direction." },
+        choices: [
+          { id: "c1", label: { en: "The Chief Officer directing the vessel's course and speed directly, bypassing the Master's navigation authority" }, isError: true, explanation: { en: "Violates the shared-command structure — the Chief Officer's authority is the vehicle deck response, not the vessel's own navigation." } },
+          { id: "c2", label: { en: "The Bosun reporting watertight closure completion immediately to the Chief Officer" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "The Second Engineer operating the pumping system only after the Chief Engineer's direction" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "continuation_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The ingress appears controlled and the reduced-alert monitoring period has elapsed. Review the readiness snapshot below before deciding whether to continue the voyage." },
+        items: [
+          { id: "ingress_stopped_stable", label: { en: "Water ingress stopped or controlled and stability confirmed within safe limits" }, isSatisfied: true },
+          { id: "monitoring_period_elapsed", label: { en: "Reduced-alert monitoring period elapsed without incident" }, isSatisfied: true },
+          { id: "source_inspected", label: { en: "Isolated source inspected and cleared" }, isSatisfied: false },
+          { id: "shore_authorities_acknowledged", label: { en: "Shore authorities informed and acknowledged" }, isSatisfied: false },
+          { id: "master_continuation_decision", label: { en: "Master's final continuation/return decision completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "In the urgency of the moment, the Chief Officer feels the pull to also weigh in on the vessel's course/speed, given how directly it affects the situation being managed on the vehicle deck." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer shares relevant information with the Master — how the vessel's motion is affecting the water ingress — but leaves the actual navigation decision to the Master." }],
+        why: [{ en: "Tests whether the shared-command boundary holds even when both domains are clearly affecting each other." }],
+        commonMistakes: [{ en: "Directly suggesting or pushing for a specific course/speed change rather than sharing information and letting the Master decide." }],
+        safetyPoints: [{ en: "Sharing relevant information across the command boundary is different from crossing into the other's decision authority." }],
+      },
+      {
+        situation: { en: "One reading shows water level stabilizing; there's a temptation to declare the situation resolved immediately." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms stability from sustained readings, not a single data point." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle for this operation's own signature measurement." }],
+        commonMistakes: [{ en: "Treating one stabilizing reading as sufficient confirmation." }],
+        safetyPoints: [{ en: "A single reading can be a temporary lull, not genuine resolution — especially given how quickly this hazard can develop." }],
+      },
+      {
+        situation: { en: "Early in the incident, the Master isn't fully certain of the severity, and there's pressure to downplay the situation when notifying shore authorities to avoid triggering a larger response than might be needed." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master reports the genuine, uncertain picture honestly, including what isn't yet known, rather than downplaying it." }],
+        why: [{ en: "Echoes the established honest-reporting-under-uncertainty value, at the highest-stakes application in the catalog." }],
+        commonMistakes: [{ en: "Downplaying the situation to avoid triggering what might turn out to be an unnecessary large-scale shore response." }],
+        safetyPoints: [{ en: "An honest report is what lets shore authorities correctly calibrate their own readiness." }],
+      },
+      {
+        situation: { en: "The Master must decide how much to adjust speed and course to reduce the vessel's motion, weighing the benefit against how much it affects overall passage or schedule." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master's speed/course adjustment is based on what genuinely reduces the ingress and stabilizes the vessel, not calibrated to minimize schedule disruption." }],
+        why: [{ en: "Tests whether the Master's active hazard-mitigation role prioritizes the actual hazard over incidental schedule considerations." }],
+        commonMistakes: [{ en: "Under-adjusting speed/course to limit the impact on the passage schedule." }],
+        safetyPoints: [{ en: "The vessel's own motion is now a direct factor in the hazard itself — schedule considerations have no place in this specific decision." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_hazard_over_schedule",
+        title: { en: "The Hazard Decides, Not the Schedule" },
+        seatRankId: "master",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Master. Water ingress has just been detected on the vehicle deck. You need to decide how much to adjust speed and course. A more aggressive reduction would clearly help stabilize the situation, but it would also significantly disrupt the schedule and mean reporting a real delay to the company." },
+          options: [
+            {
+              id: "a_moderate_calibrated",
+              label: { en: "Make a moderate adjustment — enough to seem responsible, but calibrated to limit the schedule impact." },
+              consequence: { en: "The adjustment is less than what the hazard alone would call for." },
+              feedback: { en: "The vessel's own motion is now a direct factor in the hazard itself — calibrating the response to the schedule rather than the hazard gets the priority backwards." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The situation continues to develop, and the moderate adjustment isn't enough — the ingress continues at a concerning rate." },
+                options: [
+                  { id: "a1", label: { en: "Continue at the same moderate adjustment, hoping it's enough." }, consequence: { en: "The ingress continues at a concerning rate with an inadequate response in place." }, feedback: { en: "Hoping an already-insufficient response becomes sufficient doesn't change the underlying physics." } },
+                  { id: "a2", label: { en: "Immediately make the full adjustment now warranted, regardless of the now-even-greater schedule impact." }, consequence: { en: "The response finally matches the hazard, later than it should have." }, feedback: { en: "Correct, though the earlier moderate choice already cost time the full response would have used better." }, isRecommended: true },
+                  { id: "a3", label: { en: "Consult with company/dispatch before adjusting further." }, consequence: { en: "The adjustment is delayed while awaiting a conversation that isn't actually needed to make it." }, feedback: { en: "This adjustment is the Master's own call to make — adding an unnecessary consultation delays a response the hazard already calls for." } },
+                ],
+              },
+            },
+            {
+              id: "b_full_adjustment_immediately",
+              label: { en: "Make the full adjustment genuinely warranted by the hazard, regardless of the schedule impact." },
+              consequence: { en: "The response matches the actual hazard from the start." },
+              feedback: { en: "Correct — the hazard determines the response; the schedule impact is a real but secondary consequence, not a factor in the decision itself." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "The adjustment is effective and the ingress rate visibly slows. The company inquires about the schedule impact." },
+                options: [
+                  { id: "b1", label: { en: "Report honestly that the disruption was necessary and genuinely warranted by the hazard." }, consequence: { en: "The company has an accurate account of why the schedule was affected." }, feedback: { en: "Correct — an honest, accurate account is what the situation actually calls for." }, isRecommended: true },
+                  { id: "b2", label: { en: "Downplay the extent of the adjustment made, to soften the reported schedule impact." }, consequence: { en: "The company's understanding of what happened is inaccurate." }, feedback: { en: "Softening the account doesn't change what was necessary — it just makes the record less accurate." } },
+                  { id: "b3", label: { en: "Avoid engaging with the schedule question at all." }, consequence: { en: "A reasonable question goes unanswered." }, feedback: { en: "The company's question is a reasonable one, given the real impact — it deserves an honest answer, not avoidance." } },
+                ],
+              },
+            },
+            {
+              id: "c_delay_deciding",
+              label: { en: "Delay deciding on the adjustment until you have more information about the severity, to avoid committing to a disruptive choice prematurely." },
+              consequence: { en: "No navigation response is made while more information is awaited." },
+              feedback: { en: "The adjustment itself helps reduce further ingress regardless of exact severity — waiting for full clarity before acting delays a response that's already warranted." },
+              next: {
+                id: "level_2_c",
+                situation: { en: "Time passes while waiting for more information, and the ingress continues unaddressed by any navigation response during that window." },
+                options: [
+                  { id: "c1", label: { en: "Continue waiting, since more clarity would still help." }, consequence: { en: "The ingress continues without a mitigating response." }, feedback: { en: "Compounds the original delay at the point it matters most." } },
+                  { id: "c2", label: { en: "Make the adjustment now, acknowledging that waiting cost valuable time." }, consequence: { en: "The response is finally made, later than it should have been." }, feedback: { en: "Correct, though the earlier wait already cost time the response would have used better." }, isRecommended: true },
+                  { id: "c3", label: { en: "Skip the navigation adjustment altogether now, since so much time has already passed." }, consequence: { en: "The response never happens at all." }, feedback: { en: "How much time has passed doesn't change whether the adjustment is still warranted — it still is." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "The Hazard Decides, Not the Schedule" },
+        bestPractices: [
+          { en: "Speed and course adjustments are calibrated to what the hazard genuinely requires, not to limit schedule disruption." },
+        ],
+        commonErrors: [
+          { en: "Making a moderate, schedule-conscious adjustment instead of the full response the hazard actually warrants." },
+          { en: "Delaying a navigation response while waiting for full clarity on severity, when the response itself helps regardless." },
+        ],
+      },
+      {
+        theme: { en: "The Shared Command Boundary" },
+        bestPractices: [
+          { en: "Information relevant to the other's domain is shared freely — vessel motion affecting the vehicle deck response, deck conditions affecting the navigation decision — without either commander crossing into the other's actual authority." },
+        ],
+        commonErrors: [
+          { en: "Directly suggesting or pushing for a navigation decision that belongs to the Master's own domain." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Stability Confirmation, Not a Single Reading" },
+        bestPractices: [
+          { en: "Stability is confirmed from sustained readings, not a single data point, given how quickly this hazard can develop." },
+        ],
+        commonErrors: [
+          { en: "Treating one stabilizing reading as sufficient confirmation that the situation is resolved." },
+        ],
+      },
+      {
+        theme: { en: "Honest Reporting to Shore Authorities" },
+        bestPractices: [
+          { en: "The genuine, even uncertain, picture is reported honestly to shore authorities, letting them calibrate their own readiness accurately." },
+        ],
+        commonErrors: [
+          { en: "Downplaying the situation to avoid triggering what might turn out to be an unnecessary shore response." },
+        ],
+      },
+      {
+        theme: { en: "Honest Accounting of a Necessary Disruption" },
+        bestPractices: [
+          { en: "A schedule impact genuinely caused by the hazard response is reported accurately when the company asks, not downplayed." },
+        ],
+        commonErrors: [
+          { en: "Softening the account of a necessary response to make the reported impact look smaller." },
+        ],
+      },
+      {
+        theme: { en: "A Standing Notification Obligation, Not a Commercial Relationship" },
+        bestPractices: [
+          { en: "Shore authorities are notified as standard practice for a developing emergency underway, distinct from any commercial counterparty relationship." },
+        ],
+        commonErrors: [
+          { en: "Treating shore notification as optional or secondary to managing the immediate technical response." },
         ],
       },
     ],
