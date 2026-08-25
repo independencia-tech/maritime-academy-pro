@@ -7197,6 +7197,372 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  roro_vehicle_deck_loading_lashing_verification: {
+    operationId: "roro_vehicle_deck_loading_lashing_verification",
+    vesselTypeId: "roro_passenger",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "RoRo Passenger Ferry — Rapid Vehicle Deck Loading with Lashing and Watertight Closure Verification" },
+    introduction: {
+      en: "This operation covers the RoRo Passenger Ferry's own defining task: rapid vehicle deck loading via ramps under real time pressure — this vessel type runs some of the most intense turnaround rotations in maritime transport — with the central discipline being securing rolling cargo (lashing trucks and trailers) and verifying watertight closure of ramps and doors before departure. The card's own most explicit named risk — water ingress on the vehicle deck causing catastrophic loss of stability, a documented historical failure mode for this vessel category specifically — exists precisely because this discipline can fail under the pressure to turn the ship around quickly. No prior operation covers securing rolling cargo against movement or watertight-closure verification: Container Ship's stowage verification is about static cargo weight and position, a genuinely different problem.",
+    },
+    objectives: [
+      { en: "Describe the sequence of vehicle deck loading via ramps, from arrival through lashing and watertight closure verification to departure." },
+      { en: "Explain why lashing and watertight closure verification are this operation's central discipline, and why rushing them under turnaround pressure is the single greatest risk this vessel type faces." },
+      { en: "Explain the distinction between this operation's rolling-cargo-securing discipline and Container Ship's static-cargo-position verification." },
+      { en: "Identify who does what during this operation on a RoRo passenger ferry specifically." },
+      { en: "Recognize correct versus incorrect prioritization when rapid-turnaround schedule pressure competes with lashing/closure verification discipline." },
+    ],
+    context: {
+      en: "The vessel's own defining task, the same 'owns the signature activity' pattern established across every first operation in the catalog — but here the schedule pressure isn't a commercial preference, it's the vessel's entire operational model. First return of Bosun since OSV, after five vessels running without one — the card explicitly names Bosun, restoring the AHTS/PSV/Container Ship/OSV execution structure. First return to the full 8-rank roster since Container Ship, per confirmation to include OOW despite the card not naming it explicitly, given this vessel's defining rapid-maneuvering tempo. 'Vehicle deck crew' folds into AB, leading under the Bosun. Passenger Safety Officer, Purser, and reception/catering staff are real ranks on this vessel but not part of this specific operation's cast — Hospitality/Passenger Services doesn't touch vehicle deck cargo operations. HSE personnel folds into the Chief Officer's existing safety ownership. Not asserting specific lashing equipment specifications, watertight door engineering details, or SOLAS stability calculation thresholds — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "arrival_and_ramp_positioning",
+      "vehicle_loading_via_ramps",
+      "lashing_and_securing",
+      "continuous_lashing_verification_and_trim_monitoring",
+      "watertight_closure_verification",
+      "departure_clearance",
+    ],
+    operationPhases: {
+      arrival_and_ramp_positioning: {
+        id: "arrival_and_ramp_positioning",
+        title: { en: "Arrival and Ramp Positioning" },
+        steps: [
+          { en: "Vessel arrives and berths; ramps positioned and lowered." },
+          { en: "Deck team ready and briefed on the loading plan and vehicle sequence." },
+        ],
+      },
+      vehicle_loading_via_ramps: {
+        id: "vehicle_loading_via_ramps",
+        title: { en: "Vehicle Loading via Ramps" },
+        steps: [
+          { en: "Vehicles embark under their own power via the ramps, directed by the deck crew per the loading plan." },
+          { en: "Traffic flow and vehicle positioning managed to keep the process moving within the turnaround window." },
+        ],
+      },
+      lashing_and_securing: {
+        id: "lashing_and_securing",
+        title: { en: "Lashing and Securing" },
+        steps: [
+          { en: "Each vehicle secured immediately as it's positioned — not batched for later, given the operation's fast pace." },
+          { en: "Lashing standard applied per the specific vehicle type and weight." },
+        ],
+        bestPractices: [
+          { en: "Lashing keeps pace with loading, vehicle by vehicle — it is never deferred to 'catch up on later.'" },
+        ],
+      },
+      continuous_lashing_verification_and_trim_monitoring: {
+        id: "continuous_lashing_verification_and_trim_monitoring",
+        title: { en: "Continuous Lashing Verification and Trim Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of loading, not a one-time check: lashing already completed is spot-checked as loading continues, and trim/stability is monitored as rolling cargo distribution changes." },
+        steps: [
+          { en: "Completed lashing spot-checked continuously as loading proceeds." },
+          { en: "Trim and stability monitored continuously as vehicle weight distribution develops." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      watertight_closure_verification: {
+        id: "watertight_closure_verification",
+        title: { en: "Watertight Closure Verification" },
+        steps: [
+          { en: "Ramps and doors closed once loading is complete." },
+          { en: "Watertight integrity explicitly verified — not assumed from the ramp simply being raised." },
+        ],
+      },
+      departure_clearance: {
+        id: "departure_clearance",
+        title: { en: "Departure Clearance" },
+        steps: [
+          { en: "Final checks completed." },
+          { en: "Departure clearance given only after watertight closure is explicitly confirmed." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "terminal_readiness_confirmation", phaseId: "arrival_and_ramp_positioning", from: "terminal", to: "deck", trigger: { en: "Before ramps lowered" }, content: { en: "Terminal confirms berth and vehicle marshalling readiness." }, whyItMatters: { en: "The plan/readiness originates externally, same confirm-before-starting pattern as every prior pre-operation channel." } },
+      { id: "loading_plan_briefing", phaseId: "arrival_and_ramp_positioning", from: "deck", to: "deck_team", trigger: { en: "Before loading begins" }, content: { en: "Chief Officer briefs the Bosun and deck team on the loading plan and vehicle sequence." }, whyItMatters: { en: "Re-briefing before each fast-paced operation, echoing AHTS's own pre-leg briefing discipline." } },
+      { id: "vehicle_loading_coordination", phaseId: "vehicle_loading_via_ramps", from: "terminal", to: "deck_team", trigger: { en: "Continuous during loading" }, content: { en: "Terminal marshals vehicles onto the ramps per the sequence; deck team directs positioning." }, whyItMatters: { en: "The operation's primary real-time coordination channel." } },
+      { id: "lashing_status_ongoing", phaseId: "continuous_lashing_verification_and_trim_monitoring", from: "deck_team", to: "deck", trigger: { en: "Continuous during loading" }, content: { en: "Bosun reports lashing progress and any deviation to the Chief Officer." }, whyItMatters: { en: "Same ongoing-status relationship as every prior operation." } },
+      { id: "trim_status_ongoing", phaseId: "continuous_lashing_verification_and_trim_monitoring", from: "engine", to: "deck", trigger: { en: "Continuous during loading" }, content: { en: "Engine reports stabilization system readings to the Chief Officer as cargo distribution develops." }, whyItMatters: { en: "Echoes the established Deck-judgment/Engine-system dependency pattern." } },
+      { id: "lashing_concern_flag", phaseId: "lashing_and_securing", from: "deck_team", to: "deck_team", trigger: { en: "Any observed lashing or closure concern" }, content: { en: "Immediate flag, regardless of rank." }, whyItMatters: { en: "Anyone on the deck team can halt work over a lashing concern — authority to flag isn't rank-gated, the same principle AHTS first established." } },
+      { id: "closure_verification_to_bridge", phaseId: "watertight_closure_verification", from: "deck", to: "bridge", trigger: { en: "Closure verified" }, content: { en: "Chief Officer confirms watertight closure verified to the Master." }, whyItMatters: { en: "Explicit confirmation, not assumed from the ramp simply being raised." } },
+      { id: "departure_clearance_touchpoint", phaseId: "departure_clearance", from: "bridge", to: "terminal", trigger: { en: "Ready to depart" }, content: { en: "Departure clearance." }, whyItMatters: { en: "Standard closing touchpoint." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "Overall command, oversight-focused rather than hands-on — the same background role as every routine first operation's Master except AHTS." } },
+      { rankId: "chief_officer", identity: { en: "The signature role, owning the entire loading discipline: briefing the deck team on the loading plan, overseeing continuous lashing verification and trim monitoring, confirming watertight closure, authorizing departure readiness." } },
+      { rankId: "oow", identity: { en: "A genuine departure from the tanker family's OOW pattern, not a continuation of it. Every tanker's OOW joined deck-side cargo verification work because there was no navigation happening during terminal loading. Here, the opposite holds: RoRo's defining trait is rapid, frequent port maneuvering, so the OOW retains a real navigation-adjacent watchkeeping role supporting the Master through the tight turnaround." } },
+      { rankId: "bosun", identity: { en: "Leads the vehicle deck crew through loading, lashing, and closure — the returning execution-lead role matching AHTS/PSV/Container Ship/OSV's Bosun pattern, absent for the last five vessels." } },
+      { rankId: "ab", identity: { en: "Mapped from the card's 'vehicle deck crew' phrasing. Executes lashing and vehicle positioning under the Bosun's direction — a return to the Bosun-intermediary structure after five vessels of AB reporting directly to the Chief Officer." } },
+      { rankId: "chief_engineer", identity: { en: "Owns stabilization and propulsion system readiness before and during the operation — reports and sustains rather than executes hands-on, the same support shape as every prior routine-operation Chief Engineer." } },
+      { rankId: "second_engineer", identity: { en: "Assists the Chief Engineer with stabilization systems at working level — the standard template." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness, supporting the Second Engineer — the same lighter role as every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Holds overall command; conducts frequent, rapid port maneuvering; authorizes departure once watertight closure is confirmed." }],
+        iMonitor: [{ en: "Overall operation status via the Chief Officer; timing against the turnaround schedule." }],
+        iReport: [{ en: "To company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on loading/lashing execution — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Briefs the deck team on the loading plan; oversees continuous lashing verification and trim monitoring; confirms watertight closure; coordinates with the terminal throughout." }],
+        iMonitor: [{ en: "Lashing progress, trim/stability, and closure status continuously." }],
+        iReport: [{ en: "Status to the Master; confirmations to the terminal." }],
+        iDoNotAuthorize: [{ en: "Departure clearance itself — the Master's call." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Master's frequent port maneuvering — watchkeeping and navigation support during the tight turnaround window." }],
+        iMonitor: [{ en: "Navigation and maneuvering status." }],
+        iReport: [{ en: "Observations to the Master." }],
+        iDoNotAuthorize: [{ en: "Independent maneuvering decisions." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Leads the vehicle deck crew through loading, lashing, and closure; assigns AB tasks; directs lashing verification at the working level." }],
+        iMonitor: [{ en: "Deck team safety and lashing quality throughout." }],
+        iReport: [{ en: "Lashing/task progress and deviations to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "Departure clearance or closure sign-off — the Chief Officer's call." }],
+      },
+      ab: {
+        iExecute: [{ en: "Secures vehicles via lashing and directs vehicle positioning, under the Bosun's direction." }],
+        iMonitor: [{ en: "Immediate lashing quality at the working level." }],
+        iReport: [{ en: "Any lashing concern to the Bosun immediately." }],
+        iDoNotAuthorize: [{ en: "Independent action; departure-relevant decisions." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Ensures stabilization and propulsion system readiness before and during the operation; directs the Second Engineer." }],
+        iMonitor: [{ en: "Overall system health throughout." }],
+        iReport: [{ en: "Readiness confirmation and any significant deviation to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Loading/lashing decisions themselves." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Assists the Chief Engineer with stabilization systems at working level." }],
+        iMonitor: [{ en: "The same systems at working level." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "The same boundary as the Chief Engineer." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch, supporting the Second Engineer." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any loading or lashing decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "support",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the six phases of the RoRo vehicle deck loading operation in the correct order." },
+        items: [
+          { id: "arrival_and_ramp_positioning", label: { en: "Arrival and Ramp Positioning" } },
+          { id: "vehicle_loading_via_ramps", label: { en: "Vehicle Loading via Ramps" } },
+          { id: "lashing_and_securing", label: { en: "Lashing and Securing" } },
+          { id: "continuous_lashing_verification_and_trim_monitoring", label: { en: "Continuous Lashing Verification and Trim Monitoring" } },
+          { id: "watertight_closure_verification", label: { en: "Watertight Closure Verification" } },
+          { id: "departure_clearance", label: { en: "Departure Clearance" } },
+        ],
+        correctOrder: ["arrival_and_ramp_positioning", "vehicle_loading_via_ramps", "lashing_and_securing", "continuous_lashing_verification_and_trim_monitoring", "watertight_closure_verification", "departure_clearance"],
+      },
+      {
+        type: "error_identification",
+        id: "err_deferred_lashing",
+        targetRanks: ["bosun", "ab", "chief_officer"],
+        scenario: { en: "The Bosun decides to defer lashing several vehicles until after loading is complete, to save time. The AB reports a lashing concern immediately to the Bosun upon noticing it. The Chief Officer explicitly verifies watertight closure before confirming to the Master." },
+        choices: [
+          { id: "c1", label: { en: "Deferring lashing of several vehicles until after loading, to save time" }, isError: true, explanation: { en: "Violates the explicit rule that lashing is never deferred to 'catch up on later.'" } },
+          { id: "c2", label: { en: "The AB reporting a lashing concern immediately upon noticing it" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "The Chief Officer explicitly verifying watertight closure before confirming to the Master" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "departure_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "Loading is complete and the deck team reports ready. Review the readiness snapshot below before authorizing departure." },
+        items: [
+          { id: "vehicles_lashed", label: { en: "All vehicles lashed and verified" }, isSatisfied: true },
+          { id: "trim_confirmed", label: { en: "Trim/stability confirmed within limits" }, isSatisfied: true },
+          { id: "closure_verified", label: { en: "Watertight closure explicitly verified" }, isSatisfied: false },
+          { id: "engine_stabilization_readiness", label: { en: "Engine confirms stabilization system readiness" }, isSatisfied: false },
+          { id: "master_departure_authorization", label: { en: "Master's final departure authorization completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The ferry is running behind the tight turnaround schedule, and there's a temptation to load remaining vehicles first and lash them all at the end to save time." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Bosun maintains the vehicle-by-vehicle lashing pace regardless of the schedule pressure, even if it means the overall loading takes longer." }],
+        why: [{ en: "Tests whether the lashing-keeps-pace discipline holds under the vessel's own defining time pressure." }],
+        commonMistakes: [{ en: "Batching lashing to the end to move faster through loading." }],
+        safetyPoints: [{ en: "An unlashed vehicle is a real hazard the moment the ship gets underway — deferring lashing doesn't defer that risk." }],
+      },
+      {
+        situation: { en: "The ramp appears fully raised and the visual indicator looks normal; there's a temptation to treat that as sufficient confirmation of watertight closure." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer explicitly verifies watertight closure through the proper check, not from the ramp's visual position alone." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle, directly tied to this vessel type's most catastrophic historical risk." }],
+        commonMistakes: [{ en: "Treating the ramp's visual position as sufficient confirmation of actual watertight closure." }],
+        safetyPoints: [{ en: "A ramp that looks closed and a ramp that's actually watertight-sealed are not automatically the same thing." }],
+      },
+      {
+        situation: { en: "An AB, not the Bosun, notices something questionable about how a vehicle was lashed by someone else, and hesitates to say something since it's not their specific assignment." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The AB flags the concern immediately, regardless of whose assignment it was originally." }],
+        why: [{ en: "Tests whether the anyone-can-flag authority holds even when the observer isn't the one who did the original work." }],
+        commonMistakes: [{ en: "Staying quiet because it wasn't their own assigned task." }],
+        safetyPoints: [{ en: "The authority to flag a safety concern doesn't depend on whose job it originally was." }],
+      },
+      {
+        situation: { en: "Loading is running late, and the Chief Officer is under real pressure to report being on schedule to the Master, even though closure verification hasn't been fully completed yet." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer reports the genuine status honestly — including that closure verification isn't complete — rather than reporting readiness prematurely to relieve schedule pressure." }],
+        why: [{ en: "Echoes the established honest-reporting-under-pressure value already proven in the catalog." }],
+        commonMistakes: [{ en: "Reporting readiness prematurely to ease schedule pressure, before verification is actually complete." }],
+        safetyPoints: [{ en: "An honest status report is what lets the Master make a genuinely informed departure decision." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_standard_under_schedule_pressure",
+        title: { en: "Holding the Standard, Reporting the Cost" },
+        seatRankId: "bosun",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the Bosun. Loading is running behind the tight turnaround schedule, and there's real pressure to get the ferry away close to on time." },
+          options: [
+            {
+              id: "a_speed_through_lashing",
+              label: { en: "Speed through lashing for the remaining vehicles — a faster, lighter version — to make up time." },
+              consequence: { en: "The remaining vehicles are secured to a lower standard than the operation calls for." },
+              feedback: { en: "The lashing standard doesn't have a faster, lighter version — cutting it to save time removes exactly the discipline this operation exists to protect." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The lighter lashing turns out insufficient — trim shifts unexpectedly as the remaining loading continues." },
+                options: [
+                  { id: "a1", label: { en: "Continue, since most of the vehicles are still fine." }, consequence: { en: "The operation proceeds with a known, unresolved lashing gap." }, feedback: { en: "A known gap doesn't become acceptable because most of the load is fine." } },
+                  { id: "a2", label: { en: "Immediately stop, redo the affected lashing to full standard, and report what happened." }, consequence: { en: "The lashing is corrected, and the Chief Officer has an accurate picture of what occurred." }, feedback: { en: "Correct — stopping to fix it properly and disclosing what happened is what actually resolves this." }, isRecommended: true },
+                  { id: "a3", label: { en: "Quietly redo the lashing without telling anyone what almost happened." }, consequence: { en: "The lashing is corrected, but the Chief Officer never learns a shortcut was taken." }, feedback: { en: "Leaves the Chief Officer without the context to understand what actually happened." } },
+                ],
+              },
+            },
+            {
+              id: "b_maintain_silently",
+              label: { en: "Maintain the full lashing standard for every remaining vehicle, without proactively mentioning that this means running late." },
+              consequence: { en: "The standard is maintained, but no one else knows why the schedule is slipping." },
+              feedback: { en: "Correct not to cut the standard — but the Chief Officer is left to wonder why things are running behind, rather than knowing the actual, good reason." },
+              next: {
+                id: "level_2_b",
+                situation: { en: "Time keeps passing, and the Chief Officer, unaware of the reason, starts asking directly why loading is running behind." },
+                options: [
+                  { id: "b1", label: { en: "Give a vague answer to avoid the conversation." }, consequence: { en: "The Chief Officer still doesn't have an actual explanation." }, feedback: { en: "A vague answer leaves the question exactly where it started." } },
+                  { id: "b2", label: { en: "Explain clearly that the full lashing standard is being maintained, which is why it's taking longer." }, consequence: { en: "The Chief Officer now understands the reason, later than it should have come." }, feedback: { en: "Correct, though this explanation would have been more useful offered before being asked for." }, isRecommended: true },
+                  { id: "b3", label: { en: "Rush now that the Chief Officer is asking, to seem more responsive." }, consequence: { en: "The standard is compromised at the exact moment it was being correctly held." }, feedback: { en: "Caving to the question at this point undoes the discipline that was correctly maintained up to now." } },
+                ],
+              },
+            },
+            {
+              id: "c_maintain_and_report",
+              label: { en: "Maintain the full lashing standard, and proactively report to the Chief Officer that this will run late." },
+              consequence: { en: "The standard is maintained, and the Chief Officer has an accurate, timely picture to work with." },
+              feedback: { en: "Correct — holding the standard is your responsibility; informing the Chief Officer of its timing cost is what lets them manage the schedule with accurate information." },
+              isRecommended: true,
+              next: {
+                id: "level_2_c",
+                situation: { en: "Informed, the Chief Officer decides departure will simply be pushed back slightly rather than compromising the lashing standard." },
+                options: [
+                  { id: "c1", label: { en: "Continue at full standard as before, now with clear timing agreed." }, consequence: { en: "Loading finishes properly, on the newly agreed timeline." }, feedback: { en: "Correct — this is exactly what the proactive report was for." }, isRecommended: true },
+                  { id: "c2", label: { en: "Try to speed up anyway now that departure has some flexibility, cutting corners unnecessarily." }, consequence: { en: "The standard is compromised despite the schedule pressure having just been relieved." }, feedback: { en: "The flexibility just granted was meant to protect the standard, not license cutting it anyway." } },
+                  { id: "c3", label: { en: "Push back for an even later departure than needed, out of extra caution." }, consequence: { en: "The operation runs later than the situation actually required." }, feedback: { en: "Adds delay beyond what the actual situation calls for." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Lashing Keeps Pace With Loading" },
+        bestPractices: [
+          { en: "Each vehicle is lashed to full standard as it's positioned — never batched or deferred to save time." },
+        ],
+        commonErrors: [
+          { en: "Deferring lashing to catch up on later in order to move faster through loading." },
+          { en: "Applying a lighter, faster version of the lashing standard under schedule pressure." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Watertight Closure Verification" },
+        bestPractices: [
+          { en: "Watertight closure is explicitly verified through the proper check, not inferred from the ramp's visual position." },
+        ],
+        commonErrors: [
+          { en: "Treating a ramp's visual position as sufficient confirmation of actual watertight closure." },
+        ],
+      },
+      {
+        theme: { en: "Anyone Can Flag a Lashing Concern" },
+        bestPractices: [
+          { en: "A lashing or closure concern is flagged immediately by whoever observes it, regardless of whose assignment the work originally was." },
+        ],
+        commonErrors: [
+          { en: "Staying quiet about a concern because it wasn't one's own assigned task." },
+        ],
+      },
+      {
+        theme: { en: "Proactive Reporting of the Standard's Real Cost" },
+        bestPractices: [
+          { en: "When holding the lashing standard means running behind schedule, that trade-off is reported proactively, not left for someone else to notice and ask about." },
+        ],
+        commonErrors: [
+          { en: "Silently maintaining the correct standard without informing anyone of its timing impact." },
+          { en: "Caving to schedule pressure once someone finally asks why things are running late." },
+        ],
+      },
+      {
+        theme: { en: "Correcting a Discovered Gap Immediately" },
+        bestPractices: [
+          { en: "A lashing shortfall discovered mid-operation is stopped and corrected to full standard right away, with what happened disclosed." },
+        ],
+        commonErrors: [
+          { en: "Continuing to load because most of the cargo is still properly secured." },
+          { en: "Quietly correcting a shortfall without disclosing that it happened." },
+        ],
+      },
+      {
+        theme: { en: "Flexibility Granted Doesn't License Cutting Corners" },
+        bestPractices: [
+          { en: "When schedule flexibility is granted specifically to protect a standard, it's used for exactly that — not treated as license to speed up anyway." },
+        ],
+        commonErrors: [
+          { en: "Rushing again once schedule pressure has just been relieved, undermining the reason it was relieved in the first place." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
