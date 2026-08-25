@@ -8322,6 +8322,392 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  bulk_carrier_cargo_liquefaction_shift: {
+    operationId: "bulk_carrier_cargo_liquefaction_shift",
+    vesselTypeId: "bulk_carrier",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Bulk Carrier — Cargo Liquefaction and Shift During Voyage" },
+    introduction: {
+      en: "Shortly after departure — interrupting the voyage that follows op1's own loading operation — a cargo that marginally passed moisture testing begins to liquefy under the vessel's motion as it encounters open-water rolling and pitching. Free water rises within the cargo, and the cargo itself begins to shift, creating a developing list. Unlike RoRo's water ingress, nothing external enters the vessel here — the cargo already aboard is changing its own physical behavior. This directly tests op1's own verification discipline: moisture testing exists specifically to prevent this, and this operation covers what happens when a marginal case develops into a real problem despite that discipline having been followed correctly. The operational response centers on detecting the developing list, assessing whether it's genuinely from cargo shift, and taking corrective action — ballasting to counter the list, course/speed adjustment to reduce motion — before it progresses toward capsizing.",
+    },
+    objectives: [
+      { en: "Describe the sequence of detecting and responding to cargo liquefaction and shift during the voyage." },
+      { en: "Explain why cargo liquefaction underway is a genuinely different hazard from RoRo's water ingress — internal cargo behavior changing, not external flooding — despite both being underway stability threats." },
+      { en: "Explain the detection, list assessment, and corrective response discipline." },
+      { en: "Identify who does what during this operation on a bulk carrier specifically." },
+      { en: "Recognize correct versus incorrect prioritization under a developing list whose cause and severity aren't immediately certain." },
+    ],
+    context: {
+      en: "This operation interrupts the voyage shortly after op1's loading operation concludes — the second underway emergency in the catalog, reusing RoRo op2's structural precedent: no terminal relationship in this context, the Master's active navigation role, shore_authorities as the relevant external channel (reused, not a new party). Genuinely distinct mechanism from RoRo's water ingress: RoRo's hazard is water entering from outside through a failed closure; this is cargo already aboard changing its own physical behavior — no external ingress at all. Carries forward op1's 8-rank roster unchanged. OOW's op2 role compounds their op1 departure (joined deck-side support, no navigation) into emergency support — matching the tanker-family pattern, not RoRo's continuity case, since Bulk Carrier's own OOW never retained navigation duties in op1. Not asserting specific liquefaction mechanics, exact list-angle thresholds, or ballasting calculation specifics — kept procedural and generic.",
+    },
+
+    operationPhaseOrder: [
+      "list_detection_and_alert",
+      ["command_and_speed_course_adjustment", "cargo_hold_inspection", "counter_ballasting_initiation"],
+      "list_assessment_and_cargo_condition_monitoring",
+      "corrective_ballasting_and_motion_management",
+      "confirmed_stable_and_standdown",
+      "continuation_or_return_to_port_decision",
+    ],
+    operationPhases: {
+      list_detection_and_alert: {
+        id: "list_detection_and_alert",
+        title: { en: "List Detection and Alert" },
+        steps: [
+          { en: "List detected — via inclinometer reading, visual observation, or a crew member noticing." },
+          { en: "Immediate alert raised: observed list angle, what's known." },
+        ],
+      },
+      command_and_speed_course_adjustment: {
+        id: "command_and_speed_course_adjustment",
+        title: { en: "Command and Speed/Course Adjustment" },
+        steps: [
+          { en: "Command transfers explicitly to the Chief Officer as on-scene commander for the cargo assessment." },
+          { en: "The Master, retaining direct control of the vessel's navigation, adjusts speed and course to reduce the vessel's motion and limit further cargo shift." },
+        ],
+      },
+      cargo_hold_inspection: {
+        id: "cargo_hold_inspection",
+        title: { en: "Cargo Hold Inspection" },
+        steps: [
+          { en: "The affected hold(s) inspected — visually and via available instruments — to assess cargo condition and confirm whether shift/liquefaction is the cause." },
+        ],
+      },
+      counter_ballasting_initiation: {
+        id: "counter_ballasting_initiation",
+        title: { en: "Counter-Ballasting Initiation" },
+        steps: [
+          { en: "Ballasting initiated to counteract the developing list." },
+        ],
+      },
+      list_assessment_and_cargo_condition_monitoring: {
+        id: "list_assessment_and_cargo_condition_monitoring",
+        title: { en: "List Assessment and Cargo Condition Monitoring" },
+        overview: { en: "An ongoing cycle for the duration of the response, not a one-time check." },
+        steps: [
+          { en: "List angle monitored continuously." },
+          { en: "Cargo condition (moisture/free water signs) monitored where safely observable." },
+          { en: "Trend assessed: stable, worsening, or improving." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      corrective_ballasting_and_motion_management: {
+        id: "corrective_ballasting_and_motion_management",
+        title: { en: "Corrective Ballasting and Motion Management" },
+        steps: [
+          { en: "Once assessed, ballasting continues or is adjusted under the Chief Officer's authorization." },
+          { en: "Speed/course adjustments continue under the Master's direction to minimize further cargo movement." },
+        ],
+      },
+      confirmed_stable_and_standdown: {
+        id: "confirmed_stable_and_standdown",
+        title: { en: "Confirmed Stable and Stand-Down" },
+        steps: [
+          { en: "List confirmed stable or reducing, cargo condition confirmed not worsening — not assumed from a single reading." },
+          { en: "Transition to reduced-alert monitoring." },
+        ],
+      },
+      continuation_or_return_to_port_decision: {
+        id: "continuation_or_return_to_port_decision",
+        title: { en: "Continuation or Return-to-Port Decision" },
+        steps: [
+          { en: "The Master, informed by the Chief Officer's assessment, decides whether to continue the voyage or return to the nearest port for full inspection." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "list_alert", phaseId: "list_detection_and_alert", from: "deck_team", to: "bridge", trigger: { en: "List detected" }, content: { en: "Immediate alert: observed list angle, what's known." }, whyItMatters: { en: "Everything downstream depends on this reaching the bridge without delay." } },
+      { id: "command_transfer_confirmation", phaseId: "command_and_speed_course_adjustment", from: "bridge", to: "deck", trigger: { en: "Immediately on alert" }, content: { en: "Explicit assumption of emergency command by the Master; Chief Officer confirmed as on-scene commander for the cargo assessment." }, whyItMatters: { en: "An authority handoff, mirroring every prior emergency operation's command-transfer touchpoint." } },
+      { id: "shore_authorities_notification", phaseId: "command_and_speed_course_adjustment", from: "bridge", to: "shore_authorities", trigger: { en: "Immediately on alert" }, content: { en: "Master notifies shore authorities of the developing situation, per standard practice for an emergency underway." }, whyItMatters: { en: "Same standing notification obligation RoRo op2 established, reused here." } },
+      { id: "hold_inspection_report", phaseId: "cargo_hold_inspection", from: "deck_team", to: "deck", trigger: { en: "Inspection complete" }, content: { en: "Bosun reports hold inspection findings — cargo condition, signs of shift or liquefaction — to the Chief Officer." }, whyItMatters: { en: "Grounds the assessment in a direct, hands-on observation." } },
+      { id: "ballasting_status", phaseId: "counter_ballasting_initiation", from: "engine", to: "deck", trigger: { en: "Ballasting initiated" }, content: { en: "Engine confirms ballasting response initiated and reports capacity/progress." }, whyItMatters: { en: "Grounds Engine's role in this specific emergency." } },
+      { id: "onscene_status_to_bridge", phaseId: "list_assessment_and_cargo_condition_monitoring", from: "deck", to: "bridge", trigger: { en: "Continuous during the incident" }, content: { en: "Chief Officer reports list angle, cargo condition, and assessment to the Master." }, whyItMatters: { en: "Same ongoing-status relationship as every prior emergency." } },
+      { id: "shore_authorities_status_update", phaseId: "list_assessment_and_cargo_condition_monitoring", from: "bridge", to: "shore_authorities", trigger: { en: "Continuous or on significant change" }, content: { en: "Master keeps shore authorities updated on the vessel's status." }, whyItMatters: { en: "Standard practice for a developing emergency underway." } },
+      { id: "ballasting_adjustment_authorization", phaseId: "corrective_ballasting_and_motion_management", from: "deck", to: "engine", trigger: { en: "Situation assessed" }, content: { en: "Chief Officer authorizes continued or adjusted ballasting response." }, whyItMatters: { en: "Mirrors the authorization discipline established across the catalog." } },
+      { id: "stable_confirmation", phaseId: "confirmed_stable_and_standdown", from: "deck", to: "bridge", trigger: { en: "Situation confirmed stable" }, content: { en: "Chief Officer reports list confirmed stable/reducing and cargo condition not worsening." }, whyItMatters: { en: "Not assumed from a single reading — the same explicit-confirmation discipline as every prior emergency." } },
+      { id: "continuation_decision_to_shore", phaseId: "continuation_or_return_to_port_decision", from: "bridge", to: "shore_authorities", trigger: { en: "Decision made" }, content: { en: "Master informs shore authorities of the decision to continue or return to port." }, whyItMatters: { en: "Closes the loop on the incident with the notified authority." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "In op1, a background, oversight-focused role. Here, becomes actively engaged in the same shape RoRo op2 first established: directly conning speed and course to reduce vessel motion, notifying shore authorities, and making the final continue-or-return-to-port decision." } },
+      { rankId: "chief_officer", identity: { en: "In op1, owned the moisture-verification and hold-distribution discipline. Here, becomes on-scene commander for the cargo assessment — directing hold inspection and ballasting authorization — while the Master retains full navigation authority in parallel." } },
+      { rankId: "oow", identity: { en: "In op1, joined deck-side support (no navigation to attach to). Here, that departure compounds into emergency support for the Master's active navigation response — matching the tanker-family compounded-departure pattern, not RoRo's continuity case." } },
+      { rankId: "bosun", identity: { en: "In op1, led the deck team's observation and verification work. Here, leads the hold inspection to assess cargo condition." } },
+      { rankId: "ab", identity: { en: "In op1, checked hold conditions under the Bosun. Here, assists with the hold inspection the same way, under the Bosun's direction." } },
+      { rankId: "chief_engineer", identity: { en: "Becomes the senior technical authority directing the ballasting response — the established default applying cleanly here, the second clean case after RoRo op2." } },
+      { rankId: "second_engineer", identity: { en: "Directly executes the ballasting operation under the Chief Engineer's direction — active, hands-on technical execution, not the passive assisting role held in op1." } },
+      { rankId: "third_engineer", identity: { en: "Continues routine engine-room watch and readiness during the incident — the same lighter role as op1 and every prior Third Engineer." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Assumes overall emergency command; directly conns the vessel's speed and course to reduce motion; notifies shore authorities; makes the final continue-or-return-to-port decision." }],
+        iMonitor: [{ en: "Overall incident status via the Chief Officer; vessel motion and navigation status directly." }],
+        iReport: [{ en: "To shore authorities; to company per standing orders." }],
+        iDoNotAuthorize: [{ en: "Hands-on cargo/hold response actions — delegated to the Chief Officer." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Assumes on-scene command of the cargo assessment; directs hold inspection; authorizes ballasting adjustments; assesses list and cargo condition continuously." }],
+        iMonitor: [{ en: "List angle, cargo condition, and ballasting progress continuously." }],
+        iReport: [{ en: "Status to the Master continuously." }],
+        iDoNotAuthorize: [{ en: "The Master's navigation authority or the final continuation/return decision." }],
+      },
+      oow: {
+        iExecute: [{ en: "Supports the Master's active speed/course response — navigation and watchkeeping support." }],
+        iMonitor: [{ en: "Navigation and vessel motion status." }],
+        iReport: [{ en: "Observations to the Master." }],
+        iDoNotAuthorize: [{ en: "Independent navigation decisions." }],
+      },
+      bosun: {
+        iExecute: [{ en: "Leads the hold inspection to assess cargo condition." }],
+        iMonitor: [{ en: "Deck team safety and inspection accuracy." }],
+        iReport: [{ en: "Findings and deviations to the Chief Officer." }],
+        iDoNotAuthorize: [{ en: "The list assessment itself or the final response decisions — the Chief Officer's call." }],
+      },
+      ab: {
+        iExecute: [{ en: "Assists with the hold inspection under the Bosun's direction." }],
+        iMonitor: [{ en: "Immediate conditions during the inspection." }],
+        iReport: [{ en: "Observations directly to the Bosun." }],
+        iDoNotAuthorize: [{ en: "Independent action." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Directs the ballasting response; oversees the Second Engineer's work." }],
+        iMonitor: [{ en: "Ballasting progress and overall engine-department status throughout the incident." }],
+        iReport: [{ en: "Status to the Chief Officer/bridge." }],
+        iDoNotAuthorize: [{ en: "Cargo assessment decisions themselves — the Chief Officer's call." }],
+      },
+      second_engineer: {
+        iExecute: [{ en: "Operates the ballasting systems under the Chief Engineer's direction." }],
+        iMonitor: [{ en: "Ballasting system status continuously." }],
+        iReport: [{ en: "Status to the Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Acting before authorization; cargo assessment decisions." }],
+      },
+      third_engineer: {
+        iExecute: [{ en: "Maintains routine engine-room watch and readiness throughout the incident." }],
+        iMonitor: [{ en: "Routine engine-room parameters." }],
+        iReport: [{ en: "Routine watch status to the Second Engineer/Chief Engineer." }],
+        iDoNotAuthorize: [{ en: "Any incident-response decision." }],
+      },
+    },
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "lead",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order",
+        targetRanks: ["deck_cadet", "ab", "oow"],
+        prompt: { en: "Put the phases of the cargo liquefaction and shift response in the correct order." },
+        items: [
+          { id: "list_detection_and_alert", label: { en: "List Detection and Alert" } },
+          { id: "command_and_speed_course_adjustment", label: { en: "Command and Speed/Course Adjustment" } },
+          { id: "cargo_hold_inspection", label: { en: "Cargo Hold Inspection" } },
+          { id: "counter_ballasting_initiation", label: { en: "Counter-Ballasting Initiation" } },
+          { id: "list_assessment_and_cargo_condition_monitoring", label: { en: "List Assessment and Cargo Condition Monitoring" } },
+          { id: "corrective_ballasting_and_motion_management", label: { en: "Corrective Ballasting and Motion Management" } },
+          { id: "confirmed_stable_and_standdown", label: { en: "Confirmed Stable and Stand-Down" } },
+          { id: "continuation_or_return_to_port_decision", label: { en: "Continuation or Return-to-Port Decision" } },
+        ],
+        correctOrder: [
+          "list_detection_and_alert",
+          ["command_and_speed_course_adjustment", "cargo_hold_inspection", "counter_ballasting_initiation"],
+          "list_assessment_and_cargo_condition_monitoring",
+          "corrective_ballasting_and_motion_management",
+          "confirmed_stable_and_standdown",
+          "continuation_or_return_to_port_decision",
+        ],
+      },
+      {
+        type: "error_identification",
+        id: "err_chief_officer_overrides_navigation",
+        targetRanks: ["ab", "bosun", "second_engineer"],
+        scenario: { en: "The Chief Officer attempts to direct the vessel's course and speed directly, bypassing the Master's navigation authority. The Bosun reports hold inspection findings immediately to the Chief Officer. The Second Engineer operates the ballasting systems only after the Chief Engineer's direction." },
+        choices: [
+          { id: "c1", label: { en: "The Chief Officer directing the vessel's course and speed directly, bypassing the Master's navigation authority" }, isError: true, explanation: { en: "Violates the shared-command structure — the Chief Officer's authority is the cargo assessment, not the vessel's own navigation." } },
+          { id: "c2", label: { en: "The Bosun reporting hold inspection findings immediately to the Chief Officer" }, isError: false, explanation: { en: "Correct." } },
+          { id: "c3", label: { en: "The Second Engineer operating the ballasting systems only after the Chief Engineer's direction" }, isError: false, explanation: { en: "Correct." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "continuation_readiness_snapshot",
+        targetRanks: ["chief_officer", "master"],
+        scenario: { en: "The list appears stable and the reduced-alert monitoring period has elapsed. Review the readiness snapshot below before deciding whether to continue the voyage." },
+        items: [
+          { id: "list_stable", label: { en: "List confirmed stable or reducing and cargo condition not worsening" }, isSatisfied: true },
+          { id: "monitoring_period_elapsed", label: { en: "Reduced-alert monitoring period elapsed without incident" }, isSatisfied: true },
+          { id: "hold_inspected", label: { en: "Affected hold inspected and cleared" }, isSatisfied: false },
+          { id: "shore_authorities_acknowledged", label: { en: "Shore authorities informed and acknowledged" }, isSatisfied: false },
+          { id: "master_continuation_decision", label: { en: "Master's final continuation/return decision completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "In the urgency of the moment, the Chief Officer feels the pull to also weigh in on the vessel's course/speed, given how directly it affects cargo movement." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer shares relevant information with the Master — how vessel motion is affecting cargo shift — but leaves the navigation decision to the Master." }],
+        why: [{ en: "Tests whether the shared-command boundary holds even when both domains are clearly affecting each other." }],
+        commonMistakes: [{ en: "Directly suggesting or pushing for a specific course/speed change." }],
+        safetyPoints: [{ en: "Sharing relevant information across the command boundary is different from crossing into the other's decision authority." }],
+      },
+      {
+        situation: { en: "One reading shows the list angle reducing; there's a temptation to declare the situation resolved immediately." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms stability from sustained readings, not a single data point." }],
+        why: [{ en: "Operationalizes the explicit-confirmation-not-assumed principle for this operation's own signature measurement." }],
+        commonMistakes: [{ en: "Treating one improved reading as sufficient confirmation." }],
+        safetyPoints: [{ en: "A single reading can be a temporary lull in an ongoing cargo shift, not genuine resolution." }],
+      },
+      {
+        situation: { en: "The list could plausibly be explained by something other than cargo shift, and there's a temptation to assume cargo liquefaction is the cause without confirming it via hold inspection, since it's the most obvious narrative given the cargo type." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Chief Officer confirms the actual cause via hold inspection before committing the response to a specific assumption." }],
+        why: [{ en: "Tests whether the assessment discipline holds against the temptation to jump to the most narratively obvious explanation." }],
+        commonMistakes: [{ en: "Assuming cargo liquefaction is the cause without confirming it." }],
+        safetyPoints: [{ en: "A correct response depends on the actual cause — treating an unconfirmed cause as certain risks a response that doesn't address the real problem." }],
+      },
+      {
+        situation: { en: "Early in the incident, the Master isn't fully certain of the severity, and there's pressure to downplay the situation when notifying shore authorities." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master reports the genuine, uncertain picture honestly." }],
+        why: [{ en: "Echoes the established honest-reporting-under-uncertainty value." }],
+        commonMistakes: [{ en: "Downplaying the situation to avoid triggering an unnecessary large-scale shore response." }],
+        safetyPoints: [{ en: "An honest report is what lets shore authorities correctly calibrate their own readiness." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_dual_relevance_routing",
+        title: { en: "When Information Belongs to Both Channels" },
+        seatRankId: "oow",
+        root: {
+          id: "level_1",
+          situation: { en: "You are the OOW, supporting the Master's active navigation response. You notice the vessel's rolling motion seems to correlate with a worsening sound and vibration reported from the cargo hold area on another channel. You're not sure whether this belongs with the Master, since it relates to motion, or with the Chief Officer, since the underlying content is about cargo condition." },
+          options: [
+            {
+              id: "a_report_to_master_only",
+              label: { en: "Report it directly to the Master, since it relates to vessel motion." },
+              consequence: { en: "The Master has the observation; the Chief Officer doesn't." },
+              feedback: { en: "This observation is relevant to both the navigation response and the cargo assessment — reporting to only one channel misses the half that's relevant to the other." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The Chief Officer, unaware of this observation, is missing a piece of information relevant to the cargo assessment." },
+                options: [
+                  { id: "a1", label: { en: "Don't bring it up now, since it was already reported to the Master." }, consequence: { en: "The Chief Officer's assessment continues without this observation." }, feedback: { en: "Reporting it once, to the wrong channel for half its relevance, doesn't cover the part that actually matters to the Chief Officer." } },
+                  { id: "a2", label: { en: "Immediately also inform the Chief Officer, even though it means reporting the same thing to two people." }, consequence: { en: "Both the Master and Chief Officer now have the observation." }, feedback: { en: "Correct — dual-relevance information genuinely needs both channels, not a choice between them." }, isRecommended: true },
+                  { id: "a3", label: { en: "Assume the Master will pass it along to the Chief Officer." }, consequence: { en: "It's unconfirmed whether the Chief Officer ever actually receives it." }, feedback: { en: "Assuming a handoff happens isn't the same as confirming it does." } },
+                ],
+              },
+            },
+            {
+              id: "b_report_to_chief_officer_only",
+              label: { en: "Route it to the Chief Officer, since the underlying content is about cargo condition." },
+              consequence: { en: "The Chief Officer has the observation; the Master doesn't." },
+              feedback: { en: "This observation is also directly relevant to the Master's motion-reduction response — reporting to only the Chief Officer misses that half." },
+              next: {
+                id: "level_2_b",
+                situation: { en: "The Master, unaware of this observation, is missing a piece of information relevant to the navigation response." },
+                options: [
+                  { id: "b1", label: { en: "Don't bring it up now, since it was already reported to the Chief Officer." }, consequence: { en: "The Master's navigation response continues without this observation." }, feedback: { en: "Reporting it once, to the wrong channel for half its relevance, doesn't cover the part that actually matters to the Master." } },
+                  { id: "b2", label: { en: "Immediately also inform the Master." }, consequence: { en: "Both the Chief Officer and Master now have the observation." }, feedback: { en: "Correct — dual-relevance information genuinely needs both channels." }, isRecommended: true },
+                  { id: "b3", label: { en: "Assume the Chief Officer will pass it along to the Master." }, consequence: { en: "It's unconfirmed whether the Master ever actually receives it." }, feedback: { en: "Assuming a handoff happens isn't the same as confirming it does." } },
+                ],
+              },
+            },
+            {
+              id: "c_report_to_both",
+              label: { en: "Report it to both the Master and the Chief Officer, since it's relevant to both the navigation response and the cargo assessment." },
+              consequence: { en: "Both have the full observation to incorporate into their respective assessments." },
+              feedback: { en: "Correct — recognizing when a single observation genuinely belongs to both channels is exactly what the shared-command structure requires." },
+              isRecommended: true,
+              next: {
+                id: "level_2_c",
+                situation: { en: "Both the Master and Chief Officer now have the observation and incorporate it into their respective assessments." },
+                options: [
+                  { id: "c1", label: { en: "Continue reporting any future relevant observations to both channels as appropriate." }, consequence: { en: "The dual-relevance discipline continues consistently." }, feedback: { en: "Correct — this is a standing discipline, not a one-time judgment call." }, isRecommended: true },
+                  { id: "c2", label: { en: "Now only report to whichever channel seems more urgent going forward, to save time." }, consequence: { en: "Future dual-relevance information starts going to only one channel again." }, feedback: { en: "Reverts to the exact mistake this discipline exists to avoid." } },
+                  { id: "c3", label: { en: "Stop actively looking for dual-relevance information now that this one instance is handled." }, consequence: { en: "A future genuinely dual-relevant observation risks being missed or misrouted." }, feedback: { en: "Treats a standing discipline as a one-off, rather than an ongoing part of the role." } },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "The Shared Command Boundary" },
+        bestPractices: [
+          { en: "Information relevant to the other's domain is shared freely — vessel motion affecting cargo condition, cargo condition affecting the navigation response — without either commander crossing into the other's actual authority." },
+        ],
+        commonErrors: [
+          { en: "Directly suggesting or pushing for a navigation decision that belongs to the Master's own domain." },
+        ],
+      },
+      {
+        theme: { en: "Dual-Relevance Routing" },
+        bestPractices: [
+          { en: "An observation relevant to both the navigation response and the cargo assessment is reported to both channels, not routed to just one because it seems to belong there." },
+        ],
+        commonErrors: [
+          { en: "Reporting a dual-relevance observation to only one channel because it superficially seems to belong there." },
+          { en: "Assuming one commander will pass relevant information along to the other rather than confirming it directly." },
+        ],
+      },
+      {
+        theme: { en: "Explicit Stability Confirmation, Not a Single Reading" },
+        bestPractices: [
+          { en: "Stability is confirmed from sustained readings, not a single data point." },
+        ],
+        commonErrors: [
+          { en: "Treating one improved reading as sufficient confirmation that the situation is resolved." },
+        ],
+      },
+      {
+        theme: { en: "Confirming the Actual Cause Before Committing the Response" },
+        bestPractices: [
+          { en: "The cause of a developing list is confirmed through direct inspection before the response is committed to a specific assumption." },
+        ],
+        commonErrors: [
+          { en: "Assuming the most narratively obvious cause without confirming it." },
+        ],
+      },
+      {
+        theme: { en: "Honest Reporting to Shore Authorities" },
+        bestPractices: [
+          { en: "The genuine, even uncertain, picture is reported honestly to shore authorities." },
+        ],
+        commonErrors: [
+          { en: "Downplaying the situation to avoid triggering what might turn out to be an unnecessary shore response." },
+        ],
+      },
+      {
+        theme: { en: "A Standing Discipline, Not a One-Time Judgment" },
+        bestPractices: [
+          { en: "Recognizing dual-relevance information and routing it correctly is an ongoing part of the role, applied consistently, not a single judgment call that's then set aside." },
+        ],
+        commonErrors: [
+          { en: "Treating a correctly-handled instance as closing the matter rather than as a standing practice." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
