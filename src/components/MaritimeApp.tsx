@@ -1220,6 +1220,12 @@ function RoleOnBoardPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
   const deckRanks = getRanksByDepartment("deck");
   const engineRanks = getRanksByDepartment("engine");
 
+  // List <-> detail is an internal toggle, not a `page` navigation, so it's
+  // invisible to MaritimeApp's page-level scroll cache. Reset explicitly on
+  // every toggle (including first mount) so the list always opens at the top
+  // and never inherits whatever scroll depth the previous view was left at.
+  useEffect(() => { window.scrollTo(0, 0); }, [selected]);
+
   if (selected) {
     return (
       <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
@@ -2177,9 +2183,16 @@ function AppInner() {
   ]);
   const NAV_RESUME_KEY = "map_last_page";
 
+  // Pages that manage their own internal list/detail sub-navigation via local
+  // state instead of this `page` value (e.g. RoleOnBoardPage's `selected`
+  // rank toggle). For those, `window.scrollY` at the moment `page` changes
+  // reflects whatever the sub-view was scrolled to, not the page itself — so
+  // caching/restoring it here just replays a stale, unrelated position.
+  const SCROLL_CACHE_EXEMPT = new Set(["role_on_board"]);
+
   const setPage = (next: string) => {
     if (typeof window !== "undefined") {
-      scrollPositionsRef.current[page] = window.scrollY;
+      if (!SCROLL_CACHE_EXEMPT.has(page)) scrollPositionsRef.current[page] = window.scrollY;
       try {
         if (NON_RESUMABLE_PAGES.has(next)) localStorage.removeItem(NAV_RESUME_KEY);
         else localStorage.setItem(NAV_RESUME_KEY, next);
@@ -2193,6 +2206,7 @@ function AppInner() {
   // safety margin for layout to settle before scrolling.
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (SCROLL_CACHE_EXEMPT.has(page)) return;
     const saved = scrollPositionsRef.current[page];
     if (saved === undefined) return;
     const raf = requestAnimationFrame(() => window.scrollTo(0, saved));
