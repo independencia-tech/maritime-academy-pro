@@ -33,6 +33,7 @@ const T = {
     studyLabel:"⏱️ OBJECTIF QUOTIDIEN",
     memberSince:"Membre depuis",
     certifiedBadge:"STANDARDS IMO / STCW",
+    cardTag:"Carte de progression",
     startBtn:"⚓ COMMENCER LA FORMATION",
     downloadBtn:"📥 Télécharger ma carte",
     pdfBtn:"📄 Exporter en PDF",
@@ -94,6 +95,7 @@ const T = {
     studyLabel:"⏱️ DAILY TARGET",
     memberSince:"Member since",
     certifiedBadge:"IMO / STCW STANDARDS",
+    cardTag:"Progress card",
     startBtn:"⚓ START TRAINING",
     downloadBtn:"📥 Download my card",
     pdfBtn:"📄 Export as PDF",
@@ -155,6 +157,7 @@ const T = {
     studyLabel:"⏱️ OBJETIVO DIARIO",
     memberSince:"Miembro desde",
     certifiedBadge:"ESTÁNDARES IMO / STCW",
+    cardTag:"Tarjeta de progreso",
     startBtn:"⚓ COMENZAR FORMACIÓN",
     downloadBtn:"📥 Descargar mi tarjeta",
     pdfBtn:"📄 Exportar a PDF",
@@ -216,6 +219,7 @@ const T = {
     studyLabel:"⏱️ META DIÁRIA",
     memberSince:"Membro desde",
     certifiedBadge:"PADRÕES IMO / STCW",
+    cardTag:"Cartão de progresso",
     startBtn:"⚓ COMEÇAR FORMAÇÃO",
     downloadBtn:"📥 Baixar meu cartão",
     pdfBtn:"📄 Exportar como PDF",
@@ -468,21 +472,34 @@ export default function StatusCardS8({
       const canvas=document.createElement("canvas");
       canvas.width=W;canvas.height=H;
       const ctx=canvas.getContext("2d");
-      // Background gradient
+      const roundedRectPath=(x:number,y:number,w:number,h:number,r:number)=>{
+        ctx.beginPath();
+        ctx.moveTo(x+r,y);
+        ctx.arcTo(x+w,y,x+w,y+h,r);
+        ctx.arcTo(x+w,y+h,x,y+h,r);
+        ctx.arcTo(x,y+h,x,y,r);
+        ctx.arcTo(x,y,x+w,y,r);
+        ctx.closePath();
+      };
+      // Background gradient — rounded card, no full-bleed frame
       const bg=ctx.createLinearGradient(0,0,0,H);
       bg.addColorStop(0,C.navy3);bg.addColorStop(1,C.navy);
+      ctx.save();
+      roundedRectPath(0,0,W,H,28);
+      ctx.clip();
       ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-      // Border
-      ctx.strokeStyle=C.gold;ctx.lineWidth=3;
-      ctx.strokeRect(20,20,W-40,H-40);
-      // Header band
-      ctx.fillStyle=C.gold;
-      ctx.font="bold 28px 'Cinzel',serif";
+      ctx.restore();
+      roundedRectPath(1,1,W-2,H-2,28);
+      ctx.strokeStyle="rgba(201,146,42,0.28)";ctx.lineWidth=2;ctx.stroke();
+      // Header — small, left-aligned wordmark (not a centered masthead)
+      ctx.fillStyle=C.white;
+      ctx.font="bold 20px 'Cinzel',serif";
+      ctx.textAlign="left";
+      ctx.fillText("MARITIME ACADEMY PRO",56,64);
+      ctx.fillStyle=C.muted;
+      ctx.font="600 12px sans-serif";
+      ctx.fillText(t.cardTag||"",56,84);
       ctx.textAlign="center";
-      ctx.fillText("MARITIME ACADEMY PRO",W/2,90);
-      ctx.fillStyle=C.green;
-      ctx.font="bold 14px sans-serif";
-      ctx.fillText(t.certifiedBadge,W/2,120);
       // Avatar circle
       const cx=W/2, cy=220, cr=70;
       let photoData=photo;
@@ -493,7 +510,7 @@ export default function StatusCardS8({
         ctx.beginPath();
         ctx.arc(cx,cy,cr,0,Math.PI*2);
         ctx.fillStyle=C.blue;ctx.fill();
-        ctx.strokeStyle=C.gold2;ctx.lineWidth=4;ctx.stroke();
+        ctx.strokeStyle="rgba(240,244,255,0.35)";ctx.lineWidth=2;ctx.stroke();
         ctx.fillStyle=C.white;
         ctx.font="bold 54px sans-serif";
         ctx.textBaseline="middle";
@@ -515,7 +532,7 @@ export default function StatusCardS8({
             ctx.restore();
             ctx.beginPath();
             ctx.arc(cx,cy,cr,0,Math.PI*2);
-            ctx.strokeStyle=C.gold2;ctx.lineWidth=4;ctx.stroke();
+            ctx.strokeStyle="rgba(240,244,255,0.35)";ctx.lineWidth=2;ctx.stroke();
             resolve(null);
           };
           img.onerror=()=>{ drawInitials(); resolve(null); };
@@ -553,29 +570,32 @@ export default function StatusCardS8({
         ctx.fillText(String(val),80,y+32);
         y+=80;
       });
-      // Stats row
-      ctx.strokeStyle=C.border;
-      ctx.beginPath();ctx.moveTo(80,y);ctx.lineTo(W-80,y);ctx.stroke();
-      y+=50;
+      // Stats row — quiet chips instead of bare oversized numbers
+      y+=20;
       const stats=[[t.statLessons,"0"],[t.statCerts,"0"],[t.statPoints,"0"]];
-      const sw=(W-160)/3;
+      const gap=14;
+      const chipW=(W-160-gap*2)/3, chipH=92;
       ctx.textAlign="center";
       stats.forEach(([lbl,v],i)=>{
-        const cx=80+sw*i+sw/2;
-        ctx.fillStyle=C.gold2;
-        ctx.font="bold 38px sans-serif";
-        ctx.fillText(v,cx,y+10);
+        const chipX=80+i*(chipW+gap);
+        roundedRectPath(chipX,y,chipW,chipH,14);
+        ctx.fillStyle="rgba(255,255,255,0.045)";ctx.fill();
+        roundedRectPath(chipX,y,chipW,chipH,14);
+        ctx.strokeStyle="rgba(255,255,255,0.08)";ctx.lineWidth=1;ctx.stroke();
+        const ccx=chipX+chipW/2;
+        ctx.fillStyle=C.white;
+        ctx.font="bold 26px sans-serif";
+        ctx.fillText(v,ccx,y+40);
         ctx.fillStyle=C.muted;
-        ctx.font="600 12px sans-serif";
-        ctx.fillText(lbl,cx,y+38);
+        ctx.font="600 10px sans-serif";
+        ctx.fillText(lbl,ccx,y+64);
       });
-      // Footer
+      // Footer — anchored near the bottom edge regardless of content above
       ctx.fillStyle=C.muted;
-      ctx.font="14px sans-serif";
+      ctx.font="13px sans-serif";
       ctx.fillText(`${t.memberSince} ${memberDate}`,W/2,H-90);
-      ctx.fillStyle=C.gold2;
-      ctx.font="bold 14px sans-serif";
-      ctx.fillText("maritime-academy-pro.lovable.app",W/2,H-60);
+      ctx.font="12px sans-serif";
+      ctx.fillText(`${t.certifiedBadge} · maritime-academy-pro.lovable.app`,W/2,H-64);
       // Download
       const link=document.createElement("a");
       link.download="maritime-status-card.png";
@@ -616,16 +636,11 @@ export default function StatusCardS8({
       pdf.setFillColor(6,14,26);
       pdf.rect(0,0,pageW,pageH,"F");
 
-      // Header band
-      pdf.setFillColor(10,32,64);
-      pdf.rect(0,0,pageW,22,"F");
+      // Small corner wordmark — no full-width letterhead band
       pdf.setTextColor(201,146,42);
       pdf.setFont("helvetica","bold");
-      pdf.setFontSize(14);
-      pdf.text("MARITIME ACADEMY PRO",pageW/2,11,{align:"center"});
-      pdf.setFontSize(8);
-      pdf.setTextColor(232,185,79);
-      pdf.text(t.certifiedBadge,pageW/2,17,{align:"center"});
+      pdf.setFontSize(9);
+      pdf.text("MARITIME ACADEMY PRO",14,14);
 
       // Card image: fit width with margins, keep aspect ratio
       const margin=18;
@@ -633,10 +648,10 @@ export default function StatusCardS8({
       const ratio=canvas.height/canvas.width;
       let imgW=maxW;
       let imgH=imgW*ratio;
-      const maxH=pageH-22-30; // header + footer
+      const maxH=pageH-24-26; // corner mark + footer
       if(imgH>maxH){ imgH=maxH; imgW=imgH/ratio; }
       const x=(pageW-imgW)/2;
-      const y=28;
+      const y=24;
       pdf.addImage(imgData,"PNG",x,y,imgW,imgH);
 
       // Footer
@@ -646,7 +661,6 @@ export default function StatusCardS8({
       pdf.setFontSize(8);
       pdf.setTextColor(150,160,180);
       pdf.text(memberDate,pageW/2,pageH-13,{align:"center"});
-      pdf.setTextColor(201,146,42);
       pdf.text("maritime-academy-pro.lovable.app",pageW/2,pageH-7,{align:"center"});
 
       pdf.save("maritime-academy-pro-status.pdf");
