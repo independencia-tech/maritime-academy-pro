@@ -273,12 +273,12 @@ function TopBar({onBack,backLabel}:{onBack:()=>void;backLabel:string}) {
         background:"rgba(255,255,255,0.07)",overflow:"hidden",
       }}>
         <div style={{
-          height:"100%",borderRadius:3,width:"75%",
+          height:"100%",borderRadius:3,width:"80%",
           background:`linear-gradient(90deg,${C.blue2},${C.gold2})`,
         }}/>
       </div>
       <span style={{fontSize:11,color:C.muted,
-        fontFamily:"'Cinzel',serif",letterSpacing:1}}>6/8</span>
+        fontFamily:"'Cinzel',serif",letterSpacing:1}}>4/5</span>
     </div>
   );
 }
@@ -384,7 +384,6 @@ export default function RegisterS6({
   onNext=()=>{},
   onBack=()=>{},
   setUsername=(_:string)=>{},
-  onSignIn,
   onTerms,
 onPrivacy,
 }:{
@@ -392,23 +391,17 @@ onPrivacy,
   onNext?:()=>void;
   onBack?:()=>void;
   setUsername?:(name:string)=>void;
-  onSignIn?:()=>void;
   onTerms?:()=>void;
 onPrivacy?:()=>void;
 }) {
   const t=T[lang]||T.fr;
   const [vis,setVis]=useState(false);
-  const [hasSaved,setHasSaved]=useState(false);
-  useEffect(()=>{
-    try { setHasSaved(!!localStorage.getItem("map_status_card")); } catch {}
-  },[]);
   const [form,setForm]=useState({ name:"",email:"",pass:"",confirm:"" });
   const [errors,setErrors]=useState<any>({});
   const [touched,setTouched]=useState<any>({});
   const [cgu,setCgu]=useState(false);
   const [cguError,setCguError]=useState(false);
   const [loading,setLoading]=useState(false);
-  const [googleLoading,setGoogleLoading]=useState(false);
 
   // ── Forgot password (inline) ──────────────────────────
   const [showForgot,setShowForgot]=useState(false);
@@ -495,18 +488,6 @@ onPrivacy?:()=>void;
     onNext();
   };
 
-  const handleGoogle=async ()=>{
-    setGoogleLoading(true);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: window.location.origin },
-    });
-    if (error) {
-      setGoogleLoading(false);
-      setErrors((p:any)=>({...p,email:t.errGoogle}));
-    }
-    // On success, the browser redirects to Google — no further code runs here.
-  };
 
   const handleResetPassword=async ()=>{
     const email=resetEmail.trim().toLowerCase();
@@ -729,59 +710,6 @@ redirectTo: "https://maritime-academy-pro.vercel.app",
               ):t.regBtn}
             </button>
             <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-
-            <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{flex:1,height:1,background:"rgba(255,255,255,0.1)"}}/>
-              <span style={{fontSize:12,color:C.muted}}>{t.orWith}</span>
-              <div style={{flex:1,height:1,background:"rgba(255,255,255,0.1)"}}/>
-            </div>
-
-            <button onClick={handleGoogle} disabled={googleLoading} style={{
-              width:"100%",padding:"14px",borderRadius:14,
-              background:"rgba(255,255,255,0.06)",
-              border:"1px solid rgba(255,255,255,0.16)",
-              display:"flex",alignItems:"center",
-              justifyContent:"center",gap:12,
-              cursor:googleLoading?"default":"pointer",color:C.white,
-              fontFamily:"'Nunito',sans-serif",
-              fontSize:14,fontWeight:600,
-              transition:"all 0.2s",
-            }}>
-              <span style={{fontSize:20}}>🔵</span>
-              {googleLoading
-                ? (lang==="fr"?"Connexion...":lang==="es"?"Conectando...":lang==="pt"?"Conectando...":"Connecting...")
-                : t.googleBtn}
-            </button>
-
-            <div style={{
-              padding:"12px 16px",borderRadius:14,
-              background:"rgba(77,166,255,0.08)",
-              border:`1px solid ${C.blue2}33`,
-              textAlign:"center",
-            }}>
-              <div style={{fontSize:12,color:C.blue2,lineHeight:1.6}}>
-                ℹ️ {t.alreadyNote}
-              </div>
-            </div>
-
-            <div style={{textAlign:"center",fontSize:13,color:C.muted}}>
-              {t.alreadyAcc}{" "}
-             <span onClick={()=>{ if(onSignIn) onSignIn(); }}
-                style={{color:C.blue2,cursor:hasSaved?"pointer":"default",
-                borderBottom:`1px solid ${C.blue2}55`,
-                fontWeight:600}}>{t.signIn}</span>
-            </div>
-
-             {onSignIn && (
-  <button onClick={onSignIn} style={{
-                width:"100%",padding:"14px",borderRadius:14,marginTop:4,
-                background:`linear-gradient(135deg,${C.blue}33,${C.gold}22)`,
-                border:`1px solid ${C.blue2}66`,
-                color:C.white,
-                fontFamily:"'Cinzel',serif",
-                fontSize:13,fontWeight:700,letterSpacing:1.5,cursor:"pointer",
-              }}>🔑 {t.signIn}</button>
-            )}
 
           </div>
         </div>

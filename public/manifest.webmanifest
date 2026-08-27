@@ -1,7 +1,7 @@
 {
   "name": "Maritime Academy Pro",
   "short_name": "MAP",
-  "description": "IMO/STCW certified maritime training platform.",
+  "description": "Maritime training built around IMO, STCW, SOLAS, MARPOL and COLREG standards.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

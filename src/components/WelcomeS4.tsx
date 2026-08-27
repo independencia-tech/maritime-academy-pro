@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -17,7 +18,7 @@ const T = {
     quote:"La mer ne pardonne pas l'ignorance.\n\nMais elle récompense généreusement ceux qui la respectent, l'étudient et la connaissent.",
     quoteBy:"— Maritime Academy Pro",
     appDesc1:"La première plateforme de formation maritime",
-    appDesc2:"certifiée IMO/STCW",
+    appDesc2:"alignée sur les standards IMO/STCW",
     appDesc3:"dans ta langue, accessible partout dans le monde.",
     features:[
       {icon:"🧭", text:"Navigation & COLREG"},
@@ -25,7 +26,11 @@ const T = {
       {icon:"⚖️", text:"Droit maritime IMO"},
       {icon:"🚢", text:"My Career Advisor™"},
     ],
-    continueBtn:"CONTINUER →",
+    createAccountBtn:"Créer un compte",
+    signInBtn:"Se connecter",
+    googleBtn:"Continuer avec Google",
+    googleConnecting:"Connexion...",
+    errGoogle:"Erreur de connexion avec Google. Réessaie.",
   },
   en:{
     back:"◀ Back",
@@ -34,7 +39,7 @@ const T = {
     quote:"The sea does not forgive ignorance.\n\nBut it generously rewards those who respect, study and understand it.",
     quoteBy:"— Maritime Academy Pro",
     appDesc1:"The first maritime training platform",
-    appDesc2:"IMO/STCW certified",
+    appDesc2:"built around IMO/STCW standards",
     appDesc3:"in your language, accessible anywhere in the world.",
     features:[
       {icon:"🧭", text:"Navigation & COLREG"},
@@ -42,7 +47,11 @@ const T = {
       {icon:"⚖️", text:"IMO Maritime Law"},
       {icon:"🚢", text:"My Career Advisor™"},
     ],
-    continueBtn:"CONTINUE →",
+    createAccountBtn:"Create an account",
+    signInBtn:"Sign in",
+    googleBtn:"Continue with Google",
+    googleConnecting:"Connecting...",
+    errGoogle:"Google sign-in error. Please try again.",
   },
   es:{
     back:"◀ Volver",
@@ -51,7 +60,7 @@ const T = {
     quote:"El mar no perdona la ignorancia.\n\nPero recompensa generosamente a quienes lo respetan, lo estudian y lo conocen.",
     quoteBy:"— Maritime Academy Pro",
     appDesc1:"La primera plataforma de formación marítima",
-    appDesc2:"certificada IMO/STCW",
+    appDesc2:"basada en los estándares IMO/STCW",
     appDesc3:"en tu idioma, accesible en todo el mundo.",
     features:[
       {icon:"🧭", text:"Navegación & COLREG"},
@@ -59,7 +68,11 @@ const T = {
       {icon:"⚖️", text:"Derecho Marítimo IMO"},
       {icon:"🚢", text:"My Career Advisor™"},
     ],
-    continueBtn:"CONTINUAR →",
+    createAccountBtn:"Crear una cuenta",
+    signInBtn:"Iniciar sesión",
+    googleBtn:"Continuar con Google",
+    googleConnecting:"Conectando...",
+    errGoogle:"Error al conectar con Google. Inténtalo de nuevo.",
   },
   pt:{
     back:"◀ Voltar",
@@ -68,7 +81,7 @@ const T = {
     quote:"O mar não perdoa a ignorância.\n\nMas recompensa generosamente quem o respeita, o estuda e o conhece.",
     quoteBy:"— Maritime Academy Pro",
     appDesc1:"A primeira plataforma de formação marítima",
-    appDesc2:"certificada IMO/STCW",
+    appDesc2:"baseada nos padrões IMO/STCW",
     appDesc3:"no seu idioma, acessível em todo o mundo.",
     features:[
       {icon:"🧭", text:"Navegação & COLREG"},
@@ -76,7 +89,11 @@ const T = {
       {icon:"⚖️", text:"Direito Marítimo IMO"},
       {icon:"🚢", text:"My Career Advisor™"},
     ],
-    continueBtn:"CONTINUAR →",
+    createAccountBtn:"Criar uma conta",
+    signInBtn:"Entrar",
+    googleBtn:"Continuar com Google",
+    googleConnecting:"Conectando...",
+    errGoogle:"Erro ao conectar com o Google. Tente novamente.",
   },
 };
 
@@ -137,24 +154,41 @@ function TopBar({onBack,backLabel}) {
       }}>{backLabel}</button>
       <div style={{flex:1,height:3,borderRadius:3,
         background:"rgba(255,255,255,0.07)",overflow:"hidden"}}>
-        <div style={{height:"100%",borderRadius:3,width:"50%",
+        <div style={{height:"100%",borderRadius:3,width:"60%",
           background:`linear-gradient(90deg,${C.blue2},${C.gold2})`}}/>
       </div>
       <span style={{fontSize:11,color:C.muted,
-        fontFamily:"'Cinzel',serif",letterSpacing:1}}>4/8</span>
+        fontFamily:"'Cinzel',serif",letterSpacing:1}}>3/5</span>
     </div>
   );
 }
 
 export default function WelcomeS4({
   lang="fr",
-  onNext=()=>{},
+  onCreateAccount=()=>{},
+  onSignIn=()=>{},
   onBack=()=>{},
 }) {
   const t=T[lang]||T.fr;
   const [idx,setIdx]=useState(0);
   const [vis,setVis]=useState(false);
   const [phase,setPhase]=useState(0);
+  const [googleLoading,setGoogleLoading]=useState(false);
+  const [googleError,setGoogleError]=useState("");
+
+  const handleGoogleSignIn=async ()=>{
+    setGoogleLoading(true);
+    setGoogleError("");
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin },
+    });
+    if (error) {
+      setGoogleLoading(false);
+      setGoogleError(t.errGoogle);
+    }
+    // On success, the browser redirects to Google — no further code runs here.
+  };
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
@@ -173,11 +207,6 @@ export default function WelcomeS4({
   },[vis]);
 
   const current=WELCOMES[idx];
-
-  // Guard: block Continue until the screen has fully loaded.
-  // If required fields are added to S4 later, AND them into `canContinue`.
-  const canContinue = phase >= 3;
-  const handleContinue = () => { if (canContinue) onNext(); };
 
   return (
     <div style={{
@@ -373,29 +402,61 @@ export default function WelcomeS4({
             ))}
           </div>
 
-          {/* ── CTA BUTTON ── */}
-          <button onClick={handleContinue} disabled={!canContinue} aria-disabled={!canContinue} style={{
-            width:"100%",padding:"17px 0",
-            border:"none",borderRadius:16,
-            background:`linear-gradient(135deg,${C.blue},${C.gold})`,
-            fontFamily:"'Cinzel',serif",fontSize:15,
-            fontWeight:700,letterSpacing:2,color:C.white,
-            cursor:canContinue?"pointer":"not-allowed",
-            boxShadow:"0 10px 36px rgba(26,111,212,0.45)",
-            position:"relative",overflow:"hidden",
-            opacity:canContinue?1:0.5,
-            transition:"opacity 0.6s ease 0.4s",
+          {/* ── THREE EQUAL ENTRY ACTIONS ── */}
+          <div style={{
+            display:"flex",flexDirection:"column",gap:10,
+            opacity:phase>=1?1:0,
+            transform:phase>=1?"translateY(0)":"translateY(16px)",
+            transition:"all 0.6s ease",
           }}>
-            <span style={{position:"relative",zIndex:1}}>
-              {t.continueBtn}
-            </span>
-            <div style={{
-              position:"absolute",top:0,left:"-100%",
-              width:"60%",height:"100%",
-              background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)",
-              animation:"shimmer 3s ease-in-out infinite 1s",
-            }}/>
-          </button>
+            <button onClick={onCreateAccount} style={{
+              width:"100%",padding:"17px 0",
+              border:"none",borderRadius:16,
+              background:`linear-gradient(135deg,${C.blue},${C.gold})`,
+              fontFamily:"'Cinzel',serif",fontSize:15,
+              fontWeight:700,letterSpacing:2,color:C.white,
+              cursor:"pointer",
+              boxShadow:"0 10px 36px rgba(26,111,212,0.45)",
+              position:"relative",overflow:"hidden",
+            }}>
+              <span style={{position:"relative",zIndex:1}}>{t.createAccountBtn}</span>
+              <div style={{
+                position:"absolute",top:0,left:"-100%",
+                width:"60%",height:"100%",
+                background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)",
+                animation:"shimmer 3s ease-in-out infinite 1s",
+              }}/>
+            </button>
+
+            <button onClick={onSignIn} style={{
+              width:"100%",padding:"15px 0",
+              border:"1px solid rgba(255,255,255,0.22)",borderRadius:16,
+              background:"rgba(255,255,255,0.05)",
+              fontFamily:"'Cinzel',serif",fontSize:14,
+              fontWeight:700,letterSpacing:1.5,color:C.white,
+              cursor:"pointer",
+            }}>
+              {t.signInBtn}
+            </button>
+
+            <button onClick={handleGoogleSignIn} disabled={googleLoading} style={{
+              width:"100%",padding:"14px",borderRadius:14,
+              background:"rgba(255,255,255,0.06)",
+              border:"1px solid rgba(255,255,255,0.16)",
+              display:"flex",alignItems:"center",
+              justifyContent:"center",gap:12,
+              cursor:googleLoading?"default":"pointer",color:C.white,
+              fontFamily:"'Nunito',sans-serif",
+              fontSize:14,fontWeight:600,
+            }}>
+              <span style={{fontSize:20}}>🔵</span>
+              {googleLoading ? t.googleConnecting : t.googleBtn}
+            </button>
+
+            {googleError && (
+              <div style={{fontSize:12,color:"#e05c4d",textAlign:"center"}}>{googleError}</div>
+            )}
+          </div>
 
         </div>
       </div>

@@ -724,7 +724,7 @@ export default function QuestionnaireS7({
       overflowX:"hidden",position:"relative",
     }}>
       <Stars/>
-      <TopBar onBack={onBack} backLabel={t.back} step={7} total={8}/>
+      <TopBar onBack={onBack} backLabel={t.back} step={5} total={5}/>
 
       <div style={{
         padding:"20px 18px 50px",

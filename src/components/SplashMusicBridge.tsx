@@ -263,7 +263,10 @@ export function SplashS1({onDone, lang="fr"}) {
           position:"relative",zIndex:1}}>
           <div style={{fontFamily:"'Cinzel',serif",fontSize:9,
             letterSpacing:5,color:C.gold,marginBottom:10}}>
-            CERTIFIÉE IMO / STCW
+            {lang==="en"?"IMO / STCW STANDARDS"
+              :lang==="es"?"ESTÁNDARES IMO / STCW"
+              :lang==="pt"?"PADRÕES IMO / STCW"
+              :"STANDARDS IMO / STCW"}
           </div>
           <div style={{
             fontFamily:"'Cinzel',serif",fontWeight:900,lineHeight:1.15,

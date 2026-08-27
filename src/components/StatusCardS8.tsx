@@ -32,7 +32,7 @@ const T = {
     countryLabel:"🌍 PAYS",
     studyLabel:"⏱️ OBJECTIF QUOTIDIEN",
     memberSince:"Membre depuis",
-    certifiedBadge:"CERTIFIÉ IMO / STCW",
+    certifiedBadge:"STANDARDS IMO / STCW",
     startBtn:"⚓ COMMENCER LA FORMATION",
     downloadBtn:"📥 Télécharger ma carte",
     pdfBtn:"📄 Exporter en PDF",
@@ -93,7 +93,7 @@ const T = {
     countryLabel:"🌍 COUNTRY",
     studyLabel:"⏱️ DAILY TARGET",
     memberSince:"Member since",
-    certifiedBadge:"CERTIFIED IMO / STCW",
+    certifiedBadge:"IMO / STCW STANDARDS",
     startBtn:"⚓ START TRAINING",
     downloadBtn:"📥 Download my card",
     pdfBtn:"📄 Export as PDF",
@@ -154,7 +154,7 @@ const T = {
     countryLabel:"🌍 PAÍS",
     studyLabel:"⏱️ OBJETIVO DIARIO",
     memberSince:"Miembro desde",
-    certifiedBadge:"CERTIFICADO IMO / STCW",
+    certifiedBadge:"ESTÁNDARES IMO / STCW",
     startBtn:"⚓ COMENZAR FORMACIÓN",
     downloadBtn:"📥 Descargar mi tarjeta",
     pdfBtn:"📄 Exportar a PDF",
@@ -215,7 +215,7 @@ const T = {
     countryLabel:"🌍 PAÍS",
     studyLabel:"⏱️ META DIÁRIA",
     memberSince:"Membro desde",
-    certifiedBadge:"CERTIFICADO IMO / STCW",
+    certifiedBadge:"PADRÕES IMO / STCW",
     startBtn:"⚓ COMEÇAR FORMAÇÃO",
     downloadBtn:"📥 Baixar meu cartão",
     pdfBtn:"📄 Exportar como PDF",
@@ -482,7 +482,7 @@ export default function StatusCardS8({
       ctx.fillText("MARITIME ACADEMY PRO",W/2,90);
       ctx.fillStyle=C.green;
       ctx.font="bold 14px sans-serif";
-      ctx.fillText("CERTIFIED IMO / STCW",W/2,120);
+      ctx.fillText(t.certifiedBadge,W/2,120);
       // Avatar circle
       const cx=W/2, cy=220, cr=70;
       let photoData=photo;
@@ -625,7 +625,7 @@ export default function StatusCardS8({
       pdf.text("MARITIME ACADEMY PRO",pageW/2,11,{align:"center"});
       pdf.setFontSize(8);
       pdf.setTextColor(232,185,79);
-      pdf.text("CERTIFIED IMO / STCW",pageW/2,17,{align:"center"});
+      pdf.text(t.certifiedBadge,pageW/2,17,{align:"center"});
 
       // Card image: fit width with margins, keep aspect ratio
       const margin=18;

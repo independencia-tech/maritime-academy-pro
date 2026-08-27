@@ -185,7 +185,6 @@ export default function SignIn({
   const [showPass,setShowPass]=useState(false);
   const [errors,setErrors]=useState<any>({});
   const [loading,setLoading]=useState(false);
-  const [googleLoading,setGoogleLoading]=useState(false);
 
   const [showForgot,setShowForgot]=useState(false);
   const [resetEmail,setResetEmail]=useState("");
@@ -219,18 +218,6 @@ export default function SignIn({
       return;
     }
     onSuccess();
-  };
-
-  const handleGoogle=async ()=>{
-    setGoogleLoading(true);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider:"google",
-      options:{ redirectTo: window.location.origin },
-    });
-    if(error){
-      setGoogleLoading(false);
-      setErrors({ pass: t.errGoogle });
-    }
   };
 
   const handleResetPassword=async ()=>{
@@ -450,41 +437,6 @@ export default function SignIn({
                 </span>
               ):t.signInBtn}
             </button>
-
-            {/* DIVIDER */}
-            <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{flex:1,height:1,background:"rgba(255,255,255,0.1)"}}/>
-              <span style={{fontSize:12,color:C.muted}}>{t.orWith}</span>
-              <div style={{flex:1,height:1,background:"rgba(255,255,255,0.1)"}}/>
-            </div>
-
-            {/* GOOGLE BUTTON */}
-            <button onClick={handleGoogle} disabled={googleLoading} style={{
-              width:"100%",padding:"14px",borderRadius:14,
-              background:"rgba(255,255,255,0.06)",
-              border:"1px solid rgba(255,255,255,0.16)",
-              display:"flex",alignItems:"center",
-              justifyContent:"center",gap:12,
-              cursor:googleLoading?"default":"pointer",color:C.white,
-              fontFamily:"'Nunito',sans-serif",
-              fontSize:14,fontWeight:600,
-              transition:"all 0.2s",
-            }}>
-              <span style={{fontSize:20}}>🔵</span>
-              {googleLoading
-                ?(lang==="fr"?"Connexion...":lang==="es"?"Conectando...":lang==="pt"?"Conectando...":"Connecting...")
-                :t.googleBtn}
-            </button>
-
-            {/* REGISTER LINK */}
-            <div style={{textAlign:"center",fontSize:13,color:C.muted,marginTop:4}}>
-              {t.noAccount}{" "}
-              <span onClick={onBack}
-                style={{color:C.blue2,cursor:"pointer",
-                borderBottom:`1px solid ${C.blue2}55`,fontWeight:600}}>
-                {t.register}
-              </span>
-            </div>
 
           </div>
         </div>

@@ -471,7 +471,7 @@ function LanguageSelect({ setLang, setPage }) {
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:24}}>
           {langs.map(l => (
             <button key={l.code}
-              onClick={() => { setLang(l.code); setPage("music"); }}
+              onClick={() => { setLang(l.code); setPage("welcome"); }}
               style={{
                 display:"flex",alignItems:"center",gap:12,
                 padding:"14px 16px",borderRadius:16,
@@ -2583,7 +2583,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
 {page==="signin" && (
       <SignIn
     lang={lang}
-    onBack={() => setPage("register")}
+    onBack={() => setPage("welcome")}
     onSuccess={() => {
       const hp = !!localStorage.getItem("map_status_card");
       setPage(hp ? "dashboard" : "questionnaire");
@@ -2593,10 +2593,9 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
      {page==="register" && (
   <RegisterS6
     lang={lang}
-    onBack={() => setPage("bridge")}
+    onBack={() => setPage("welcome")}
     onNext={() => setPage("questionnaire")}
     setUsername={(name) => setProfile((p) => ({ ...p, name }))}
-    onSignIn={() => setPage("signin")}
     onTerms={() => setPage("terms")}
     onPrivacy={() => setPage("privacy")}
   />
@@ -2606,8 +2605,9 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
       {page==="welcome"     && (
         <WelcomeS4
           lang={lang}
-          onBack={() => setPage("music")}
-          onNext={() => setPage("bridge")}
+          onBack={() => setPage("lang")}
+          onCreateAccount={() => setPage("register")}
+          onSignIn={() => setPage("signin")}
         />
       )}
       {page==="bridge"      && (
