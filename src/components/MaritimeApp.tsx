@@ -2164,9 +2164,26 @@ function AppInner() {
   // calls and every place `setPage` is passed down as a prop — captures scroll
   // for free, without touching those ~500+ call sites individually.
   const scrollPositionsRef = useRef<Record<string, number>>({});
+
+  // Pages that must never be treated as a "resume point" on relaunch: pre-auth
+  // onboarding steps, and transient/sensitive flows (password recovery, admin
+  // login). Everything else — dashboard, module list pages, individual lessons —
+  // is fair game to restore to instead of always dumping the user back on the
+  // dashboard after the WebView gets killed and relaunched (see Phase B of the
+  // 2026-08 session-persistence fix).
+  const NON_RESUMABLE_PAGES = new Set([
+    "splash","lang","music","welcome","bridge","register","questionnaire","status",
+    "reset_password","admin-login","admin",
+  ]);
+  const NAV_RESUME_KEY = "map_last_page";
+
   const setPage = (next: string) => {
     if (typeof window !== "undefined") {
       scrollPositionsRef.current[page] = window.scrollY;
+      try {
+        if (NON_RESUMABLE_PAGES.has(next)) localStorage.removeItem(NAV_RESUME_KEY);
+        else localStorage.setItem(NAV_RESUME_KEY, next);
+      } catch {}
     }
     setPageState(next);
   };
@@ -2187,6 +2204,17 @@ function AppInner() {
 
   const hasProfile = () => {
     try { return !!localStorage.getItem("map_status_card"); } catch { return false; }
+  };
+  // Where the user actually was before the session was interrupted (app closed,
+  // WebView killed on wake), so a restored session lands back on the exact
+  // dashboard/module/lesson page instead of always bouncing to "dashboard".
+  // Only used when a profile already exists — never skips onboarding.
+  const resumePage = () => {
+    try {
+      const saved = localStorage.getItem(NAV_RESUME_KEY);
+      if (saved && !NON_RESUMABLE_PAGES.has(saved)) return saved;
+    } catch {}
+    return "dashboard";
   };
 try { localStorage.removeItem("map_completed_lessons"); } catch {}
   const syncLocalProfile = (user: any) => {
@@ -2264,7 +2292,7 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
     if (session) {
       syncLocalProfile(session.user);
       loadUserProgress(session.user);
-      setPage(hasProfile() ? "dashboard" : "questionnaire");
+      setPage(hasProfile() ? resumePage() : "questionnaire");
     }
   });
 }
@@ -2278,7 +2306,7 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
     if (event === "SIGNED_IN" && session) {
       syncLocalProfile(session.user);
       loadUserProgress(session.user);
-      setPage(hasProfile() ? "dashboard" : "questionnaire");
+      setPage(hasProfile() ? resumePage() : "questionnaire");
     }
     if (event === "SIGNED_OUT") {
       setPage("lang");
