@@ -135,10 +135,10 @@ function ui(key: keyof typeof UI.en, lang: SupportedLanguage): string {
 
 // Communication-party labels — same fixed-UI-chrome convention as UI above.
 const PARTY_LABEL: Record<SupportedLanguage, Record<CommunicationParty, string>> = {
-  en: { deck: "Deck", engine: "Engine", bridge: "Bridge", installation: "Installation", deck_team: "Deck Team", assisted_vessel: "Assisted Vessel", transferee: "Transferee", terminal: "Terminal", shore_fire_brigade: "Shore Fire Brigade", shore_authorities: "Shore Authorities" },
-  fr: { deck: "Pont", engine: "Machine", bridge: "Passerelle", installation: "Installation", deck_team: "Équipe de pont", assisted_vessel: "Navire assisté", transferee: "Personne transférée", terminal: "Terminal", shore_fire_brigade: "Pompiers portuaires", shore_authorities: "Autorités à terre" },
-  es: { deck: "Cubierta", engine: "Máquinas", bridge: "Puente de mando", installation: "Instalación", deck_team: "Equipo de cubierta", assisted_vessel: "Buque asistido", transferee: "Persona transferida", terminal: "Terminal", shore_fire_brigade: "Bomberos portuarios", shore_authorities: "Autoridades en tierra" },
-  pt: { deck: "Convés", engine: "Máquinas", bridge: "Ponte de comando", installation: "Instalação", deck_team: "Equipa de convés", assisted_vessel: "Navio assistido", transferee: "Pessoa transferida", terminal: "Terminal", shore_fire_brigade: "Bombeiros portuários", shore_authorities: "Autoridades em terra" },
+  en: { deck: "Deck", engine: "Engine", bridge: "Bridge", installation: "Installation", deck_team: "Deck Team", assisted_vessel: "Assisted Vessel", transferee: "Transferee", terminal: "Terminal", shore_fire_brigade: "Shore Fire Brigade", shore_authorities: "Shore Authorities", process_control: "Process Control" },
+  fr: { deck: "Pont", engine: "Machine", bridge: "Passerelle", installation: "Installation", deck_team: "Équipe de pont", assisted_vessel: "Navire assisté", transferee: "Personne transférée", terminal: "Terminal", shore_fire_brigade: "Pompiers portuaires", shore_authorities: "Autorités à terre", process_control: "Salle de contrôle Process" },
+  es: { deck: "Cubierta", engine: "Máquinas", bridge: "Puente de mando", installation: "Instalación", deck_team: "Equipo de cubierta", assisted_vessel: "Buque asistido", transferee: "Persona transferida", terminal: "Terminal", shore_fire_brigade: "Bomberos portuarios", shore_authorities: "Autoridades en tierra", process_control: "Sala de control de Proceso" },
+  pt: { deck: "Convés", engine: "Máquinas", bridge: "Ponte de comando", installation: "Instalação", deck_team: "Equipa de convés", assisted_vessel: "Navio assistido", transferee: "Pessoa transferida", terminal: "Terminal", shore_fire_brigade: "Bombeiros portuários", shore_authorities: "Autoridades em terra", process_control: "Sala de controlo de Processo" },
 };
 
 function partyLabel(party: CommunicationParty, lang: SupportedLanguage): string {

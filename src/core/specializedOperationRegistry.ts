@@ -100,8 +100,21 @@ export interface OperationPhase {
 // obligation for a developing emergency at sea, not a commercial or
 // task-based relationship, and there is no "terminal" available in this
 // underway context at all.
+//
+// "process_control" added for the FPSO shuttle tanker STS offloading
+// operation: the FPSO's own onboard Process/Production control room (OIM,
+// Production Supervisor, Control Room Operator, Process Operator) —
+// deliberately kept out of RankId (see the operation's own architecture
+// decision: an entire onboard department, not a single specialist role a
+// Pumpman/Gas Engineer-style fold would fit). Distinct from "engine" (the
+// RankId-mapped ship's engine crew) and from "installation" (an external
+// fixed platform/rig) — Process/Production is part of this vessel, not
+// external to it. The shuttle tanker's own bridge/mooring team reuses the
+// existing "assisted_vessel" instead of needing its own addition — the
+// concept coined for Tugboat (another vessel's own bridge/pilot team) fits
+// without modification.
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -8704,6 +8717,626 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Treating a correctly-handled instance as closing the matter rather than as a standing practice." },
+        ],
+      },
+    ],
+  },
+
+  fpso_sts_shuttle_tanker_offloading: {
+    operationId: "fpso_sts_shuttle_tanker_offloading",
+    vesselTypeId: "fpso",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "FPSO — Shuttle Tanker STS Offloading" },
+    introduction: {
+      en: "Shuttle tanker offloading is the operation that closes the loop on what makes an FPSO a production unit and not just a storage hull: oil accumulated in the FPSO's tanks from continuous processing has to be exported periodically to a shuttle tanker, moored alongside or in tandem, without the FPSO ever leaving its field position. This module covers the full ship-to-ship (STS) offloading cycle from the FPSO's own marine crew's side: approach and mooring of the shuttle tanker, hose connection, transfer monitoring and safety-zone management, and disconnection — not the internal separation/processing that produces the oil in the first place, which belongs to the Process/Production department and is treated as an external party this operation coordinates with, not a track this module teaches. A structural feature shapes several sections below: the FPSO's own crew (Master, Chief Officer, Chief Engineer, Second Engineer, Bosun/AB) drives this operation directly — Chief Officer specifically takes on Loading Master duties — while Process/Production (Offshore Installation Manager, Production Supervisor, Control Room Operator, Process Operator) appears throughout as the counterparty controlling valve line-up, pumping rate, and custody-transfer measurement, without ever holding a MAP crew rank of its own.",
+    },
+    objectives: [
+      { en: "Describe the full chronology of an FPSO-to-shuttle-tanker STS offloading operation, from approach through disconnection, and explain why it is structurally different from a terminal cargo loading (no shore infrastructure, FPSO stays on station via its turret mooring, cargo is produced aboard rather than received)." },
+      { en: "Identify the marine-side equipment and roles involved (mooring hawsers/hoses, cargo transfer hose connection, Loading Master duties held by the Chief Officer) and distinguish them from the Process/Production department's own internal responsibilities." },
+      { en: "Explain the specific hazards of STS transfer between two floating units on station (collision risk from relative motion/weathervaning mismatch, hose rupture, mooring line failure) and the controls used against them." },
+      { en: "Identify who does what during this operation on an FPSO, including where the crew's authority stops and Process/Production's begins." },
+      { en: "Recognize correct versus incorrect sequencing and communication during approach, connection, transfer, and disconnection." },
+      { en: "Recognize the shuttle tanker's own bridge/mooring team as a coordinating party with its own authority, not a subordinate crew — a peer relationship, not a command one." },
+    ],
+    context: {
+      en: "Scoped deliberately to STS offloading only — not the internal oil/gas/water separation process, which stays with the external Process/Production party per this operation's own architecture decision, and not turret mooring's own sustained weathervaning behavior, which is a background condition rather than this operation's active task. Extends the Ships Library card (Fpso.tsx) rather than replacing it. The shuttle tanker's bridge/mooring team reuses the existing \"assisted_vessel\" CommunicationParty (coined for Tugboat, and the underlying concept — another vessel's own bridge/mooring crew, not a fixed installation — fits here without modification); Process/Production itself uses the new \"process_control\" CommunicationParty, since it's an onboard-but-non-RankId department distinct from every existing value.",
+    },
+
+    operationPhaseOrder: [
+      "pre_offloading_preparation",
+      "shuttle_tanker_approach_tandem_positioning",
+      "mooring_hawser_connection",
+      "hose_connection_lineup",
+      "cargo_transfer",
+      "transfer_completion_line_clearing",
+      "disconnection_departure",
+    ],
+    operationPhases: {
+      pre_offloading_preparation: {
+        id: "pre_offloading_preparation",
+        title: { en: "Pre-Offloading Preparation" },
+        overview: { en: "Confirming the export is actually ready — quantity, weather, equipment, and communication protocol — before any coordination with the shuttle tanker begins." },
+        steps: [
+          { en: "Confirm export-ready quantity with Process Control (tank levels, oil-in-water spec met)." },
+          { en: "Check the weather window against STS transfer limits, stricter than terminal loading since there is no shore breakwater and both units are exposed." },
+          { en: "Notify the shuttle tanker's agent/company of the offloading window." },
+          { en: "Inspect the mooring hawser, messenger lines, floating hose, and manifold connections." },
+          { en: "Brief exclusion zones on deck." },
+          { en: "Confirm the bridge-to-bridge communication protocol with the shuttle tanker: working VHF channel, reporting format." },
+        ],
+        bestPractices: [
+          { en: "Treat the weather window as a go/no-go gate, not a target to push against." },
+          { en: "Confirm Process Control's export quantity independently rather than taking a verbal figure at face value." },
+        ],
+        commonMistakes: [
+          { en: "Starting approach coordination before the weather window is actually confirmed against STS-specific limits, not generic transit limits." },
+        ],
+      },
+      shuttle_tanker_approach_tandem_positioning: {
+        id: "shuttle_tanker_approach_tandem_positioning",
+        title: { en: "Shuttle Tanker Approach & Tandem Positioning" },
+        overview: { en: "The shuttle tanker's own bridge team conducts the approach under its own command — tandem configuration chosen because the FPSO's heading is never fixed." },
+        steps: [
+          { en: "Shuttle tanker's own bridge team conducts the approach under its own command, coordinating by VHF with the FPSO bridge." },
+          { en: "Tandem configuration used specifically because the FPSO weathervanes on its turret mooring — it lets the shuttle tanker align behind it rather than fight an unpredictable beam angle." },
+          { en: "FPSO bridge continuously reports its own heading and weathervaning trend so the shuttle tanker can plan its final approach line." },
+          { en: "Safe stand-off distance maintained until hawser transfer begins." },
+        ],
+        bestPractices: [
+          { en: "FPSO bridge proactively reports heading trend, not just current heading, so the shuttle tanker isn't approaching a moving target blind." },
+        ],
+        commonMistakes: [
+          { en: "Treating this like a side-by-side alongside approach and closing distance too early, before the tandem line-up is actually confirmed." },
+        ],
+      },
+      mooring_hawser_connection: {
+        id: "mooring_hawser_connection",
+        title: { en: "Mooring Hawser Connection" },
+        overview: { en: "Establishing and confirming the physical connection and safe following distance between the two vessels before any cargo-side work begins." },
+        steps: [
+          { en: "Messenger line passed, by workboat or floating line depending on sea state." },
+          { en: "Main hawser retrieved and secured on the shuttle tanker's forecastle." },
+          { en: "Hawser tension monitored continuously by the FPSO's Bosun/AB team." },
+          { en: "Safe following distance between FPSO stern and shuttle tanker bow established and logged." },
+        ],
+        bestPractices: [
+          { en: "Log the established following distance explicitly — it's the reference point transfer-phase monitoring checks against, not something to eyeball later." },
+        ],
+        commonMistakes: [
+          { en: "Declaring the hawser \"connected\" before tension has actually stabilized within the safe range." },
+        ],
+      },
+      hose_connection_lineup: {
+        id: "hose_connection_lineup",
+        title: { en: "Hose Connection & Line-Up" },
+        overview: { en: "Connecting the cargo hose and independently confirming both sides' valve line-up before any flow begins." },
+        steps: [
+          { en: "Floating hose retrieved and connected to the shuttle tanker's manifold." },
+          { en: "Connection pressure-tested before flow begins." },
+          { en: "Valve line-up confirmed jointly between the Chief Officer (FPSO marine side) and Process Control (FPSO cargo side) — two separate confirmations, not one handoff." },
+          { en: "Shuttle tanker confirms its own tank line-up and ullage space." },
+        ],
+        bestPractices: [
+          { en: "Treat the joint line-up confirmation as two independent checks that must both come back positive, not a single relayed confirmation." },
+        ],
+        commonMistakes: [
+          { en: "Assuming Process Control's line-up is correct because the pressure test passed — a pressure test confirms the hose, not which tanks are open." },
+        ],
+      },
+      cargo_transfer: {
+        id: "cargo_transfer",
+        title: { en: "Cargo Transfer" },
+        overview: { en: "Sustained monitoring throughout the transfer — rate, tension, hose condition, and scheduled communication — kept up regardless of whether anything appears wrong." },
+        steps: [
+          { en: "Pumping starts at a reduced initial rate, ramped up only once stable flow and pressure are confirmed." },
+          { en: "Continuous monitoring of hawser tension, hose condition, relative distance, and both vessels' ullage/quantity." },
+          { en: "Custody-transfer measurement taken jointly." },
+          { en: "Scheduled communication checks at fixed intervals throughout, not only on exception." },
+        ],
+        bestPractices: [
+          { en: "Scheduled checks happen on the clock even when nothing is wrong — the check itself is the safeguard, not a response to a problem." },
+        ],
+        commonMistakes: [
+          { en: "Letting monitoring intervals slip once the transfer \"settles down\" and appears routine." },
+        ],
+      },
+      transfer_completion_line_clearing: {
+        id: "transfer_completion_line_clearing",
+        title: { en: "Transfer Completion & Line Clearing" },
+        overview: { en: "Stopping the pump is not the end of the transfer — reconciliation comes before disconnection is authorized." },
+        steps: [
+          { en: "Pumping stopped at the agreed target quantity." },
+          { en: "Hose line cleared and purged back toward the FPSO." },
+          { en: "Final quantity reconciled between FPSO and shuttle tanker records before disconnection is authorized." },
+        ],
+        bestPractices: [
+          { en: "Reconcile quantities before disconnecting, not after — a discrepancy is far easier to trace with the hose still connected." },
+        ],
+        commonMistakes: [
+          { en: "Authorizing disconnection because pumping has stopped, without waiting for the reconciled figure." },
+        ],
+      },
+      disconnection_departure: {
+        id: "disconnection_departure",
+        title: { en: "Disconnection & Departure" },
+        overview: { en: "Exclusion-zone discipline holds until the shuttle tanker has genuinely cleared, not just cast off." },
+        steps: [
+          { en: "Hose disconnected and stowed on the FPSO." },
+          { en: "Hawser released in a controlled sequence, not simply let go." },
+          { en: "Shuttle tanker moves to a safe distance under its own power before setting course, with the FPSO bridge confirming clearance." },
+        ],
+        bestPractices: [
+          { en: "Controlled hawser release, paying it out rather than slipping it, to avoid a sudden load transfer." },
+        ],
+        commonMistakes: [
+          { en: "Treating disconnection as the end of the operation and relaxing exclusion-zone discipline before the shuttle tanker has actually cleared to a safe distance." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "export_quantity_confirmation",
+        phaseId: "pre_offloading_preparation",
+        from: "process_control", to: "deck",
+        trigger: { en: "Offloading window approaching, export-ready quantity needs confirming before scheduling." },
+        content: { en: "Process Control reports the confirmed export-ready quantity and oil-in-water spec compliance to the Chief Officer, who logs it independently rather than treating the verbal figure as final." },
+        whyItMatters: { en: "The whole operation's scheduling and custody-transfer reconciliation later depends on this number being right at the start, not assumed." },
+      },
+      {
+        id: "offloading_window_coordination",
+        phaseId: "pre_offloading_preparation",
+        from: "bridge", to: "assisted_vessel",
+        trigger: { en: "Weather window confirmed against STS-specific limits." },
+        content: { en: "FPSO bridge contacts the shuttle tanker's bridge to confirm the offloading window, working VHF channel, and reporting format for the operation." },
+        whyItMatters: { en: "STS transfer has no shore infrastructure to fall back on — this is the only coordination channel between two independently-commanded vessels for the entire operation." },
+      },
+      {
+        id: "heading_trend_report",
+        phaseId: "shuttle_tanker_approach_tandem_positioning",
+        from: "bridge", to: "assisted_vessel",
+        trigger: { en: "Shuttle tanker beginning final approach." },
+        content: { en: "FPSO bridge reports not just current heading but its weathervaning trend, so the shuttle tanker isn't planning its approach line against a target that will have moved by the time it arrives." },
+        whyItMatters: { en: "The FPSO's heading is never fixed — a static heading report would already be stale by the time the shuttle tanker acts on it." },
+      },
+      {
+        id: "hawser_ready_confirmation",
+        phaseId: "mooring_hawser_connection",
+        from: "assisted_vessel", to: "bridge",
+        trigger: { en: "Main hawser secured on the shuttle tanker's forecastle." },
+        content: { en: "Shuttle tanker confirms the hawser is secured and reports back to the FPSO bridge before tension is applied." },
+        whyItMatters: { en: "Applying tension before the shuttle tanker confirms a secure hold risks the hawser slipping under load rather than parting cleanly under a controlled connection." },
+      },
+      {
+        id: "hawser_tension_status",
+        phaseId: "mooring_hawser_connection",
+        from: "deck", to: "bridge",
+        trigger: { en: "Following distance established, tension being monitored." },
+        content: { en: "Bosun/AB team reports hawser tension and the logged following distance to the bridge at regular intervals, not only if something changes." },
+        whyItMatters: { en: "This distance is the reference point every later transfer-phase check measures against — the bridge needs it logged, not just observed on deck." },
+      },
+      {
+        id: "joint_valve_lineup_confirmation",
+        phaseId: "hose_connection_lineup",
+        from: "deck", to: "process_control",
+        trigger: { en: "Hose connected and pressure-tested." },
+        content: { en: "Chief Officer and Process Control each independently confirm their own side's valve line-up before flow begins — two separate confirmations exchanged, not one relayed from the other." },
+        whyItMatters: { en: "A pressure test only proves the hose holds pressure — it says nothing about which tanks are actually open. Only this exchange confirms the right tanks are lined up." },
+      },
+      {
+        id: "pumping_rate_change",
+        phaseId: "cargo_transfer",
+        from: "process_control", to: "deck",
+        trigger: { en: "Ramping from initial reduced rate to full transfer rate, or any subsequent rate change." },
+        content: { en: "Process Control notifies the Chief Officer before changing pumping rate, not after, so the deck team can watch for the corresponding change in hose behavior and hawser load." },
+        whyItMatters: { en: "A rate change the deck team doesn't expect can be misread as a developing fault rather than a deliberate adjustment — or the reverse." },
+      },
+      {
+        id: "scheduled_transfer_checkin",
+        phaseId: "cargo_transfer",
+        from: "bridge", to: "assisted_vessel",
+        trigger: { en: "Fixed interval reached during an otherwise uneventful transfer." },
+        content: { en: "FPSO bridge and shuttle tanker bridge exchange a scheduled status check — position, hawser tension, hose condition — on the clock, regardless of whether anything is wrong." },
+        whyItMatters: { en: "The check itself is the safeguard. Waiting for a problem to prompt communication means the first sign of trouble is discovered late, not caught early." },
+      },
+      {
+        id: "final_quantity_reconciliation",
+        phaseId: "transfer_completion_line_clearing",
+        from: "deck", to: "process_control",
+        trigger: { en: "Pumping stopped at target quantity." },
+        content: { en: "Chief Officer and Process Control reconcile the transferred quantity against both the FPSO's and shuttle tanker's own figures before authorizing disconnection." },
+        whyItMatters: { en: "A discrepancy is far easier to trace with the hose still connected and the line-up still known than after everything has been disconnected and stowed." },
+      },
+      {
+        id: "departure_clearance",
+        phaseId: "disconnection_departure",
+        from: "assisted_vessel", to: "bridge",
+        trigger: { en: "Shuttle tanker underway and moving to a safe distance." },
+        content: { en: "Shuttle tanker reports clear of the exclusion zone; FPSO bridge confirms clearance before the operation is logged as complete." },
+        whyItMatters: { en: "Disconnection isn't the end of the operation — exclusion-zone discipline has to hold until the shuttle tanker has actually cleared, not just cast off." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Overall authority for the operation. Sets the go/no-go on the weather window before it begins, monitors the FPSO's weathervaning behavior throughout, and holds final authority to abort if relative positioning with the shuttle tanker degrades beyond safe limits." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Takes on Loading Master duties for the operation — owns the marine/cargo-transfer side directly: hawser and hose connection oversight, the joint valve line-up confirmation with Process Control, and transfer-phase monitoring coordination. The clearest example in this operation of where crew authority and Process/Production's authority meet without either commanding the other." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Directs overall readiness of the hydraulic and pump systems supporting the mooring winches and any FPSO-side transfer-support machinery, and directs the Second Engineer's hands-on work — the same ownership-versus-execution split held across nearly every prior operation." },
+      },
+      {
+        rankId: "second_engineer",
+        identity: { en: "Hands-on execution and monitoring of winch hydraulics and support systems throughout the operation, under the Chief Engineer's direction." },
+      },
+      {
+        rankId: "third_engineer",
+        identity: { en: "Present and on watch during the operation, observing procedure and system behavior without independent responsibility — building familiarity rather than carrying an assigned task." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team's hands-on mooring and hawser work — messenger line, hawser handling, tension monitoring — and reports status directly to the bridge." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes hawser and mooring line handling and general deck work during approach, connection, and disconnection, under the Bosun's direction." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "With the FPSO holding station and no active navigation to attach to for most of its time on the field, the OOW joins the deck-side operation directly — supporting bridge communications and logging with the shuttle tanker throughout the transfer, the same departure from classic watchkeeping already established for tanker-family operations." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      chief_engineer: "support",
+      second_engineer: "perform",
+      third_engineer: "observe",
+      bosun: "perform",
+      ab: "perform",
+      oow: "perform",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Sets the go/no-go decision on the weather window before the operation begins." },
+          { en: "Issues an abort order if relative positioning with the shuttle tanker degrades beyond safe limits." },
+        ],
+        iMonitor: [
+          { en: "The FPSO's own weathervaning behavior and heading trend throughout the operation." },
+          { en: "Overall safety of the STS evolution end to end." },
+        ],
+        iReport: [
+          { en: "Reports the operation's outcome, and any abort decision, to the company." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize or direct Process Control's internal valve, pump, or line-up decisions — that boundary stays with Process Control." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Loading Master duties: hawser and hose connection oversight, joint valve line-up confirmation with Process Control, transfer-phase monitoring coordination." },
+        ],
+        iMonitor: [
+          { en: "Hawser tension, hose condition, and pumping rate changes reported by Process Control." },
+        ],
+        iReport: [
+          { en: "Reports transfer status to the Master at scheduled intervals, and the final reconciled quantity at completion." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize Process Control's own valve or pump operations — confirms line-up jointly, does not direct Process Control's equipment." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Directs overall readiness of the hydraulic and pump systems supporting the mooring winches and FPSO-side transfer-support machinery." },
+        ],
+        iMonitor: [
+          { en: "Hydraulic and pump system health throughout the operation." },
+        ],
+        iReport: [
+          { en: "Reports system readiness, and any fault, to the Chief Officer and Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize deviation from the confirmed weather window or transfer schedule." },
+        ],
+      },
+      second_engineer: {
+        iExecute: [
+          { en: "Hands-on operation and maintenance of winch hydraulics and support systems, under the Chief Engineer's direction." },
+        ],
+        iMonitor: [
+          { en: "System pressure and temperature parameters throughout the operation." },
+        ],
+        iReport: [
+          { en: "Reports any abnormal reading to the Chief Engineer immediately." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize system shutdown or restart without the Chief Engineer's direction." },
+        ],
+      },
+      third_engineer: {
+        iMonitor: [
+          { en: "System behavior and procedure throughout the operation, building familiarity rather than carrying an assigned task." },
+        ],
+        iReport: [
+          { en: "Reports observations or questions to the Chief or Second Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently operate or adjust any system." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the deck team's messenger line and hawser handling, and oversees mooring-line tension monitoring." },
+        ],
+        iMonitor: [
+          { en: "Hawser tension, the logged following distance, and deck team readiness." },
+        ],
+        iReport: [
+          { en: "Reports tension and distance status to the bridge at regular intervals." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize departure from the established safe following distance without bridge confirmation." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes hawser and mooring line handling under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Line condition and immediate deck hazards in their own work area." },
+        ],
+        iReport: [
+          { en: "Reports hazards or line condition issues to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize any change to the mooring or hawser plan." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Supports bridge communications and logging with the shuttle tanker throughout the transfer." },
+        ],
+        iMonitor: [
+          { en: "Communication log accuracy and scheduled check-in timing." },
+        ],
+        iReport: [
+          { en: "Reports communication status to the Master and Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently authorize deviations from the communication protocol established with the shuttle tanker." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "fpso_sts_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the shuttle tanker STS offloading operation's phases in the correct order." },
+        items: [
+          { id: "prep", label: { en: "Pre-Offloading Preparation" } },
+          { id: "approach", label: { en: "Shuttle Tanker Approach & Tandem Positioning" } },
+          { id: "hawser", label: { en: "Mooring Hawser Connection" } },
+          { id: "hose", label: { en: "Hose Connection & Line-Up" } },
+          { id: "transfer", label: { en: "Cargo Transfer" } },
+          { id: "completion", label: { en: "Transfer Completion & Line Clearing" } },
+          { id: "disconnect", label: { en: "Disconnection & Departure" } },
+        ],
+        correctOrder: ["prep", "approach", "hawser", "hose", "transfer", "completion", "disconnect"],
+      },
+      {
+        type: "error_identification",
+        id: "fpso_sts_lineup_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The hose is connected and the pressure test has just passed. Process Control reports their side is lined up and ready. Transfer is scheduled to start in a few minutes and the weather window is tight. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Authorize flow to begin immediately, since the pressure test passed and Process Control confirmed their line-up." }, isError: true, explanation: { en: "A pressure test only proves the hose holds pressure — it says nothing about which tanks are open. This skips the Chief Officer's own independent line-up confirmation, the exact two-sided check this operation's architecture depends on." } },
+          { id: "b", label: { en: "Independently confirm the FPSO-side valve line-up before authorizing flow, even with the weather window tight." }, isError: false, explanation: { en: "Correct — the joint confirmation is two separate checks that must both come back positive, not one relayed from the other." } },
+          { id: "c", label: { en: "Start at the reduced initial rate once line-up is independently confirmed, not full rate immediately." }, isError: false, explanation: { en: "Correct sequencing — ramping only after stable flow and pressure are confirmed at reduced rate first." } },
+          { id: "d", label: { en: "Note the tight weather window and flag it to the Master rather than letting schedule pressure shortcut the line-up check." }, isError: false, explanation: { en: "Correct — a tight weather window is a reason for more discipline in the confirmation, not less." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "fpso_sts_pre_transfer_gate",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The hose is connected and pressure-tested. Before authorizing the start of cargo transfer, review which readiness items are actually satisfied." },
+        items: [
+          { id: "quantity", label: { en: "Export-ready quantity confirmed and logged from Process Control." }, isSatisfied: true },
+          { id: "weather", label: { en: "Weather window confirmed against STS-specific limits." }, isSatisfied: true },
+          { id: "hawser_tension", label: { en: "Hawser tension stabilized within the safe range and following distance logged." }, isSatisfied: true },
+          { id: "hose_test", label: { en: "Hose connection pressure-tested." }, isSatisfied: true },
+          { id: "lineup", label: { en: "FPSO-side valve line-up independently confirmed by the Chief Officer (not just relayed from Process Control)." }, isSatisfied: false },
+          { id: "shuttle_ready", label: { en: "Shuttle tanker's own tank line-up and ullage space confirmed by its bridge." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "During hawser connection, tension readings are climbing faster than expected as the shuttle tanker settles into position, though still within the nominal safe range." },
+        mission: { en: "As Bosun, decide how to handle the trend before it becomes a problem." },
+        expectedActions: [
+          { en: "Report the rising trend to the bridge immediately, not just the current reading." },
+          { en: "Continue close monitoring rather than waiting for the next scheduled check." },
+          { en: "Be ready to recommend easing the shuttle tanker's approach if the trend continues." },
+        ],
+        why: [
+          { en: "A trend still inside the safe range is exactly the kind of information that lets the bridge act early instead of reacting to a limit being breached." },
+        ],
+        commonMistakes: [
+          { en: "Waiting to report until the reading actually exceeds the safe range — by then, the reaction is forced rather than planned." },
+        ],
+        safetyPoints: [
+          { en: "The logged following distance and tension range exist precisely so a trend can be judged against a known reference, not gut feel." },
+        ],
+      },
+      {
+        situation: { en: "Midway through cargo transfer, sea state begins building beyond what was forecast when the weather window was confirmed, though still within the STS transfer's outer limits." },
+        mission: { en: "As Chief Officer, decide whether to continue, slow, or pause the transfer." },
+        expectedActions: [
+          { en: "Report the developing conditions to the Master rather than making the call alone — this affects the go/no-go authority the Master holds." },
+          { en: "Coordinate with the shuttle tanker's bridge on their own read of conditions before any rate change." },
+          { en: "If continuing, consider reducing rate rather than treating it as all-or-nothing." },
+        ],
+        why: [
+          { en: "The weather window was a go/no-go gate at the start, not a one-time check — conditions changing mid-operation is exactly the scenario that gate was meant to be revisited for." },
+        ],
+        commonMistakes: [
+          { en: "Treating 'still within outer limits' as equivalent to 'no need to reassess' — the trend matters as much as the current reading, the same lesson as the hawser tension case." },
+        ],
+        safetyPoints: [
+          { en: "Two independently-commanded vessels means neither can unilaterally decide to continue if the other has concerns — this has to be a coordinated call." },
+        ],
+      },
+      {
+        situation: { en: "During cargo transfer, the Second Engineer notices a winch hydraulic pressure reading drifting slightly outside its normal band, though the winch itself is functioning normally with no visible fault." },
+        mission: { en: "As Second Engineer, decide what to do with this observation." },
+        expectedActions: [
+          { en: "Report the reading to the Chief Engineer immediately, even though nothing has visibly failed." },
+          { en: "Continue monitoring the trend rather than assuming it will self-correct." },
+          { en: "Do not adjust or reset the system independently." },
+        ],
+        why: [
+          { en: "A functioning system with a drifting parameter is an early-warning case, not a false alarm — reporting it is what lets the Chief Engineer decide whether it needs action before it becomes a fault." },
+        ],
+        commonMistakes: [
+          { en: "Dismissing the reading because the equipment is still working normally on the surface." },
+        ],
+        safetyPoints: [
+          { en: "The Second Engineer's iDoNotAuthorize boundary exists exactly for this situation: notice and report, but the decision on system intervention stays with the Chief Engineer." },
+        ],
+      },
+      {
+        situation: { en: "A scheduled communication check-in with the shuttle tanker's bridge is two minutes late — no distress, just no response yet." },
+        mission: { en: "As OOW, decide how to handle the missed check-in." },
+        expectedActions: [
+          { en: "Attempt the call again promptly rather than waiting for the next scheduled interval." },
+          { en: "Notify the Chief Officer or Master if contact isn't reestablished quickly." },
+          { en: "Log the delay and the eventual response, not just the successful check-in once it happens." },
+        ],
+        why: [
+          { en: "Scheduled check-ins are the safeguard precisely because they happen on the clock — a late one is the first, mildest signal that something may need attention, not yet an emergency but not nothing either." },
+        ],
+        commonMistakes: [
+          { en: "Assuming a two-minute delay is meaningless and letting it pass without escalation, since nothing else appears wrong." },
+        ],
+        safetyPoints: [
+          { en: "Two independently-commanded vessels have no other coordination channel for the whole operation — a communication gap is never a minor administrative detail here." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "fpso_sts_weathervaning_drift",
+        title: { en: "A Slow Drift During Transfer" },
+        seatRankId: "master",
+        root: {
+          id: "root",
+          situation: { en: "Cargo transfer is underway, about a third through. Over the last twenty minutes, a wind shift has caused the FPSO to slowly weathervane on its turret. The relative distance to the tandem-moored shuttle tanker is still within the safe range you set at connection — but the trend, if it continues, will tighten it further within the hour." },
+          options: [
+            {
+              id: "wait",
+              label: { en: "Continue monitoring — it's still within the safe range, no need to act yet." },
+              consequence: { en: "The drift continues over the following twenty minutes. By the time the distance actually approaches the limit, you're reacting to a breach instead of a trend — exactly the pattern this operation's own monitoring discipline was built to avoid." },
+              feedback: { en: "A reading inside its safe range doesn't mean the trend is meaningless — this is the same lesson as the hawser tension case, applied to your own domain: the FPSO's positional behavior." },
+            },
+            {
+              id: "alert_shuttle",
+              label: { en: "Alert the shuttle tanker's bridge to the trend and ask for their own read on it." },
+              isRecommended: true,
+              consequence: { en: "The shuttle tanker's bridge confirms they've noticed the same drift and are watching it too — their own comfort margin is tighter than yours, and they say so plainly." },
+              feedback: { en: "Correct instinct: this is a two-vessel situation, and the shuttle tanker's own assessment is information you don't have from your own bridge alone." },
+              next: {
+                id: "shuttle_confirmed",
+                situation: { en: "Both bridges now agree the drift is real and worth acting on, though neither vessel is yet outside its safe operating range. The shuttle tanker's Master asks how you want to proceed." },
+                options: [
+                  {
+                    id: "graduated_response",
+                    label: { en: "Coordinate a temporary pause in pumping while both vessels reassess position, rather than moving straight to full disconnection." },
+                    isRecommended: true,
+                    consequence: { en: "Pumping is paused; both vessels hold position and confirm the drift has stabilized before resuming at the original rate." },
+                    feedback: { en: "This mirrors the graduated response already established for a deteriorating weather window: slow or pause first, don't treat it as all-or-nothing unless the situation actually demands it." },
+                  },
+                  {
+                    id: "full_abort",
+                    label: { en: "Order immediate full disconnection and abort the transfer." },
+                    consequence: { en: "The operation is aborted safely, but a full disconnection and re-approach later costs far more time than the pause would have — and the shuttle tanker's Master notes, diplomatically, that neither vessel was actually outside safe limits yet." },
+                    feedback: { en: "Not wrong on safety grounds, but an overcorrection — the same graduated-response option was available and would have addressed the same concern with far less cost." },
+                  },
+                  {
+                    id: "defer_to_shuttle",
+                    label: { en: "Since the shuttle tanker raised it, let their Master decide how to proceed." },
+                    consequence: { en: "The shuttle tanker's Master, reasonably, pushes the question back — the FPSO's own drift is your vessel's behavior to manage, not theirs to decide for you." },
+                    feedback: { en: "Coordinating with a peer vessel isn't the same as handing them your own authority. The decision for the FPSO's side of this situation stays yours to make." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "immediate_abort",
+              label: { en: "Order an immediate abort of the transfer without first contacting the shuttle tanker." },
+              consequence: { en: "The abrupt stop catches the shuttle tanker's bridge off guard mid-transfer, and their own emergency disconnection procedure — triggered by an unexplained stop rather than a coordinated one — turns out to be a rougher, higher-risk process than a planned pause would have been." },
+              feedback: { en: "Unilateral action skips exactly the coordination this operation depends on. Two independently-commanded vessels means even a safety-motivated decision needs to be communicated before it's executed, not after." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Trend over threshold" },
+        bestPractices: [
+          { en: "Report a reading that's moving in the wrong direction, not just one that has already crossed a limit — hawser tension, weather, hydraulic pressure, and the FPSO's own heading drift are all governed by this same discipline." },
+          { en: "Log reference points (following distance, safe tension range, weather limits) explicitly, so a trend can be judged against a known number rather than memory or instinct." },
+        ],
+        commonErrors: [
+          { en: "Treating 'still within range' as equivalent to 'nothing to report' — the whole point of catching a trend early is acting before the range is actually breached." },
+        ],
+      },
+      {
+        theme: { en: "Two independently-commanded vessels" },
+        bestPractices: [
+          { en: "Coordinate any decision that affects both vessels — position, rate changes, pausing or aborting — rather than acting unilaterally and informing the other bridge afterward." },
+          { en: "Keep scheduled communication checks on the clock throughout the transfer, not just when something seems wrong." },
+        ],
+        commonErrors: [
+          { en: "Acting first and communicating after, even when the action is safety-motivated — an uncoordinated stop can create its own hazard on the other vessel's side." },
+          { en: "Letting a scheduled check-in slip once the operation feels routine." },
+        ],
+      },
+      {
+        theme: { en: "The marine/production boundary" },
+        bestPractices: [
+          { en: "Confirm the FPSO-side valve line-up independently, even when Process Control has already reported theirs is ready — two separate confirmations, not one relayed." },
+          { en: "Respect that Process Control's internal valve, pump, and line-up decisions are theirs to make — the crew's role is to confirm the interface, not direct their equipment." },
+        ],
+        commonErrors: [
+          { en: "Treating a passed pressure test as proof the line-up itself is correct — it only proves the hose holds pressure." },
+          { en: "Letting schedule pressure (a tight weather window, an on-time departure) shortcut the independent line-up check." },
+        ],
+      },
+      {
+        theme: { en: "Graduated response over all-or-nothing" },
+        bestPractices: [
+          { en: "Consider slowing or pausing before considering a full abort or disconnection — both for a deteriorating weather window and for a developing positional drift." },
+          { en: "Reassess and resume once conditions stabilize, rather than treating any deviation as an automatic end to the operation." },
+        ],
+        commonErrors: [
+          { en: "Overcorrecting to a full abort when a coordinated pause would have addressed the same concern at far lower cost." },
         ],
       },
     ],
