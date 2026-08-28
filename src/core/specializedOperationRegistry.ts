@@ -12079,6 +12079,560 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  general_cargo_own_gear_multi_cargo_loading: {
+    operationId: "general_cargo_own_gear_multi_cargo_loading",
+    vesselTypeId: "general_cargo",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "General Cargo — Multi-Cargo Loading via Ship's Own Gear" },
+    introduction: {
+      en: "A general cargo ship earns its name by carrying whatever a voyage calls for — bagged goods, crated equipment, drummed products, palletized cargo — often several types on the same call, at ports too small or too poorly equipped to offer shore cranes at all. This module covers loading that mixed cargo using the vessel's own onboard cranes and rigging, with the crew both deciding the stowage plan as each cargo type arrives and physically operating the lift themselves. This is a genuine double departure from every prior cargo operation in the catalog: unlike Container Ship, where the crew never touches the lifting equipment and the operation is purely supervisory, here the crew's own crane operation is the central hands-on task; and unlike Bulk Carrier's single homogeneous commodity or Container Ship's fixed, pre-verified plan, there is no plan to simply check against — the Chief Officer has to decide compatibility, sequencing, and weight distribution in real time as each different cargo type comes aboard, not confirm a plan made in advance.",
+    },
+    objectives: [
+      { en: "Describe the full chronology of loading a mixed general cargo using the ship's own gear, from pre-loading planning through securing the final stow." },
+      { en: "Explain why this operation is structurally different from Container Ship's supervisory stowage verification and Bulk Carrier's single-commodity stability focus." },
+      { en: "Identify the crane/rigging equipment involved and the crew's direct hands-on role operating it, as opposed to supervising shore-operated equipment." },
+      { en: "Explain how stowage decisions — compatibility between cargo types, sequencing, weight distribution — are made adaptively as each cargo arrives, not verified against a pre-fixed plan." },
+      { en: "Identify who does what during this operation, given the crew's own direct operation of the lifting gear." },
+      { en: "Recognize the specific hazards of self-operated crane work with heterogeneous cargo (uneven loads, incompatible stacking, handling accidents) and the controls used against them." },
+    ],
+    context: {
+      en: "Extends the Ships Library card (GeneralCargo.tsx) rather than replacing it. Roster read directly and unambiguously from the card's own explicit list: Master, Chief Officer, OOW, Bosun, AB, Chief Engineer, Second/Third Engineer — the classic 8-rank structure already used by Container Ship, OSV, RoRo, and Bulk Carrier, no fold decision needed. The reskin risk against Container Ship and Bulk Carrier was checked explicitly, not assumed clear: differentiated by the crew's own hands-on crane operation (versus Container Ship's purely supervisory stance) and adaptive, cargo-by-cargo stowage decision-making (versus a fixed plan to verify, or a single homogeneous commodity's stability profile).",
+    },
+
+    operationPhaseOrder: [
+      "pre_loading_planning",
+      "crane_rigging_setup",
+      "cargo_type_assessment_placement",
+      "lift_and_stow",
+      "weight_distribution_verification",
+      "final_securing_departure_prep",
+    ],
+    operationPhases: {
+      pre_loading_planning: {
+        id: "pre_loading_planning",
+        title: { en: "Pre-Loading Planning" },
+        overview: { en: "The initial plan is a starting point to adjust, not a fixed sequence — unlike an already-validated container plan." },
+        steps: [
+          { en: "Cargo manifest reviewed: declared types, quantities, weights." },
+          { en: "Initial sequencing plan drafted based on known cargo types, explicitly provisional." },
+          { en: "Ship's cranes and rigging inspected." },
+          { en: "Weather checked." },
+        ],
+        bestPractices: [
+          { en: "Treat the initial plan as a starting point to adjust, not a fixed sequence." },
+        ],
+        commonMistakes: [
+          { en: "Treating the initial plan as final when actual dimensions/weights are only confirmed at the quay." },
+        ],
+      },
+      crane_rigging_setup: {
+        id: "crane_rigging_setup",
+        title: { en: "Crane & Rigging Setup" },
+        overview: { en: "Rigging reconfigured every time the cargo type changes, not stretched across different loads." },
+        steps: [
+          { en: "Ship's crane rigging configured for the specific lift type needed (slings for crates, nets for bags, etc.)." },
+          { en: "Safe working load confirmed for each configuration." },
+        ],
+        bestPractices: [
+          { en: "Reconfigure rigging for every cargo type change rather than forcing one configuration across different loads." },
+        ],
+        commonMistakes: [
+          { en: "Using the same rigging for a cargo type different from the one it was verified for." },
+        ],
+      },
+      cargo_type_assessment_placement: {
+        id: "cargo_type_assessment_placement",
+        title: { en: "Cargo Type Assessment & Placement" },
+        overview: { en: "Repeats once per cargo type — each new arrival is its own decision, not a continuation of the last." },
+        steps: [
+          { en: "On each new cargo type's arrival, the Chief Officer assesses compatibility with what's already stowed (weight distribution, stacking suitability, damage risk) and decides placement." },
+        ],
+        bestPractices: [
+          { en: "Treat each new cargo type as its own decision, not a simple continuation of the previous one." },
+        ],
+        commonMistakes: [
+          { en: "Placing a new cargo type assuming compatibility with the previous one without explicit assessment." },
+        ],
+      },
+      lift_and_stow: {
+        id: "lift_and_stow",
+        title: { en: "Lift & Stow" },
+        overview: { en: "Repeats once per cargo type — the ship's own crew performs the lift, not shore personnel." },
+        steps: [
+          { en: "Lift performed by the ship's own crew, not shore personnel." },
+          { en: "Cargo stowed at the location decided in the assessment phase." },
+        ],
+        bestPractices: [
+          { en: "The crane operator confirms load and balance before every single lift, cargo by cargo." },
+        ],
+        commonMistakes: [
+          { en: "Chaining lifts without individual confirmation because previous ones went smoothly." },
+        ],
+      },
+      weight_distribution_verification: {
+        id: "weight_distribution_verification",
+        title: { en: "Weight Distribution Verification" },
+        overview: { en: "Checked at regular intervals throughout loading, not deferred to the end." },
+        steps: [
+          { en: "Periodic check of the vessel's stability/trim as heterogeneous cargo accumulates." },
+        ],
+        bestPractices: [
+          { en: "Check at regular intervals throughout loading, not only at the end." },
+        ],
+        commonMistakes: [
+          { en: "Deferring all stability verification to the end of loading." },
+        ],
+      },
+      final_securing_departure_prep: {
+        id: "final_securing_departure_prep",
+        title: { en: "Final Securing & Departure Prep" },
+        overview: { en: "No single securing method applied uniformly across different cargo types." },
+        steps: [
+          { en: "Final securing appropriate to each cargo type (different lashing methods per type)." },
+          { en: "Final stability check." },
+          { en: "Cranes stowed for sea." },
+        ],
+        bestPractices: [
+          { en: "Never apply a single uniform securing method across cargo of different natures." },
+        ],
+        commonMistakes: [
+          { en: "Applying the same lashing method to cargo types that need different treatment." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "manifest_confirmation",
+        phaseId: "pre_loading_planning",
+        from: "terminal", to: "bridge",
+        trigger: { en: "Cargo delivered to the quay for loading." },
+        content: { en: "Terminal/agent confirms cargo manifest details to the bridge; the Chief Officer treats this as a starting point, not a final plan." },
+        whyItMatters: { en: "Declared quantities and dimensions on the manifest often differ from what actually arrives at the quay — the initial plan has to stay genuinely provisional." },
+      },
+      {
+        id: "rigging_confirmation",
+        phaseId: "crane_rigging_setup",
+        from: "deck", to: "bridge",
+        trigger: { en: "Rigging reconfigured for a new cargo type." },
+        content: { en: "Bosun confirms the crane rigging and safe working load are correct for the specific cargo type about to be lifted." },
+        whyItMatters: { en: "A rigging configuration verified for one cargo type doesn't carry over safely to a different one — this confirmation has to happen every time the type changes." },
+      },
+      {
+        id: "placement_decision_communicated",
+        phaseId: "cargo_type_assessment_placement",
+        from: "bridge", to: "deck",
+        trigger: { en: "Chief Officer decides where a new cargo type will be stowed." },
+        content: { en: "Chief Officer communicates the placement decision and reasoning to the Bosun/crane operator before the lift begins." },
+        whyItMatters: { en: "The crew executing the lift needs to understand not just where to place the load, but why, so they can catch a problem the plan didn't anticipate." },
+      },
+      {
+        id: "crane_power_readiness",
+        phaseId: "crane_rigging_setup",
+        from: "engine", to: "deck",
+        trigger: { en: "Crane about to be used for a new lift." },
+        content: { en: "Chief Engineer confirms crane hydraulic/electric power is ready and stable before lifting begins." },
+        whyItMatters: { en: "An unstable power supply during a lift, with cargo suspended over the deck, is a far more dangerous moment to discover a problem than before it starts." },
+      },
+      {
+        id: "load_balance_confirmation",
+        phaseId: "lift_and_stow",
+        from: "deck", to: "deck",
+        trigger: { en: "Each individual lift about to begin." },
+        content: { en: "The crane operator confirms load and balance before every single lift, cargo by cargo, rather than assuming the previous lift's setup still applies." },
+        whyItMatters: { en: "Different cargo items, even of the same declared type, can have genuinely different weight and balance — treating each lift as its own check catches what a batch assumption would miss." },
+      },
+      {
+        id: "stability_check_status",
+        phaseId: "weight_distribution_verification",
+        from: "deck", to: "bridge",
+        trigger: { en: "Scheduled stability check during loading." },
+        content: { en: "Chief Officer reports the vessel's current stability/trim status to the Master at regular intervals throughout loading, not only at the end." },
+        whyItMatters: { en: "A stability problem building up gradually across a mixed cargo is far easier to correct mid-load than discovered only once loading is complete." },
+      },
+      {
+        id: "securing_complete_confirmation",
+        phaseId: "final_securing_departure_prep",
+        from: "deck", to: "bridge",
+        trigger: { en: "Final securing of all cargo types complete." },
+        content: { en: "Bosun confirms all cargo is secured — using the method appropriate to each type, not a uniform approach — before the Master clears the vessel for departure." },
+        whyItMatters: { en: "Heterogeneous cargo secured with a one-size-fits-all method is exactly the gap between \"looks secured\" and \"actually secured\" this operation has to close." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall authority — confirms the vessel's stability status throughout loading and gives final clearance for departure once all cargo is confirmed secured." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Owns the multi-cargo loading plan directly — assesses each new cargo type's compatibility with what's already stowed and decides its placement, adapting continuously rather than verifying a fixed plan." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "With the vessel alongside and no navigation to attach to during the port call, the OOW joins the deck-side loading team directly — the same departure from classic watchkeeping already established for in-port operations elsewhere in the catalog." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the crane and rigging team directly — reconfigures rigging for each cargo type, operates or oversees each individual lift, and confirms load/balance before every lift." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes rigging setup and lift support tasks under the Bosun's direction throughout loading." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Directs readiness of crane hydraulic/electric power throughout loading, confirming stability before each new lift sequence begins." },
+      },
+      {
+        rankId: "second_engineer",
+        identity: { en: "Hands-on operation and monitoring of crane power support systems, under the Chief Engineer's direction." },
+      },
+      {
+        rankId: "third_engineer",
+        identity: { en: "Present and on watch during the operation, observing procedure and system behavior without independent responsibility — the same observe-level role held across the catalog." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Confirms the vessel's stability status throughout loading." },
+          { en: "Gives final clearance for departure once all cargo is confirmed secured." },
+        ],
+        iMonitor: [
+          { en: "Overall progress and safety of the loading operation." },
+        ],
+        iReport: [
+          { en: "Reports loading completion and departure readiness to the company." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize departure before securing is confirmed complete for every cargo type aboard." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Assesses each new cargo type's compatibility with what's already stowed and decides its placement." },
+          { en: "Communicates placement decisions and reasoning to the crane team before each lift." },
+        ],
+        iMonitor: [
+          { en: "Stability/trim status throughout loading." },
+        ],
+        iReport: [
+          { en: "Reports stability status to the Master at regular intervals." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize a lift to begin before rigging is confirmed correct for that specific cargo type." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Supports the deck-side loading team throughout the port call." },
+        ],
+        iMonitor: [
+          { en: "Assigned deck tasks during loading." },
+        ],
+        iReport: [
+          { en: "Reports task status to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent placement or compatibility decisions." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Reconfigures crane rigging for each cargo type and operates or oversees each individual lift." },
+        ],
+        iMonitor: [
+          { en: "Load and balance before every lift, cargo by cargo." },
+        ],
+        iReport: [
+          { en: "Reports rigging readiness and lift status to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not proceed with a lift using rigging verified for a different cargo type." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes rigging setup and lift support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate rigging and deck conditions in their own work area." },
+        ],
+        iReport: [
+          { en: "Reports hazards or rigging issues to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize any change to the rigging or lift plan." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Directs readiness of crane hydraulic/electric power throughout loading." },
+        ],
+        iMonitor: [
+          { en: "Crane power system health throughout the operation." },
+        ],
+        iReport: [
+          { en: "Reports system readiness, and any fault, to the Chief Officer and Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize a lift to proceed without confirming power stability first." },
+        ],
+      },
+      second_engineer: {
+        iExecute: [
+          { en: "Hands-on operation and monitoring of crane power support systems, under the Chief Engineer's direction." },
+        ],
+        iMonitor: [
+          { en: "System parameters throughout loading." },
+        ],
+        iReport: [
+          { en: "Reports any abnormal reading to the Chief Engineer immediately." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize system shutdown or restart without the Chief Engineer's direction." },
+        ],
+      },
+      third_engineer: {
+        iMonitor: [
+          { en: "System behavior and procedure throughout the operation, building familiarity rather than carrying an assigned task." },
+        ],
+        iReport: [
+          { en: "Reports observations or questions to the Chief or Second Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently operate or adjust any system." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "general_cargo_loading_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the multi-cargo loading operation's phases in the correct order." },
+        items: [
+          { id: "plan", label: { en: "Pre-Loading Planning" } },
+          { id: "rig", label: { en: "Crane & Rigging Setup" } },
+          { id: "assess", label: { en: "Cargo Type Assessment & Placement" } },
+          { id: "lift", label: { en: "Lift & Stow" } },
+          { id: "stability", label: { en: "Weight Distribution Verification" } },
+          { id: "secure", label: { en: "Final Securing & Departure Prep" } },
+        ],
+        correctOrder: ["plan", "rig", "assess", "lift", "stability", "secure"],
+      },
+      {
+        type: "error_identification",
+        id: "general_cargo_rigging_reuse_shortcut",
+        targetRanks: ["bosun"],
+        scenario: { en: "A lift of crated machinery just went smoothly. The next cargo up is bagged goods, and the crew is eager to keep momentum going. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Proceed with the same rigging configuration used for the crates, since it just worked fine." }, isError: true, explanation: { en: "A rigging configuration verified for one cargo type doesn't carry over safely to a different one — crates and bagged goods have genuinely different load and handling characteristics." } },
+          { id: "b", label: { en: "Reconfigure the rigging appropriate to bagged goods before the next lift." }, isError: false, explanation: { en: "Correct — this reconfiguration is required every time the cargo type changes, not optional when momentum feels good." } },
+          { id: "c", label: { en: "Confirm the safe working load for the new configuration before lifting." }, isError: false, explanation: { en: "Correct — this confirmation is part of the same per-type discipline." } },
+          { id: "d", label: { en: "Report the rigging change to the Chief Officer before proceeding." }, isError: false, explanation: { en: "Correct — keeping the Chief Officer informed is part of the same discipline that governs placement decisions." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "general_cargo_pre_departure_gate",
+        targetRanks: ["master"],
+        scenario: { en: "Loading is complete and departure is being considered. Before clearing the vessel, review which readiness items are actually satisfied." },
+        items: [
+          { id: "all_secured", label: { en: "All cargo types secured using the method appropriate to each, not a uniform approach." }, isSatisfied: true },
+          { id: "stability_confirmed", label: { en: "Final stability/trim confirmed within safe limits." }, isSatisfied: true },
+          { id: "crane_stowed", label: { en: "Cranes stowed and secured for sea." }, isSatisfied: false },
+          { id: "manifest_reconciled", label: { en: "Loaded cargo reconciled against the manifest, including any discrepancies from the original declared figures." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "While supporting the deck team, the OOW notices a crate's dimensions look larger than what the manifest declared — not dramatically, but noticeably." },
+        mission: { en: "As OOW, decide whether this is worth reporting." },
+        expectedActions: [
+          { en: "Report the discrepancy to the Chief Officer promptly rather than assuming it's a minor measurement difference." },
+          { en: "Avoid making an independent judgment about whether the discrepancy matters." },
+        ],
+        why: [
+          { en: "A dimension discrepancy can affect both the placement decision and the rigging configuration — exactly the kind of information the Chief Officer needs before, not after, the lift." },
+        ],
+        commonMistakes: [
+          { en: "Deciding independently that a modest discrepancy isn't worth mentioning." },
+        ],
+        safetyPoints: [
+          { en: "The Chief Officer's placement decisions depend on accurate information about what's actually arriving, not just what the manifest said in advance." },
+        ],
+      },
+      {
+        situation: { en: "During a lift, the Second Engineer notices a brief, unusual reading on the crane's hydraulic pressure gauge — gone almost as quickly as it appeared, with the lift itself proceeding normally." },
+        mission: { en: "As Second Engineer, decide what to do with this observation." },
+        expectedActions: [
+          { en: "Report the reading to the Chief Engineer as soon as practical, even though the lift itself seemed unaffected." },
+          { en: "Continue watching closely for any recurrence on subsequent lifts." },
+        ],
+        why: [
+          { en: "A brief anomaly during otherwise normal operation is exactly the kind of thing worth flagging — the lift going fine doesn't make the reading less real." },
+        ],
+        commonMistakes: [
+          { en: "Dismissing the reading because the lift itself completed without incident." },
+        ],
+        safetyPoints: [
+          { en: "The Chief Engineer's monitoring of crane power health depends on the Second Engineer reporting what they actually see, not filtering it by whether anything visibly went wrong." },
+        ],
+      },
+      {
+        situation: { en: "With loading running behind schedule, the Chief Officer asks the Chief Engineer whether the power stability confirmation before each lift could be skipped for a few upcoming lifts to save time, given the crane has been running smoothly all day." },
+        mission: { en: "As Chief Engineer, decide how to respond." },
+        expectedActions: [
+          { en: "Decline to skip the confirmation, even given a full day of smooth operation and schedule pressure." },
+          { en: "Offer to make the confirmation as quick as possible without skipping it, if speed is the real concern." },
+        ],
+        why: [
+          { en: "A smooth day doesn't change what the confirmation is actually for — it verifies each specific upcoming lift, not the crane's reputation from earlier lifts." },
+        ],
+        commonMistakes: [
+          { en: "Agreeing to skip the confirmation because the equipment has been reliable so far today." },
+        ],
+        safetyPoints: [
+          { en: "Cargo suspended over the deck during a lift is exactly the wrong moment to discover a power problem the pre-lift confirmation exists to catch beforehand." },
+        ],
+      },
+      {
+        situation: { en: "Partway through loading, the Master notices the stability reports have shown a gradual, slight trend in one direction over the last several checks — nothing alarming yet, but a consistent direction rather than random variation." },
+        mission: { en: "As Master, decide how to handle the trend." },
+        expectedActions: [
+          { en: "Raise the trend with the Chief Officer now, rather than waiting to see if it resolves by the end of loading." },
+          { en: "Ask whether upcoming placement decisions can help correct the trend rather than continue it." },
+        ],
+        why: [
+          { en: "A consistent trend across several checks is a real signal, even if each individual reading looked unremarkable on its own." },
+        ],
+        commonMistakes: [
+          { en: "Waiting until loading is complete to address a trend that's been visible for several checks already." },
+        ],
+        safetyPoints: [
+          { en: "A stability trend is far easier to correct with placement decisions still ahead than after the cargo is fully loaded and secured." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "general_cargo_swinging_load_judgment",
+        title: { en: "More Movement Than Normal" },
+        seatRankId: "bosun",
+        root: {
+          id: "root",
+          situation: { en: "Mid-lift, a crated item begins swinging more than expected as it clears the rail — not clearly dangerous yet, but noticeably more movement than a normal lift." },
+          options: [
+            {
+              id: "continue_expecting_settle",
+              label: { en: "Continue the lift smoothly, expecting the swing to settle as it's lowered." },
+              consequence: { en: "The swing doesn't settle — it builds as the load continues moving, and the crate strikes the rail on its way down." },
+              feedback: { en: "Assuming a developing problem will resolve itself on its own is the same mistake this catalog keeps returning to under different names — a trend needs a response, not an optimistic assumption." },
+            },
+            {
+              id: "pause_reassess",
+              label: { en: "Pause the lift immediately, holding position, and reassess before continuing." },
+              isRecommended: true,
+              consequence: { en: "The load steadies somewhat once movement stops. The team has a moment to assess what's causing the swing before deciding how to proceed." },
+              feedback: { en: "Correct — pausing to reassess costs a little time but doesn't commit to either continuing or aborting before you actually know what's happening." },
+              next: {
+                id: "swing_reduced",
+                situation: { en: "The swinging has reduced but hasn't fully stopped. A crew member, aware of the quay traffic waiting behind this lift, asks whether it's alright to continue now." },
+                options: [
+                  {
+                    id: "wait_full_stop",
+                    label: { en: "Wait for the swing to fully stop before resuming, regardless of the time pressure." },
+                    isRecommended: true,
+                    consequence: { en: "The swing fully settles a short while later, and the lift resumes and completes cleanly." },
+                    feedback: { en: "Correct — \"reduced\" and \"stopped\" are different states, and only the second one is actually safe to resume on." },
+                  },
+                  {
+                    id: "resume_mostly_stopped",
+                    label: { en: "Resume the lift since the swing is much better than before, even if not completely still." },
+                    consequence: { en: "The residual swing picks back up as soon as the load starts moving again, right back to where the pause began." },
+                    feedback: { en: "\"Much better than before\" isn't the same as safe to proceed — this is the same trend-over-threshold lesson from elsewhere in this catalog, just easy to miss when the improvement itself feels reassuring." },
+                  },
+                  {
+                    id: "hand_steady",
+                    label: { en: "Have a crew member physically steady the load by hand while resuming the lift." },
+                    consequence: { en: "You refuse the suggestion outright — a hand anywhere near a suspended, moving load is never how this is done, whatever the time pressure." },
+                    feedback: { en: "There is no version of steadying a suspended load by hand that's safe — the load stays clear of anyone until it's fully controlled, full stop." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "abandon_setdown",
+              label: { en: "Set the load back down quickly onto where it just came from, abandoning the lift." },
+              consequence: { en: "The load is set down safely, but the lift now has to be restarted entirely, costing far more time than a brief pause would have." },
+              feedback: { en: "Not unsafe, but an overcorrection — a pause-and-reassess was available and would have addressed the same concern without abandoning progress already made." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Per-cargo, per-lift discipline" },
+        bestPractices: [
+          { en: "Reconfigure and reconfirm rigging, load, and balance for every cargo type and every individual lift — never carry forward an assumption from the previous one, however smoothly it went." },
+        ],
+        commonErrors: [
+          { en: "Reusing a rigging configuration or skipping a confirmation because the last lift worked fine." },
+        ],
+      },
+      {
+        theme: { en: "Report discrepancies and anomalies promptly" },
+        bestPractices: [
+          { en: "Report a manifest discrepancy, a brief equipment anomaly, or a stability trend as soon as it's noticed, even when nothing has visibly gone wrong yet." },
+        ],
+        commonErrors: [
+          { en: "Deciding independently that a discrepancy or anomaly is too minor to mention." },
+        ],
+      },
+      {
+        theme: { en: "Pause and reassess, not continue-and-hope or abandon-and-restart" },
+        bestPractices: [
+          { en: "Pause a developing problem to assess it, rather than assuming it will resolve on its own or reacting by abandoning progress already made." },
+          { en: "Wait for a genuine resolution (fully stopped, fully confirmed), not a partial improvement that merely feels reassuring." },
+        ],
+        commonErrors: [
+          { en: "Assuming a developing issue will settle itself, or overcorrecting to abandoning the action entirely when a brief pause would have sufficed." },
+        ],
+      },
+      {
+        theme: { en: "Stability is a running check, not an end-of-load verification" },
+        bestPractices: [
+          { en: "Check and report stability/trim at regular intervals throughout loading, and use remaining placement decisions to correct a developing trend." },
+        ],
+        commonErrors: [
+          { en: "Deferring stability concerns until loading is complete, when correction is far harder." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
