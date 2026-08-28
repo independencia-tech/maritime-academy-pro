@@ -9341,6 +9341,606 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  fpso_sts_hose_rupture_emergency_disconnect: {
+    operationId: "fpso_sts_hose_rupture_emergency_disconnect",
+    vesselTypeId: "fpso",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "FPSO — STS Hose Rupture & Emergency Disconnect" },
+    introduction: {
+      en: "Partway through cargo transfer, the floating hose connecting the FPSO to the shuttle tanker fails — a rupture or a connection-fitting failure — releasing oil under pressure between the two vessels. This directly interrupts op1's own Cargo Transfer phase. Unlike LPG's containment failure (an internal valve/fitting on the vessel's own system) or LNG's leak (an internal containment escape), this failure is at the interface between two independently-commanded vessels, not internal to either one — the connection itself, not a system either vessel fully owns. The immediate risks are threefold: the oil release itself (marine pollution obligation), the physical hazard of a ruptured pressurized hose (whip/spray injury risk to anyone nearby), and a secondary fire/explosion risk if hydrocarbon vapor from the release finds an ignition source. The response has to happen in two places at once and stay coordinated across both: Process Control's emergency pump shutdown on the FPSO side, and the shuttle tanker's own emergency response on theirs, converging on a joint decision — controlled emergency disconnection of hose and, if the situation escalates, the hawser itself.",
+    },
+    objectives: [
+      { en: "Describe the sequence of detecting, containing, and responding to a hose rupture during STS transfer, through to emergency disconnection." },
+      { en: "Explain why this failure is structurally different from LNG's containment leak and LPG's containment failure — a failure at the interface between two vessels, not an internal system failure either one fully owns." },
+      { en: "Identify the immediate actions required (pump shutdown, spill response, injury-risk awareness) and who is responsible for each." },
+      { en: "Recognize when the situation requires escalating from hose disconnection alone to full emergency separation of the two vessels." },
+      { en: "Recognize the marine pollution notification obligation this event triggers, and to whom." },
+      { en: "Recognize correct versus incorrect prioritization when both vessels are responding simultaneously and need to stay coordinated rather than acting independently." },
+    ],
+    context: {
+      en: "Interrupts op1's own Cargo Transfer phase directly. Checked explicitly against a collision-based alternative angle and against LNG/LPG's containment-failure operations — genuinely distinct in mechanism (an interface failure between two vessels, not an internal system failure) and in response shape (requires two independently-commanded crews converging on one joint decision, not one vessel's crew acting alone). No new CommunicationParty needed: Process Control (pump shutdown), the shuttle tanker via the existing \"assisted_vessel\", and marine pollution notification via the existing \"shore_authorities\" (the same standing regulatory-notification concept RoRo's underway emergency established, not a commercial/task relationship) — all route through parties already in the schema. Carries forward op1's 8-rank roster unchanged. Chief Engineer's responsibilityLevel was checked explicitly rather than defaulting to the established emergency archetype: stays \"support\", not elevated to \"lead\" — the same reasoning category as Chemical Tanker op2 (the failure's actual domain, the hose/hawser interface and cross-vessel coordination, belongs to Deck, not Engine), a third instance of this exception type rather than a new one.",
+    },
+
+    operationPhaseOrder: [
+      "rupture_detection_alert",
+      ["emergency_pump_shutdown", "spill_hazard_response", "shuttle_tanker_coordination"],
+      "escalation_assessment",
+      "emergency_disconnection",
+      "standdown_notification_resumption_decision",
+    ],
+    operationPhases: {
+      rupture_detection_alert: {
+        id: "rupture_detection_alert",
+        title: { en: "Rupture Detection & Alert" },
+        overview: { en: "The first sign — pressure drop or visual observation — is enough to raise the alert and trigger all three concurrent response tracks at once." },
+        steps: [
+          { en: "Abnormal pressure drop or visible oil release detected, whether by the deck transfer watch or by Process Control on its instruments." },
+          { en: "Immediate general alert raised to the Chief Officer and the Master." },
+          { en: "The alert triggers all three concurrent response tracks simultaneously." },
+        ],
+        bestPractices: [
+          { en: "Treat the first sign — pressure drop or visual observation — as sufficient to raise the alert, without waiting for confirmation of both." },
+        ],
+        commonMistakes: [
+          { en: "Waiting for visual confirmation before acting on an already-abnormal pressure drop, losing critical time." },
+        ],
+      },
+      emergency_pump_shutdown: {
+        id: "emergency_pump_shutdown",
+        title: { en: "Emergency Pump Shutdown" },
+        overview: { en: "Process Control's emergency shutdown, confirmed to the Chief Officer, is the baseline every other response track depends on." },
+        steps: [
+          { en: "Emergency shutdown (ESD) of the transfer pumps on the FPSO side triggered immediately on the alert." },
+          { en: "Process Control confirms to the Chief Officer that flow is at zero." },
+        ],
+        bestPractices: [
+          { en: "The shutdown is triggered as a reflex on the alert, not a decision awaiting the Chief Officer's authorization first." },
+        ],
+        commonMistakes: [
+          { en: "Delaying the shutdown to seek confirmation that it's actually needed." },
+        ],
+      },
+      spill_hazard_response: {
+        id: "spill_hazard_response",
+        title: { en: "Spill & Hazard Response" },
+        overview: { en: "Personnel safety takes priority over spill containment — nobody approaches until the hose is confirmed stable." },
+        steps: [
+          { en: "Immediate assessment of the physical hazard: hose whip risk, spray." },
+          { en: "Personnel moved clear of the hazard zone." },
+          { en: "Available spill containment measures activated." },
+        ],
+        bestPractices: [
+          { en: "Personnel safety comes before spill containment — nobody approaches until the hose is confirmed stable." },
+        ],
+        commonMistakes: [
+          { en: "Prioritizing spill containment actions before personnel are confirmed clear." },
+        ],
+      },
+      shuttle_tanker_coordination: {
+        id: "shuttle_tanker_coordination",
+        title: { en: "Shuttle Tanker Coordination" },
+        overview: { en: "An explicit alert to the shuttle tanker is required even if the rupture seems visible from both sides." },
+        steps: [
+          { en: "Immediate alert sent to the shuttle tanker's bridge." },
+          { en: "Confirmation sought that their own emergency response is engaged: reception stopped, personnel clear on their side." },
+        ],
+        bestPractices: [
+          { en: "Never assume the shuttle tanker has already noticed the incident, even when the rupture appears visible from both vessels." },
+        ],
+        commonMistakes: [
+          { en: "Delaying the alert on the assumption the other bridge has already seen it." },
+        ],
+      },
+      escalation_assessment: {
+        id: "escalation_assessment",
+        title: { en: "Escalation Assessment" },
+        overview: { en: "A real decision, not a formality: hose-only disconnection or full vessel separation, made jointly once pumps are stopped and personnel are clear." },
+        steps: [
+          { en: "Once pumps are stopped and personnel are clear, the Chief Officer and Master jointly assess whether the situation is manageable by hose disconnection alone, or whether the risk (fire, structural damage extending to the hawser) requires full separation of the two vessels." },
+          { en: "The assessment and resulting decision are coordinated with the shuttle tanker's own bridge." },
+        ],
+        bestPractices: [
+          { en: "Treat this as a genuine decision based on what's actually observed, not an automatic escalation out of caution." },
+        ],
+        commonMistakes: [
+          { en: "Escalating straight to full separation by default, without evaluating whether hose-only disconnection is actually sufficient." },
+        ],
+      },
+      emergency_disconnection: {
+        id: "emergency_disconnection",
+        title: { en: "Emergency Disconnection" },
+        overview: { en: "Even in an emergency, disconnection stays a controlled maneuver, coordinated between both vessels." },
+        steps: [
+          { en: "Emergency hose disconnection executed per established procedure." },
+          { en: "If escalation assessment concluded full separation is needed, controlled hawser release follows." },
+        ],
+        bestPractices: [
+          { en: "Even under emergency conditions, disconnection remains a controlled maneuver, not a rushed release that creates its own risk." },
+        ],
+        commonMistakes: [
+          { en: "Treating urgency as license to skip the controlled release sequence." },
+        ],
+      },
+      standdown_notification_resumption_decision: {
+        id: "standdown_notification_resumption_decision",
+        title: { en: "Stand-down, Notification & Resumption Decision" },
+        overview: { en: "Notification is sent as soon as a release is confirmed; resumption is a joint decision, not a unilateral one." },
+        steps: [
+          { en: "Marine pollution notification sent to the relevant authorities if a release occurred." },
+          { en: "Consolidated incident report prepared." },
+          { en: "Joint decision made — both vessels — on resuming the transfer after inspection and repair, or standing down pending further inspection." },
+        ],
+        bestPractices: [
+          { en: "The pollution notification is sent as soon as a release is confirmed, not once its full extent is assessed." },
+        ],
+        commonMistakes: [
+          { en: "Delaying notification while gathering a more complete picture of the release." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "rupture_alert",
+        phaseId: "rupture_detection_alert",
+        from: "deck", to: "bridge",
+        trigger: { en: "Abnormal pressure drop or visible oil release observed at the hose connection." },
+        content: { en: "Deck reports the rupture immediately to the bridge — the first sign, pressure drop or visual, is treated as sufficient to raise the alert, not just a confirmed combination of both." },
+        whyItMatters: { en: "This single report is what triggers all three concurrent response tracks at once — any delay here delays everything downstream." },
+      },
+      {
+        id: "esd_confirmation",
+        phaseId: "emergency_pump_shutdown",
+        from: "process_control", to: "deck",
+        trigger: { en: "Emergency shutdown triggered on the alert, before any authorization request." },
+        content: { en: "Process Control confirms to the Chief Officer that pumps are stopped and flow is at zero." },
+        whyItMatters: { en: "Every other response track depends on flow actually having stopped — this confirmation is what lets the rest of the response proceed with a known baseline." },
+      },
+      {
+        id: "hazard_clear_report",
+        phaseId: "spill_hazard_response",
+        from: "deck", to: "bridge",
+        trigger: { en: "Personnel moved clear of the immediate hazard zone, spill containment measures activated." },
+        content: { en: "Bosun reports the deck team's status to the bridge: personnel accounted for and clear, containment measures underway." },
+        whyItMatters: { en: "The bridge can't assess the overall situation without knowing whether the immediate physical hazard to personnel is actually under control." },
+      },
+      {
+        id: "shuttle_emergency_alert",
+        phaseId: "shuttle_tanker_coordination",
+        from: "bridge", to: "assisted_vessel",
+        trigger: { en: "Rupture confirmed on the FPSO side." },
+        content: { en: "FPSO bridge alerts the shuttle tanker's bridge immediately, without assuming the rupture is already obvious from their side." },
+        whyItMatters: { en: "An explicit alert is required even when the failure seems visible from both vessels — assuming the other side has already noticed is exactly the kind of unilateral assumption this operation's architecture is built to avoid." },
+      },
+      {
+        id: "shuttle_response_confirmation",
+        phaseId: "shuttle_tanker_coordination",
+        from: "assisted_vessel", to: "bridge",
+        trigger: { en: "Shuttle tanker's own emergency response engaged." },
+        content: { en: "Shuttle tanker confirms their own reception has stopped and their personnel are clear." },
+        whyItMatters: { en: "The FPSO's own response is only half the picture — the operation isn't stabilized until both sides have confirmed." },
+      },
+      {
+        id: "joint_escalation_input",
+        phaseId: "escalation_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Pumps stopped, personnel clear, initial damage visible." },
+        content: { en: "Chief Officer reports the observed condition of the hose and connection to the Master, as input to the escalation decision." },
+        whyItMatters: { en: "The Master's decision on hose-only disconnection versus full separation depends on an accurate read of what's actually been observed, not an assumption of the worst case by default." },
+      },
+      {
+        id: "joint_escalation_decision",
+        phaseId: "escalation_assessment",
+        from: "bridge", to: "assisted_vessel",
+        trigger: { en: "FPSO-side assessment complete." },
+        content: { en: "FPSO bridge and shuttle tanker bridge jointly confirm whether the response proceeds as hose disconnection alone or full vessel separation." },
+        whyItMatters: { en: "This decision affects both vessels equally — neither can decide it unilaterally, the same discipline as every other joint call in this operation." },
+      },
+      {
+        id: "disconnection_execution_coordination",
+        phaseId: "emergency_disconnection",
+        from: "bridge", to: "assisted_vessel",
+        trigger: { en: "Escalation decision confirmed." },
+        content: { en: "FPSO bridge coordinates the disconnection sequence with the shuttle tanker's bridge so both sides execute in step, not independently." },
+        whyItMatters: { en: "An uncoordinated disconnection attempt from either side risks the same rough, higher-risk outcome an uncoordinated stop already illustrated in op1." },
+      },
+      {
+        id: "pollution_notification",
+        phaseId: "standdown_notification_resumption_decision",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "A release is confirmed to have occurred." },
+        content: { en: "FPSO bridge notifies the relevant authorities of the marine pollution incident as soon as a release is confirmed, not once its full extent is known." },
+        whyItMatters: { en: "This is a standing regulatory obligation, not a discretionary judgment call — waiting for a complete assessment before notifying is itself the error." },
+      },
+      {
+        id: "resumption_decision",
+        phaseId: "standdown_notification_resumption_decision",
+        from: "bridge", to: "assisted_vessel",
+        trigger: { en: "Incident report consolidated." },
+        content: { en: "FPSO and shuttle tanker bridges jointly decide whether to resume the transfer after inspection and repair, or stand down pending further inspection." },
+        whyItMatters: { en: "Resuming is a joint decision like every other major call in this operation — neither vessel restarts unilaterally." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command of the emergency response — makes the escalation decision (hose-only disconnection versus full vessel separation) and the eventual resumption-or-standdown decision, coordinating each as a peer with the shuttle tanker's own Master rather than issuing unilateral orders." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "On-scene technical lead — coordinates the hazard and spill response directly, assesses the hose and connection's actual condition, and feeds that assessment to the Master as the basis for the escalation decision." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Directs readiness of the hydraulic systems that support emergency disconnection, standing ready to support a hawser release if the situation escalates to full separation." },
+      },
+      {
+        rankId: "second_engineer",
+        identity: { en: "Hands-on execution of any hydraulic action needed for emergency disconnection, under the Chief Engineer's direction." },
+      },
+      {
+        rankId: "third_engineer",
+        identity: { en: "Present and observing throughout the emergency response, without an assigned task — the same observe-level role carried over from op1, building familiarity with how the emergency archetype plays out." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team's immediate hazard response — clearing personnel from the danger zone and activating spill containment measures." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes the hazard response tasks — personnel clearance, containment deployment — under the Bosun's direction." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "Supports bridge communications throughout the emergency — relaying the alert to the shuttle tanker, logging the incident timeline — an extension of the same communications-support role held in op1." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      chief_engineer: "support",
+      second_engineer: "perform",
+      third_engineer: "observe",
+      bosun: "perform",
+      ab: "perform",
+      oow: "perform",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Makes the escalation decision — hose-only disconnection or full vessel separation." },
+          { en: "Makes the eventual resumption-or-standdown decision jointly with the shuttle tanker's Master." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency response status across both vessels." },
+        ],
+        iReport: [
+          { en: "Reports the incident and escalation decision to the company; ensures marine pollution notification is sent." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize resumption before joint agreement is reached with the shuttle tanker." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Coordinates the on-scene hazard and spill response directly." },
+          { en: "Executes the emergency disconnection sequence once the escalation decision is made." },
+        ],
+        iMonitor: [
+          { en: "Hazard response status reported by the Bosun; the hose and connection's physical condition." },
+        ],
+        iReport: [
+          { en: "Reports the assessment to the Master as the basis for the escalation decision." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not unilaterally decide the escalation level — that call belongs to the Master, based on the assessment provided." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Directs readiness of the hydraulic systems supporting a potential emergency hawser release." },
+        ],
+        iMonitor: [
+          { en: "Hydraulic system readiness throughout the response." },
+        ],
+        iReport: [
+          { en: "Reports readiness status to the Chief Officer and Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not direct the hazard or spill response itself — this emergency's domain sits with Deck, not Engine." },
+        ],
+      },
+      second_engineer: {
+        iExecute: [
+          { en: "Hands-on hydraulic action if emergency disconnection requires it, under the Chief Engineer's direction." },
+        ],
+        iMonitor: [
+          { en: "System parameters during standby and, if required, execution." },
+        ],
+        iReport: [
+          { en: "Reports to the Chief Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not act independently of the Chief Engineer's direction." },
+        ],
+      },
+      third_engineer: {
+        iMonitor: [
+          { en: "Observes the emergency response throughout." },
+        ],
+        iReport: [
+          { en: "Reports observations to the Chief or Second Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently act during the emergency." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads personnel clearance from the hazard zone and activation of spill containment measures." },
+        ],
+        iMonitor: [
+          { en: "Hazard zone status and personnel accounted for." },
+        ],
+        iReport: [
+          { en: "Reports hazard status to the Chief Officer and bridge." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize personnel back into the hazard zone without bridge or Chief Officer confirmation." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes clearance and containment tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate work area conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not re-enter a cleared zone independently." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Relays alerts and communications with the shuttle tanker; logs the incident timeline." },
+        ],
+        iMonitor: [
+          { en: "Communication status throughout the emergency." },
+        ],
+        iReport: [
+          { en: "Reports communication status to the Master and Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently decide the content of the notification sent to shore authorities — that stays the Master's call." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "fpso_hose_rupture_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the hose rupture emergency response's phases in the correct order." },
+        items: [
+          { id: "detect", label: { en: "Rupture Detection & Alert" } },
+          { id: "esd", label: { en: "Emergency Pump Shutdown" } },
+          { id: "hazard", label: { en: "Spill & Hazard Response" } },
+          { id: "shuttle", label: { en: "Shuttle Tanker Coordination" } },
+          { id: "escalate", label: { en: "Escalation Assessment" } },
+          { id: "disconnect", label: { en: "Emergency Disconnection" } },
+          { id: "standdown", label: { en: "Stand-down, Notification & Resumption Decision" } },
+        ],
+        correctOrder: ["detect", ["esd", "hazard", "shuttle"], "escalate", "disconnect", "standdown"],
+      },
+      {
+        type: "error_identification",
+        id: "fpso_hose_rupture_disconnect_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "Pumps are stopped, personnel are clear, and the hose damage looks limited to the connection fitting. The Master hasn't yet made the escalation call, but the shuttle tanker's bridge is pushing to move quickly. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Begin the disconnection sequence immediately to satisfy the shuttle tanker's urgency, before the Master's escalation decision is made." }, isError: true, explanation: { en: "The escalation decision — hose-only or full separation — belongs to the Master, based on the Chief Officer's own assessment. Acting before that decision skips the exact call this operation's architecture depends on, even under schedule pressure from the other vessel." } },
+          { id: "b", label: { en: "Report the observed condition to the Master promptly so the escalation decision can be made without unnecessary delay." }, isError: false, explanation: { en: "Correct — a fast, accurate report is how the decision gets made quickly and correctly, not by skipping it." } },
+          { id: "c", label: { en: "Communicate to the shuttle tanker that the assessment is in progress rather than promising an immediate disconnection." }, isError: false, explanation: { en: "Correct — managing the other vessel's expectations honestly is better than a rushed, uncoordinated action." } },
+          { id: "d", label: { en: "Confirm hazard-zone personnel clearance is still holding while waiting on the Master's decision." }, isError: false, explanation: { en: "Correct — the wait for a decision doesn't mean pausing other genuinely relevant monitoring." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "fpso_hose_rupture_resumption_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The incident is contained and both vessels have separated the hose. Before deciding whether to resume the transfer, review which readiness items are actually satisfied." },
+        items: [
+          { id: "pumps_confirmed", label: { en: "Pump shutdown confirmed by Process Control." }, isSatisfied: true },
+          { id: "personnel_clear", label: { en: "Personnel accounted for and clear of the hazard zone." }, isSatisfied: true },
+          { id: "pollution_notified", label: { en: "Marine pollution notification sent to the relevant authorities." }, isSatisfied: true },
+          { id: "incident_report", label: { en: "Incident report consolidated between both vessels." }, isSatisfied: true },
+          { id: "hose_inspected", label: { en: "Hose and connection fitting inspected and confirmed fit for reuse or replaced." }, isSatisfied: false },
+          { id: "joint_agreement", label: { en: "Joint resumption agreement reached with the shuttle tanker's Master." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Spill containment measures are in place and the immediate area looks stable, but the Bosun isn't fully certain the hazard is over — no clear all-clear signal has been given yet." },
+        mission: { en: "As Bosun, decide whether to let personnel resume normal work near the area." },
+        expectedActions: [
+          { en: "Keep the exclusion zone in place until an explicit all-clear is confirmed, not just an absence of visible danger." },
+          { en: "Report the current, stable-but-unconfirmed status to the bridge rather than deciding independently." },
+        ],
+        why: [
+          { en: "\"Looks stable\" and \"confirmed clear\" are different things — the Bosun's own iDoNotAuthorize boundary exists exactly to keep that distinction from being blurred under pressure to get back to normal." },
+        ],
+        commonMistakes: [
+          { en: "Treating the absence of new problems as equivalent to an actual all-clear." },
+        ],
+        safetyPoints: [
+          { en: "Re-authorizing the zone is the bridge's call, informed by the Bosun's report — not a judgment the Bosun makes alone in the moment." },
+        ],
+      },
+      {
+        situation: { en: "During the emergency, someone on deck — under pressure and looking for direction — asks the Chief Engineer to take charge of the hazard response, since Engine has the most readily available hands at that moment." },
+        mission: { en: "As Chief Engineer, decide how to respond to this request." },
+        expectedActions: [
+          { en: "Decline to take charge of the hazard response itself — that domain belongs to the Chief Officer and Bosun." },
+          { en: "Offer Engine's actual support role clearly: readiness for hydraulic disconnection assistance, and hands if genuinely needed under Deck's direction." },
+        ],
+        why: [
+          { en: "Available hands in the moment isn't the same as domain ownership — this operation's own architecture placed this response with Deck for a real reason, not by accident." },
+        ],
+        commonMistakes: [
+          { en: "Stepping into a leadership role during a chaotic moment simply because someone asked and it would resolve the immediate uncertainty." },
+        ],
+        safetyPoints: [
+          { en: "A well-intentioned overstep during an emergency can create confusion about who's actually directing the response, which is more dangerous than a moment of uncertainty about who to ask." },
+        ],
+      },
+      {
+        situation: { en: "A release has occurred and the Master has directed that pollution authorities be notified. The OOW is unsure exactly how much detail to include, since the full extent of the spill isn't yet known." },
+        mission: { en: "As OOW, decide how to handle drafting the notification." },
+        expectedActions: [
+          { en: "Send the notification promptly with what is currently known, rather than delaying it to gather a more complete picture." },
+          { en: "Confirm the notification's content with the Master before sending, since the decision on what to report stays with the Master." },
+        ],
+        why: [
+          { en: "The notification obligation triggers on confirmation of a release, not on a complete assessment — delaying to be thorough is itself the mistake here." },
+        ],
+        commonMistakes: [
+          { en: "Waiting for a fuller picture before sending, out of a reasonable-seeming desire to report something more complete." },
+        ],
+        safetyPoints: [
+          { en: "A prompt, partial notification followed by updates is far better practice than a complete but late one." },
+        ],
+      },
+      {
+        situation: { en: "During the escalation assessment, the shuttle tanker's Master proposes proceeding straight to full separation, while the FPSO's own assessment suggests hose-only disconnection may be sufficient." },
+        mission: { en: "As Master, decide how to handle the disagreement." },
+        expectedActions: [
+          { en: "Share the FPSO's own assessment and reasoning clearly, rather than simply deferring or insisting." },
+          { en: "Treat this as a joint decision to work through together, not a contest of authority between the two vessels." },
+        ],
+        why: [
+          { en: "Two independently-commanded vessels means neither Master's read is automatically correct — the decision has to be reached together, informed by both vessels' own observations." },
+        ],
+        commonMistakes: [
+          { en: "Either unilaterally overriding the shuttle tanker's concern, or simply deferring to it without sharing the FPSO's own relevant assessment." },
+        ],
+        safetyPoints: [
+          { en: "When in doubt between two reasonable readings, the more cautious option is defensible — but it should be a genuinely joint conclusion, not one side simply yielding." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "fpso_hose_rupture_assessment_honesty",
+        title: { en: "What to Report" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "Pumps are stopped and personnel are clear. From a safe vantage point, you assess the hose and connection: the damage looks limited to the connection fitting. But there's also a faint sheen and smell near a second point on the hose, not yet confirmed as an active leak. The shuttle tanker is waiting, and the weather window that started this transfer is closing. The Master needs your assessment now to make the escalation call." },
+          options: [
+            {
+              id: "report_partial",
+              label: { en: "Report the damage as limited to the connection fitting and recommend hose-only disconnection — the second indication isn't confirmed, so leave it out for now." },
+              consequence: { en: "The Master makes the escalation call based on your report. Partway through the hose-only disconnection, the second point turns out to be an active drip after all — not severe, but something the Master would have wanted to know about before deciding." },
+              feedback: { en: "Unconfirmed isn't the same as irrelevant. The Master's decision depends on a complete picture, including genuine uncertainty — leaving it out because it wasn't confirmed yet is the same omission error this operation's architecture is built to catch." },
+            },
+            {
+              id: "report_full",
+              label: { en: "Report the full picture, including the unconfirmed second indication, and recommend a closer look before finalizing the call." },
+              isRecommended: true,
+              consequence: { en: "The Master agrees the extra minute is worth it and asks you to check the second point before the escalation decision is finalized." },
+              feedback: { en: "Correct — a complete report, uncertainty included, is what lets the Master actually make an informed decision instead of a confident-sounding but incomplete one." },
+              next: {
+                id: "closer_look",
+                situation: { en: "You get a closer look. The second point turns out to be a minor residual drip — most likely draining from the hose now that pumping has stopped, not an active second failure point. You can't be completely certain without more time you don't really have." },
+                options: [
+                  {
+                    id: "proportionate_recommendation",
+                    label: { en: "Recommend hose-only disconnection, noting the residual drip is most likely benign but should be watched during the disconnection itself." },
+                    isRecommended: true,
+                    consequence: { en: "The Master proceeds with hose-only disconnection, with the drip specifically monitored throughout — it stays exactly what it appeared to be." },
+                    feedback: { en: "This is the proportionate call: your assessment supports it, and flagging the residual drip for monitoring covers the remaining uncertainty without overreacting to it." },
+                  },
+                  {
+                    id: "overcautious_escalate",
+                    label: { en: "Recommend full separation anyway, just to be safe, despite the assessment pointing toward hose-only." },
+                    consequence: { en: "Full separation proceeds — safe, but it costs far more time and disruption than the situation, as you yourself assessed it, actually called for." },
+                    feedback: { en: "The whole point of taking the closer look was to inform the decision — recommending against your own assessment out of caution defeats the purpose of having done the work." },
+                  },
+                  {
+                    id: "omit_again",
+                    label: { en: "Recommend hose-only disconnection, but don't mention the residual drip at all now that it looks benign." },
+                    consequence: { en: "Hose-only disconnection proceeds without anyone watching for the drip specifically — it turns out to be benign, this time, but nobody was actually monitoring for the possibility that it wasn't." },
+                    feedback: { en: "The same omission mistake as before, just with a reassuring-sounding reason attached. \"Probably nothing\" is exactly the kind of detail that should be reported and monitored, not quietly dropped." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "report_worst_case",
+              label: { en: "Recommend full separation immediately, without checking the second indication first, since erring cautious feels safer." },
+              consequence: { en: "Full separation proceeds. Afterward, inspection confirms the second point genuinely was just a residual drip — the more disruptive response wasn't actually necessary, and a two-minute closer look would have shown that." },
+              feedback: { en: "Caution isn't the same as a grounded assessment. Recommending the most drastic option without taking the short time available to actually check skips the assessment work this decision depends on." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Complete reporting over confident-sounding reporting" },
+        bestPractices: [
+          { en: "Report genuinely relevant information even when it's unconfirmed — an uncertain observation flagged as such is still useful; the same observation quietly dropped is not." },
+          { en: "Let a proportionate assessment inform the recommendation, rather than defaulting to the most cautious option without taking the time to actually check." },
+        ],
+        commonErrors: [
+          { en: "Omitting an unconfirmed detail because it isn't fully verified yet, rather than reporting it with its actual level of certainty." },
+          { en: "Recommending the most drastic response as a default when a short, available check would have grounded the recommendation instead." },
+        ],
+      },
+      {
+        theme: { en: "Domain boundaries hold under pressure" },
+        bestPractices: [
+          { en: "Offer support within one's own actual domain during a crisis, rather than stepping into another rank's decision-making because the moment feels urgent." },
+          { en: "Recognize that available hands in the moment is not the same thing as domain ownership." },
+        ],
+        commonErrors: [
+          { en: "Taking charge of a response outside one's own domain because someone asked and it would resolve immediate uncertainty." },
+        ],
+      },
+      {
+        theme: { en: "Joint decisions across two vessels, again" },
+        bestPractices: [
+          { en: "Treat the escalation and resumption decisions as genuinely joint calls between two independently-commanded vessels, not a contest of whose assessment wins." },
+          { en: "Share reasoning, not just conclusions, when the two vessels' bridges disagree." },
+        ],
+        commonErrors: [
+          { en: "Either overriding the other vessel's concern unilaterally, or deferring to it without contributing one's own genuinely relevant assessment." },
+        ],
+      },
+      {
+        theme: { en: "Regulatory notification is not discretionary" },
+        bestPractices: [
+          { en: "Send the pollution notification as soon as a release is confirmed, with an update to follow as the picture becomes clearer." },
+        ],
+        commonErrors: [
+          { en: "Delaying notification to first gather a more complete assessment of the release's extent." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
