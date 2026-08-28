@@ -11599,6 +11599,486 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  fishing_vessel_gear_induced_mob: {
+    operationId: "fishing_vessel_gear_induced_mob",
+    vesselTypeId: "fishing_vessel",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Fishing Vessel — Gear-Induced Man Overboard During Haul" },
+    introduction: {
+      en: "During the haul, a crew member becomes caught in the net or warp and is pulled overboard as the winch continues retrieving — not a slip or a fall, but an entanglement that drags a person into the water. This directly interrupts op1's own Haul Commencement/Net Aboard sequence, and extends the entanglement hazard op1 already covers into its worst outcome. This is a structurally different emergency from a generic man-overboard: the person in the water is likely still attached to, or immediately alongside, gear that's still under the winch's control, meaning the very first action — stopping the winch — has to happen before any recovery maneuver begins, and recovery itself has to account for gear in the water near the person, not just a swimmer to retrieve. On a vessel with only four crew, the response also has real, unavoidable constraints: there's no large crew to spare a dedicated lookout, a rescue boat crew, and full deck operations simultaneously — the same small team has to cover all of it, in sequence and by priority.",
+    },
+    objectives: [
+      { en: "Describe the sequence of responding to a gear-induced man-overboard: emergency stop, alarm, recovery, accounting for entangled gear near the person in the water." },
+      { en: "Explain why this emergency is structurally different from a generic man-overboard — the person may still be attached to or near live gear, and the winch must be stopped before any recovery maneuver begins." },
+      { en: "Identify how a four-person crew sequences and prioritizes MOB response actions that a larger crew could otherwise run in parallel." },
+      { en: "Recognize the immediate actions required and who is responsible for each, given the small crew." },
+      { en: "Recognize correct versus incorrect prioritization between stopping the winch, raising the alarm, and beginning recovery." },
+    ],
+    context: {
+      en: "Interrupts op1's own Haul Commencement/Net Aboard sequence directly, extending its entanglement hazard into a worst-case outcome. Checked explicitly against MAP's existing generic MOB content (LessonSauvetage.tsx) — genuinely distinct, the same differentiation pattern used for AHTS against LessonSafetyS4 and OSV against LessonSauvetage: this module covers the fishing-specific mechanism (gear-induced, not a slip or fall) and its specific first action (stop the winch before any recovery maneuver), not generic MOB search-and-recovery procedure, which stays out of scope. Carries forward op1's 4-rank roster unchanged. Given the small crew, responsibilityLevels compress relative to a larger-crew emergency, checked explicitly at Part 5 rather than assumed: Chief Engineer elevates to \"lead\" (the winch stop is the literal gate action the whole response depends on), producing this catalog's third simultaneous three-way lead (after FPSO op2 and Research Vessel op2). The AB, as the person pulled overboard, is represented at \"support\" with a deliberately sparse responsibilityMatrix — the first case in the catalog where a RankId crew member, not an external party, is the one the emergency is happening to rather than one responding to it.",
+    },
+
+    operationPhaseOrder: [
+      "mob_alert_winch_stop",
+      ["gear_securing", "vessel_maneuvering_alarm", "recovery_preparation"],
+      "approach_assessment",
+      "recovery",
+      "post_recovery_care_standdown",
+    ],
+    operationPhases: {
+      mob_alert_winch_stop: {
+        id: "mob_alert_winch_stop",
+        title: { en: "MOB Alert & Winch Stop" },
+        overview: { en: "The winch stop precedes absolutely every other action — the same lesson from op1's entanglement material, applied here to the gravest possible outcome." },
+        steps: [
+          { en: "Immediate \"man overboard\" call the moment the entanglement is seen pulling the crew member in." },
+          { en: "Emergency winch stop triggered without delay, before any other action." },
+        ],
+        bestPractices: [
+          { en: "The winch stop precedes absolutely every other action, including any move toward the rail." },
+        ],
+        commonMistakes: [
+          { en: "Rushing toward the rail before the winch is stopped." },
+        ],
+      },
+      gear_securing: {
+        id: "gear_securing",
+        title: { en: "Gear Securing" },
+        overview: { en: "Positively securing the winch, not just stopping it, before the situation is treated as stable." },
+        steps: [
+          { en: "Confirmation the winch is genuinely stopped and secured — locked, not just halted." },
+          { en: "Assessment of whether the gear itself poses further danger to the person in the water." },
+        ],
+        bestPractices: [
+          { en: "Positively secure the winch (lock, not just stop) before considering the situation stabilized." },
+        ],
+        commonMistakes: [
+          { en: "Treating a stopped winch as equivalent to a secured one." },
+        ],
+      },
+      vessel_maneuvering_alarm: {
+        id: "vessel_maneuvering_alarm",
+        title: { en: "Vessel Maneuvering & MOB Alarm" },
+        overview: { en: "GPS marking is a safety net, not a substitute for continuous visual contact." },
+        steps: [
+          { en: "Vessel maneuvered to approach safely without risking contact with the person or trailing gear in the water." },
+          { en: "MOB alarm triggered and position marked by GPS." },
+        ],
+        bestPractices: [
+          { en: "Maintain continuous visual contact with the person throughout the maneuver — GPS marking is a safety net, not a substitute." },
+        ],
+        commonMistakes: [
+          { en: "Relying on the GPS mark instead of maintaining direct visual contact." },
+        ],
+      },
+      recovery_preparation: {
+        id: "recovery_preparation",
+        title: { en: "Recovery Preparation" },
+        overview: { en: "Recovery equipment prepared alone, without the usual AB assistance, in parallel with the other two tracks." },
+        steps: [
+          { en: "Recovery equipment (line, ladder, lifebuoy) prepared alone by the Chief Officer, without the AB's usual assistance." },
+        ],
+        bestPractices: [
+          { en: "Prepare recovery equipment in parallel with the other two tracks, not after, so no time is lost once the approach is complete." },
+        ],
+        commonMistakes: [
+          { en: "Waiting until the approach is complete before beginning equipment preparation." },
+        ],
+      },
+      approach_assessment: {
+        id: "approach_assessment",
+        title: { en: "Approach & Assessment" },
+        overview: { en: "Never assume the person has freed themselves from the gear just because they appear clear of the rail." },
+        steps: [
+          { en: "Assessment of the person's condition (conscious, apparently injured) and entanglement status (still caught in gear, or free) before choosing the recovery method." },
+        ],
+        bestPractices: [
+          { en: "Actively verify entanglement status rather than assuming the person has freed themselves." },
+        ],
+        commonMistakes: [
+          { en: "Beginning recovery without first confirming whether the person is still caught in gear." },
+        ],
+      },
+      recovery: {
+        id: "recovery",
+        title: { en: "Recovery" },
+        overview: { en: "Even under the most extreme time pressure, freeing from gear stays as controlled as it was in op1." },
+        steps: [
+          { en: "Extraction from the water, with a controlled freeing from gear if still entangled." },
+          { en: "Recovery aboard." },
+        ],
+        bestPractices: [
+          { en: "Keep the freeing as controlled as any other entanglement response, even under this level of pressure." },
+        ],
+        commonMistakes: [
+          { en: "Pulling abruptly on the gear to speed up freeing, risking worsening the entanglement or further injury." },
+        ],
+      },
+      post_recovery_care_standdown: {
+        id: "post_recovery_care_standdown",
+        title: { en: "Post-Recovery Care & Stand-down" },
+        overview: { en: "Treat for immersion/hypothermia systematically, even without visible injury." },
+        steps: [
+          { en: "First aid and immersion/hypothermia care." },
+          { en: "Incident report." },
+          { en: "Decision on continuing operations or returning to port." },
+        ],
+        bestPractices: [
+          { en: "Treat systematically for hypothermia/immersion even without visible injury." },
+        ],
+        commonMistakes: [
+          { en: "Skipping immersion/hypothermia care because no visible injury is present." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "mob_alert",
+        phaseId: "mob_alert_winch_stop",
+        from: "deck", to: "bridge",
+        trigger: { en: "AB pulled overboard by the gear." },
+        content: { en: "Chief Officer, witnessing the entanglement, immediately calls \"man overboard\" to the bridge — the call itself takes priority over any other action." },
+        whyItMatters: { en: "Every subsequent action in this operation — the winch stop, the maneuver, the alarm — depends on this call happening first and immediately." },
+      },
+      {
+        id: "winch_stop_confirmation",
+        phaseId: "gear_securing",
+        from: "engine", to: "bridge",
+        trigger: { en: "Emergency stop triggered." },
+        content: { en: "Chief Engineer confirms the winch is stopped and positively secured, not just halted." },
+        whyItMatters: { en: "The Master cannot safely maneuver the vessel toward the AB without knowing the gear itself is no longer a moving hazard." },
+      },
+      {
+        id: "distress_notification",
+        phaseId: "vessel_maneuvering_alarm",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "MOB alarm raised, vessel maneuvering to approach." },
+        content: { en: "Master sends a distress notification given the severity — entanglement, a four-person crew fully committed to the response — rather than waiting to see how recovery goes first." },
+        whyItMatters: { en: "With no crew to spare, notifying early means help is already on its way if the situation on board turns out to be more than the crew alone can manage." },
+      },
+      {
+        id: "approach_status_update",
+        phaseId: "approach_assessment",
+        from: "bridge", to: "deck",
+        trigger: { en: "Vessel approaching the AB's position." },
+        content: { en: "Master reports the AB's visible condition and entanglement status to the Chief Officer as the vessel closes in, so recovery preparation matches what's actually needed." },
+        whyItMatters: { en: "Recovery is a different maneuver if the AB is still caught in gear versus free in the water — the Chief Officer needs this before recovery begins, not during it." },
+      },
+      {
+        id: "recovery_confirmation",
+        phaseId: "recovery",
+        from: "deck", to: "bridge",
+        trigger: { en: "AB recovered aboard." },
+        content: { en: "Chief Officer confirms the AB is aboard and reports initial condition to the Master." },
+        whyItMatters: { en: "This confirmation is what allows the Master to update or cancel the distress notification with accurate information." },
+      },
+      {
+        id: "outcome_report_authorities",
+        phaseId: "post_recovery_care_standdown",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "AB's condition assessed after recovery." },
+        content: { en: "Master reports the outcome to the authorities already notified — confirming recovery, condition, and whether further assistance is still needed." },
+        whyItMatters: { en: "A notification sent during the emergency needs a genuine close-out, not just being left open once the immediate crisis has passed." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command of the emergency — maneuvers the vessel to approach safely, raises the MOB alarm, sends the distress notification, and directs the recovery approach." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "With the AB unavailable, personally prepares recovery equipment alone rather than directing it, then leads the physical recovery once the vessel is alongside — a direct role reversal from the AB-does-the-hands-on-work pattern established in op1." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "The crew member entangled and pulled overboard. Not an active operational role in the usual sense — the priority is staying as calm and visible as possible and cooperating with the recovery once the vessel approaches, without struggling against gear that's still attached." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Triggers and positively secures the emergency winch stop, and monitors gear/engine systems throughout the response to ensure nothing re-engages accidentally." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      chief_engineer: "lead",
+      ab: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Maneuvers the vessel to approach safely without risking contact with the AB or trailing gear." },
+          { en: "Raises the MOB alarm and sends the distress notification." },
+          { en: "Directs the recovery approach and, once the AB is aboard, updates or cancels the notification." },
+        ],
+        iMonitor: [
+          { en: "Overall response status and the AB's visible condition throughout the approach." },
+        ],
+        iReport: [
+          { en: "Reports the outcome to the authorities already notified." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize recovery to begin before the AB's entanglement status is assessed." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Prepares recovery equipment alone, without the AB's usual assistance." },
+          { en: "Leads the physical recovery once the vessel is alongside, including a controlled freeing from gear if the AB is still caught." },
+        ],
+        iMonitor: [
+          { en: "The AB's entanglement and physical condition during approach and recovery." },
+        ],
+        iReport: [
+          { en: "Confirms the AB is aboard and reports initial condition to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not force or rush the freeing of the AB from gear regardless of time pressure." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Triggers and positively secures the emergency winch stop — the first action the entire response depends on." },
+        ],
+        iMonitor: [
+          { en: "Gear and engine systems throughout the response, to ensure nothing re-engages accidentally." },
+        ],
+        iReport: [
+          { en: "Confirms the winch is stopped and secured to the Master before any approach maneuver begins." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not restart or release the winch under any circumstance until the AB is confirmed clear." },
+        ],
+      },
+      ab: {
+        iReport: [
+          { en: "Stays as visible and calm as possible, cooperating with recovery rather than struggling against attached gear." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not attempt to free themselves from gear independently while still in the water." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "fishing_vessel_mob_phase_sequence",
+        targetRanks: ["master", "chief_officer", "chief_engineer"],
+        prompt: { en: "Put the gear-induced MOB response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "MOB Alert & Winch Stop" } },
+          { id: "gear", label: { en: "Gear Securing" } },
+          { id: "maneuver", label: { en: "Vessel Maneuvering & MOB Alarm" } },
+          { id: "prep", label: { en: "Recovery Preparation" } },
+          { id: "assess", label: { en: "Approach & Assessment" } },
+          { id: "recover", label: { en: "Recovery" } },
+          { id: "standdown", label: { en: "Post-Recovery Care & Stand-down" } },
+        ],
+        correctOrder: ["alert", ["gear", "maneuver", "prep"], "assess", "recover", "standdown"],
+      },
+      {
+        type: "error_identification",
+        id: "fishing_vessel_approach_before_confirmation",
+        targetRanks: ["master"],
+        scenario: { en: "The MOB alarm has just been raised. The Chief Engineer hasn't yet confirmed the winch is stopped and secured. Every second feels critical. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Begin closing distance toward the AB immediately, before the winch stop is confirmed." }, isError: true, explanation: { en: "Maneuvering toward gear that isn't confirmed stopped risks the vessel itself contacting live, moving gear near the AB — the confirmation is a genuine gate, not a formality to skip under time pressure." } },
+          { id: "b", label: { en: "Wait for the winch stop confirmation before maneuvering close." }, isError: false, explanation: { en: "Correct — this confirmation is what makes the approach itself safe to attempt." } },
+          { id: "c", label: { en: "Sound the MOB alarm immediately regardless of winch status." }, isError: false, explanation: { en: "Correct — the alarm and the winch stop are two of the three concurrent tracks; the alarm doesn't wait on the other two." } },
+          { id: "d", label: { en: "Begin the distress notification while waiting for the winch confirmation." }, isError: false, explanation: { en: "Correct — this can and should proceed concurrently rather than waiting on the winch confirmation." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "fishing_vessel_pre_recovery_gate",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The vessel has approached the AB's position. Before beginning the recovery maneuver, review which conditions are actually satisfied." },
+        items: [
+          { id: "winch_secured", label: { en: "Winch confirmed stopped and positively secured." }, isSatisfied: true },
+          { id: "entanglement_assessed", label: { en: "AB's entanglement status assessed — still caught in gear, or free." }, isSatisfied: false },
+          { id: "condition_assessed", label: { en: "AB's visible condition assessed — conscious, apparently injured or not." }, isSatisfied: true },
+          { id: "equipment_ready", label: { en: "Recovery line, ladder, and lifebuoy ready and positioned." }, isSatisfied: true },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The Master is maneuvering to approach the AB. Closing the distance faster would reach them sooner, but a faster approach also means less margin if the AB or trailing gear shifts position unexpectedly." },
+        mission: { en: "As Master, decide how to balance approach speed against safety margin." },
+        expectedActions: [
+          { en: "Approach at a speed that preserves genuine ability to react to the AB or gear shifting position, not the fastest speed physically possible." },
+          { en: "Maintain continuous visual contact throughout, adjusting speed as the picture becomes clearer on final approach." },
+        ],
+        why: [
+          { en: "A faster approach that has to overshoot or divert around an unexpected shift costs more time overall than a controlled one that doesn't need to." },
+        ],
+        commonMistakes: [
+          { en: "Prioritizing raw speed of approach over maintaining a safe reactive margin." },
+        ],
+        safetyPoints: [
+          { en: "The vessel itself becomes a hazard to the AB if it closes distance faster than it can safely react to what it finds." },
+        ],
+      },
+      {
+        situation: { en: "Preparing recovery equipment alone, the Chief Officer has time to grab either just the essential line and ladder, or those plus a backup recovery sling — but not without a short delay." },
+        mission: { en: "As Chief Officer, decide whether the extra moment for backup equipment is worth it." },
+        expectedActions: [
+          { en: "Take the short extra moment for the backup sling, since a failed primary attempt with nothing in reserve costs far more time than preparing it now." },
+          { en: "Don't let the delay become open-ended — grab it and move, not deliberate at length over the choice." },
+        ],
+        why: [
+          { en: "A brief, bounded delay to be genuinely prepared for a failed first attempt is different from delay for its own sake — the first is time well spent." },
+        ],
+        commonMistakes: [
+          { en: "Skipping the backup equipment entirely because any delay feels unacceptable under the circumstances." },
+        ],
+        safetyPoints: [
+          { en: "Recovery with no backup plan turns any complication with the primary method into a second emergency." },
+        ],
+      },
+      {
+        situation: { en: "The Chief Engineer's winch stop indicator shows the winch has halted, but the usual secondary lock confirmation light hasn't illuminated — everything else about the reading looks normal." },
+        mission: { en: "As Chief Engineer, decide whether to report the winch as fully secured." },
+        expectedActions: [
+          { en: "Report the winch as stopped but not yet confirmed positively secured, rather than rounding up to \"secured\" because it looks fine otherwise." },
+          { en: "Investigate the missing lock confirmation before giving the all-clear for the vessel to approach." },
+        ],
+        why: [
+          { en: "\"Stopped\" and \"positively secured\" are explicitly different standards in this operation — the Master's approach decision depends on which one is actually true." },
+        ],
+        commonMistakes: [
+          { en: "Reporting the winch as fully secured because the stop itself looks normal, without the full confirmation actually present." },
+        ],
+        safetyPoints: [
+          { en: "An unconfirmed lock is exactly the kind of gap this operation's own gate exists to catch before the vessel closes distance." },
+        ],
+      },
+      {
+        situation: { en: "In the first seconds after being pulled into the water, the AB's instinct is to grab and thrash against the gear that's still attached." },
+        mission: { en: "As AB, decide how to respond in that first moment." },
+        expectedActions: [
+          { en: "Resist the instinct to grab or fight the gear, and instead go as still as possible while signaling for help." },
+          { en: "Conserve effort rather than struggling, since struggling against attached gear risks tightening it further." },
+        ],
+        why: [
+          { en: "The instinct to fight the thing that pulled you in is natural, but the gear tightens under exactly that kind of resistance — stillness is the counterintuitive but correct response." },
+        ],
+        commonMistakes: [
+          { en: "Fighting or pulling against the gear in the first moments, out of natural panic." },
+        ],
+        safetyPoints: [
+          { en: "The crew above is already responding the moment the call goes out — the AB's job in these first seconds is to avoid making the entanglement worse, not to try to solve it alone." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "fishing_vessel_mob_waiting_for_rescue",
+        title: { en: "The Longest Two Minutes" },
+        seatRankId: "ab",
+        root: {
+          id: "root",
+          situation: { en: "You've stayed still since going in, and the gear hasn't tightened further. The vessel is maneuvering toward you, but it feels like it's taking a long time — the cold is setting in, and you notice what looks like a way to work one hand free of the gear yourself." },
+          options: [
+            {
+              id: "keep_waiting",
+              label: { en: "Continue staying still and wait, trusting the approach even though it feels slow." },
+              isRecommended: true,
+              consequence: { en: "The vessel completes its approach without incident. The wait felt long, but nothing about the gear or your position changed for the worse." },
+              feedback: { en: "Correct, and harder to do than it sounds — the instinct to act builds the longer you wait, but nothing about the situation has actually changed to make self-freeing safer than it was in the first seconds." },
+              next: {
+                id: "line_offset",
+                situation: { en: "The vessel is now close and recovery is beginning. The Chief Officer lowers a recovery line, but it lands slightly to the side, not quite within easy reach." },
+                options: [
+                  {
+                    id: "controlled_reach",
+                    label: { en: "Make a small, controlled reach for the line without thrashing, staying otherwise still." },
+                    isRecommended: true,
+                    consequence: { en: "The controlled reach closes the small gap cleanly, and you get a solid hold on the line." },
+                    feedback: { en: "Correct — a small, deliberate action is not the same thing as struggling. Staying still was right when there was nothing to safely act on; now there genuinely is." },
+                  },
+                  {
+                    id: "wait_for_reposition",
+                    label: { en: "Stay completely motionless and wait for the crew to reposition the line, even though a small reach seems safe." },
+                    consequence: { en: "The Chief Officer, seeing you're not reaching, has to reposition the line manually, costing time now that the crew is actively ready and coordinating directly with you." },
+                    feedback: { en: "The stillness rule was for the earlier, uncertain moments — now that recovery is actively underway and a small safe action is available, over-applying it just slows down a coordinated effort." },
+                  },
+                  {
+                    id: "urgent_grab",
+                    label: { en: "Reach quickly and forcefully for the line, since it's finally within reach." },
+                    consequence: { en: "The quick, off-balance reach misjudges the distance and the line slips from your grip on the first attempt." },
+                    feedback: { en: "Urgency doesn't improve a reach that distance and balance already make difficult — the same controlled-over-urgent lesson that's held throughout this operation." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "attempt_self_free",
+              label: { en: "Attempt to work a hand free using the apparent opportunity, since waiting feels increasingly dangerous with the cold." },
+              consequence: { en: "The attempt shifts the gear rather than freeing it, and it tightens slightly against the new position — the exact outcome staying still was preventing." },
+              feedback: { en: "The cold and the wait make this feel like a different, more urgent situation than the first seconds, but the gear itself works the same way regardless of how long you've been in the water — the same lesson, under more sympathetic pressure to ignore it." },
+            },
+            {
+              id: "swim_toward_vessel",
+              label: { en: "Try to swim toward the vessel to close the distance faster, using remaining energy." },
+              consequence: { en: "The vessel now has to track a moving target instead of a fixed one, slowing the approach it was already making — and the effort leaves you more fatigued right when the recovery itself will demand the most from you." },
+              feedback: { en: "A stationary point is what the vessel is actually maneuvering toward — adding movement doesn't speed up the approach, it complicates it, and spends energy you'll need for the recovery itself." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Stop before anything else" },
+        bestPractices: [
+          { en: "Treat the winch stop and positive securing as the one action every other part of the response depends on — nothing else proceeds safely before it's confirmed." },
+        ],
+        commonErrors: [
+          { en: "Beginning the approach or recovery before winch confirmation, driven by the pressure of every second feeling critical." },
+        ],
+      },
+      {
+        theme: { en: "A small crew means explicit division, not less coverage" },
+        bestPractices: [
+          { en: "Assign each of the three concurrent tracks to a specific rank clearly, so nothing is assumed to be someone else's responsibility." },
+          { en: "Accept that a small crew makes some roles temporarily double up (the Chief Officer preparing equipment alone) rather than skipping a step because there's no one to spare." },
+        ],
+        commonErrors: [
+          { en: "Assuming a step will get covered by someone else when the crew is too small to make that assumption safely." },
+        ],
+      },
+      {
+        theme: { en: "Controlled action over urgency, including in the water" },
+        bestPractices: [
+          { en: "Keep every action — a rescuer's freeing maneuver, or the AB's own reach for a line — small and deliberate, regardless of how much time pressure is felt." },
+        ],
+        commonErrors: [
+          { en: "Rushing or forcing an action because the situation feels urgent, when a controlled version of the same action was available." },
+        ],
+      },
+      {
+        theme: { en: "Stillness has its place, and its limit" },
+        bestPractices: [
+          { en: "Recognize that staying still is the right response while the situation is uncertain or gear is still live, but a small, safe, coordinated action is appropriate once recovery is genuinely underway." },
+        ],
+        commonErrors: [
+          { en: "Over-applying stillness past the point it's still the right call, once a safe, coordinated opportunity to act has actually arrived." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
