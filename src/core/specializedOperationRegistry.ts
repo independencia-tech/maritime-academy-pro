@@ -10534,6 +10534,579 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  research_vessel_instrument_entanglement_emergency: {
+    operationId: "research_vessel_instrument_entanglement_emergency",
+    vesselTypeId: "research_vessel",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Research Vessel — Instrument Entanglement During Recovery" },
+    introduction: {
+      en: "During the final approach of recovery, the instrument or its wire snags — on the moon pool guide, the hull, or debris — just as weather begins deteriorating faster than forecast, in an operating area isolated enough that outside assistance isn't a realistic option. This directly interrupts op1's own Recovery phase. Unlike a wire-parting emergency (a sudden, single failure), this is a developing situation: the instrument is caught but not yet lost, and the response is a careful, time-pressured effort to free it — using controlled winch and crane maneuvering, not by sending anyone into the water — before worsening conditions force a harder choice. The operation covers the full arc: assessing the entanglement, attempting a controlled freeing, and, if conditions continue to deteriorate before the instrument is freed, the genuine decision to cut the wire and accept the instrument's loss rather than risk the vessel or crew for it.",
+    },
+    objectives: [
+      { en: "Describe the sequence of assessing and responding to an instrument entanglement during recovery, through to either a successful freeing or a deliberate cut-and-release decision." },
+      { en: "Explain why this emergency is structurally different from a sudden wire-parting failure — a developing, assessable situation rather than an instantaneous one." },
+      { en: "Identify the safe methods available for attempting to free an entangled instrument from the deck, and why sending personnel into the water is not one of them in this context." },
+      { en: "Recognize the point at which continuing freeing attempts stops being the right call, given worsening weather and isolation from outside support." },
+      { en: "Identify who does what during this operation, including where Engine's hydraulic/winch control becomes the primary tool for resolving the entanglement." },
+      { en: "Recognize correct versus incorrect prioritization when instrument value, weather, and crew safety are all genuinely in tension." },
+    ],
+    context: {
+      en: "Interrupts op1's own Recovery phase directly. Checked explicitly against a wire-parting emergency angle and against AHTS's own tension-failure territory — genuinely distinct: this is a developing, assessable entanglement, not a sudden parting under extreme tension, and the crew has time to attempt a controlled response rather than reacting to an instant failure. Combines three of the card's own named risks (heavy/fragile equipment handling, isolated/polar operating areas, precise maneuvers under difficult weather) into one coherent event, the same pattern used for LNG/Chemical Tanker/LPG op2. Carries forward op1's 8-rank roster unchanged. Chief Engineer's responsibilityLevel was checked explicitly against the established emergency default, unlike FPSO op2 (where the domain stayed with Deck) or Chemical Tanker op2 (not Engine's domain at all): here, resolving the entanglement genuinely depends on Engine's hydraulic/winch control as the primary tool, so Chief Engineer elevates to \"lead\" — confirming the default applies, not another exception. No new CommunicationParty needed, checked explicitly: no third vessel, and equipment loss triggers no regulatory notification the way a pollution release does.",
+    },
+
+    operationPhaseOrder: [
+      "entanglement_detection_alert",
+      ["freeing_attempt", "weather_position_monitoring", "engine_hydraulic_support"],
+      "decision_point_assessment",
+      "resolution",
+      "standdown_incident_report",
+    ],
+    operationPhases: {
+      entanglement_detection_alert: {
+        id: "entanglement_detection_alert",
+        title: { en: "Entanglement Detection & Alert" },
+        overview: { en: "Abnormal winch resistance alone is enough to raise the alert and trigger all three concurrent response tracks." },
+        steps: [
+          { en: "Entanglement detected: abnormal winch resistance, instrument stuck, visual confirmation if possible." },
+          { en: "Immediate alert raised to the Chief Officer and the Master." },
+          { en: "The alert triggers all three concurrent response tracks simultaneously." },
+        ],
+        bestPractices: [
+          { en: "Treat abnormal winch resistance as sufficient to raise the alert, without waiting for visual confirmation." },
+        ],
+        commonMistakes: [
+          { en: "Continuing to pull on the winch to \"see if it clears\" before assessing the situation." },
+        ],
+      },
+      freeing_attempt: {
+        id: "freeing_attempt",
+        title: { en: "Freeing Attempt" },
+        overview: { en: "Every maneuver stays small and controlled — freeing an entanglement is never attempted by sending anyone into the water." },
+        steps: [
+          { en: "Nature of the entanglement assessed from the deck (visual, camera if available)." },
+          { en: "Controlled freeing attempted by winch/crane maneuvering only, never by sending personnel into the water." },
+        ],
+        bestPractices: [
+          { en: "Keep every maneuver small and controlled — no jerky action that could worsen the entanglement or part the wire." },
+        ],
+        commonMistakes: [
+          { en: "Applying sudden or forceful maneuvers in an attempt to speed up the freeing." },
+        ],
+      },
+      weather_position_monitoring: {
+        id: "weather_position_monitoring",
+        title: { en: "Weather & Position Monitoring" },
+        overview: { en: "Continuous reporting of the weather trend, not just once it becomes critical." },
+        steps: [
+          { en: "Continuous monitoring of weather deterioration against the operation's limits." },
+          { en: "Continuous monitoring of vessel position/drift." },
+          { en: "Ongoing assessment of remaining time before conditions themselves become dangerous." },
+        ],
+        bestPractices: [
+          { en: "Report the weather trend continuously to the Master, not only once it becomes critical." },
+        ],
+        commonMistakes: [
+          { en: "Waiting to report until conditions have already become alarming." },
+        ],
+      },
+      engine_hydraulic_support: {
+        id: "engine_hydraulic_support",
+        title: { en: "Engine Hydraulic Support" },
+        overview: { en: "Repeated freeing attempts stress equipment in unusual ways — any strain is reported immediately." },
+        steps: [
+          { en: "Precise, controlled hydraulic winch/crane power provided for each maneuver attempt." },
+          { en: "System load monitored throughout repeated attempts." },
+        ],
+        bestPractices: [
+          { en: "Report any abnormal hydraulic strain immediately during repeated attempts." },
+        ],
+        commonMistakes: [
+          { en: "Treating strain as normal simply because the equipment hasn't failed yet." },
+        ],
+      },
+      decision_point_assessment: {
+        id: "decision_point_assessment",
+        title: { en: "Decision Point Assessment" },
+        overview: { en: "A fixed reassessment point, not an open-ended \"keep trying while it seems to be working.\"" },
+        steps: [
+          { en: "Master and Chief Officer jointly assess, at regular intervals, whether freeing is genuinely progressing or the situation is stalling while weather deteriorates." },
+        ],
+        bestPractices: [
+          { en: "Fix a reassessment point in advance rather than continuing indefinitely as long as it \"seems to be progressing.\"" },
+        ],
+        commonMistakes: [
+          { en: "Continuing without a formal reassessment simply because stopping feels premature." },
+        ],
+      },
+      resolution: {
+        id: "resolution",
+        title: { en: "Resolution" },
+        overview: { en: "If a cut is decided, it's executed as a controlled maneuver, not a rushed abandonment." },
+        steps: [
+          { en: "If freeing succeeds, normal recovery resumes (op1's own Recovery phase)." },
+          { en: "If conditions deteriorate before freeing succeeds, a deliberate decision is made to cut the wire and accept the instrument's loss rather than risk the vessel or crew." },
+        ],
+        bestPractices: [
+          { en: "If cutting is decided, execute it as a controlled maneuver, not a rushed abandonment." },
+        ],
+        commonMistakes: [
+          { en: "Delaying the cut decision past the fixed reassessment point out of reluctance to lose the instrument." },
+        ],
+      },
+      standdown_incident_report: {
+        id: "standdown_incident_report",
+        title: { en: "Stand-down & Incident Report" },
+        overview: { en: "The report to the science team includes the full reasoning, not just the outcome." },
+        steps: [
+          { en: "Deck secured." },
+          { en: "Science team informed: instrument recovered, or lost and why." },
+          { en: "Consolidated incident report prepared." },
+          { en: "Decision made on next steps: mission continues, or reassessment." },
+        ],
+        bestPractices: [
+          { en: "Include the full reasoning behind the decision in the report to the science team, not just the outcome." },
+        ],
+        commonMistakes: [
+          { en: "Reporting only the outcome without the reasoning, leaving the science team unable to understand a difficult decision." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "entanglement_alert",
+        phaseId: "entanglement_detection_alert",
+        from: "deck", to: "bridge",
+        trigger: { en: "Abnormal winch resistance or visual confirmation the instrument is caught." },
+        content: { en: "Deck reports the entanglement immediately to the bridge — abnormal resistance alone is treated as sufficient to raise the alert." },
+        whyItMatters: { en: "This report triggers all three concurrent response tracks at once; continuing to pull on the winch to \"see if it clears\" before reporting wastes the time this operation's own procedure depends on." },
+      },
+      {
+        id: "hydraulic_support_request",
+        phaseId: "freeing_attempt",
+        from: "deck", to: "engine",
+        trigger: { en: "A controlled maneuver attempt is planned." },
+        content: { en: "Chief Officer requests precise, controlled winch/crane power from Engine for each individual freeing attempt, not a general standing authorization to maneuver freely." },
+        whyItMatters: { en: "Each attempt needs to be its own controlled action — a jerky or unplanned maneuver risks worsening the entanglement or parting the wire outright." },
+      },
+      {
+        id: "hydraulic_strain_report",
+        phaseId: "engine_hydraulic_support",
+        from: "engine", to: "deck",
+        trigger: { en: "Repeated freeing attempts placing unusual load on the winch/crane hydraulic systems." },
+        content: { en: "Chief Engineer reports any abnormal strain on the systems immediately, not only if something actually fails." },
+        whyItMatters: { en: "Repeated freeing attempts stress the equipment in ways normal operation doesn't — this is exactly the kind of trend that needs reporting before it becomes a second failure on top of the first." },
+      },
+      {
+        id: "decision_point_input",
+        phaseId: "decision_point_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "A scheduled reassessment point reached." },
+        content: { en: "Chief Officer reports whether freeing attempts are genuinely progressing or stalling, as input to the Master's continue-or-cut decision." },
+        whyItMatters: { en: "The Master's decision depends on an honest read of actual progress, not an optimistic one shaped by reluctance to lose the instrument." },
+      },
+      {
+        id: "cut_decision_order",
+        phaseId: "resolution",
+        from: "bridge", to: "deck",
+        trigger: { en: "Master decides to cut the wire rather than continue attempts." },
+        content: { en: "Master's decision is communicated clearly to the deck team as an order to execute a controlled cut, not a suggestion to consider." },
+        whyItMatters: { en: "A hesitant or ambiguous order at this point risks a delayed, less controlled execution of a decision that's already been made." },
+      },
+      {
+        id: "science_team_situation_update",
+        phaseId: "entanglement_detection_alert",
+        from: "bridge", to: "science_team",
+        trigger: { en: "Entanglement confirmed and response underway." },
+        content: { en: "Bridge informs the science team that an entanglement emergency is in progress, before the outcome is known either way." },
+        whyItMatters: { en: "The science team has a real stake in the instrument's fate and deserves to know a genuine emergency is underway, not just its eventual outcome." },
+      },
+      {
+        id: "outcome_report",
+        phaseId: "standdown_incident_report",
+        from: "bridge", to: "science_team",
+        trigger: { en: "Situation resolved, either by successful freeing or by the cut decision." },
+        content: { en: "Bridge reports the full outcome to the science team, including the reasoning behind a cut decision if that's what occurred." },
+        whyItMatters: { en: "A complete explanation, not just the result, is what lets the science team understand and accept a difficult outcome rather than just receive it." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command of the emergency response — makes the continue-or-cut decision at each reassessment point, weighing the instrument's value against genuine risk to the vessel and crew as weather deteriorates." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "On-scene coordinator of the freeing attempt — assesses whether attempts are genuinely progressing and feeds that assessment to the Master as the basis for the continue-or-cut decision." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "Monitors weather and position trend throughout the response, reporting the deteriorating conditions that ultimately bound how much time is available for freeing attempts." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the physical freeing attempt from the deck — assessing the entanglement and directing each controlled maneuver, never by sending anyone into the water." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes freeing-attempt tasks — visual assessment, tool work from the deck — under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Directs precise, controlled hydraulic winch and crane power for each individual freeing attempt — the primary technical tool this emergency's resolution actually depends on, a genuinely more central role than the readiness-support position held in op1." },
+      },
+      {
+        rankId: "second_engineer",
+        identity: { en: "Hands-on execution of hydraulic control adjustments for each freeing attempt, under the Chief Engineer's direction." },
+      },
+      {
+        rankId: "third_engineer",
+        identity: { en: "Present and observing throughout the emergency response, without an assigned task — the same observe-level role carried over from op1." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Makes the continue-or-cut decision at each scheduled reassessment point." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency response status and weather/position trend." },
+        ],
+        iReport: [
+          { en: "Reports the incident and its outcome to the science team and, if relevant, the company." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize continued attempts beyond a scheduled reassessment point without a genuine progress-based justification." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Coordinates the on-scene freeing attempt directly." },
+        ],
+        iMonitor: [
+          { en: "Progress of each freeing attempt against the reassessment schedule." },
+        ],
+        iReport: [
+          { en: "Reports an honest progress assessment to the Master as the basis for the continue-or-cut decision." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not unilaterally decide to continue past a reassessment point — that call belongs to the Master." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Monitors weather and vessel position throughout the response." },
+        ],
+        iMonitor: [
+          { en: "Weather trend and time remaining before conditions become independently dangerous." },
+        ],
+        iReport: [
+          { en: "Reports the deteriorating trend to the Master continuously, not only once it becomes critical." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not decide when freeing attempts should stop — only reports the conditions bounding that decision." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the physical freeing attempt from the deck — assessment and each controlled maneuver." },
+        ],
+        iMonitor: [
+          { en: "The entanglement's condition and any change during each attempt." },
+        ],
+        iReport: [
+          { en: "Reports attempt outcomes to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not send personnel into the water under any circumstance in this operation." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes visual assessment and tool work from the deck, under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate entanglement and deck conditions." },
+        ],
+        iReport: [
+          { en: "Reports observations to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not attempt a freeing maneuver independently of the Bosun's direction." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Directs precise, controlled hydraulic winch and crane power for each individual freeing attempt — the primary technical tool this emergency depends on." },
+        ],
+        iMonitor: [
+          { en: "Hydraulic system strain throughout repeated attempts." },
+        ],
+        iReport: [
+          { en: "Reports any abnormal strain immediately, and confirms readiness for each new attempt." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize an uncontrolled or emergency-speed maneuver — every attempt stays precise regardless of time pressure." },
+        ],
+      },
+      second_engineer: {
+        iExecute: [
+          { en: "Hands-on execution of hydraulic control adjustments for each freeing attempt, under the Chief Engineer's direction." },
+        ],
+        iMonitor: [
+          { en: "System parameters during each attempt." },
+        ],
+        iReport: [
+          { en: "Reports to the Chief Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not act independently of the Chief Engineer's direction." },
+        ],
+      },
+      third_engineer: {
+        iMonitor: [
+          { en: "Observes the emergency response throughout." },
+        ],
+        iReport: [
+          { en: "Reports observations to the Chief or Second Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently act during the emergency." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "research_vessel_entanglement_phase_sequence",
+        targetRanks: ["master", "chief_officer", "chief_engineer"],
+        prompt: { en: "Put the instrument entanglement emergency response's phases in the correct order." },
+        items: [
+          { id: "detect", label: { en: "Entanglement Detection & Alert" } },
+          { id: "freeing", label: { en: "Freeing Attempt" } },
+          { id: "weather", label: { en: "Weather & Position Monitoring" } },
+          { id: "hydraulic", label: { en: "Engine Hydraulic Support" } },
+          { id: "decision", label: { en: "Decision Point Assessment" } },
+          { id: "resolve", label: { en: "Resolution" } },
+          { id: "standdown", label: { en: "Stand-down & Incident Report" } },
+        ],
+        correctOrder: ["detect", ["freeing", "weather", "hydraulic"], "decision", "resolve", "standdown"],
+      },
+      {
+        type: "error_identification",
+        id: "research_vessel_speed_over_control",
+        targetRanks: ["chief_engineer"],
+        scenario: { en: "Weather is worsening faster than forecast and the next reassessment point is approaching. The Bosun asks whether the winch can move faster and more aggressively to try to free the instrument before time runs out. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Authorize a faster, more aggressive maneuver to save time given the worsening weather." }, isError: true, explanation: { en: "Every freeing attempt stays precise and controlled regardless of time pressure — an aggressive maneuver risks worsening the entanglement or parting the wire outright, exactly the outcome the controlled approach exists to prevent." } },
+          { id: "b", label: { en: "Maintain the same controlled, precise maneuver pace despite the time pressure." }, isError: false, explanation: { en: "Correct — time pressure is a reason to reassess sooner, not a reason to abandon precision." } },
+          { id: "c", label: { en: "Report the time pressure to the Chief Officer rather than personally deciding to speed up." }, isError: false, explanation: { en: "Correct — the reassessment schedule and any change to it belongs to the Master's decision, not an individual maneuver choice." } },
+          { id: "d", label: { en: "Confirm hydraulic system status remains stable before continuing with the current approach." }, isError: false, explanation: { en: "Correct — repeated attempts stress the equipment regardless of pace, so this check stays relevant throughout." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "research_vessel_reassessment_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The scheduled reassessment point has arrived. Before deciding whether to continue freeing attempts, review which conditions are actually satisfied." },
+        items: [
+          { id: "genuine_progress", label: { en: "Genuine, observable progress on the entanglement since the last check, not just continued effort." }, isSatisfied: false },
+          { id: "hydraulic_sound", label: { en: "Hydraulic systems confirmed sound, with no abnormal strain reported." }, isSatisfied: true },
+          { id: "weather_within_limits", label: { en: "Weather still within the operation's safe limits for continued attempts." }, isSatisfied: true },
+          { id: "time_remaining", label: { en: "Meaningful time remaining before conditions are forecast to worsen further." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Partway through the response, the OOW notices the weather trend has ticked slightly worse again — nothing dramatic, and still within the operation's limits, but a continuation of the same direction as the last report." },
+        mission: { en: "As OOW, decide whether this is worth another report." },
+        expectedActions: [
+          { en: "Report the continued trend even though nothing definitive has changed since the last update." },
+          { en: "Keep the reporting interval consistent rather than waiting for a more significant change to justify speaking up again." },
+        ],
+        why: [
+          { en: "A trend continuing in the same direction is itself the information the Master needs — waiting for something dramatic to report defeats the purpose of continuous monitoring." },
+        ],
+        commonMistakes: [
+          { en: "Withholding a report because the change since last time feels too small to mention on its own." },
+        ],
+        safetyPoints: [
+          { en: "The Master's continue-or-cut decision depends on an accurate, continuous read of the trend, not a series of only-when-dramatic updates." },
+        ],
+      },
+      {
+        situation: { en: "During a freeing attempt, the AB has a clear opportunity to apply more manual force with a tool to try to speed things along — a bit beyond what the Bosun's instruction called for, but it looks like it might work." },
+        mission: { en: "As AB, decide whether to take the initiative." },
+        expectedActions: [
+          { en: "Stay within the Bosun's instructed approach rather than escalating force independently." },
+          { en: "Mention the idea to the Bosun rather than acting on it unilaterally." },
+        ],
+        why: [
+          { en: "A controlled approach is controlled specifically because every action stays within a deliberate plan — a well-intentioned extra push is still a deviation from it." },
+        ],
+        commonMistakes: [
+          { en: "Applying extra force because it seems likely to help and the situation feels urgent enough to justify it." },
+        ],
+        safetyPoints: [
+          { en: "An entanglement that seems close to resolved is not a lower-risk moment to improvise — it's exactly the moment where an uncontrolled action could still make things worse." },
+        ],
+      },
+      {
+        situation: { en: "During a freeing attempt, the Second Engineer notices a brief, unusual reading on a hydraulic gauge — gone almost as soon as it appeared, and everything else looks normal. The team is in the middle of what looks like real progress." },
+        mission: { en: "As Second Engineer, decide what to do with this observation." },
+        expectedActions: [
+          { en: "Report the reading to the Chief Engineer as soon as practical, even though it was brief and everything else looks fine." },
+          { en: "Continue watching closely for any recurrence rather than dismissing it as a fluke." },
+        ],
+        why: [
+          { en: "A brief anomaly during a period of repeated, unusual system stress is exactly the kind of thing worth flagging — momentum toward progress doesn't make an unusual reading less real." },
+        ],
+        commonMistakes: [
+          { en: "Deciding not to interrupt the moment because the reading was brief and the team seems close to success." },
+        ],
+        safetyPoints: [
+          { en: "The Chief Engineer's iMonitor responsibility for hydraulic strain depends on the Second Engineer actually reporting what they see, not filtering it based on how the moment feels." },
+        ],
+      },
+      {
+        situation: { en: "The scheduled reassessment point arrives. Progress has been slow but the team feels genuinely close — one more attempt, someone suggests, might be all it takes." },
+        mission: { en: "As Master, decide how to handle the reassessment." },
+        expectedActions: [
+          { en: "Base the decision on the actual, honestly-reported progress evidence, not on how close the team feels." },
+          { en: "If evidence doesn't support continuing, hold the decision even against the temptation of \"just one more attempt.\"" },
+        ],
+        why: [
+          { en: "\"Feels close\" is exactly the kind of reasoning the scheduled reassessment point exists to override — a felt sense of proximity isn't the same as genuine, observable progress." },
+        ],
+        commonMistakes: [
+          { en: "Extending past the reassessment point because stopping feels premature when the team seems so close." },
+        ],
+        safetyPoints: [
+          { en: "A fixed reassessment point only works as a safeguard if it's actually honored when the moment arrives, not treated as a suggestion to override under the right kind of pressure." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "research_vessel_entanglement_honest_progress",
+        title: { en: "Not Yet, Not \"Almost\"" },
+        seatRankId: "bosun",
+        root: {
+          id: "root",
+          situation: { en: "Your first controlled maneuver to free the instrument hasn't worked. The Chief Officer asks for a status update ahead of the upcoming reassessment point. Reporting the attempt failed feels like it might read as giving up too early, when another attempt could still work." },
+          options: [
+            {
+              id: "report_honest",
+              label: { en: "Report clearly and factually that the attempt did not succeed, without speculating on how likely the next one is to work." },
+              isRecommended: true,
+              consequence: { en: "The Chief Officer relays the honest assessment. The Master, informed accurately, allows time for one more attempt but asks specifically what will be done differently." },
+              feedback: { en: "Correct — a clear, factual report is exactly what the reassessment decision depends on. It didn't cost you the chance to try again; it just meant the next decision was based on reality." },
+              next: {
+                id: "next_attempt_planning",
+                situation: { en: "You have time for one more attempt before the reassessment point closes. Two different approaches from the current position haven't worked. Weather is closing in." },
+                options: [
+                  {
+                    id: "adapted_approach",
+                    label: { en: "Try a genuinely different approach based on what the failed attempts revealed — for example, working the entanglement from a different angle — and communicate the change clearly." },
+                    isRecommended: true,
+                    consequence: { en: "The adapted approach succeeds where the repeated maneuver hadn't — the instrument comes free with time to spare before the reassessment point." },
+                    feedback: { en: "This is what \"genuine progress\" actually looks like: not effort repeated, but effort informed by what was just learned." },
+                  },
+                  {
+                    id: "repeat_same",
+                    label: { en: "Try the same maneuver once more, hoping persistence pays off." },
+                    consequence: { en: "The same maneuver produces the same result — no progress, and now less time remains before the reassessment point." },
+                    feedback: { en: "Repeating an approach that already failed twice isn't genuine progress, even if it feels like continued effort — the readiness gate this operation is built around exists precisely to catch this distinction." },
+                  },
+                  {
+                    id: "suggest_cut_early",
+                    label: { en: "Suggest to the Chief Officer that it may be time to cut the wire now, since two attempts have already failed." },
+                    consequence: { en: "The Chief Officer notes the point but reminds you the continue-or-cut call is the Master's, based on genuine reassessment — and there's still a real, untried approach available before that decision point arrives." },
+                    feedback: { en: "Not wrong to have a view, but this isn't your call to push, and it comes before actually trying the one approach that hasn't been attempted yet — the same as giving up a step too early." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "report_optimistic",
+              label: { en: "Report that things are \"still progressing\" even though this specific attempt didn't succeed, to avoid seeming like you're giving up too early." },
+              consequence: { en: "The Chief Officer relays the optimistic framing. The Master, working from an inflated picture of progress, allows more time than the actual situation justified — time that turns out to matter once weather closes in faster than expected." },
+              feedback: { en: "This is exactly the mistake the reassessment gate is built to catch: continued effort isn't the same thing as genuine progress, and reporting it that way feeds the Master a decision built on the wrong picture." },
+            },
+            {
+              id: "delay_report",
+              label: { en: "Wait to try one more approach before saying anything, since reporting now would just look like a failure." },
+              consequence: { en: "The delay eats into the time available before the reassessment point, and the Chief Officer ends up asking again anyway before you're ready to answer." },
+              feedback: { en: "The reassessment decision needs your honest input on its own schedule, not once you have something more flattering to report." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Honest progress over comfortable framing" },
+        bestPractices: [
+          { en: "Report what actually happened — an attempt that failed, a reading that appeared briefly — factually, without shading it toward a more reassuring picture." },
+          { en: "Recognize the difference between continued effort and genuine, observable progress; only the second should inform a continue decision." },
+        ],
+        commonErrors: [
+          { en: "Framing a failed attempt as \"still progressing\" out of reluctance to seem like giving up." },
+          { en: "Withholding a report until there's something more flattering to say." },
+        ],
+      },
+      {
+        theme: { en: "Controlled precision holds under time pressure" },
+        bestPractices: [
+          { en: "Keep every maneuver within the deliberate, controlled plan, regardless of how much time pressure is building." },
+          { en: "When a repeated approach isn't working, adapt based on what was learned rather than simply repeating it with more urgency." },
+        ],
+        commonErrors: [
+          { en: "Escalating force or speed under time pressure instead of maintaining the controlled approach." },
+          { en: "Repeating an already-failed maneuver rather than adapting to what it revealed." },
+        ],
+      },
+      {
+        theme: { en: "Reporting continues even without dramatic change" },
+        bestPractices: [
+          { en: "Report a continuing trend or a brief anomaly even when nothing definitive has changed since the last update." },
+        ],
+        commonErrors: [
+          { en: "Withholding a report because the change feels too small, or the moment feels too close to success, to interrupt." },
+        ],
+      },
+      {
+        theme: { en: "The reassessment gate is a real decision, not a formality" },
+        bestPractices: [
+          { en: "Base the continue-or-cut decision on the actual evidence available at the scheduled point, not on how close the situation feels." },
+          { en: "Honor the reassessment schedule even under pressure to grant \"just one more attempt.\"" },
+        ],
+        commonErrors: [
+          { en: "Extending past a scheduled reassessment point because stopping feels premature." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
