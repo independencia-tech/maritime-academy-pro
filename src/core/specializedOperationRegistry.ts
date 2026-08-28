@@ -16337,6 +16337,513 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  jackup_rig_move_jacking_leg_preloading: {
+    operationId: "jackup_rig_move_jacking_leg_preloading",
+    vesselTypeId: "jackup",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Jackup — Rig Move, Jacking Up & Leg Preloading" },
+    introduction: {
+      en: "A jackup rig arrives at a new location and has to transform from a floating vessel into a fixed, elevated platform before any drilling work can even begin. This operation covers that transformation: positioning precisely over the location, lowering the legs to the seabed, spudding in, preloading each leg to confirm the seabed will actually hold the rig's full weight, and finally jacking the entire hull up to a safe working air gap above the waves. It's routine in the sense that every jackup does this at the start of every location, but the margin for error is real — a leg that punches through unexpectedly soft ground, or an uneven preload result, can mean real structural risk if it's missed or rushed past. This operation stays entirely on the marine/rig-move side — drilling operations themselves, and the drilling department that runs them, are out of scope here, exactly as Process/Production stayed out of scope for FPSO's own marine-side operations.",
+    },
+    objectives: [
+      { en: "Describe the sequence of positioning, leg lowering, spudding in, preloading, and jacking up to working air gap." },
+      { en: "Explain why preloading exists and what a genuine seabed-related irregularity looks like versus normal, expected leg penetration." },
+      { en: "Identify how Master and Chief Engineer jointly lead this operation — one on positioning/command, the other on the jacking/ballast system that is the operation's actual mechanism." },
+      { en: "Identify who does what, including the boundary between this operation's marine-crew scope and the drilling department's separate, later responsibility." },
+      { en: "Recognize correct versus incorrect judgment calls when preload or leg-penetration readings are ambiguous or asymmetric." },
+    ],
+    context: {
+      en: "Genuinely new terrain — no reskin risk against Heavy Lift (float-on submersion ballast, a different mechanism and purpose) or FPSO/Drillship (production/drilling, not the jacking transformation itself). Roster: 5-rank roster, with Chief Engineer at lead alongside Master, mirroring Heavy Lift's precedent since the jacking/ballast system genuinely is this operation's core mechanism. No new CommunicationParty — the drilling department stays entirely out of this operation's scope.",
+    },
+
+    operationPhaseOrder: [
+      "location_positioning_setup",
+      "leg_lowering_spud_in",
+      ["preload_ballasting_sequence", "leg_penetration_monitoring", "weather_environmental_monitoring"],
+      "preload_confirmation_hold_assessment",
+      "jacking_up_working_air_gap",
+      "final_elevation_verification_securing",
+    ],
+    operationPhases: {
+      location_positioning_setup: {
+        id: "location_positioning_setup",
+        title: { en: "Location Positioning & Setup" },
+        overview: { en: "Final position is confirmed against the survey/location plan before committing to leg lowering." },
+        steps: [
+          { en: "Rig positioned precisely over the target location using DP or anchor/mooring setup as applicable." },
+        ],
+        bestPractices: [
+          { en: "Confirm final position against the survey/location plan before committing to leg lowering, not just \"close enough.\"" },
+        ],
+      },
+      leg_lowering_spud_in: {
+        id: "leg_lowering_spud_in",
+        title: { en: "Leg Lowering & Spud-In" },
+        overview: { en: "Legs lowered in the sequence and rate specified for this rig." },
+        steps: [
+          { en: "Legs lowered to the seabed until initial contact (\"spudding in\") is achieved on all legs." },
+        ],
+        bestPractices: [
+          { en: "Lower legs in the sequence and rate specified for this rig, not faster than the system is designed to confirm contact safely." },
+        ],
+      },
+      preload_ballasting_sequence: {
+        id: "preload_ballasting_sequence",
+        title: { en: "Preload Ballasting Sequence" },
+        overview: { en: "Ballasting staged, with each stage confirmed before the next." },
+        steps: [
+          { en: "Hull ballasted down to transfer weight onto the legs in a controlled, staged sequence." },
+        ],
+        bestPractices: [
+          { en: "Stage the ballasting in the planned increments, confirming each stage before proceeding to the next, rather than pushing straight to full preload." },
+        ],
+      },
+      leg_penetration_monitoring: {
+        id: "leg_penetration_monitoring",
+        title: { en: "Leg Penetration Monitoring" },
+        overview: { en: "Any leg penetrating differently from the others is worth investigating, not just noting." },
+        steps: [
+          { en: "Leg penetration into the seabed monitored and compared across all legs throughout preloading." },
+        ],
+        bestPractices: [
+          { en: "Treat any leg penetrating noticeably differently from the others as worth investigating before continuing, not a detail to note and move past." },
+        ],
+      },
+      weather_environmental_monitoring: {
+        id: "weather_environmental_monitoring",
+        title: { en: "Weather & Environmental Monitoring" },
+        overview: { en: "The weather trend against the operation's own limits, not just current conditions." },
+        steps: [
+          { en: "Weather and sea-state conditions monitored continuously throughout the jacking operation." },
+        ],
+        bestPractices: [
+          { en: "Track the weather trend against the operation's own weather-window limits, not just current conditions." },
+        ],
+      },
+      preload_confirmation_hold_assessment: {
+        id: "preload_confirmation_hold_assessment",
+        title: { en: "Preload Confirmation & Hold Assessment" },
+        overview: { en: "Genuine confirmation from both the penetration data and the preload readings together." },
+        steps: [
+          { en: "Master and Chief Engineer jointly assess whether preload readings across all legs are acceptable before proceeding to jack up." },
+        ],
+        bestPractices: [
+          { en: "Require genuine confirmation from both the penetration data and the preload readings together, not either alone." },
+        ],
+      },
+      jacking_up_working_air_gap: {
+        id: "jacking_up_working_air_gap",
+        title: { en: "Jacking Up to Working Air Gap" },
+        overview: { en: "Staged jacking with leg loads re-confirmed within limits at each stage." },
+        steps: [
+          { en: "Hull jacked up the legs to the planned working air gap above the highest expected wave crest." },
+        ],
+        bestPractices: [
+          { en: "Jack up in the planned stages, re-confirming leg loads are within limits at each stage rather than proceeding continuously to final height." },
+        ],
+      },
+      final_elevation_verification_securing: {
+        id: "final_elevation_verification_securing",
+        title: { en: "Final Elevation Verification & Securing" },
+        overview: { en: "Final verification is a genuine confirmation step, not a formality." },
+        steps: [
+          { en: "Final air gap, hull level, and leg loads verified and confirmed within limits; jacking system secured for the duration of the operation." },
+        ],
+        bestPractices: [
+          { en: "Treat final verification as a genuine confirmation step, not a formality after jacking completes." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "positioning_confirmation",
+        phaseId: "location_positioning_setup",
+        from: "deck", to: "bridge",
+        trigger: { en: "Position achieved over the target location." },
+        content: { en: "Chief Officer confirms the final position reading against the survey/location plan to the Master." },
+        whyItMatters: { en: "Committing to leg lowering on an unconfirmed position risks having to reposition mid-operation, which is far costlier than confirming first." },
+      },
+      {
+        id: "spud_in_confirmation",
+        phaseId: "leg_lowering_spud_in",
+        from: "deck", to: "bridge",
+        trigger: { en: "All legs lowered." },
+        content: { en: "Bosun/AB confirms all legs have achieved initial seabed contact." },
+        whyItMatters: { en: "Preloading can't begin safely until every leg is genuinely spudded in, not just most of them." },
+      },
+      {
+        id: "ballasting_status_report",
+        phaseId: "preload_ballasting_sequence",
+        from: "engine", to: "bridge",
+        trigger: { en: "Each ballasting stage completes." },
+        content: { en: "Chief Engineer reports each ballasting stage's status to the Master as preloading proceeds." },
+        whyItMatters: { en: "The Master needs to track the staged sequence in real time to catch any deviation from the plan early." },
+      },
+      {
+        id: "leg_penetration_report",
+        phaseId: "leg_penetration_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Routine penetration monitoring interval." },
+        content: { en: "Whoever is monitoring penetration reports readings across all legs periodically to the Master." },
+        whyItMatters: { en: "This is the routine data stream the joint preload assessment ultimately depends on." },
+      },
+      {
+        id: "leg_penetration_anomaly_alert",
+        phaseId: "leg_penetration_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "A leg's penetration reads markedly different from the others." },
+        content: { en: "An immediate, distinct alert raised the moment any leg's penetration reads markedly different from the others, separate from the routine periodic report." },
+        whyItMatters: { en: "An asymmetric penetration reading is exactly the kind of early signal that shouldn't wait for the next routine report to surface." },
+      },
+      {
+        id: "weather_status_report",
+        phaseId: "weather_environmental_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing weather monitoring." },
+        content: { en: "Weather and sea-state trend reported continuously to the Master throughout the operation." },
+        whyItMatters: { en: "The jacking operation's own weather-window limits depend on the trend, not a single snapshot." },
+      },
+      {
+        id: "preload_hold_confirmation",
+        phaseId: "preload_confirmation_hold_assessment",
+        from: "engine", to: "bridge",
+        trigger: { en: "Preload readings assessed across all legs." },
+        content: { en: "Chief Engineer formally confirms preload readings across all legs are acceptable to the Master, completing the joint assessment." },
+        whyItMatters: { en: "Jacking up shouldn't begin until both leaders of this operation have genuinely confirmed the seabed will hold, not just one." },
+      },
+      {
+        id: "jacking_stage_confirmation",
+        phaseId: "jacking_up_working_air_gap",
+        from: "engine", to: "bridge",
+        trigger: { en: "Each jacking stage completes." },
+        content: { en: "Chief Engineer confirms each jacking stage's leg loads are within limits before proceeding to the next." },
+        whyItMatters: { en: "Catching a leg-load issue at an intermediate stage is far safer than discovering it only at final height." },
+      },
+      {
+        id: "final_verification_report",
+        phaseId: "final_elevation_verification_securing",
+        from: "engine", to: "bridge",
+        trigger: { en: "Final elevation reached." },
+        content: { en: "Chief Engineer reports final air gap, hull level, and leg loads confirmed within limits." },
+        whyItMatters: { en: "This is the Master's final gate before the rig is declared ready for the operations that follow." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the operation overall: leads positioning, jointly assesses preload readiness with the Chief Engineer, and authorizes each stage from leg lowering through final jacking." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads position confirmation and leg-penetration monitoring — the operation's data-verification role, watching for asymmetry across legs throughout preloading." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team on leg-lowering execution and spud-in confirmation — the operation's hands-on deck lead for the physical leg-handling sequence." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes leg-lowering and monitoring tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Leads the ballast/jacking system itself: executes the preload ballasting sequence, confirms preload readings jointly with the Master, and runs the staged jack-up to working air gap — the operation's technical mechanism lead, alongside Master." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Leads positioning; authorizes each stage from leg lowering through final jacking." },
+        ],
+        iMonitor: [
+          { en: "Position, weather trend, and the joint preload assessment throughout." },
+        ],
+        iReport: [
+          { en: "Confirms final elevation status once verified." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize jacking up before the joint preload assessment with the Chief Engineer is genuinely confirmed." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Confirms position readings; monitors leg penetration across all legs throughout preloading." },
+        ],
+        iMonitor: [
+          { en: "Penetration data for any asymmetry between legs." },
+        ],
+        iReport: [
+          { en: "Reports position confirmation and penetration readings/anomalies to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not treat an asymmetric penetration reading as routine without flagging it." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the deck team on leg-lowering execution and spud-in confirmation." },
+        ],
+        iMonitor: [
+          { en: "Leg-lowering sequence and rate; initial seabed contact on all legs." },
+        ],
+        iReport: [
+          { en: "Reports spud-in confirmation to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not lower legs faster than the system's designed rate." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes leg-lowering and monitoring tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate task conditions during leg handling." },
+        ],
+        iReport: [
+          { en: "Reports hazards or irregularities to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent leg-handling decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Executes the preload ballasting sequence and the staged jack-up to working air gap." },
+        ],
+        iMonitor: [
+          { en: "Ballasting stage status, preload readings, and leg loads at each jacking stage." },
+        ],
+        iReport: [
+          { en: "Jointly confirms preload readiness with the Master; reports jacking-stage and final verification status." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not proceed to the next ballasting or jacking stage before confirming the current stage is within limits." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "jackup_rig_move_jacking_phase_sequence",
+        targetRanks: ["master", "chief_engineer", "chief_officer"],
+        prompt: { en: "Put the rig move, jacking up, and leg preloading operation's phases in the correct order." },
+        items: [
+          { id: "position", label: { en: "Location Positioning & Setup" } },
+          { id: "leg_lower", label: { en: "Leg Lowering & Spud-In" } },
+          { id: "ballast", label: { en: "Preload Ballasting Sequence" } },
+          { id: "penetration", label: { en: "Leg Penetration Monitoring" } },
+          { id: "weather", label: { en: "Weather & Environmental Monitoring" } },
+          { id: "preload_confirm", label: { en: "Preload Confirmation & Hold Assessment" } },
+          { id: "jack_up", label: { en: "Jacking Up to Working Air Gap" } },
+          { id: "final_verify", label: { en: "Final Elevation Verification & Securing" } },
+        ],
+        correctOrder: ["position", "leg_lower", ["ballast", "penetration", "weather"], "preload_confirm", "jack_up", "final_verify"],
+      },
+      {
+        type: "error_identification",
+        id: "jackup_penetration_anomaly_downplayed",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "Monitoring leg penetration during preload, one leg shows notably deeper penetration than the other two — still within a range that could plausibly resolve on its own. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Note the difference but continue reporting routine status, since it might resolve on its own." }, isError: true, explanation: { en: "Folding an asymmetric reading into the routine report, rather than flagging it distinctly, is exactly the shortcut this operation's monitoring discipline exists to catch." } },
+          { id: "b", label: { en: "Immediately raise a distinct anomaly alert to the Master rather than folding it into the routine report." }, isError: false, explanation: { en: "Correct — an asymmetric reading deserves its own flag, not routine treatment." } },
+          { id: "c", label: { en: "Request the ballasting sequence pause briefly while the reading is verified." }, isError: false, explanation: { en: "Correct — pausing to verify costs little against the risk of continuing on an unconfirmed anomaly." } },
+          { id: "d", label: { en: "Cross-check the reading against the ballast stage data before deciding it's significant." }, isError: false, explanation: { en: "Correct — cross-checking against a second data source is a genuine verification step, not a delay tactic." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "jackup_pre_jack_up_readiness_gate",
+        targetRanks: ["master"],
+        scenario: { en: "Preloading is complete and the crew is ready to begin jacking up. Before authorizing the jack-up to begin, review which conditions are actually satisfied." },
+        items: [
+          { id: "legs_spudded_in", label: { en: "All legs confirmed spudded in before preloading began." }, isSatisfied: true },
+          { id: "preload_readings_confirmed", label: { en: "Preload readings confirmed acceptable across all legs, jointly with the Chief Engineer." }, isSatisfied: true },
+          { id: "weather_within_limits", label: { en: "Weather trend confirmed within the jacking operation's own weather-window limits." }, isSatisfied: false },
+          { id: "anomaly_resolved", label: { en: "Any penetration anomaly fully investigated and resolved, not just noted." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Legs are being lowered and one leg reaches seabed contact noticeably faster than the planned rate would suggest for this water depth." },
+        mission: { en: "As Bosun, decide how to proceed." },
+        expectedActions: [
+          { en: "Pause and verify the reading rather than continuing at the planned rate assuming the depth data was simply off." },
+        ],
+        why: [
+          { en: "An unexpectedly fast contact could mean a genuinely shallower or different seabed than expected — proceeding on the assumption it's just a data quirk risks missing a real condition." },
+        ],
+        commonMistakes: [
+          { en: "Continuing the lowering sequence on the assumption the discrepancy is a sensor or data issue." },
+        ],
+        safetyPoints: [
+          { en: "An unexpected reading during leg lowering is exactly the kind of signal this operation's own discipline exists to catch early, before preloading begins." },
+        ],
+      },
+      {
+        situation: { en: "While monitoring one leg's penetration display during preload, you're asked to also help with an unrelated task on deck for a few minutes." },
+        mission: { en: "As AB, decide how to respond." },
+        expectedActions: [
+          { en: "Decline or hand off the monitoring task properly to someone else before doing anything else, rather than leaving it unmonitored." },
+        ],
+        why: [
+          { en: "A monitoring task during an active preload sequence is a genuine, assigned responsibility — leaving it unmonitored even briefly creates a real gap in the operation's own safeguards." },
+        ],
+        commonMistakes: [
+          { en: "Stepping away from monitoring without arranging a proper handoff." },
+        ],
+        safetyPoints: [
+          { en: "A handed-off monitoring task stays covered; an abandoned one doesn't." },
+        ],
+      },
+      {
+        situation: { en: "The preload ballasting sequence is proceeding well, and completing the next stage a bit faster than planned would save meaningful time, with no readings currently showing concern." },
+        mission: { en: "As Chief Engineer, decide whether to accelerate the sequence." },
+        expectedActions: [
+          { en: "Stay within the planned staged increments and confirmation points, regardless of how well things are currently going." },
+        ],
+        why: [
+          { en: "The staged approach exists precisely to catch a problem between stages — going well so far doesn't mean the next stage will, and skipping confirmation points removes the chance to catch it if it doesn't." },
+        ],
+        commonMistakes: [
+          { en: "Accelerating or combining stages because current readings look favorable." },
+        ],
+        safetyPoints: [
+          { en: "The value of a staged confirmation process is in following it even when — especially when — everything currently looks fine." },
+        ],
+      },
+      {
+        situation: { en: "The weather forecast shows conditions staying within limits for the jacking operation, but a later, less certain forecast update suggests conditions might deteriorate sooner than originally expected." },
+        mission: { en: "As Master, decide how to factor this into the jacking decision." },
+        expectedActions: [
+          { en: "Treat the less certain but more recent forecast update as a genuine input to the timeline, building in margin rather than planning to the original, more favorable forecast." },
+        ],
+        why: [
+          { en: "A later forecast update, even if less certain, generally reflects more current information — dismissing it in favor of the original, more comfortable forecast risks running the operation closer to the actual weather window's edge than realized." },
+        ],
+        commonMistakes: [
+          { en: "Continuing to plan against the original forecast because it's more favorable and was already relied upon." },
+        ],
+        safetyPoints: [
+          { en: "Building margin against the more recent, less favorable information costs little compared to being caught by weather mid-jacking." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "jackup_leg_penetration_pattern_judgment",
+        title: { en: "The Leg That Doesn't Quite Match" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "During preload, your monitoring shows one leg's penetration reading consistently, if modestly, higher than the other two across several readings — not dramatic, but a real pattern rather than a single blip." },
+          options: [
+            {
+              id: "continue_routine_monitoring",
+              label: { en: "Continue routine monitoring and reporting, since the difference isn't dramatic enough to interrupt the sequence." },
+              consequence: { en: "The discrepancy continues growing across further stages, becoming a larger, harder-to-explain gap than it would have been if addressed now." },
+              feedback: { en: "A consistent pattern across several readings is different from a single blip — treating it as routine because no single reading looks alarming misses what the pattern itself is showing." },
+            },
+            {
+              id: "raise_anomaly_request_pause",
+              label: { en: "Raise it as a distinct anomaly to the Master and request the next stage pause briefly for verification." },
+              isRecommended: true,
+              consequence: { en: "The Master and Chief Engineer investigate together and trace the cause to a ballast valve on that leg's tank not fully open." },
+              feedback: { en: "Correct — flagging a real pattern distinctly, while it's still small, is exactly what lets it be traced and corrected before it grows." },
+              next: {
+                id: "valve_cause_identified",
+                situation: { en: "The valve issue is identified and corrected — the ballast distribution to that leg's tank was uneven due to the valve not being fully open. The immediate cause is now explained and fixed." },
+                options: [
+                  {
+                    id: "continue_without_reverify",
+                    label: { en: "Correct the valve and continue the ballasting/preload sequence from the current stage, without redoing prior stages." },
+                    consequence: { en: "The data collected during the earlier stages, gathered while the valve issue was still present, is never actually re-verified — an assumption stands in for a confirmation." },
+                    feedback: { en: "Explaining the cause isn't the same as confirming the readings collected under that condition are still valid — the earlier stages deserve a genuine re-check, not a pass because the cause is now understood." },
+                  },
+                  {
+                    id: "reverify_affected_leg_data",
+                    label: { en: "Correct the valve and re-verify the affected leg's penetration/preload data from that stage onward before continuing." },
+                    isRecommended: true,
+                    consequence: { en: "The re-verification confirms the corrected readings are now consistent with the other legs, and the sequence resumes on confirmed, not assumed, data." },
+                    feedback: { en: "Correct — identifying the cause and confirming the fix actually resolved it are two different steps; both are needed before treating the data as reliable again." },
+                  },
+                  {
+                    id: "skip_reverify_proceed_jacking",
+                    label: { en: "Since the cause is now explained as equipment, not seabed, skip re-verification and proceed straight to jacking up." },
+                    consequence: { en: "The jack-up proceeds on data that was never actually re-confirmed after the fix, on the assumption that identifying the cause was equivalent to confirming the current state." },
+                    feedback: { en: "Ruling out one explanation (a seabed problem) isn't the same as confirming the current readings are now genuinely fine — that still needs its own check." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "quiet_self_check_first",
+              label: { en: "Quietly cross-check the raw sensor yourself first, and only report if you find something clearly wrong." },
+              consequence: { en: "The pattern continues developing while you work through your own check, and the Master's awareness is delayed for a discrepancy that was already real." },
+              feedback: { en: "\"Clearly wrong\" is too high a bar for something that's already showing a consistent pattern — this is exactly the kind of finding that deserves reporting alongside verification, not instead of it." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "A consistent pattern deserves a distinct flag, not folding into routine" },
+        bestPractices: [
+          { en: "Raise a pattern that develops across multiple readings as its own distinct signal, even if no single reading looks alarming on its own." },
+        ],
+        commonErrors: [
+          { en: "Treating a developing pattern as routine because each individual reading, taken alone, isn't dramatic." },
+        ],
+      },
+      {
+        theme: { en: "Assigned monitoring tasks stay covered — handoff, not abandonment" },
+        bestPractices: [
+          { en: "Properly hand off a monitoring task to someone else before stepping away, rather than leaving it unmonitored." },
+        ],
+        commonErrors: [
+          { en: "Stepping away from an assigned monitoring task without arranging coverage." },
+        ],
+      },
+      {
+        theme: { en: "Follow the staged process even when things are going well" },
+        bestPractices: [
+          { en: "Hold to the planned staged increments and confirmation points regardless of how favorable current readings look." },
+        ],
+        commonErrors: [
+          { en: "Accelerating or skipping staged confirmations because everything currently appears fine." },
+        ],
+      },
+      {
+        theme: { en: "Identifying a cause isn't the same as confirming the fix worked" },
+        bestPractices: [
+          { en: "Re-verify data or conditions after correcting an identified cause, rather than treating the explanation itself as confirmation the issue is resolved." },
+        ],
+        commonErrors: [
+          { en: "Proceeding on the assumption that understanding the cause is equivalent to confirming the current state is now genuinely fine." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
