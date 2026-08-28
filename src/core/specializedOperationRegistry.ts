@@ -15842,6 +15842,501 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  yacht_guest_overboard_emergency_response: {
+    operationId: "yacht_guest_overboard_emergency_response",
+    vesselTypeId: "yacht",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Yacht — Guest Overboard During Watersports" },
+    introduction: {
+      en: "During guest water activity, someone goes into real difficulty — swept by a current, injured, or simply struggling — and the crew's response has to happen for real, not as a supervised drill. This directly interrupts and stress-tests op1's own infrastructure: the dedicated, undivided supervision role built there is what should catch this the moment it develops, and the tender that was standing by for routine guest transport now becomes the recovery vessel. With only five crew aboard, this operation tests whether that same small-crew structure holds up when the stakes turn real — no reserve of specialist rescue crew to call on, just the same five people, now doing this instead of what they were doing a moment ago.",
+    },
+    objectives: [
+      { en: "Describe the sequence of responding to a guest in the water in genuine difficulty: recognition, alert, recovery, and post-recovery care." },
+      { en: "Explain how op1's dedicated-supervision role is what surfaces this emergency early, and why that discipline matters even more once it's real." },
+      { en: "Identify how the five-person crew reallocates itself for recovery without leaving the vessel itself unattended or unsecured." },
+      { en: "Identify who does what, including when and why shore authorities are notified." },
+      { en: "Recognize correct versus incorrect judgment calls under the time pressure a real recovery creates." },
+    ],
+    context: {
+      en: "Directly interrupts and stress-tests op1's supervision and tender infrastructure — genuinely distinct from Fishing Vessel's gear-induced MOB (crew-focused, gear-entanglement-driven); this is guest-focused and supervision-driven. Roster carries forward unchanged from op1 (5 ranks), no new CommunicationParty needed. Chief Engineer checked, not assumed: stays at support, since this is a deck-led guest-rescue emergency, not an engine-driven one. Lead pairing genuinely shifts from op1: Bosun elevates to lead alongside Master (leading the physical recovery, the operation's core task), while Chief Officer moves to perform (remaining-guest accounting) — confirmed with the user as the first case in the catalog where the second lead seat changes between an op1 and its op2.",
+    },
+
+    operationPhaseOrder: [
+      "recognition_alert_signal",
+      ["tender_recovery_approach", "remaining_guest_accounting", "vessel_standby_positioning"],
+      "guest_recovery_immediate_care",
+      "medical_assessment_evacuation_decision",
+      "notification_outcome_reporting",
+    ],
+    operationPhases: {
+      recognition_alert_signal: {
+        id: "recognition_alert_signal",
+        title: { en: "Recognition & Alert Signal" },
+        overview: { en: "The alert is raised on the first sign of genuine difficulty, not after waiting to see if it resolves itself." },
+        steps: [
+          { en: "Crew member on dedicated supervision duty spots the guest in genuine difficulty." },
+          { en: "Alert raised immediately, loudly and unambiguously, to the whole crew." },
+        ],
+        bestPractices: [
+          { en: "Raise the alert on the first sign of genuine difficulty, not after waiting to see if it resolves itself." },
+        ],
+        commonMistakes: [
+          { en: "Hesitating to raise the alert for fear of a false alarm." },
+        ],
+      },
+      tender_recovery_approach: {
+        id: "tender_recovery_approach",
+        title: { en: "Tender Recovery Approach" },
+        overview: { en: "The fastest safe approach, not the fastest possible one." },
+        steps: [
+          { en: "Bosun (with AB) takes the tender directly to the guest for recovery." },
+        ],
+        bestPractices: [
+          { en: "Approach from a position that doesn't risk the propeller near the guest in the water." },
+        ],
+      },
+      remaining_guest_accounting: {
+        id: "remaining_guest_accounting",
+        title: { en: "Remaining Guest Accounting" },
+        overview: { en: "An active headcount, not an assumption that everyone else is fine because attention is on the one guest in difficulty." },
+        steps: [
+          { en: "A second crew member accounts for every other guest in the water or on deck." },
+        ],
+        bestPractices: [
+          { en: "Treat this as an active headcount, not an assumption." },
+        ],
+        commonMistakes: [
+          { en: "Letting supervision of the remaining guests lapse while all attention goes to the recovery." },
+        ],
+      },
+      vessel_standby_positioning: {
+        id: "vessel_standby_positioning",
+        title: { en: "Vessel Standby Positioning" },
+        overview: { en: "The yacht itself doesn't become a second unattended concern." },
+        steps: [
+          { en: "Master/remaining crew keep the anchored yacht properly stood by — ready to assist, maneuver, or receive the recovered guest." },
+        ],
+        bestPractices: [
+          { en: "Confirm the yacht itself remains safely secured and ready throughout, not just the tender/recovery effort." },
+        ],
+      },
+      guest_recovery_immediate_care: {
+        id: "guest_recovery_immediate_care",
+        title: { en: "Guest Recovery & Immediate Care" },
+        overview: { en: "First assessment begins the moment the guest is aboard." },
+        steps: [
+          { en: "Guest brought aboard the tender or yacht and given immediate first aid/assessment." },
+        ],
+        bestPractices: [
+          { en: "Begin first assessment the moment the guest is aboard, without waiting to return fully to the yacht first if time matters." },
+        ],
+      },
+      medical_assessment_evacuation_decision: {
+        id: "medical_assessment_evacuation_decision",
+        title: { en: "Medical Assessment & Evacuation Decision" },
+        overview: { en: "The decision is based on an actual assessment of the guest's condition, not a default reflex in either direction." },
+        steps: [
+          { en: "Based on the guest's condition, a decision is made on whether onboard care suffices or evacuation/medical assistance is needed." },
+        ],
+        bestPractices: [
+          { en: "Base the decision on an actual assessment of the guest's condition, not a default reflex toward under- or over-reacting." },
+        ],
+      },
+      notification_outcome_reporting: {
+        id: "notification_outcome_reporting",
+        title: { en: "Notification & Outcome Reporting" },
+        overview: { en: "A prompt notification once the evacuation decision is made, not a delay to gather more information first." },
+        steps: [
+          { en: "Shore authorities notified if evacuation or medical assistance is needed." },
+          { en: "Outcome and incident reported." },
+        ],
+        bestPractices: [
+          { en: "Notify promptly once the evacuation decision is made, rather than delaying to gather more information first." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "overboard_alert",
+        phaseId: "recognition_alert_signal",
+        from: "deck", to: "bridge",
+        trigger: { en: "Guest seen in genuine difficulty." },
+        content: { en: "The crew member on supervision duty alerts the Master immediately, loudly and unambiguously." },
+        whyItMatters: { en: "Every second before the alert is a second the recovery hasn't started — this is the single highest-value moment in the whole operation." },
+      },
+      {
+        id: "recovery_underway_report",
+        phaseId: "tender_recovery_approach",
+        from: "deck", to: "bridge",
+        trigger: { en: "Tender launched toward the guest." },
+        content: { en: "Bosun reports the tender is underway toward the guest's position." },
+        whyItMatters: { en: "The Master needs to know recovery is actively in motion to coordinate the rest of the crew's reallocation." },
+      },
+      {
+        id: "remaining_guests_accounted_report",
+        phaseId: "remaining_guest_accounting",
+        from: "deck", to: "bridge",
+        trigger: { en: "Accounting of remaining guests complete." },
+        content: { en: "The crew member accounting for the other guests reports them confirmed safe and supervised." },
+        whyItMatters: { en: "The Master can't treat the situation as contained until this is confirmed — a second guest at risk during the recovery would be a compounding emergency." },
+      },
+      {
+        id: "standby_readiness_confirmation",
+        phaseId: "vessel_standby_positioning",
+        from: "deck", to: "bridge",
+        trigger: { en: "Vessel standby position established." },
+        content: { en: "Whoever remains with the yacht confirms it's secured and properly stood by, ready to assist or maneuver." },
+        whyItMatters: { en: "The recovery effort depends on the yacht itself not becoming a second unattended problem." },
+      },
+      {
+        id: "guest_aboard_care_request",
+        phaseId: "guest_recovery_immediate_care",
+        from: "deck", to: "guest_services",
+        trigger: { en: "Guest brought aboard." },
+        content: { en: "The recovery crew requests medical-kit support and care preparation from the interior team." },
+        whyItMatters: { en: "Guest Services can have care ready the moment the guest is brought back rather than scrambling after the fact." },
+      },
+      {
+        id: "condition_report_to_bridge",
+        phaseId: "medical_assessment_evacuation_decision",
+        from: "deck", to: "bridge",
+        trigger: { en: "Guest's condition assessed." },
+        content: { en: "The crew member assessing the guest reports their condition to the Master." },
+        whyItMatters: { en: "The evacuation decision depends on an accurate, current condition report, not a guess from a distance." },
+      },
+      {
+        id: "evacuation_decision_communicated",
+        phaseId: "medical_assessment_evacuation_decision",
+        from: "bridge", to: "guest_services",
+        trigger: { en: "Evacuation decision made." },
+        content: { en: "Master communicates the decision — onboard care or evacuation — to Guest Services and the crew." },
+        whyItMatters: { en: "Guest Services needs this to manage the other guests' awareness and prepare accordingly." },
+      },
+      {
+        id: "shore_notification",
+        phaseId: "notification_outcome_reporting",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Evacuation or medical assistance needed." },
+        content: { en: "Master notifies shore authorities promptly once evacuation or medical assistance is needed." },
+        whyItMatters: { en: "A prompt notification means outside assistance is already moving rather than starting only once onboard options are exhausted." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the overall response: receives the alert, coordinates the crew's reallocation across recovery/accounting/standby, and makes the medical evacuation decision." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Takes the remaining-guest accounting role, confirming every other guest is safe and supervised while the recovery is underway — the operation's second-priority safeguard, distinct from but as critical as the recovery itself." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the tender recovery approach and physical recovery of the guest — the operation's hands-on rescue lead." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes recovery tasks under the Bosun's direction, and may hold the vessel-standby role, keeping the yacht itself secured and ready during the recovery." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Confirms engine/systems readiness in case the yacht needs to maneuver, and supports first-aid/medical response as needed — support role, since this operation's core response is deck-led, not engine-driven." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "lead",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Coordinates the crew's reallocation across recovery, accounting, and standby." },
+          { en: "Makes the evacuation decision." },
+        ],
+        iMonitor: [
+          { en: "Recovery progress, remaining-guest status, and guest condition throughout." },
+        ],
+        iReport: [
+          { en: "Notifies shore authorities if evacuation/medical assistance is needed." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not delay the evacuation decision waiting for more certainty than the guest's condition report already provides." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Accounts for every other guest in the water or on deck during the recovery." },
+        ],
+        iMonitor: [
+          { en: "Remaining guests' safety and supervision status throughout the recovery." },
+        ],
+        iReport: [
+          { en: "Reports remaining guests confirmed safe to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not let this accounting lapse because attention is drawn to the primary recovery." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the tender recovery approach and physical recovery of the guest." },
+        ],
+        iMonitor: [
+          { en: "Recovery approach safety (propeller clearance, guest condition on pickup)." },
+        ],
+        iReport: [
+          { en: "Reports recovery underway and guest recovered status to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not approach in a way that risks the propeller near the guest in the water." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes recovery tasks under the Bosun; may hold the vessel-standby role." },
+        ],
+        iMonitor: [
+          { en: "Yacht security/readiness when on standby duty; recovery tasks otherwise." },
+        ],
+        iReport: [
+          { en: "Reports standby readiness to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not leave the yacht unattended while assigned standby duty." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Confirms engine/systems readiness for possible maneuvering; supports first-aid response as needed." },
+        ],
+        iMonitor: [
+          { en: "Engine/systems readiness throughout." },
+        ],
+        iReport: [
+          { en: "Reports readiness status to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not direct the recovery or medical-decision process — support role only." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "yacht_guest_overboard_phase_sequence",
+        targetRanks: ["master", "bosun", "chief_officer"],
+        prompt: { en: "Put the guest overboard emergency response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Recognition & Alert Signal" } },
+          { id: "tender_approach", label: { en: "Tender Recovery Approach" } },
+          { id: "guest_accounting", label: { en: "Remaining Guest Accounting" } },
+          { id: "vessel_standby", label: { en: "Vessel Standby Positioning" } },
+          { id: "recovery_care", label: { en: "Guest Recovery & Immediate Care" } },
+          { id: "medical_decision", label: { en: "Medical Assessment & Evacuation Decision" } },
+          { id: "notification", label: { en: "Notification & Outcome Reporting" } },
+        ],
+        correctOrder: ["alert", ["tender_approach", "guest_accounting", "vessel_standby"], "recovery_care", "medical_decision", "notification"],
+      },
+      {
+        type: "error_identification",
+        id: "yacht_accounting_attention_lapse",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The overboard alert is raised and the tender launches toward the guest in difficulty. It's a tense moment and everyone's eyes are drawn to the recovery. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Watch the recovery unfold along with everyone else instead of starting the remaining-guest accounting." }, isError: true, explanation: { en: "The recovery drawing everyone's attention is exactly why this accounting task exists as a separate, assigned responsibility — a second unsupervised guest during this window is a real, compounding risk." } },
+          { id: "b", label: { en: "Immediately begin accounting for the remaining guests while the recovery is underway." }, isError: false, explanation: { en: "Correct — this task runs in parallel with the recovery, not after it." } },
+          { id: "c", label: { en: "Report the remaining guests confirmed safe once the count is complete." }, isError: false, explanation: { en: "Correct — the Master needs this confirmation to treat the situation as contained." } },
+          { id: "d", label: { en: "Continue accounting for guests even though the recovery appears to be going well." }, isError: false, explanation: { en: "Correct — the recovery looking fine doesn't substitute for actually completing the count." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "yacht_pre_evacuation_decision_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The guest has been recovered and brought aboard. Before making the evacuation decision, review which conditions are actually satisfied." },
+        items: [
+          { id: "condition_directly_assessed", label: { en: "Guest's condition directly assessed by a crew member, not judged from a distance." }, isSatisfied: true },
+          { id: "guests_accounted", label: { en: "Remaining guests confirmed accounted for and safe." }, isSatisfied: true },
+          { id: "vessel_standby_confirmed", label: { en: "Yacht confirmed secured and properly stood by throughout the recovery." }, isSatisfied: false },
+          { id: "authorities_pre_alerted", label: { en: "Shore authorities pre-alerted in case evacuation is needed, even before the final decision." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "You're assigned vessel-standby duty while the Bosun and another crew member handle the recovery. The recovery seems to be taking a while, and it's tempting to move to the rail to get a better view of what's happening." },
+        mission: { en: "As AB, decide how to handle the urge." },
+        expectedActions: [
+          { en: "Remain at your standby post, monitoring the yacht itself, unless specifically directed to assist." },
+        ],
+        why: [
+          { en: "The standby role exists precisely because the yacht can't be left unattended during a recovery — abandoning it to watch defeats its purpose." },
+        ],
+        commonMistakes: [
+          { en: "Leaving the standby post to observe the recovery." },
+        ],
+        safetyPoints: [
+          { en: "A properly stood-by yacht is what lets the recovery crew focus fully on the guest, without a second problem developing." },
+        ],
+      },
+      {
+        situation: { en: "Approaching the guest in the water, there's a faster, more direct line that would bring the tender's stern (and propeller) closer to the guest than the standard approach." },
+        mission: { en: "As Bosun, decide which approach to take." },
+        expectedActions: [
+          { en: "Take the slightly slower, safer approach that keeps the propeller clear of the guest, even though it costs a few extra seconds." },
+        ],
+        why: [
+          { en: "A propeller-related injury during the rescue attempt would turn one emergency into a worse one — the few seconds saved aren't worth that risk." },
+        ],
+        commonMistakes: [
+          { en: "Prioritizing speed of approach over propeller clearance." },
+        ],
+        safetyPoints: [
+          { en: "The fastest technically-possible approach isn't always the safest actual approach." },
+        ],
+      },
+      {
+        situation: { en: "During the recovery, you notice the engine would benefit from a few minutes of warm-up before it could reliably maneuver if needed, but starting it now means noise and vibration near the recovery effort." },
+        mission: { en: "As Chief Engineer, decide how to handle it." },
+        expectedActions: [
+          { en: "Start the warm-up regardless, informing the Master of the brief noise/vibration trade-off for maneuvering readiness." },
+        ],
+        why: [
+          { en: "Being ready to maneuver if the situation escalates is worth a temporary inconvenience — waiting until maneuvering is actually needed risks not having it available in time." },
+        ],
+        commonMistakes: [
+          { en: "Delaying warm-up to avoid disturbing the recovery, leaving the yacht unable to maneuver quickly if needed." },
+        ],
+        safetyPoints: [
+          { en: "Readiness prepared in advance is what makes a fast response possible if conditions change." },
+        ],
+      },
+      {
+        situation: { en: "The guest's condition looks stable enough that onboard care seems sufficient, but you're aware the assessment came from a crew member without medical training, under a stressful, fast-moving situation." },
+        mission: { en: "As Master, decide how to weigh this." },
+        expectedActions: [
+          { en: "Request a more thorough or a second assessment before finalizing the decision, rather than accepting the first read as conclusive." },
+        ],
+        why: [
+          { en: "A single, hurried assessment under pressure is exactly the kind of information that benefits from a second look before it becomes the basis for a significant decision." },
+        ],
+        commonMistakes: [
+          { en: "Finalizing the evacuation decision on a single, hurried assessment without seeking confirmation." },
+        ],
+        safetyPoints: [
+          { en: "A second assessment costs little time relative to the cost of an evacuation decision made on an incomplete picture." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "yacht_ambiguous_guest_condition_judgment",
+        title: { en: "The Assessment That's Not Quite Clear" },
+        seatRankId: "master",
+        root: {
+          id: "root",
+          situation: { en: "The guest has been recovered and brought aboard. The initial condition report is mixed — some coughing and mild disorientation, but nothing that clearly reads as severe. Time matters, but so does getting this right." },
+          options: [
+            {
+              id: "hold_monitor_reassess_later",
+              label: { en: "Hold at anchorage, monitor onboard, and reassess after a short interval." },
+              consequence: { en: "The guest's condition develops further before anyone takes a closer look, losing time that an earlier reassessment would have caught." },
+              feedback: { en: "Deciding to wait without actually gathering a clearer picture first isn't the same as making an informed decision to hold." },
+            },
+            {
+              id: "request_thorough_reassessment",
+              label: { en: "Request a more thorough onboard reassessment before deciding either way." },
+              isRecommended: true,
+              consequence: { en: "The reassessment surfaces a more specific and concerning pattern of symptoms." },
+              feedback: { en: "Correct — genuinely ambiguous information is worth clarifying before it becomes the basis for a significant decision." },
+              next: {
+                id: "clarified_delayed_onset_risk",
+                situation: { en: "The reassessment finds a pattern more specifically consistent with a known delayed-onset risk after a near-drowning event — the guest currently seems alert and comfortable, but the risk is real precisely because it can develop after that initial appearance." },
+                options: [
+                  {
+                    id: "evacuate_now_clarified",
+                    label: { en: "Decide to evacuate now, based on this clarified and more concerning picture." },
+                    isRecommended: true,
+                    consequence: { en: "The guest is evacuated promptly while still stable, ahead of the delayed-onset risk the reassessment specifically flagged." },
+                    feedback: { en: "Correct — now that the ambiguity is resolved into a specific, known concern, further delay adds no value and only costs time against a risk that's exactly about delayed onset." },
+                  },
+                  {
+                    id: "continue_monitoring_looks_fine",
+                    label: { en: "Continue monitoring a while longer, since the guest currently seems alert and comfortable." },
+                    consequence: { en: "The guest's apparent comfort masks the delayed-onset risk the reassessment just identified, and the condition develops further before action is taken." },
+                    feedback: { en: "The reassessment's entire value was catching a risk that doesn't show in how the guest currently looks — discounting it back to \"looks fine\" throws away what was just learned." },
+                  },
+                  {
+                    id: "request_third_assessment",
+                    label: { en: "Request a third assessment before deciding to evacuate." },
+                    consequence: { en: "The decision is delayed again despite already having a clear, specific finding — losing time this exact hazard doesn't allow for." },
+                    feedback: { en: "One clarifying reassessment was the right call against genuine ambiguity — once it delivers a clear, specific finding, another round of delay no longer serves a purpose." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "evacuate_immediately_no_assessment",
+              label: { en: "Begin evacuation immediately without further assessment, given the ambiguity." },
+              consequence: { en: "The evacuation is launched on an unclear picture that a brief reassessment could have clarified either way, committing significant resources on ambiguity rather than information." },
+              feedback: { en: "Ambiguity is a reason to clarify quickly, not to skip straight to the most resource-intensive response." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Raise the alert on the first sign, not after waiting for certainty" },
+        bestPractices: [
+          { en: "Alert the crew immediately at the first sign of genuine difficulty, loudly and unambiguously." },
+        ],
+        commonErrors: [
+          { en: "Hesitating to raise the alert for fear of a false alarm." },
+        ],
+      },
+      {
+        theme: { en: "Parallel safety tasks stay staffed even when attention is drawn elsewhere" },
+        bestPractices: [
+          { en: "Maintain assigned tasks (remaining-guest accounting, vessel standby) in parallel with the primary recovery, not as an afterthought once it concludes." },
+        ],
+        commonErrors: [
+          { en: "Letting a parallel safety task lapse because attention is drawn to the more visible emergency." },
+        ],
+      },
+      {
+        theme: { en: "Don't trade safety for a few seconds of speed" },
+        bestPractices: [
+          { en: "Choose the approach or action that keeps genuine hazards (propeller clearance, readiness gaps) controlled, even at a small time cost." },
+        ],
+        commonErrors: [
+          { en: "Prioritizing the fastest possible action over one that manages a real, avoidable risk." },
+        ],
+      },
+      {
+        theme: { en: "Clarify genuine ambiguity once, then act decisively on what you learn" },
+        bestPractices: [
+          { en: "Resolve a genuinely unclear picture with one focused reassessment, then commit to the decision that finding supports without further unnecessary delay." },
+        ],
+        commonErrors: [
+          { en: "Either deciding on unclear information without seeking clarification, or continuing to delay after a clear finding no longer justifies it." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
