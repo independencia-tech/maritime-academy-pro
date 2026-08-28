@@ -146,8 +146,19 @@ export interface OperationPhase {
 // same party rather than added separately, since their domain overlaps
 // directly with the Passenger Safety Officer's own. Load-bearing across
 // seven communication touchpoints.
+//
+// "guest_services" added for the Yacht remote-bay anchoring/tender
+// operation: the interior team (chief stewardess, stews) who run
+// guest-facing coordination — the fifth instance of the onboard-but-non-
+// RankId department pattern. Deliberately distinct from "passenger_services":
+// that party coordinates mass-passenger logistics (headcounts, muster
+// stations) at merchant-ferry/cruise scale; this one is bespoke, small-crew
+// guest service on a vessel carrying a handful of owners/guests — different
+// scale and texture, not a renamed duplicate. Load-bearing across two of
+// this operation's communication touchpoints (tender readiness, guest
+// headcount reconciliation).
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team" | "warranty_surveyor" | "passenger_services";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team" | "warranty_surveyor" | "passenger_services" | "guest_services";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -15327,6 +15338,506 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Delaying a necessary decision while waiting for more clarity than the situation is likely to provide in time." },
+        ],
+      },
+    ],
+  },
+
+  yacht_remote_bay_anchoring_tender_ops: {
+    operationId: "yacht_remote_bay_anchoring_tender_ops",
+    vesselTypeId: "yacht",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Yacht — Anchoring & Tender Operations in a Remote Bay" },
+    introduction: {
+      en: "A yacht arrives at a secluded, often unsurveyed anchorage to let guests enjoy the bay — swimming, watersports, a shore excursion. With a crew of five doing what a merchant ship spreads across a dozen or more, this operation is defined by that compression: the same person often shifts between anchoring the vessel, launching and running the tender, and keeping an eye on guests in the water, all within the same short window. It's routine in the sense that this happens on nearly every charter day, but the margin for error is genuinely tighter than on a merchant vessel — an unsurveyed bay means the depth sounder and local knowledge matter more than a chart, and guests in the water are a different category of exposure than cargo or crew alone.",
+    },
+    objectives: [
+      { en: "Describe the sequence of selecting, executing, and confirming a safe anchoring position in an unsurveyed or lightly-charted bay." },
+      { en: "Explain the tender launch/recovery sequence and how it's coordinated alongside guest water activity." },
+      { en: "Identify how a five-person crew divides anchoring and tender/guest-supervision duties without leaving either unattended." },
+      { en: "Identify who does what, including the boundary between deck/engine crew's vessel-safety authority and the interior team's guest-facing role." },
+      { en: "Recognize correct versus incorrect judgment calls when local depth/holding information is uncertain or guest activity creates competing demands on crew attention." },
+    ],
+    context: {
+      en: "Genuinely new terrain in the catalog — no reskin risk against Passenger Ship's mass-passenger logistics or any offshore/cargo vessel. A 5-rank roster (no dedicated OOW — the Chief Officer is the effective watch/navigation officer at this vessel scale), with the interior/guest-service team represented as a new external CommunicationParty rather than folded into RankId.",
+    },
+
+    operationPhaseOrder: [
+      "bay_assessment_anchor_position_selection",
+      "anchoring_execution_and_hold_confirmation",
+      ["tender_launch_preparation", "guest_water_activity_supervision", "anchor_watch_monitoring"],
+      "tender_recovery_guest_return",
+      "post_activity_stow_departure_prep",
+    ],
+    operationPhases: {
+      bay_assessment_anchor_position_selection: {
+        id: "bay_assessment_anchor_position_selection",
+        title: { en: "Bay Assessment & Anchor Position Selection" },
+        overview: { en: "Chart data is a starting point to verify, not a substitute for direct depth/bottom confirmation." },
+        steps: [
+          { en: "Depth, holding ground, swing room, and hazards assessed using sounder, local knowledge, and visual read of the bay." },
+        ],
+        bestPractices: [
+          { en: "Treat local/chart data as a starting point to verify, not a substitute for direct depth/bottom confirmation." },
+        ],
+        commonMistakes: [
+          { en: "Anchoring based on chart data alone in an area explicitly known to be lightly surveyed." },
+        ],
+      },
+      anchoring_execution_and_hold_confirmation: {
+        id: "anchoring_execution_and_hold_confirmation",
+        title: { en: "Anchoring Execution & Hold Confirmation" },
+        overview: { en: "The anchor's hold is actively confirmed, not assumed, before the crew moves on to other tasks." },
+        steps: [
+          { en: "Anchor dropped, chain veered to appropriate scope, hold actively confirmed." },
+        ],
+        bestPractices: [
+          { en: "Confirm the anchor is actually holding — via transit bearings, GPS drift check, or direct observation — before considering the vessel secure." },
+        ],
+        commonMistakes: [
+          { en: "Veering the chain and walking away without confirming the hold." },
+        ],
+      },
+      tender_launch_preparation: {
+        id: "tender_launch_preparation",
+        title: { en: "Tender Launch & Preparation" },
+        overview: { en: "The tender's own pre-launch safety check is completed every time, not just on the first launch of the day." },
+        steps: [
+          { en: "Tender launched and prepared for guest use — fuel, safety gear, water-sports equipment as applicable." },
+        ],
+        bestPractices: [
+          { en: "Complete the tender's own pre-launch safety check every time, not just on the first launch of the day." },
+        ],
+      },
+      guest_water_activity_supervision: {
+        id: "guest_water_activity_supervision",
+        title: { en: "Guest Water Activity Supervision" },
+        overview: { en: "Supervision is a continuous, undivided task, not something checked periodically between other duties." },
+        steps: [
+          { en: "Direct visual supervision of guests in the water maintained throughout the activity." },
+        ],
+        bestPractices: [
+          { en: "Assign supervision as a dedicated task to one crew member rather than treating it as background awareness while doing something else." },
+        ],
+        commonMistakes: [
+          { en: "Splitting attention between guest supervision and an unrelated task at the same time." },
+        ],
+      },
+      anchor_watch_monitoring: {
+        id: "anchor_watch_monitoring",
+        title: { en: "Anchor Watch & Position Monitoring" },
+        overview: { en: "Conditions can change the holding situation after the initial set, so monitoring continues for the duration of the stay." },
+        steps: [
+          { en: "Anchor position/drift monitored continuously for the duration of the stay." },
+        ],
+        bestPractices: [
+          { en: "Set a position-drift alarm or equivalent check rather than relying on periodic manual glances alone." },
+        ],
+      },
+      tender_recovery_guest_return: {
+        id: "tender_recovery_guest_return",
+        title: { en: "Tender Recovery & Guest Return" },
+        overview: { en: "The same headcount discipline used elsewhere in the catalog for any guest/passenger count applies here." },
+        steps: [
+          { en: "Guests and equipment brought back aboard, tender recovered and secured." },
+        ],
+        bestPractices: [
+          { en: "Conduct a headcount of returning guests against those who departed." },
+        ],
+      },
+      post_activity_stow_departure_prep: {
+        id: "post_activity_stow_departure_prep",
+        title: { en: "Post-Activity Stow & Departure Prep" },
+        overview: { en: "Stowage is a genuine safety step (securing for sea), not just tidying up." },
+        steps: [
+          { en: "Tender and water-sports equipment stowed, deck secured, vessel prepared to get underway." },
+        ],
+        bestPractices: [
+          { en: "Treat stowage as a genuine safety step rather than just tidying up." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "bay_depth_hazard_report",
+        phaseId: "bay_assessment_anchor_position_selection",
+        from: "deck", to: "bridge",
+        trigger: { en: "Bay assessment underway." },
+        content: { en: "Chief Officer reports depth soundings, holding-ground read, and any hazards found while assessing the bay." },
+        whyItMatters: { en: "The Master's anchor-position decision depends on this direct, current-day read rather than chart data alone." },
+      },
+      {
+        id: "anchor_position_confirmation",
+        phaseId: "bay_assessment_anchor_position_selection",
+        from: "bridge", to: "deck",
+        trigger: { en: "Anchor position assessed." },
+        content: { en: "Master confirms the selected anchor position and scope to the deck team before execution." },
+        whyItMatters: { en: "Everyone executing the anchoring needs the same confirmed plan, not an assumption based on the assessment discussion alone." },
+      },
+      {
+        id: "hold_confirmation_report",
+        phaseId: "anchoring_execution_and_hold_confirmation",
+        from: "deck", to: "bridge",
+        trigger: { en: "Anchor dropped and chain veered." },
+        content: { en: "Chief Officer/Bosun reports that the anchor is actively confirmed holding, not just that the chain has been veered." },
+        whyItMatters: { en: "The vessel isn't genuinely secure — and other tasks shouldn't start — until this is confirmed, not assumed." },
+      },
+      {
+        id: "tender_launch_readiness",
+        phaseId: "tender_launch_preparation",
+        from: "deck", to: "guest_services",
+        trigger: { en: "Tender checked and launched." },
+        content: { en: "Bosun notifies the interior team once the tender is checked, launched, and ready for guest use." },
+        whyItMatters: { en: "Guest Services coordinates guests coming on deck for water activities, and needs this confirmed-ready signal rather than guessing the tender is available." },
+      },
+      {
+        id: "guest_activity_status",
+        phaseId: "guest_water_activity_supervision",
+        from: "deck", to: "bridge",
+        trigger: { en: "Guest water activity underway." },
+        content: { en: "The crew member supervising guests in the water reports status periodically to the bridge." },
+        whyItMatters: { en: "The Master retains overall situational awareness of guest safety even while occupied with anchor watch or other duties." },
+      },
+      {
+        id: "anchor_drift_alert",
+        phaseId: "anchor_watch_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Drift-alarm trigger or concerning position change suspected." },
+        content: { en: "Whoever is monitoring anchor position reports any drift-alarm trigger or concerning position change immediately." },
+        whyItMatters: { en: "A drifting anchor during active guest water activity is a compounding hazard — the Master needs to know the instant it's suspected, not after it's confirmed." },
+      },
+      {
+        id: "guest_return_headcount",
+        phaseId: "tender_recovery_guest_return",
+        from: "deck", to: "guest_services",
+        trigger: { en: "Guests returning to the vessel." },
+        content: { en: "Deck crew exchanges the returning-guest headcount with Guest Services, who holds the reference count of who went ashore/into the water." },
+        whyItMatters: { en: "Only Guest Services has the authoritative count of who left — reconciling against it is the only way to confirm everyone is actually back aboard." },
+      },
+      {
+        id: "departure_readiness_report",
+        phaseId: "post_activity_stow_departure_prep",
+        from: "deck", to: "bridge",
+        trigger: { en: "Stowage and deck securing underway." },
+        content: { en: "Chief Officer confirms the tender is stowed and the deck is secured for getting underway." },
+        whyItMatters: { en: "The Master needs this explicit confirmation before setting the vessel in motion, not an assumption that stowage is complete." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the operation overall: makes the anchor-position decision from the Chief Officer's assessment, confirms the plan, and retains situational awareness of both the anchor and guest safety throughout." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads the bay assessment (depth, holding ground, hazards) and confirms the anchor's hold once set — the operation's technical anchoring authority, and the crew's effective navigation-officer role on a vessel this size." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads tender launch, recovery, and guest water-activity logistics — the operation's hands-on deck lead once the vessel is anchored." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes tender-handling tasks under the Bosun's direction, and takes the dedicated guest-water-supervision role when assigned — a genuine, undivided task, not a background one." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Monitors engine and systems standby readiness (windlass, tender fuel/systems, generator) throughout the anchorage — support role, since this operation's core tasks are deck-led, not engine-led." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Makes the final anchor-position decision." },
+          { en: "Retains overall situational command throughout guest water activity." },
+        ],
+        iMonitor: [
+          { en: "Guest activity status and anchor drift reports throughout the anchorage." },
+        ],
+        iReport: [
+          { en: "Confirms the anchor plan to the deck team; authorizes departure once secure." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize getting underway before stowage and hold-release are confirmed complete." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads the bay assessment." },
+          { en: "Confirms the anchor is actively holding." },
+        ],
+        iMonitor: [
+          { en: "Depth, holding ground, and hazard conditions during assessment; anchor status during execution." },
+        ],
+        iReport: [
+          { en: "Reports assessment findings and hold confirmation to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not report the anchor as holding based on chain-veered status alone, without active confirmation." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads tender launch, recovery, and guest water-activity logistics." },
+        ],
+        iMonitor: [
+          { en: "Tender readiness and condition; guest activity logistics on deck." },
+        ],
+        iReport: [
+          { en: "Reports tender readiness to Guest Services; reports any deck-side hazard to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not launch the tender without completing its pre-launch safety check." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes tender-handling tasks under the Bosun; holds dedicated guest-water-supervision when assigned." },
+        ],
+        iMonitor: [
+          { en: "Guests in the water when assigned supervision duty; immediate task conditions otherwise." },
+        ],
+        iReport: [
+          { en: "Reports guest activity status to the bridge when on supervision duty; reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not split supervision duty with an unrelated task once assigned." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Monitors and maintains engine/systems standby readiness throughout the anchorage." },
+        ],
+        iMonitor: [
+          { en: "Windlass, tender systems, and generator status." },
+        ],
+        iReport: [
+          { en: "Reports any system irregularity to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not direct anchoring or guest-activity decisions — support role only in this operation." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "yacht_anchoring_tender_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the remote-bay anchoring and tender operation's phases in the correct order." },
+        items: [
+          { id: "assess", label: { en: "Bay Assessment & Anchor Position Selection" } },
+          { id: "anchor_exec", label: { en: "Anchoring Execution & Hold Confirmation" } },
+          { id: "tender_launch", label: { en: "Tender Launch & Preparation" } },
+          { id: "guest_supervision", label: { en: "Guest Water Activity Supervision" } },
+          { id: "anchor_watch", label: { en: "Anchor Watch & Position Monitoring" } },
+          { id: "tender_recovery", label: { en: "Tender Recovery & Guest Return" } },
+          { id: "stow_departure", label: { en: "Post-Activity Stow & Departure Prep" } },
+        ],
+        correctOrder: ["assess", "anchor_exec", ["tender_launch", "guest_supervision", "anchor_watch"], "tender_recovery", "stow_departure"],
+      },
+      {
+        type: "error_identification",
+        id: "yacht_split_attention_supervision_lapse",
+        targetRanks: ["ab"],
+        scenario: { en: "You're assigned to supervise guests swimming near the tender. The Bosun asks you to quickly check a fitting on the tender's outboard while keeping an eye on the swimmers. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Step away briefly to check the fitting while keeping half an eye on the swimmers." }, isError: true, explanation: { en: "Splitting a dedicated supervision task, even briefly and even with partial attention retained, is exactly the lapse this operation's phase discipline exists to prevent." } },
+          { id: "b", label: { en: "Tell the Bosun you can't leave supervision right now and ask him to find someone else for the fitting." }, isError: false, explanation: { en: "Correct — guest supervision is a genuine, undivided task, not something to interrupt for an unrelated request." } },
+          { id: "c", label: { en: "Ask another available crew member to check the fitting instead." }, isError: false, explanation: { en: "Correct — redirecting the unrelated task rather than splitting your own attention keeps supervision intact." } },
+          { id: "d", label: { en: "Continue supervising and tell the Bosun the fitting check will have to wait." }, isError: false, explanation: { en: "Correct — supervision takes priority; the fitting can wait or go to someone else." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "yacht_pre_departure_readiness_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The tender has been recovered and guests are back aboard. Before authorizing the vessel to get underway, review which conditions are actually satisfied." },
+        items: [
+          { id: "headcount_reconciled", label: { en: "Guest headcount reconciled against the departure/water-activity roster." }, isSatisfied: true },
+          { id: "tender_stowed", label: { en: "Tender fully stowed and secured for sea, not just recovered onto the deck." }, isSatisfied: false },
+          { id: "windlass_ready", label: { en: "Anchor windlass and ground tackle confirmed ready for weighing." }, isSatisfied: true },
+          { id: "engineer_report_current", label: { en: "Chief Engineer's system standby report received and current." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The depth sounder and local knowledge suggest good holding ground, but one sounding pass shows an unexpected patch of rock or coral just at the edge of the planned swing circle." },
+        mission: { en: "As Chief Officer, decide how to proceed." },
+        expectedActions: [
+          { en: "Re-survey the area more closely before finalizing the position." },
+          { en: "Adjust the anchor position or scope to keep the swing circle clear of the hazard." },
+        ],
+        why: [
+          { en: "One favorable pass doesn't rule out a hazard the next pass might catch — and swing circle, not just the drop point, is what determines whether the vessel stays clear." },
+        ],
+        commonMistakes: [
+          { en: "Proceeding with the original position because the first pass looked fine." },
+        ],
+        safetyPoints: [
+          { en: "An unsurveyed bay means the crew's own verification is the only real safeguard, not the chart." },
+        ],
+      },
+      {
+        situation: { en: "Guests are eager to get in the water, and the tender's pre-launch check would take a few extra minutes they're visibly impatient about." },
+        mission: { en: "As Bosun, decide how to handle the pressure." },
+        expectedActions: [
+          { en: "Complete the full pre-launch check regardless of guest impatience." },
+          { en: "Communicate briefly why the short wait matters." },
+        ],
+        why: [
+          { en: "Guest impatience is real but doesn't change what the check is there to catch — skipping it trades a few minutes for a real risk." },
+        ],
+        commonMistakes: [
+          { en: "Rushing or skipping steps of the check to accommodate guest eagerness." },
+        ],
+        safetyPoints: [
+          { en: "A completed check protects the same guests who are impatient for it to be done." },
+        ],
+      },
+      {
+        situation: { en: "While supervising guests swimming, you notice one guest has drifted further from the boat than the others, though they don't appear to be in distress." },
+        mission: { en: "As AB, decide how to respond." },
+        expectedActions: [
+          { en: "Move to a position with a clearer view/closer proximity to that guest, or call them back, rather than waiting to see if it becomes a problem." },
+        ],
+        why: [
+          { en: "\"Not yet in distress\" isn't the same as \"no action needed\" — closing the gap early is far easier than a rescue later." },
+        ],
+        commonMistakes: [
+          { en: "Waiting to intervene until the guest is visibly struggling." },
+        ],
+        safetyPoints: [
+          { en: "Proactive positioning is part of what makes supervision a genuine safeguard rather than passive watching." },
+        ],
+      },
+      {
+        situation: { en: "The anchor-drift alarm triggers with a minor position shift at the same moment a guest is signaling from the water that they'd like assistance getting back to the tender." },
+        mission: { en: "As Master, decide how to prioritize with a five-person crew already occupied." },
+        expectedActions: [
+          { en: "Direct the nearest available crew member to the guest immediately." },
+          { en: "Personally, or via the Chief Officer, assess whether the drift is a genuine developing problem or a minor, momentary shift." },
+        ],
+        why: [
+          { en: "A five-person crew means competing demands are a real, not hypothetical, tension — the Master's job is to triage both quickly rather than let one wait on the other by default." },
+        ],
+        commonMistakes: [
+          { en: "Fixating on one issue (the alarm or the guest) to the exclusion of assessing the other." },
+        ],
+        safetyPoints: [
+          { en: "Guest safety in the water and vessel security are both genuine priorities — the operation is designed so neither is silently deprioritized." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "yacht_closing_weather_window_judgment",
+        title: { en: "The Weather Window That's Closing" },
+        seatRankId: "bosun",
+        root: {
+          id: "root",
+          situation: { en: "You're running the tender alongside guest watersports when you notice the swell building faster than forecast — nothing dangerous yet, but the comfortable margin is shrinking. Guests are mid-activity and clearly want to keep going." },
+          options: [
+            {
+              id: "continue_watch_conditions",
+              label: { en: "Continue the activity, keep a closer watch on conditions." },
+              consequence: { en: "The swell keeps building past the point where recovery is straightforward, turning an easy recall into a harder one." },
+              feedback: { en: "Waiting for conditions to become obviously unsafe gives up the exact margin that made an easy, unhurried recall possible." },
+            },
+            {
+              id: "recall_guests_inform_bridge",
+              label: { en: "Recall guests to the tender now and immediately inform the bridge of the changing conditions." },
+              isRecommended: true,
+              consequence: { en: "Guests are recovered smoothly while conditions are still manageable, and the bridge has early warning to factor into anchor-watch attention." },
+              feedback: { en: "Correct — acting on the authority you already have while informing the bridge preserves the closing safety margin instead of trading it away." },
+              next: {
+                id: "loose_equipment_drift",
+                situation: { en: "Guests are moving back to the tender when you notice a piece of watersports equipment has come loose and is drifting away with the wind/current." },
+                options: [
+                  {
+                    id: "chase_equipment_immediately",
+                    label: { en: "Break off to chase down the equipment immediately, before all guests are aboard." },
+                    consequence: { en: "Guest recovery is delayed and momentarily less supervised while you're occupied chasing equipment in building swell." },
+                    feedback: { en: "Equipment is replaceable; a guest still transitioning from water to tender in worsening conditions isn't the moment to divide attention toward it." },
+                  },
+                  {
+                    id: "guests_first_mark_equipment",
+                    label: { en: "Get all guests safely aboard first, marking the equipment's drift direction/position to retrieve once that's done." },
+                    isRecommended: true,
+                    consequence: { en: "Guests are recovered without delay, and the equipment — still tracked — is retrieved shortly after with no one at risk chasing it mid-recall." },
+                    feedback: { en: "Correct — the priority order (guests, then everything else) doesn't change just because something else also needs attention." },
+                  },
+                  {
+                    id: "abandon_equipment",
+                    label: { en: "Let the equipment go and don't attempt retrieval at all." },
+                    consequence: { en: "The equipment is lost unnecessarily, when a brief, safe retrieval was available once guests were aboard." },
+                    feedback: { en: "Abandoning it entirely isn't necessary — tracking it and retrieving it once guests are safe is the available middle option." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "wait_for_master_decision",
+              label: { en: "Radio the bridge and wait for the Master's decision before taking any action." },
+              consequence: { en: "The delay costs exactly the margin that made an easy recall possible, for a decision you already had the authority and complete situational picture to make yourself." },
+              feedback: { en: "Informing the bridge as you act serves the same coordination purpose without trading away the closing window." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Verify directly, don't rely on secondhand or partial data" },
+        bestPractices: [
+          { en: "Confirm depth, holding ground, and anchor hold through direct, current-day verification, not chart data or a single favorable pass alone." },
+        ],
+        commonErrors: [
+          { en: "Anchoring or reporting \"holding\" based on assumption rather than active confirmation." },
+        ],
+      },
+      {
+        theme: { en: "Dedicated supervision is a genuine, undivided task" },
+        bestPractices: [
+          { en: "Treat guest water supervision as a standalone task requiring full attention — redirect competing requests elsewhere rather than splitting focus." },
+        ],
+        commonErrors: [
+          { en: "Stepping away from supervision, even briefly, to handle an unrelated request." },
+        ],
+      },
+      {
+        theme: { en: "Guests come before equipment or schedule, every time" },
+        bestPractices: [
+          { en: "When guest safety and any other concern (equipment, timing, guest impatience) compete, resolve guest safety first — track and address the other concern once that's settled, not before." },
+        ],
+        commonErrors: [
+          { en: "Rushing a safety step to accommodate guest impatience, or prioritizing equipment recovery over completing guest recovery." },
+        ],
+      },
+      {
+        theme: { en: "Act on the authority you already have — inform, don't wait for permission" },
+        bestPractices: [
+          { en: "When you have both the authority and full situational picture to act safely, act and inform the bridge as you go, rather than waiting for a decision you're already positioned to make." },
+        ],
+        commonErrors: [
+          { en: "Delaying a needed action to seek permission that doesn't add real safety value, at the cost of a closing safety margin." },
         ],
       },
     ],
