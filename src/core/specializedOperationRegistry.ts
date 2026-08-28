@@ -113,8 +113,19 @@ export interface OperationPhase {
 // existing "assisted_vessel" instead of needing its own addition — the
 // concept coined for Tugboat (another vessel's own bridge/pilot team) fits
 // without modification.
+//
+// "science_team" added for the Research Vessel CTD/rosette deployment
+// operation: the embarked Chief Scientist and scientific technicians who
+// direct the pace of the cast (requested sampling depths, bottle firing,
+// when the cast is genuinely complete) without holding any authority over
+// the crew executing it. A third instance of the onboard-but-non-RankId
+// party pattern (after "transferee" and "process_control") — distinct from
+// both: unlike the transferee, this party is embarked for the whole
+// mission, not transferred once; unlike process_control, it directs a
+// scientific rather than industrial-process domain. Load-bearing across
+// nine communication touchpoints, not folded into an existing value.
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -9937,6 +9948,588 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Delaying notification to first gather a more complete assessment of the release's extent." },
+        ],
+      },
+    ],
+  },
+
+  research_vessel_ctd_rosette_deployment: {
+    operationId: "research_vessel_ctd_rosette_deployment",
+    vesselTypeId: "research_vessel",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Research Vessel — CTD/Rosette Deployment & Recovery" },
+    introduction: {
+      en: "CTD/rosette deployment is the operation that defines a research vessel's day-to-day work at sea: an instrument package measuring conductivity, temperature, and depth, fitted with water-sampling bottles, is lowered on a winch wire through the water column — sometimes through a moon pool, sometimes over the side — to a scientifically chosen depth, held there or stepped through several depths as the science team collects data and water samples, then recovered. This module covers the deployment/recovery cycle itself, from the crew's side: crane/winch operation, station-keeping during the cast, and the operational coordination with the embarked science team — not the oceanographic science itself (what the data means, how sampling depths are chosen), which belongs to the Chief Scientist and stays outside this module's scope. A structural feature shapes several sections below: the vessel holds dynamic position not as a generic safety margin, as PSV or AHTS might, but paced to the cast itself — the ship's positioning has to serve the instrument's schedule, not the other way around. The Chief Scientist directs what happens to the instrument and when, without holding any authority over the crew executing it — genuinely different from every prior non-RankId party in the catalog, none of which directed the pace of the vessel's own operation this closely.",
+    },
+    objectives: [
+      { en: "Describe the full chronology of a CTD/rosette deployment and recovery, from pre-cast preparation through instrument recovery and handover to the science team." },
+      { en: "Identify the deck equipment involved (crane, winch, wire, moon pool or overside deployment point) and the crew roles at each stage." },
+      { en: "Explain why dynamic positioning during a CTD cast is paced to the instrument's schedule rather than being a fixed-duration hold, and what that means for the OOW's role." },
+      { en: "Explain the specific hazards of instrument deployment at sea (wire tension/parting, swinging load injury, entanglement risk at the moon pool or over the side) and the controls used against them." },
+      { en: "Identify who does what during this operation, including where the Chief Scientist's direction over the instrument's use stops and the crew's authority over the vessel and its equipment begins." },
+      { en: "Recognize correct versus incorrect sequencing and communication during deployment, the cast itself, and recovery." },
+    ],
+    context: {
+      en: "Scoped deliberately to the deployment/recovery cycle only — not the oceanographic science itself, and not the vessel's broader mission logistics, both of which stay with the Chief Scientist and the embarked science team. Extends the Ships Library card (ResearchVessel.tsx) rather than replacing it. Roster is unambiguous directly from the card's own wording: Master, Chief Officer, OOW, Bosun, AB, Chief Engineer, Second/Third Engineer, with the Chief Scientist and scientific technicians explicitly named as outside the maritime hierarchy — no fold decision needed, unlike the Pumpman/Gas Engineer or FPSO Process/Production cases. The Chief Scientist is represented via the new \"science_team\" CommunicationParty, a third instance of the onboard-but-non-RankId party pattern (after \"transferee\" and \"process_control\") — present throughout the content and communication touchpoints without a responsibilityMatrix/responsibilityLevels entry of its own.",
+    },
+
+    operationPhaseOrder: [
+      "pre_cast_preparation",
+      "deployment",
+      "descent_station_keeping",
+      "sampling_at_depth",
+      "recovery",
+      "post_cast_handover_standdown",
+    ],
+    operationPhases: {
+      pre_cast_preparation: {
+        id: "pre_cast_preparation",
+        title: { en: "Pre-Cast Preparation" },
+        overview: { en: "Two independent confirmations — instrument readiness and deployment-point readiness — both have to come back positive before the cast proceeds." },
+        steps: [
+          { en: "Instrument calibration and readiness confirmed by the science team." },
+          { en: "Deployment point checked: moon pool clear, or overside crane path clear." },
+          { en: "Weather and sea state checked against cast limits." },
+          { en: "Communication protocol confirmed between bridge, deck, and science team for the cast." },
+          { en: "DP mode engaged and confirmed stable before deployment begins." },
+        ],
+        bestPractices: [
+          { en: "Confirm DP is genuinely stable, not just engaged, before starting deployment — a cast begun during an unstable hold risks the instrument swinging on entry." },
+        ],
+        commonMistakes: [
+          { en: "Treating instrument readiness and deployment-point readiness as a single combined check instead of two independent confirmations." },
+        ],
+      },
+      deployment: {
+        id: "deployment",
+        title: { en: "Deployment" },
+        overview: { en: "A silent instrument at this stage is a stop-and-check moment, not a proceed-and-hope one." },
+        steps: [
+          { en: "Crane/winch lowers the rosette to the water." },
+          { en: "Deck team confirms no entanglement and clean entry." },
+          { en: "Science team confirms the instrument is communicating correctly once submerged." },
+          { en: "Wire payout begins at controlled speed." },
+        ],
+        bestPractices: [
+          { en: "Confirm the instrument is communicating before increasing payout speed." },
+        ],
+        commonMistakes: [
+          { en: "Increasing payout speed before the science team has confirmed the instrument is actually transmitting data." },
+        ],
+      },
+      descent_station_keeping: {
+        id: "descent_station_keeping",
+        title: { en: "Descent & Station-Keeping" },
+        overview: { en: "Descent is paced to the cast, not a fixed duration — every requested pause is authoritative." },
+        steps: [
+          { en: "Vessel holds DP position throughout the descent, paced to the cast rather than a fixed duration." },
+          { en: "Wire tension monitored continuously." },
+          { en: "Descent paused at each depth the science team requests, not on a pre-set schedule." },
+        ],
+        bestPractices: [
+          { en: "Treat every requested pause as authoritative even if it wasn't part of the original plan." },
+        ],
+        commonMistakes: [
+          { en: "Continuing descent on the original planned schedule when the science team has requested an unplanned pause." },
+        ],
+      },
+      sampling_at_depth: {
+        id: "sampling_at_depth",
+        title: { en: "Sampling at Depth" },
+        overview: { en: "Wire position has to be genuinely steady during sampling — a drifting depth can misattribute a sample." },
+        steps: [
+          { en: "Science team remotely triggers water-sample bottles at each designated depth." },
+          { en: "Deck/winch team holds steady wire position while sampling occurs." },
+          { en: "Confirmation exchanged before moving to the next depth or beginning recovery." },
+        ],
+        bestPractices: [
+          { en: "Hold wire position genuinely steady during sampling." },
+        ],
+        commonMistakes: [
+          { en: "Beginning to reposition the wire before the science team has confirmed sampling at the current depth is actually complete." },
+        ],
+      },
+      recovery: {
+        id: "recovery",
+        title: { en: "Recovery" },
+        overview: { en: "The final few meters before the instrument reaches the surface are where an impact is most likely and most damaging." },
+        steps: [
+          { en: "Winch retrieves the rosette." },
+          { en: "Deck team manages the wire and controls the final approach carefully to avoid impact against the hull or moon pool edge." },
+          { en: "Instrument secured on deck once clear of the water." },
+        ],
+        bestPractices: [
+          { en: "Slow the retrieval rate well before the instrument nears the surface." },
+        ],
+        commonMistakes: [
+          { en: "Retrieving at a constant rate throughout, rather than slowing for the final approach." },
+        ],
+      },
+      post_cast_handover_standdown: {
+        id: "post_cast_handover_standdown",
+        title: { en: "Post-Cast Handover & Stand-down" },
+        overview: { en: "The cast isn't over just because the instrument is back on deck — the science team's own confirmation closes it out." },
+        steps: [
+          { en: "Instrument handed over to the science team for sample processing and data download." },
+          { en: "Deck equipment secured." },
+          { en: "DP mode released once the cast is confirmed complete, or the vessel proceeds to the next station under the science team's plan." },
+        ],
+        bestPractices: [
+          { en: "Confirm the cast is genuinely complete, including any science-team follow-up checks, before releasing DP." },
+        ],
+        commonMistakes: [
+          { en: "Releasing DP as soon as the instrument clears the water, before confirming with the science team that the cast itself is finished." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "instrument_readiness_confirmation",
+        phaseId: "pre_cast_preparation",
+        from: "science_team", to: "deck",
+        trigger: { en: "Cast scheduled, instrument calibration due for confirmation." },
+        content: { en: "Science team confirms the instrument is calibrated and ready to the deck team, independently of the deck's own deployment-point check." },
+        whyItMatters: { en: "These are two separate confirmations — instrument readiness and deployment-point readiness — and both have to come back positive before the cast proceeds." },
+      },
+      {
+        id: "dp_stable_go_ahead",
+        phaseId: "pre_cast_preparation",
+        from: "bridge", to: "science_team",
+        trigger: { en: "DP engaged and confirmed stable." },
+        content: { en: "Bridge confirms to the science team that DP is genuinely stable, not just engaged, clearing the cast to begin." },
+        whyItMatters: { en: "A cast begun during an unstable hold risks the instrument swinging on entry — the science team needs this confirmation before triggering deployment." },
+      },
+      {
+        id: "instrument_communicating_confirmation",
+        phaseId: "deployment",
+        from: "science_team", to: "deck",
+        trigger: { en: "Instrument submerged after initial entry." },
+        content: { en: "Science team confirms the instrument is transmitting data correctly before the deck team increases payout speed." },
+        whyItMatters: { en: "A silent instrument at this stage is a stop-and-check moment — proceeding on payout speed without this confirmation risks deploying a non-functioning instrument to full depth." },
+      },
+      {
+        id: "requested_depth_instruction",
+        phaseId: "descent_station_keeping",
+        from: "science_team", to: "bridge",
+        trigger: { en: "A depth of scientific interest reached, whether planned or decided in real time." },
+        content: { en: "Science team instructs the bridge/winch team to pause descent at a specific depth, treated as authoritative even when it wasn't part of the original plan." },
+        whyItMatters: { en: "Real-time scientific judgment on where to stop is the entire reason this operation exists — the vessel's positioning serves the instrument's schedule, not the reverse." },
+      },
+      {
+        id: "bottle_firing_instruction",
+        phaseId: "sampling_at_depth",
+        from: "science_team", to: "deck",
+        trigger: { en: "Wire position confirmed steady at the requested depth." },
+        content: { en: "Science team instructs bottle firing at the current depth; deck/winch team holds position steady throughout." },
+        whyItMatters: { en: "Bottle firing at a drifting depth can misattribute the sample to the wrong point in the water column — steady wire position is a precondition, not a nice-to-have." },
+      },
+      {
+        id: "sampling_complete_confirmation",
+        phaseId: "sampling_at_depth",
+        from: "science_team", to: "deck",
+        trigger: { en: "Sampling at the current depth finished." },
+        content: { en: "Science team confirms sampling is complete before the deck team begins repositioning the wire for the next depth or recovery." },
+        whyItMatters: { en: "Repositioning before this confirmation risks cutting a sample short or missing it entirely." },
+      },
+      {
+        id: "recovery_clear_confirmation",
+        phaseId: "recovery",
+        from: "deck", to: "bridge",
+        trigger: { en: "Instrument clear of the water and secured on deck." },
+        content: { en: "Deck team confirms the instrument is clear and secured, clearing the bridge to consider releasing DP." },
+        whyItMatters: { en: "The bridge needs a positive confirmation, not an assumption based on the winch stopping, before DP is released." },
+      },
+      {
+        id: "post_cast_handover",
+        phaseId: "post_cast_handover_standdown",
+        from: "deck", to: "science_team",
+        trigger: { en: "Instrument secured on deck." },
+        content: { en: "Deck team hands the instrument over to the science team for sample processing and data download." },
+        whyItMatters: { en: "Marks the clear boundary between the crew's operational responsibility for the deployment and the science team's responsibility for what the instrument produced." },
+      },
+      {
+        id: "cast_complete_next_station",
+        phaseId: "post_cast_handover_standdown",
+        from: "science_team", to: "bridge",
+        trigger: { en: "Sample processing confirms the cast met its scientific objective." },
+        content: { en: "Science team confirms the cast is genuinely complete and communicates the plan for the next station, if any." },
+        whyItMatters: { en: "DP shouldn't be released, or the vessel proceed, based on the instrument simply being back on deck — the science team's own confirmation is what actually closes out the cast." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall authority for the cast — confirms DP is genuinely stable before deployment begins, and retains authority to pause or abort for weather or safety at any point in the operation." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Coordinates the deck-side operation directly — directs crane and winch execution through deployment and recovery, and is the deck team's point of contact for the science team's pacing instructions." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "The DP-qualified watch officer for the cast — holds station throughout the descent and sampling, paced to the science team's real-time depth requests rather than a fixed schedule, and is the bridge's direct contact for those requests." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team's hands-on crane and winch work through deployment, station-keeping, and recovery, and oversees the careful final approach during recovery to avoid impact against the hull or moon pool edge." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes deployment and recovery tasks — crane operation support, wire handling — under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Directs readiness of the hydraulic and power systems supporting the crane and winch throughout the cast, and directs the Second Engineer's hands-on work — the same ownership-versus-execution split held across the catalog." },
+      },
+      {
+        rankId: "second_engineer",
+        identity: { en: "Hands-on operation and monitoring of the winch and crane support systems throughout the cast, under the Chief Engineer's direction." },
+      },
+      {
+        rankId: "third_engineer",
+        identity: { en: "Present and on watch during the operation, observing procedure and system behavior without independent responsibility — the same observe-level role held across the catalog." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Confirms DP is genuinely stable before deployment begins." },
+          { en: "Retains authority to pause or abort the cast for weather or safety at any point." },
+        ],
+        iMonitor: [
+          { en: "Overall safety of the cast throughout deployment, descent, sampling, and recovery." },
+        ],
+        iReport: [
+          { en: "Reports any pause or abort decision to the science team and, if relevant, the company." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize or direct the science team's own sampling decisions — depth requests and sampling judgment stay with them." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Directs crane and winch execution through deployment and recovery." },
+          { en: "Serves as the deck team's point of contact for the science team's pacing instructions." },
+        ],
+        iMonitor: [
+          { en: "Deck team readiness and wire tension throughout the cast." },
+        ],
+        iReport: [
+          { en: "Reports deployment and recovery status to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize a depth change or sampling instruction independently of the science team." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Holds DP station throughout the cast, paced to the science team's real-time depth requests." },
+        ],
+        iMonitor: [
+          { en: "Vessel position accuracy relative to the requested hold throughout descent and sampling." },
+        ],
+        iReport: [
+          { en: "Reports positioning status to the Master; relays the science team's depth requests to the winch team." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not decide sampling depths — only holds and reports position against what the science team requests." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the deck team's crane and winch work through deployment, station-keeping, and recovery." },
+          { en: "Oversees the careful final approach during recovery to avoid impact against the hull or moon pool edge." },
+        ],
+        iMonitor: [
+          { en: "Wire tension and instrument condition throughout the cast." },
+        ],
+        iReport: [
+          { en: "Reports deployment and recovery status to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize a change in payout speed without confirmation from the science team on instrument status." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes crane operation support and wire handling during deployment and recovery, under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate wire and deck conditions in their own work area." },
+        ],
+        iReport: [
+          { en: "Reports hazards or wire condition issues to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize any change to the deployment or recovery plan." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Directs readiness of the hydraulic and power systems supporting the crane and winch throughout the cast." },
+        ],
+        iMonitor: [
+          { en: "Crane and winch support system health throughout the operation." },
+        ],
+        iReport: [
+          { en: "Reports system readiness, and any fault, to the Chief Officer and Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize deviation from the confirmed cast plan or pacing." },
+        ],
+      },
+      second_engineer: {
+        iExecute: [
+          { en: "Hands-on operation and monitoring of the winch and crane support systems, under the Chief Engineer's direction." },
+        ],
+        iMonitor: [
+          { en: "System pressure and load parameters throughout the cast." },
+        ],
+        iReport: [
+          { en: "Reports any abnormal reading to the Chief Engineer immediately." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize system shutdown or restart without the Chief Engineer's direction." },
+        ],
+      },
+      third_engineer: {
+        iMonitor: [
+          { en: "System behavior and procedure throughout the cast, building familiarity rather than carrying an assigned task." },
+        ],
+        iReport: [
+          { en: "Reports observations or questions to the Chief or Second Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently operate or adjust any system." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "research_vessel_ctd_phase_sequence",
+        targetRanks: ["master", "chief_officer", "oow"],
+        prompt: { en: "Put the CTD/rosette deployment operation's phases in the correct order." },
+        items: [
+          { id: "prep", label: { en: "Pre-Cast Preparation" } },
+          { id: "deploy", label: { en: "Deployment" } },
+          { id: "descent", label: { en: "Descent & Station-Keeping" } },
+          { id: "sampling", label: { en: "Sampling at Depth" } },
+          { id: "recovery", label: { en: "Recovery" } },
+          { id: "handover", label: { en: "Post-Cast Handover & Stand-down" } },
+        ],
+        correctOrder: ["prep", "deploy", "descent", "sampling", "recovery", "handover"],
+      },
+      {
+        type: "error_identification",
+        id: "research_vessel_premature_repositioning",
+        targetRanks: ["bosun"],
+        scenario: { en: "Sampling at the current depth appears finished — the winch has held steady for a while and nothing further seems to be happening. The science team hasn't yet explicitly confirmed sampling is complete. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Begin repositioning the wire toward the next depth based on the deck team's own read that sampling looks done." }, isError: true, explanation: { en: "\"Looks done\" from the deck isn't the same as the science team's own confirmation — repositioning before that confirmation risks cutting a sample short or missing it entirely." } },
+          { id: "b", label: { en: "Continue holding wire position steady while awaiting the science team's explicit confirmation." }, isError: false, explanation: { en: "Correct — steady position is the precondition sampling depends on, right up until confirmation actually arrives." } },
+          { id: "c", label: { en: "Ask the science team directly for a status update if the wait feels unusually long." }, isError: false, explanation: { en: "Correct — checking in is not the same as acting on an assumption, and resolves the uncertainty properly." } },
+          { id: "d", label: { en: "Report the current holding status to the Chief Officer while waiting." }, isError: false, explanation: { en: "Correct — keeping the chain informed doesn't require acting ahead of the confirmation." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "research_vessel_pre_deployment_gate",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The cast is scheduled to begin shortly. Before authorizing deployment, review which readiness items are actually satisfied." },
+        items: [
+          { id: "instrument_ready", label: { en: "Instrument calibration confirmed ready by the science team." }, isSatisfied: true },
+          { id: "deployment_point", label: { en: "Deployment point (moon pool or overside crane path) checked clear." }, isSatisfied: true },
+          { id: "weather", label: { en: "Weather and sea state checked against cast limits." }, isSatisfied: true },
+          { id: "comms_protocol", label: { en: "Communication protocol confirmed between bridge, deck, and science team for this cast." }, isSatisfied: true },
+          { id: "dp_stable", label: { en: "DP engaged and confirmed genuinely stable, not just engaged." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Partway through the descent, the OOW notices the vessel's DP hold has drifted slightly off the requested position — still within the instrument's safe working radius, but trending outward." },
+        mission: { en: "As OOW, decide how to handle the drift." },
+        expectedActions: [
+          { en: "Correct the position promptly rather than waiting for it to approach the working radius limit." },
+          { en: "Report the trend to the bridge/Chief Officer even though it's still within tolerance." },
+        ],
+        why: [
+          { en: "A drift trending outward, even inside tolerance, is exactly the kind of information that allows early correction instead of a forced one later." },
+        ],
+        commonMistakes: [
+          { en: "Waiting until the drift actually approaches the working radius limit before correcting." },
+        ],
+        safetyPoints: [
+          { en: "The instrument's safe working radius exists precisely so a trend can be judged against a known reference." },
+        ],
+      },
+      {
+        situation: { en: "During recovery, the Bosun notices the wire tension reading is slightly higher than expected for this stage of the retrieval, though not yet alarming." },
+        mission: { en: "As Bosun, decide how to respond." },
+        expectedActions: [
+          { en: "Slow the retrieval rate rather than continuing at the planned pace." },
+          { en: "Report the reading to the bridge and continue close monitoring." },
+        ],
+        why: [
+          { en: "An elevated but not-yet-alarming reading is the moment to act before it becomes a genuine problem, not after." },
+        ],
+        commonMistakes: [
+          { en: "Continuing at the planned retrieval rate because the reading hasn't crossed an alarming threshold yet." },
+        ],
+        safetyPoints: [
+          { en: "The final approach during recovery is already the highest-risk moment for impact — an elevated tension reading at this stage deserves extra caution, not less." },
+        ],
+      },
+      {
+        situation: { en: "The science team is eager to keep to schedule and asks the Chief Engineer directly whether the winch can be run faster than the planned rate to save time." },
+        mission: { en: "As Chief Engineer, decide how to respond to this request." },
+        expectedActions: [
+          { en: "Decline to unilaterally change the winch rate — that's the Chief Officer's and Bosun's call, informed by wire tension and instrument safety, not a scheduling decision." },
+          { en: "Direct the request to the Chief Officer rather than acting on it directly." },
+        ],
+        why: [
+          { en: "Schedule pressure from the science team is a reasonable thing to raise, but the rate decision belongs to the people directly monitoring wire tension and instrument safety during the cast." },
+        ],
+        commonMistakes: [
+          { en: "Adjusting the rate directly because the request came from the science team and seemed reasonable." },
+        ],
+        safetyPoints: [
+          { en: "A well-intentioned accommodation that bypasses the people actually monitoring the cast's safety margins is the same kind of overstep as taking charge of a response outside one's own domain." },
+        ],
+      },
+      {
+        situation: { en: "Weather is deteriorating faster than forecast during a cast. The science team, close to completing an unusually valuable sampling sequence, asks to continue for another fifteen minutes despite the trend." },
+        mission: { en: "As Master, decide how to handle the request." },
+        expectedActions: [
+          { en: "Weigh the request seriously rather than dismissing it, but base the decision on the vessel's own safety assessment, not the scientific value of the data." },
+          { en: "Communicate the reasoning clearly to the science team rather than simply refusing or simply granting the extension." },
+        ],
+        why: [
+          { en: "The Master's authority over pausing or aborting the cast exists precisely for this kind of moment — genuine scientific value doesn't change what the weather is actually doing." },
+        ],
+        commonMistakes: [
+          { en: "Extending the cast because the scientific case is compelling, without the weather assessment actually supporting it." },
+        ],
+        safetyPoints: [
+          { en: "A clearly communicated no, with reasoning, preserves the working relationship with the science team far better than an unexplained refusal — and better than a reluctant yes that goes wrong." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "research_vessel_wire_guide_judgment",
+        title: { en: "A Small Thing Worth Mentioning" },
+        seatRankId: "ab",
+        root: {
+          id: "root",
+          situation: { en: "You're guiding the wire onto the drum during recovery. It's running slightly off-center on the guide — not clearly dangerous yet, but a chafe risk if it continues. The Bosun is focused on watching the instrument's approach as it nears the surface, the highest-risk moment of the whole recovery, and hasn't noticed the wire." },
+          options: [
+            {
+              id: "stay_quiet",
+              label: { en: "Keep guiding without saying anything — the Bosun is busy, and it doesn't look urgent yet." },
+              consequence: { en: "The wire continues running off-center. By the time it becomes visibly worse, some chafing has already occurred on the wire's outer strands." },
+              feedback: { en: "Not urgent yet doesn't mean not worth mentioning — this is the same trend-over-threshold lesson the rest of this operation's monitoring is built on, just applied to something you noticed instead of an instrument reading." },
+            },
+            {
+              id: "flag_immediately",
+              label: { en: "Flag it to the Bosun immediately, even though the Bosun is focused elsewhere." },
+              isRecommended: true,
+              consequence: { en: "The Bosun glances over, agrees it's worth watching, and asks you to keep monitoring it and call out immediately if it worsens — while keeping their own attention on the instrument's approach." },
+              feedback: { en: "Correct — a quick, clear flag doesn't have to pull the Bosun's attention away from the critical moment they're watching, and it makes sure the observation isn't lost." },
+              next: {
+                id: "keep_monitoring",
+                situation: { en: "The wire straightens back to center briefly, then starts drifting off-center again in the same direction. The instrument is now very close to the surface — the exact moment this operation's own procedure calls the highest-risk point for impact." },
+                options: [
+                  {
+                    id: "call_out_again",
+                    label: { en: "Call it out again immediately, even though the Bosun is fully focused on the critical final approach right now." },
+                    isRecommended: true,
+                    consequence: { en: "The Bosun acknowledges without breaking focus on the approach, makes a small adjustment to the drum guide once the instrument is safely aboard, and the wire runs true afterward." },
+                    feedback: { en: "Correct instinct, and correct timing — reporting a worsening trend doesn't wait for a more convenient moment, even during the operation's single riskiest few seconds." },
+                  },
+                  {
+                    id: "wait_until_aboard",
+                    label: { en: "Wait until the instrument is safely aboard before mentioning it again, since interrupting the Bosun during the final approach seems like bad timing." },
+                    consequence: { en: "The wire chafes further during the final, highest-tension meters of the approach — exactly the stage where an unaddressed problem does the most damage." },
+                    feedback: { en: "This is the same mistake as waiting for a reading to cross an alarming threshold before reporting it — a worsening trend during the highest-risk moment is precisely when it needs to be flagged, not precisely when to hold back." },
+                  },
+                  {
+                    id: "self_fix_again",
+                    label: { en: "Try to correct the wire's position on the drum yourself again, more confident this time since it corrected once already." },
+                    consequence: { en: "The correction doesn't hold this time, and the wire drifts further while your attention is split between fixing it and guiding the instrument's final approach." },
+                    feedback: { en: "One earlier correction succeeding doesn't establish it as something to keep handling alone — this is the same overstep as adjusting equipment without direction, now compounded by false confidence and split attention at the worst possible moment." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "self_fix",
+              label: { en: "Try to correct the wire's position on the drum yourself without telling the Bosun, since it seems like a small fix." },
+              consequence: { en: "The correction doesn't fully hold, and now nobody besides you is aware the wire ever ran off-center at all." },
+              feedback: { en: "Adjusting equipment without direction and without reporting it means the one person responsible for the whole recovery's safety has no idea it happened — even a successful fix shouldn't stay unreported." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Trend over threshold, once again" },
+        bestPractices: [
+          { en: "Report a reading or observation that's moving in the wrong direction, not just one that has already crossed a limit — DP drift, wire tension, and a wire running off-center on the drum guide are all governed by the same discipline." },
+          { en: "Report even when the timing feels inconvenient — a worsening trend during the operation's highest-risk moment is exactly when it needs to be flagged, not when to hold back." },
+        ],
+        commonErrors: [
+          { en: "Waiting for a reading or observation to become clearly alarming before reporting it." },
+        ],
+      },
+      {
+        theme: { en: "Confirmation before proceeding" },
+        bestPractices: [
+          { en: "Treat each stage's confirmation — instrument readiness, communicating correctly, sampling complete, cast complete — as a genuine gate, not a formality to assume has been met." },
+        ],
+        commonErrors: [
+          { en: "Proceeding to the next stage based on an own-side read that things look finished, ahead of the other side's explicit confirmation." },
+        ],
+      },
+      {
+        theme: { en: "Domain boundaries hold, even under schedule pressure" },
+        bestPractices: [
+          { en: "Direct a request outside one's own domain to the rank who actually owns it, rather than acting on it directly because it seemed reasonable." },
+          { en: "Report an equipment fix rather than handling it silently, even when it seems minor and the fix succeeds." },
+        ],
+        commonErrors: [
+          { en: "Accommodating a well-intentioned request (faster winch rate, a quiet equipment adjustment) that bypasses the people actually responsible for that judgment." },
+        ],
+      },
+      {
+        theme: { en: "The science team directs the instrument, not the vessel's safety" },
+        bestPractices: [
+          { en: "Weigh the science team's requests seriously, and base safety decisions on the vessel's own assessment, not on how scientifically valuable the request is." },
+          { en: "Communicate the reasoning behind a safety decision clearly, rather than simply granting or refusing a request." },
+        ],
+        commonErrors: [
+          { en: "Letting the scientific value of a request substitute for an actual safety assessment." },
         ],
       },
     ],
