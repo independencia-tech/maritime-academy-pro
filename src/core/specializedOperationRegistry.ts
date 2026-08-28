@@ -12633,6 +12633,571 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  general_cargo_rigging_failure_dropped_load: {
+    operationId: "general_cargo_rigging_failure_dropped_load",
+    vesselTypeId: "general_cargo",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "General Cargo — Rigging Failure & Uncontrolled Load Emergency" },
+    introduction: {
+      en: "During a lift, a rigging component — a sling or wire — parts under load, and the cargo becomes uncontrolled: swinging wildly, partially dropped, or coming down toward the deck where crew are working. This directly interrupts op1's own Lift & Stow phase, and turns the handling-accident risk op1 already names into an actual failure rather than a well-managed close call. Because this crew operates its own cranes and works directly beneath and around each lift — unlike a Container Ship crew watching a shore crane from a distance — a rigging failure puts people in immediate physical danger, not just cargo. The response centers on clearing the area, stopping the crane, and assessing whether the load can be safely lowered and secured or needs to be released in a controlled way, followed by treating any injury and understanding what actually failed before lifting resumes.",
+    },
+    objectives: [
+      { en: "Describe the sequence of responding to a rigging failure during a lift: area clearance, crane stop, load assessment, controlled resolution." },
+      { en: "Explain why this emergency is structurally different from op1's own swinging-load near-miss — an actual equipment failure, not a developing signal managed correctly." },
+      { en: "Identify the immediate priority (personnel clear of the load's path) before any attempt to control or lower the cargo." },
+      { en: "Identify who does what during this operation, including whether the failure's domain belongs to Deck (rigging) or Engine (crane power/mechanism)." },
+      { en: "Recognize correct versus incorrect prioritization when the load itself, the crane, and personnel safety are all in play simultaneously." },
+    ],
+    context: {
+      en: "Interrupts op1's own Lift & Stow phase directly, extending the handling-accident risk it already names into an actual failure. Scoped specifically to a rigging failure (a sling or wire parting) rather than a crane mechanical/hydraulic failure, to keep this operation's domain clearly with Deck (the Bosun's own rigging responsibility from op1) rather than conflating it with an Engine-domain crane failure, which would be a different operation. Carries forward op1's 8-rank roster unchanged. Chief Engineer stays \"support\" rather than elevating — the fourth exception to the established emergency default (after LNG op2, Chemical Tanker op2, FPSO op2), same reasoning category: the failure's domain belongs to Deck, not Engine.",
+    },
+
+    operationPhaseOrder: [
+      "rigging_failure_alert",
+      ["area_clearance", "crane_emergency_stop", "injury_assessment"],
+      "load_assessment",
+      "controlled_resolution",
+      "post_incident_care_investigation",
+    ],
+    operationPhases: {
+      rigging_failure_alert: {
+        id: "rigging_failure_alert",
+        title: { en: "Rigging Failure & Alert" },
+        overview: { en: "An abnormal sound or sudden movement is treated as sufficient to alert, not something to confirm first." },
+        steps: [
+          { en: "A sling or wire parts under load; cargo becomes uncontrolled — violent swinging, partial drop." },
+          { en: "Immediate general alert raised." },
+        ],
+        bestPractices: [
+          { en: "Treat the first sign of failure (abnormal sound, sudden movement) as sufficient to alert, without waiting for full visual confirmation." },
+        ],
+        commonMistakes: [
+          { en: "Hesitating to alert while waiting to see if the situation stabilizes on its own." },
+        ],
+      },
+      area_clearance: {
+        id: "area_clearance",
+        title: { en: "Area Clearance" },
+        overview: { en: "Absolute priority before any attempt to control the cargo itself." },
+        steps: [
+          { en: "Immediate evacuation of personnel from the load's path." },
+        ],
+        bestPractices: [
+          { en: "Clear an area wider than seems strictly necessary — an uncontrolled load can move unpredictably." },
+        ],
+        commonMistakes: [
+          { en: "Attempting to control or steady the load before personnel are fully clear." },
+        ],
+      },
+      crane_emergency_stop: {
+        id: "crane_emergency_stop",
+        title: { en: "Crane Emergency Stop" },
+        overview: { en: "The stop precedes any assessment of the remaining rigging's condition." },
+        steps: [
+          { en: "Immediate emergency stop of the crane, preventing further uncontrolled movement." },
+        ],
+        bestPractices: [
+          { en: "The stop precedes any attempt to assess the remaining rigging's condition." },
+        ],
+        commonMistakes: [
+          { en: "Assessing rigging condition before confirming the crane itself is fully stopped." },
+        ],
+      },
+      injury_assessment: {
+        id: "injury_assessment",
+        title: { en: "Injury Assessment" },
+        overview: { en: "Runs in parallel with the other two tracks, not after them — an injured person can't wait." },
+        steps: [
+          { en: "Immediate check for anyone struck by the load or the failed rigging." },
+        ],
+        bestPractices: [
+          { en: "This check runs in parallel with the other two tracks, not after — an injured person needs an immediate response, not a delayed one." },
+        ],
+        commonMistakes: [
+          { en: "Sequencing the injury check after clearance and crane-stop confirmations instead of running it concurrently." },
+        ],
+      },
+      load_assessment: {
+        id: "load_assessment",
+        title: { en: "Load Assessment" },
+        overview: { en: "Assess before acting — don't assume the load's state from what was seen during the failure itself." },
+        steps: [
+          { en: "Once the area is clear and the crane is stopped, assess the load's actual state (down, partially suspended, still moving) and the damaged rigging." },
+        ],
+        bestPractices: [
+          { en: "Assess before acting — don't assume the load's current state from what was observed during the failure itself." },
+        ],
+        commonMistakes: [
+          { en: "Attempting a control action before confirming the load's and remaining rigging's actual state." },
+        ],
+      },
+      controlled_resolution: {
+        id: "controlled_resolution",
+        title: { en: "Controlled Resolution" },
+        overview: { en: "Accepting cargo loss or damage over a risky recovery attempt." },
+        steps: [
+          { en: "If possible, controlled lower-and-secure using alternate rigging." },
+          { en: "If the load genuinely can't be controlled, a controlled release to a cleared deck area rather than a risky recovery attempt." },
+        ],
+        bestPractices: [
+          { en: "Accept cargo loss or damage over any risky intervention to recover it intact." },
+        ],
+        commonMistakes: [
+          { en: "Prioritizing cargo preservation over the safety of the resolution attempt." },
+        ],
+      },
+      post_incident_care_investigation: {
+        id: "post_incident_care_investigation",
+        title: { en: "Post-Incident Care & Investigation" },
+        overview: { en: "Inspect all of the day's rigging, not just the component that failed." },
+        steps: [
+          { en: "First aid if needed." },
+          { en: "Incident report." },
+          { en: "Full inspection of the remaining rigging before any resumption of lifting." },
+          { en: "Decision on resuming operations." },
+        ],
+        bestPractices: [
+          { en: "Inspect all of the day's rigging, not just the failed component — an isolated failure can signal a broader issue." },
+        ],
+        commonMistakes: [
+          { en: "Resuming lifting after inspecting only the component that actually failed." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "failure_alert",
+        phaseId: "rigging_failure_alert",
+        from: "deck", to: "bridge",
+        trigger: { en: "Rigging parts under load, cargo becomes uncontrolled." },
+        content: { en: "Whoever witnesses the failure calls it immediately to the bridge — an abnormal sound or sudden movement is treated as sufficient to alert, not a formality to confirm first." },
+        whyItMatters: { en: "This single call triggers all three concurrent response tracks — clearance, crane stop, injury check — at once." },
+      },
+      {
+        id: "area_clear_confirmation",
+        phaseId: "area_clearance",
+        from: "deck", to: "bridge",
+        trigger: { en: "Personnel moved clear of the load's path." },
+        content: { en: "Bosun confirms the area is clear to the bridge, wider than what seemed strictly necessary given the load's unpredictable movement." },
+        whyItMatters: { en: "No other action in this operation should proceed until this confirmation is genuinely in, not assumed from how quickly people moved." },
+      },
+      {
+        id: "crane_stopped_confirmation",
+        phaseId: "crane_emergency_stop",
+        from: "deck", to: "bridge",
+        trigger: { en: "Emergency stop triggered." },
+        content: { en: "Chief Officer confirms the crane is stopped and no further uncontrolled movement is possible." },
+        whyItMatters: { en: "The load assessment that follows depends on knowing the crane itself won't move again unexpectedly." },
+      },
+      {
+        id: "injury_status_report",
+        phaseId: "injury_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Personnel checked for injury." },
+        content: { en: "Whoever conducts the check reports injury status to the bridge immediately, in parallel with the other two tracks, not after them." },
+        whyItMatters: { en: "An injured crew member needs the fastest possible response — this report can't wait behind clearance and crane confirmations." },
+      },
+      {
+        id: "load_condition_report",
+        phaseId: "load_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Area clear, crane stopped." },
+        content: { en: "Chief Officer reports the load's actual state (down, partially suspended, still moving) and the remaining rigging's condition to the Master." },
+        whyItMatters: { en: "The resolution decision depends on an accurate picture of the load, not an assumption based on what was seen during the failure itself." },
+      },
+      {
+        id: "resolution_decision",
+        phaseId: "controlled_resolution",
+        from: "bridge", to: "deck",
+        trigger: { en: "Load assessment complete." },
+        content: { en: "Master confirms whether the deck team proceeds with a controlled lower-and-secure using alternate rigging, or a controlled release to a cleared area." },
+        whyItMatters: { en: "This decision explicitly favors safety over cargo preservation, and needs to be clear and unambiguous before the deck team acts on it." },
+      },
+      {
+        id: "shore_assistance_request",
+        phaseId: "post_incident_care_investigation",
+        from: "bridge", to: "terminal",
+        trigger: { en: "Injury requiring shore medical assistance." },
+        content: { en: "Master requests shore medical assistance through the terminal/agent if the injury assessment warrants it, given this port may not have equipped facilities of its own." },
+        whyItMatters: { en: "A small port's limited safety infrastructure, already named as a risk on this vessel's own card, means outside assistance may need to be actively requested, not assumed available." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command of the emergency — confirms the resolution approach (controlled lower-and-secure, or controlled release) and authorizes resumption of lifting only after the post-incident rigging inspection is complete." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Triggers the crane emergency stop, assesses the load's actual condition and the remaining rigging once the area is clear, and feeds that assessment to the Master as the basis for the resolution decision." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "Conducts the injury assessment as part of the concurrent response, given their existing deck-support role from op1 — reports directly and immediately rather than waiting on the other two tracks." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads area clearance the moment the failure is called, and later leads the full inspection of the day's rigging before lifting resumes — the same rigging ownership held throughout op1." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes area clearance and supports the rigging inspection under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Confirms the crane's mechanical/power systems are not themselves implicated in the failure, supporting the Chief Officer's assessment without owning the rigging failure's own domain." },
+      },
+      {
+        rankId: "second_engineer",
+        identity: { en: "Supports the Chief Engineer's system check, under their direction." },
+      },
+      {
+        rankId: "third_engineer",
+        identity: { en: "Present and observing throughout the emergency response, without an assigned task — the same observe-level role carried over from op1." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Confirms the resolution approach — controlled lower-and-secure, or controlled release." },
+          { en: "Authorizes resumption of lifting only after the post-incident rigging inspection is complete." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency response status." },
+        ],
+        iReport: [
+          { en: "Reports the incident to the company; requests shore medical assistance if warranted." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize any resolution attempt before the area is confirmed clear and the crane confirmed stopped." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Triggers the crane emergency stop." },
+          { en: "Assesses the load's condition and remaining rigging once the area is clear." },
+        ],
+        iMonitor: [
+          { en: "Load state and rigging condition throughout the response." },
+        ],
+        iReport: [
+          { en: "Reports the assessment to the Master as the basis for the resolution decision." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not attempt to control or lower the load before the area is confirmed clear." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Conducts the injury assessment as part of the concurrent response." },
+        ],
+        iMonitor: [
+          { en: "Condition of any affected personnel." },
+        ],
+        iReport: [
+          { en: "Reports injury status directly and immediately to the bridge." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not delay the injury report to wait on the other two concurrent tracks." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads area clearance immediately on the alert." },
+          { en: "Leads the full inspection of the day's rigging before lifting resumes." },
+        ],
+        iMonitor: [
+          { en: "Clearance status and rigging condition." },
+        ],
+        iReport: [
+          { en: "Reports clearance confirmation to the bridge, and inspection findings before resumption." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not clear lifting to resume before the full day's rigging is inspected, not just the failed component." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes area clearance and supports the rigging inspection, under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate area conditions during clearance." },
+        ],
+        iReport: [
+          { en: "Reports to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not approach the load or remaining rigging independently." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Confirms the crane's mechanical/power systems are not themselves implicated in the failure." },
+        ],
+        iMonitor: [
+          { en: "Crane system status during the response." },
+        ],
+        iReport: [
+          { en: "Reports system status to the Chief Officer to support their assessment." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not direct the rigging failure response itself — this emergency's domain sits with Deck." },
+        ],
+      },
+      second_engineer: {
+        iExecute: [
+          { en: "Supports the Chief Engineer's system check, under their direction." },
+        ],
+        iMonitor: [
+          { en: "System parameters as directed." },
+        ],
+        iReport: [
+          { en: "Reports to the Chief Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not act independently of the Chief Engineer's direction." },
+        ],
+      },
+      third_engineer: {
+        iMonitor: [
+          { en: "Observes the emergency response throughout." },
+        ],
+        iReport: [
+          { en: "Reports observations to the Chief or Second Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently act during the emergency." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "general_cargo_rigging_failure_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the rigging failure emergency response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Rigging Failure & Alert" } },
+          { id: "clearance", label: { en: "Area Clearance" } },
+          { id: "stop", label: { en: "Crane Emergency Stop" } },
+          { id: "injury", label: { en: "Injury Assessment" } },
+          { id: "assess", label: { en: "Load Assessment" } },
+          { id: "resolve", label: { en: "Controlled Resolution" } },
+          { id: "investigate", label: { en: "Post-Incident Care & Investigation" } },
+        ],
+        correctOrder: ["alert", ["clearance", "stop", "injury"], "assess", "resolve", "investigate"],
+      },
+      {
+        type: "error_identification",
+        id: "general_cargo_cargo_preservation_over_safety",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The load is partially suspended, still swaying, but appears salvageable if handled carefully rather than released. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Attempt a careful but risky maneuver to save the cargo intact rather than releasing it." }, isError: true, explanation: { en: "This operation's own resolution phase explicitly favors accepting damage or loss of cargo over a risky intervention — prioritizing intact cargo over safety is exactly the reversal it's built to prevent." } },
+          { id: "b", label: { en: "Proceed with a controlled release even if it means the cargo is damaged." }, isError: false, explanation: { en: "Correct — this is the operation's own stated priority, safety over cargo preservation." } },
+          { id: "c", label: { en: "Confirm the area is genuinely clear before any resolution attempt." }, isError: false, explanation: { en: "Correct — this confirmation precedes any resolution action, whichever one is chosen." } },
+          { id: "d", label: { en: "Report the load's condition to the Master before acting." }, isError: false, explanation: { en: "Correct — the resolution decision belongs to the Master, informed by this report." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "general_cargo_pre_resumption_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The incident is resolved and the deck is clear. Before authorizing lifting to resume, review which conditions are actually satisfied." },
+        items: [
+          { id: "injury_addressed", label: { en: "Any injury addressed and, if needed, shore assistance requested." }, isSatisfied: true },
+          { id: "full_rigging_inspected", label: { en: "The full day's rigging inspected, not just the component that failed." }, isSatisfied: false },
+          { id: "incident_reported", label: { en: "Incident report filed." }, isSatisfied: true },
+          { id: "crane_confirmed", label: { en: "Crane systems confirmed unaffected by the failure." }, isSatisfied: true },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "During the injury assessment, one crew member who was near the load says they feel fine and wasn't struck, but they were close enough that something could have grazed them without them noticing in the moment." },
+        mission: { en: "As OOW, decide how thorough to be with this assessment." },
+        expectedActions: [
+          { en: "Check this crew member as thoroughly as one who reported an injury, rather than taking \"I feel fine\" as sufficient given the proximity." },
+          { en: "Report the assessment, including this check, to the bridge." },
+        ],
+        why: [
+          { en: "Adrenaline and proximity to a fast-moving load can mask a minor injury in the moment — proximity alone is reason enough for a real check, not just a question." },
+        ],
+        commonMistakes: [
+          { en: "Accepting a quick \"I'm fine\" from someone near the load without an actual check." },
+        ],
+        safetyPoints: [
+          { en: "The injury report needs to be accurate for the Master's resolution decision, not optimistic because nobody is visibly hurt." },
+        ],
+      },
+      {
+        situation: { en: "During area clearance, the AB notices a tool left near where the load might still swing, but retrieving it means a few extra seconds inside the area still being cleared." },
+        mission: { en: "As AB, decide whether to grab it on the way out." },
+        expectedActions: [
+          { en: "Leave the tool and clear the area immediately, without the extra seconds inside a zone still being evacuated." },
+          { en: "Report the tool's location once clear, so it can be retrieved once the area is actually secured." },
+        ],
+        why: [
+          { en: "A few seconds inside an unclear area is exactly the margin this operation's clearance discipline exists to protect — a tool is never worth trading against that." },
+        ],
+        commonMistakes: [
+          { en: "Taking the extra seconds to retrieve equipment before fully clearing the area." },
+        ],
+        safetyPoints: [
+          { en: "The clearance zone is deliberately wider than what seems strictly necessary — cutting it close for any reason defeats that margin." },
+        ],
+      },
+      {
+        situation: { en: "With lifting operations paused and schedule pressure building, the Chief Officer asks the Chief Engineer to confirm the crane systems are clear quickly so lifting can resume, before the full rigging inspection is even complete." },
+        mission: { en: "As Chief Engineer, decide how to respond." },
+        expectedActions: [
+          { en: "Give an honest, appropriately-paced system check rather than rushing it to match the requested timeline." },
+          { en: "Note explicitly that the crane systems being clear doesn't substitute for the full rigging inspection, which is a separate, still-pending gate." },
+        ],
+        why: [
+          { en: "A rushed check defeats its own purpose, and confirming crane systems alone could be mistaken for clearing the whole resumption gate, which it doesn't." },
+        ],
+        commonMistakes: [
+          { en: "Rushing the system check to relieve schedule pressure, or letting it be read as clearing more than it actually covers." },
+        ],
+        safetyPoints: [
+          { en: "This operation's own resumption gate needs the full rigging inspection, not just the crane systems check, before lifting resumes." },
+        ],
+      },
+      {
+        situation: { en: "The cargo owner's agent, made aware the load is still partially recoverable, pushes the Master to authorize a careful retrieval attempt rather than a controlled release." },
+        mission: { en: "As Master, decide how to handle the pressure." },
+        expectedActions: [
+          { en: "Hold the safety-over-cargo priority regardless of the agent's pressure or the cargo's value." },
+          { en: "Communicate the reasoning clearly to the agent rather than simply refusing without explanation." },
+        ],
+        why: [
+          { en: "The cargo's value doesn't change the actual risk of a retrieval attempt — this is exactly the pressure this operation's own resolution priority is built to hold against." },
+        ],
+        commonMistakes: [
+          { en: "Yielding to commercial pressure to attempt a risky retrieval." },
+        ],
+        safetyPoints: [
+          { en: "A cargo owner's stake in the cargo doesn't extend to deciding how much risk the crew takes to preserve it." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "general_cargo_frayed_sling_judgment",
+        title: { en: "Looks Mostly Intact" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "The load has stopped moving and is now resting in a stable-looking position. The area is clear, the crane is stopped. Assessing the remaining rigging, you notice the original sling — still attached — has a slightly frayed section near where the failure occurred. It's not obviously compromised, but it's visible wear you wouldn't have looked twice at before today." },
+          options: [
+            {
+              id: "reuse_original",
+              label: { en: "Proceed with a lower-and-secure using the remaining original sling alongside new rigging, since it looks mostly intact." },
+              consequence: { en: "Partway through the lower-and-secure attempt, the frayed section gives further under the new load path, and the situation you just resolved starts developing again." },
+              feedback: { en: "\"Mostly intact\" on a sling that just witnessed a rigging failure isn't a standard to proceed on — the fact that today's failure originated in rigging is exactly why any visible wear on the survivor gets treated as disqualifying, not reassuring." },
+            },
+            {
+              id: "fresh_rigging_only",
+              label: { en: "Treat the frayed sling as disqualified entirely, and rig entirely fresh gear before any lower-and-secure attempt." },
+              isRecommended: true,
+              consequence: { en: "Fresh rigging takes a few extra minutes to set up properly, but the lower-and-secure proceeds cleanly with no further incident." },
+              feedback: { en: "Correct — on the day a rigging component already failed, any visible wear on what's left is a disqualifying sign, not an acceptable risk to weigh against the extra setup time." },
+              next: {
+                id: "fresh_rigging_ready",
+                situation: { en: "Fresh rigging is attached and ready. The load's current resting position is different from a normal lift's starting point, and the standard clearance zone used earlier in the operation doesn't quite match where the load will actually travel from here." },
+                options: [
+                  {
+                    id: "reposition_clearance",
+                    label: { en: "Reassess and reposition the clearance zone based on the load's actual current position and path, not the standard zone used earlier." },
+                    isRecommended: true,
+                    consequence: { en: "The repositioned zone correctly covers the load's actual path, and the lower-and-secure completes safely." },
+                    feedback: { en: "Correct — the standard zone was calibrated for a normal lift, and this situation genuinely isn't one. Reassessing rather than reusing it is the same discipline applied to a new detail." },
+                  },
+                  {
+                    id: "use_standard_zone",
+                    label: { en: "Use the standard clearance zone from earlier in the operation, since it worked fine for area clearance already." },
+                    consequence: { en: "The load's actual path extends slightly beyond the standard zone's boundary, requiring a last-second adjustment as the lower-and-secure begins." },
+                    feedback: { en: "The standard zone was right for the earlier, different situation — reusing it here without checking it against this specific, unusual load position is the same kind of unchecked carryover the rigging decision just avoided." },
+                  },
+                  {
+                    id: "add_spotters",
+                    label: { en: "Use the standard clearance zone but add extra spotters/lookouts as a safety margin." },
+                    consequence: { en: "The spotters catch the load encroaching past the zone boundary just in time — a reactive save rather than a planned safe margin." },
+                    feedback: { en: "A plausible-sounding compromise, but it compensates for an uncorrected zone rather than fixing the actual miscalculation — extra eyes are not a substitute for reassessing the zone itself." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "skip_to_release",
+              label: { en: "Recommend to the Master going straight to a controlled release instead, skipping any lower-and-secure attempt." },
+              consequence: { en: "The Master asks why, given fresh rigging is a genuinely available option — the frayed sling only disqualifies itself, not a lower-and-secure attempt done properly." },
+              feedback: { en: "An overcorrection — the frayed sling is a reason to use fresh rigging, not a reason to abandon a safer resolution option that fresh rigging would still allow." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Safety over cargo preservation, without exception" },
+        bestPractices: [
+          { en: "Accept damage or loss of cargo over any risky attempt to save it intact — this operation's resolution priority is explicit, not situational." },
+        ],
+        commonErrors: [
+          { en: "Attempting a risky maneuver to preserve cargo value, or yielding to commercial pressure to do so." },
+        ],
+      },
+      {
+        theme: { en: "Visible wear after a failure is disqualifying, not reassuring" },
+        bestPractices: [
+          { en: "Treat any visible wear on surviving rigging as disqualifying on a day rigging has already failed, rather than weighing it against the convenience of reusing it." },
+        ],
+        commonErrors: [
+          { en: "Reusing rigging that \"looks mostly intact\" because full replacement costs time." },
+        ],
+      },
+      {
+        theme: { en: "Don't carry forward assumptions calibrated for a different situation" },
+        bestPractices: [
+          { en: "Reassess zones, plans, or checks that were set for a normal situation before applying them to this genuinely different one." },
+        ],
+        commonErrors: [
+          { en: "Reusing a standard zone or check because it worked earlier, without confirming it still fits the current, unusual circumstances." },
+        ],
+      },
+      {
+        theme: { en: "Concurrent tracks proceed independently" },
+        bestPractices: [
+          { en: "Report an injury immediately and directly, in parallel with clearance and crane-stop confirmations, not queued behind them." },
+        ],
+        commonErrors: [
+          { en: "Delaying an injury report until the other response tracks are confirmed." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
