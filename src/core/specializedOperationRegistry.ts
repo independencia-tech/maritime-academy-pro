@@ -13736,6 +13736,548 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  heavy_lift_uncontrolled_list_during_ballast: {
+    operationId: "heavy_lift_uncontrolled_list_during_ballast",
+    vesselTypeId: "heavy_lift",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Heavy Lift Vessel — Uncontrolled List During Semi-Submersion" },
+    introduction: {
+      en: "During resurfacing, as the vessel rises beneath the cargo and weight actively transfers from water buoyancy to deck support, a list or trim develops beyond what the staged sequence anticipated — a ballast tank not responding as calculated, or the cargo's actual weight distribution interacting with the deck differently than planned. This directly interrupts op1's own Resurfacing & Load Transfer phase, at the exact moment op1 itself identifies as its most actively-changing, least stable state. Unlike a stop-and-assess emergency, the vessel is mid-maneuver, already partway between fully submerged and fully surfaced — there is no neutral, stable state to simply hold at indefinitely. The response has to decide not just whether to continue or abort, but which direction actually leads back to safety: complete the resurfacing, reverse back down to re-submerge, or hold the current ballast state while assessing — a decision shape genuinely new to the catalog, since every prior emergency response operated from an already-stable starting position.",
+    },
+    objectives: [
+      { en: "Describe the sequence of detecting, assessing, and responding to an uncontrolled list developing during resurfacing." },
+      { en: "Explain why this emergency's core decision — which ballast direction leads to safety — is structurally different from every prior emergency's continue-or-abort shape." },
+      { en: "Identify the immediate action (freezing the current ballast state) before any directional decision is made." },
+      { en: "Identify who does what during this operation, given Chief Engineer's already-central role in the underlying mechanism." },
+      { en: "Recognize correct versus incorrect prioritization when the vessel, the cargo, and the crew's safety all depend on the same directional decision." },
+    ],
+    context: {
+      en: "Interrupts op1's own Resurfacing & Load Transfer phase directly, at the point op1 itself names as its most actively-changing state. Checked explicitly against a submersion-phase version of the same emergency — chosen for resurfacing specifically because the cargo is already partially or fully transferred onto the deck by this point, raising the stakes beyond a submersion-phase list, which would affect the vessel alone. Carries forward op1's 6-rank roster unchanged. Chief Engineer's centrality from op1 carries directly into this emergency, since the response is executed through the same ballast system they already own — expected to hold \"lead\" here as a continuation of op1's own precedent, not a fresh elevation to check.",
+    },
+
+    operationPhaseOrder: [
+      "list_detection_alert",
+      "immediate_ballast_freeze",
+      ["cause_assessment", "cargo_structural_monitoring", "surveyor_consultation"],
+      "directional_decision",
+      "controlled_execution",
+      "post_incident_verification_investigation",
+    ],
+    operationPhases: {
+      list_detection_alert: {
+        id: "list_detection_alert",
+        title: { en: "List Detection & Alert" },
+        overview: { en: "Any deviation from the expected list/trim trajectory is enough to alert, not just a dramatic one." },
+        steps: [
+          { en: "Abnormal list or trim detected during load transfer." },
+          { en: "Immediate alert raised." },
+        ],
+        bestPractices: [
+          { en: "Treat any deviation from the expected list/trim trajectory as sufficient to alert, without waiting for it to become dramatic." },
+        ],
+        commonMistakes: [
+          { en: "Waiting for further confirmation before alerting, while the situation continues to develop." },
+        ],
+      },
+      immediate_ballast_freeze: {
+        id: "immediate_ballast_freeze",
+        title: { en: "Immediate Ballast Freeze" },
+        overview: { en: "There is no neutral, stable state at this point in the maneuver — freezing the current state is the only immediate safe action." },
+        steps: [
+          { en: "The current ballast sequence is immediately frozen — neither continuing resurfacing nor reversing — before any directional decision." },
+        ],
+        bestPractices: [
+          { en: "The freeze precedes absolutely any decision on direction; there's no neutral stable state to default to at this stage of the maneuver." },
+        ],
+        commonMistakes: [
+          { en: "Deciding a direction (continue or reverse) before the current sequence is actually frozen." },
+        ],
+      },
+      cause_assessment: {
+        id: "cause_assessment",
+        title: { en: "Cause Assessment" },
+        overview: { en: "Diagnose before recommending a direction — the cause largely determines which direction is actually safe." },
+        steps: [
+          { en: "Diagnosis of the cause — ballast tank malfunction, unexpected cargo/deck interaction, or otherwise." },
+        ],
+        bestPractices: [
+          { en: "Diagnose before recommending a direction." },
+        ],
+      },
+      cargo_structural_monitoring: {
+        id: "cargo_structural_monitoring",
+        title: { en: "Cargo & Structural Monitoring" },
+        overview: { en: "The frozen state isn't necessarily stable over time — monitoring is continuous, not a one-time check." },
+        steps: [
+          { en: "Monitoring of cargo securing and structural stress signs while the vessel holds the frozen state." },
+        ],
+        bestPractices: [
+          { en: "Treat this monitoring as continuous, not a single check — the frozen state isn't necessarily stable indefinitely." },
+        ],
+      },
+      surveyor_consultation: {
+        id: "surveyor_consultation",
+        title: { en: "Surveyor Consultation" },
+        overview: { en: "Requested in parallel with the other two tracks, not after — it can directly inform the directional decision." },
+        steps: [
+          { en: "Marine Warranty Surveyor consulted given the structural stakes, if available." },
+        ],
+        bestPractices: [
+          { en: "Request this consultation in parallel with the other two tracks, not after." },
+        ],
+      },
+      directional_decision: {
+        id: "directional_decision",
+        title: { en: "Directional Decision" },
+        overview: { en: "Grounded in the diagnosed cause, not a default reflex in either direction." },
+        steps: [
+          { en: "Based on the assessment, decision to complete resurfacing, reverse to re-submerge, or hold the current position for further stabilization before acting." },
+        ],
+        bestPractices: [
+          { en: "Base the decision on the diagnosed cause, not a default reflex (\"always reverse\" or \"always continue\")." },
+        ],
+        commonMistakes: [
+          { en: "Choosing a direction by reflex rather than on the basis of the actual diagnosis." },
+        ],
+      },
+      controlled_execution: {
+        id: "controlled_execution",
+        title: { en: "Controlled Execution" },
+        overview: { en: "Even under emergency pressure, execution stays staged and confirmed at each step, not continuous." },
+        steps: [
+          { en: "The chosen direction executed in a staged, monitored way, reusing op1's own staging discipline." },
+        ],
+        bestPractices: [
+          { en: "Keep execution staged and confirmed at each step even under pressure, not continuous." },
+        ],
+      },
+      post_incident_verification_investigation: {
+        id: "post_incident_verification_investigation",
+        title: { en: "Post-Incident Verification & Investigation" },
+        overview: { en: "Inspect all ballast systems, not just the one identified as the cause, before any resumption." },
+        steps: [
+          { en: "Confirmation of the final stable state." },
+          { en: "Full inspection." },
+          { en: "Incident report." },
+          { en: "Decision on resuming or completing the operation." },
+        ],
+        bestPractices: [
+          { en: "Inspect all ballast systems, not just the one identified as the cause, before resuming." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "list_alert",
+        phaseId: "list_detection_alert",
+        from: "engine", to: "bridge",
+        trigger: { en: "List or trim reading deviates from the expected resurfacing trajectory." },
+        content: { en: "Chief Engineer alerts the bridge immediately on the first deviation, not waiting for it to become dramatic." },
+        whyItMatters: { en: "This alert triggers the immediate freeze — any delay extends the time the vessel spends drifting further from the planned trajectory." },
+      },
+      {
+        id: "freeze_confirmation",
+        phaseId: "immediate_ballast_freeze",
+        from: "engine", to: "bridge",
+        trigger: { en: "Ballast sequence frozen." },
+        content: { en: "Chief Engineer confirms the current ballast state is frozen — neither continuing nor reversing — before any directional discussion begins." },
+        whyItMatters: { en: "This confirmation is the precondition for every following action; nothing about direction gets decided while the state is still actively changing." },
+      },
+      {
+        id: "cause_diagnosis_report",
+        phaseId: "cause_assessment",
+        from: "engine", to: "bridge",
+        trigger: { en: "Assessment of the list's cause underway." },
+        content: { en: "Chief Engineer reports the diagnosed cause — tank malfunction, unexpected cargo interaction, or otherwise — to the Master as it's established." },
+        whyItMatters: { en: "The directional decision depends on the actual cause, not a default reflex in either direction." },
+      },
+      {
+        id: "structural_status_report",
+        phaseId: "cargo_structural_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Vessel frozen in the current ballast state." },
+        content: { en: "Chief Officer reports cargo securing status and any sign of structural stress continuously while the vessel holds its frozen position." },
+        whyItMatters: { en: "The frozen state isn't necessarily stable indefinitely — this ongoing report is what would catch it deteriorating." },
+      },
+      {
+        id: "surveyor_consultation_request",
+        phaseId: "surveyor_consultation",
+        from: "bridge", to: "warranty_surveyor",
+        trigger: { en: "List incident underway, structural stakes involved." },
+        content: { en: "Master requests the Marine Warranty Surveyor's input given the structural implications, in parallel with the other two assessment tracks." },
+        whyItMatters: { en: "The surveyor's independent perspective can directly inform the directional decision, and requesting it early means it's available in time to matter." },
+      },
+      {
+        id: "surveyor_input",
+        phaseId: "surveyor_consultation",
+        from: "warranty_surveyor", to: "bridge",
+        trigger: { en: "Surveyor consulted." },
+        content: { en: "Surveyor provides input on the structural implications of each possible direction, if available in time." },
+        whyItMatters: { en: "An independent structural read adds a perspective the crew's own assessment alone doesn't have." },
+      },
+      {
+        id: "direction_decision_order",
+        phaseId: "directional_decision",
+        from: "bridge", to: "engine",
+        trigger: { en: "Directional decision made." },
+        content: { en: "Master communicates the chosen direction — complete resurfacing, reverse to re-submerge, or continue holding — clearly and unambiguously to the Chief Engineer." },
+        whyItMatters: { en: "An ambiguous order at this point risks a hesitant or inconsistent execution of a decision that needs to be acted on decisively." },
+      },
+      {
+        id: "execution_stage_confirmation",
+        phaseId: "controlled_execution",
+        from: "engine", to: "bridge",
+        trigger: { en: "Each stage of the chosen direction's execution." },
+        content: { en: "Chief Engineer confirms each stage of execution to the Master, reusing the same staged-confirmation discipline established in op1." },
+        whyItMatters: { en: "Even under emergency pressure, this operation's core discipline — confirm before proceeding — doesn't change." },
+      },
+      {
+        id: "full_inspection_status",
+        phaseId: "post_incident_verification_investigation",
+        from: "engine", to: "bridge",
+        trigger: { en: "Vessel confirmed in a final stable state." },
+        content: { en: "Chief Engineer reports the status of a full ballast system inspection, not just the component identified as the cause, before any resumption is considered." },
+        whyItMatters: { en: "An isolated cause found and fixed doesn't rule out a related issue elsewhere in the same systems." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command of the emergency — requests the surveyor's input, makes the directional decision (complete, reverse, or hold), and communicates it decisively to the Chief Engineer." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Monitors cargo securing and structural stress continuously while the vessel holds its frozen position, feeding that assessment into the Master's decision." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes securing checks and support tasks on deck under the Chief Officer's direction while the vessel is frozen." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Diagnoses the cause of the list and executes the Master's directional decision through the same ballast system they already own from op1 — the continuity of their op1 centrality into this emergency." },
+      },
+      {
+        rankId: "second_engineer",
+        identity: { en: "Hands-on execution of ballast adjustments for the chosen direction, under the Chief Engineer's direction." },
+      },
+      {
+        rankId: "third_engineer",
+        identity: { en: "Present and observing throughout the emergency response, without an assigned task — the same observe-level role carried over from op1." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      chief_engineer: "lead",
+      ab: "perform",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Requests the surveyor's input given the structural stakes." },
+          { en: "Makes the directional decision — complete resurfacing, reverse to re-submerge, or hold." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency response status." },
+        ],
+        iReport: [
+          { en: "Reports the incident and its resolution to the company." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize any directional action before the ballast state is confirmed frozen." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Monitors cargo securing and structural stress continuously while the vessel holds its frozen position." },
+        ],
+        iMonitor: [
+          { en: "Cargo and structural condition throughout the frozen state." },
+        ],
+        iReport: [
+          { en: "Reports status to the Master continuously, not only once." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not treat the frozen state as stable without ongoing verification." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Diagnoses the cause of the list." },
+          { en: "Executes the Master's directional decision through the ballast system." },
+        ],
+        iMonitor: [
+          { en: "Ballast system state throughout the frozen period and the chosen direction's execution." },
+        ],
+        iReport: [
+          { en: "Reports the diagnosed cause to the Master before the directional decision is made." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not choose or execute a direction independently of the Master's decision." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes securing checks and support tasks on deck, under the Chief Officer's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate deck and cargo conditions in their own work area." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent judgments about cargo security status." },
+        ],
+      },
+      second_engineer: {
+        iExecute: [
+          { en: "Hands-on execution of ballast adjustments for the chosen direction, under the Chief Engineer's direction." },
+        ],
+        iMonitor: [
+          { en: "System parameters throughout execution." },
+        ],
+        iReport: [
+          { en: "Reports any abnormal reading to the Chief Engineer immediately." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not adjust ballast independently of the Chief Engineer's direction." },
+        ],
+      },
+      third_engineer: {
+        iMonitor: [
+          { en: "Observes the emergency response throughout." },
+        ],
+        iReport: [
+          { en: "Reports observations or questions to the Chief or Second Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently act during the emergency." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "heavy_lift_list_emergency_phase_sequence",
+        targetRanks: ["master", "chief_officer", "chief_engineer"],
+        prompt: { en: "Put the uncontrolled list emergency response's phases in the correct order." },
+        items: [
+          { id: "detect", label: { en: "List Detection & Alert" } },
+          { id: "freeze", label: { en: "Immediate Ballast Freeze" } },
+          { id: "cause", label: { en: "Cause Assessment" } },
+          { id: "structural", label: { en: "Cargo & Structural Monitoring" } },
+          { id: "surveyor", label: { en: "Surveyor Consultation" } },
+          { id: "decide", label: { en: "Directional Decision" } },
+          { id: "execute", label: { en: "Controlled Execution" } },
+          { id: "investigate", label: { en: "Post-Incident Verification & Investigation" } },
+        ],
+        correctOrder: ["detect", "freeze", ["cause", "structural", "surveyor"], "decide", "execute", "investigate"],
+      },
+      {
+        type: "error_identification",
+        id: "heavy_lift_reflex_direction_shortcut",
+        targetRanks: ["chief_engineer"],
+        scenario: { en: "The ballast state is frozen, but under pressure there's a temptation to immediately begin reversing toward re-submersion \"just to be safe,\" before the list's cause is actually diagnosed. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Begin reversing immediately as a safe default, before the cause is diagnosed." }, isError: true, explanation: { en: "Reversing isn't automatically the safer direction — the correct direction depends on the actual cause, which isn't known yet. A reflexive default can move the vessel the wrong way just as easily as the right one." } },
+          { id: "b", label: { en: "Complete the cause diagnosis before recommending any direction." }, isError: false, explanation: { en: "Correct — the directional decision depends on the diagnosis, not a default assumption about which way is safer." } },
+          { id: "c", label: { en: "Keep the ballast state frozen while diagnosis is ongoing." }, isError: false, explanation: { en: "Correct — the freeze holds until an informed decision replaces it, not until impatience does." } },
+          { id: "d", label: { en: "Report findings to the Master as they emerge, rather than waiting for a complete picture." }, isError: false, explanation: { en: "Correct — incremental reporting during diagnosis helps the Master prepare for the decision without forcing a premature one." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "heavy_lift_pre_execution_gate",
+        targetRanks: ["master"],
+        scenario: { en: "A direction has been chosen. Before authorizing execution to begin, review which conditions are actually satisfied." },
+        items: [
+          { id: "cause_diagnosed", label: { en: "Cause of the list diagnosed by the Chief Engineer." }, isSatisfied: true },
+          { id: "structural_stable", label: { en: "Cargo and structural status confirmed stable by the Chief Officer." }, isSatisfied: true },
+          { id: "surveyor_consulted", label: { en: "Surveyor consulted, or explicitly noted as unavailable in the time available." }, isSatisfied: false },
+          { id: "direction_communicated", label: { en: "Chosen direction communicated clearly and unambiguously to the Chief Engineer." }, isSatisfied: true },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "While checking cargo securing during the frozen state, the AB notices a lashing that looks slightly less taut than the others — not clearly loose, just not quite matching the rest." },
+        mission: { en: "As AB, decide how to handle the observation." },
+        expectedActions: [
+          { en: "Report the specific lashing to the Chief Officer rather than deciding independently it's probably fine." },
+          { en: "Continue checking the remaining lashings rather than stopping at the first one checked." },
+        ],
+        why: [
+          { en: "A lashing that doesn't quite match the others is exactly the kind of detail the ongoing structural monitoring exists to catch, even without a clear sign of failure." },
+        ],
+        commonMistakes: [
+          { en: "Deciding independently that a modest inconsistency isn't worth reporting." },
+        ],
+        safetyPoints: [
+          { en: "The frozen state's stability isn't guaranteed to hold indefinitely — small changes are exactly what ongoing monitoring is watching for." },
+        ],
+      },
+      {
+        situation: { en: "During execution of the chosen direction, the Second Engineer notices a ballast pump reading fluctuating slightly more than usual, though still within its normal operating range." },
+        mission: { en: "As Second Engineer, decide what to do with this observation." },
+        expectedActions: [
+          { en: "Report the fluctuation to the Chief Engineer even though the reading is technically within range." },
+          { en: "Continue monitoring closely rather than assuming it will settle." },
+        ],
+        why: [
+          { en: "A system already implicated in an emergency deserves closer scrutiny of even in-range fluctuations than it would on an ordinary day." },
+        ],
+        commonMistakes: [
+          { en: "Dismissing the fluctuation because it's still technically within the normal range." },
+        ],
+        safetyPoints: [
+          { en: "This is exactly the system whose behavior caused the emergency in the first place — a marginal reading here carries more weight than it would elsewhere." },
+        ],
+      },
+      {
+        situation: { en: "While monitoring for structural stress, the Chief Officer hears a sound from the cargo/deck interface that could be normal settling or could be something more concerning — it's genuinely hard to tell." },
+        mission: { en: "As Chief Officer, decide how to handle the ambiguity." },
+        expectedActions: [
+          { en: "Report the sound and the genuine uncertainty about its meaning, rather than resolving the ambiguity themselves before reporting." },
+          { en: "Request a closer inspection rather than waiting for a clearer signal that may or may not come." },
+        ],
+        why: [
+          { en: "Reporting genuine uncertainty is more useful than reporting a guessed resolution — the Master's decision benefits from knowing what's actually known versus assumed." },
+        ],
+        commonMistakes: [
+          { en: "Deciding privately that the sound was \"probably normal settling\" without reporting the observation at all." },
+        ],
+        safetyPoints: [
+          { en: "An ambiguous but reported signal is far more useful to the response than a confidently guessed non-report." },
+        ],
+      },
+      {
+        situation: { en: "With the situation seemingly stabilizing and time pressure building, there's a temptation to proceed with the directional decision without waiting on the surveyor's input, given they may not respond quickly." },
+        mission: { en: "As Master, decide how to handle the time pressure." },
+        expectedActions: [
+          { en: "Request the surveyor's input regardless, while allowing a reasonable, bounded wait rather than an open-ended one." },
+          { en: "If the surveyor genuinely can't respond in time, proceed with an explicit note that this step was unavailable, not silently skipped." },
+        ],
+        why: [
+          { en: "The surveyor's independent structural perspective is valuable specifically because it's independent — skipping the request removes information the crew's own assessment doesn't have access to." },
+        ],
+        commonMistakes: [
+          { en: "Not requesting the surveyor's input at all because a response seems unlikely to arrive in time." },
+        ],
+        safetyPoints: [
+          { en: "An explicitly noted gap in the readiness check is honest; a silently skipped one looks the same as a satisfied one to anyone reviewing the decision later." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "heavy_lift_stuck_valve_direction_judgment",
+        title: { en: "Which Way Is Actually Safe" },
+        seatRankId: "chief_engineer",
+        root: {
+          id: "root",
+          situation: { en: "Diagnosis is complete: one ballast tank's valve is partially stuck, causing uneven de-ballasting on that side — the source of the list. Two technically viable paths exist: compensate using the other tanks asymmetrically and continue resurfacing, or reverse to re-submerge, relieving load on the stuck valve, and properly diagnose and fix it before trying again. The Master asks for your recommendation." },
+          options: [
+            {
+              id: "compensate_continue",
+              label: { en: "Recommend compensating via the other tanks and continuing to resurface." },
+              consequence: { en: "The compensation holds initially, but continuing to load the malfunctioning valve under pressure causes it to worsen further partway through resurfacing, right as the operation reaches its highest-stakes phase." },
+              feedback: { en: "Compensating masks the malfunction rather than resolving it — continuing to rely on a system that's already shown a problem, under increasing load, is exactly the wrong moment to bet on it holding." },
+            },
+            {
+              id: "reverse_resubmerge",
+              label: { en: "Recommend reversing to re-submerge, relieving pressure on the affected valve, then properly diagnosing and fixing it before attempting again." },
+              isRecommended: true,
+              consequence: { en: "The Master approves. As reversal begins, pressure on the stuck valve eases." },
+              feedback: { en: "Correct — relieving load on a system that's already shown a fault, before attempting a proper fix, is the conservative choice this catalog's own judgment consistently favors over compensating around a known problem." },
+              next: {
+                id: "valve_easing",
+                situation: { en: "Partway through the reversal, the valve appears to be unseating on its own as pressure reduces — it looks like it might be freeing itself. The Master asks whether to stop the reversal and try resurfacing again now." },
+                options: [
+                  {
+                    id: "complete_reversal",
+                    label: { en: "Continue the reversal fully to a safe, re-submerged state before reassessing, despite the apparent improvement." },
+                    isRecommended: true,
+                    consequence: { en: "The reversal completes cleanly. Inspection at the fully re-submerged, stable state confirms the valve is genuinely clear, and a proper restart is planned." },
+                    feedback: { en: "Correct — \"looks like it's freeing itself\" mid-maneuver isn't the same as a confirmed fix at a genuinely stable state. Completing the reversal first is what turns an appearance into a confirmation." },
+                  },
+                  {
+                    id: "resume_early",
+                    label: { en: "Stop the reversal partway and attempt resurfacing again now that the valve seems to be freeing." },
+                    consequence: { en: "The valve issue reasserts itself as soon as load increases again during the new resurfacing attempt, and the same list begins developing a second time." },
+                    feedback: { en: "An improvement observed while pressure is still easing doesn't confirm the fix holds under load — this is the same partial-improvement trap the operation's own readiness gate is built to catch." },
+                  },
+                  {
+                    id: "hold_partial",
+                    label: { en: "Stop the reversal and hold in the current partial position to observe further before deciding." },
+                    consequence: { en: "The vessel lingers in an intermediate ballast state longer than necessary — not clearly worse, but not the stable state either direction would have reached." },
+                    feedback: { en: "An intermediate position was never established as stable to begin with — this operation's own first action was freezing precisely because there's no safe state to simply wait in. Completing the move to an actual stable state is the better use of the time." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "hold_and_fix_in_place",
+              label: { en: "Recommend holding the frozen position indefinitely and attempting a fix in place without moving in either direction." },
+              consequence: { en: "Attempting to work on the valve while it remains under the same load that caused the problem proves far harder than the same fix would be once pressure is relieved, and the frozen position itself shows early signs of drifting further as time passes." },
+              feedback: { en: "The frozen state was never established as indefinitely stable — holding in place under continued load, rather than actually relieving it, makes the fix harder while gaining nothing in safety." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Freeze first, decide direction second" },
+        bestPractices: [
+          { en: "Freeze the current ballast state immediately on detecting a problem, before any directional decision — there is no default \"safer\" direction until the cause is known." },
+        ],
+        commonErrors: [
+          { en: "Choosing a direction by reflex (\"reversing is always safer\") before diagnosis is complete." },
+        ],
+      },
+      {
+        theme: { en: "Relieve load on a malfunctioning system, don't compensate around it" },
+        bestPractices: [
+          { en: "Reduce load on a system that's already shown a fault before attempting a proper fix, rather than working around it with other systems under increasing pressure." },
+        ],
+        commonErrors: [
+          { en: "Compensating for a known malfunction and continuing to rely on it under load." },
+        ],
+      },
+      {
+        theme: { en: "An apparent improvement mid-maneuver isn't a confirmed fix" },
+        bestPractices: [
+          { en: "Complete a corrective move to a genuinely stable state before reassessing, rather than acting on an improvement observed while still mid-maneuver." },
+        ],
+        commonErrors: [
+          { en: "Reversing course early because a problem seems to be resolving itself before it's actually confirmed at a stable state." },
+        ],
+      },
+      {
+        theme: { en: "Report genuine uncertainty rather than a private, guessed resolution" },
+        bestPractices: [
+          { en: "Report an ambiguous observation along with the uncertainty itself, rather than resolving it privately and reporting only a conclusion." },
+        ],
+        commonErrors: [
+          { en: "Deciding privately that something is \"probably fine\" and not reporting the underlying observation at all." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
