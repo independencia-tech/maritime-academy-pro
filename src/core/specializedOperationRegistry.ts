@@ -14811,6 +14811,526 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  passenger_ship_fire_mass_evacuation: {
+    operationId: "passenger_ship_fire_mass_evacuation",
+    vesselTypeId: "passenger_ship",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Passenger Ship — Accommodation Fire & Mass Evacuation" },
+    introduction: {
+      en: "A fire breaks out in an accommodation area — a cabin or common space — and spreads enough to require mustering and potentially evacuating passengers in earnest, not as a drill. This directly interrupts and tests op1's own infrastructure: the headcount discipline, muster station system, and Passenger Services coordination built there now operate under real pressure, with real passengers who may be confused, frightened, or resistant, not compliant drill participants. This module is scoped specifically to the evacuation side of the emergency — crowd management, real-condition muster and headcount, coordination with Passenger Services, and the decision of whether full abandon-ship is warranted — not the technical firefighting response itself, which follows the same discipline already established for AHTS and Container Ship's fire content and isn't repeated here. The fire is this operation's trigger, not its subject; the subject is whether the evacuation system built in op1 actually holds up when it's tested for real.",
+    },
+    objectives: [
+      { en: "Describe the sequence of responding to an accommodation fire requiring mass evacuation: alarm, muster under real conditions, headcount verification, and the abandon-ship decision if warranted." },
+      { en: "Explain why this operation focuses on evacuation execution rather than firefighting technique, and where that boundary sits." },
+      { en: "Identify how op1's headcount and muster infrastructure is tested differently under real emergency conditions versus a drill." },
+      { en: "Identify who does what during this operation, including the boundary between the crew's evacuation authority and Passenger Services' direct passenger management." },
+      { en: "Recognize correct versus incorrect prioritization when crowd behavior, headcount accuracy, and the fire's own development all demand attention simultaneously." },
+    ],
+    context: {
+      en: "Interrupts and stress-tests op1's own headcount/muster infrastructure directly. Scoped explicitly to evacuation, not firefighting — checked against AHTS and Container Ship's existing fire-response content, which already covers technical firefighting discipline; repeating it here would add nothing new, so this operation stays focused on what's genuinely unaddressed: real-condition crowd management and evacuation execution. Carries forward op1's 6-rank roster and the passenger_services party unchanged.",
+    },
+
+    operationPhaseOrder: [
+      "fire_alert_emergency_muster_signal",
+      ["real_condition_crowd_management", "headcount_verification_under_pressure", "fire_development_monitoring"],
+      "evacuation_severity_assessment",
+      "decision_execution",
+      "post_emergency_verification_care",
+    ],
+    operationPhases: {
+      fire_alert_emergency_muster_signal: {
+        id: "fire_alert_emergency_muster_signal",
+        title: { en: "Fire Alert & Emergency Muster Signal" },
+        overview: { en: "Any fire report, even uncertain, is enough to raise the alarm — no visual confirmation required first." },
+        steps: [
+          { en: "Fire detected or reported in an accommodation area." },
+          { en: "Emergency alarm sounded, distinct from the drill signal." },
+          { en: "Passengers directed to muster stations." },
+        ],
+        bestPractices: [
+          { en: "Treat any fire report, even uncertain, as sufficient to raise the alarm — no need for full visual confirmation first." },
+        ],
+        commonMistakes: [
+          { en: "Waiting for further confirmation before raising the alarm." },
+        ],
+      },
+      real_condition_crowd_management: {
+        id: "real_condition_crowd_management",
+        title: { en: "Real-Condition Crowd Management" },
+        overview: { en: "Real passengers diverge from drill compliance — the procedure adapts, not just repeats." },
+        steps: [
+          { en: "Passengers managed under real conditions — potentially frightened, confused, or resistant, unlike drill cooperation." },
+        ],
+        bestPractices: [
+          { en: "Anticipate that real behavior diverges from drill behavior, and adapt management accordingly rather than mechanically applying drill procedure." },
+        ],
+      },
+      headcount_verification_under_pressure: {
+        id: "headcount_verification_under_pressure",
+        title: { en: "Headcount Verification Under Pressure" },
+        overview: { en: "The same rigor as the drill, despite harder real conditions — not a relaxed standard because the situation is chaotic." },
+        steps: [
+          { en: "Headcount at muster stations verified against the embarkation total, under harder real conditions than a drill." },
+        ],
+        bestPractices: [
+          { en: "Treat any headcount discrepancy with the same rigor as in the drill, despite the increased pressure." },
+        ],
+        commonMistakes: [
+          { en: "Relaxing counting discipline because the situation is chaotic." },
+        ],
+      },
+      fire_development_monitoring: {
+        id: "fire_development_monitoring",
+        title: { en: "Fire Development Monitoring" },
+        overview: { en: "The decision depends on the trend, not a single snapshot." },
+        steps: [
+          { en: "Fire development tracked to inform the evacuation-severity decision." },
+        ],
+        bestPractices: [
+          { en: "Report the fire's development continuously, not just a single point-in-time status." },
+        ],
+      },
+      evacuation_severity_assessment: {
+        id: "evacuation_severity_assessment",
+        title: { en: "Evacuation Severity Assessment" },
+        overview: { en: "Grounded in the actual situation, not a default reflex in either direction." },
+        steps: [
+          { en: "Based on fire development and headcount status, assessment of whether holding at muster stations suffices or full evacuation (abandon ship) is needed." },
+        ],
+        bestPractices: [
+          { en: "Base the decision on the actual assessment of the situation, not a default reflex either way." },
+        ],
+      },
+      decision_execution: {
+        id: "decision_execution",
+        title: { en: "Decision & Execution" },
+        overview: { en: "Once made, the decision is communicated clearly and unambiguously to everyone involved." },
+        steps: [
+          { en: "Either hold at muster stations (fire contained), or execute the full evacuation/abandon-ship procedure." },
+        ],
+        bestPractices: [
+          { en: "Communicate the decision clearly and unambiguously to all involved once made." },
+        ],
+      },
+      post_emergency_verification_care: {
+        id: "post_emergency_verification_care",
+        title: { en: "Post-Emergency Verification & Care" },
+        overview: { en: "The same rigor as op1's own final reconciliation — no closing out with an unresolved gap." },
+        steps: [
+          { en: "Final headcount reconciliation." },
+          { en: "Care for any injured or distressed passengers." },
+          { en: "Incident report." },
+        ],
+        bestPractices: [
+          { en: "Apply the same rigor to final reconciliation as op1's own — never close out with an unresolved discrepancy." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "fire_alert",
+        phaseId: "fire_alert_emergency_muster_signal",
+        from: "deck", to: "bridge",
+        trigger: { en: "Fire detected or reported in an accommodation area." },
+        content: { en: "Whoever detects or is informed of the fire alerts the bridge immediately — any report, even uncertain, is treated as sufficient, no visual confirmation required first." },
+        whyItMatters: { en: "This alert triggers the emergency muster signal — any delay here delays passengers beginning to move toward safety." },
+      },
+      {
+        id: "emergency_muster_signal_coordination",
+        phaseId: "fire_alert_emergency_muster_signal",
+        from: "bridge", to: "passenger_services",
+        trigger: { en: "Fire alert confirmed." },
+        content: { en: "Master coordinates the emergency muster signal with Passenger Services, distinct from the drill signal, so passenger-facing staff know this is real." },
+        whyItMatters: { en: "Passenger Services' own response — genuine crowd management, not drill routine — depends on knowing immediately this isn't an exercise." },
+      },
+      {
+        id: "crowd_status_report",
+        phaseId: "real_condition_crowd_management",
+        from: "passenger_services", to: "bridge",
+        trigger: { en: "Passengers moving toward muster stations under real conditions." },
+        content: { en: "Passenger Services reports crowd behavior and any difficulty continuously, since real conditions diverge from drill compliance in ways that matter to the response." },
+        whyItMatters: { en: "The Master's evacuation-severity assessment depends on an honest read of how the crowd is actually behaving, not an assumption it mirrors the drill." },
+      },
+      {
+        id: "headcount_status_under_pressure",
+        phaseId: "headcount_verification_under_pressure",
+        from: "deck", to: "bridge",
+        trigger: { en: "Headcount underway at muster stations." },
+        content: { en: "Chief Officer reports headcount status with the same rigor as op1's drill, despite the more difficult real conditions." },
+        whyItMatters: { en: "A relaxed standard under pressure is exactly when an actual missing passenger would be hardest to catch." },
+      },
+      {
+        id: "fire_trend_report",
+        phaseId: "fire_development_monitoring",
+        from: "engine", to: "bridge",
+        trigger: { en: "Fire status being tracked." },
+        content: { en: "Chief Engineer reports the fire's development trend continuously to the Master, not a single point-in-time status." },
+        whyItMatters: { en: "The evacuation-severity decision depends on the trend — whether the fire is being contained or worsening — not a snapshot." },
+      },
+      {
+        id: "distress_notification",
+        phaseId: "evacuation_severity_assessment",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Severity of the situation warrants notification." },
+        content: { en: "Master sends a distress notification given the potential scale of the emergency, rather than waiting to see whether full evacuation is ultimately needed." },
+        whyItMatters: { en: "Notifying early means outside assistance is already moving if the situation turns out to require more than the crew alone can manage." },
+      },
+      {
+        id: "decision_communicated",
+        phaseId: "decision_execution",
+        from: "bridge", to: "passenger_services",
+        trigger: { en: "Evacuation severity decision made." },
+        content: { en: "Master communicates the decision — hold at muster stations, or full evacuation — clearly and unambiguously to Passenger Services and the deck team." },
+        whyItMatters: { en: "An ambiguous decision at this point risks a mixed or hesitant response from passenger-facing staff at the worst possible moment." },
+      },
+      {
+        id: "outcome_report_authorities",
+        phaseId: "post_emergency_verification_care",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Situation resolved." },
+        content: { en: "Master reports the outcome to the already-notified authorities — final headcount status, any injuries, and whether further assistance is still needed." },
+        whyItMatters: { en: "A notification sent during the emergency needs a genuine close-out, not just being left open." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command — makes the evacuation-severity decision (hold at muster stations or full evacuation) and sends the distress notification given the situation's scale." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads headcount verification under real-emergency conditions, holding the same rigor as op1's drill despite the pressure, and coordinates directly with Passenger Services." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "Supports deck-side coordination during the emergency, an extension of the same port-stay support role established in op1, now applied under real pressure." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team supporting muster station logistics and crowd flow." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes support tasks at muster stations under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Tracks the fire's development trend and confirms evacuation-support systems (emergency lighting, alarms) remain functioning — monitoring and reporting, not the technical firefighting response itself, which stays outside this operation's scope." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Makes the evacuation-severity decision — hold at muster stations, or full evacuation." },
+          { en: "Sends the distress notification given the situation's scale." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency response status." },
+        ],
+        iReport: [
+          { en: "Reports the incident and its outcome to the already-notified authorities and the company." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize stand-down before headcount is fully reconciled." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads headcount verification at muster stations under real conditions." },
+        ],
+        iMonitor: [
+          { en: "Headcount status against the embarkation total throughout." },
+        ],
+        iReport: [
+          { en: "Reports headcount status to the Master, and coordinates directly with Passenger Services." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not relax headcount rigor because conditions are more difficult than a drill." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Supports deck-side coordination during the emergency." },
+        ],
+        iMonitor: [
+          { en: "Assigned tasks during the emergency response." },
+        ],
+        iReport: [
+          { en: "Reports task status to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent headcount or evacuation decisions." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the deck team supporting muster station logistics and crowd flow." },
+        ],
+        iMonitor: [
+          { en: "Crowd flow and muster station conditions." },
+        ],
+        iReport: [
+          { en: "Reports conditions and any hazard to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize a change to the muster/evacuation plan independently." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes support tasks at muster stations under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate conditions in their own area." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent crowd management decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Tracks the fire's development trend and confirms evacuation-support systems remain functioning." },
+        ],
+        iMonitor: [
+          { en: "Fire development trend and evacuation-support system status throughout." },
+        ],
+        iReport: [
+          { en: "Reports the fire's trend continuously to the Master, not a single point-in-time status." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not direct the firefighting response itself — that stays outside this operation's scope." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "passenger_ship_evacuation_phase_sequence",
+        targetRanks: ["master", "chief_officer", "chief_engineer"],
+        prompt: { en: "Put the accommodation fire/mass evacuation response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Fire Alert & Emergency Muster Signal" } },
+          { id: "crowd", label: { en: "Real-Condition Crowd Management" } },
+          { id: "headcount", label: { en: "Headcount Verification Under Pressure" } },
+          { id: "fire_trend", label: { en: "Fire Development Monitoring" } },
+          { id: "assess", label: { en: "Evacuation Severity Assessment" } },
+          { id: "decide", label: { en: "Decision & Execution" } },
+          { id: "care", label: { en: "Post-Emergency Verification & Care" } },
+        ],
+        correctOrder: ["alert", ["crowd", "headcount", "fire_trend"], "assess", "decide", "care"],
+      },
+      {
+        type: "error_identification",
+        id: "passenger_ship_approximate_headcount_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "Conditions at the muster station are chaotic, and the headcount seems roughly right. Given the pressure, there's a temptation to accept an approximate count rather than a fully verified one. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Accept an approximate headcount given the chaotic conditions." }, isError: true, explanation: { en: "\"Roughly right\" under real chaos is exactly the condition op1's drill discipline was built to hold through — relaxing it now is the one moment it matters most." } },
+          { id: "b", label: { en: "Maintain the same rigorous count discipline as the drill despite the conditions." }, isError: false, explanation: { en: "Correct — the standard doesn't lower because the situation is harder; if anything, it matters more." } },
+          { id: "c", label: { en: "Report any discrepancy immediately regardless of the pressure." }, isError: false, explanation: { en: "Correct — the Master's evacuation-severity decision depends on this being accurate." } },
+          { id: "d", label: { en: "Request additional support if conditions are hindering accurate counting." }, isError: false, explanation: { en: "Correct — asking for help to maintain accuracy is preferable to quietly lowering the standard." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "passenger_ship_pre_standdown_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The fire appears controlled and the crowd is stable. Before authorizing stand-down from emergency muster, review which conditions are actually satisfied." },
+        items: [
+          { id: "headcount_reconciled", label: { en: "Headcount fully reconciled against the embarkation total." }, isSatisfied: true },
+          { id: "fire_confirmed_contained", label: { en: "Fire trend confirmed contained, not just appearing calmer." }, isSatisfied: false },
+          { id: "injured_accounted", label: { en: "Any injured or distressed passengers identified and accounted for." }, isSatisfied: true },
+          { id: "authorities_updated", label: { en: "Notified authorities updated on current status." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "During evacuation to muster stations, the OOW notices a passenger with a mobility difficulty falling behind the flow of people moving toward their station." },
+        mission: { en: "As OOW, decide how to handle this while the broader evacuation continues." },
+        expectedActions: [
+          { en: "Provide direct assistance or get help for the passenger rather than continuing past and hoping someone else notices." },
+          { en: "Report the situation so the passenger is accounted for even if they're delayed reaching their station." },
+        ],
+        why: [
+          { en: "A passenger who falls behind the flow is exactly the kind of gap that a headcount at the muster station alone won't catch until it's already a problem." },
+        ],
+        commonMistakes: [
+          { en: "Continuing past on the assumption that someone else will help." },
+        ],
+        safetyPoints: [
+          { en: "Individual attention during evacuation isn't a distraction from the broader response — it's part of what makes the eventual headcount actually accurate." },
+        ],
+      },
+      {
+        situation: { en: "A bottleneck develops at one muster station as more people arrive than the space comfortably holds. There's a temptation to informally redirect some passengers to a different station on the spot." },
+        mission: { en: "As AB, decide how to handle the bottleneck." },
+        expectedActions: [
+          { en: "Report the bottleneck to the Bosun rather than personally redirecting passengers." },
+          { en: "Manage the immediate crowding as safely as possible while awaiting direction." },
+        ],
+        why: [
+          { en: "An informal redirection, however well-intentioned, breaks the headcount system's own assumption that people are where they're expected to be — exactly what the muster verification depends on." },
+        ],
+        commonMistakes: [
+          { en: "Redirecting passengers informally without coordinating the change through the chain." },
+        ],
+        safetyPoints: [
+          { en: "A coordinated redirection can be tracked in the headcount system; an informal one can't." },
+        ],
+      },
+      {
+        situation: { en: "The Chief Engineer notices emergency lighting in one corridor flickering intermittently — not out, but not fully steady either." },
+        mission: { en: "As Chief Engineer, decide whether this is worth reporting immediately." },
+        expectedActions: [
+          { en: "Report the flickering immediately rather than waiting to see if it stabilizes or fails outright." },
+          { en: "Continue monitoring it closely alongside the report." },
+        ],
+        why: [
+          { en: "Evacuation-support systems in active use during an emergency deserve immediate reporting of any degradation, not a wait-and-see approach." },
+        ],
+        commonMistakes: [
+          { en: "Waiting to report until the light either stabilizes or fails completely." },
+        ],
+        safetyPoints: [
+          { en: "A flickering light along an evacuation route is exactly the kind of degrading system this operation's monitoring exists to catch early." },
+        ],
+      },
+      {
+        situation: { en: "The evacuation-severity decision is genuinely difficult to call — the fire trend is ambiguous and there's pressure to wait for more information before deciding between holding at muster stations or ordering full evacuation." },
+        mission: { en: "As Master, decide how to handle the ambiguity." },
+        expectedActions: [
+          { en: "Make a timely decision based on the best available information rather than waiting indefinitely for more certainty." },
+          { en: "Remain ready to escalate quickly if the situation develops, rather than treating the initial decision as final and unchangeable." },
+        ],
+        why: [
+          { en: "Waiting for perfect certainty in a developing emergency has its own real cost — a timely decision that can be revised is generally safer than delay in pursuit of certainty that may not come in time." },
+        ],
+        commonMistakes: [
+          { en: "Delaying the decision indefinitely while waiting for more clarity than the situation is likely to provide in time." },
+        ],
+        safetyPoints: [
+          { en: "A decision made with available information, held ready to escalate, serves passengers better than no decision at all." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "passenger_ship_headcount_shortfall_judgment",
+        title: { en: "The Numbers Don't Quite Add Up" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "At the muster station, the headcount comes up short by a noticeable margin. A quick initial recount doesn't fully close the gap. The Master is waiting on your report to make the evacuation-severity decision, and there's real pressure to report something now." },
+          options: [
+            {
+              id: "report_approximate",
+              label: { en: "Report an approximate figure to keep things moving, noting the exact number is unclear." },
+              consequence: { en: "The Master, working from an imprecise figure, has to factor genuine uncertainty into an already difficult decision — uncertainty that a proper recount could have resolved." },
+              feedback: { en: "An approximate figure under real pressure is exactly the shortcut this operation's own drill discipline was built to hold against — the harder the conditions, the more the accurate number actually matters." },
+            },
+            {
+              id: "careful_recount",
+              label: { en: "Take the extra time for a careful, verified recount before reporting, clearly communicating that a report is coming shortly." },
+              isRecommended: true,
+              consequence: { en: "The careful recount finds the actual cause: a family group mustered at the adjacent station rather than their assigned one, not genuinely missing." },
+              feedback: { en: "Correct — a brief, communicated delay for an accurate count serves the Master's decision far better than a fast but uncertain one." },
+              next: {
+                id: "group_found_elsewhere",
+                situation: { en: "The recount suggests the missing group mustered at the adjacent station instead. You could report the discrepancy resolved based on this explanation, or verify it further before doing so." },
+                options: [
+                  {
+                    id: "cross_check_adjacent",
+                    label: { en: "Cross-check with the adjacent muster station's own count to confirm the group is genuinely accounted for there, then report resolved." },
+                    isRecommended: true,
+                    consequence: { en: "The adjacent station confirms the group is present and counted. The discrepancy is reported as genuinely resolved, with confirmation behind it." },
+                    feedback: { en: "Correct — a plausible explanation becomes a confirmed one only once it's actually checked against a second source, especially when the stakes are this high." },
+                  },
+                  {
+                    id: "report_resolved_no_check",
+                    label: { en: "Report the discrepancy resolved immediately based on the recount's finding, without cross-checking the other station." },
+                    consequence: { en: "The explanation turns out to be correct this time, but the Master's decision was made on an unconfirmed assumption rather than a verified fact." },
+                    feedback: { en: "A plausible explanation isn't the same as a confirmed one — this time it happened to be right, but the decision was made on a guess dressed as a resolution." },
+                  },
+                  {
+                    id: "discount_explanation",
+                    label: { en: "Report the group as still missing until they can be located exactly, discounting the recount's explanation." },
+                    consequence: { en: "The Master, working from an unnecessarily alarming report, escalates the response beyond what the actual situation — a group at the wrong but adjacent station — required." },
+                    feedback: { en: "A plausible, checkable explanation deserves an actual check, not automatic distrust — discounting it without verifying either way just trades one kind of uncertainty for another." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "report_as_missing",
+              label: { en: "Report the shortfall as-is without further recount, treating it as confirmed missing passengers immediately." },
+              consequence: { en: "The Master escalates toward full evacuation based on a report that turns out, after further checking, to have been an uncompleted recount rather than a confirmed shortfall." },
+              feedback: { en: "Jumping to the most serious interpretation without completing the verification step this operation's own discipline calls for risks triggering a response more severe than the actual situation warrants." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Accurate over fast, with the delay communicated" },
+        bestPractices: [
+          { en: "Take the time needed for an accurate count or system report, communicating that it's coming, rather than delivering a fast but uncertain one." },
+        ],
+        commonErrors: [
+          { en: "Reporting an approximate or rounded figure under pressure to keep the process moving." },
+        ],
+      },
+      {
+        theme: { en: "Confirm a plausible explanation, don't just trust it" },
+        bestPractices: [
+          { en: "Verify a plausible explanation against an independent source before treating it as resolved, especially when the stakes are high." },
+        ],
+        commonErrors: [
+          { en: "Reporting an issue resolved based on a plausible but unconfirmed explanation." },
+        ],
+      },
+      {
+        theme: { en: "Individual attention is part of the aggregate count's accuracy" },
+        bestPractices: [
+          { en: "Address an individual passenger's difficulty directly during evacuation, not just as a distraction from the broader response." },
+        ],
+        commonErrors: [
+          { en: "Assuming someone else will notice and help an individual passenger falling behind." },
+        ],
+      },
+      {
+        theme: { en: "A timely decision under ambiguity beats indefinite delay" },
+        bestPractices: [
+          { en: "Decide based on the best available information, ready to escalate quickly if the situation develops, rather than waiting indefinitely for certainty." },
+        ],
+        commonErrors: [
+          { en: "Delaying a necessary decision while waiting for more clarity than the situation is likely to provide in time." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
