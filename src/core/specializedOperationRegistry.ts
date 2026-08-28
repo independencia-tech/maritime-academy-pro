@@ -11107,6 +11107,498 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  fishing_vessel_trawl_deployment_haul: {
+    operationId: "fishing_vessel_trawl_deployment_haul",
+    vesselTypeId: "fishing_vessel",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Fishing Vessel — Trawl Deployment, Towing & Haul" },
+    introduction: {
+      en: "Trawling is the operation that defines a large share of the world's commercial fishing effort: a net is deployed (\"shot\") over the stern or side, towed through the water column or along the seabed for a set period while the vessel maintains a specific speed and course, then hauled back aboard with the catch. This module covers the full cycle — shooting the net, the towing period, and the haul — from the deck crew's side. Unlike towing or holding an instrument in position, a trawl is an active gear under continuous load and motion: winch tension, warp angle, and net behavior all change throughout the tow and have to be read and responded to, not just monitored for stability. The haul itself is this operation's most hazard-dense moment — the net comes aboard heavy and unpredictable, and the crew works in close proximity to winches, warps, and a moving, loaded net on a working deck that's often wet and rolling. This module does not cover catch sorting/processing below deck or gear selection by species/regulation, both of which stay outside its scope.",
+    },
+    objectives: [
+      { en: "Describe the full chronology of a trawl operation, from shooting the net through towing to the haul, and explain why continuous load/behavior monitoring during the tow is different from a fixed-duration hold." },
+      { en: "Identify the deck equipment involved (net drum, warps, gallows/gantry, winches) and the crew's role at each stage." },
+      { en: "Explain the specific hazards of trawl operations (entanglement in winches and gear, falls overboard during net handling, an unpredictable loaded net coming aboard) and the controls used against them." },
+      { en: "Identify who does what during this operation on a fishing vessel, given its small, versatile crew." },
+      { en: "Recognize correct versus incorrect sequencing and communication during shooting, towing, and the haul." },
+      { en: "Recognize the boundary between a versatile deckhand's hands-on execution and the Skipper's/Mate's authority over gear and course decisions." },
+    ],
+    context: {
+      en: "Scoped deliberately to trawl deployment, towing, and haul only — not catch sorting/processing, and not gear selection by species or regulatory zone, both of which stay outside this module. Extends the Ships Library card (FishingVessel.tsx) rather than replacing it. Roster read directly and unambiguously from the card's own small, explicit list: Skipper/Master, Mate, Deckhand, Chief Engineer — a 4-rank roster, the same scale as Tugboat's, with no Bosun, OOW, or additional engineers implied. Mapped to RankId as master, chief_officer, ab, chief_engineer — a clean, unambiguous fold, unlike the Pumpman/Gas Engineer or FPSO Process/Production cases.",
+    },
+
+    operationPhaseOrder: [
+      "pre_shot_preparation",
+      "shooting_the_net",
+      "towing",
+      "haul_commencement",
+      "net_aboard_catch_release",
+      "post_haul_securing_reset",
+    ],
+    operationPhases: {
+      pre_shot_preparation: {
+        id: "pre_shot_preparation",
+        title: { en: "Pre-Shot Preparation" },
+        overview: { en: "The net inspection is a real check, not a formality — a missed tear compromises the whole haul, not just the catch." },
+        steps: [
+          { en: "Net and gear inspected for tears and wear at tension points." },
+          { en: "Winches and warps checked." },
+          { en: "Weather and sea state checked against operation limits." },
+          { en: "Tow course/speed plan confirmed." },
+          { en: "Deck exclusion zone briefed to the crew." },
+        ],
+        bestPractices: [
+          { en: "Treat the net inspection as a real check, not a formality." },
+        ],
+        commonMistakes: [
+          { en: "Skipping the net inspection when the crew is eager to shoot." },
+        ],
+      },
+      shooting_the_net: {
+        id: "shooting_the_net",
+        title: { en: "Shooting the Net" },
+        overview: { en: "Deployment paced to what's actually happening at the stern, not a rate fixed in advance." },
+        steps: [
+          { en: "Net paid out in a controlled sequence over the stern or side." },
+          { en: "Warp length set to reach the target depth." },
+          { en: "Speed and course maintained throughout shooting." },
+        ],
+        bestPractices: [
+          { en: "Pace the shot to the net's actual deployment, not a rate fixed in advance regardless of what's happening at the stern." },
+        ],
+        commonMistakes: [
+          { en: "Speeding up warp payout without confirming the net is deploying correctly astern." },
+        ],
+      },
+      towing: {
+        id: "towing",
+        title: { en: "Towing" },
+        overview: { en: "A drifting tension or angle reading is a signal to watch closely, not a normal fluctuation to ignore by default." },
+        steps: [
+          { en: "Continuous monitoring of winch tension, warp angle, and net behavior (sonar/sensors if equipped)." },
+          { en: "Course and speed maintained." },
+          { en: "Tow duration tracked." },
+        ],
+        bestPractices: [
+          { en: "Treat a drifting tension or angle reading as a signal to watch closely, not a normal fluctuation." },
+        ],
+        commonMistakes: [
+          { en: "Relying solely on the planned tow duration without actively monitoring actual net behavior." },
+        ],
+      },
+      haul_commencement: {
+        id: "haul_commencement",
+        title: { en: "Haul Commencement" },
+        overview: { en: "Every crew member confirms their position before retrieval begins, not during." },
+        steps: [
+          { en: "Winches begin retrieving the warps." },
+          { en: "Retrieval speed controlled." },
+          { en: "Crew positions established for the incoming net, clear of the winch and warps under tension." },
+        ],
+        bestPractices: [
+          { en: "Confirm every crew member's position before retrieval begins, not during." },
+        ],
+        commonMistakes: [
+          { en: "Beginning retrieval before the crew is confirmed safely positioned." },
+        ],
+      },
+      net_aboard_catch_release: {
+        id: "net_aboard_catch_release",
+        title: { en: "Net Aboard & Catch Release" },
+        overview: { en: "A net that appears stable can still swing under its own residual weight — nobody approaches without explicit confirmation." },
+        steps: [
+          { en: "Net brought aboard over the stern or side." },
+          { en: "Cod-end secured." },
+          { en: "Catch released onto the deck." },
+          { en: "Crew stays clear of the swinging, loaded net until it's confirmed secured." },
+        ],
+        bestPractices: [
+          { en: "Never approach the net before an explicit confirmation it's secured, even if it looks stationary." },
+        ],
+        commonMistakes: [
+          { en: "Approaching the net as soon as it looks stationary, without explicit confirmation." },
+        ],
+      },
+      post_haul_securing_reset: {
+        id: "post_haul_securing_reset",
+        title: { en: "Post-Haul Securing & Reset" },
+        overview: { en: "The post-haul net inspection isn't optional even under pressure to shoot again quickly." },
+        steps: [
+          { en: "Net inspected for damage." },
+          { en: "Gear stowed or prepared for the next shot." },
+          { en: "Deck cleared." },
+          { en: "Catch handed off for processing (outside this module's scope)." },
+        ],
+        bestPractices: [
+          { en: "Complete the post-haul net inspection even when the next shot feels urgent." },
+        ],
+        commonMistakes: [
+          { en: "Skipping the inspection to save time before the next shot." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "gear_ready_confirmation",
+        phaseId: "pre_shot_preparation",
+        from: "deck", to: "bridge",
+        trigger: { en: "Net and gear inspection complete." },
+        content: { en: "Deckhand confirms net and gear are inspected and ready; the bridge doesn't proceed to shooting on an assumed readiness." },
+        whyItMatters: { en: "A torn net or worn gear discovered mid-shot is far harder and more dangerous to address than one caught during a deliberate pre-shot check." },
+      },
+      {
+        id: "course_speed_confirmation",
+        phaseId: "shooting_the_net",
+        from: "bridge", to: "deck",
+        trigger: { en: "Ready to begin shooting." },
+        content: { en: "Bridge confirms course and speed are set for shooting before the deck team begins paying out the net." },
+        whyItMatters: { en: "Shooting the net at the wrong speed or course risks a fouled or improperly deployed net from the very start of the tow." },
+      },
+      {
+        id: "tow_status_report",
+        phaseId: "towing",
+        from: "deck", to: "bridge",
+        trigger: { en: "Regular interval during the tow, or any change in winch tension/warp angle/net behavior." },
+        content: { en: "Deckhand reports winch tension, warp angle, and net behavior to the bridge at regular intervals throughout the tow, not only when something looks wrong." },
+        whyItMatters: { en: "A drifting tension or angle reading is exactly the kind of trend that's easier to act on early than after it becomes an obvious problem." },
+      },
+      {
+        id: "haul_positions_confirmed",
+        phaseId: "haul_commencement",
+        from: "deck", to: "bridge",
+        trigger: { en: "Crew positioned for the haul." },
+        content: { en: "Deckhand confirms all crew are in safe position before the bridge authorizes the winches to begin retrieving." },
+        whyItMatters: { en: "The haul cannot begin on an assumption that everyone is clear — this confirmation is the actual gate." },
+      },
+      {
+        id: "winch_power_readiness",
+        phaseId: "haul_commencement",
+        from: "engine", to: "deck",
+        trigger: { en: "Haul about to begin." },
+        content: { en: "Chief Engineer confirms winch hydraulic power is ready and stable before retrieval starts." },
+        whyItMatters: { en: "An unstable power supply during retrieval, with a loaded net and crew working close to the winch, is a far more dangerous moment to discover a problem than before it starts." },
+      },
+      {
+        id: "net_secured_confirmation",
+        phaseId: "net_aboard_catch_release",
+        from: "deck", to: "bridge",
+        trigger: { en: "Net aboard and appearing stable." },
+        content: { en: "Deckhand gives an explicit confirmation that the net is genuinely secured before anyone approaches it, not just that it looks stationary." },
+        whyItMatters: { en: "A net that appears stable can still swing under its own residual weight — this confirmation is the actual safety gate, not visual impression." },
+      },
+      {
+        id: "gear_condition_report",
+        phaseId: "post_haul_securing_reset",
+        from: "deck", to: "engine",
+        trigger: { en: "Net and winch inspected after the haul." },
+        content: { en: "Deckhand reports any gear or winch condition issue to the Chief Engineer before the next shot is prepared." },
+        whyItMatters: { en: "A developing winch or warp issue is best caught and addressed between tows, not discovered mid-shot on the next one." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command — decides where and when to fish, makes the go/no-go call on weather before shooting, and retains authority to alter or abort the tow at any point." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Coordinates the operation directly from the bridge — confirms course and speed for shooting, monitors tow status reports, and authorizes the haul to begin once crew positions are confirmed." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "The versatile hands-on executor for nearly all deck-side work — net and gear inspection, shooting the net, monitoring tow behavior, and handling the net and catch during the haul. On a vessel this size, this single rank carries most of the operation's physical execution." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Directs readiness of the winch hydraulic power throughout the operation, confirming stability before the haul begins and addressing any gear condition issue reported after each haul." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Decides where and when to fish, and makes the go/no-go call on weather before shooting." },
+          { en: "Retains authority to alter or abort the tow at any point." },
+        ],
+        iMonitor: [
+          { en: "Overall safety and progress of the operation." },
+        ],
+        iReport: [
+          { en: "Reports the catch and any incident to the vessel's owner/company as relevant." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize the haul to begin before crew positions are confirmed by the deck." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Confirms course and speed for shooting the net." },
+          { en: "Authorizes the haul to begin once crew positions are confirmed." },
+        ],
+        iMonitor: [
+          { en: "Tow status reports — winch tension, warp angle, net behavior — throughout the tow." },
+        ],
+        iReport: [
+          { en: "Reports operational status to the Master throughout." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize shooting the net before gear readiness is confirmed by the deck." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Inspects net and gear before each shot." },
+          { en: "Shoots the net, monitors tow behavior, and handles the net and catch during the haul." },
+        ],
+        iMonitor: [
+          { en: "Winch tension, warp angle, and net behavior throughout the tow." },
+        ],
+        iReport: [
+          { en: "Reports gear readiness, tow status, and any hazard to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not approach the net after the haul before giving and confirming the explicit secured signal." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Directs readiness of winch hydraulic power throughout the operation." },
+        ],
+        iMonitor: [
+          { en: "Winch and hydraulic system health throughout shooting, towing, and the haul." },
+        ],
+        iReport: [
+          { en: "Reports power readiness before the haul, and any gear condition issue reported by the deck, for follow-up." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize the haul to proceed without confirming power stability first." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "fishing_vessel_trawl_phase_sequence",
+        targetRanks: ["master", "chief_officer", "ab"],
+        prompt: { en: "Put the trawl operation's phases in the correct order." },
+        items: [
+          { id: "prep", label: { en: "Pre-Shot Preparation" } },
+          { id: "shoot", label: { en: "Shooting the Net" } },
+          { id: "tow", label: { en: "Towing" } },
+          { id: "haul_start", label: { en: "Haul Commencement" } },
+          { id: "aboard", label: { en: "Net Aboard & Catch Release" } },
+          { id: "reset", label: { en: "Post-Haul Securing & Reset" } },
+        ],
+        correctOrder: ["prep", "shoot", "tow", "haul_start", "aboard", "reset"],
+      },
+      {
+        type: "error_identification",
+        id: "fishing_vessel_net_approach_shortcut",
+        targetRanks: ["ab"],
+        scenario: { en: "The net is aboard and looks stationary. Everyone's eager to start sorting the catch. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Approach the net and start releasing the catch, since it looks stopped." }, isError: true, explanation: { en: "A net that looks stationary can still swing under its own residual weight — approaching without the explicit secured confirmation is exactly the mistake this operation's own safety gate exists to prevent." } },
+          { id: "b", label: { en: "Give an explicit secured confirmation before anyone approaches the net." }, isError: false, explanation: { en: "Correct — this confirmation is the actual gate, not the net's appearance." } },
+          { id: "c", label: { en: "Wait for that confirmation even though the net seems obviously stable." }, isError: false, explanation: { en: "Correct — \"seems stable\" and \"confirmed secured\" are different things." } },
+          { id: "d", label: { en: "Report to the Chief Officer once the net is genuinely secured." }, isError: false, explanation: { en: "Correct — keeping the chain informed is part of closing out the haul properly." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "fishing_vessel_pre_haul_gate",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The tow period is complete and the haul is about to begin. Before authorizing the winches, review which readiness items are actually satisfied." },
+        items: [
+          { id: "crew_positioned", label: { en: "All crew confirmed in safe position, clear of the winch and warps." }, isSatisfied: true },
+          { id: "power_ready", label: { en: "Winch hydraulic power confirmed ready and stable by the Chief Engineer." }, isSatisfied: true },
+          { id: "weather_ok", label: { en: "Weather and sea state still within the operation's limits." }, isSatisfied: true },
+          { id: "tow_status_normal", label: { en: "Tow status (tension, warp angle, net behavior) confirmed normal before commencing retrieval." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Partway through the tow, the AB notices the warp angle has drifted slightly asymmetric — not alarming yet, but different from the steady pattern seen so far, possibly the net catching unevenly on the bottom." },
+        mission: { en: "As AB, decide how to handle the change." },
+        expectedActions: [
+          { en: "Report the change to the Chief Officer promptly rather than waiting to see if it self-corrects." },
+          { en: "Continue close monitoring of the angle and tension while awaiting a response." },
+        ],
+        why: [
+          { en: "An asymmetric angle can signal the net snagging or fishing unevenly — reporting it early is what lets a problem be assessed before the haul, not discovered during it." },
+        ],
+        commonMistakes: [
+          { en: "Waiting to see if the angle corrects on its own before saying anything." },
+        ],
+        safetyPoints: [
+          { en: "A steady pattern breaking is itself the useful signal, whether or not it's yet outside any defined limit." },
+        ],
+      },
+      {
+        situation: { en: "Midway through the tow, an updated forecast suggests weather will worsen noticeably before the originally planned haul time." },
+        mission: { en: "As Chief Officer, decide whether to haul early or stick to the plan." },
+        expectedActions: [
+          { en: "Weigh hauling earlier against the original plan based on the actual updated forecast, not on reluctance to cut the tow short." },
+          { en: "Communicate the decision and reasoning to the Master rather than deciding alone if there's time to do so." },
+        ],
+        why: [
+          { en: "The tow duration was a plan made with the information available at the time — a genuine forecast update is exactly the kind of new information that plan should be revisited against." },
+        ],
+        commonMistakes: [
+          { en: "Sticking to the original tow duration because changing the plan feels like giving up catch." },
+        ],
+        safetyPoints: [
+          { en: "The haul is this operation's most hazard-dense moment — doing it in worsening conditions because the schedule said so is a worse trade than a shorter, safer tow." },
+        ],
+      },
+      {
+        situation: { en: "Just before the scheduled haul, the Chief Engineer notices winch hydraulic pressure running slightly elevated — not clearly failing, but higher than the normal range." },
+        mission: { en: "As Chief Engineer, decide whether to flag it and delay, or proceed since nothing has actually failed." },
+        expectedActions: [
+          { en: "Flag the elevated reading to the Chief Officer before authorizing haul start, rather than proceeding because nothing has failed yet." },
+          { en: "Recommend a brief check rather than an open-ended delay, if the reading doesn't clearly indicate a serious fault." },
+        ],
+        why: [
+          { en: "The haul places sustained load on the winch with crew working close to it — an elevated reading beforehand is exactly the moment to resolve doubt, not the moment to hope it holds." },
+        ],
+        commonMistakes: [
+          { en: "Proceeding because the system hasn't technically failed and stopping now would delay the haul." },
+        ],
+        safetyPoints: [
+          { en: "The winch power readiness confirmation exists precisely so a marginal reading gets a second look before the highest-load, highest-risk phase begins, not during it." },
+        ],
+      },
+      {
+        situation: { en: "After a good first tow, the crew is eager to shoot again. The Master notices a subtle shift in the weather — nothing dramatic, but a change from earlier in the day." },
+        mission: { en: "As Master, decide whether to authorize another shot or call it for the day." },
+        expectedActions: [
+          { en: "Base the decision on the actual weather assessment, not on the crew's enthusiasm or the success of the first tow." },
+          { en: "Communicate the reasoning clearly if the decision is to stop, rather than leaving it unexplained." },
+        ],
+        why: [
+          { en: "A good first tow says nothing about whether conditions still support a second one safely — the two are genuinely independent questions." },
+        ],
+        commonMistakes: [
+          { en: "Authorizing another shot because the crew is eager and the day has gone well so far." },
+        ],
+        safetyPoints: [
+          { en: "The Master's go/no-go authority exists to be exercised on its own merits at each decision point, not carried forward automatically from the last one." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "fishing_vessel_haul_entanglement",
+        title: { en: "A Loop Around Your Foot" },
+        seatRankId: "ab",
+        root: {
+          id: "root",
+          situation: { en: "The net is coming aboard during the haul. A loop of loose warp has come free and settled around your foot as the winch continues retrieving. It isn't tight yet, but the winch is still under load and pulling." },
+          options: [
+            {
+              id: "self_free_quiet",
+              label: { en: "Try to quickly step out of the loop yourself without stopping the winch or alerting anyone — it seems manageable, and stopping would slow the haul." },
+              consequence: { en: "As you try to step clear, the winch takes up more slack and the loop tightens sharply around your foot before you can get free." },
+              feedback: { en: "This is exactly the mechanism behind some of the most serious injuries in this trade — a loop under a live winch's tension can tighten in an instant. There is no version of this that's safe to handle alone while the gear is still under load." },
+            },
+            {
+              id: "call_stop",
+              label: { en: "Immediately call out for an emergency stop of the winch before attempting anything." },
+              isRecommended: true,
+              consequence: { en: "The winch stops immediately on your call. The loop stays loose, and you're not under any load." },
+              feedback: { en: "Correct — the first and only right move with a loop under a live winch is to stop the load, before anything else is attempted." },
+              next: {
+                id: "winch_stopped",
+                situation: { en: "The winch is stopped. The loop is loose but you're still partially inside it. The Chief Officer, hearing the call, asks for a status update." },
+                options: [
+                  {
+                    id: "report_clearly",
+                    label: { en: "Report the situation clearly — what's caught, how, and the current state — before attempting to free yourself." },
+                    isRecommended: true,
+                    consequence: { en: "With the situation understood, the Chief Officer confirms the winch will stay stopped until you're clear, and you free yourself calmly with everyone aware of what's happening." },
+                    feedback: { en: "Correct — a clear report means nobody touches the winch controls until you're actually clear, which is the entire point of stopping in the first place." },
+                  },
+                  {
+                    id: "self_free_now",
+                    label: { en: "Free yourself quickly now that the winch is stopped, without reporting first, since it seems safe now." },
+                    consequence: { en: "You free yourself without incident this time, but the Chief Officer had no idea you were still working free of the gear — if the winch had been restarted even a few seconds earlier, the outcome would have been very different." },
+                    feedback: { en: "The winch being stopped removes the immediate danger, but not the risk of it being restarted before anyone knows you're still inside the loop. Reporting first is what actually closes that risk." },
+                  },
+                  {
+                    id: "ask_restart_slow",
+                    label: { en: "Ask the Chief Officer to restart the winch slowly to help \"walk\" the loop off, since the tension was what mattered, not the motion." },
+                    consequence: { en: "The Chief Officer refuses outright — restarting the winch with anyone still inside a loop is never done, at any speed." },
+                    feedback: { en: "There is no safe speed for a winch to move while someone is still inside a loop of gear it controls. The winch stays stopped until the person is fully clear, full stop." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "wait_pause",
+              label: { en: "Step back and wait for a natural pause in the hauling without alerting anyone, since the loop doesn't look tight yet." },
+              consequence: { en: "The haul continues at its normal pace, and the loop tightens before any natural pause arrives." },
+              feedback: { en: "\"Not tight yet\" while the winch is still pulling is not a safe condition to wait out — it's a developing one, and it needed the emergency stop immediately, not a wait for convenient timing." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Trend over threshold, once again" },
+        bestPractices: [
+          { en: "Report a warp angle, tension, or hydraulic reading that's drifting from its normal pattern, not just one that's already alarming." },
+        ],
+        commonErrors: [
+          { en: "Waiting to see if a drifting reading self-corrects before reporting it." },
+        ],
+      },
+      {
+        theme: { en: "Explicit confirmation, not appearance" },
+        bestPractices: [
+          { en: "Treat \"looks secured\" and \"confirmed secured\" as genuinely different things — crew positioning, gear readiness, and a net coming aboard all depend on the actual confirmation, not the visual impression." },
+        ],
+        commonErrors: [
+          { en: "Proceeding based on how a situation looks rather than waiting for the explicit confirmation it depends on." },
+        ],
+      },
+      {
+        theme: { en: "Entanglement: stop first, always" },
+        bestPractices: [
+          { en: "Call for an immediate stop the moment any loop or line settles around a person while gear is under load — before attempting anything else." },
+          { en: "Report status clearly once stopped, so nobody restarts the gear before confirming the person is genuinely clear." },
+        ],
+        commonErrors: [
+          { en: "Attempting to self-free without stopping the load first." },
+          { en: "Freeing oneself without reporting, leaving others unaware the gear still needs to stay stopped." },
+        ],
+      },
+      {
+        theme: { en: "Each decision point stands on its own" },
+        bestPractices: [
+          { en: "Revisit go/no-go and plan decisions against current information — a new forecast, a second shot's conditions — rather than carrying forward the last decision automatically." },
+        ],
+        commonErrors: [
+          { en: "Authorizing a repeat action because the previous one went well, without independently assessing current conditions." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
