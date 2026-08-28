@@ -134,8 +134,20 @@ export interface OperationPhase {
 // with a real veto over whether the operation proceeds at all. Load-bearing
 // across two of this operation's own gating touchpoints (initial clearance,
 // final departure sign-off).
+//
+// "passenger_services" added for the Passenger Ship embarkation/muster
+// drill/disembarkation operation: the Passenger Safety Officer, Purser, and
+// reception/catering staff, collectively — the fourth instance of the
+// onboard-but-non-RankId department pattern (after process_control,
+// science_team, and warranty_surveyor's related external-authority
+// variant). Direct passenger-facing coordination (headcounts, muster
+// station management, briefings) without holding authority over the
+// vessel's own crew or safety systems. "HSE personnel" folded into this
+// same party rather than added separately, since their domain overlaps
+// directly with the Passenger Safety Officer's own. Load-bearing across
+// seven communication touchpoints.
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team" | "warranty_surveyor";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team" | "warranty_surveyor" | "passenger_services";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -14274,6 +14286,527 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Deciding privately that something is \"probably fine\" and not reporting the underlying observation at all." },
+        ],
+      },
+    ],
+  },
+
+  passenger_ship_embarkation_muster_drill_disembarkation: {
+    operationId: "passenger_ship_embarkation_muster_drill_disembarkation",
+    vesselTypeId: "passenger_ship",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Passenger Ship — Embarkation, Mandatory Muster Drill & Disembarkation" },
+    introduction: {
+      en: "A passenger ship's defining cycle isn't a single dramatic maneuver — it's the recurring, disciplined sequence of getting large numbers of passengers safely aboard, oriented to their muster stations through the SOLAS-mandated safety drill within 24 hours of boarding, and safely ashore again at the destination. This module covers that full cycle from the crew's side: embarkation control, the mandatory muster drill, and disembarkation. The vessel's own crew (Master, Chief Officer, OOW, Bosun, AB, Chief Engineer) owns navigation, port maneuvering, and vessel safety systems throughout, while Passenger Services — the Passenger Safety Officer, Purser, reception and catering staff — owns direct passenger-facing coordination: headcounts, muster station management, briefings. Neither commands the other; the drill itself only works because both domains execute their own part in step. This is the catalog's first genuine engagement with mass passenger safety, an area RoRo's own operations deliberately left out of scope as separate future work.",
+    },
+    objectives: [
+      { en: "Describe the full chronology of embarkation, the mandatory muster drill, and disembarkation." },
+      { en: "Explain why this operation's SOLAS-mandated drill timing (within 24 hours of boarding) is non-negotiable, not a scheduling convenience." },
+      { en: "Identify the crew's own role (navigation, port maneuvering, vessel safety systems) and where it meets Passenger Services' direct passenger coordination." },
+      { en: "Recognize the specific hazards of mass embarkation/disembarkation and muster drills (crowd management, gangway safety, headcount accuracy) and the controls used against them." },
+      { en: "Recognize correct versus incorrect sequencing and communication during embarkation, the drill, and disembarkation." },
+    ],
+    context: {
+      en: "Extends the Ships Library card (PassengerShip.tsx) rather than replacing it. Roster read from the card's own list, applying the same reading discipline already used for Tugboat, Fishing Vessel, and Heavy Lift: Master, Chief Officer, OOW, Bosun, AB, Chief Engineer — no Second/Third Engineer implied, since this operation isn't propulsion/machinery-intensive; OOW joins deck-side coordination during the port stay, the same departure from classic watchkeeping already established for in-port operations elsewhere in the catalog. Passenger Safety Officer, Purser, and reception/catering staff are represented collectively via a new CommunicationParty, \"passenger_services\" — an onboard-but-non-RankId department, the fourth instance of this pattern (after process_control, science_team, and warranty_surveyor's related-but-distinct external-authority variant) — folding \"HSE personnel\" into the same party rather than adding a separate entity, since their domain overlaps directly with the Passenger Safety Officer's own.",
+    },
+
+    operationPhaseOrder: [
+      "pre_embarkation_readiness",
+      "embarkation_control",
+      "mandatory_muster_drill",
+      "post_drill_verification",
+      "disembarkation_preparation",
+      "disembarkation_control",
+    ],
+    operationPhases: {
+      pre_embarkation_readiness: {
+        id: "pre_embarkation_readiness",
+        title: { en: "Pre-Embarkation Readiness" },
+        overview: { en: "Passenger Services' readiness is confirmed independently, not assumed from routine." },
+        steps: [
+          { en: "Vessel safety systems checked (alarms, evacuation equipment)." },
+          { en: "Embarkation points/gangways prepared." },
+          { en: "Passenger Services readiness confirmed (muster station staffing, briefing materials)." },
+        ],
+        bestPractices: [
+          { en: "Treat Passenger Services' readiness confirmation as an independent check, not an assumption that everything is ready as usual." },
+        ],
+        commonMistakes: [
+          { en: "Beginning embarkation before Passenger Services' readiness is explicitly confirmed." },
+        ],
+      },
+      embarkation_control: {
+        id: "embarkation_control",
+        title: { en: "Embarkation Control" },
+        overview: { en: "The count runs continuously during boarding, not reconstructed afterward from ticketing." },
+        steps: [
+          { en: "Passengers boarded via the gangway." },
+          { en: "Headcount tracked continuously against the manifest/ticketing." },
+          { en: "Safety card and muster station information distributed." },
+        ],
+        bestPractices: [
+          { en: "Run the headcount continuously during embarkation, not reconstructed afterward from ticketing alone." },
+        ],
+        commonMistakes: [
+          { en: "Relying solely on ticketing figures without a real physical count during embarkation." },
+        ],
+      },
+      mandatory_muster_drill: {
+        id: "mandatory_muster_drill",
+        title: { en: "Mandatory Muster Drill" },
+        overview: { en: "The 24-hour SOLAS window is an absolute regulatory obligation, never a target to push against for convenience." },
+        steps: [
+          { en: "Alarm sounded within 24 hours of boarding (non-negotiable SOLAS obligation)." },
+          { en: "Passengers proceed to muster stations." },
+          { en: "Headcount taken and verified against the embarkation total." },
+          { en: "Safety briefing delivered." },
+          { en: "Confirmation everyone is accounted for." },
+        ],
+        bestPractices: [
+          { en: "Treat the 24-hour deadline as an absolute regulatory obligation, never a target to push against for operational convenience." },
+        ],
+        commonMistakes: [
+          { en: "Delaying the drill beyond the regulatory window for convenience." },
+        ],
+      },
+      post_drill_verification: {
+        id: "post_drill_verification",
+        title: { en: "Post-Drill Verification" },
+        overview: { en: "The drill isn't complete until an unresolved discrepancy is actually resolved." },
+        steps: [
+          { en: "Any discrepancy between muster count and embarkation total resolved." },
+          { en: "Drill completion logged." },
+          { en: "Normal operations resumed." },
+        ],
+        bestPractices: [
+          { en: "Never close out the drill with an unresolved headcount discrepancy, however minor it appears." },
+        ],
+        commonMistakes: [
+          { en: "Closing out the drill with an unresolved discrepancy, assuming it's a counting error." },
+        ],
+      },
+      disembarkation_preparation: {
+        id: "disembarkation_preparation",
+        title: { en: "Disembarkation Preparation" },
+        overview: { en: "The expected disembarkation count is confirmed independently, not assumed to match embarkation." },
+        steps: [
+          { en: "Number of passengers to disembark confirmed." },
+          { en: "Disembarkation points prepared." },
+          { en: "Disembarkation sequence coordinated with Passenger Services." },
+        ],
+        bestPractices: [
+          { en: "Confirm the expected disembarkation count independently, not assumed to automatically match the embarkation figure." },
+        ],
+      },
+      disembarkation_control: {
+        id: "disembarkation_control",
+        title: { en: "Disembarkation Control" },
+        overview: { en: "The same continuous-count discipline as embarkation, not reconstructed afterward." },
+        steps: [
+          { en: "Passengers disembarked via the gangway." },
+          { en: "Headcount tracked." },
+          { en: "Final confirmation that the disembarked count matches the expected figure." },
+        ],
+        bestPractices: [
+          { en: "Apply the same continuous-count discipline to disembarkation as embarkation." },
+        ],
+        commonMistakes: [
+          { en: "Not verifying the final disembarked count against the expected figure." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "passenger_services_readiness",
+        phaseId: "pre_embarkation_readiness",
+        from: "passenger_services", to: "bridge",
+        trigger: { en: "Embarkation about to begin." },
+        content: { en: "Passenger Services confirms muster station staffing and briefing materials are ready — an independent confirmation, not assumed from routine." },
+        whyItMatters: { en: "Embarkation shouldn't begin on an assumption that the passenger-facing side is ready as usual — this is checked every time." },
+      },
+      {
+        id: "embarkation_headcount_status",
+        phaseId: "embarkation_control",
+        from: "deck", to: "bridge",
+        trigger: { en: "Passengers boarding via the gangway." },
+        content: { en: "Deck team reports the running headcount continuously as embarkation proceeds, not reconstructed afterward from ticketing alone." },
+        whyItMatters: { en: "A continuous count is what makes the muster drill's own headcount verification meaningful — it needs a real number to check against." },
+      },
+      {
+        id: "drill_trigger_coordination",
+        phaseId: "mandatory_muster_drill",
+        from: "bridge", to: "passenger_services",
+        trigger: { en: "Drill scheduled within the 24-hour SOLAS window." },
+        content: { en: "Master coordinates the drill alarm timing with Passenger Services so muster station staff are positioned and ready when it sounds." },
+        whyItMatters: { en: "An uncoordinated alarm risks passengers arriving at stations before staff are ready to manage them." },
+      },
+      {
+        id: "muster_headcount_report",
+        phaseId: "mandatory_muster_drill",
+        from: "passenger_services", to: "bridge",
+        trigger: { en: "Passengers assembled at muster stations." },
+        content: { en: "Passenger Services reports the muster station headcount, to be verified against the embarkation total." },
+        whyItMatters: { en: "This is the drill's actual safety verification — a passenger unaccounted for here is the exact scenario the drill exists to catch before a real emergency." },
+      },
+      {
+        id: "discrepancy_resolution",
+        phaseId: "post_drill_verification",
+        from: "bridge", to: "passenger_services",
+        trigger: { en: "Muster count doesn't match the embarkation total." },
+        content: { en: "Master and Passenger Services jointly resolve any discrepancy before the drill is logged as complete." },
+        whyItMatters: { en: "The drill isn't genuinely complete until the numbers reconcile, whatever the cause of the initial mismatch turns out to be." },
+      },
+      {
+        id: "disembarkation_count_confirmation",
+        phaseId: "disembarkation_preparation",
+        from: "passenger_services", to: "bridge",
+        trigger: { en: "Approaching destination." },
+        content: { en: "Passenger Services confirms the expected disembarkation count independently, rather than assuming it matches the embarkation figure." },
+        whyItMatters: { en: "Onboard changes (illness, itinerary adjustments) can mean the disembarkation count genuinely differs from embarkation — this needs its own confirmation." },
+      },
+      {
+        id: "final_disembarkation_confirmation",
+        phaseId: "disembarkation_control",
+        from: "deck", to: "bridge",
+        trigger: { en: "Disembarkation complete." },
+        content: { en: "Deck team confirms the final disembarked count matches the expected figure before the operation is closed out." },
+        whyItMatters: { en: "This closing confirmation is what actually verifies the cycle completed cleanly, not an assumption that everyone who should have left has." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command — decides drill timing within the SOLAS window, and holds final authority on resolving any headcount discrepancy before the drill or the operation itself is closed out." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Coordinates embarkation and disembarkation control directly, and owns the headcount tracking discipline throughout — the crew's main point of contact with Passenger Services." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "With the vessel alongside during embarkation and disembarkation, joins deck-side coordination directly — the same departure from classic watchkeeping already established for in-port operations elsewhere in the catalog." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team at the gangway/embarkation points throughout boarding and disembarkation." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes gangway and headcount support tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Confirms the vessel's own safety systems — alarms, evacuation equipment — are ready and functioning before embarkation and before the drill." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Decides drill timing within the 24-hour SOLAS window." },
+          { en: "Holds final authority on resolving any headcount discrepancy before closing out the drill or the operation." },
+        ],
+        iMonitor: [
+          { en: "Overall safety and progress of the embarkation/drill/disembarkation cycle." },
+        ],
+        iReport: [
+          { en: "Reports drill completion and any incident to the company." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize the drill to be logged complete with an unresolved headcount discrepancy." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Coordinates embarkation and disembarkation control directly." },
+          { en: "Owns headcount tracking discipline throughout." },
+        ],
+        iMonitor: [
+          { en: "Running headcount status during embarkation and disembarkation." },
+        ],
+        iReport: [
+          { en: "Reports headcount status to the Master, and serves as the main point of contact with Passenger Services." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not begin embarkation before Passenger Services' readiness is independently confirmed." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Supports deck-side coordination during embarkation and disembarkation." },
+        ],
+        iMonitor: [
+          { en: "Assigned deck tasks during the port stay." },
+        ],
+        iReport: [
+          { en: "Reports task status to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent headcount or discrepancy-resolution decisions." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the deck team at the gangway/embarkation points throughout boarding and disembarkation." },
+        ],
+        iMonitor: [
+          { en: "Gangway conditions and running headcount at the embarkation/disembarkation point." },
+        ],
+        iReport: [
+          { en: "Reports headcount and any hazard to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize gangway operations to continue if the running count and physical flow stop matching." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes gangway and headcount support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate gangway conditions in their own work area." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize any change to the embarkation/disembarkation plan." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Confirms the vessel's safety systems — alarms, evacuation equipment — are ready and functioning before embarkation and before the drill." },
+        ],
+        iMonitor: [
+          { en: "Safety system status throughout the operation." },
+        ],
+        iReport: [
+          { en: "Reports system readiness, and any fault, to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize the drill to proceed without confirming safety system readiness first." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "passenger_ship_cycle_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the embarkation/muster drill/disembarkation cycle's phases in the correct order." },
+        items: [
+          { id: "readiness", label: { en: "Pre-Embarkation Readiness" } },
+          { id: "embark", label: { en: "Embarkation Control" } },
+          { id: "drill", label: { en: "Mandatory Muster Drill" } },
+          { id: "verify", label: { en: "Post-Drill Verification" } },
+          { id: "disembark_prep", label: { en: "Disembarkation Preparation" } },
+          { id: "disembark", label: { en: "Disembarkation Control" } },
+        ],
+        correctOrder: ["readiness", "embark", "drill", "verify", "disembark_prep", "disembark"],
+      },
+      {
+        type: "error_identification",
+        id: "passenger_ship_discrepancy_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The muster drill headcount comes up one short of the embarkation total. Departure is scheduled soon and the gap seems likely to be a counting error. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Log the drill as complete and proceed with departure preparation, since the discrepancy is minor and likely a counting error." }, isError: true, explanation: { en: "\"Likely a counting error\" is an assumption, not a resolution — this operation's own gate exists precisely to catch the case where it isn't, before departure rather than after." } },
+          { id: "b", label: { en: "Investigate the discrepancy before logging the drill complete." }, isError: false, explanation: { en: "Correct — the drill isn't complete until the numbers genuinely reconcile." } },
+          { id: "c", label: { en: "Report the discrepancy to the Master immediately." }, isError: false, explanation: { en: "Correct — the Master holds final authority on resolving it, and needs to know promptly." } },
+          { id: "d", label: { en: "Continue counting and verifying rather than assuming it's a counting error." }, isError: false, explanation: { en: "Correct — an assumption isn't a substitute for an actual recount or investigation." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "passenger_ship_pre_departure_gate",
+        targetRanks: ["master"],
+        scenario: { en: "Disembarkation preparation is complete for a port call, or the vessel is preparing to get underway after embarkation. Before authorizing departure, review which conditions are actually satisfied." },
+        items: [
+          { id: "drill_complete", label: { en: "Muster drill logged complete, with headcount fully reconciled." }, isSatisfied: true },
+          { id: "safety_systems_confirmed", label: { en: "Vessel safety systems confirmed ready by the Chief Engineer." }, isSatisfied: true },
+          { id: "passenger_services_signoff", label: { en: "Passenger Services sign-off received." }, isSatisfied: false },
+          { id: "gangway_secured", label: { en: "Gangway secured and embarkation/disembarkation points cleared." }, isSatisfied: true },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "During embarkation, the OOW notices a passenger who seems confused about where to go, wandering near the gangway rather than proceeding — not an emergency, just someone who looks lost." },
+        mission: { en: "As OOW, decide how to handle this." },
+        expectedActions: [
+          { en: "Direct the passenger or get them assistance rather than assuming someone else will notice." },
+          { en: "Continue monitoring the flow rather than treating it as a one-off, isolated moment." },
+        ],
+        why: [
+          { en: "A confused passenger during embarkation is a small version of exactly the kind of gap in orientation that matters much more during an actual emergency — worth addressing now, not just noting." },
+        ],
+        commonMistakes: [
+          { en: "Assuming someone else will notice and help." },
+        ],
+        safetyPoints: [
+          { en: "Passenger orientation during embarkation is a preview of how well they'll navigate to a muster station if it matters — it's worth getting right at low stakes." },
+        ],
+      },
+      {
+        situation: { en: "The gangway queue is building up and moving slower than usual. There's a temptation to wave people through a bit faster to relieve the congestion." },
+        mission: { en: "As AB, decide how to handle the congestion." },
+        expectedActions: [
+          { en: "Maintain the same headcount discipline regardless of the queue building up." },
+          { en: "Report the congestion to the Bosun rather than personally deciding to speed up the process at the cost of the count." },
+        ],
+        why: [
+          { en: "A faster, less careful count now undermines the exact number the muster drill later needs to verify against." },
+        ],
+        commonMistakes: [
+          { en: "Sacrificing headcount accuracy for the sake of moving the queue faster." },
+        ],
+        safetyPoints: [
+          { en: "The running count exists specifically so the muster drill has something real to check against — a rushed count defeats that purpose." },
+        ],
+      },
+      {
+        situation: { en: "Just before the scheduled muster drill, the Chief Engineer finds one alarm zone responding slightly slower than the others during a routine check — not failing, just noticeably slower." },
+        mission: { en: "As Chief Engineer, decide whether this is \"good enough\" to proceed." },
+        expectedActions: [
+          { en: "Report the slow response as a genuine finding rather than dismissing it as within acceptable range." },
+          { en: "Investigate before confirming the safety systems are fully ready." },
+        ],
+        why: [
+          { en: "\"Not failing yet\" and \"confirmed ready\" are different standards — a system already showing degraded response deserves a real look before the drill, not a pass on a technicality." },
+        ],
+        commonMistakes: [
+          { en: "Treating a system that hasn't outright failed as equivalent to one that's confirmed ready." },
+        ],
+        safetyPoints: [
+          { en: "The pre-drill safety system confirmation exists precisely to catch a degrading system before it's actually needed in an emergency." },
+        ],
+      },
+      {
+        situation: { en: "With the schedule tight, there's a suggestion that since it's \"just\" a drill this time, it could be shortened slightly to make up time." },
+        mission: { en: "As Master, decide how to respond." },
+        expectedActions: [
+          { en: "Hold the drill to its full, genuine standard regardless of schedule pressure." },
+          { en: "Communicate the reasoning clearly if pressure continues, rather than simply refusing without explanation." },
+        ],
+        why: [
+          { en: "The SOLAS timing and content requirements aren't a scheduling convenience to trim — \"just a drill\" is exactly the framing that erodes what the drill is supposed to guarantee." },
+        ],
+        commonMistakes: [
+          { en: "Shortening or simplifying the drill to save time, treating it as lower-stakes because it's not a real emergency." },
+        ],
+        safetyPoints: [
+          { en: "A drill that's quietly shortened doesn't actually verify what a full drill verifies — the gap only becomes visible if a real emergency ever tests it." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "passenger_ship_gangway_count_discrepancy",
+        title: { en: "The Flow Looks Ahead of the Count" },
+        seatRankId: "bosun",
+        root: {
+          id: "root",
+          situation: { en: "Partway through embarkation, the physical flow through the gangway seems to be running ahead of the tally — more people appear to have passed through than the running count shows, likely from a large family group moving through quickly together." },
+          options: [
+            {
+              id: "continue_catch_up_later",
+              label: { en: "Continue counting going forward without stopping, planning to catch up the discrepancy later." },
+              consequence: { en: "The gap persists through the rest of embarkation, and by the time anyone tries to reconcile it, there's no way to tell how many people or which ones account for the difference." },
+              feedback: { en: "A discrepancy caught in the moment is resolvable; the same discrepancy discovered after the flow has moved on is often not — this is exactly the moment with the most information available to fix it." },
+            },
+            {
+              id: "pause_reconcile",
+              label: { en: "Pause the gangway flow briefly to reconcile the count before continuing." },
+              isRecommended: true,
+              consequence: { en: "The brief pause finds the gap: the counter missed a few people during the family group's quick pass-through. Corrected, embarkation resumes." },
+              feedback: { en: "Correct — a short, deliberate pause to fix a real discrepancy costs far less than letting an unresolved gap ride into the muster drill's own verification later." },
+              next: {
+                id: "gap_corrected",
+                situation: { en: "The immediate gap is corrected. The underlying cause — fast-moving groups being harder to count accurately — hasn't been addressed, though, and more groups are still expected to board." },
+                options: [
+                  {
+                    id: "adjust_method",
+                    label: { en: "Adjust the counting method for groups (an explicit head-tap or verbal count-out) going forward to prevent the same gap recurring." },
+                    isRecommended: true,
+                    consequence: { en: "The adjusted method holds accurately through the remaining groups, with no further discrepancy." },
+                    feedback: { en: "Correct — fixing the specific gap this time doesn't fix the method that produced it. The same groups-moving-fast pattern was going to keep causing this until the method itself changed." },
+                  },
+                  {
+                    id: "resume_same_method",
+                    label: { en: "Resume the same counting method as before, since this was a one-off miss." },
+                    consequence: { en: "A second group causes the same kind of gap shortly after, requiring another pause to reconcile." },
+                    feedback: { en: "The cause wasn't a one-off — it was the method's own blind spot with fast-moving groups, and that blind spot doesn't go away just because this particular instance got fixed." },
+                  },
+                  {
+                    id: "add_extra_watcher",
+                    label: { en: "Assign an extra person to specifically watch for groups, without changing the counting method itself." },
+                    consequence: { en: "The extra watcher catches most group-related gaps but occasionally misses one during a particularly fast pass-through, since the underlying method is still the same one that missed the first group." },
+                    feedback: { en: "A plausible-sounding compensation, but it works around the method's weakness rather than fixing it — the same kind of patch this catalog has flagged before as insufficient on its own." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "continue_note_for_later",
+              label: { en: "Continue at normal pace and note the possible discrepancy for the Chief Officer to review after embarkation." },
+              consequence: { en: "By the time the Chief Officer reviews it after embarkation is complete, there's no practical way to identify or resolve who the discrepancy actually involves." },
+              feedback: { en: "Noting a resolvable problem for later, when it's still resolvable now, defers exactly the information (who, how many, when) that only exists while the situation is still fresh." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Resolve discrepancies now, not later" },
+        bestPractices: [
+          { en: "Pause and reconcile a counting or tracking discrepancy in the moment, while the information needed to resolve it still exists." },
+        ],
+        commonErrors: [
+          { en: "Deferring a resolvable discrepancy to a later review, once the information needed to actually resolve it is gone." },
+        ],
+      },
+      {
+        theme: { en: "Fix the method, not just the instance" },
+        bestPractices: [
+          { en: "When a specific gap reveals a weakness in the method itself, adjust the method — not just the one instance that revealed it." },
+        ],
+        commonErrors: [
+          { en: "Correcting a single occurrence while leaving the underlying method unchanged, letting the same gap recur." },
+        ],
+      },
+      {
+        theme: { en: "Regulatory requirements are not scheduling conveniences" },
+        bestPractices: [
+          { en: "Hold the muster drill to its full standard and timing regardless of schedule pressure." },
+        ],
+        commonErrors: [
+          { en: "Shortening or simplifying the drill because it's \"just\" a drill and time is tight." },
+        ],
+      },
+      {
+        theme: { en: "\"Not failing yet\" isn't \"confirmed ready\"" },
+        bestPractices: [
+          { en: "Treat a degraded but not-yet-failed safety system finding as a genuine issue to investigate, not a pass on a technicality." },
+        ],
+        commonErrors: [
+          { en: "Accepting a system that hasn't outright failed as equivalent to one that's actually confirmed ready." },
         ],
       },
     ],
