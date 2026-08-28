@@ -124,8 +124,18 @@ export interface OperationPhase {
 // mission, not transferred once; unlike process_control, it directs a
 // scientific rather than industrial-process domain. Load-bearing across
 // nine communication touchpoints, not folded into an existing value.
+//
+// "warranty_surveyor" added for the Heavy Lift semi-submersion float-on
+// loading operation: an independent Marine Warranty Surveyor, mandated by
+// the project's insurers, who verifies load/stability calculations and
+// holds genuine authority to clear or block the operation. Different in
+// kind from every prior party addition — not a coordination counterparty
+// (terminal, installation, assisted_vessel) but an external authority
+// with a real veto over whether the operation proceeds at all. Load-bearing
+// across two of this operation's own gating touchpoints (initial clearance,
+// final departure sign-off).
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team" | "warranty_surveyor";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -13194,6 +13204,534 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         ],
         commonErrors: [
           { en: "Delaying an injury report until the other response tracks are confirmed." },
+        ],
+      },
+    ],
+  },
+
+  heavy_lift_semi_submersion_float_on_loading: {
+    operationId: "heavy_lift_semi_submersion_float_on_loading",
+    vesselTypeId: "heavy_lift",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Heavy Lift Vessel — Semi-Submersion Float-On Loading" },
+    introduction: {
+      en: "Semi-submersion loading is what makes a heavy lift vessel capable of carrying cargo no conventional ship can: the vessel ballasts down until its deck is submerged, floating cargo — an offshore platform section, another vessel entirely — is maneuvered into position directly above the submerged deck, and the vessel then de-ballasts, rising beneath the cargo until it rests fully supported on deck, out of the water. This module covers that full cycle from the crew's side: ballast planning, the submersion itself, cargo positioning and alignment, and the resurfacing lift. Unlike anything else in the catalog, the vessel's own controlled ballasting — not a crane, not a winch — is the lifting mechanism, and Chief Engineer's ballast system ownership sits at the center of this operation's own signature moment, not in a supporting role. An independent Marine Warranty Surveyor, mandated by the project's insurers, verifies load and stability calculations before the operation proceeds — a real third party with genuine authority over whether the operation is cleared to begin, without holding any crew rank.",
+    },
+    objectives: [
+      { en: "Describe the full chronology of a semi-submersion float-on loading, from ballast planning through cargo alignment to the resurfacing lift." },
+      { en: "Explain why the vessel's own ballasting is this operation's lifting mechanism, structurally distinct from every crane- or winch-based cargo operation in the catalog." },
+      { en: "Identify the roles of the Chief Engineer (ballast systems) and Chief Officer (cargo alignment and loading plan) and how their domains meet during submersion and resurfacing." },
+      { en: "Explain the Marine Warranty Surveyor's independent verification role and the boundary between their authority and the crew's own." },
+      { en: "Recognize the specific hazards of semi-submersion (extreme, sensitive stability during the maneuver; structural risk from load calculation error; cargo/vessel collision risk during alignment) and the controls used against them." },
+      { en: "Recognize correct versus incorrect sequencing and communication during submersion, alignment, and resurfacing." },
+    ],
+    context: {
+      en: "Scoped to the semi-submersion float-on cycle only — not a conventional crane-based heavy lift, which some vessels of this type also perform but which doesn't carry this operation's genuine novelty. Extends the Ships Library card (HeavyLift.tsx) rather than replacing it. Roster read directly and unambiguously from the card's own explicit list: Master, Chief Officer, AB, Chief Engineer, Second/Third Engineer — a 6-rank roster, no Bosun or OOW implied, the same discipline already applied to Tugboat's and Fishing Vessel's small, clean rosters. The Marine Warranty Surveyor is represented via a new CommunicationParty, \"warranty_surveyor\": genuinely independent of the vessel (mandated by insurers, not company or crew), distinct from every existing party — not an onboard department like Process Control, not embarked science staff, not a visiting individual being transferred. Chief Engineer holds \"lead\" even in this routine op1 — the first exception to the established support-by-default op1 pattern in the whole catalog — because ballast control is this operation's own signature mechanism, not a supporting system.",
+    },
+
+    operationPhaseOrder: [
+      "pre_submersion_planning",
+      "controlled_submersion",
+      "cargo_positioning_alignment",
+      "resurfacing_load_transfer",
+      "post_lift_verification",
+      "final_securing_departure_prep",
+    ],
+    operationPhases: {
+      pre_submersion_planning: {
+        id: "pre_submersion_planning",
+        title: { en: "Pre-Submersion Planning" },
+        overview: { en: "The surveyor's verification is a real authorization, not an administrative formality." },
+        steps: [
+          { en: "Load and stability calculations verified by the Marine Warranty Surveyor." },
+          { en: "Ballast plan confirmed." },
+          { en: "Weather window checked." },
+          { en: "Cargo positioning plan confirmed, including tug coordination if needed." },
+        ],
+        bestPractices: [
+          { en: "Never proceed to submersion before the surveyor's explicit, documented clearance." },
+        ],
+        commonMistakes: [
+          { en: "Treating the surveyor's verification as assumed before it's actually given." },
+        ],
+      },
+      controlled_submersion: {
+        id: "controlled_submersion",
+        title: { en: "Controlled Submersion" },
+        overview: { en: "Staged and monitored, each step confirmed before the next — not a continuous run to the target draft." },
+        steps: [
+          { en: "Sequential, monitored ballasting to the target draft." },
+          { en: "Deck submerged to the planned depth." },
+        ],
+        bestPractices: [
+          { en: "Submerge in monitored stages, confirming each one before proceeding to the next." },
+        ],
+        commonMistakes: [
+          { en: "Accelerating the ballast sequence without intermediate stability confirmation." },
+        ],
+      },
+      cargo_positioning_alignment: {
+        id: "cargo_positioning_alignment",
+        title: { en: "Cargo Positioning & Alignment" },
+        overview: { en: "A misalignment is far harder to correct once contact is established than before resurfacing begins." },
+        steps: [
+          { en: "Floating cargo maneuvered into position above the submerged deck, often with tug assistance." },
+          { en: "Precise alignment confirmed." },
+          { en: "Final position locked in before resurfacing begins." },
+        ],
+        bestPractices: [
+          { en: "Begin resurfacing only after alignment is explicitly confirmed final, not while still being adjusted." },
+        ],
+        commonMistakes: [
+          { en: "Beginning resurfacing while alignment adjustments are still in progress." },
+        ],
+      },
+      resurfacing_load_transfer: {
+        id: "resurfacing_load_transfer",
+        title: { en: "Resurfacing & Load Transfer" },
+        overview: { en: "Weight distribution changes actively during resurfacing — not a stable state to assume." },
+        steps: [
+          { en: "Sequential, controlled de-ballasting." },
+          { en: "Vessel rises beneath the cargo." },
+          { en: "Weight progressively transfers from water buoyancy to deck support as the vessel rises." },
+        ],
+        bestPractices: [
+          { en: "Monitor load transfer continuously throughout resurfacing." },
+        ],
+        commonMistakes: [
+          { en: "Treating resurfacing as a simple reversal of submersion without active load-transfer monitoring." },
+        ],
+      },
+      post_lift_verification: {
+        id: "post_lift_verification",
+        title: { en: "Post-Lift Verification" },
+        overview: { en: "A complete stability check, not a visual impression that the cargo is \"on deck.\"" },
+        steps: [
+          { en: "Confirmation the cargo is fully supported and stable on deck." },
+          { en: "Initial securing." },
+          { en: "Full post-lift stability check." },
+        ],
+        bestPractices: [
+          { en: "Complete the full post-lift stability check, not just a visual confirmation." },
+        ],
+        commonMistakes: [
+          { en: "Treating the cargo's visible presence on deck as equivalent to confirmed stability." },
+        ],
+      },
+      final_securing_departure_prep: {
+        id: "final_securing_departure_prep",
+        title: { en: "Final Securing & Departure Prep" },
+        overview: { en: "Departure is authorized on the surveyor's final sign-off, not physical securing alone." },
+        steps: [
+          { en: "Final securing for sea." },
+          { en: "Final surveyor sign-off." },
+          { en: "Departure clearance." },
+        ],
+        bestPractices: [
+          { en: "Authorize departure only after the surveyor's final sign-off." },
+        ],
+        commonMistakes: [
+          { en: "Treating physical securing alone as sufficient for departure clearance." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "load_calc_verification",
+        phaseId: "pre_submersion_planning",
+        from: "warranty_surveyor", to: "bridge",
+        trigger: { en: "Load and stability calculations submitted for verification." },
+        content: { en: "The Marine Warranty Surveyor independently verifies the load and stability calculations and gives explicit, documented clearance before the operation proceeds — not a formality, a real authorization." },
+        whyItMatters: { en: "This is the single gate the entire operation depends on — nothing about submersion begins on an assumed or informal clearance." },
+      },
+      {
+        id: "submersion_cleared",
+        phaseId: "pre_submersion_planning",
+        from: "bridge", to: "engine",
+        trigger: { en: "Surveyor clearance received." },
+        content: { en: "Master confirms to the Chief Engineer that submersion is cleared to begin, referencing the surveyor's documented sign-off." },
+        whyItMatters: { en: "The Chief Engineer needs explicit confirmation the gate has actually been cleared, not an assumption that planning is finished." },
+      },
+      {
+        id: "ballast_stage_confirmation",
+        phaseId: "controlled_submersion",
+        from: "engine", to: "bridge",
+        trigger: { en: "Each stage of the ballast sequence reached." },
+        content: { en: "Chief Engineer confirms stability at each ballast stage to the Master before proceeding to the next, rather than running the sequence continuously to the target draft." },
+        whyItMatters: { en: "A staged, confirmed submersion is what allows a developing stability issue to be caught between steps rather than discovered only at the target depth." },
+      },
+      {
+        id: "alignment_status",
+        phaseId: "cargo_positioning_alignment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Cargo maneuvered into position above the submerged deck." },
+        content: { en: "Chief Officer reports alignment status continuously as the cargo is positioned, including any tug coordination." },
+        whyItMatters: { en: "The Master's decision to begin resurfacing depends on this status being current, not a snapshot from earlier in the positioning." },
+      },
+      {
+        id: "final_alignment_lockin",
+        phaseId: "cargo_positioning_alignment",
+        from: "bridge", to: "deck",
+        trigger: { en: "Alignment reported as correct." },
+        content: { en: "Master confirms the final lock-in to begin resurfacing only once alignment is explicitly confirmed complete, not while adjustments are still in progress." },
+        whyItMatters: { en: "A misalignment is far easier to correct before resurfacing begins than once contact between cargo and deck is established." },
+      },
+      {
+        id: "load_transfer_status",
+        phaseId: "resurfacing_load_transfer",
+        from: "engine", to: "bridge",
+        trigger: { en: "De-ballasting underway, load transferring from buoyancy to deck support." },
+        content: { en: "Chief Engineer reports load transfer status continuously throughout resurfacing, treating it as an actively changing state, not a stable one." },
+        whyItMatters: { en: "The weight distribution genuinely changes as the vessel rises — this isn't a simple reversal of the submersion sequence." },
+      },
+      {
+        id: "cargo_secured_confirmation",
+        phaseId: "post_lift_verification",
+        from: "deck", to: "bridge",
+        trigger: { en: "Cargo appears fully supported on deck." },
+        content: { en: "Chief Officer confirms the cargo is genuinely supported and stable, backed by the full post-lift stability check, not a visual impression alone." },
+        whyItMatters: { en: "\"On deck\" and \"confirmed stable\" are different standards, the same distinction this catalog keeps returning to under different names." },
+      },
+      {
+        id: "final_departure_clearance",
+        phaseId: "final_securing_departure_prep",
+        from: "warranty_surveyor", to: "bridge",
+        trigger: { en: "Final securing complete." },
+        content: { en: "The surveyor gives final sign-off before the Master authorizes departure — the operation's second, closing gate." },
+        whyItMatters: { en: "Departure is authorized on the surveyor's final clearance, not on physical securing alone." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Holds overall command — receives the surveyor's clearances at both gates, authorizes the transition from planning to submersion, and from alignment to resurfacing." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Owns cargo alignment and the loading plan directly — coordinates the floating cargo's positioning above the submerged deck and confirms alignment before resurfacing begins." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes deck-side support tasks — line handling for tug coordination during positioning, and securing once the cargo is confirmed stable on deck." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Directly operates this operation's own signature mechanism — the staged ballast sequence that submerges and resurfaces the vessel — reporting stability at each stage rather than holding a supporting role behind someone else's lift." },
+      },
+      {
+        rankId: "second_engineer",
+        identity: { en: "Hands-on operation of ballast pumps and valves throughout the staged sequence, under the Chief Engineer's direction." },
+      },
+      {
+        rankId: "third_engineer",
+        identity: { en: "Present and on watch during the operation, observing procedure and system behavior without independent responsibility — the same observe-level role held across the catalog." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      chief_engineer: "lead",
+      ab: "perform",
+      second_engineer: "perform",
+      third_engineer: "observe",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Receives the surveyor's clearances at both gates." },
+          { en: "Authorizes the transition from planning to submersion, and from alignment to resurfacing." },
+        ],
+        iMonitor: [
+          { en: "Overall progress and safety of the operation." },
+        ],
+        iReport: [
+          { en: "Reports operation completion to the company." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize submersion or resurfacing without the surveyor's explicit, documented clearance." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Coordinates cargo positioning above the submerged deck." },
+          { en: "Confirms alignment before resurfacing begins." },
+        ],
+        iMonitor: [
+          { en: "Alignment status continuously throughout positioning." },
+        ],
+        iReport: [
+          { en: "Reports alignment status to the Master continuously." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not confirm final lock-in while adjustments are still in progress." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Directly operates the staged ballast sequence — submersion and resurfacing — this operation's own lifting mechanism." },
+        ],
+        iMonitor: [
+          { en: "Stability and load transfer at every stage of the sequence." },
+        ],
+        iReport: [
+          { en: "Reports stability confirmation at each ballast stage before proceeding to the next." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not proceed to the next ballast stage without confirming stability at the current one." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes line handling for tug coordination during positioning, and securing once cargo is confirmed stable." },
+        ],
+        iMonitor: [
+          { en: "Immediate deck conditions in their own work area." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize any change to the positioning or securing plan." },
+        ],
+      },
+      second_engineer: {
+        iExecute: [
+          { en: "Hands-on operation of ballast pumps and valves throughout the staged sequence, under the Chief Engineer's direction." },
+        ],
+        iMonitor: [
+          { en: "System parameters at each stage." },
+        ],
+        iReport: [
+          { en: "Reports any abnormal reading to the Chief Engineer immediately." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not adjust ballast independently of the Chief Engineer's direction." },
+        ],
+      },
+      third_engineer: {
+        iMonitor: [
+          { en: "System behavior and procedure throughout the operation, building familiarity rather than carrying an assigned task." },
+        ],
+        iReport: [
+          { en: "Reports observations or questions to the Chief or Second Engineer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not independently operate or adjust any system." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "heavy_lift_float_on_phase_sequence",
+        targetRanks: ["master", "chief_officer", "chief_engineer"],
+        prompt: { en: "Put the semi-submersion float-on loading operation's phases in the correct order." },
+        items: [
+          { id: "plan", label: { en: "Pre-Submersion Planning" } },
+          { id: "submerge", label: { en: "Controlled Submersion" } },
+          { id: "align", label: { en: "Cargo Positioning & Alignment" } },
+          { id: "resurface", label: { en: "Resurfacing & Load Transfer" } },
+          { id: "verify", label: { en: "Post-Lift Verification" } },
+          { id: "secure", label: { en: "Final Securing & Departure Prep" } },
+        ],
+        correctOrder: ["plan", "submerge", "align", "resurface", "verify", "secure"],
+      },
+      {
+        type: "error_identification",
+        id: "heavy_lift_continuous_ballast_shortcut",
+        targetRanks: ["chief_engineer"],
+        scenario: { en: "Submersion is running behind schedule. It would be faster to run the remaining ballast stages continuously to the target draft rather than confirming stability at each one. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Run the remaining stages continuously to save time." }, isError: true, explanation: { en: "A staged, confirmed submersion exists precisely to catch a developing stability issue between steps — running continuously to save time removes exactly the safeguard the schedule pressure makes most valuable." } },
+          { id: "b", label: { en: "Continue confirming stability at each stage despite the time pressure." }, isError: false, explanation: { en: "Correct — the staged confirmation doesn't become optional because the schedule is tight." } },
+          { id: "c", label: { en: "Report the schedule delay to the Master rather than compressing the sequence unilaterally." }, isError: false, explanation: { en: "Correct — a schedule concern is the Master's to weigh, not a reason to independently change the ballast procedure." } },
+          { id: "d", label: { en: "Confirm stability at the current stage before any further action." }, isError: false, explanation: { en: "Correct — this confirmation precedes proceeding to the next stage, regardless of schedule." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "heavy_lift_pre_resurfacing_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The cargo appears positioned above the submerged deck. Before authorizing resurfacing to begin, review which conditions are actually satisfied." },
+        items: [
+          { id: "alignment_confirmed", label: { en: "Alignment explicitly confirmed complete by the Chief Officer, not still being adjusted." }, isSatisfied: true },
+          { id: "tug_coordination_complete", label: { en: "Tug coordination and positioning support confirmed complete." }, isSatisfied: true },
+          { id: "ballast_plan_confirmed", label: { en: "Resurfacing ballast plan confirmed by the Chief Engineer." }, isSatisfied: true },
+          { id: "surveyor_available", label: { en: "Marine Warranty Surveyor available for consultation if an issue arises during resurfacing." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "While handling a tug line during cargo positioning, the AB notices the line has developed more slack than expected as the cargo drifts slightly — not alarming yet, but different from the steady tension seen so far." },
+        mission: { en: "As AB, decide how to handle the change." },
+        expectedActions: [
+          { en: "Report the slack change to the Chief Officer promptly rather than waiting to see if it corrects." },
+          { en: "Continue close monitoring of the line while awaiting a response." },
+        ],
+        why: [
+          { en: "A tension change during a precision positioning maneuver is exactly the kind of signal that's easier to act on early than after the drift compounds." },
+        ],
+        commonMistakes: [
+          { en: "Waiting to see if the slack resolves on its own before saying anything." },
+        ],
+        safetyPoints: [
+          { en: "Precision alignment above a submerged deck leaves very little margin for an uncorrected drift to compound." },
+        ],
+      },
+      {
+        situation: { en: "During a ballast stage, the Second Engineer notices a tank level reading slightly behind where the plan predicted it should be at this point — not alarming, but not matching the plan either." },
+        mission: { en: "As Second Engineer, decide what to do with this observation." },
+        expectedActions: [
+          { en: "Report the discrepancy to the Chief Engineer before proceeding to the next stage." },
+          { en: "Avoid independently deciding the discrepancy is within normal variation." },
+        ],
+        why: [
+          { en: "A plan-versus-actual discrepancy during a staged, closely-monitored sequence is exactly the kind of detail the staging exists to catch." },
+        ],
+        commonMistakes: [
+          { en: "Assuming a modest discrepancy is normal variation without reporting it." },
+        ],
+        safetyPoints: [
+          { en: "The Chief Engineer's stage-by-stage confirmation depends on accurate readings being reported, not filtered by whether they seem concerning." },
+        ],
+      },
+      {
+        situation: { en: "With the weather window closing sooner than expected, there's pressure to proceed with submersion before the Marine Warranty Surveyor has fully completed the final round of calculation checks." },
+        mission: { en: "As Master, decide how to handle the time pressure." },
+        expectedActions: [
+          { en: "Hold for the surveyor's explicit, complete clearance regardless of the closing weather window." },
+          { en: "Communicate the time pressure to the surveyor so they can prioritize accordingly, without asking them to skip steps." },
+        ],
+        why: [
+          { en: "The surveyor's clearance is this operation's foundational gate — a closing weather window is a real constraint, but not one that changes what the gate is for." },
+        ],
+        commonMistakes: [
+          { en: "Proceeding on a partial or informal clearance because of genuine schedule pressure." },
+        ],
+        safetyPoints: [
+          { en: "A missed weather window can be waited out; a structural failure from an unverified calculation cannot be undone." },
+        ],
+      },
+      {
+        situation: { en: "During alignment, the tugs report the cargo is essentially in position, but the Chief Officer's own visual read suggests it may be off by a small margin — not clearly wrong, just not quite matching the tugs' assessment." },
+        mission: { en: "As Chief Officer, decide how to resolve the discrepancy." },
+        expectedActions: [
+          { en: "Request a more precise confirmation (instrumentation, a closer check) rather than deferring to the tugs' assessment or overriding it on visual impression alone." },
+          { en: "Avoid confirming final lock-in until the discrepancy is actually resolved one way or the other." },
+        ],
+        why: [
+          { en: "Two different reads of the same alignment, even a small disagreement, is exactly the situation that deserves a decisive check rather than picking whichever one to trust." },
+        ],
+        commonMistakes: [
+          { en: "Confirming lock-in based on the tugs' report despite a personal doubt, to avoid seeming overly cautious." },
+        ],
+        safetyPoints: [
+          { en: "A misalignment at lock-in is a much harder problem to correct once resurfacing begins than a few extra minutes spent resolving a discrepancy now." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "heavy_lift_unexplained_list_judgment",
+        title: { en: "The Numbers Check Out, But..." },
+        seatRankId: "chief_engineer",
+        root: {
+          id: "root",
+          situation: { en: "Submersion is nearing the target draft. Every planned ballast reading checks out exactly as expected — but there's a slight, persistent list to one side that doesn't have an obvious explanation from the sequence you've been following." },
+          options: [
+            {
+              id: "proceed_readings_ok",
+              label: { en: "Proceed to the next stage, since all the planned readings check out normally." },
+              consequence: { en: "The list persists into the next stage, now slightly more pronounced, still without explanation." },
+              feedback: { en: "The planned readings checking out doesn't account for an observation the plan didn't anticipate — this is the same trend-over-threshold lesson from elsewhere in the catalog: an unexplained signal is still a signal, whether or not it appears on the checklist." },
+            },
+            {
+              id: "pause_investigate",
+              label: { en: "Pause the sequence and investigate the list before continuing." },
+              isRecommended: true,
+              consequence: { en: "Investigation finds a minor discrepancy in one ballast tank — a valve not fully seated, giving a level slightly off from its intended reading. Not dangerous yet, but it explains the list." },
+              feedback: { en: "Correct — an unexplained observation, even alongside otherwise-normal readings, is worth a pause. This is exactly the judgment the staged sequence exists to make room for." },
+              next: {
+                id: "valve_found",
+                situation: { en: "The valve issue is identified and minor — easily correctable, but doing so means a short additional delay before resuming the staged sequence." },
+                options: [
+                  {
+                    id: "fix_then_resume",
+                    label: { en: "Correct the valve issue, verify the fix, then resume the staged sequence." },
+                    isRecommended: true,
+                    consequence: { en: "The correction resolves the list, and the remaining stages proceed with no further discrepancy." },
+                    feedback: { en: "Correct — a known, explained issue gets fixed before it has more submersion depth to compound under, not deferred for convenience." },
+                  },
+                  {
+                    id: "continue_unfixed",
+                    label: { en: "Since the list is now explained and appears minor, continue the sequence without correcting the valve, planning to address it later." },
+                    consequence: { en: "The valve issue worsens slightly as submersion continues, and the list becomes more pronounced by the final stage than it would have been if corrected immediately." },
+                    feedback: { en: "Explaining a discrepancy isn't the same as resolving it — a known issue left uncorrected has more depth and time to compound under before this operation gives you another good moment to fix it." },
+                  },
+                  {
+                    id: "defer_to_target_draft",
+                    label: { en: "Report the finding but recommend continuing to full target draft first, since the issue doesn't seem urgent." },
+                    consequence: { en: "The Master asks why a known, correctable issue wouldn't be fixed at the first safe opportunity rather than carried deliberately further into the operation." },
+                    feedback: { en: "\"Not urgent\" isn't a reason to delay a known fix — it's precisely the moment with the most safety margin to correct it, before continuing deeper into a sequence where margin only shrinks." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "immediate_abort",
+              label: { en: "Immediately abort submersion and begin resurfacing given the unexplained list." },
+              consequence: { en: "Resurfacing begins, and only afterward is the minor valve issue identified — a full operational restart is needed for what turned out to be a small, quickly correctable problem." },
+              feedback: { en: "An overcorrection — the readings were otherwise normal, and a pause to investigate was available before jumping to a full abort of the operation." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Two independent gates, never shortcuts" },
+        bestPractices: [
+          { en: "Treat the surveyor's clearances — before submersion and before departure — as genuine authorizations, held for regardless of weather windows or schedule pressure." },
+        ],
+        commonErrors: [
+          { en: "Proceeding on a partial or informal clearance because of real time pressure." },
+        ],
+      },
+      {
+        theme: { en: "Staged confirmation, not continuous" },
+        bestPractices: [
+          { en: "Confirm stability at every ballast stage before proceeding to the next, both during submersion and resurfacing." },
+        ],
+        commonErrors: [
+          { en: "Running stages continuously to save time, removing the safeguard staging exists to provide." },
+        ],
+      },
+      {
+        theme: { en: "An unexplained signal is still a signal" },
+        bestPractices: [
+          { en: "Investigate an observation the plan didn't anticipate, even when every planned reading checks out normally." },
+        ],
+        commonErrors: [
+          { en: "Proceeding because the checklist items are satisfied, without accounting for something the checklist didn't cover." },
+        ],
+      },
+      {
+        theme: { en: "Fix known issues at the earliest safe opportunity" },
+        bestPractices: [
+          { en: "Correct a known, explained discrepancy as soon as it's found, when the safety margin to do so is greatest." },
+        ],
+        commonErrors: [
+          { en: "Deferring a correctable issue because it seems minor or not urgent, carrying it deeper into an operation with shrinking margin." },
         ],
       },
     ],
