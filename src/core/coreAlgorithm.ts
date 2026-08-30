@@ -89,6 +89,15 @@
 // in an unconfirmed seniority assumption. Rank-only, additive, separate
 // function — no trajectory or vessel-type combination bundled in.
 //
+// Step 9 (2026-08-30), scoped and validated before writing any code — adds
+// current→target rank trajectory combined with vessel-type narrowing for
+// Specialized Operations, extending Step 5's rank+vessel-type narrowing to
+// the trajectory level exactly as Step 4 extended Step 3's rank-only
+// lookup. No new ambiguities — every decision (path symmetry/inclusiveness
+// from Step 2, exact vesselTypeId match with no category fallback from
+// Step 5, dedup-by-operationId from Step 4) was already validated and
+// simply reused, same as Step 4's own "nothing new to decide" case.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -331,4 +340,27 @@ export function getSpecializedOperationsByRankAndLevels(
     const level = op.responsibilityLevels?.[rankId];
     return level !== undefined && allowed.has(level);
   });
+}
+
+/**
+ * Returns Specialized Operations relevant to both a current→target rank
+ * trajectory and a specific vessel type — extends
+ * getSpecializedOperationsByRankAndVesselType() to the trajectory level
+ * exactly as getSpecializedOperationsForTrajectory() extends
+ * getSpecializedOperationsByRank().
+ *
+ * No new decisions this step — reuses getRankPath()'s symmetric/inclusive/
+ * same-department path (Step 2), the exact vesselTypeId match with no
+ * category fallback (Step 5), and dedup by operationId (Step 4).
+ * Additive: getSpecializedOperationsForTrajectory() and
+ * getSpecializedOperationsByRankAndVesselType() are unchanged.
+ */
+export function getSpecializedOperationsForTrajectoryAndVesselType(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  vesselTypeId: VesselTypeId
+): SpecializedOperation[] {
+  return getSpecializedOperationsForTrajectory(currentRankId, targetRankId).filter(
+    (op) => op.vesselTypeId === vesselTypeId
+  );
 }
