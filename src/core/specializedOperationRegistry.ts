@@ -19350,6 +19350,505 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  dredger_trailing_suction_dredging_hopper_loading: {
+    operationId: "dredger_trailing_suction_dredging_hopper_loading",
+    vesselTypeId: "dredger",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Dredger (TSHD) — Trailing Suction Dredging & Hopper Loading" },
+    introduction: {
+      en: "A trailing suction hopper dredger works underway, dragging a draghead along a planned track across the seabed while a powerful dredge pump draws up a slurry of sediment and water through the suction pipe and into the vessel's hopper holds. It's routine in the sense that this is the vessel's core, repeated function, but the process demands constant judgment: as the hoppers fill, the mixture's density and the point of overflow both have to be actively managed to load efficiently without simply pumping valuable material — or worse, sediment that should stay contained — straight back out. This operation covers the full dredging and loading sequence: track-following, slurry production and density monitoring, hopper load management, and overflow control, distinct from any cargo-loading content elsewhere in the catalog since it's monitored by load and density readings rather than a cargo plan.",
+    },
+    objectives: [
+      { en: "Describe the sequence of track-following, dredge pump engagement, slurry density monitoring, hopper load management, and overflow control." },
+      { en: "Explain why density and load must be actively managed together, and what a genuine loading problem looks like versus normal, expected variation as the hoppers fill." },
+      { en: "Identify how Master and Chief Engineer jointly lead this operation — one on track/course command, the other on the dredge pump and hopper system that is the operation's actual mechanism." },
+      { en: "Identify who does what during a continuous, underway dredging operation." },
+      { en: "Recognize correct versus incorrect judgment calls when density or overflow readings are ambiguous or the track deviates from plan." },
+    ],
+    context: {
+      en: "Genuinely new terrain — no reskin risk against Bulk Carrier or General Cargo (both alongside, cargo-plan-driven loading of dry cargo via shore equipment) or Cable Layer (continuous underway payout, but laying an asset rather than dredging/loading a slurry). Roster: 5-rank roster, with Chief Engineer at lead alongside Master, continuing the established pattern (Jackup's ballast/jacking, Drillship's riser tensioner, Cable Layer's cable engine) since the dredge pump/hopper system genuinely is this operation's core mechanism. No new CommunicationParty needed.",
+    },
+
+    operationPhaseOrder: [
+      "dredge_track_setup_confirmation",
+      "draghead_lowering_pump_engagement",
+      ["track_course_monitoring", "slurry_density_production_monitoring", "hopper_load_level_monitoring"],
+      "overflow_management",
+      "load_optimization_assessment",
+      "dredging_completion_final_verification",
+    ],
+    operationPhases: {
+      dredge_track_setup_confirmation: {
+        id: "dredge_track_setup_confirmation",
+        title: { en: "Dredge Track Setup & Confirmation" },
+        overview: { en: "Confirm the loaded track against the actual survey/plan, not just that a track file is present." },
+        steps: [
+          { en: "Master and Chief Officer confirm the planned dredge track is loaded and course is set before commencing." },
+        ],
+        bestPractices: [
+          { en: "Confirm the loaded track against the actual survey/plan, not just that a track file is present." },
+        ],
+      },
+      draghead_lowering_pump_engagement: {
+        id: "draghead_lowering_pump_engagement",
+        title: { en: "Draghead Lowering & Dredge Pump Engagement" },
+        overview: { en: "Confirm draghead contact and initial suction before committing to full pump power." },
+        steps: [
+          { en: "Chief Engineer lowers the draghead to the seabed and engages the dredge pump, beginning slurry production." },
+        ],
+        bestPractices: [
+          { en: "Confirm draghead contact and initial suction before committing to full pump power." },
+        ],
+      },
+      track_course_monitoring: {
+        id: "track_course_monitoring",
+        title: { en: "Track & Course Monitoring" },
+        overview: { en: "Any track deviation is worth investigating immediately, since it means dredging outside the planned area." },
+        steps: [
+          { en: "Vessel's course tracked continuously against the planned dredge track throughout the operation." },
+        ],
+        bestPractices: [
+          { en: "Treat any track deviation as worth investigating immediately, since it means dredging outside the planned area." },
+        ],
+      },
+      slurry_density_production_monitoring: {
+        id: "slurry_density_production_monitoring",
+        title: { en: "Slurry Density & Production Monitoring" },
+        overview: { en: "A sustained drop in density is a genuine signal, not a passing fluctuation to ignore." },
+        steps: [
+          { en: "Slurry density and production rate monitored continuously to assess dredging efficiency." },
+        ],
+        bestPractices: [
+          { en: "Treat a sustained drop in density as a genuine signal — of the draghead losing contact or the material changing — not a passing fluctuation to ignore." },
+        ],
+      },
+      hopper_load_level_monitoring: {
+        id: "hopper_load_level_monitoring",
+        title: { en: "Hopper Load Level Monitoring" },
+        overview: { en: "Track load level against the vessel's own known capacity curve, not a rough visual estimate." },
+        steps: [
+          { en: "Hopper load level tracked continuously as material accumulates." },
+        ],
+        bestPractices: [
+          { en: "Track load level against the vessel's own known capacity curve, not a rough visual estimate." },
+        ],
+      },
+      overflow_management: {
+        id: "overflow_management",
+        title: { en: "Overflow Management" },
+        overview: { en: "Adjust overflow based on actual settling behavior, not a fixed setting used regardless of material type." },
+        steps: [
+          { en: "As hoppers approach capacity, overflow managed to maximize load without discharging valuable material or improperly releasing sediment." },
+        ],
+        bestPractices: [
+          { en: "Adjust overflow level based on actual settling behavior of the material being dredged, not a fixed setting used regardless of material type." },
+        ],
+      },
+      load_optimization_assessment: {
+        id: "load_optimization_assessment",
+        title: { en: "Load Optimization Assessment" },
+        overview: { en: "Base the stop decision on the actual production trend, not a default toward dredging as long as possible." },
+        steps: [
+          { en: "Assessment of whether the hopper load has reached economic/optimal capacity, deciding when to stop dredging." },
+        ],
+        bestPractices: [
+          { en: "Base the stop decision on the actual production trend, not a default toward dredging as long as possible regardless of diminishing returns." },
+        ],
+      },
+      dredging_completion_final_verification: {
+        id: "dredging_completion_final_verification",
+        title: { en: "Dredging Completion & Final Verification" },
+        overview: { en: "Final verification is a genuine confirmation step, not a formality once dredging stops." },
+        steps: [
+          { en: "Final load confirmed, draghead raised, dredge pump secured, vessel ready to transit to the disposal site." },
+        ],
+        bestPractices: [
+          { en: "Treat final verification as a genuine confirmation step, not a formality once dredging stops." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "track_load_confirmation",
+        phaseId: "dredge_track_setup_confirmation",
+        from: "deck", to: "bridge",
+        trigger: { en: "Track loaded, course set." },
+        content: { en: "Chief Officer confirms the planned dredge track is loaded and course is set to the Master." },
+        whyItMatters: { en: "Committing to dredging on an unconfirmed track risks working outside the planned, permitted area from the very first pass." },
+      },
+      {
+        id: "pump_engagement_report",
+        phaseId: "draghead_lowering_pump_engagement",
+        from: "engine", to: "bridge",
+        trigger: { en: "Draghead lowered, pump engaged." },
+        content: { en: "Chief Engineer reports the draghead lowered, pump engaged, and slurry production commenced." },
+        whyItMatters: { en: "The Master needs to know dredging has genuinely started, and that draghead contact was confirmed before full power, not assumed." },
+      },
+      {
+        id: "course_status_report",
+        phaseId: "track_course_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing course monitoring." },
+        content: { en: "Course status reported continuously to the Master against the planned dredge track." },
+        whyItMatters: { en: "A track deviation means dredging outside the planned area — the Master needs this as an ongoing stream, not a periodic check." },
+      },
+      {
+        id: "density_production_status_report",
+        phaseId: "slurry_density_production_monitoring",
+        from: "engine", to: "bridge",
+        trigger: { en: "Ongoing density/production monitoring." },
+        content: { en: "Chief Engineer reports slurry density and production rate status continuously to the Master." },
+        whyItMatters: { en: "A genuine drop in density signals a real problem with the draghead or the material — the Master needs this tracked continuously, not discovered after the fact." },
+      },
+      {
+        id: "hopper_load_status_report",
+        phaseId: "hopper_load_level_monitoring",
+        from: "engine", to: "bridge",
+        trigger: { en: "Ongoing hopper load monitoring." },
+        content: { en: "Chief Engineer reports hopper load level continuously to the Master." },
+        whyItMatters: { en: "The overflow and stop decisions both depend on an accurate, current load picture, not a rough estimate." },
+      },
+      {
+        id: "overflow_adjustment_report",
+        phaseId: "overflow_management",
+        from: "engine", to: "bridge",
+        trigger: { en: "Hoppers approaching capacity." },
+        content: { en: "Chief Engineer reports overflow adjustments and status to the Master as hoppers approach capacity." },
+        whyItMatters: { en: "Overflow set wrong for the material being dredged either wastes valuable load or risks improperly releasing sediment — the Master needs this actively managed and reported." },
+      },
+      {
+        id: "load_stop_recommendation",
+        phaseId: "load_optimization_assessment",
+        from: "engine", to: "bridge",
+        trigger: { en: "Production trend assessed." },
+        content: { en: "Chief Engineer recommends the stop point based on the actual production trend to the Master." },
+        whyItMatters: { en: "The Master's final decision to stop dredging depends on a genuine trend-based recommendation, not a default toward maximum time regardless of diminishing returns." },
+      },
+      {
+        id: "completion_confirmation",
+        phaseId: "dredging_completion_final_verification",
+        from: "engine", to: "bridge",
+        trigger: { en: "Dredging stopped." },
+        content: { en: "Chief Engineer confirms final load, draghead raised, and pump secured, ready for transit." },
+        whyItMatters: { en: "This is the Master's final gate before getting underway to the disposal site." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the operation overall: confirms track/course setup, oversees the continuous dredging process, and makes the final stop decision from the Chief Engineer's load optimization recommendation." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads track and course monitoring — the operation's data-verification role, watching the vessel's actual position against the planned dredge track throughout." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team supporting draghead and pipeline handling/inspection on deck." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes draghead and pipeline support tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Leads the dredge pump and hopper system: engages the pump, monitors slurry density/production and hopper load, manages overflow, and recommends the load-optimization stop point — the operation's technical mechanism lead, alongside Master." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Confirms track/course setup; oversees the continuous dredging process; makes the final stop decision." },
+        ],
+        iMonitor: [
+          { en: "Course, density/production, hopper load, and overflow status throughout." },
+        ],
+        iReport: [
+          { en: "Confirms dredging complete once final verification is reported." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize continuing to dredge past the recommended stop point without genuine justification." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Confirms track/course setup; leads track and course monitoring." },
+        ],
+        iMonitor: [
+          { en: "Course against the planned dredge track throughout." },
+        ],
+        iReport: [
+          { en: "Reports course status continuously to the Master; flags any track deviation." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not treat a track deviation as routine without flagging it distinctly." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads deck team support for draghead and pipeline handling/inspection." },
+        ],
+        iMonitor: [
+          { en: "Deck-side draghead and pipeline conditions." },
+        ],
+        iReport: [
+          { en: "Reports deck-side hazards or issues to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent draghead-handling decisions." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes draghead and pipeline support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate task conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent handling decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Engages the dredge pump; monitors slurry density/production and hopper load; manages overflow; recommends the load-optimization stop point." },
+        ],
+        iMonitor: [
+          { en: "Density, production rate, hopper load level, and overflow status throughout." },
+        ],
+        iReport: [
+          { en: "Reports pump engagement, density/production status, hopper load status, overflow adjustments, and the stop recommendation to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not commit to full pump power before draghead contact is confirmed." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "dredger_tshd_phase_sequence",
+        targetRanks: ["master", "chief_engineer", "chief_officer"],
+        prompt: { en: "Put the trailing suction dredging and hopper loading operation's phases in the correct order." },
+        items: [
+          { id: "track_setup", label: { en: "Dredge Track Setup & Confirmation" } },
+          { id: "pump_engage", label: { en: "Draghead Lowering & Dredge Pump Engagement" } },
+          { id: "course_monitor", label: { en: "Track & Course Monitoring" } },
+          { id: "density_monitor", label: { en: "Slurry Density & Production Monitoring" } },
+          { id: "load_monitor", label: { en: "Hopper Load Level Monitoring" } },
+          { id: "overflow", label: { en: "Overflow Management" } },
+          { id: "load_assess", label: { en: "Load Optimization Assessment" } },
+          { id: "completion", label: { en: "Dredging Completion & Final Verification" } },
+        ],
+        correctOrder: ["track_setup", "pump_engage", ["course_monitor", "density_monitor", "load_monitor"], "overflow", "load_assess", "completion"],
+      },
+      {
+        type: "error_identification",
+        id: "dredger_density_drop_ignored",
+        targetRanks: ["chief_engineer"],
+        scenario: { en: "As the hopper approaches capacity, density readings begin dropping — mostly water now being drawn rather than solids — but load numbers still look decent at the current overflow setting. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Continue dredging at the current overflow setting despite the density drop, since load numbers still look decent." }, isError: true, explanation: { en: "A density drop signals diminishing returns even while the load number still looks acceptable — continuing unchanged wastes time and pump capacity on mostly water." } },
+          { id: "b", label: { en: "Adjust overflow or reassess given the density drop, since it signals diminishing returns." }, isError: false, explanation: { en: "Correct — this is exactly the discipline load optimization requires." } },
+          { id: "c", label: { en: "Report the density drop as a genuine trend requiring attention." }, isError: false, explanation: { en: "Correct — a sustained drop deserves a report, not silence because the load number still looks fine." } },
+          { id: "d", label: { en: "Reassess whether continuing to dredge is still efficient given the changed material characteristics." }, isError: false, explanation: { en: "Correct — the stop decision should track actual efficiency, not just the raw load figure." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "dredger_pre_transit_readiness_gate",
+        targetRanks: ["master"],
+        scenario: { en: "Dredging has stopped and the vessel is preparing to transit to the disposal site. Before authorizing transit, review which conditions are actually satisfied." },
+        items: [
+          { id: "draghead_raised", label: { en: "Draghead confirmed raised and secured." }, isSatisfied: true },
+          { id: "pump_secured", label: { en: "Dredge pump confirmed secured." }, isSatisfied: true },
+          { id: "load_confirmed_recorded", label: { en: "Final hopper load confirmed and recorded." }, isSatisfied: false },
+          { id: "track_deviation_resolved", label: { en: "Any course/track deviation resolved or accounted for before transit." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Inspecting the draghead connection before dredging begins, you notice a seal that looks slightly worn but still appears to be sealing properly." },
+        mission: { en: "As Bosun, decide how to handle it." },
+        expectedActions: [
+          { en: "Flag the worn seal for inspection/replacement before committing to a full dredging run, rather than assuming it'll hold because it still appears to be sealing." },
+        ],
+        why: [
+          { en: "A seal that fails mid-run costs far more in lost production and cleanup than replacing a marginal one now." },
+        ],
+        commonMistakes: [
+          { en: "Assuming a seal that still appears functional doesn't need attention." },
+        ],
+        safetyPoints: [
+          { en: "Catching a marginal component before the run starts is exactly what pre-operation checks are for." },
+        ],
+      },
+      {
+        situation: { en: "Assisting on deck during dredging, you notice the pipeline vibrating somewhat differently than usual — not obviously wrong, just different from what you're used to feeling." },
+        mission: { en: "As AB, decide how to respond." },
+        expectedActions: [
+          { en: "Report the observation to the Bosun or Chief Engineer, even though you can't say exactly what's different, rather than staying quiet because it's not clearly a fault." },
+        ],
+        why: [
+          { en: "A crew member's direct physical observation is valuable information, even without a technical diagnosis attached to it." },
+        ],
+        commonMistakes: [
+          { en: "Staying silent about an unusual observation because it can't be clearly identified as a problem." },
+        ],
+        safetyPoints: [
+          { en: "An early, imprecise report is more useful than a late, precise one after an issue has developed further." },
+        ],
+      },
+      {
+        situation: { en: "Production rate is strong and load is climbing steadily, but you notice the draghead track position seems to be drifting slightly from where you'd expect based on the seabed profile you're familiar with in this area." },
+        mission: { en: "As Chief Engineer, decide how to weigh this against the strong production numbers." },
+        expectedActions: [
+          { en: "Raise the position observation to the Chief Officer for verification against the actual track data, rather than letting strong production numbers override a genuine positional concern." },
+        ],
+        why: [
+          { en: "Strong production doesn't confirm the vessel is on the planned track — the two are genuinely separate questions, and a track deviation matters regardless of how well dredging itself is going." },
+        ],
+        commonMistakes: [
+          { en: "Treating strong production as reassurance that everything else, including track position, must also be fine." },
+        ],
+        safetyPoints: [
+          { en: "Production quality and track position are independent facts — one being good doesn't vouch for the other." },
+        ],
+      },
+      {
+        situation: { en: "The load optimization assessment recommends stopping soon given diminishing returns, but the hopper isn't quite at its theoretical maximum capacity, and there's a temptation to push for a few more minutes to get closer to full." },
+        mission: { en: "As Master, decide how to weigh this." },
+        expectedActions: [
+          { en: "Follow the recommendation based on the actual production trend, rather than pushing past it chasing a theoretical maximum that the trend itself suggests won't be reached efficiently." },
+        ],
+        why: [
+          { en: "The stop recommendation already accounts for the trend — pushing past it based on a capacity number alone ignores exactly the diminishing-returns signal the recommendation was built on." },
+        ],
+        commonMistakes: [
+          { en: "Overriding a trend-based stop recommendation to chase a raw capacity number." },
+        ],
+        safetyPoints: [
+          { en: "A recommendation grounded in the actual trend serves the operation's efficiency better than a target number pursued regardless of what the trend is actually showing." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "dredger_turbidity_trend_judgment",
+        title: { en: "The Turbidity Reading Creeping Up" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "During dredging, turbidity monitoring shows readings trending steadily upward — still below the permitted environmental limit, but the direction is clear." },
+          options: [
+            {
+              id: "continue_current_settings",
+              label: { en: "Continue dredging at current settings since the reading is still below the limit." },
+              consequence: { en: "The trend continues, and turbidity approaches the limit closely enough that any further change risks exceeding it, leaving little margin to react." },
+              feedback: { en: "\"Still below the limit\" describes where the reading is right now, not where the trend is heading — waiting until the limit is actually reached gives up the chance to manage it proactively." },
+            },
+            {
+              id: "report_proactive_adjustment",
+              label: { en: "Report the trend to the Master and consider proactively adjusting operations before reaching the limit." },
+              isRecommended: true,
+              consequence: { en: "An adjustment to the overflow setting brings turbidity back down, though production rate drops noticeably as a result." },
+              feedback: { en: "Correct — a clear trend toward a limit is worth acting on before it's reached, not just monitored until it arrives." },
+              next: {
+                id: "adjustment_reduces_production",
+                situation: { en: "The overflow adjustment brings turbidity back down and keeps it well within the limit, but production rate has dropped noticeably as a result." },
+                options: [
+                  {
+                    id: "revert_original_setting",
+                    label: { en: "Revert to the original overflow setting since turbidity dropped and seems controlled now." },
+                    consequence: { en: "Turbidity begins trending upward again under the original setting, since the adjustment — not a change in conditions — was what brought it down." },
+                    feedback: { en: "The improvement came from the adjustment itself, not from the underlying conditions changing — reverting removes the very thing that was controlling the trend." },
+                  },
+                  {
+                    id: "maintain_adjusted_setting",
+                    label: { en: "Maintain the adjusted overflow setting for the remainder of the run, accepting the reduced production rate as the cost of staying safely within the limit." },
+                    isRecommended: true,
+                    consequence: { en: "Turbidity stays comfortably within the permitted limit for the rest of the run, at the cost of a lower overall load than an unconstrained run would have achieved." },
+                    feedback: { en: "Correct — accepting the production trade-off is what the environmental limit actually requires, not a target to work around." },
+                  },
+                  {
+                    id: "partial_revert_compromise",
+                    label: { en: "Partially revert the overflow setting to try to recover more production while still nominally staying under the limit." },
+                    consequence: { en: "Turbidity begins trending upward again, now with less margin than before the original adjustment, since the compromise setting only partially addressed what caused the trend." },
+                    feedback: { en: "A partial reversal chases some of the lost production back, but also gives back some of the margin the full adjustment was providing — a compromise that undermines the fix without fully committing to either side." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "stop_preemptively",
+              label: { en: "Immediately stop all dredging operations preemptively, well before the trend suggests the limit will actually be reached." },
+              consequence: { en: "Production stops far earlier than the trend actually required, losing significant dredging time to a precaution well beyond what the situation called for." },
+              feedback: { en: "A developing trend calls for a proportionate response — stopping entirely, this far ahead of the actual limit, overreacts to what the data is showing." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "An imprecise but genuine physical observation is worth reporting, even without a diagnosis" },
+        bestPractices: [
+          { en: "Report something that feels or behaves unusually, even without being able to identify exactly what's different." },
+        ],
+        commonErrors: [
+          { en: "Staying silent about an unusual observation because it can't be clearly identified as a fault." },
+        ],
+      },
+      {
+        theme: { en: "Strong performance in one area doesn't vouch for a genuinely separate area" },
+        bestPractices: [
+          { en: "Treat production quality and positional/track accuracy as independent facts, raising a concern in one even when the other looks strong." },
+        ],
+        commonErrors: [
+          { en: "Treating strong performance in one measure as reassurance that an unrelated concern must also be fine." },
+        ],
+      },
+      {
+        theme: { en: "Follow a trend-based recommendation rather than chasing a raw target number" },
+        bestPractices: [
+          { en: "Base a stop or continue decision on the actual production or condition trend, not a fixed target pursued regardless of what the trend shows." },
+        ],
+        commonErrors: [
+          { en: "Overriding a trend-based recommendation to chase a raw number the trend suggests won't be reached efficiently." },
+        ],
+      },
+      {
+        theme: { en: "Act proactively on a clear trend toward a limit, and sustain the fix rather than reverting once it appears controlled" },
+        bestPractices: [
+          { en: "Adjust operations proactively as a trend develops toward a limit, and maintain the adjustment for as long as the underlying condition would otherwise recur." },
+        ],
+        commonErrors: [
+          { en: "Waiting until a limit is reached before acting, or reverting a successful fix once the symptom it addressed has cleared." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
