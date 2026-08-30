@@ -17349,6 +17349,506 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  drillship_riser_running_bop_deployment: {
+    operationId: "drillship_riser_running_bop_deployment",
+    vesselTypeId: "drillship",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Drillship — Riser Running & BOP Deployment" },
+    introduction: {
+      en: "A drillship arrives on location and has to establish a physical connection from the vessel down to the wellhead on the seabed before any drilling can begin. This operation covers that connection: holding precise DP station over the wellhead, running the marine riser joint by joint down through the moonpool, lowering and latching the blowout preventer (BOP) stack onto the wellhead, and pressure-testing the connection before it's trusted. It's routine in the sense that every drillship does this at the start of every well, but the margin for error is real — riser running is a slow, methodical, joint-by-joint process where a rushed connection or an unconfirmed latch is exactly the kind of thing that becomes a serious problem much later, once drilling is already underway. This operation stays entirely on the marine/subsea-equipment side — the drilling department that directs the well itself is out of scope here, exactly as it was for Jackup's rig-move operation.",
+    },
+    objectives: [
+      { en: "Describe the sequence of DP positioning, riser running joint by joint, BOP lowering and latching, and pressure testing." },
+      { en: "Explain why each riser joint connection and the final BOP latch require genuine confirmation, not just completion." },
+      { en: "Identify how Master and Chief Engineer jointly lead this operation — one on DP/positioning command, the other on the riser tensioner and subsea marine equipment that is the operation's actual mechanism." },
+      { en: "Identify who does what, including the boundary between this operation's marine-crew scope and the drilling department's separate, later responsibility for the well itself." },
+      { en: "Recognize correct versus incorrect judgment calls when a riser joint connection or BOP latch confirmation is ambiguous." },
+    ],
+    context: {
+      en: "Genuinely new terrain — no reskin risk against Jackup (legs, not DP/riser) or FPSO (production, not the wellhead connection itself). Roster: 5-rank roster, with Chief Engineer at lead alongside Master, mirroring the Jackup precedent since the riser tensioner/subsea marine equipment genuinely is this operation's core mechanism. No new CommunicationParty — the drilling department stays entirely out of this operation's scope, exactly as it did for Jackup.",
+    },
+
+    operationPhaseOrder: [
+      "dp_wellhead_positioning",
+      "riser_joint_running_sequence",
+      ["riser_connection_verification", "dp_position_monitoring", "moonpool_safety_monitoring"],
+      "bop_lowering_latching",
+      "latch_confirmation_pressure_test",
+      "final_readiness_handover",
+    ],
+    operationPhases: {
+      dp_wellhead_positioning: {
+        id: "dp_wellhead_positioning",
+        title: { en: "DP Station-Keeping & Wellhead Positioning" },
+        overview: { en: "Position confirmed against the wellhead's actual surveyed location, not the planned location alone." },
+        steps: [
+          { en: "Master establishes and confirms precise DP station directly over the wellhead location before riser running begins." },
+        ],
+        bestPractices: [
+          { en: "Confirm position against the wellhead's actual surveyed location, not the planned location alone." },
+        ],
+      },
+      riser_joint_running_sequence: {
+        id: "riser_joint_running_sequence",
+        title: { en: "Riser Joint Running Sequence" },
+        overview: { en: "Each joint run at the pace the connection process actually requires." },
+        steps: [
+          { en: "Marine riser run down through the moonpool joint by joint, in the methodical, staged process this equipment requires." },
+        ],
+        bestPractices: [
+          { en: "Run each joint at the pace the connection process actually requires, not faster than confirmation allows." },
+        ],
+      },
+      riser_connection_verification: {
+        id: "riser_connection_verification",
+        title: { en: "Riser Connection Verification" },
+        overview: { en: "\"Connected\" and \"confirmed connected\" are two different things." },
+        steps: [
+          { en: "Each riser joint connection verified before the next joint is added." },
+        ],
+        bestPractices: [
+          { en: "Treat \"connected\" and \"confirmed connected\" as two different things, and require the second before moving to the next joint." },
+        ],
+      },
+      dp_position_monitoring: {
+        id: "dp_position_monitoring",
+        title: { en: "DP Position Monitoring" },
+        overview: { en: "Position monitoring stays continuous throughout the whole running sequence." },
+        steps: [
+          { en: "DP-held position over the wellhead monitored continuously throughout riser running." },
+        ],
+        bestPractices: [
+          { en: "Treat position monitoring as continuous throughout the whole running sequence, not just at the start." },
+        ],
+      },
+      moonpool_safety_monitoring: {
+        id: "moonpool_safety_monitoring",
+        title: { en: "Moonpool Area Safety Monitoring" },
+        overview: { en: "The moonpool is an active hazard area for the full duration of running." },
+        steps: [
+          { en: "The moonpool area, where riser joints are actively being handled, kept clear and monitored for hazards throughout." },
+        ],
+        bestPractices: [
+          { en: "Treat the moonpool as an active hazard area for the full duration of running, not just during each individual joint's handling." },
+        ],
+      },
+      bop_lowering_latching: {
+        id: "bop_lowering_latching",
+        title: { en: "BOP Lowering & Latching" },
+        overview: { en: "Controlled rate, with approach and alignment confirmed before final latching." },
+        steps: [
+          { en: "BOP stack lowered on the completed riser string and latched onto the wellhead." },
+        ],
+        bestPractices: [
+          { en: "Lower the BOP at the controlled rate the procedure specifies, confirming approach and alignment before final latching." },
+        ],
+      },
+      latch_confirmation_pressure_test: {
+        id: "latch_confirmation_pressure_test",
+        title: { en: "Latch Confirmation & Pressure Test" },
+        overview: { en: "The pressure test has to actually pass on its own terms." },
+        steps: [
+          { en: "BOP latch confirmed secure, then the connection pressure-tested before it's trusted for drilling operations." },
+        ],
+        bestPractices: [
+          { en: "Require the pressure test to actually pass on its own terms, not treat a \"probably fine\" latch confirmation as sufficient on its own." },
+        ],
+      },
+      final_readiness_handover: {
+        id: "final_readiness_handover",
+        title: { en: "Final Readiness & Handover" },
+        overview: { en: "The handover itself is a genuine confirmation step, not a formality." },
+        steps: [
+          { en: "Final verification that the riser/BOP system is confirmed ready, before responsibility passes to the drilling department." },
+        ],
+        bestPractices: [
+          { en: "Treat the handover itself as a genuine confirmation step, not a formality once testing is done." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "wellhead_position_confirmation",
+        phaseId: "dp_wellhead_positioning",
+        from: "deck", to: "bridge",
+        trigger: { en: "DP station established over the wellhead." },
+        content: { en: "Chief Officer confirms the DP position reading against the wellhead's surveyed location to the Master." },
+        whyItMatters: { en: "Beginning riser running on an unconfirmed position risks a costly repositioning once the riser is already partially deployed." },
+      },
+      {
+        id: "riser_running_commenced",
+        phaseId: "riser_joint_running_sequence",
+        from: "engine", to: "bridge",
+        trigger: { en: "Riser tensioner system engaged." },
+        content: { en: "Chief Engineer reports the riser tensioner system engaged and running commenced." },
+        whyItMatters: { en: "The Master needs to know the methodical joint-by-joint process has begun to coordinate the crew's parallel monitoring." },
+      },
+      {
+        id: "joint_connection_confirmation",
+        phaseId: "riser_connection_verification",
+        from: "deck", to: "bridge",
+        trigger: { en: "Each riser joint connection made." },
+        content: { en: "Chief Officer confirms each riser joint connection verified before the next joint is added." },
+        whyItMatters: { en: "An unconfirmed connection compounds with every joint added afterward — this is the checkpoint that catches it before it does." },
+      },
+      {
+        id: "dp_position_status_report",
+        phaseId: "dp_position_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing DP position monitoring." },
+        content: { en: "DP-held position over the wellhead reported continuously to the Master throughout riser running." },
+        whyItMatters: { en: "Any drift matters more with a riser partially deployed than it did before running began." },
+      },
+      {
+        id: "moonpool_hazard_alert",
+        phaseId: "moonpool_safety_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Hazard observed in the moonpool area." },
+        content: { en: "Bosun/AB reports any hazard in the moonpool area to the Master immediately." },
+        whyItMatters: { en: "The moonpool is an active hazard area for the full duration of running — a delayed report here is a delayed response to a real physical risk." },
+      },
+      {
+        id: "bop_latch_status_report",
+        phaseId: "bop_lowering_latching",
+        from: "engine", to: "bridge",
+        trigger: { en: "BOP lowering underway." },
+        content: { en: "Chief Engineer reports BOP lowering progress and latch status to the Master." },
+        whyItMatters: { en: "The Master needs this to confirm the controlled rate and alignment are being maintained before final latching." },
+      },
+      {
+        id: "pressure_test_result_report",
+        phaseId: "latch_confirmation_pressure_test",
+        from: "engine", to: "bridge",
+        trigger: { en: "Pressure test completed." },
+        content: { en: "Chief Engineer reports the pressure test result — pass or fail — to the Master." },
+        whyItMatters: { en: "The connection isn't trusted for drilling until this test result is genuinely confirmed, not assumed from the latch alone." },
+      },
+      {
+        id: "system_readiness_confirmed",
+        phaseId: "final_readiness_handover",
+        from: "bridge", to: "deck",
+        trigger: { en: "Final verification complete." },
+        content: { en: "Master confirms the full riser/BOP system is verified ready, communicated back to the crew." },
+        whyItMatters: { en: "This closes out the operation's own scope with a genuine confirmation, before responsibility passes to the drilling department." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the operation overall: establishes and holds DP station over the wellhead, and confirms final system readiness before handover to the drilling department." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads position confirmation and riser connection verification — the operation's data-verification role, confirming each joint connection and monitoring DP position throughout running." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team on moonpool area safety and physical riser-handling support — the operation's hands-on deck lead for the active hazard area." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes riser-handling and moonpool monitoring tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Leads the riser tensioner and subsea marine equipment: runs the riser joint-by-joint sequence, lowers and latches the BOP, and confirms the pressure test — the operation's technical mechanism lead, alongside Master." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Establishes and holds DP station over the wellhead." },
+          { en: "Confirms final system readiness for handover." },
+        ],
+        iMonitor: [
+          { en: "Position status, connection verification progress, and moonpool safety throughout." },
+        ],
+        iReport: [
+          { en: "Confirms final readiness to the crew, closing out this operation's scope." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not confirm handover readiness before the pressure test has genuinely passed." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Confirms position readings; verifies each riser joint connection." },
+        ],
+        iMonitor: [
+          { en: "DP position and connection verification status throughout running." },
+        ],
+        iReport: [
+          { en: "Reports position confirmation and connection verification to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not treat a joint as connected without a genuine confirmation, separate from the connection attempt itself." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads moonpool area safety and physical riser-handling support." },
+        ],
+        iMonitor: [
+          { en: "Moonpool area conditions and hazards throughout running." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Master immediately." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not treat the moonpool as safe between individual joint handlings — monitoring stays continuous." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes riser-handling and moonpool monitoring tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate task conditions in the moonpool area." },
+        ],
+        iReport: [
+          { en: "Reports hazards or irregularities to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent riser-handling decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Runs the riser joint-by-joint sequence; lowers and latches the BOP; confirms the pressure test." },
+        ],
+        iMonitor: [
+          { en: "Tensioner system status, BOP lowering rate/alignment, and pressure test result." },
+        ],
+        iReport: [
+          { en: "Reports riser running commenced, BOP latch status, and pressure test result to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not proceed to the next riser joint before the current connection is genuinely confirmed." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "drillship_riser_bop_phase_sequence",
+        targetRanks: ["master", "chief_engineer", "chief_officer"],
+        prompt: { en: "Put the riser running and BOP deployment operation's phases in the correct order." },
+        items: [
+          { id: "position", label: { en: "DP Station-Keeping & Wellhead Positioning" } },
+          { id: "run_riser", label: { en: "Riser Joint Running Sequence" } },
+          { id: "joint_verify", label: { en: "Riser Connection Verification" } },
+          { id: "dp_monitor", label: { en: "DP Position Monitoring" } },
+          { id: "moonpool_safety", label: { en: "Moonpool Area Safety Monitoring" } },
+          { id: "bop_latch", label: { en: "BOP Lowering & Latching" } },
+          { id: "pressure_test", label: { en: "Latch Confirmation & Pressure Test" } },
+          { id: "handover", label: { en: "Final Readiness & Handover" } },
+        ],
+        correctOrder: ["position", "run_riser", ["joint_verify", "dp_monitor", "moonpool_safety"], "bop_latch", "pressure_test", "handover"],
+      },
+      {
+        type: "error_identification",
+        id: "drillship_connected_vs_confirmed_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "A riser joint connection is made and appears seated. The next joint is ready to be prepared. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Proceed to prepare the next joint since the connection appears seated." }, isError: true, explanation: { en: "\"Appears seated\" is a completion, not a confirmation — proceeding on appearance alone is exactly the shortcut this operation's own verification step exists to prevent." } },
+          { id: "b", label: { en: "Complete the full verification check on the current connection before preparing the next joint." }, isError: false, explanation: { en: "Correct — this is exactly the discipline the sequence requires." } },
+          { id: "c", label: { en: "Report the connection as verified only after the check confirms it." }, isError: false, explanation: { en: "Correct — reporting should follow confirmation, not appearance." } },
+          { id: "d", label: { en: "Flag any ambiguous verification result rather than assuming it's fine." }, isError: false, explanation: { en: "Correct — an ambiguous result deserves a flag, not a default assumption of success." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "drillship_pre_handover_readiness_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The BOP is latched and the pressure test has run. Before confirming handover readiness, review which conditions are actually satisfied." },
+        items: [
+          { id: "joints_verified", label: { en: "All riser joint connections verified, not just completed." }, isSatisfied: true },
+          { id: "latch_secure", label: { en: "BOP latch confirmed secure." }, isSatisfied: true },
+          { id: "pressure_test_passed", label: { en: "Pressure test passed on its own terms, not treated as a formality." }, isSatisfied: false },
+          { id: "moonpool_cleared", label: { en: "Moonpool area confirmed clear and secured after running is complete." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "A riser joint handling operation in the moonpool is running a bit behind schedule, and there's a suggestion to have someone step into the moonpool safety zone briefly to help speed up rigging the next joint while handling on the current one is still finishing." },
+        mission: { en: "As Bosun, decide how to respond." },
+        expectedActions: [
+          { en: "Keep the moonpool safety zone clear until the current joint handling is fully complete, regardless of the schedule pressure." },
+        ],
+        why: [
+          { en: "The moonpool is an active hazard area for the full duration of running — allowing someone in early to save time trades a real physical risk for a modest time saving." },
+        ],
+        commonMistakes: [
+          { en: "Allowing early entry into the safety zone to keep pace with the schedule." },
+        ],
+        safetyPoints: [
+          { en: "Schedule pressure doesn't change what makes the moonpool hazardous during active handling." },
+        ],
+      },
+      {
+        situation: { en: "You're monitoring the moonpool area and need to step away briefly for an unrelated reason. Another crew member is nearby but not specifically assigned to this task." },
+        mission: { en: "As AB, decide how to handle the handoff." },
+        expectedActions: [
+          { en: "Explicitly hand off the monitoring responsibility to the nearby crew member, confirming they understand they now hold it, rather than assuming their presence is sufficient coverage." },
+        ],
+        why: [
+          { en: "Someone being physically nearby isn't the same as someone knowingly holding an assigned responsibility — an implicit handoff can leave the area effectively unmonitored even with someone standing right there." },
+        ],
+        commonMistakes: [
+          { en: "Assuming a nearby person's presence counts as coverage without an explicit handoff." },
+        ],
+        safetyPoints: [
+          { en: "A genuine handoff means the task is actually covered; proximity alone doesn't." },
+        ],
+      },
+      {
+        situation: { en: "The pressure test result comes back right at the edge of the acceptable range — technically passing, but with very little margin." },
+        mission: { en: "As Chief Engineer, decide how to treat this result." },
+        expectedActions: [
+          { en: "Treat a marginal pass as worth a second test or closer review before reporting the connection fully confirmed, rather than accepting it at face value because it's technically within range." },
+        ],
+        why: [
+          { en: "A result at the very edge of acceptable is different from one comfortably within range — treating them identically ignores what the margin itself is telling you." },
+        ],
+        commonMistakes: [
+          { en: "Accepting a marginal pass without further review because it's technically within specification." },
+        ],
+        safetyPoints: [
+          { en: "The pressure test's value comes from what it actually shows, not just whether the number clears the bar." },
+        ],
+      },
+      {
+        situation: { en: "DP position has held steady throughout riser running so far, but a routine system check shows one of the DP reference systems reporting slightly degraded accuracy — not enough to trigger an automatic alarm, but a real change from earlier readings." },
+        mission: { en: "As Master, decide how to weigh this." },
+        expectedActions: [
+          { en: "Treat the degraded reference system as worth investigating and potentially compensating for, rather than dismissing it because the overall position is still holding and no alarm has triggered." },
+        ],
+        why: [
+          { en: "A degraded reference system is a real change in the redundancy the DP system depends on — \"no alarm yet\" and \"genuinely fine\" aren't the same thing, especially with a riser now partially deployed." },
+        ],
+        commonMistakes: [
+          { en: "Dismissing a sub-threshold degradation because current position is still holding." },
+        ],
+        safetyPoints: [
+          { en: "Redundancy in a DP system is only as good as its weakest working part — a real degradation deserves attention before it becomes the part that matters." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "drillship_ambiguous_torque_reading_judgment",
+        title: { en: "The Connection That Looks Fine — Mostly" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "Verifying a riser joint connection, the standard check shows mostly good results, but one indicator — the torque reading — sits slightly outside the normal range. Not clearly failing, but not clearly matching the expected pattern either." },
+          options: [
+            {
+              id: "accept_mostly_fine",
+              label: { en: "Accept the connection as verified since most indicators look fine, and proceed to the next joint." },
+              consequence: { en: "The ambiguous reading is never actually resolved, and the next joint is added on top of a connection that was never genuinely confirmed." },
+              feedback: { en: "\"Mostly fine\" isn't the same as \"confirmed\" — one ambiguous indicator among several good ones still deserves resolution, not being outvoted by the others." },
+            },
+            {
+              id: "flag_and_recheck",
+              label: { en: "Flag the ambiguous indicator and request a re-check of that specific connection before proceeding." },
+              isRecommended: true,
+              consequence: { en: "The re-check traces the odd torque reading to a sensor calibration drift, not a genuine connection issue." },
+              feedback: { en: "Correct — an ambiguous result gets resolved, not assumed, exactly as this operation's own verification discipline calls for." },
+              next: {
+                id: "sensor_drift_identified",
+                situation: { en: "The re-check finds the odd torque reading was caused by a calibration drift in that sensor — not a genuine connection issue. But this raises a further question: could earlier joints' torque readings, taken with the same sensor, have been affected too?" },
+                options: [
+                  {
+                    id: "confirm_without_reviewing_earlier",
+                    label: { en: "Confirm this joint's connection now that the cause is understood, and proceed without revisiting the earlier joints' readings." },
+                    consequence: { en: "The current joint is genuinely fine, but any earlier joint whose reading was also affected by the same drift goes unchecked." },
+                    feedback: { en: "Understanding the cause for this joint doesn't automatically clear every other reading taken by the same sensor — that implication is worth following through on, not left unexamined." },
+                  },
+                  {
+                    id: "confirm_and_review_earlier_readings",
+                    label: { en: "Confirm this joint's connection, and separately review the earlier joints' torque readings from the same sensor to confirm they're still valid despite the calibration issue." },
+                    isRecommended: true,
+                    consequence: { en: "The review confirms the earlier readings were taken before the drift began and remain valid, closing out the concern with genuine confirmation rather than an assumption." },
+                    feedback: { en: "Correct — a cause identified for one reading raises a real question about every other reading from the same source, and that question deserves its own answer." },
+                  },
+                  {
+                    id: "distrust_all_joints",
+                    label: { en: "Distrust all joints entirely and require a full re-verification of the entire riser string using different equipment." },
+                    consequence: { en: "The entire string is re-verified from scratch, at significant cost and delay, when the actual cause was narrow and specific." },
+                    feedback: { en: "A specific, understood cause calls for a proportionate check of what it could have affected — not a wholesale distrust of everything already verified." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "reject_outright_no_diagnosis",
+              label: { en: "Reject the connection outright and require a full re-do of the joint from scratch, without further diagnosis." },
+              consequence: { en: "The joint is unnecessarily redone, costing significant time, before ever finding out the actual cause was a sensor issue that didn't require redoing anything." },
+              feedback: { en: "Rejecting outright, before diagnosing, trades a potentially unnecessary full redo for a much smaller, targeted check that might have resolved it directly." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Completed isn't confirmed — require genuine verification, not appearance" },
+        bestPractices: [
+          { en: "Complete the full verification check on a connection before proceeding, treating \"appears seated\" and \"confirmed\" as genuinely different things." },
+        ],
+        commonErrors: [
+          { en: "Proceeding to the next step because a connection appears fine, without completing the actual verification." },
+        ],
+      },
+      {
+        theme: { en: "Schedule pressure doesn't change what makes an active hazard area hazardous" },
+        bestPractices: [
+          { en: "Keep an active hazard area (like the moonpool) clear and monitored for its full duration, regardless of schedule pressure." },
+        ],
+        commonErrors: [
+          { en: "Allowing early access to a hazard area to keep pace with a schedule." },
+        ],
+      },
+      {
+        theme: { en: "A genuine handoff means the task is actually covered — proximity alone doesn't" },
+        bestPractices: [
+          { en: "Explicitly hand off a monitoring responsibility, confirming the other person knowingly holds it, before stepping away." },
+        ],
+        commonErrors: [
+          { en: "Assuming someone nearby provides coverage without an explicit handoff." },
+        ],
+      },
+      {
+        theme: { en: "A specific cause raises a specific question about everything else it could have affected" },
+        bestPractices: [
+          { en: "When a cause is identified for one reading or finding, check whether it could have affected other related readings or findings, rather than treating only the immediate case as resolved." },
+        ],
+        commonErrors: [
+          { en: "Confirming the immediate case and not following through on what else the same cause might have touched." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
