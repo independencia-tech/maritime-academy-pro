@@ -34,11 +34,24 @@
 // and Step 3's already-validated decisions (any level counts, all vessel
 // types, full objects) — nothing new to decide for this step.
 //
+// Step 5 (2026-08-30), scoped and validated before writing any code — adds
+// rank + vessel-type narrowing for Specialized Operations, bringing the
+// "dream ship" dimension of User Profile / Status Data into the algorithm
+// for the first time (Steps 1-4 only ever used rank). Additive: sits
+// alongside getSpecializedOperationsByRank()/...ForTrajectory(), which stay
+// untouched. Single-rank only, no trajectory variant yet — same discipline
+// as Step 3 shipping rank-only before Step 4 added trajectory. Exact
+// vesselTypeId match only, no category fallback if the result is empty —
+// user-validated; "what to show when there's nothing" stays a presentation
+// concern for a future UI-wiring step, not something this function papers
+// over.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
 import { RANK_REGISTRY, getRankMeta, type RankId } from "./rankRegistry";
 import { LESSON_REGISTRY, type LessonRegistryItem, type LessonId } from "./lessonRegistry";
+import type { VesselTypeId } from "./vesselTypeRegistry";
 import {
   SPECIALIZED_OPERATION_REGISTRY,
   type SpecializedOperation,
@@ -157,4 +170,26 @@ export function getSpecializedOperationsForTrajectory(
   }
 
   return result;
+}
+
+/**
+ * Returns Specialized Operations relevant to both a rank and a specific
+ * vessel type — narrower than getSpecializedOperationsByRank().
+ *
+ * User-validated decisions for this step:
+ * - Exact vesselTypeId match only. No fallback to other vessel types in the
+ *   same category if the result is empty — that stays a presentation-layer
+ *   concern for a later step, not something this function decides.
+ * - Additive: getSpecializedOperationsByRank() and
+ *   getSpecializedOperationsForTrajectory() are unchanged and still return
+ *   all vessel types.
+ * - Single-rank only, no trajectory variant in this step.
+ */
+export function getSpecializedOperationsByRankAndVesselType(
+  rankId: RankId,
+  vesselTypeId: VesselTypeId
+): SpecializedOperation[] {
+  return getSpecializedOperationsByRank(rankId).filter(
+    (op) => op.vesselTypeId === vesselTypeId
+  );
 }
