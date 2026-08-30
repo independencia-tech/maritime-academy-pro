@@ -15,7 +15,7 @@ import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
 import { VESSEL_TYPE_REGISTRY, type VesselTypeId } from "@/core/vesselTypeRegistry";
 import { SHIPS_LIBRARY_INDEX } from "@/core/shipsLibraryIndex";
-import { getRanksByDepartment } from "@/core/rankRegistry";
+import { getRanksByDepartment, getRankMeta } from "@/core/rankRegistry";
 import { getSpecializedOperationsByVesselType } from "@/core/specializedOperationRegistry";
 import type { SupportedLanguage } from "@/core/roleOnBoardRegistry";
 const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
@@ -1110,10 +1110,41 @@ function AdminPage({ setPage }) {
 
 // ── MODULES LIST & SHIPS PAGES ─────────────────────────────────
 const NAV_T:any = {
-  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine", specializedOps:"Opérations Spécialisées" },
-  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine", specializedOps:"Specialized Operations" },
-  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas", specializedOps:"Operaciones Especializadas" },
-  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas", specializedOps:"Operações Especializadas" },
+  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine", specializedOps:"Opérations Spécialisées", examCenter:"Centre d'Examens" },
+  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine", specializedOps:"Specialized Operations", examCenter:"Exam Center" },
+  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas", specializedOps:"Operaciones Especializadas", examCenter:"Centro de Exámenes" },
+  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas", specializedOps:"Operações Especializadas", examCenter:"Centro de Exames" },
+};
+
+// Exam Center — visual shell only (no functional logic, no data). See
+// project_exams_system_architecture.md memory: 4 category placeholders per
+// rank, each showing a "coming soon" state until Core Algorithm + real
+// content are wired in a later phase.
+const EXAM_CATEGORY_T:any = {
+  fr:{
+    foundation:"Épreuves fondamentales", specialty:"Épreuves de spécialités",
+    practical:"Épreuves techniques et pratiques", remedial:"Épreuves de rattrapage",
+    comingSoon:"Bientôt disponible",
+    hint:"Choisis un rang pour voir ses 4 catégories d'épreuves",
+  },
+  en:{
+    foundation:"Foundation Exams", specialty:"Specialty Exams",
+    practical:"Technical & Practical Exams", remedial:"Remedial Exams",
+    comingSoon:"Coming soon",
+    hint:"Pick a rank to see its 4 exam categories",
+  },
+  es:{
+    foundation:"Exámenes Fundamentales", specialty:"Exámenes de Especialidad",
+    practical:"Exámenes Técnicos y Prácticos", remedial:"Exámenes de Recuperación",
+    comingSoon:"Próximamente",
+    hint:"Elige un rango para ver sus 4 categorías de exámenes",
+  },
+  pt:{
+    foundation:"Exames Fundamentais", specialty:"Exames de Especialidade",
+    practical:"Exames Técnicos e Práticos", remedial:"Exames de Recuperação",
+    comingSoon:"Em breve",
+    hint:"Escolhe um posto para ver as suas 4 categorias de exames",
+  },
 };
 
 // Vessel category display order + labels for ShipsPage grouping.
@@ -1276,6 +1307,82 @@ function RoleOnBoardPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={t.roleOnBoard} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:18}}>
+        <div>
+          <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:8,textTransform:"uppercase"}}>{t.deckDept}</div>
+          <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            {deckRanks.map(renderRankButton)}
+          </div>
+        </div>
+        <div>
+          <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:8,textTransform:"uppercase"}}>{t.engineDept}</div>
+          <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            {engineRanks.map(renderRankButton)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Exam Center — visual shell only. Structure and navigation, no functional
+// logic, no real data: lists ranks (rankRegistry.ts), and per rank shows the
+// 4 exam categories as placeholders. Not connected to lessonRegistry.ts,
+// specializedOperationRegistry.ts, or any scenario engine — that wiring
+// depends on the Core Algorithm chantier (see memory: project_exams_system_architecture.md).
+function ExamCenterPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
+  const t = NAV_T[lang] || NAV_T.fr;
+  const ct = EXAM_CATEGORY_T[lang] || EXAM_CATEGORY_T.fr;
+  const [selected, setSelected] = useState<string | null>(null);
+  const deckRanks = getRanksByDepartment("deck");
+  const engineRanks = getRanksByDepartment("engine");
+
+  useEffect(() => { window.scrollTo(0, 0); }, [selected]);
+
+  const categories = ["foundation", "specialty", "practical", "remedial"] as const;
+
+  if (selected) {
+    const rankMeta = getRankMeta(selected as any);
+    const rankLabel = rankMeta?.label?.[lang] || rankMeta?.label?.fr || selected;
+    return (
+      <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+        <TopBar onBack={() => setSelected(null)} title={rankLabel} backLabel={t.back}/>
+        <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:10}}>
+          {categories.map((cat) => (
+            <div key={cat} style={{
+              position:"relative",display:"flex",alignItems:"center",gap:12,padding:"16px",
+              background:"rgba(13,31,60,0.6)",border:"1px dashed rgba(77,166,255,0.27)",
+              borderRadius:16,
+            }}>
+              <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.1)",border:"1px solid rgba(77,166,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0,opacity:0.6}}>📝</div>
+              <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700,color:"rgba(240,244,255,0.7)"}}>{ct[cat]}</div>
+              <div style={{
+                fontSize:9,padding:"2px 7px",borderRadius:10,flexShrink:0,
+                background:"rgba(201,146,42,0.15)",border:"1px solid rgba(201,146,42,0.33)",
+                color:"#c9922a",letterSpacing:1,fontFamily:"'Cinzel',serif",
+              }}>{ct.comingSoon}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const renderRankButton = (r:any) => (
+    <button key={r.id} onClick={()=>setSelected(r.id)} style={{
+      display:"flex",alignItems:"center",gap:12,padding:"14px",
+      background:"rgba(13,31,60,0.8)",border:"1px solid rgba(77,166,255,0.27)",
+      borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
+    }}>
+      <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.15)",border:"1px solid rgba(77,166,255,0.27)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>📝</div>
+      <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{r.label?.[lang] || r.label?.fr}</div>
+    </button>
+  );
+
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={t.examCenter} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:18}}>
+        <div style={{fontSize:12,color:"rgba(240,244,255,0.5)",lineHeight:1.5}}>{ct.hint}</div>
         <div>
           <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:8,textTransform:"uppercase"}}>{t.deckDept}</div>
           <div style={{display:"flex",flexDirection:"column",gap:10}}>
@@ -2512,7 +2619,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
         setPage("seemp_lessons");
         return;
       }
-      if (["modules","ships","nav_lessons","engine_lessons","marpol_lessons","seemp_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","shipcareer_lessons","admin","admin-login"].includes(cur)) {
+      if (["modules","ships","exams","nav_lessons","engine_lessons","marpol_lessons","seemp_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","shipcareer_lessons","admin","admin-login"].includes(cur)) {
         try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
         setPage("dashboard");
         return;
@@ -2738,6 +2845,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
             onNavHome={() => setPage("dashboard")}
             onNavModules={() => setPage("modules")}
             onNavShips={() => setPage("ships")}
+            onNavExams={() => setPage("exams")}
             onNavProfile={() => setPage("status")}
             onAdmin={() => setPage("admin-login")}
             onChangeLanguage={handleChangeLanguage}
@@ -2786,6 +2894,9 @@ else if (m?.id === "e7") setPage("e7_lessons");
       )}
       {page === "ships" && (
         <ShipsPage lang={lang} onBack={() => setPage("dashboard")}/>
+      )}
+      {page === "exams" && (
+        <ExamCenterPage lang={lang} onBack={() => setPage("dashboard")}/>
       )}
       {page === "role_on_board" && (
         <RoleOnBoardPage lang={lang} onBack={() => setPage("dashboard")}/>
