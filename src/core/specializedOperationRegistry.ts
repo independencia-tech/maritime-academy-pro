@@ -18350,6 +18350,1006 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  cable_layer_route_lay_down: {
+    operationId: "cable_layer_route_lay_down",
+    vesselTypeId: "cable_layer",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Cable Layer — Cable Route Lay-Down" },
+    introduction: {
+      en: "A cable layer proceeds along a pre-planned route, paying out submarine cable in a continuous, tensioned process as it goes — a fundamentally different task from a single-point deployment: the vessel is underway the entire time, following the route precisely while the cable engine controls payout rate and tension to match the seabed profile below. It's routine in the sense that this is the vessel's core, repeated function, but the margin for error is real — cable laid under the wrong tension, or allowed to drift off the planned route, can mean an unusable or badly-placed asset that's extremely costly to correct once the vessel has moved on. This operation covers the full lay sequence: route/course-following, controlled payout, touchdown point monitoring — tracking where the cable actually meets the seabed — and burial coordination where the route calls for it.",
+    },
+    objectives: [
+      { en: "Describe the sequence of route/course-following, controlled cable payout, touchdown point monitoring, and burial coordination." },
+      { en: "Explain why touchdown point tracking matters and what a genuine route or tension deviation looks like versus normal, expected variation." },
+      { en: "Identify how Master and Chief Engineer jointly lead this operation — one on route/DP command, the other on the cable engine and tensioning system that is the operation's actual mechanism." },
+      { en: "Identify who does what during a continuous, underway lay operation, as distinct from a station-keeping deployment." },
+      { en: "Recognize correct versus incorrect judgment calls when touchdown point or tension readings are ambiguous or drift from the plan." },
+    ],
+    context: {
+      en: "Genuinely new terrain — no reskin risk against Research Vessel (single-point vertical CTD/rosette deployment, science-directed) or Heavy Lift/AHTS (rigging/towing, not continuous cable payout). Roster: 5-rank roster, with Chief Engineer at lead alongside Master, continuing the established pattern (Jackup's ballast/jacking, Drillship's riser tensioner) since the cable engine/tensioning system genuinely is this operation's core mechanism. The specialist Cable Engineer role folds into Chief Engineer rather than becoming a new RankId. No new CommunicationParty — this operation stays entirely marine-crew-led against a pre-planned route.",
+    },
+
+    operationPhaseOrder: [
+      "route_course_setup_confirmation",
+      "cable_payout_commencement",
+      ["continuous_route_course_monitoring", "cable_tension_payout_monitoring", "touchdown_point_tracking"],
+      "burial_coordination",
+      "route_deviation_assessment",
+      "lay_completion_final_verification",
+    ],
+    operationPhases: {
+      route_course_setup_confirmation: {
+        id: "route_course_setup_confirmation",
+        title: { en: "Route & Course Setup Confirmation" },
+        overview: { en: "Confirm the loaded route against the actual survey/plan, not just that a route file is present." },
+        steps: [
+          { en: "Master and Chief Officer confirm the planned route is loaded and the initial course is set before commencing the lay." },
+        ],
+        bestPractices: [
+          { en: "Confirm the loaded route against the actual survey/plan, not just that a route file is present." },
+        ],
+      },
+      cable_payout_commencement: {
+        id: "cable_payout_commencement",
+        title: { en: "Cable Payout Commencement" },
+        overview: { en: "Confirm the splice/connection is sound before committing to payout." },
+        steps: [
+          { en: "Chief Engineer commences cable engine payout at the planned rate, with the cable end properly secured or spliced before release." },
+        ],
+        bestPractices: [
+          { en: "Confirm the splice/connection is sound before committing to payout, not after cable is already running out." },
+        ],
+      },
+      continuous_route_course_monitoring: {
+        id: "continuous_route_course_monitoring",
+        title: { en: "Continuous Route & Course Monitoring" },
+        overview: { en: "Any course deviation is worth investigating immediately, since it compounds the longer it continues underway." },
+        steps: [
+          { en: "Vessel's course tracked continuously against the planned route throughout the lay." },
+        ],
+        bestPractices: [
+          { en: "Treat any course deviation as worth investigating immediately, since it compounds the longer it continues underway." },
+        ],
+      },
+      cable_tension_payout_monitoring: {
+        id: "cable_tension_payout_monitoring",
+        title: { en: "Cable Tension & Payout Monitoring" },
+        overview: { en: "Adjust payout to match the actual seabed profile, not hold a fixed rate regardless of what's beneath the vessel." },
+        steps: [
+          { en: "Cable tension and payout rate monitored continuously against the planned values for the current seabed profile." },
+        ],
+        bestPractices: [
+          { en: "Adjust payout to match the actual seabed profile, not hold a fixed rate regardless of what's beneath the vessel." },
+        ],
+      },
+      touchdown_point_tracking: {
+        id: "touchdown_point_tracking",
+        title: { en: "Touchdown Point Tracking" },
+        overview: { en: "Touchdown point is what actually matters, not just the payout numbers alone — the two can drift apart." },
+        steps: [
+          { en: "The point where the cable actually meets the seabed tracked and compared against the planned touchdown position." },
+        ],
+        bestPractices: [
+          { en: "Treat touchdown point as the thing that actually matters, not just the payout numbers alone — the two can drift apart." },
+        ],
+      },
+      burial_coordination: {
+        id: "burial_coordination",
+        title: { en: "Burial Coordination" },
+        overview: { en: "Confirm burial equipment status before the vessel reaches a burial-required section, not after." },
+        steps: [
+          { en: "Where the route calls for burial, burial equipment (plow or ROV) coordinated with the lay process itself." },
+        ],
+        bestPractices: [
+          { en: "Confirm burial equipment status before the vessel reaches a burial-required section, not after." },
+        ],
+      },
+      route_deviation_assessment: {
+        id: "route_deviation_assessment",
+        title: { en: "Route/Tension Deviation Assessment" },
+        overview: { en: "Base the correction decision on the actual assessment, not a default toward continuing because stopping is costly." },
+        steps: [
+          { en: "Any flagged course, tension, or touchdown deviation assessed to determine whether correction is needed before continuing." },
+        ],
+        bestPractices: [
+          { en: "Base the correction decision on the actual assessment, not a default toward continuing because stopping is costly." },
+        ],
+      },
+      lay_completion_final_verification: {
+        id: "lay_completion_final_verification",
+        title: { en: "Lay Completion & Final Verification" },
+        overview: { en: "Final verification is a genuine confirmation step, not a formality once the vessel reaches the end point." },
+        steps: [
+          { en: "Cable laid to the planned end point; final tension, position, and touchdown data verified and the cable secured." },
+        ],
+        bestPractices: [
+          { en: "Treat final verification as a genuine confirmation step, not a formality once the vessel reaches the end point." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "route_load_confirmation",
+        phaseId: "route_course_setup_confirmation",
+        from: "deck", to: "bridge",
+        trigger: { en: "Route loaded, course set." },
+        content: { en: "Chief Officer confirms the planned route is loaded and course is set to the Master." },
+        whyItMatters: { en: "Committing to payout on an unconfirmed route risks laying cable against the wrong plan from the very first meter." },
+      },
+      {
+        id: "payout_commenced_report",
+        phaseId: "cable_payout_commencement",
+        from: "engine", to: "bridge",
+        trigger: { en: "Cable payout begins." },
+        content: { en: "Chief Engineer reports cable payout commenced, with the splice/connection confirmed secure beforehand." },
+        whyItMatters: { en: "The Master needs to know the lay has genuinely started, and that the connection was checked before release, not after cable is already running." },
+      },
+      {
+        id: "course_status_report",
+        phaseId: "continuous_route_course_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing course monitoring." },
+        content: { en: "Course status reported continuously to the Master against the planned route." },
+        whyItMatters: { en: "A course deviation compounds the longer it runs underway — the Master needs this as an ongoing stream, not a periodic check." },
+      },
+      {
+        id: "tension_payout_status_report",
+        phaseId: "cable_tension_payout_monitoring",
+        from: "engine", to: "bridge",
+        trigger: { en: "Ongoing tension/payout monitoring." },
+        content: { en: "Chief Engineer reports cable tension and payout rate status continuously to the Master." },
+        whyItMatters: { en: "Tension mismatched to the seabed profile is exactly the kind of issue that's cheap to correct in the moment and costly to fix afterward." },
+      },
+      {
+        id: "touchdown_point_report",
+        phaseId: "touchdown_point_tracking",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing touchdown point tracking." },
+        content: { en: "Chief Officer reports the tracked touchdown point against the planned position." },
+        whyItMatters: { en: "Touchdown point, not payout numbers alone, is what actually determines whether the cable ends up where it's supposed to be." },
+      },
+      {
+        id: "burial_equipment_status_report",
+        phaseId: "burial_coordination",
+        from: "engine", to: "bridge",
+        trigger: { en: "Vessel approaching a burial-required section." },
+        content: { en: "Chief Engineer reports burial equipment status and coordination as the vessel approaches a burial-required section." },
+        whyItMatters: { en: "The Master needs burial readiness confirmed before the vessel reaches that section, not discovered as a gap once already there." },
+      },
+      {
+        id: "deviation_flag_alert",
+        phaseId: "route_deviation_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Course, tension, or touchdown deviation flagged." },
+        content: { en: "A distinct, immediate alert raised the moment a course, tension, or touchdown deviation is flagged, separate from the routine status reports." },
+        whyItMatters: { en: "A genuine deviation deserves its own signal, not folding into the next routine update." },
+      },
+      {
+        id: "lay_completion_confirmation",
+        phaseId: "lay_completion_final_verification",
+        from: "engine", to: "bridge",
+        trigger: { en: "Route end point reached." },
+        content: { en: "Chief Engineer confirms final tension, position, and touchdown data verified at the route's end point." },
+        whyItMatters: { en: "This is the Master's final gate before the cable is considered properly laid and the vessel moves on." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the operation overall: confirms route/course setup, oversees the continuous lay, and makes the correction decision on any assessed deviation." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads course monitoring and touchdown point tracking — the operation's data-verification role, watching the vessel's actual position against the planned route and the cable's actual seabed contact point throughout." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team supporting cable-handling and burial equipment logistics on deck." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes cable-handling and equipment support tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Leads the cable engine and tensioning system: commences and controls payout, monitors tension against the seabed profile, coordinates burial equipment, and confirms final lay verification — the operation's technical mechanism lead, alongside Master." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Confirms route/course setup; oversees the continuous lay; makes the correction decision on any assessed deviation." },
+        ],
+        iMonitor: [
+          { en: "Course, tension/payout, touchdown point, and burial status throughout." },
+        ],
+        iReport: [
+          { en: "Confirms lay completion once final verification is reported." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize continuing past a flagged deviation before it's genuinely assessed." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Confirms route/course setup; leads course monitoring and touchdown point tracking." },
+        ],
+        iMonitor: [
+          { en: "Course against the planned route and touchdown point against the planned position throughout." },
+        ],
+        iReport: [
+          { en: "Reports course status and touchdown point continuously to the Master; flags any deviation." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not treat a course or touchdown deviation as routine without flagging it distinctly." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads deck team support for cable-handling and burial equipment logistics." },
+        ],
+        iMonitor: [
+          { en: "Deck-side cable-handling and equipment conditions." },
+        ],
+        iReport: [
+          { en: "Reports deck-side hazards or issues to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent cable-handling decisions." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes cable-handling and equipment support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate task conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent handling decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Commences and controls cable payout; monitors tension against the seabed profile; coordinates burial equipment; confirms final lay verification." },
+        ],
+        iMonitor: [
+          { en: "Tension, payout rate, and burial equipment status throughout." },
+        ],
+        iReport: [
+          { en: "Reports payout commencement, tension/payout status, burial equipment status, and final verification to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not commence payout before the splice/connection is confirmed secure." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "cable_layer_route_lay_phase_sequence",
+        targetRanks: ["master", "chief_engineer", "chief_officer"],
+        prompt: { en: "Put the cable route lay-down operation's phases in the correct order." },
+        items: [
+          { id: "route_setup", label: { en: "Route & Course Setup Confirmation" } },
+          { id: "payout_start", label: { en: "Cable Payout Commencement" } },
+          { id: "course_monitor", label: { en: "Continuous Route & Course Monitoring" } },
+          { id: "tension_monitor", label: { en: "Cable Tension & Payout Monitoring" } },
+          { id: "touchdown_track", label: { en: "Touchdown Point Tracking" } },
+          { id: "burial", label: { en: "Burial Coordination" } },
+          { id: "deviation_assess", label: { en: "Route/Tension Deviation Assessment" } },
+          { id: "completion", label: { en: "Lay Completion & Final Verification" } },
+        ],
+        correctOrder: ["route_setup", "payout_start", ["course_monitor", "tension_monitor", "touchdown_track"], "burial", "deviation_assess", "completion"],
+      },
+      {
+        type: "error_identification",
+        id: "cable_layer_payout_vs_touchdown_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "Payout rate matches the plan exactly, but touchdown point tracking shows the cable landing slightly off the planned position. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Trust the payout numbers since they match the plan, and don't flag the touchdown position discrepancy." }, isError: true, explanation: { en: "Payout matching the plan doesn't mean the cable is landing where it should — the two can diverge, and this is exactly the case this operation's monitoring discipline exists to catch." } },
+          { id: "b", label: { en: "Flag the touchdown position discrepancy even though payout numbers look correct." }, isError: false, explanation: { en: "Correct — touchdown point is what actually matters, independent of whether payout numbers look fine." } },
+          { id: "c", label: { en: "Report both the payout status and touchdown position independently, since they can diverge." }, isError: false, explanation: { en: "Correct — treating them as two separate data streams is exactly right." } },
+          { id: "d", label: { en: "Investigate why touchdown position differs despite correct payout." }, isError: false, explanation: { en: "Correct — a genuine discrepancy deserves investigation, not dismissal because one related number looks fine." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "cable_layer_pre_burial_section_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The vessel is approaching a section of the route requiring burial. Before entering that section, review which conditions are actually satisfied." },
+        items: [
+          { id: "course_confirmed", label: { en: "Course confirmed on the planned route approaching the burial section." }, isSatisfied: true },
+          { id: "burial_equipment_ready", label: { en: "Burial equipment status confirmed ready." }, isSatisfied: true },
+          { id: "touchdown_within_tolerance", label: { en: "Touchdown point confirmed within tolerance approaching the section." }, isSatisfied: false },
+          { id: "prior_deviation_resolved", label: { en: "Any prior flagged deviation resolved before entering the burial section." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Preparing burial equipment ahead of a burial-required section, you notice a component that looks slightly worn but still appears functional." },
+        mission: { en: "As Bosun, decide how to handle it." },
+        expectedActions: [
+          { en: "Flag the worn component for inspection before the vessel reaches the burial section, rather than assuming it'll hold up because it still appears to work." },
+        ],
+        why: [
+          { en: "\"Still appears functional\" and \"confirmed reliable for the task ahead\" are different things — discovering a failure once burial is underway is far more costly than addressing it now." },
+        ],
+        commonMistakes: [
+          { en: "Assuming a component that still looks functional doesn't need attention." },
+        ],
+        safetyPoints: [
+          { en: "Catching a marginal component before it's needed is exactly what pre-section readiness checks are for." },
+        ],
+      },
+      {
+        situation: { en: "Assisting with cable-handling on deck, you notice the cable moving slightly differently than usual as it pays out — not obviously wrong, just different from what you're used to seeing." },
+        mission: { en: "As AB, decide how to respond." },
+        expectedActions: [
+          { en: "Report the observation to the Bosun or Chief Officer, even though you can't say exactly what's wrong, rather than staying quiet because it's not clearly a problem." },
+        ],
+        why: [
+          { en: "A crew member's direct observation of something \"not quite normal\" is valuable information, even without a technical diagnosis attached to it." },
+        ],
+        commonMistakes: [
+          { en: "Staying silent about an unusual observation because it can't be clearly identified as a fault." },
+        ],
+        safetyPoints: [
+          { en: "An early, imprecise report is more useful than a late, precise one after the issue has developed further." },
+        ],
+      },
+      {
+        situation: { en: "Tension readings are within the planned range, but you notice they've been trending steadily toward the edge of that range as the seabed profile changes ahead." },
+        mission: { en: "As Chief Engineer, decide how to respond." },
+        expectedActions: [
+          { en: "Adjust payout proactively to anticipate the changing seabed profile, rather than waiting until the tension actually exceeds the planned range to react." },
+        ],
+        why: [
+          { en: "Reacting only once the range is exceeded means the vessel has already laid cable under a tension the plan didn't intend, however briefly — anticipating the change avoids that gap entirely." },
+        ],
+        commonMistakes: [
+          { en: "Waiting for tension to exceed the planned range before adjusting, rather than adjusting proactively as the trend develops." },
+        ],
+        safetyPoints: [
+          { en: "The plan accounts for the seabed profile changing — using that information proactively is the intended way to stay within range, not a reactive fallback." },
+        ],
+      },
+      {
+        situation: { en: "A flagged touchdown point deviation is assessed and found to be small — within a range that's arguably still acceptable, though outside the originally planned tolerance." },
+        mission: { en: "As Master, decide how to weigh this." },
+        expectedActions: [
+          { en: "Treat the deviation as needing an explicit decision — accept it with reasoning, or correct it — rather than letting it pass unaddressed because it's small." },
+        ],
+        why: [
+          { en: "A deviation outside planned tolerance deserves a genuine decision either way, even if that decision turns out to be \"accept it\" — letting it pass silently sets a precedent that erodes the tolerance itself." },
+        ],
+        commonMistakes: [
+          { en: "Letting a small, technically-outside-tolerance deviation pass without an explicit decision, simply because it's not dramatic." },
+        ],
+        safetyPoints: [
+          { en: "An explicit, reasoned \"accept\" is different from an unaddressed pass — the first is a decision, the second is a gap in the process." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "cable_layer_uncharted_obstruction_judgment",
+        title: { en: "An Obstacle Not on the Chart" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "During the lay, sonar/ROV detects an unexpected seabed obstruction ahead on the planned route — not present on the original route survey." },
+          options: [
+            {
+              id: "continue_planned_route",
+              label: { en: "Continue on the planned route and lay directly over the area, since the route was pre-approved and stopping is costly." },
+              consequence: { en: "The cable is laid over an obstruction the original survey never accounted for, risking damage or an unstable final position." },
+              feedback: { en: "A route being pre-approved reflects the information available when it was planned — it doesn't override new physical information discovered since." },
+            },
+            {
+              id: "halt_assess_obstruction",
+              label: { en: "Halt payout and pause to assess the obstruction and determine a safe course before continuing." },
+              isRecommended: true,
+              consequence: { en: "The assessment finds the obstruction is real, and a minor course adjustment would clear it safely — but that adjustment would fall outside the originally surveyed/permitted route corridor." },
+              feedback: { en: "Correct — a genuine physical finding deserves a genuine pause to assess, rather than either pushing through or reacting unilaterally." },
+              next: {
+                id: "corridor_adjustment_needed",
+                situation: { en: "The assessment confirms a minor course adjustment would safely clear the obstruction — but that adjustment falls outside the originally surveyed and permitted route corridor." },
+                options: [
+                  {
+                    id: "adjust_immediately_report_after",
+                    label: { en: "Make the course adjustment immediately since it's clearly the practical solution, and report it after the fact." },
+                    consequence: { en: "The cable ends up laid outside the permitted corridor without prior approval, creating a genuine regulatory and ownership problem even though the physical routing was sound." },
+                    feedback: { en: "Being practically correct about the routing doesn't cover the separate question of permitted-corridor approval — that still needs to happen before acting, not after." },
+                  },
+                  {
+                    id: "report_await_approval",
+                    label: { en: "Report the situation and proposed adjustment to the Master/company for approval, holding position and pausing payout while awaiting confirmation." },
+                    isRecommended: true,
+                    consequence: { en: "Approval is obtained for the adjusted routing, and the lay resumes on a course that's both physically safe and properly authorized." },
+                    feedback: { en: "Correct — a route deviation carries stakes beyond the immediate physical hazard, and getting it authorized protects against a problem that wouldn't show up until much later." },
+                  },
+                  {
+                    id: "refuse_deviate_lay_over_obstruction",
+                    label: { en: "Refuse to deviate at all and lay directly over the obstruction as originally planned, accepting the risk to avoid the permitting question." },
+                    consequence: { en: "The cable is laid over a known hazard specifically to avoid a coordination step, trading a real physical risk for an administrative inconvenience." },
+                    feedback: { en: "Avoiding the permitting conversation isn't worth accepting a known, avoidable physical risk to the cable." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "independent_adjustment_no_coordination",
+              label: { en: "Make an immediate, independent course adjustment yourself to route around the obstruction, without stopping payout or informing the Master first." },
+              consequence: { en: "The vessel deviates from the approved route corridor without coordination, creating a placement the company and permitting authority never approved, even though it avoided the physical obstruction." },
+              feedback: { en: "Avoiding a real hazard doesn't justify acting alone on a decision with regulatory and ownership implications — this is exactly the kind of deviation that needs coordination, not independent action." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Payout numbers and touchdown position are separate data streams — both matter independently" },
+        bestPractices: [
+          { en: "Track and report touchdown position independently of payout/tension numbers, since correct numbers don't guarantee correct placement." },
+        ],
+        commonErrors: [
+          { en: "Trusting payout/tension numbers as sufficient confirmation without checking touchdown position separately." },
+        ],
+      },
+      {
+        theme: { en: "An imprecise but genuine observation is worth reporting, even without a diagnosis" },
+        bestPractices: [
+          { en: "Report something that looks or behaves unusually, even without being able to identify exactly what's wrong." },
+        ],
+        commonErrors: [
+          { en: "Staying silent about an unusual observation because it can't be clearly labeled as a fault." },
+        ],
+      },
+      {
+        theme: { en: "Anticipate a known changing condition proactively, rather than reacting once a limit is exceeded" },
+        bestPractices: [
+          { en: "Adjust proactively as a known condition (like a changing seabed profile) develops, rather than waiting until a planned limit is actually exceeded." },
+        ],
+        commonErrors: [
+          { en: "Waiting for a value to exceed its planned range before adjusting, despite a clear anticipated trend." },
+        ],
+      },
+      {
+        theme: { en: "A route deviation carries stakes beyond the immediate physical fix — coordinate, don't act alone" },
+        bestPractices: [
+          { en: "Get proper approval for a route deviation before executing it, even when the physical solution is clear and stopping is costly." },
+        ],
+        commonErrors: [
+          { en: "Acting independently on a route deviation, or executing it before authorization, because the practical fix seems obvious." },
+        ],
+      },
+    ],
+  },
+
+  cable_layer_sudden_snag_tension_spike_emergency: {
+    operationId: "cable_layer_sudden_snag_tension_spike_emergency",
+    vesselTypeId: "cable_layer",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Cable Layer — Sudden Cable Snag & Tension Spike" },
+    introduction: {
+      en: "Mid-lay, the cable suddenly catches on an unexpected seabed obstruction — debris, a rock outcrop, or something the survey never flagged — and tension spikes sharply and fast. Left unaddressed, this can part the cable, damage the cable engine, or in a severe case pull the vessel off its course entirely. This directly interrupts and stress-tests op1's own infrastructure: the tension/payout monitoring built in op1 is exactly what has to catch this the instant it develops, and the cable engine that carefully controlled payout throughout op1 now has to react immediately to arrest a runaway tension spike before real damage occurs.",
+    },
+    objectives: [
+      { en: "Describe the sequence of recognizing, responding to, and stabilizing after a sudden cable snag and tension spike." },
+      { en: "Explain how op1's tension monitoring infrastructure is what surfaces this emergency, and why speed of response matters once it's real." },
+      { en: "Identify how the crew reacts to arrest the tension spike while monitoring cable condition and vessel course simultaneously." },
+      { en: "Identify who does what, including the cable-condition assessment and continue-versus-cut decision that follows stabilization." },
+      { en: "Recognize correct versus incorrect judgment calls under the time pressure a genuine tension spike creates." },
+    ],
+    context: {
+      en: "Directly interrupts and stress-tests op1's tension/payout monitoring infrastructure — a fast-developing mechanical emergency specific to the cable engine, distinct from anything else in the catalog. Roster carries forward unchanged (5 ranks). Chief Engineer stays at lead — mirroring the Jackup/Drillship precedent, since the emergency response (immediate tension release/arrest via the cable engine) is itself an escalation of the same mechanism Chief Engineer already led in op1. No new CommunicationParty needed.",
+    },
+
+    operationPhaseOrder: [
+      "tension_spike_recognition_alert",
+      ["emergency_tension_release_response", "vessel_course_stability_monitoring", "cable_condition_monitoring"],
+      "stabilization_confirmation",
+      "cable_damage_assessment",
+      "continue_or_cut_decision",
+      "notification_incident_reporting",
+    ],
+    operationPhases: {
+      tension_spike_recognition_alert: {
+        id: "tension_spike_recognition_alert",
+        title: { en: "Recognition & Alert" },
+        overview: { en: "Speed and sharpness of the spike, not just the absolute tension value, is the signal." },
+        steps: [
+          { en: "The sudden, sharp tension spike is recognized as a genuine snag, distinct from normal payout variation." },
+          { en: "Alert raised immediately." },
+        ],
+        bestPractices: [
+          { en: "Treat the speed and sharpness of the spike, not just the absolute tension value, as the signal." },
+        ],
+      },
+      emergency_tension_release_response: {
+        id: "emergency_tension_release_response",
+        title: { en: "Emergency Tension Release Response" },
+        overview: { en: "Act immediately on the recognized spike rather than waiting for a routine joint assessment." },
+        steps: [
+          { en: "Chief Engineer initiates emergency tension release/brake on the cable engine to arrest the spike before it parts the cable or damages the engine." },
+        ],
+        bestPractices: [
+          { en: "Act immediately on the recognized spike rather than waiting for the joint assessment op1's routine process would normally require first." },
+        ],
+      },
+      vessel_course_stability_monitoring: {
+        id: "vessel_course_stability_monitoring",
+        title: { en: "Vessel Course & Stability Monitoring" },
+        overview: { en: "Report course/stability changes continuously, not as a single reading, since the situation is actively developing." },
+        steps: [
+          { en: "Vessel course and stability monitored continuously, since a sudden snag can pull the vessel off course or affect its heading." },
+        ],
+        bestPractices: [
+          { en: "Report course/stability changes continuously, not as a single reading, since the situation is actively developing." },
+        ],
+      },
+      cable_condition_monitoring: {
+        id: "cable_condition_monitoring",
+        title: { en: "Cable Condition Monitoring" },
+        overview: { en: "Any visible or sensed irregularity in the cable is worth investigating before continuing." },
+        steps: [
+          { en: "Cable condition (visual and sensor-based) monitored for signs of damage during and immediately after the spike." },
+        ],
+        bestPractices: [
+          { en: "Treat any visible or sensed irregularity in the cable as worth investigating before continuing, not a detail to note and move past." },
+        ],
+      },
+      stabilization_confirmation: {
+        id: "stabilization_confirmation",
+        title: { en: "Stabilization Confirmation" },
+        overview: { en: "A sustained period of stable readings, not a single favorable reading." },
+        steps: [
+          { en: "Confirmation that tension has genuinely stabilized and the snag has cleared or been released." },
+        ],
+        bestPractices: [
+          { en: "Require a sustained period of stable readings before declaring the situation stabilized, not a single favorable reading." },
+        ],
+      },
+      cable_damage_assessment: {
+        id: "cable_damage_assessment",
+        title: { en: "Cable Damage Assessment" },
+        overview: { en: "A genuine prerequisite to the next decision, not a formality to complete quickly." },
+        steps: [
+          { en: "Cable condition at and around the snag point assessed to determine whether it's still viable to continue the lay from this point." },
+        ],
+        bestPractices: [
+          { en: "Treat this assessment as a genuine prerequisite to the next decision, not a formality to complete quickly." },
+        ],
+      },
+      continue_or_cut_decision: {
+        id: "continue_or_cut_decision",
+        title: { en: "Continue-or-Cut Decision" },
+        overview: { en: "Based on the actual assessment findings, not a default toward continuing because stopping is costly." },
+        steps: [
+          { en: "A decision is made on whether the lay can safely continue from this point or the cable must be cut and the affected section addressed later." },
+        ],
+        bestPractices: [
+          { en: "Base the decision on the actual assessment findings, not a default toward continuing because stopping is costly." },
+        ],
+      },
+      notification_incident_reporting: {
+        id: "notification_incident_reporting",
+        title: { en: "Notification & Incident Reporting" },
+        overview: { en: "Reported in full regardless of the eventual decision's outcome." },
+        steps: [
+          { en: "Company and relevant parties notified; incident reported in full." },
+        ],
+        bestPractices: [
+          { en: "Report the incident in full regardless of the eventual decision's outcome, not only if the lay is interrupted." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "snag_alert",
+        phaseId: "tension_spike_recognition_alert",
+        from: "engine", to: "bridge",
+        trigger: { en: "Sudden tension spike recognized." },
+        content: { en: "Chief Engineer, monitoring the cable engine, recognizes the sudden tension spike and alerts the Master immediately." },
+        whyItMatters: { en: "Every second before the alert is a second the emergency response hasn't started, in an event defined by how fast it develops." },
+      },
+      {
+        id: "tension_release_action_report",
+        phaseId: "emergency_tension_release_response",
+        from: "engine", to: "bridge",
+        trigger: { en: "Emergency tension release initiated." },
+        content: { en: "Chief Engineer reports emergency tension release has been initiated on the cable engine." },
+        whyItMatters: { en: "The Master needs to know the response is underway to coordinate the rest of the crew's monitoring effort." },
+      },
+      {
+        id: "course_stability_report",
+        phaseId: "vessel_course_stability_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing course/stability monitoring." },
+        content: { en: "Chief Officer reports vessel course and stability status continuously to the Master." },
+        whyItMatters: { en: "A snag pulling the vessel off course compounds the emergency — the Master needs this tracked in parallel, not discovered after the fact." },
+      },
+      {
+        id: "cable_condition_report",
+        phaseId: "cable_condition_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing cable condition monitoring." },
+        content: { en: "Chief Officer reports cable condition — visual and sensor-based — to the Master." },
+        whyItMatters: { en: "Any sign of damage at this stage directly informs how urgently the situation needs to be treated." },
+      },
+      {
+        id: "stabilization_confirmed_report",
+        phaseId: "stabilization_confirmation",
+        from: "engine", to: "bridge",
+        trigger: { en: "Sustained stable readings observed." },
+        content: { en: "Chief Engineer confirms tension has genuinely stabilized over a sustained period." },
+        whyItMatters: { en: "The next phase's assessment shouldn't begin on a situation that only looks stable for a moment." },
+      },
+      {
+        id: "damage_assessment_report",
+        phaseId: "cable_damage_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Cable damage assessment complete." },
+        content: { en: "Chief Officer reports findings from the cable damage assessment at and around the snag point." },
+        whyItMatters: { en: "The continue-or-cut decision depends entirely on this assessment being genuine and complete." },
+      },
+      {
+        id: "decision_communicated",
+        phaseId: "continue_or_cut_decision",
+        from: "bridge", to: "engine",
+        trigger: { en: "Continue-or-cut decision made." },
+        content: { en: "Master communicates the continue-or-cut decision clearly to the Chief Engineer and crew." },
+        whyItMatters: { en: "An ambiguous decision at this point risks a mixed response from a crew that just executed a genuine emergency procedure." },
+      },
+      {
+        id: "company_notification",
+        phaseId: "notification_incident_reporting",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Incident ready for reporting." },
+        content: { en: "Master notifies the company and relevant parties, reporting the full incident." },
+        whyItMatters: { en: "A cable emergency of this kind needs a full report regardless of outcome, not only if the lay is ultimately interrupted." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the overall emergency response: receives the alert, coordinates the crew's parallel monitoring effort, and makes the continue-or-cut decision from the damage assessment." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads vessel course/stability monitoring and cable condition monitoring throughout the emergency, and leads the cable damage assessment once stabilized — the operation's data-verification role, carried forward and escalated from op1." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Supports the deck-side monitoring effort and assists with the cable condition inspection." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes monitoring and assessment support tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Leads the emergency tension release response and confirms stabilization — the operation's technical mechanism lead, continuing directly from op1's cable engine/tensioning lead role since this emergency is an escalation of that same mechanism." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Coordinates the crew's parallel monitoring effort." },
+          { en: "Makes the continue-or-cut decision." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency development — tension release response, vessel course/stability, and cable condition together." },
+        ],
+        iReport: [
+          { en: "Notifies the company and relevant parties; reports the incident." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize resuming the lay before stabilization and damage assessment are both genuinely confirmed." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads vessel course/stability monitoring and cable condition monitoring; leads the cable damage assessment once stabilized." },
+        ],
+        iMonitor: [
+          { en: "Course/stability and cable condition throughout the emergency." },
+        ],
+        iReport: [
+          { en: "Reports course/stability and cable condition continuously to the Master; reports damage assessment findings." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not report the situation stabilized based on a single favorable reading." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Supports deck-side monitoring and the cable condition inspection." },
+        ],
+        iMonitor: [
+          { en: "Immediate deck-side conditions during the emergency." },
+        ],
+        iReport: [
+          { en: "Reports observations to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent assessment judgments outside assigned tasks." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes monitoring and assessment support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Assigned task conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent monitoring decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Leads the emergency tension release response; confirms stabilization." },
+        ],
+        iMonitor: [
+          { en: "Tension spike development, release effect, and stabilization trend throughout." },
+        ],
+        iReport: [
+          { en: "Reports tension release action and stabilization confirmation to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not declare stabilization confirmed without a sustained period of stable readings." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "cable_layer_snag_emergency_phase_sequence",
+        targetRanks: ["master", "chief_engineer", "chief_officer"],
+        prompt: { en: "Put the sudden cable snag and tension spike emergency response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Recognition & Alert" } },
+          { id: "release", label: { en: "Emergency Tension Release Response" } },
+          { id: "course_stability", label: { en: "Vessel Course & Stability Monitoring" } },
+          { id: "cable_condition", label: { en: "Cable Condition Monitoring" } },
+          { id: "stabilize", label: { en: "Stabilization Confirmation" } },
+          { id: "damage_assess", label: { en: "Cable Damage Assessment" } },
+          { id: "decision", label: { en: "Continue-or-Cut Decision" } },
+          { id: "notification", label: { en: "Notification & Incident Reporting" } },
+        ],
+        correctOrder: ["alert", ["release", "course_stability", "cable_condition"], "stabilize", "damage_assess", "decision", "notification"],
+      },
+      {
+        type: "error_identification",
+        id: "cable_layer_visual_only_soundness_call",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "Assessing cable condition after the tension spike, a visual inspection shows no obvious damage. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Report the cable as sound based on the visual inspection alone, without further checks." }, isError: true, explanation: { en: "\"No visible damage\" and \"confirmed sound\" are different things — a tension spike this severe can cause internal damage a visual check alone won't catch." } },
+          { id: "b", label: { en: "Continue the assessment with additional available checks (e.g., an electrical/optical continuity test) before concluding on the cable's condition." }, isError: false, explanation: { en: "Correct — this is exactly the discipline the assessment requires." } },
+          { id: "c", label: { en: "Report the visual inspection result accurately, but note the assessment is not yet complete." }, isError: false, explanation: { en: "Correct — an honest interim report is different from a premature conclusion." } },
+          { id: "d", label: { en: "Treat \"no visible damage\" and \"confirmed sound\" as two genuinely different things." }, isError: false, explanation: { en: "Correct — this distinction is exactly what the assessment discipline depends on." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "cable_layer_pre_continue_decision_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The tension spike has been arrested and the situation appears to have settled. Before making the continue-or-cut decision, review which conditions are actually satisfied." },
+        items: [
+          { id: "stabilization_sustained", label: { en: "Stabilization confirmed over a sustained period, not a single reading." }, isSatisfied: true },
+          { id: "damage_assessment_thorough", label: { en: "Cable damage assessment completed with more than a visual inspection alone." }, isSatisfied: true },
+          { id: "course_recovered", label: { en: "Vessel course/position confirmed recovered and stable." }, isSatisfied: false },
+          { id: "notification_sent", label: { en: "Company/relevant parties notification sent." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Assisting with the cable condition inspection after the spike, you notice something that could be a minor scuff mark, or could be early sign of sheath damage — you're not certain which." },
+        mission: { en: "As Bosun, decide how to report it." },
+        expectedActions: [
+          { en: "Report the finding as uncertain and flag it for closer inspection by whoever is qualified to assess it, rather than deciding yourself which it is." },
+        ],
+        why: [
+          { en: "The assessment step exists precisely to resolve exactly this kind of uncertainty — deciding it's \"probably nothing\" without genuine expertise defeats the purpose of having the assessment at all." },
+        ],
+        commonMistakes: [
+          { en: "Downplaying an uncertain finding because it looks minor at a glance." },
+        ],
+        safetyPoints: [
+          { en: "Flagging uncertainty accurately is more valuable than a confident guess in either direction." },
+        ],
+      },
+      {
+        situation: { en: "You're assigned to monitor vessel stability during the emergency, and the readings seem to be holding steady, but you're not entirely sure what a concerning trend would look like following a snag of this kind." },
+        mission: { en: "As AB, decide how to proceed." },
+        expectedActions: [
+          { en: "Continue reporting the raw readings faithfully and say directly that you're unsure how to interpret a trend, rather than assuming steady means safe." },
+        ],
+        why: [
+          { en: "Reporting honest uncertainty about interpretation is more useful to those making decisions than a confident but potentially wrong read of what the numbers mean." },
+        ],
+        commonMistakes: [
+          { en: "Assuming steady readings mean no concern without actually knowing the relevant threshold." },
+        ],
+        safetyPoints: [
+          { en: "Raw, honestly-reported data serves the Master and Chief Officer's judgment better than a well-intentioned but uninformed interpretation layered on top of it." },
+        ],
+      },
+      {
+        situation: { en: "The emergency tension release appears to have worked — tension has dropped sharply — but you haven't yet confirmed whether the cable engine itself sustained any damage from the spike before it was arrested." },
+        mission: { en: "As Chief Engineer, decide whether to report the emergency handled." },
+        expectedActions: [
+          { en: "Report the tension release as successful, but explicitly hold off on declaring the emergency fully handled until the cable engine itself has also been checked." },
+        ],
+        why: [
+          { en: "A successful tension release addresses one part of the emergency, but the engine that absorbed a sudden spike deserves its own check before being trusted for continued operation." },
+        ],
+        commonMistakes: [
+          { en: "Treating a successful tension release as equivalent to the whole system being confirmed fine." },
+        ],
+        safetyPoints: [
+          { en: "The mechanism that just handled a genuine emergency is exactly the one worth checking before relying on it again." },
+        ],
+      },
+      {
+        situation: { en: "The damage assessment finds the cable likely sound, but there's real pressure — schedule, cost — to resume the lay quickly rather than take the extra time for the additional checks the assessment discipline calls for." },
+        mission: { en: "As Master, decide how to weigh this pressure." },
+        expectedActions: [
+          { en: "Base the continue-or-cut decision on the assessment actually being complete, treating schedule/cost pressure as a real but separate factor that doesn't override what the assessment discipline requires." },
+        ],
+        why: [
+          { en: "A cable that turns out to be damaged after resuming the lay is a far more costly outcome than the modest delay a complete assessment costs now." },
+        ],
+        commonMistakes: [
+          { en: "Accepting an incomplete assessment as sufficient because of schedule or cost pressure." },
+        ],
+        safetyPoints: [
+          { en: "The assessment's value comes specifically from being complete — an assessment cut short to save time doesn't actually reduce the real risk, just the visible delay." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "cable_layer_ambiguous_course_shift_judgment",
+        title: { en: "Which Way Did We Actually Move?" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "During the emergency, vessel position/heading shows a shift — but it's ambiguous whether this is due to the snag itself pulling the vessel, or normal current/wind effects that happen to coincide with the emergency." },
+          options: [
+            {
+              id: "attribute_to_current_wind",
+              label: { en: "Attribute the shift to normal current/wind since that's a plausible explanation, and don't flag it as snag-related." },
+              consequence: { en: "If the shift actually is snag-related, the Master's picture of the emergency's severity is missing a real piece of information." },
+              feedback: { en: "A plausible alternative explanation isn't the same as a confirmed one — attributing the shift without actually establishing the cause risks leaving a real signal unflagged." },
+            },
+            {
+              id: "report_observed_no_attribution",
+              label: { en: "Report the shift as observed without attributing a cause, flagging it for the Master's situational picture regardless of the explanation." },
+              isRecommended: true,
+              consequence: { en: "The Master, now aware of the shift, requests further data — correlating it with the cable condition timeline shows the shift's timing lines up closely with the tension spike." },
+              feedback: { en: "Correct — reporting what's observed without prematurely assigning a cause keeps the Master's picture accurate and lets the actual cause be established properly." },
+              next: {
+                id: "timing_correlation_found",
+                situation: { en: "Correlating with the cable condition timeline shows the vessel shift's timing lines up closely with the tension spike, suggesting it likely is snag-related rather than coincidental." },
+                options: [
+                  {
+                    id: "declare_definitive_no_corroboration",
+                    label: { en: "Confidently declare it was definitely snag-related and finalize the report on that basis without further corroboration." },
+                    consequence: { en: "The report treats a strong timing correlation as definitive proof, when it's still a correlation rather than a confirmed causal link." },
+                    feedback: { en: "A close timing correlation is strong supporting evidence, not the same as confirmed causation — reporting it as certain overstates what's actually been established." },
+                  },
+                  {
+                    id: "report_calibrated_confidence",
+                    label: { en: "Report the timing correlation as strong supporting evidence while flagging it as the most likely explanation rather than definitively confirmed, and continue monitoring for any further shift." },
+                    isRecommended: true,
+                    consequence: { en: "The Master receives an accurately calibrated picture — likely explanation, not overstated certainty — and continued monitoring catches anything further if the situation isn't fully resolved." },
+                    feedback: { en: "Correct — this reports exactly what's known, at the confidence level the evidence actually supports, without either understating or overstating it." },
+                  },
+                  {
+                    id: "dismiss_correlation_as_coincidental",
+                    label: { en: "Dismiss the correlation as coincidental since current/wind effects remain plausible, and treat the shift as unrelated." },
+                    consequence: { en: "A close, non-trivial timing correlation is set aside in favor of the original alternative explanation, despite the new evidence pointing the other way." },
+                    feedback: { en: "Dismissing a real correlation because an alternative explanation was plausible earlier ignores what the new evidence is actually showing." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "assume_snag_immediate_correction",
+              label: { en: "Assume the shift is definitely snag-related and recommend an emergency course correction immediately, without further data." },
+              consequence: { en: "A course correction is initiated based on an assumed cause, adding an action to an already-developing emergency before the actual relationship between the shift and the snag is established." },
+              feedback: { en: "Jumping to the most serious interpretation without establishing the cause risks adding an unnecessary action to a situation that's already demanding enough." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Speed and sharpness define the spike, not just the absolute value" },
+        bestPractices: [
+          { en: "Treat a sudden, sharp change as the signal, and raise the alert immediately rather than waiting for further confirmation." },
+        ],
+        commonErrors: [
+          { en: "Waiting to see if a sudden change settles before raising the alert." },
+        ],
+      },
+      {
+        theme: { en: "A successful fix to one part of the emergency doesn't confirm the whole system is fine" },
+        bestPractices: [
+          { en: "Check the mechanism that absorbed the emergency itself, not just confirm the immediate symptom has resolved." },
+        ],
+        commonErrors: [
+          { en: "Treating a successful immediate response as equivalent to the whole system being confirmed sound." },
+        ],
+      },
+      {
+        theme: { en: "\"No visible damage\" isn't \"confirmed sound\"" },
+        bestPractices: [
+          { en: "Extend an assessment beyond the obvious/visual check when further verification is available, and report an interim finding as interim." },
+        ],
+        commonErrors: [
+          { en: "Concluding a component is sound based on a visual check alone, without further available verification." },
+        ],
+      },
+      {
+        theme: { en: "Report at the confidence level the evidence actually supports — neither overstate nor understate" },
+        bestPractices: [
+          { en: "Distinguish a plausible explanation, a supported likely explanation, and a confirmed cause, reporting each at its own actual confidence level." },
+        ],
+        commonErrors: [
+          { en: "Either attributing an ambiguous finding to a convenient explanation without evidence, or treating strong supporting evidence as definitive proof." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
