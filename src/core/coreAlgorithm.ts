@@ -46,6 +46,17 @@
 // concern for a future UI-wiring step, not something this function papers
 // over.
 //
+// Step 6 (2026-08-30), scoped and validated before writing any code — brings
+// Learning Data into the algorithm for the first time (Steps 1-5 only ever
+// used User Profile/Status Data: rank + vessel type). Excludes already-
+// completed lessons from recommendations, using the real, populated
+// `completedLessons` app state as the Learning Data source. Additive per
+// explicit instruction: new, separate functions; getRecommendedLessonsForRank()
+// and getRecommendedLessonsForTrajectory() are untouched. Scoped to lessons
+// only — completed-exclusion for Specialized Operations would be its own
+// future step if wanted, since Specialized Operations doesn't currently
+// track a "completed" concept the way lessons do.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -191,5 +202,48 @@ export function getSpecializedOperationsByRankAndVesselType(
 ): SpecializedOperation[] {
   return getSpecializedOperationsByRank(rankId).filter(
     (op) => op.vesselTypeId === vesselTypeId
+  );
+}
+
+/**
+ * Returns the lessons targeted at a given rank, excluding any lesson the
+ * user has already completed.
+ *
+ * User-validated decisions for this step:
+ * - Separate, additive function — getRecommendedLessonsForRank() is left
+ *   untouched, consistent with how Step 5 stayed additive rather than
+ *   modifying Steps 3/4.
+ * - completedLessonIds is taken as a parameter (Learning Data), not read
+ *   from any storage/global here — this file stays a pure query/filter
+ *   layer with no side-channel state access.
+ */
+export function getRecommendedLessonsForRankExcludingCompleted(
+  rankId: RankId,
+  completedLessonIds: LessonId[]
+): LessonRegistryItem[] {
+  const completed = new Set(completedLessonIds);
+  return getRecommendedLessonsForRank(rankId).filter(
+    (lesson) => !completed.has(lesson.lessonId)
+  );
+}
+
+/**
+ * Returns the union of getRecommendedLessonsForTrajectory() across the path
+ * from currentRankId to targetRankId, excluding any lesson the user has
+ * already completed. Mirrors getRecommendedLessonsForRankExcludingCompleted()
+ * at the trajectory level, exactly as getRecommendedLessonsForTrajectory()
+ * mirrors getRecommendedLessonsForRank().
+ *
+ * Separate, additive function — getRecommendedLessonsForTrajectory() is left
+ * untouched.
+ */
+export function getRecommendedLessonsForTrajectoryExcludingCompleted(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  completedLessonIds: LessonId[]
+): LessonRegistryItem[] {
+  const completed = new Set(completedLessonIds);
+  return getRecommendedLessonsForTrajectory(currentRankId, targetRankId).filter(
+    (lesson) => !completed.has(lesson.lessonId)
   );
 }
