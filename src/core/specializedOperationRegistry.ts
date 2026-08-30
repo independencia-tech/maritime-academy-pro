@@ -20849,6 +20849,507 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  fso_tank_overfill_emergency: {
+    operationId: "fso_tank_overfill_emergency",
+    vesselTypeId: "fso",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "FSO — Tank Overfill Emergency" },
+    introduction: {
+      en: "During an extended receiving period, a gap develops — a monitoring lapse, a delayed tank switch, a miscommunication about remaining capacity — and a tank approaches its capacity faster than anyone realizes. Left unaddressed, this can mean an actual overflow: oil on deck, a genuine spill risk, and a serious safety and environmental incident. This directly interrupts and stress-tests op1's own infrastructure: the tank level/ullage monitoring built in op1 is exactly what should catch this before it becomes critical, and now has to function under real time pressure once the margin has already narrowed further than it should have.",
+    },
+    objectives: [
+      { en: "Describe the sequence of recognizing an approaching overfill, executing the emergency response, and confirming the situation is genuinely resolved." },
+      { en: "Explain how op1's tank level/ullage monitoring is what should catch this early, and why a gap in that monitoring is what allows the situation to develop this far." },
+      { en: "Identify how the crew reacts to stop or redirect flow while confirming no product has actually been released." },
+      { en: "Identify who does what, including the root-cause review that follows the immediate response." },
+      { en: "Recognize correct versus incorrect judgment calls under the time pressure a genuine overfill risk creates." },
+    ],
+    context: {
+      en: "Directly interrupts and stress-tests op1's tank level/ullage monitoring infrastructure — a genuine, serious safety and environmental hazard, distinct from anything else in the catalog. Roster carries forward unchanged (5 ranks). Master + Chief Officer stay lead — a continuation, not a shift, since the emergency is a failure within the same cargo/inventory management domain already led in op1, not an escalation of a marine mechanical system. Chief Engineer stays at support. No new CommunicationParty needed — the spill-response notification reuses shore_authorities.",
+    },
+
+    operationPhaseOrder: [
+      "overfill_risk_recognition_alert",
+      ["emergency_flow_stop_diversion", "tank_level_containment_monitoring", "deck_spill_watch"],
+      "spill_confirmation_containment",
+      "root_cause_review",
+      "resume_or_hold_decision",
+      "notification_incident_reporting",
+    ],
+    operationPhases: {
+      overfill_risk_recognition_alert: {
+        id: "overfill_risk_recognition_alert",
+        title: { en: "Recognition & Alert" },
+        overview: { en: "A high-level alarm or unexpectedly fast-rising level is sufficient to alert immediately." },
+        steps: [
+          { en: "A tank level approaching capacity faster than expected, or a high-level alarm, is recognized as a genuine overfill risk." },
+          { en: "Alert raised immediately." },
+        ],
+        bestPractices: [
+          { en: "Treat a high-level alarm or an unexpectedly fast-rising level as sufficient to alert immediately, not something to double-check quietly first." },
+        ],
+      },
+      emergency_flow_stop_diversion: {
+        id: "emergency_flow_stop_diversion",
+        title: { en: "Emergency Flow Stop/Diversion" },
+        overview: { en: "Act to stop or divert flow first, before fully understanding why the situation developed." },
+        steps: [
+          { en: "Chief Officer stops or diverts incoming flow away from the affected tank immediately." },
+        ],
+        bestPractices: [
+          { en: "Act to stop or divert flow first, before fully understanding why the situation developed — the immediate risk takes priority over the explanation." },
+        ],
+      },
+      tank_level_containment_monitoring: {
+        id: "tank_level_containment_monitoring",
+        title: { en: "Tank Level Containment Monitoring" },
+        overview: { en: "Require the level to actually stop, not just rise more slowly." },
+        steps: [
+          { en: "Tank level monitored continuously to confirm the rise has genuinely stopped, not just slowed." },
+        ],
+        bestPractices: [
+          { en: "Require the level to actually stop, not just rise more slowly, before treating the immediate risk as contained." },
+        ],
+      },
+      deck_spill_watch: {
+        id: "deck_spill_watch",
+        title: { en: "Deck Spill Watch" },
+        overview: { en: "Physically verify deck condition directly, not assume no spill occurred." },
+        steps: [
+          { en: "Deck physically checked for any sign of actual product release." },
+        ],
+        bestPractices: [
+          { en: "Physically verify deck condition directly, not assume no spill occurred just because the tank level stopped in time." },
+        ],
+      },
+      spill_confirmation_containment: {
+        id: "spill_confirmation_containment",
+        title: { en: "Spill Confirmation & Containment" },
+        overview: { en: "A genuine confirmation, not an assumption based on how close the call seemed to be." },
+        steps: [
+          { en: "Whether any product was actually released is confirmed, and any spill is contained." },
+        ],
+        bestPractices: [
+          { en: "Treat this as a genuine confirmation, not an assumption based on how close the call seemed to be." },
+        ],
+      },
+      root_cause_review: {
+        id: "root_cause_review",
+        title: { en: "Root Cause Review" },
+        overview: { en: "Identify the actual gap in the process, not just the immediate trigger." },
+        steps: [
+          { en: "What allowed the situation to develop this far — a monitoring gap, a delayed tank switch, a communication breakdown — is reviewed." },
+        ],
+        bestPractices: [
+          { en: "Identify the actual gap in the process, not just the immediate trigger, since the same gap could recur elsewhere." },
+        ],
+      },
+      resume_or_hold_decision: {
+        id: "resume_or_hold_decision",
+        title: { en: "Resume-or-Hold Decision" },
+        overview: { en: "Based on the root cause actually being addressed, not just on the immediate crisis having passed." },
+        steps: [
+          { en: "A decision is made on whether receiving can resume (potentially to a different tank) or must be held." },
+        ],
+        bestPractices: [
+          { en: "Base the decision on the root cause actually being addressed, not just on the immediate crisis having passed." },
+        ],
+      },
+      notification_incident_reporting: {
+        id: "notification_incident_reporting",
+        title: { en: "Notification & Incident Reporting" },
+        overview: { en: "Notify based on the actual outcome, not softened because the situation was ultimately contained." },
+        steps: [
+          { en: "Company and, if any product was released, shore authorities notified; incident reported in full." },
+        ],
+        bestPractices: [
+          { en: "Notify based on the actual outcome (spill or no spill), not soften the report because the situation was ultimately contained." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "overfill_alert",
+        phaseId: "overfill_risk_recognition_alert",
+        from: "deck", to: "bridge",
+        trigger: { en: "Overfill risk recognized." },
+        content: { en: "Chief Officer, recognizing the approaching overfill risk, alerts the Master immediately." },
+        whyItMatters: { en: "Every second before the alert is a second the emergency response hasn't started, in a situation where the margin has already narrowed further than it should have." },
+      },
+      {
+        id: "flow_stop_action_report",
+        phaseId: "emergency_flow_stop_diversion",
+        from: "deck", to: "bridge",
+        trigger: { en: "Flow stopped/diverted." },
+        content: { en: "Chief Officer reports flow stopped or diverted away from the affected tank." },
+        whyItMatters: { en: "The Master needs to know the immediate risk is being addressed before turning attention to confirming the outcome." },
+      },
+      {
+        id: "level_containment_report",
+        phaseId: "tank_level_containment_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing level monitoring." },
+        content: { en: "Chief Officer reports tank level status continuously to the Master." },
+        whyItMatters: { en: "The Master needs confirmation the level has genuinely stopped rising, not just slowed, before treating the immediate risk as contained." },
+      },
+      {
+        id: "deck_spill_watch_report",
+        phaseId: "deck_spill_watch",
+        from: "deck", to: "bridge",
+        trigger: { en: "Deck check underway." },
+        content: { en: "Bosun/AB reports deck condition — any sign of product release — to the Chief Officer and Master." },
+        whyItMatters: { en: "A direct physical check is the only way to actually confirm whether a spill occurred, rather than inferring it from the tank level alone." },
+      },
+      {
+        id: "spill_confirmation_report",
+        phaseId: "spill_confirmation_containment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Spill status determined." },
+        content: { en: "Chief Officer confirms whether any product was actually released and reports containment status to the Master." },
+        whyItMatters: { en: "The Master's notification decision downstream depends entirely on this being a genuine confirmation, not an assumption." },
+      },
+      {
+        id: "root_cause_findings_report",
+        phaseId: "root_cause_review",
+        from: "deck", to: "bridge",
+        trigger: { en: "Root cause review complete." },
+        content: { en: "Chief Officer reports findings from the root cause review to the Master." },
+        whyItMatters: { en: "The resume-or-hold decision depends on knowing the actual gap that allowed this to happen, not just that the immediate crisis passed." },
+      },
+      {
+        id: "decision_communicated",
+        phaseId: "resume_or_hold_decision",
+        from: "bridge", to: "deck",
+        trigger: { en: "Resume-or-hold decision made." },
+        content: { en: "Master communicates the resume-or-hold decision clearly to the Chief Officer and crew." },
+        whyItMatters: { en: "An ambiguous decision at this point risks a mixed response from a crew that just executed a genuine emergency procedure." },
+      },
+      {
+        id: "company_shore_notification",
+        phaseId: "notification_incident_reporting",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Incident ready for reporting." },
+        content: { en: "Master notifies the company and, if any product was released, shore authorities, reporting the full incident." },
+        whyItMatters: { en: "An overfill incident of this kind needs a full, honest report based on the actual outcome, not a softened version because the situation was ultimately contained." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the overall emergency response: receives the alert, coordinates the crew's parallel response effort, and makes the resume-or-hold decision from the root cause review." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads the emergency flow stop/diversion, tank level containment monitoring, spill confirmation, and the root cause review — the operation's cargo/inventory management lead, continuing directly from op1's lead role since this emergency is a failure within that same domain." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck spill watch and physical deck inspection." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes deck watch and inspection support tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Monitors ballast/stability implications if flow diversion affects tank loading distribution — support role, since this operation's core is cargo/inventory management, not a marine mechanical system." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Coordinates the crew's parallel response effort." },
+          { en: "Makes the resume-or-hold decision." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency development — flow stop status, tank level, and deck condition together." },
+        ],
+        iReport: [
+          { en: "Notifies the company and shore authorities if needed; reports the incident." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize resuming receiving before the root cause review is genuinely complete." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads the emergency flow stop/diversion, tank level containment monitoring, spill confirmation, and root cause review." },
+        ],
+        iMonitor: [
+          { en: "Tank level and spill status throughout the emergency." },
+        ],
+        iReport: [
+          { en: "Reports flow stop action, level status, spill confirmation, and root cause findings to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not report the risk contained based on the level slowing alone — requires it to actually stop." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the deck spill watch and physical deck inspection." },
+        ],
+        iMonitor: [
+          { en: "Deck condition for any sign of product release." },
+        ],
+        iReport: [
+          { en: "Reports deck condition to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not report the deck clear without a genuine physical check." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes deck watch and inspection support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate task conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent monitoring decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Monitors ballast/stability implications if flow diversion affects tank loading distribution." },
+        ],
+        iMonitor: [
+          { en: "Ballast/stability status if diversion changes the loading picture." },
+        ],
+        iReport: [
+          { en: "Reports any ballast/stability implication to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not direct the emergency response itself — support role only in this operation." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "fso_overfill_emergency_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the tank overfill emergency response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Recognition & Alert" } },
+          { id: "stop_divert", label: { en: "Emergency Flow Stop/Diversion" } },
+          { id: "level_monitor", label: { en: "Tank Level Containment Monitoring" } },
+          { id: "deck_watch", label: { en: "Deck Spill Watch" } },
+          { id: "spill_confirm", label: { en: "Spill Confirmation & Containment" } },
+          { id: "root_cause", label: { en: "Root Cause Review" } },
+          { id: "decision", label: { en: "Resume-or-Hold Decision" } },
+          { id: "notification", label: { en: "Notification & Incident Reporting" } },
+        ],
+        correctOrder: ["alert", ["stop_divert", "level_monitor", "deck_watch"], "spill_confirm", "root_cause", "decision", "notification"],
+      },
+      {
+        type: "error_identification",
+        id: "fso_skip_spill_watch_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The emergency flow stop is executed and the tank level appears to have leveled off quickly. There's a temptation to declare the risk contained and skip the deck spill watch since the response seemed to work in time. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Declare the risk contained and skip the deck spill watch since the level leveled off quickly." }, isError: true, explanation: { en: "A level stopping in time doesn't confirm no product was released during the moments before it did — skipping the physical check assumes exactly what the watch exists to verify." } },
+          { id: "b", label: { en: "Complete the deck spill watch regardless of how quickly the level leveled off." }, isError: false, explanation: { en: "Correct — this is exactly the discipline the operation requires." } },
+          { id: "c", label: { en: "Treat level stabilization and confirmed no-spill as two separate things to verify." }, isError: false, explanation: { en: "Correct — this distinction is exactly what the response discipline depends on." } },
+          { id: "d", label: { en: "Report the level status and spill watch findings as two distinct confirmations." }, isError: false, explanation: { en: "Correct — the Master needs both confirmed independently, not one standing in for the other." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "fso_pre_resume_decision_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The immediate emergency appears resolved. Before making the resume-or-hold decision, review which conditions are actually satisfied." },
+        items: [
+          { id: "level_stopped", label: { en: "Tank level confirmed stopped rising." }, isSatisfied: true },
+          { id: "spill_watch_complete", label: { en: "Deck spill watch completed." }, isSatisfied: true },
+          { id: "root_cause_identified", label: { en: "Root cause identified." }, isSatisfied: false },
+          { id: "notification_sent", label: { en: "Notification sent, if applicable." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Assisting with the deck spill watch, you notice a small wet patch near a vent that could be recent rain or could be product." },
+        mission: { en: "As AB, decide how to report it." },
+        expectedActions: [
+          { en: "Report the finding immediately and flag it for closer, qualified inspection, rather than deciding yourself it's probably just rain." },
+        ],
+        why: [
+          { en: "A deck spill watch exists precisely to catch findings like this — deciding privately it's probably nothing defeats the purpose of having a dedicated watch." },
+        ],
+        commonMistakes: [
+          { en: "Assuming an ambiguous wet patch is probably rain without a closer check." },
+        ],
+        safetyPoints: [
+          { en: "An uncertain finding reported honestly is more valuable than a confident guess made to move on quickly." },
+        ],
+      },
+      {
+        situation: { en: "The tank level has stopped rising and the deck spill watch found nothing, but you're aware the root cause review hasn't started yet, and there's pressure to move straight to considering resumption." },
+        mission: { en: "As Chief Officer, decide how to sequence your next steps." },
+        expectedActions: [
+          { en: "Proceed to the root cause review before considering any resumption discussion, rather than skipping ahead because the immediate crisis appears over." },
+        ],
+        why: [
+          { en: "The immediate crisis passing doesn't mean the gap that allowed it has been identified or addressed — resuming without that review risks the same gap causing the same emergency again." },
+        ],
+        commonMistakes: [
+          { en: "Treating the immediate crisis passing as equivalent to the situation being fully handled." },
+        ],
+        safetyPoints: [
+          { en: "A resolved emergency and an understood emergency are two different states — only the second makes resuming genuinely safe." },
+        ],
+      },
+      {
+        situation: { en: "The emergency flow diversion shifted more cargo weight toward tanks you weren't expecting, and you're not immediately sure whether this affects the vessel's stability margins." },
+        mission: { en: "As Chief Engineer, decide how to proceed." },
+        expectedActions: [
+          { en: "Check the actual stability implications of the new distribution directly, rather than assuming the diversion was minor enough not to matter." },
+        ],
+        why: [
+          { en: "An emergency diversion, by its nature, wasn't planned the way a normal tank switch would be — assuming it's fine without checking skips exactly the verification an unplanned change deserves." },
+        ],
+        commonMistakes: [
+          { en: "Assuming an emergency diversion's effect on stability is probably minor without checking." },
+        ],
+        safetyPoints: [
+          { en: "An unplanned change to cargo distribution deserves the same verification a planned one would get, not less." },
+        ],
+      },
+      {
+        situation: { en: "The root cause review identifies a gap in how tank-switch timing was being communicated, but it's tempting to treat this specific incident as a one-off rather than a signal of a broader process issue." },
+        mission: { en: "As Master, decide how to weigh this." },
+        expectedActions: [
+          { en: "Treat the identified gap as a genuine process issue worth addressing broadly, not just as an isolated incident specific to this one receiving period." },
+        ],
+        why: [
+          { en: "A communication gap that caused this incident is a process characteristic, not a one-time fluke — treating it as isolated leaves the same gap available to cause the same emergency again later." },
+        ],
+        commonMistakes: [
+          { en: "Treating a root cause finding as specific to this incident rather than as a signal about the broader process." },
+        ],
+        safetyPoints: [
+          { en: "The value of a root cause review comes from what it reveals about the process, not just about this one event." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "fso_ambiguous_deck_stain_judgment",
+        title: { en: "Old Stain or New?" },
+        seatRankId: "bosun",
+        root: {
+          id: "root",
+          situation: { en: "During the deck spill watch, you find a stain near a vent/manifold area — it could be old residue that's always been there, or it could be a fresh release from tonight's incident. It's genuinely unclear which." },
+          options: [
+            {
+              id: "assume_old_residue",
+              label: { en: "Assume it's old residue since the area often has minor staining, and report the deck as clear." },
+              consequence: { en: "If the stain is actually new, the deck spill watch's own purpose — confirming whether product was released — is defeated by an unverified assumption." },
+              feedback: { en: "\"Often has minor staining\" describes the area's history, not this specific stain's age — reporting the deck clear on that basis skips the verification the watch exists to provide." },
+            },
+            {
+              id: "report_unresolved_compare_baseline",
+              label: { en: "Report the stain as an unresolved finding and take a sample/photograph for comparison against known baseline condition, without concluding either way yet." },
+              isRecommended: true,
+              consequence: { en: "Comparison against a routine inspection photo from a few days ago confirms the stain wasn't there before — it's genuinely new, though the exact extent isn't yet clear." },
+              feedback: { en: "Correct — resolving genuine ambiguity with an actual comparison, rather than assuming either way, is exactly what a spill watch finding like this calls for." },
+              next: {
+                id: "confirmed_new_release",
+                situation: { en: "Comparison against a routine inspection photo confirms the stain wasn't there before — a genuine new release has occurred, though its exact quantity and source aren't yet clear." },
+                options: [
+                  {
+                    id: "report_worst_case_no_characterization",
+                    label: { en: "Since it's confirmed new, immediately report a full-scale spill without further characterizing extent, matching the most severe possible interpretation." },
+                    consequence: { en: "The report overstates the situation relative to what's actually known, since severity was assumed rather than assessed." },
+                    feedback: { en: "Confirming the stain is new answers one question — whether a release happened — not how large it is; reporting the most severe interpretation without characterizing extent overstates what's actually known." },
+                  },
+                  {
+                    id: "confirm_release_then_characterize",
+                    label: { en: "Report that a genuine new release is confirmed, then work to characterize the extent (quantity, source) before finalizing severity classification." },
+                    isRecommended: true,
+                    consequence: { en: "The report accurately reflects a confirmed release with severity classification following a genuine assessment of extent, giving the Master and any notified authorities an accurate picture." },
+                    feedback: { en: "Correct — confirming the release and characterizing its extent are two separate steps, and both are needed before a severity classification means anything." },
+                  },
+                  {
+                    id: "downplay_unclear_amount",
+                    label: { en: "Since only the stain's newness is confirmed but the amount is unclear, treat it as minor/inconsequential without measuring or characterizing further." },
+                    consequence: { en: "A confirmed release is downplayed based on the absence of information about its extent, rather than an actual assessment showing it's minor." },
+                    feedback: { en: "Not yet knowing the extent isn't the same as knowing it's minor — downplaying it on that basis substitutes an assumption for an assessment that hasn't been done yet." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "declare_confirmed_spill_immediately",
+              label: { en: "Immediately declare a confirmed spill and escalate to full spill-response protocol without further verification." },
+              consequence: { en: "Full spill-response protocol is triggered based on an unconfirmed stain, before determining whether it's even new." },
+              feedback: { en: "Escalating to the most serious response before verifying the finding risks a significant overreaction to something that might have turned out to be old residue." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "A response working in time doesn't confirm no release occurred — two separate confirmations" },
+        bestPractices: [
+          { en: "Complete a physical check to confirm no product was released, regardless of how quickly the immediate risk indicator resolved." },
+        ],
+        commonErrors: [
+          { en: "Skipping the physical confirmation because the immediate response appeared to work in time." },
+        ],
+      },
+      {
+        theme: { en: "A resolved crisis and an understood crisis are two different states" },
+        bestPractices: [
+          { en: "Complete the root cause review before considering resumption, treating the crisis passing and the cause being understood as separate milestones." },
+        ],
+        commonErrors: [
+          { en: "Treating the immediate crisis passing as equivalent to the situation being fully handled." },
+        ],
+      },
+      {
+        theme: { en: "An unplanned change deserves the same verification a planned one would get" },
+        bestPractices: [
+          { en: "Check the actual implications of an unplanned or emergency change directly, rather than assuming it's minor because it wasn't intentional." },
+        ],
+        commonErrors: [
+          { en: "Assuming an emergency or unplanned change's effects are probably minor without checking." },
+        ],
+      },
+      {
+        theme: { en: "Confirming a finding and characterizing its extent are two separate steps" },
+        bestPractices: [
+          { en: "Confirm whether something genuinely happened, then separately assess its actual extent, rather than assuming severity in either direction before assessing." },
+        ],
+        commonErrors: [
+          { en: "Reporting the most severe interpretation without characterizing actual extent, or downplaying a confirmed finding because its extent isn't yet known." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
