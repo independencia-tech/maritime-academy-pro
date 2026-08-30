@@ -20350,6 +20350,505 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  fso_crude_receiving_storage_tank_management: {
+    operationId: "fso_crude_receiving_storage_tank_management",
+    vesselTypeId: "fso",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "FSO — Crude Receiving & Storage Tank Management" },
+    introduction: {
+      en: "Unlike a producing platform, an FSO exists specifically to receive crude oil from an external source — a subsea pipeline tied back to a producing field or platform — and hold it safely until it's offloaded to a shuttle tanker. This operation covers that inbound side: connecting and confirming the receiving line, allocating incoming flow across the vessel's storage tanks, and managing ullage, levels, and grade segregation as the tanks fill over what can be a continuous, extended period. It's routine in the sense that this is the FSO's core, ongoing function, but the margin for error is real — misallocated flow, an unmonitored tank approaching capacity, or mixed grades that should have stayed segregated can mean a genuinely costly problem, discovered only once it's already happened.",
+    },
+    objectives: [
+      { en: "Describe the sequence of receiving line connection/confirmation, flow allocation across storage tanks, and ongoing level/ullage/segregation management." },
+      { en: "Explain why grade segregation and tank allocation require active management, not passive monitoring, over an extended receiving period." },
+      { en: "Identify how Master and Chief Officer jointly lead this operation — cargo/inventory management, not a marine mechanical system, distinguishing it from the jacking, riser, cable, and dredge-pump mechanisms led by Chief Engineer elsewhere in the catalog." },
+      { en: "Identify who does what during a continuous, extended-duration receiving operation, as distinct from a discrete loading or offloading event." },
+      { en: "Recognize correct versus incorrect judgment calls when tank levels, segregation, or flow allocation become ambiguous over time." },
+    ],
+    context: {
+      en: "Genuinely new terrain — no reskin risk against FPSO's already-built STS shuttle tanker offloading (the outbound side; FPSO never needed inbound-receiving content since it produces its own crude) or against Oil Tanker/Chemical Tanker (discrete, terminal-based loading events, not continuous subsea-tie-back receiving into segregated storage). Roster: 5-rank roster, with Master + Chief Officer leading — confirmed with you as a deliberate departure from the recent mechanism-lead pattern (Jackup, Drillship, Cable Layer, Dredger), since this operation is fundamentally cargo/inventory management. Chief Engineer supports (ballast/stability systems as tanks fill), not leads. No new CommunicationParty needed.",
+    },
+
+    operationPhaseOrder: [
+      "receiving_line_connection_confirmation",
+      "flow_allocation_tank_lineup",
+      ["tank_level_ullage_monitoring", "grade_segregation_monitoring", "ballast_trim_stability_monitoring"],
+      "tank_switching_management",
+      "receiving_rate_adjustment_assessment",
+      "receiving_completion_final_verification",
+    ],
+    operationPhases: {
+      receiving_line_connection_confirmation: {
+        id: "receiving_line_connection_confirmation",
+        title: { en: "Receiving Line Connection & Confirmation" },
+        overview: { en: "Confirm the connection is sound and pressure-tested before opening to full flow." },
+        steps: [
+          { en: "Chief Officer and Master confirm the subsea pipeline riser/manifold connection to the FSO before commencing receipt." },
+        ],
+        bestPractices: [
+          { en: "Confirm the connection is sound and pressure-tested before opening to full flow, not after." },
+        ],
+      },
+      flow_allocation_tank_lineup: {
+        id: "flow_allocation_tank_lineup",
+        title: { en: "Flow Allocation & Tank Line-Up" },
+        overview: { en: "Confirm the line-up against the actual tank plan, not an assumption of which tanks are available." },
+        steps: [
+          { en: "Chief Officer sets the valve line-up to allocate incoming flow to the designated storage tank(s) per the tank plan." },
+        ],
+        bestPractices: [
+          { en: "Confirm the line-up against the actual tank plan, not an assumption of which tanks are available." },
+        ],
+      },
+      tank_level_ullage_monitoring: {
+        id: "tank_level_ullage_monitoring",
+        title: { en: "Tank Level & Ullage Monitoring" },
+        overview: { en: "Track levels against each tank's own capacity, not a general sense of \"still filling.\"" },
+        steps: [
+          { en: "Tank levels and ullage tracked continuously as receiving proceeds." },
+        ],
+        bestPractices: [
+          { en: "Track levels against each tank's own capacity, not a general sense of \"still filling.\"" },
+        ],
+      },
+      grade_segregation_monitoring: {
+        id: "grade_segregation_monitoring",
+        title: { en: "Grade Segregation Monitoring" },
+        overview: { en: "Actively confirm segregation is being maintained, since a lineup error can mix grades silently." },
+        steps: [
+          { en: "Crude grade segregation between tanks actively verified throughout, not assumed to hold on its own." },
+        ],
+        bestPractices: [
+          { en: "Actively confirm segregation is being maintained, since a lineup error can mix grades silently until discovered." },
+        ],
+      },
+      ballast_trim_stability_monitoring: {
+        id: "ballast_trim_stability_monitoring",
+        title: { en: "Ballast, Trim & Stability Monitoring" },
+        overview: { en: "Adjust ballast proactively as tanks fill, not only once trim or list becomes noticeable." },
+        steps: [
+          { en: "Vessel trim and stability monitored and managed via ballast as cargo weight shifts with incoming flow." },
+        ],
+        bestPractices: [
+          { en: "Adjust ballast proactively as tanks fill, not only once trim or list becomes noticeable." },
+        ],
+      },
+      tank_switching_management: {
+        id: "tank_switching_management",
+        title: { en: "Tank Switching Management" },
+        overview: { en: "Confirm the new tank's line-up before switching, not during or after the switch." },
+        steps: [
+          { en: "As a tank approaches capacity, flow switched to the next tank in sequence without interrupting continuous receipt." },
+        ],
+        bestPractices: [
+          { en: "Confirm the new tank's line-up before switching, not during or after the switch." },
+        ],
+      },
+      receiving_rate_adjustment_assessment: {
+        id: "receiving_rate_adjustment_assessment",
+        title: { en: "Receiving Rate Adjustment Assessment" },
+        overview: { en: "Base any rate adjustment on the actual tank availability picture, not a default toward a fixed rate." },
+        steps: [
+          { en: "Assessment of whether the receiving rate needs adjustment based on tank capacity and availability." },
+        ],
+        bestPractices: [
+          { en: "Base any rate adjustment on the actual tank availability picture, not a default toward maintaining a fixed rate regardless of capacity." },
+        ],
+      },
+      receiving_completion_final_verification: {
+        id: "receiving_completion_final_verification",
+        title: { en: "Receiving Completion & Final Verification" },
+        overview: { en: "Final verification is a genuine confirmation step, not a formality once receiving stops." },
+        steps: [
+          { en: "Receiving completed or paused, final tank levels recorded, and the receiving line secured." },
+        ],
+        bestPractices: [
+          { en: "Treat final verification as a genuine confirmation step, not a formality once receiving stops." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "connection_confirmation_report",
+        phaseId: "receiving_line_connection_confirmation",
+        from: "deck", to: "bridge",
+        trigger: { en: "Receiving line connected." },
+        content: { en: "Chief Officer confirms the receiving line connection is sound and pressure-tested to the Master." },
+        whyItMatters: { en: "Opening to full flow on an unconfirmed connection risks a leak or failure right at the start of an extended receiving period." },
+      },
+      {
+        id: "tank_lineup_confirmation",
+        phaseId: "flow_allocation_tank_lineup",
+        from: "deck", to: "bridge",
+        trigger: { en: "Tank line-up set." },
+        content: { en: "Chief Officer confirms the tank line-up is set per the tank plan to the Master." },
+        whyItMatters: { en: "An unconfirmed line-up risks flow going to the wrong tank from the very first barrel received." },
+      },
+      {
+        id: "tank_level_status_report",
+        phaseId: "tank_level_ullage_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing tank level monitoring." },
+        content: { en: "Tank levels and ullage reported continuously to the Master as receiving proceeds." },
+        whyItMatters: { en: "The tank-switching and rate-adjustment decisions both depend on an accurate, current picture, not a periodic estimate." },
+      },
+      {
+        id: "segregation_status_report",
+        phaseId: "grade_segregation_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing segregation monitoring." },
+        content: { en: "Chief Officer reports grade segregation status continuously to the Master." },
+        whyItMatters: { en: "A segregation error can mix grades silently — the Master needs this actively confirmed, not assumed to be holding." },
+      },
+      {
+        id: "ballast_trim_status_report",
+        phaseId: "ballast_trim_stability_monitoring",
+        from: "engine", to: "bridge",
+        trigger: { en: "Ongoing ballast/trim monitoring." },
+        content: { en: "Chief Engineer reports ballast, trim, and stability status continuously to the Master." },
+        whyItMatters: { en: "Cargo weight shifts continuously during receiving — the Master needs this tracked in parallel with the tank-filling process, not checked only when trim becomes noticeable." },
+      },
+      {
+        id: "tank_switch_confirmation",
+        phaseId: "tank_switching_management",
+        from: "deck", to: "bridge",
+        trigger: { en: "Tank switch executed." },
+        content: { en: "Chief Officer confirms the tank switch executed and the new line-up confirmed to the Master." },
+        whyItMatters: { en: "An unconfirmed switch risks a brief but real gap where flow isn't correctly allocated to any tank, or is misallocated." },
+      },
+      {
+        id: "rate_adjustment_recommendation",
+        phaseId: "receiving_rate_adjustment_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Rate adjustment assessed." },
+        content: { en: "Chief Officer recommends a receiving rate adjustment based on the actual tank availability picture to the Master." },
+        whyItMatters: { en: "The Master's rate decision depends on a genuine capacity-based recommendation, not a default toward a fixed rate." },
+      },
+      {
+        id: "completion_confirmation",
+        phaseId: "receiving_completion_final_verification",
+        from: "deck", to: "bridge",
+        trigger: { en: "Receiving stopped/paused." },
+        content: { en: "Chief Officer confirms final tank levels recorded and the receiving line secured to the Master." },
+        whyItMatters: { en: "This is the Master's final gate before the receiving period is considered properly closed out." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the operation overall: confirms connection setup, oversees the extended receiving process, and authorizes rate adjustments and final closeout." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads flow allocation, tank line-up, level/ullage monitoring, grade segregation, tank switching, and the rate-adjustment recommendation — the operation's cargo/inventory management lead, working alongside Master." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the deck team supporting manifold/valve handling and inspection on deck." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes manifold/valve support tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Monitors and manages ballast, trim, and stability as cargo weight shifts with incoming flow — support role, since this operation's core is cargo/inventory management, not a marine mechanical system." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Confirms connection setup; oversees the extended receiving process; authorizes rate adjustments and final closeout." },
+        ],
+        iMonitor: [
+          { en: "Tank levels, segregation, and ballast/trim/stability throughout." },
+        ],
+        iReport: [
+          { en: "Confirms receiving complete once final verification is reported." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize opening to full flow before the connection is confirmed sound and pressure-tested." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads flow allocation, tank line-up, level/ullage monitoring, grade segregation, tank switching, and the rate-adjustment recommendation." },
+        ],
+        iMonitor: [
+          { en: "Tank levels, ullage, and segregation status throughout." },
+        ],
+        iReport: [
+          { en: "Reports tank status, segregation status, tank switches, and rate recommendations to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not switch tanks without confirming the new line-up first." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads deck team support for manifold/valve handling and inspection." },
+        ],
+        iMonitor: [
+          { en: "Deck-side manifold and valve conditions." },
+        ],
+        iReport: [
+          { en: "Reports deck-side hazards or issues to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent valve-lineup decisions." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes manifold/valve support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate task conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent handling decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Monitors and manages ballast, trim, and stability as cargo weight shifts." },
+        ],
+        iMonitor: [
+          { en: "Trim, list, and stability continuously throughout receiving." },
+        ],
+        iReport: [
+          { en: "Reports ballast/trim/stability status to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not wait for a noticeable trim/list before adjusting ballast." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "fso_receiving_phase_sequence",
+        targetRanks: ["master", "chief_officer", "chief_engineer"],
+        prompt: { en: "Put the crude receiving and storage tank management operation's phases in the correct order." },
+        items: [
+          { id: "connection", label: { en: "Receiving Line Connection & Confirmation" } },
+          { id: "lineup", label: { en: "Flow Allocation & Tank Line-Up" } },
+          { id: "level_monitor", label: { en: "Tank Level & Ullage Monitoring" } },
+          { id: "segregation_monitor", label: { en: "Grade Segregation Monitoring" } },
+          { id: "ballast_monitor", label: { en: "Ballast, Trim & Stability Monitoring" } },
+          { id: "tank_switch", label: { en: "Tank Switching Management" } },
+          { id: "rate_assess", label: { en: "Receiving Rate Adjustment Assessment" } },
+          { id: "completion", label: { en: "Receiving Completion & Final Verification" } },
+        ],
+        correctOrder: ["connection", "lineup", ["level_monitor", "segregation_monitor", "ballast_monitor"], "tank_switch", "rate_assess", "completion"],
+      },
+      {
+        type: "error_identification",
+        id: "fso_segregation_complacency_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The tank line-up was set correctly at the start, and receiving has proceeded smoothly for hours without incident. There's a temptation to reduce active segregation checks since nothing has gone wrong. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Reduce active segregation verification since the lineup was correct at the start and nothing has gone wrong so far." }, isError: true, explanation: { en: "A correct initial lineup doesn't guarantee it holds on its own — reducing verification because nothing has gone wrong yet is exactly the complacency this operation's monitoring discipline exists to prevent." } },
+          { id: "b", label: { en: "Continue actively verifying segregation throughout, regardless of how smoothly receiving has gone so far." }, isError: false, explanation: { en: "Correct — this is exactly the sustained discipline the operation requires." } },
+          { id: "c", label: { en: "Treat a correct initial lineup as a starting point to maintain, not a guarantee that holds on its own." }, isError: false, explanation: { en: "Correct — this distinction is exactly what the monitoring discipline depends on." } },
+          { id: "d", label: { en: "Report segregation status as an ongoing item, not a one-time confirmation." }, isError: false, explanation: { en: "Correct — ongoing reporting is what keeps the Master's picture current over an extended period." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "fso_pre_rate_adjustment_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The Chief Officer has recommended a receiving rate adjustment. Before authorizing it, review which conditions are actually satisfied." },
+        items: [
+          { id: "levels_current", label: { en: "Current tank levels/availability confirmed and current." }, isSatisfied: true },
+          { id: "recommendation_received", label: { en: "Chief Officer's rate recommendation received." }, isSatisfied: true },
+          { id: "ballast_compatible", label: { en: "Ballast/stability status confirmed compatible with the rate change." }, isSatisfied: false },
+          { id: "downstream_capacity_confirmed", label: { en: "Downstream capacity (next tank ready) confirmed before increasing rate." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Inspecting the manifold connection before receiving begins, you notice a fitting that looks slightly different from what you remember from the last connection, though it still seems to seal properly." },
+        mission: { en: "As Bosun, decide how to handle it." },
+        expectedActions: [
+          { en: "Flag the fitting for a closer check before committing to full flow, rather than assuming it's fine because it still appears to seal." },
+        ],
+        why: [
+          { en: "A connection that holds for a pressure test but has a subtle irregularity is exactly the kind of thing worth catching before an extended, multi-hour receiving period begins." },
+        ],
+        commonMistakes: [
+          { en: "Assuming a fitting that still seals is unchanged from before without a closer look." },
+        ],
+        safetyPoints: [
+          { en: "A brief extra check before committing to hours of continuous flow costs little compared to a connection issue discovered mid-receipt." },
+        ],
+      },
+      {
+        situation: { en: "Assisting with valve line-up under the Bosun's direction, you notice the line-up matches what you were told, but it doesn't quite match your own recollection of the tank plan from the briefing." },
+        mission: { en: "As AB, decide how to respond." },
+        expectedActions: [
+          { en: "Raise the discrepancy for clarification before proceeding, rather than assuming your own recollection must be wrong." },
+        ],
+        why: [
+          { en: "A genuine discrepancy between instruction and plan is exactly the kind of thing worth resolving before flow begins, not after — either the instruction or your recollection could be the one that's off." },
+        ],
+        commonMistakes: [
+          { en: "Assuming your own memory of the plan is the less reliable one without checking." },
+        ],
+        safetyPoints: [
+          { en: "A quick clarification before flow starts is far cheaper than discovering a lineup error once tanks are already filling." },
+        ],
+      },
+      {
+        situation: { en: "Trim has been holding within normal range as tanks fill, but you notice the rate of change has been accelerating slightly as receiving continues." },
+        mission: { en: "As Chief Engineer, decide how to respond." },
+        expectedActions: [
+          { en: "Adjust ballast proactively to anticipate the accelerating trend, rather than waiting until trim moves outside the normal range to react." },
+        ],
+        why: [
+          { en: "An accelerating trend, even while still within range, signals that the current ballast approach may not keep pace as receiving continues — addressing it now is easier than catching up once it's already outside range." },
+        ],
+        commonMistakes: [
+          { en: "Waiting for trim to exceed the normal range before adjusting, despite a clear accelerating trend." },
+        ],
+        safetyPoints: [
+          { en: "Reacting to a trend early keeps the correction small; reacting only once a limit is crossed makes the correction bigger and more urgent." },
+        ],
+      },
+      {
+        situation: { en: "The Chief Officer recommends a rate increase given strong tank availability, but you're aware the Chief Engineer hasn't yet confirmed the ballast/stability picture is compatible with that change." },
+        mission: { en: "As Master, decide how to proceed." },
+        expectedActions: [
+          { en: "Hold the rate increase until the Chief Engineer's confirmation is received, rather than approving based on tank availability alone." },
+        ],
+        why: [
+          { en: "Tank availability and ballast/stability compatibility are two separate questions — a strong recommendation on one doesn't answer the other, and a rate change that outpaces ballast management creates a real, avoidable risk." },
+        ],
+        commonMistakes: [
+          { en: "Approving a rate change based on cargo-side readiness alone, without confirming the ballast/stability side is equally ready." },
+        ],
+        safetyPoints: [
+          { en: "Both halves of the readiness picture need their own confirmation — one being strong doesn't substitute for the other." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "fso_cross_contamination_reading_judgment",
+        title: { en: "The Reading That Suggests Cross-Contamination" },
+        seatRankId: "chief_officer",
+        root: {
+          id: "root",
+          situation: { en: "During a tank switch, a sample/sensor reading from the newly-switched tank shows a trace inconsistent with the expected grade — it could indicate cross-contamination from the previous tank's residue, or it could be a sampling/sensor artifact." },
+          options: [
+            {
+              id: "dismiss_as_artifact",
+              label: { en: "Dismiss the reading as likely a sensor artifact since a single anomalous reading isn't conclusive, and continue receiving into that tank." },
+              consequence: { en: "If the reading was genuine, receiving continues into a tank with an actual contamination issue, compounding the problem with more volume received on top of it." },
+              feedback: { en: "A single reading being inconclusive is a reason to verify it, not a reason to dismiss it — continuing on an unresolved anomaly risks compounding whatever it actually is." },
+            },
+            {
+              id: "pause_retest_report",
+              label: { en: "Pause flow to that tank and take a confirming sample/re-test before continuing, reporting the anomaly to the Master." },
+              isRecommended: true,
+              consequence: { en: "The re-test confirms a genuine trace of the previous grade, at a low level whose acceptability depends on the specific tolerance for the grade being received." },
+              feedback: { en: "Correct — pausing to verify a genuine anomaly, rather than dismissing or overreacting to it, is exactly the right response before more volume is committed either way." },
+              next: {
+                id: "trace_confirmed_low_level",
+                situation: { en: "The re-test confirms a genuine trace of the previous grade, at a low level whose acceptability depends on the specific tolerance for the grade being received." },
+                options: [
+                  {
+                    id: "resume_without_checking_tolerance",
+                    label: { en: "Resume receiving into the tank without checking the tolerance, since the trace level seems low anyway." },
+                    consequence: { en: "Receiving resumes based on an assumption about what counts as \"low enough,\" rather than the actual applicable specification — which may or may not permit that level." },
+                    feedback: { en: "\"Seems low\" isn't the same as \"within the actual permitted tolerance\" — the specification, not an impression of the number, is what should decide this." },
+                  },
+                  {
+                    id: "check_tolerance_decide",
+                    label: { en: "Check the actual tolerance/specification for the grade being received and make the continue/divert decision based on whether the confirmed trace level is within it." },
+                    isRecommended: true,
+                    consequence: { en: "The specification check gives a definitive answer, and the decision is made on that basis rather than an estimate." },
+                    feedback: { en: "Correct — now that a genuine, quantified finding exists, the actual applicable standard is what should decide the outcome, not an impression of the number." },
+                  },
+                  {
+                    id: "divert_regardless_of_level",
+                    label: { en: "Automatically divert to a different tank regardless of the confirmed trace level, since any contamination at all is unacceptable on principle." },
+                    consequence: { en: "The tank is diverted and the lineup reworked even though the confirmed trace level may well have been within the grade's own acceptable tolerance, at real unnecessary operational cost." },
+                    feedback: { en: "A rigid \"any trace at all\" rule ignores the fact that grades genuinely do have defined tolerances — the specification, once available, is what should actually settle this." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "declare_contaminated_divert_immediately",
+              label: { en: "Immediately declare the tank contaminated and divert all incoming flow to a different tank without further verification." },
+              consequence: { en: "Flow is diverted and the lineup reworked based on an unconfirmed reading, at real operational cost, before finding out whether the anomaly was even genuine." },
+              feedback: { en: "Reacting to the most serious interpretation before verifying it risks real operational cost for a problem that hasn't actually been confirmed yet." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "A correct initial setup doesn't guarantee it holds on its own" },
+        bestPractices: [
+          { en: "Maintain active verification throughout an extended operation, regardless of how smoothly it's gone so far." },
+        ],
+        commonErrors: [
+          { en: "Reducing verification because nothing has gone wrong yet, treating a correct start as a guarantee." },
+        ],
+      },
+      {
+        theme: { en: "Raise a genuine discrepancy rather than assuming your own information is the one that's wrong" },
+        bestPractices: [
+          { en: "Flag a discrepancy between instruction and plan for clarification, rather than silently deferring to the other source." },
+        ],
+        commonErrors: [
+          { en: "Assuming your own recollection or information must be the mistaken one without checking." },
+        ],
+      },
+      {
+        theme: { en: "Act on a developing trend early, before it exceeds a limit" },
+        bestPractices: [
+          { en: "Adjust proactively as a trend develops, even while still within normal range, rather than waiting for a limit to be crossed." },
+        ],
+        commonErrors: [
+          { en: "Waiting for a value to exceed its normal range before reacting, despite a clear developing trend." },
+        ],
+      },
+      {
+        theme: { en: "Once a genuine finding is confirmed, decide against the actual applicable standard — not an impression of the number" },
+        bestPractices: [
+          { en: "Check the actual specification or tolerance relevant to a confirmed finding, and base the decision on that, rather than an estimate of whether it \"seems\" acceptable." },
+        ],
+        commonErrors: [
+          { en: "Deciding based on an impression of a number rather than checking the specific standard that actually applies." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
