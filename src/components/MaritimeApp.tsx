@@ -1116,6 +1116,15 @@ const NAV_T:any = {
   pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas", specializedOps:"Operações Especializadas" },
 };
 
+// Vessel category display order + labels for ShipsPage grouping.
+const VESSEL_CATEGORY_ORDER = ["commercial", "offshore", "passenger", "fishing", "special"] as const;
+const VESSEL_CATEGORY_LABEL:any = {
+  fr:{ commercial:"Commercial", offshore:"Offshore", passenger:"Passagers", fishing:"Pêche", special:"Spécial" },
+  en:{ commercial:"Commercial", offshore:"Offshore", passenger:"Passenger", fishing:"Fishing", special:"Special" },
+  es:{ commercial:"Comercial", offshore:"Offshore", passenger:"Pasajeros", fishing:"Pesca", special:"Especial" },
+  pt:{ commercial:"Comercial", offshore:"Offshore", passenger:"Passageiros", fishing:"Pesca", special:"Especial" },
+};
+
 function ModulesListPage({ lang, onBack, onStart }:{lang:string;onBack:()=>void;onStart:(m:any)=>void}) {
   const t = NAV_T[lang] || NAV_T.fr;
   const all = Object.values(ALL_MODULES as any).flat() as any[];
@@ -1190,19 +1199,34 @@ function ShipsPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
     );
   }
 
+  const categoryLabels = VESSEL_CATEGORY_LABEL[lang] || VESSEL_CATEGORY_LABEL.fr;
+  const grouped = VESSEL_CATEGORY_ORDER.map((cat) => ({
+    cat,
+    items: entries.filter((v:any) => v.category === cat),
+  })).filter((g) => g.items.length > 0);
+
+  const renderShipButton = (v:any) => (
+    <button key={v.id} onClick={()=>setSelected(v.id)} style={{
+      display:"flex",alignItems:"center",gap:12,padding:"14px",
+      background:"rgba(13,31,60,0.8)",border:"1px solid rgba(77,166,255,0.27)",
+      borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
+    }}>
+      <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.15)",border:"1px solid rgba(77,166,255,0.27)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>🚢</div>
+      <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{v.label?.[lang] || v.label?.fr}</div>
+    </button>
+  );
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={t.ships} backLabel={t.back}/>
-      <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:10}}>
-        {entries.map((v:any)=>(
-          <button key={v.id} onClick={()=>setSelected(v.id)} style={{
-            display:"flex",alignItems:"center",gap:12,padding:"14px",
-            background:"rgba(13,31,60,0.8)",border:"1px solid rgba(77,166,255,0.27)",
-            borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
-          }}>
-            <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.15)",border:"1px solid rgba(77,166,255,0.27)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>🚢</div>
-            <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{v.label?.[lang] || v.label?.fr}</div>
-          </button>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:18}}>
+        {grouped.map(({ cat, items }) => (
+          <div key={cat}>
+            <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:8,textTransform:"uppercase"}}>{categoryLabels[cat] || cat}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+              {items.map(renderShipButton)}
+            </div>
+          </div>
         ))}
       </div>
     </div>
