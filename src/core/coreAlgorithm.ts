@@ -98,6 +98,20 @@
 // Step 5, dedup-by-operationId from Step 4) was already validated and
 // simply reused, same as Step 4's own "nothing new to decide" case.
 //
+// Step 10 (2026-08-30), scoped and validated before writing any code — adds
+// current→target rank trajectory combined with involvement-level filtering
+// for Specialized Operations. Not a clean mirror of Step 9: vesselTypeId is
+// a scalar property of the operation itself, but responsibilityLevels is
+// keyed per rank, and a trajectory spans multiple ranks — so an operation
+// that qualifies via two different ranks on the path may have two different
+// levels for the same operation. Flagged and resolved before writing any
+// code: OR/union semantics — an operation is included if ANY rank on the
+// path has one of the allowedLevels for that operation, not all of them.
+// This matches how every trajectory function so far already treats the
+// path (a lesson/operation relevant to any rank on the path is included in
+// the union, not required to be relevant to every rank on it) — chosen for
+// consistency, not asserted as the only valid reading.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -362,5 +376,36 @@ export function getSpecializedOperationsForTrajectoryAndVesselType(
 ): SpecializedOperation[] {
   return getSpecializedOperationsForTrajectory(currentRankId, targetRankId).filter(
     (op) => op.vesselTypeId === vesselTypeId
+  );
+}
+
+/**
+ * Returns Specialized Operations relevant to a current→target rank
+ * trajectory where at least one rank on the path has one of the given
+ * allowedLevels for that operation.
+ *
+ * User-validated decision for this step: OR/union semantics across the
+ * path — an operation qualifies if ANY rank on the path has an allowed
+ * level for it, not all of them. responsibilityLevels is keyed per rank,
+ * unlike vesselTypeId (a scalar property of the operation), so this is not
+ * a plain filter on getSpecializedOperationsForTrajectory()'s result the
+ * way getSpecializedOperationsForTrajectoryAndVesselType() is — each
+ * operation is re-checked against every rank on the path.
+ *
+ * Additive: getSpecializedOperationsForTrajectory() and
+ * getSpecializedOperationsByRankAndLevels() are unchanged.
+ */
+export function getSpecializedOperationsForTrajectoryAndLevels(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  allowedLevels: ResponsibilityLevel[]
+): SpecializedOperation[] {
+  const path = getRankPath(currentRankId, targetRankId);
+  const allowed = new Set(allowedLevels);
+  return getSpecializedOperationsForTrajectory(currentRankId, targetRankId).filter((op) =>
+    path.some((rankId) => {
+      const level = op.responsibilityLevels?.[rankId];
+      return level !== undefined && allowed.has(level);
+    })
   );
 }
