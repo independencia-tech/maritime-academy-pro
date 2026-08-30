@@ -75,6 +75,20 @@
 // is "available" if its prerequisite is later on the path but not yet
 // reached, that deserves its own scoping pass).
 //
+// Step 8 (2026-08-30), scoped and validated before writing any code — adds
+// involvement-level filtering for Specialized Operations, using the
+// `responsibilityLevels` field (100% populated across all 48 operations,
+// full coverage against every roleOnVessel entry: 310/310) that no prior
+// step had read. The field's own comment in specializedOperationRegistry.ts
+// states it was "deliberately not built to drive anything automatically
+// yet... this is only the data itself" — this step is that explicitly
+// named future goal. Built as an explicit allow-list
+// (`allowedLevels: ResponsibilityLevel[]`), not a "minimum level" threshold
+// — the 5 levels ("lead"|"perform"|"supervised"|"support"|"observe") have
+// no declared ordering anywhere in the codebase, so a threshold would bake
+// in an unconfirmed seniority assumption. Rank-only, additive, separate
+// function — no trajectory or vessel-type combination bundled in.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -85,6 +99,7 @@ import {
   SPECIALIZED_OPERATION_REGISTRY,
   type SpecializedOperation,
   type SpecializedOperationId,
+  type ResponsibilityLevel,
 } from "./specializedOperationRegistry";
 
 /**
@@ -289,4 +304,31 @@ export function getAvailableLessonsForRank(
       !completed.has(lesson.lessonId) &&
       lesson.prerequisites.every((prereqId) => completed.has(prereqId))
   );
+}
+
+/**
+ * Returns Specialized Operations relevant to a rank (via getSpecializedOperationsByRank())
+ * whose responsibilityLevels entry for that rank is one of the given allowedLevels.
+ *
+ * User-validated decisions for this step:
+ * - Explicit allow-list, not a "minimum level" threshold — the 5
+ *   ResponsibilityLevel values have no declared ordering anywhere in the
+ *   codebase, so a threshold would bake in an unconfirmed seniority
+ *   assumption. Callers decide which levels count as relevant.
+ * - An operation whose responsibilityLevels has no entry for the given rank
+ *   is excluded (defensive default; currently moot — every roleOnVessel
+ *   entry has a matching responsibilityLevels entry as of this step).
+ * - Rank-only, additive: getSpecializedOperationsByRank()/...ForTrajectory()/
+ *   ...ByRankAndVesselType() are unchanged. No trajectory or vessel-type
+ *   combination in this step.
+ */
+export function getSpecializedOperationsByRankAndLevels(
+  rankId: RankId,
+  allowedLevels: ResponsibilityLevel[]
+): SpecializedOperation[] {
+  const allowed = new Set(allowedLevels);
+  return getSpecializedOperationsByRank(rankId).filter((op) => {
+    const level = op.responsibilityLevels?.[rankId];
+    return level !== undefined && allowed.has(level);
+  });
 }
