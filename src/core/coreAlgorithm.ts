@@ -140,6 +140,25 @@
 // composition of Step 9's exact vesselTypeId match and Step 10's
 // OR/union-across-path level semantics, both already validated.
 //
+// Step 14 (2026-08-30), scoped and validated before writing any code — the
+// first synthesis-type function in this file, not another filter: Steps
+// 1-13 built two entirely parallel tracks (lessons, Specialized Operations)
+// that had never been combined. Three design points were flagged and
+// resolved before writing any code:
+// - Output shape: a keyed object ({ lessons, specializedOperations }), not
+//   a flat/tagged-union array — the two content types have genuinely
+//   different shapes, and forcing a discriminated union for a first
+//   combining step would be premature machinery.
+// - Composes the plain rank-only basics only (getRecommendedLessonsForRank
+//   + getSpecializedOperationsByRank) — not the completedLessonIds/
+//   vesselTypeId/allowedLevels-parameterized variants. This sidesteps a
+//   real asymmetry question (lessons have a completion concept via
+//   getAvailableLessonsForRank; Specialized Operations don't) rather than
+//   deciding it as a side effect of this step. A fully-parameterized
+//   version is a future step if wanted.
+// - Rank-only, no trajectory variant this step — consistent with every
+//   prior multi-step buildout here (Step 3→4, Step 5→9, Step 7→11, etc.).
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -524,4 +543,34 @@ export function getSpecializedOperationsForTrajectoryAndVesselTypeAndLevels(
       return level !== undefined && allowed.has(level);
     })
   );
+}
+
+/**
+ * Returns the combined recommendation for a rank: the plain rank-only
+ * lesson recommendations and the plain rank-only Specialized Operations
+ * relevant to that rank, side by side. The first synthesis-type function
+ * in this file — Steps 1-13 built lessons and Specialized Operations as
+ * two entirely parallel tracks that had never been combined.
+ *
+ * User-validated decisions for this step:
+ * - Keyed object output ({ lessons, specializedOperations }), not a flat or
+ *   tagged-union array — the two content types have genuinely different
+ *   shapes, and a discriminated union would be premature machinery.
+ * - Composes only the plain rank-only basics
+ *   (getRecommendedLessonsForRank + getSpecializedOperationsByRank) — not
+ *   the completedLessonIds/vesselTypeId/allowedLevels-parameterized
+ *   variants. Sidesteps a real asymmetry (lessons have a completion
+ *   concept, Specialized Operations don't) rather than deciding it here.
+ * - Rank-only — no trajectory variant in this step.
+ */
+export interface CombinedRecommendationForRank {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForRank(rankId: RankId): CombinedRecommendationForRank {
+  return {
+    lessons: getRecommendedLessonsForRank(rankId),
+    specializedOperations: getSpecializedOperationsByRank(rankId),
+  };
 }
