@@ -134,6 +134,12 @@
 // not a path of several. Pure composition of Step 5's exact vesselTypeId
 // match and Step 8's explicit allow-list; no new decisions.
 //
+// Step 13 (2026-08-30), scoped and validated before writing any code —
+// closes the SpecOps filter combinatorial space: trajectory + vessel-type +
+// involvement-level (the full quadruple). No new decisions — pure
+// composition of Step 9's exact vesselTypeId match and Step 10's
+// OR/union-across-path level semantics, both already validated.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -484,4 +490,38 @@ export function getSpecializedOperationsByRankAndVesselTypeAndLevels(
     const level = op.responsibilityLevels?.[rankId];
     return level !== undefined && allowed.has(level);
   });
+}
+
+/**
+ * Returns Specialized Operations relevant to a current→target rank
+ * trajectory and a specific vessel type where at least one rank on the
+ * path has one of the given allowedLevels for that operation — closes the
+ * SpecOps filter combinatorial space (trajectory + vessel-type + level).
+ *
+ * No new decisions this step — pure composition of
+ * getSpecializedOperationsForTrajectoryAndVesselType()'s exact vesselTypeId
+ * match (Step 9) and getSpecializedOperationsForTrajectoryAndLevels()'s
+ * OR/union-across-path level semantics (Step 10), both already validated.
+ *
+ * Additive: getSpecializedOperationsForTrajectoryAndVesselType() and
+ * getSpecializedOperationsForTrajectoryAndLevels() are unchanged.
+ */
+export function getSpecializedOperationsForTrajectoryAndVesselTypeAndLevels(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  vesselTypeId: VesselTypeId,
+  allowedLevels: ResponsibilityLevel[]
+): SpecializedOperation[] {
+  const path = getRankPath(currentRankId, targetRankId);
+  const allowed = new Set(allowedLevels);
+  return getSpecializedOperationsForTrajectoryAndVesselType(
+    currentRankId,
+    targetRankId,
+    vesselTypeId
+  ).filter((op) =>
+    path.some((rankId) => {
+      const level = op.responsibilityLevels?.[rankId];
+      return level !== undefined && allowed.has(level);
+    })
+  );
 }
