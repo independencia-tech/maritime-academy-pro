@@ -112,6 +112,21 @@
 // the union, not required to be relevant to every rank on it) — chosen for
 // consistency, not asserted as the only valid reading.
 //
+// Step 11 (2026-08-30), scoped and validated before writing any code —
+// closes the gap flagged since Step 7: prerequisite-aware lesson
+// availability at the trajectory level. Real data was checked before
+// deciding: deck_meteo_l4 (targeted at oow/chief_officer) requires
+// deck_meteo_l3 (targeted at deck_cadet/os/ab/bosun, an earlier tier) — a
+// genuine cross-rank prerequisite chain, not a hypothetical. This resolves
+// the ambiguity rather than complicating it: the strict reading (identical
+// logic to getAvailableLessonsForRank(), applied to
+// getRecommendedLessonsForTrajectory()'s result — prerequisites checked
+// against real completedLessonIds regardless of where either lesson sits
+// on the path) produces the pedagogically correct result automatically, and
+// keeps faith with the doctrine's Learning Data principle: only real
+// completion data drives decisions, never an assumption that an earlier
+// path segment is "as good as done." No new semantics — pure reuse.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -407,5 +422,33 @@ export function getSpecializedOperationsForTrajectoryAndLevels(
       const level = op.responsibilityLevels?.[rankId];
       return level !== undefined && allowed.has(level);
     })
+  );
+}
+
+/**
+ * Returns the union of getRecommendedLessonsForTrajectory() across the path
+ * from currentRankId to targetRankId that are currently available to take:
+ * not yet completed, and every entry in `prerequisites` (if any) is already
+ * in `completedLessonIds`. Mirrors getAvailableLessonsForRank() exactly,
+ * applied to the trajectory's recommended set instead of a single rank's.
+ *
+ * User-validated: prerequisites are checked against real completedLessonIds
+ * regardless of where either lesson sits on the path — no assumption that
+ * an earlier path segment is "as good as done." Real data has a genuine
+ * cross-rank prerequisite chain (deck_meteo_l4, targeted at oow/chief_officer,
+ * requires deck_meteo_l3, targeted at an earlier tier), and this strict
+ * reading handles it correctly by construction: deck_meteo_l4 stays
+ * unavailable until deck_meteo_l3 is actually completed.
+ */
+export function getAvailableLessonsForTrajectory(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  completedLessonIds: LessonId[]
+): LessonRegistryItem[] {
+  const completed = new Set(completedLessonIds);
+  return getRecommendedLessonsForTrajectory(currentRankId, targetRankId).filter(
+    (lesson) =>
+      !completed.has(lesson.lessonId) &&
+      lesson.prerequisites.every((prereqId) => completed.has(prereqId))
   );
 }
