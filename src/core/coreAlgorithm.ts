@@ -18,11 +18,25 @@
 // than in lessonRegistry.ts: the algorithm queries/filters registries, it
 // doesn't live inside them.
 //
+// Step 3 (2026-08-30), scoped and validated before writing any code — brings
+// Specialized Operations into the algorithm for the first time, per the
+// doctrine's explicit correction: Specialized Operations is a real content
+// source to read (specializedOperationRegistry.ts's roleOnVessel arrays),
+// not an undifferentiated lesson. specializedOperationRegistry.ts has no
+// targetRanks field like lessons do — rank relevance is expressed through
+// roleOnVessel, a genuinely different lookup than Steps 1-2's. Deliberately
+// scoped narrower than it could be: rank-only (no trajectory, no vessel-type
+// narrowing) — each of those would be its own future step if wanted.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
 import { RANK_REGISTRY, getRankMeta, type RankId } from "./rankRegistry";
 import { LESSON_REGISTRY, type LessonRegistryItem, type LessonId } from "./lessonRegistry";
+import {
+  SPECIALIZED_OPERATION_REGISTRY,
+  type SpecializedOperation,
+} from "./specializedOperationRegistry";
 
 /**
  * Returns the lessons targeted at a given rank.
@@ -91,4 +105,23 @@ export function getRecommendedLessonsForTrajectory(
   }
 
   return result;
+}
+
+/**
+ * Returns every Specialized Operation, across every vessel type, where the
+ * given rank appears in roleOnVessel.
+ *
+ * User-validated decisions for this step:
+ * - Any responsibilityLevel counts as relevant, including "observe" — no
+ *   involvement threshold is applied.
+ * - All vessel types are scanned; the result is not narrowed to any
+ *   particular vessel type (e.g. a user's target/dream ship).
+ * - Full SpecializedOperation objects are returned, consistent with
+ *   getRecommendedLessonsForRank() returning full LessonRegistryItem
+ *   objects rather than a lighter summary.
+ */
+export function getSpecializedOperationsByRank(rankId: RankId): SpecializedOperation[] {
+  return Object.values(SPECIALIZED_OPERATION_REGISTRY).filter((op) =>
+    (op.roleOnVessel ?? []).some((role) => role.rankId === rankId)
+  );
 }
