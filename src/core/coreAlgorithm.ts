@@ -159,6 +159,14 @@
 // - Rank-only, no trajectory variant this step — consistent with every
 //   prior multi-step buildout here (Step 3→4, Step 5→9, Step 7→11, etc.).
 //
+// Step 15 (2026-08-30), scoped and validated before writing any code — adds
+// the trajectory variant of getRecommendationsForRank(), mirroring it the
+// same way every other rank-only function here got a trajectory
+// counterpart (Step 1→2, Step 3→4, Step 7→11). No new decisions — same
+// plain-basics composition, keyed-object shape, and completion-concept
+// asymmetry deferral as Step 14, just over
+// getRecommendedLessonsForTrajectory() + getSpecializedOperationsForTrajectory().
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -572,5 +580,32 @@ export function getRecommendationsForRank(rankId: RankId): CombinedRecommendatio
   return {
     lessons: getRecommendedLessonsForRank(rankId),
     specializedOperations: getSpecializedOperationsByRank(rankId),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a current→target rank
+ * trajectory: the plain trajectory lesson recommendations and the plain
+ * trajectory Specialized Operations, side by side. Mirrors
+ * getRecommendationsForRank() exactly, the same way every other rank-only
+ * function here got a trajectory counterpart (Step 1→2, Step 3→4, Step
+ * 7→11).
+ *
+ * No new decisions this step — same keyed-object shape, plain-basics
+ * composition, and completion-concept asymmetry deferral as
+ * getRecommendationsForRank().
+ */
+export interface CombinedRecommendationForTrajectory {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForTrajectory(
+  currentRankId: RankId,
+  targetRankId: RankId
+): CombinedRecommendationForTrajectory {
+  return {
+    lessons: getRecommendedLessonsForTrajectory(currentRankId, targetRankId),
+    specializedOperations: getSpecializedOperationsForTrajectory(currentRankId, targetRankId),
   };
 }
