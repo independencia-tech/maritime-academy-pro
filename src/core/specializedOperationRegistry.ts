@@ -16844,6 +16844,511 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  jackup_sudden_leg_punch_through_emergency: {
+    operationId: "jackup_sudden_leg_punch_through_emergency",
+    vesselTypeId: "jackup",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Jackup — Sudden Leg Punch-Through During Preload" },
+    introduction: {
+      en: "During preload, a leg that had been penetrating normally suddenly and rapidly punches down further than expected — the seabed layer supporting it gives way faster than the staged ballasting process anticipated. This is the single most consequential real hazard in jackup operations: an uncontrolled punch-through can tilt the hull, overload the remaining legs, and in a severe case threaten the structural integrity of the rig itself. This directly interrupts and stress-tests op1's own infrastructure — the penetration-monitoring discipline and the Master/Chief Engineer joint-assessment role that op1 built are what should catch the earliest signs, and now have to function under a genuine, fast-developing failure rather than a routine or ambiguous reading.",
+    },
+    objectives: [
+      { en: "Describe the sequence of recognizing, responding to, and stabilizing after a sudden leg punch-through." },
+      { en: "Explain how op1's penetration-monitoring and joint-assessment infrastructure is what surfaces this emergency, and why speed of response matters once it's real." },
+      { en: "Identify how the crew reacts to arrest further penetration while monitoring hull attitude and load redistribution to the other legs simultaneously." },
+      { en: "Identify who does what, including the structural-assessment and continue-versus-abort decision that follows stabilization." },
+      { en: "Recognize correct versus incorrect judgment calls under the time pressure a genuine punch-through creates." },
+    ],
+    context: {
+      en: "Directly interrupts and stress-tests op1's penetration-monitoring and joint-assessment infrastructure — a seabed-failure emergency specific to the jacking mechanism, distinct from anything else in the catalog. Roster carries forward unchanged (5 ranks). Chief Engineer stays at lead — unlike Yacht's op2, where the second lead seat genuinely shifted, here the emergency is a direct escalation of the same ballast/jacking mechanism Chief Engineer already led in op1, so continuity is correct rather than a fresh decision. No new CommunicationParty needed.",
+    },
+
+    operationPhaseOrder: [
+      "punch_through_recognition_alert",
+      ["emergency_deballast_response", "hull_attitude_monitoring", "adjacent_leg_load_monitoring"],
+      "stabilization_confirmation",
+      "structural_damage_assessment",
+      "continue_or_abort_decision",
+      "notification_incident_reporting",
+    ],
+    operationPhases: {
+      punch_through_recognition_alert: {
+        id: "punch_through_recognition_alert",
+        title: { en: "Recognition & Alert" },
+        overview: { en: "A punch-through is defined by speed, not just how far a leg has gone." },
+        steps: [
+          { en: "The rapid, abnormal penetration rate is recognized as a genuine punch-through, distinct from normal preload monitoring." },
+          { en: "Alert raised immediately." },
+        ],
+        bestPractices: [
+          { en: "Treat a sudden rate change, not just an absolute depth, as the signal." },
+        ],
+        commonMistakes: [
+          { en: "Waiting to see if the rate settles before raising the alert." },
+        ],
+      },
+      emergency_deballast_response: {
+        id: "emergency_deballast_response",
+        title: { en: "Emergency De-Ballast Response" },
+        overview: { en: "Act immediately on the recognized punch-through rather than waiting for a routine joint assessment." },
+        steps: [
+          { en: "Chief Engineer initiates emergency de-ballasting to reduce the load driving further penetration." },
+        ],
+        bestPractices: [
+          { en: "Act immediately on the recognized punch-through rather than waiting for the joint assessment that op1's routine process would normally require first." },
+        ],
+      },
+      hull_attitude_monitoring: {
+        id: "hull_attitude_monitoring",
+        title: { en: "Hull Attitude Monitoring" },
+        overview: { en: "Attitude changes reported continuously, not as a single reading, since the situation is actively developing." },
+        steps: [
+          { en: "Hull list/trim monitored continuously as the affected leg's sudden movement can tilt the whole platform." },
+        ],
+        bestPractices: [
+          { en: "Report attitude changes continuously, not as a single reading, since the situation is actively developing." },
+        ],
+      },
+      adjacent_leg_load_monitoring: {
+        id: "adjacent_leg_load_monitoring",
+        title: { en: "Adjacent Leg Load Monitoring" },
+        overview: { en: "The other legs are at elevated risk during this event, not unaffected bystanders." },
+        steps: [
+          { en: "Load on the other legs monitored, since a sudden shift on one leg redistributes load onto the others." },
+        ],
+        bestPractices: [
+          { en: "Treat the other legs as at elevated risk during this event, not as unaffected bystanders." },
+        ],
+      },
+      stabilization_confirmation: {
+        id: "stabilization_confirmation",
+        title: { en: "Stabilization Confirmation" },
+        overview: { en: "A sustained period of stable readings, not a single favorable reading." },
+        steps: [
+          { en: "Confirmation that the penetration has genuinely stopped and the hull attitude has stabilized." },
+        ],
+        bestPractices: [
+          { en: "Require a sustained period of stable readings before declaring the situation stabilized, not a single favorable reading." },
+        ],
+      },
+      structural_damage_assessment: {
+        id: "structural_damage_assessment",
+        title: { en: "Structural Damage Assessment" },
+        overview: { en: "A genuine prerequisite to the next decision, not a formality to complete quickly." },
+        steps: [
+          { en: "Structural integrity of the affected leg and surrounding hull assessed before deciding how to proceed." },
+        ],
+        bestPractices: [
+          { en: "Treat this assessment as a genuine prerequisite to the next decision, not a formality to complete quickly." },
+        ],
+      },
+      continue_or_abort_decision: {
+        id: "continue_or_abort_decision",
+        title: { en: "Continue-or-Abort Decision" },
+        overview: { en: "Based on the actual assessment findings, not a default toward optimism about a location already invested in." },
+        steps: [
+          { en: "A decision is made on whether preload can safely continue at this location or the operation must be aborted/relocated." },
+        ],
+        bestPractices: [
+          { en: "Base the decision on the actual assessment findings, not a default toward optimism about a location already invested in." },
+        ],
+      },
+      notification_incident_reporting: {
+        id: "notification_incident_reporting",
+        title: { en: "Notification & Incident Reporting" },
+        overview: { en: "Reported in full regardless of the eventual decision's outcome." },
+        steps: [
+          { en: "Company and, if the decision is to abort, relevant shore parties notified." },
+          { en: "Incident reported." },
+        ],
+        bestPractices: [
+          { en: "Report the incident in full regardless of the eventual decision's outcome, not only if the operation is aborted." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "punch_through_alert",
+        phaseId: "punch_through_recognition_alert",
+        from: "deck", to: "bridge",
+        trigger: { en: "Abnormal penetration rate recognized." },
+        content: { en: "The crew member monitoring penetration recognizes the abnormal rate and alerts the Master immediately." },
+        whyItMatters: { en: "Every second before the alert is a second the emergency response hasn't started, in an event defined by how fast it develops." },
+      },
+      {
+        id: "deballast_action_report",
+        phaseId: "emergency_deballast_response",
+        from: "engine", to: "bridge",
+        trigger: { en: "Emergency de-ballasting initiated." },
+        content: { en: "Chief Engineer reports emergency de-ballasting has been initiated." },
+        whyItMatters: { en: "The Master needs to know the response is underway to coordinate the rest of the crew's monitoring effort." },
+      },
+      {
+        id: "hull_attitude_report",
+        phaseId: "hull_attitude_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing attitude monitoring." },
+        content: { en: "Hull list/trim reported continuously to the Master as it develops." },
+        whyItMatters: { en: "A continuously updated picture, not a single reading, is what a genuinely developing situation requires." },
+      },
+      {
+        id: "adjacent_leg_load_report",
+        phaseId: "adjacent_leg_load_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing load monitoring on other legs." },
+        content: { en: "Load status on the other legs reported to the Master." },
+        whyItMatters: { en: "A secondary punch-through on another leg would compound the emergency — the Master needs this tracked in parallel, not discovered after the fact." },
+      },
+      {
+        id: "stabilization_confirmed_report",
+        phaseId: "stabilization_confirmation",
+        from: "engine", to: "bridge",
+        trigger: { en: "Sustained stable readings observed." },
+        content: { en: "Chief Engineer confirms the penetration has genuinely stopped and attitude has stabilized over a sustained period." },
+        whyItMatters: { en: "The next phase's assessment shouldn't begin on a situation that only looks stable for a moment." },
+      },
+      {
+        id: "structural_assessment_report",
+        phaseId: "structural_damage_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Structural assessment complete." },
+        content: { en: "Findings from the structural assessment of the affected leg and hull reported to the Master." },
+        whyItMatters: { en: "The continue-or-abort decision depends entirely on this assessment being genuine and complete." },
+      },
+      {
+        id: "decision_communicated",
+        phaseId: "continue_or_abort_decision",
+        from: "bridge", to: "engine",
+        trigger: { en: "Continue-or-abort decision made." },
+        content: { en: "Master communicates the continue-or-abort decision clearly to the Chief Engineer and crew." },
+        whyItMatters: { en: "An ambiguous decision at this point risks a mixed response from a crew that just executed a genuine emergency procedure." },
+      },
+      {
+        id: "company_shore_notification",
+        phaseId: "notification_incident_reporting",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Incident ready for reporting." },
+        content: { en: "Master notifies the company and, if aborting, relevant shore parties, and reports the incident." },
+        whyItMatters: { en: "A structural incident of this kind needs a full report regardless of outcome, not only if the location is ultimately abandoned." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the overall emergency response: receives the alert, coordinates the crew's parallel monitoring effort, and makes the continue-or-abort decision from the structural assessment." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads hull attitude and adjacent-leg load monitoring throughout the emergency, and leads the structural damage assessment once stabilized — the operation's data-verification role, carried forward and escalated from op1." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Supports the deck-side monitoring effort and assists with the structural assessment inspection." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes monitoring and assessment support tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Leads the emergency de-ballast response and confirms stabilization — the operation's technical mechanism lead, continuing directly from op1's ballast/jacking lead role since this emergency is an escalation of that same mechanism." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Coordinates the crew's parallel monitoring effort." },
+          { en: "Makes the continue-or-abort decision." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency development — de-ballast response, hull attitude, and adjacent-leg loads together." },
+        ],
+        iReport: [
+          { en: "Notifies the company and shore parties; reports the incident." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize resuming preload or jacking before stabilization and structural assessment are both genuinely confirmed." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads hull attitude and adjacent-leg load monitoring; leads the structural damage assessment once stabilized." },
+        ],
+        iMonitor: [
+          { en: "Hull list/trim and other legs' load status throughout the emergency." },
+        ],
+        iReport: [
+          { en: "Reports attitude and load status continuously to the Master; reports structural assessment findings." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not report the situation stabilized based on a single favorable reading." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Supports deck-side monitoring and the structural assessment inspection." },
+        ],
+        iMonitor: [
+          { en: "Immediate deck-side conditions during the emergency." },
+        ],
+        iReport: [
+          { en: "Reports observations to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent assessment judgments outside assigned tasks." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes monitoring and assessment support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Assigned task conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent monitoring decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Leads the emergency de-ballast response; confirms stabilization." },
+        ],
+        iMonitor: [
+          { en: "Penetration rate, de-ballast effect, and stabilization trend throughout." },
+        ],
+        iReport: [
+          { en: "Reports de-ballast action and stabilization confirmation to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not declare stabilization confirmed without a sustained period of stable readings." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "jackup_punch_through_phase_sequence",
+        targetRanks: ["master", "chief_engineer", "chief_officer"],
+        prompt: { en: "Put the sudden leg punch-through emergency response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Recognition & Alert" } },
+          { id: "deballast", label: { en: "Emergency De-Ballast Response" } },
+          { id: "attitude", label: { en: "Hull Attitude Monitoring" } },
+          { id: "adjacent_load", label: { en: "Adjacent Leg Load Monitoring" } },
+          { id: "stabilize", label: { en: "Stabilization Confirmation" } },
+          { id: "structural_assess", label: { en: "Structural Damage Assessment" } },
+          { id: "decision", label: { en: "Continue-or-Abort Decision" } },
+          { id: "notification", label: { en: "Notification & Incident Reporting" } },
+        ],
+        correctOrder: ["alert", ["deballast", "attitude", "adjacent_load"], "stabilize", "structural_assess", "decision", "notification"],
+      },
+      {
+        type: "error_identification",
+        id: "jackup_premature_stabilization_call",
+        targetRanks: ["chief_engineer"],
+        scenario: { en: "After initiating emergency de-ballast, the penetration rate drops sharply on the very first reading afterward. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Declare stabilization confirmed based on this first favorable reading." }, isError: true, explanation: { en: "One favorable reading right after an active intervention isn't the same as a sustained, confirmed stabilization — declaring it too early risks moving to assessment on a situation that hasn't actually settled." } },
+          { id: "b", label: { en: "Continue monitoring over a sustained period before declaring stabilization." }, isError: false, explanation: { en: "Correct — this is exactly the discipline the operation requires." } },
+          { id: "c", label: { en: "Report the favorable reading as a positive sign while continuing to monitor." }, isError: false, explanation: { en: "Correct — sharing encouraging information doesn't require prematurely closing out the monitoring." } },
+          { id: "d", label: { en: "Wait for hull attitude to also confirm before declaring stabilized." }, isError: false, explanation: { en: "Correct — stabilization means the whole picture agrees, not just the penetration rate alone." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "jackup_pre_continue_decision_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The situation appears to have settled after the punch-through. Before making the continue-or-abort decision, review which conditions are actually satisfied." },
+        items: [
+          { id: "stabilization_sustained", label: { en: "Stabilization confirmed over a sustained period, not a single reading." }, isSatisfied: true },
+          { id: "structural_assessment_done", label: { en: "Structural assessment of the affected leg and hull completed." }, isSatisfied: true },
+          { id: "adjacent_loads_within_limits", label: { en: "Adjacent leg loads confirmed within limits." }, isSatisfied: false },
+          { id: "notification_sent", label: { en: "Company/shore notification sent regardless of the eventual decision's outcome." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "While monitoring hull attitude during the emergency, the list appears to have stopped increasing, but you haven't yet gotten a reading on the adjacent legs' loads." },
+        mission: { en: "As Chief Officer, decide whether to report the situation as improving." },
+        expectedActions: [
+          { en: "Report attitude status accurately as observed, but avoid characterizing the overall situation as improving until the adjacent-leg picture is also known." },
+        ],
+        why: [
+          { en: "A stopped list doesn't tell the whole story if load has simply shifted elsewhere in a way that creates a new risk — the picture isn't complete until both are known." },
+        ],
+        commonMistakes: [
+          { en: "Reporting the overall situation as improving based on attitude alone." },
+        ],
+        safetyPoints: [
+          { en: "Partial good news reported as complete good news can lead the Master to a premature sense of the emergency easing." },
+        ],
+      },
+      {
+        situation: { en: "Assisting with the structural assessment after stabilization, you notice something that looks like it could be minor cosmetic damage, or could be an early sign of something more serious — you're not certain which." },
+        mission: { en: "As Bosun, decide how to report it." },
+        expectedActions: [
+          { en: "Report the finding as uncertain and flag it for closer inspection by whoever is qualified to assess it, rather than deciding yourself which it is." },
+        ],
+        why: [
+          { en: "An assessment step exists precisely to resolve exactly this kind of uncertainty — deciding it's \"probably nothing\" without genuine expertise defeats the purpose of having the assessment at all." },
+        ],
+        commonMistakes: [
+          { en: "Downplaying an uncertain finding because it looks minor at a glance." },
+        ],
+        safetyPoints: [
+          { en: "Flagging uncertainty accurately is more valuable than a confident guess in either direction." },
+        ],
+      },
+      {
+        situation: { en: "You're assigned to monitor one of the adjacent legs' load readings, and the numbers seem to be holding steady, but you're not entirely sure what a concerning trend would look like for this specific rig." },
+        mission: { en: "As AB, decide how to proceed." },
+        expectedActions: [
+          { en: "Continue reporting the raw readings faithfully and say directly that you're unsure how to interpret a trend, rather than assuming steady means safe." },
+        ],
+        why: [
+          { en: "Reporting honest uncertainty about interpretation is more useful to those making decisions than a confident but potentially wrong read of what the numbers mean." },
+        ],
+        commonMistakes: [
+          { en: "Assuming steady readings mean no concern without actually knowing the relevant threshold." },
+        ],
+        safetyPoints: [
+          { en: "Raw, honestly-reported data serves the Master and Chief Engineer's judgment better than a well-intentioned but uninformed interpretation layered on top of it." },
+        ],
+      },
+      {
+        situation: { en: "The structural assessment comes back with no damage found, and there's real pressure — schedule, cost — to resume preload quickly at this location rather than treat the punch-through as reason enough to reconsider the location itself." },
+        mission: { en: "As Master, decide how to weigh this pressure." },
+        expectedActions: [
+          { en: "Base the continue-or-abort decision on the actual assessment and stabilization findings, treating schedule/cost pressure as a real but separate factor that doesn't override what the technical findings show." },
+        ],
+        why: [
+          { en: "A structural assessment finding \"no damage\" answers one question — whether the rig itself is still sound — but doesn't by itself answer whether the seabed at this location is safe to resume preloading on." },
+        ],
+        commonMistakes: [
+          { en: "Treating a clean structural assessment as sufficient justification to resume without separately reconsidering the location itself." },
+        ],
+        safetyPoints: [
+          { en: "The decision has two genuinely separate parts — is the rig sound, and is the location safe — and both deserve their own answer." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "jackup_continue_or_relocate_judgment",
+        title: { en: "The Assessment Says Sound — But Is the Location?" },
+        seatRankId: "master",
+        root: {
+          id: "root",
+          situation: { en: "The structural assessment comes back clean — no damage to the rig itself. There's real schedule and cost pressure to resume preload at this same spot rather than treat the punch-through as reason to look further." },
+          options: [
+            {
+              id: "resume_same_spot_clean_assessment",
+              label: { en: "Resume preload at the same spot, since the structural assessment came back clean." },
+              consequence: { en: "Preload resumes without ever actually checking whether the seabed condition that caused the punch-through is still present, since the assessment only ever addressed the rig's own structural soundness." },
+              feedback: { en: "A clean structural assessment answers whether the rig is sound, not whether this specific seabed is safe to preload on again — treating one as covering the other skips a genuinely separate question." },
+            },
+            {
+              id: "request_geotechnical_investigation",
+              label: { en: "Request additional geotechnical/seabed investigation of this specific location before deciding whether to resume or relocate." },
+              isRecommended: true,
+              consequence: { en: "The investigation finds a localized soft pocket in the seabed near the affected leg, with firm ground confirmed close by." },
+              feedback: { en: "Correct — the structural assessment and the seabed question are genuinely separate, and this one hadn't been answered yet." },
+              next: {
+                id: "soft_pocket_identified",
+                situation: { en: "The investigation identifies a localized soft pocket near the affected leg's position, with firm, confirmed ground just a short distance away." },
+                options: [
+                  {
+                    id: "resume_same_spot_after_investigation",
+                    label: { en: "Resume preload at the exact same spot, since the assessment shows this was just localized bad luck." },
+                    consequence: { en: "Preload resumes directly over the same soft pocket the investigation just identified, risking a repeat of the same failure." },
+                    feedback: { en: "The investigation didn't just explain what happened — it identified exactly where the problem is, which is information this decision should actually use, not set aside." },
+                  },
+                  {
+                    id: "reposition_to_firm_ground",
+                    label: { en: "Reposition the affected leg onto the confirmed firm ground nearby, then repeat preload from the start at the new position." },
+                    isRecommended: true,
+                    consequence: { en: "The reposition avoids the identified soft pocket entirely, and preload completes normally at the adjusted position." },
+                    feedback: { en: "Correct — using the specific, localized finding to make a proportionate adjustment is exactly what the investigation was for." },
+                  },
+                  {
+                    id: "abandon_location_entirely",
+                    label: { en: "Abandon the location entirely and move to a completely different site, despite firm ground being available nearby." },
+                    consequence: { en: "The rig incurs the cost and delay of a full relocation when the investigation had just identified a much smaller, sufficient fix." },
+                    feedback: { en: "Once the finding is this specific and actionable, a full relocation overshoots what the data actually calls for." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "relocate_immediately_no_investigation",
+              label: { en: "Relocate immediately to a different location without further investigation, given the punch-through already occurred here." },
+              consequence: { en: "The rig moves to an entirely new site, incurring significant time and cost, before finding out whether the actual problem was small and local enough to have been resolved with a modest reposition instead." },
+              feedback: { en: "Abandoning the location outright, before finding out whether the issue is small and local, trades a potentially minor fix for a much larger one." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Speed defines a punch-through — recognize rate, not just depth" },
+        bestPractices: [
+          { en: "Treat a sudden change in penetration rate as the signal, and raise the alert immediately rather than waiting to see if it settles." },
+        ],
+        commonErrors: [
+          { en: "Waiting for the rate to stabilize on its own before raising the alert." },
+        ],
+      },
+      {
+        theme: { en: "Confirm stabilization over a sustained period, not a single reading" },
+        bestPractices: [
+          { en: "Require a sustained period of stable readings — across all relevant indicators, not just one — before declaring the situation stabilized." },
+        ],
+        commonErrors: [
+          { en: "Declaring stabilization based on a single favorable reading right after an intervention." },
+        ],
+      },
+      {
+        theme: { en: "Report partial findings as partial, not as the whole picture" },
+        bestPractices: [
+          { en: "Report what's actually confirmed and flag genuine uncertainty explicitly, rather than characterizing an incomplete picture as fully resolved." },
+        ],
+        commonErrors: [
+          { en: "Reporting the overall situation as improving or resolved based on only part of the relevant data." },
+        ],
+      },
+      {
+        theme: { en: "After an incident, the equipment question and the location question are separate" },
+        bestPractices: [
+          { en: "Answer both \"is the rig itself sound\" and \"is this specific location/condition safe\" independently — a clean answer to one doesn't answer the other." },
+        ],
+        commonErrors: [
+          { en: "Treating a clean structural/equipment assessment as sufficient justification to resume without separately addressing the condition that caused the incident." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
