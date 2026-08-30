@@ -19849,6 +19849,507 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  dredger_sudden_pipeline_blockage_emergency: {
+    operationId: "dredger_sudden_pipeline_blockage_emergency",
+    vesselTypeId: "dredger",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Dredger (TSHD) — Sudden Pipeline Blockage" },
+    introduction: {
+      en: "Mid-dredging, the suction pipeline suddenly clogs — a large debris object, a compacted mass of material, or a mechanical obstruction blocks the flow — and density and production readings crash sharply and fast. Left unaddressed, this can damage the dredge pump, burst the pipeline under pressure, or force a much longer, costlier clearing operation than an early response would require. This directly interrupts and stress-tests op1's own infrastructure: the density/production monitoring built in op1 is exactly what has to catch this the instant it develops, and the dredge pump that carefully controlled production throughout op1 now has to react immediately to avoid compounding the blockage into real damage.",
+    },
+    objectives: [
+      { en: "Describe the sequence of recognizing, responding to, and clearing a sudden pipeline blockage." },
+      { en: "Explain how op1's density/production monitoring infrastructure is what surfaces this emergency, and why speed of response matters once it's real." },
+      { en: "Identify how the crew reacts to protect the pump and pipeline while diagnosing the blockage." },
+      { en: "Identify who does what, including the pipeline-condition assessment and continue-versus-clear decision that follows the initial response." },
+      { en: "Recognize correct versus incorrect judgment calls under the time pressure a genuine blockage creates." },
+    ],
+    context: {
+      en: "Directly interrupts and stress-tests op1's density/production monitoring infrastructure — a fast-developing mechanical emergency specific to the dredge pump and pipeline, distinct from anything else in the catalog. Roster carries forward unchanged (5 ranks). Chief Engineer stays at lead — mirroring the established precedent, since the emergency response (protecting the pump, diagnosing and clearing the blockage) is itself an escalation of the same mechanism Chief Engineer already led in op1. No new CommunicationParty needed.",
+    },
+
+    operationPhaseOrder: [
+      "blockage_recognition_alert",
+      ["emergency_pump_protection_response", "pipeline_pressure_monitoring", "draghead_position_stability_monitoring"],
+      "blockage_diagnosis_clearing_procedure",
+      "pipeline_condition_assessment",
+      "continue_or_repair_decision",
+      "notification_incident_reporting",
+    ],
+    operationPhases: {
+      blockage_recognition_alert: {
+        id: "blockage_recognition_alert",
+        title: { en: "Recognition & Alert" },
+        overview: { en: "The speed and sharpness of the crash, not just the absolute reading, is the signal." },
+        steps: [
+          { en: "The sharp, fast crash in density and production is recognized as a genuine blockage, distinct from normal variation." },
+          { en: "Alert raised immediately." },
+        ],
+        bestPractices: [
+          { en: "Treat the speed and sharpness of the crash, not just the absolute reading, as the signal." },
+        ],
+      },
+      emergency_pump_protection_response: {
+        id: "emergency_pump_protection_response",
+        title: { en: "Emergency Pump Protection Response" },
+        overview: { en: "Act immediately to protect the pump rather than continuing to run it at power against a blockage." },
+        steps: [
+          { en: "Chief Engineer reduces pump power or stops the pump to protect it from damage while the blockage is addressed." },
+        ],
+        bestPractices: [
+          { en: "Act immediately to protect the pump rather than continuing to run it at power against a blockage." },
+        ],
+      },
+      pipeline_pressure_monitoring: {
+        id: "pipeline_pressure_monitoring",
+        title: { en: "Pipeline Pressure Monitoring" },
+        overview: { en: "Rising pressure is a genuine hazard requiring active management, not just a number to note." },
+        steps: [
+          { en: "Pipeline pressure monitored continuously, since a blockage can cause dangerous pressure buildup behind the obstruction." },
+        ],
+        bestPractices: [
+          { en: "Treat rising pressure as a genuine hazard requiring active management, not just a number to note." },
+        ],
+      },
+      draghead_position_stability_monitoring: {
+        id: "draghead_position_stability_monitoring",
+        title: { en: "Draghead Position & Vessel Stability Monitoring" },
+        overview: { en: "Report any handling change continuously, not as a single observation." },
+        steps: [
+          { en: "Draghead position and vessel handling monitored, since a sudden blockage can affect how the vessel handles." },
+        ],
+        bestPractices: [
+          { en: "Report any handling change continuously, not as a single observation, since the situation is actively developing." },
+        ],
+      },
+      blockage_diagnosis_clearing_procedure: {
+        id: "blockage_diagnosis_clearing_procedure",
+        title: { en: "Blockage Diagnosis & Clearing Procedure" },
+        overview: { en: "Diagnose before clearing, since the wrong approach for the actual cause can make the blockage worse." },
+        steps: [
+          { en: "Likely cause and location of the blockage diagnosed, and the appropriate clearing procedure (reverse flow, mechanical clearing) executed." },
+        ],
+        bestPractices: [
+          { en: "Diagnose before clearing, since the wrong clearing approach for the actual cause can make the blockage worse." },
+        ],
+      },
+      pipeline_condition_assessment: {
+        id: "pipeline_condition_assessment",
+        title: { en: "Pipeline Condition Assessment" },
+        overview: { en: "A genuine prerequisite to the next decision, not a formality once the blockage clears." },
+        steps: [
+          { en: "Pipeline and pump condition assessed after clearing to determine whether the system is genuinely ready to resume." },
+        ],
+        bestPractices: [
+          { en: "Treat this assessment as a genuine prerequisite to the next decision, not a formality once the blockage clears." },
+        ],
+      },
+      continue_or_repair_decision: {
+        id: "continue_or_repair_decision",
+        title: { en: "Continue-or-Repair Decision" },
+        overview: { en: "Based on the actual assessment findings, not a default toward resuming because stopping is costly." },
+        steps: [
+          { en: "A decision is made on whether dredging can safely resume or the affected components need repair first." },
+        ],
+        bestPractices: [
+          { en: "Base the decision on the actual assessment findings, not a default toward resuming because stopping is costly." },
+        ],
+      },
+      notification_incident_reporting: {
+        id: "notification_incident_reporting",
+        title: { en: "Notification & Incident Reporting" },
+        overview: { en: "Reported in full regardless of the eventual decision's outcome." },
+        steps: [
+          { en: "Company and relevant parties notified; incident reported in full." },
+        ],
+        bestPractices: [
+          { en: "Report the incident in full regardless of the eventual decision's outcome, not only if repair is required." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "blockage_alert",
+        phaseId: "blockage_recognition_alert",
+        from: "engine", to: "bridge",
+        trigger: { en: "Sharp density/production crash recognized." },
+        content: { en: "Chief Engineer, monitoring density and production, recognizes the sharp crash and alerts the Master immediately." },
+        whyItMatters: { en: "Every second before the alert is a second the emergency response hasn't started, in an event defined by how fast it develops." },
+      },
+      {
+        id: "pump_protection_action_report",
+        phaseId: "emergency_pump_protection_response",
+        from: "engine", to: "bridge",
+        trigger: { en: "Pump power reduced/stopped." },
+        content: { en: "Chief Engineer reports pump power reduced or stopped to protect the system." },
+        whyItMatters: { en: "The Master needs to know the pump is protected before further diagnosis or handling changes are attempted." },
+      },
+      {
+        id: "pipeline_pressure_report",
+        phaseId: "pipeline_pressure_monitoring",
+        from: "engine", to: "bridge",
+        trigger: { en: "Ongoing pipeline pressure monitoring." },
+        content: { en: "Chief Engineer reports pipeline pressure status continuously to the Master." },
+        whyItMatters: { en: "Rising pressure behind a blockage is a genuine hazard — the Master needs this tracked in parallel, not discovered after the fact." },
+      },
+      {
+        id: "draghead_stability_report",
+        phaseId: "draghead_position_stability_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing draghead/vessel handling monitoring." },
+        content: { en: "Chief Officer reports draghead position and vessel handling status continuously to the Master." },
+        whyItMatters: { en: "A handling change during the emergency could compound the situation — the Master needs this monitored alongside the pump response, not as an afterthought." },
+      },
+      {
+        id: "diagnosis_clearing_report",
+        phaseId: "blockage_diagnosis_clearing_procedure",
+        from: "engine", to: "bridge",
+        trigger: { en: "Diagnosis complete, clearing procedure executed." },
+        content: { en: "Chief Engineer reports the diagnosed cause and the clearing procedure executed." },
+        whyItMatters: { en: "The Master needs to know the diagnosis actually informed the clearing approach, not that a generic procedure was applied regardless of cause." },
+      },
+      {
+        id: "condition_assessment_report",
+        phaseId: "pipeline_condition_assessment",
+        from: "engine", to: "bridge",
+        trigger: { en: "Post-clearing condition assessment complete." },
+        content: { en: "Chief Engineer reports findings from the post-clearing pipeline and pump condition assessment." },
+        whyItMatters: { en: "The continue-or-repair decision depends entirely on this assessment being genuine and complete." },
+      },
+      {
+        id: "decision_communicated",
+        phaseId: "continue_or_repair_decision",
+        from: "bridge", to: "engine",
+        trigger: { en: "Continue-or-repair decision made." },
+        content: { en: "Master communicates the continue-or-repair decision clearly to the Chief Engineer and crew." },
+        whyItMatters: { en: "An ambiguous decision at this point risks a mixed response from a crew that just executed a genuine emergency procedure." },
+      },
+      {
+        id: "company_notification",
+        phaseId: "notification_incident_reporting",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Incident ready for reporting." },
+        content: { en: "Master notifies the company and relevant parties, reporting the full incident." },
+        whyItMatters: { en: "A pipeline emergency of this kind needs a full report regardless of outcome, not only if repair is ultimately required." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the overall emergency response: receives the alert, coordinates the crew's parallel monitoring effort, and makes the continue-or-repair decision from the condition assessment." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads draghead position and vessel stability monitoring throughout the emergency — the operation's data-verification role, watching for any handling change the blockage might cause." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Supports the deck-side response and assists with pipeline inspection during clearing and assessment." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes support tasks under the Bosun's direction throughout the emergency." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Leads the emergency pump protection response, pipeline pressure monitoring, blockage diagnosis and clearing, and the condition assessment — the operation's technical mechanism lead, continuing directly from op1's dredge pump/hopper lead role since this emergency is an escalation of that same mechanism." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Coordinates the crew's parallel monitoring effort." },
+          { en: "Makes the continue-or-repair decision." },
+        ],
+        iMonitor: [
+          { en: "Overall emergency development — pump protection, pipeline pressure, and draghead/vessel stability together." },
+        ],
+        iReport: [
+          { en: "Notifies the company and relevant parties; reports the incident." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize resuming dredging before the condition assessment is genuinely confirmed." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads draghead position and vessel stability monitoring throughout the emergency." },
+        ],
+        iMonitor: [
+          { en: "Draghead position and vessel handling for any change during the emergency." },
+        ],
+        iReport: [
+          { en: "Reports handling status continuously to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not treat a handling change as routine without flagging it distinctly." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Supports the deck-side response and pipeline inspection." },
+        ],
+        iMonitor: [
+          { en: "Immediate deck-side conditions during the emergency." },
+        ],
+        iReport: [
+          { en: "Reports observations to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent assessment judgments outside assigned tasks." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Assigned task conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent monitoring decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Leads emergency pump protection, pipeline pressure monitoring, blockage diagnosis and clearing, and the condition assessment." },
+        ],
+        iMonitor: [
+          { en: "Pump status, pipeline pressure, and post-clearing condition throughout." },
+        ],
+        iReport: [
+          { en: "Reports pump protection action, pipeline pressure status, diagnosis/clearing outcome, and condition assessment to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not clear the blockage before diagnosing its likely cause." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "dredger_blockage_emergency_phase_sequence",
+        targetRanks: ["master", "chief_engineer", "chief_officer"],
+        prompt: { en: "Put the sudden pipeline blockage emergency response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Recognition & Alert" } },
+          { id: "pump_protect", label: { en: "Emergency Pump Protection Response" } },
+          { id: "pressure_monitor", label: { en: "Pipeline Pressure Monitoring" } },
+          { id: "stability_monitor", label: { en: "Draghead Position & Vessel Stability Monitoring" } },
+          { id: "diagnose_clear", label: { en: "Blockage Diagnosis & Clearing Procedure" } },
+          { id: "condition_assess", label: { en: "Pipeline Condition Assessment" } },
+          { id: "decision", label: { en: "Continue-or-Repair Decision" } },
+          { id: "notification", label: { en: "Notification & Incident Reporting" } },
+        ],
+        correctOrder: ["alert", ["pump_protect", "pressure_monitor", "stability_monitor"], "diagnose_clear", "condition_assess", "decision", "notification"],
+      },
+      {
+        type: "error_identification",
+        id: "dredger_clear_before_diagnose_shortcut",
+        targetRanks: ["chief_engineer"],
+        scenario: { en: "The blockage is recognized and the pump is protected. There's a temptation to immediately apply a generic clearing procedure (e.g., reverse flow) without first diagnosing the likely cause. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Immediately apply a generic clearing procedure without first diagnosing the likely cause." }, isError: true, explanation: { en: "The wrong clearing approach for the actual cause can make the blockage worse — skipping diagnosis trades a brief delay for a real risk of compounding the problem." } },
+          { id: "b", label: { en: "Diagnose the likely cause and location before selecting the clearing approach." }, isError: false, explanation: { en: "Correct — this is exactly the discipline the procedure requires." } },
+          { id: "c", label: { en: "Consider that the wrong clearing approach for the actual cause could worsen the blockage." }, isError: false, explanation: { en: "Correct — this is precisely the reasoning that should drive the diagnose-first sequence." } },
+          { id: "d", label: { en: "Report the diagnosis findings before executing the clearing procedure." }, isError: false, explanation: { en: "Correct — the Master benefits from knowing the diagnosis informed the approach, not just that something was attempted." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "dredger_pre_resume_decision_gate",
+        targetRanks: ["master"],
+        scenario: { en: "The blockage has been cleared. Before making the continue-or-repair decision, review which conditions are actually satisfied." },
+        items: [
+          { id: "pump_protection_confirmed", label: { en: "Pump protection response confirmed successful." }, isSatisfied: true },
+          { id: "diagnosis_clearing_complete", label: { en: "Blockage diagnosed and clearing procedure completed." }, isSatisfied: true },
+          { id: "condition_assessment_complete", label: { en: "Pipeline/pump condition assessment completed." }, isSatisfied: false },
+          { id: "pressure_normalized", label: { en: "Pipeline pressure confirmed returned to normal." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Assisting with pipeline inspection during the clearing procedure, you notice a section of pipe that looks slightly deformed, though it's hard to tell from your position whether that's new or just how it normally looks." },
+        mission: { en: "As Bosun, decide how to report it." },
+        expectedActions: [
+          { en: "Report the observation and get a closer, more qualified look before concluding either way, rather than deciding yourself it's probably normal." },
+        ],
+        why: [
+          { en: "A deformed section after a blockage event is exactly the kind of finding the condition assessment exists to catch — dismissing it because you're uncertain skips the check it's there for." },
+        ],
+        commonMistakes: [
+          { en: "Assuming an uncertain finding is probably normal because it's hard to tell from a distance." },
+        ],
+        safetyPoints: [
+          { en: "An uncertain observation reported honestly is more valuable than a confident guess made to avoid seeming unsure." },
+        ],
+      },
+      {
+        situation: { en: "During the emergency, you're asked to help monitor pipeline pressure readings, but you're not familiar with what a genuinely concerning pressure trend looks like for this system." },
+        mission: { en: "As AB, decide how to proceed." },
+        expectedActions: [
+          { en: "Report the raw readings faithfully and say directly that you're unsure how to interpret the trend, rather than assuming the readings are fine because nothing looks obviously alarming." },
+        ],
+        why: [
+          { en: "Honest uncertainty about interpretation is more useful to the Chief Engineer's judgment than a confident but uninformed read of the numbers." },
+        ],
+        commonMistakes: [
+          { en: "Assuming readings are fine because nothing looks dramatically wrong, without actually knowing the relevant threshold." },
+        ],
+        safetyPoints: [
+          { en: "Raw, honestly-reported data serves the emergency response better than a well-intentioned but uninformed interpretation layered on top of it." },
+        ],
+      },
+      {
+        situation: { en: "Monitoring vessel handling during the emergency, you notice a subtle change that could be related to the blockage, or could just be normal variation given current sea conditions." },
+        mission: { en: "As Chief Officer, decide how to report it." },
+        expectedActions: [
+          { en: "Report the change as observed, noting the ambiguity about its cause, rather than deciding on your own which explanation is correct." },
+        ],
+        why: [
+          { en: "A subtle handling change during an active emergency is worth flagging regardless of its eventual explanation — the Master's overall picture depends on knowing about it, not on you resolving the ambiguity yourself first." },
+        ],
+        commonMistakes: [
+          { en: "Deciding privately that a subtle change is probably unrelated and not mentioning it." },
+        ],
+        safetyPoints: [
+          { en: "Flagging genuine ambiguity is more useful during an active emergency than silently resolving it based on incomplete information." },
+        ],
+      },
+      {
+        situation: { en: "The condition assessment is taking longer than expected, and there's real pressure — schedule, cost — to authorize resuming dredging based on the clearing procedure alone, without waiting for the assessment to fully complete." },
+        mission: { en: "As Master, decide how to weigh this pressure." },
+        expectedActions: [
+          { en: "Wait for the condition assessment to genuinely complete before authorizing resumption, treating schedule/cost pressure as real but separate from what the assessment discipline requires." },
+        ],
+        why: [
+          { en: "Resuming on an incomplete assessment risks running the pump and pipeline in a condition that hasn't actually been confirmed safe, which could turn a manageable delay into a much larger failure." },
+        ],
+        commonMistakes: [
+          { en: "Authorizing resumption based on the clearing procedure completing, without waiting for the separate condition assessment." },
+        ],
+        safetyPoints: [
+          { en: "The assessment's value comes specifically from being complete — cutting it short to save time doesn't reduce the real risk, just the visible delay." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "dredger_blockage_cause_diagnostic_judgment",
+        title: { en: "Two Possible Causes, One Clearing Choice" },
+        seatRankId: "chief_engineer",
+        root: {
+          id: "root",
+          situation: { en: "The blockage is recognized and the pump is protected. Initial data suggests two plausible causes — a large discrete debris object, or a compacted mass of dredged material — and each would call for a different clearing approach. Using the wrong one risks worsening the blockage or damaging equipment." },
+          options: [
+            {
+              id: "guess_and_clear_immediately",
+              label: { en: "Pick the clearing approach that seems more likely based on a quick guess, and proceed to clear immediately to save time." },
+              consequence: { en: "The guessed approach turns out to be wrong for the actual cause, and the clearing attempt makes the blockage harder to resolve than it started." },
+              feedback: { en: "A genuine ambiguity between two real possibilities is worth resolving before acting — a quick guess trades a brief diagnostic delay for a real chance of making things worse." },
+            },
+            {
+              id: "gather_diagnostic_data",
+              label: { en: "Gather additional diagnostic data (pressure pattern analysis, camera/sensor check if available) to narrow down the likely cause before choosing a clearing approach." },
+              isRecommended: true,
+              consequence: { en: "The additional data points toward compacted material as the more likely cause, though not with complete certainty." },
+              feedback: { en: "Correct — narrowing down a genuine ambiguity with available data is exactly what should happen before committing to an approach that could make things worse if wrong." },
+              next: {
+                id: "compacted_material_likely",
+                situation: { en: "Additional diagnostic data suggests compacted material is the more likely cause, though not with complete certainty." },
+                options: [
+                  {
+                    id: "proceed_best_supported_conclusion",
+                    label: { en: "Proceed with the clearing approach appropriate for compacted material, based on the diagnostic data's best-supported conclusion, while remaining ready to switch if it doesn't work as expected." },
+                    isRecommended: true,
+                    consequence: { en: "The clearing procedure succeeds, consistent with the data-supported diagnosis, and the pipeline clears without further complication." },
+                    feedback: { en: "Correct — acting on the best-supported conclusion, while staying ready to adapt, is the right way to proceed once genuine ambiguity has been narrowed as far as the available data allows." },
+                  },
+                  {
+                    id: "gather_more_data_indefinitely",
+                    label: { en: "Since certainty isn't complete, continue gathering more diagnostic data indefinitely before committing to any clearing approach." },
+                    consequence: { en: "The pipeline remains blocked far longer than necessary, chasing a level of certainty the situation doesn't require before acting." },
+                    feedback: { en: "Once the data reasonably supports a conclusion, continuing to gather more without acting trades a resolvable delay for an unresolved one." },
+                  },
+                  {
+                    id: "choose_cautious_unsupported_option",
+                    label: { en: "Since the debris-object explanation can't be fully ruled out, apply the mechanical/physical clearing approach instead, as a more cautious \"worst case\" choice." },
+                    consequence: { en: "The mechanical approach, applied to what was actually compacted material, is less effective and risks unnecessary wear on equipment for a cause that wasn't actually present." },
+                    feedback: { en: "Choosing the approach the data doesn't support, in the name of caution, isn't actually more cautious — it just substitutes an assumption for what the diagnosis found." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "attempt_both_approaches_sequentially",
+              label: { en: "Attempt both clearing approaches in sequence without further diagnosis, reasoning that one of them is bound to work." },
+              consequence: { en: "The first, wrong approach is attempted first, compounding the blockage before the second, more appropriate approach is even tried." },
+              feedback: { en: "Trying the wrong approach first doesn't just fail to help — it actively risks making the situation worse before the right approach is ever reached." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Speed and sharpness define the emergency signal" },
+        bestPractices: [
+          { en: "Treat a sudden, sharp change in readings as the signal, and raise the alert immediately rather than waiting for further confirmation." },
+        ],
+        commonErrors: [
+          { en: "Waiting to see if a sudden change settles before raising the alert." },
+        ],
+      },
+      {
+        theme: { en: "Diagnose before acting when the wrong action could worsen the problem" },
+        bestPractices: [
+          { en: "Resolve genuine ambiguity about a cause using available diagnostic data before choosing an approach that could make things worse if wrong." },
+        ],
+        commonErrors: [
+          { en: "Guessing at a cause and acting immediately, or trying multiple approaches without diagnosis first." },
+        ],
+      },
+      {
+        theme: { en: "Report genuine ambiguity honestly rather than resolving it privately" },
+        bestPractices: [
+          { en: "Report an observation along with its genuine ambiguity, rather than deciding privately which explanation is correct and only reporting the conclusion." },
+        ],
+        commonErrors: [
+          { en: "Silently resolving an ambiguous observation instead of flagging the uncertainty itself." },
+        ],
+      },
+      {
+        theme: { en: "Act on the best-supported conclusion once diagnosis narrows it down — don't chase complete certainty indefinitely" },
+        bestPractices: [
+          { en: "Proceed on the conclusion the available data best supports, staying ready to adapt, rather than either acting before diagnosing or delaying indefinitely for more certainty than the situation requires." },
+        ],
+        commonErrors: [
+          { en: "Continuing to gather data well past the point of a reasonably supported conclusion, or choosing an unsupported \"cautious\" option instead of what the diagnosis actually found." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
