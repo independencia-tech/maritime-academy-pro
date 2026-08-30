@@ -28,6 +28,12 @@
 // scoped narrower than it could be: rank-only (no trajectory, no vessel-type
 // narrowing) — each of those would be its own future step if wanted.
 //
+// Step 4 (2026-08-30), scoped and validated before writing any code — adds
+// current→target rank trajectory for Specialized Operations, mirroring
+// Step 2's lesson trajectory. Reuses getRankPath() as-is (no new path logic)
+// and Step 3's already-validated decisions (any level counts, all vessel
+// types, full objects) — nothing new to decide for this step.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -36,6 +42,7 @@ import { LESSON_REGISTRY, type LessonRegistryItem, type LessonId } from "./lesso
 import {
   SPECIALIZED_OPERATION_REGISTRY,
   type SpecializedOperation,
+  type SpecializedOperationId,
 } from "./specializedOperationRegistry";
 
 /**
@@ -124,4 +131,30 @@ export function getSpecializedOperationsByRank(rankId: RankId): SpecializedOpera
   return Object.values(SPECIALIZED_OPERATION_REGISTRY).filter((op) =>
     (op.roleOnVessel ?? []).some((role) => role.rankId === rankId)
   );
+}
+
+/**
+ * Returns the union of getSpecializedOperationsByRank() across every rank on
+ * the path from currentRankId to targetRankId (see getRankPath for the
+ * same-department / symmetric / inclusive rules). An operation relevant to
+ * multiple ranks on the path appears once, not once per matching rank.
+ */
+export function getSpecializedOperationsForTrajectory(
+  currentRankId: RankId,
+  targetRankId: RankId
+): SpecializedOperation[] {
+  const path = getRankPath(currentRankId, targetRankId);
+  const seen = new Set<SpecializedOperationId>();
+  const result: SpecializedOperation[] = [];
+
+  for (const rankId of path) {
+    for (const op of getSpecializedOperationsByRank(rankId)) {
+      if (!seen.has(op.operationId)) {
+        seen.add(op.operationId);
+        result.push(op);
+      }
+    }
+  }
+
+  return result;
 }
