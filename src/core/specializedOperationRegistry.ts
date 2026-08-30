@@ -21868,6 +21868,526 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  cruise_ship_missing_guest_final_reconciliation: {
+    operationId: "cruise_ship_missing_guest_final_reconciliation",
+    vesselTypeId: "cruise_ship",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Cruise Ship — Missing Guest at Final Reconciliation" },
+    introduction: {
+      en: "The recall signal has gone out, all tenders have returned, and everything appears complete — until final manifest reconciliation reveals a guest who boarded the ship at embarkation but hasn't shown up as returned. This is a well-known, genuinely serious real-world cruise scenario, and it directly interrupts and stress-tests op1's own defining infrastructure: the continuous manifest reconciliation built in op1 is exactly what surfaces this discrepancy, and now the crew has to resolve it under real departure-delay pressure, with a genuine person's safety potentially at stake ashore.",
+    },
+    objectives: [
+      { en: "Describe the sequence of confirming a genuine discrepancy, searching/verifying, and deciding how to proceed." },
+      { en: "Explain how op1's continuous manifest reconciliation is what surfaces this situation, and why a discrepancy at final count deserves full resolution before departure, not a default assumption in either direction." },
+      { en: "Identify how the crew coordinates between the ship and shore-side resources to locate the missing guest." },
+      { en: "Identify who does what, including the boundary between the crew's onboard search/verification and any external search coordination." },
+      { en: "Recognize correct versus incorrect judgment calls under the time and departure pressure a genuine missing-guest situation creates." },
+    ],
+    context: {
+      en: "Directly interrupts and stress-tests op1's manifest reconciliation infrastructure — a genuine, serious real-world scenario, distinct from anything else in the catalog. Roster carries forward unchanged (6 ranks). Master + Chief Officer stay lead — a continuation, not a shift, since this emergency is a failure within the same cargo/passenger-inventory domain already led in op1. No new CommunicationParty needed — shore-side coordination and escalation both reuse shore_authorities.",
+    },
+
+    operationPhaseOrder: [
+      "discrepancy_recognition_alert",
+      ["onboard_search_verification", "cabin_and_records_check", "shore_side_coordination"],
+      "discrepancy_resolution_assessment",
+      "departure_delay_decision",
+      "escalation_to_authorities",
+      "notification_incident_reporting",
+    ],
+    operationPhases: {
+      discrepancy_recognition_alert: {
+        id: "discrepancy_recognition_alert",
+        title: { en: "Recognition & Alert" },
+        overview: { en: "Any unresolved discrepancy at final count requires full resolution, not a default assumption." },
+        steps: [
+          { en: "Final manifest reconciliation reveals a genuine discrepancy — a guest recorded as embarked but not confirmed returned." },
+          { en: "Alert raised immediately." },
+        ],
+        bestPractices: [
+          { en: "Treat any unresolved discrepancy at final count as requiring full resolution, not a default assumption the guest is simply late or already aboard." },
+        ],
+      },
+      onboard_search_verification: {
+        id: "onboard_search_verification",
+        title: { en: "Onboard Search & Verification" },
+        overview: { en: "Search thoroughly before assuming the discrepancy reflects the guest actually being ashore." },
+        steps: [
+          { en: "The ship is searched for the guest, since a discrepancy could reflect a recording error rather than an actual absence." },
+        ],
+        bestPractices: [
+          { en: "Search thoroughly before assuming the discrepancy reflects the guest actually being ashore." },
+        ],
+      },
+      cabin_and_records_check: {
+        id: "cabin_and_records_check",
+        title: { en: "Cabin & Records Check" },
+        overview: { en: "Use every available record, not just the manifest count alone." },
+        steps: [
+          { en: "The guest's cabin and available records (key-card usage, last known activity) checked for information on their last known status." },
+        ],
+        bestPractices: [
+          { en: "Use every available record, not just the manifest count alone, to build the most complete picture possible." },
+        ],
+      },
+      shore_side_coordination: {
+        id: "shore_side_coordination",
+        title: { en: "Shore-Side Coordination" },
+        overview: { en: "Initiate shore-side coordination promptly and in parallel with the onboard search." },
+        steps: [
+          { en: "Shore agent and port contacts coordinated with to check whether the guest is known to be ashore." },
+        ],
+        bestPractices: [
+          { en: "Initiate shore-side coordination promptly and in parallel with the onboard search, not only after the ship has been fully searched." },
+        ],
+      },
+      discrepancy_resolution_assessment: {
+        id: "discrepancy_resolution_assessment",
+        title: { en: "Discrepancy Resolution Assessment" },
+        overview: { en: "Genuine confirmation from the combined findings, not a conclusion drawn from any single track alone." },
+        steps: [
+          { en: "Findings from the onboard search, records check, and shore-side coordination assessed together to determine the guest's actual status." },
+        ],
+        bestPractices: [
+          { en: "Require genuine confirmation from the combined findings, not a conclusion drawn from any single track alone." },
+        ],
+      },
+      departure_delay_decision: {
+        id: "departure_delay_decision",
+        title: { en: "Departure Delay Decision" },
+        overview: { en: "Base the decision on the actual state of the discrepancy, not a default toward keeping to schedule." },
+        steps: [
+          { en: "Based on the assessment, a decision is made on whether to delay departure pending further resolution." },
+        ],
+        bestPractices: [
+          { en: "Base the delay decision on the actual state of the discrepancy, not a default toward keeping to schedule." },
+        ],
+      },
+      escalation_to_authorities: {
+        id: "escalation_to_authorities",
+        title: { en: "Escalation to Authorities" },
+        overview: { en: "Escalate based on how genuinely unresolved the situation is." },
+        steps: [
+          { en: "If the guest's status remains genuinely unresolved, local authorities are notified and search coordination escalated." },
+        ],
+        bestPractices: [
+          { en: "Escalate based on how genuinely unresolved the situation is, not delay escalation hoping for a late resolution." },
+        ],
+      },
+      notification_incident_reporting: {
+        id: "notification_incident_reporting",
+        title: { en: "Notification & Incident Reporting" },
+        overview: { en: "Report the full sequence of events even if the guest is found safe and accounted for." },
+        steps: [
+          { en: "Company notified and incident reported in full, regardless of how the situation is ultimately resolved." },
+        ],
+        bestPractices: [
+          { en: "Report the full sequence of events even if the guest is found safe and accounted for, not just if the outcome is serious." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "discrepancy_alert",
+        phaseId: "discrepancy_recognition_alert",
+        from: "deck", to: "bridge",
+        trigger: { en: "Discrepancy discovered." },
+        content: { en: "Chief Officer, discovering the discrepancy during final reconciliation, alerts the Master immediately." },
+        whyItMatters: { en: "Every minute before the alert is a minute less available to resolve the situation before departure pressure builds further." },
+      },
+      {
+        id: "onboard_search_status_report",
+        phaseId: "onboard_search_verification",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing onboard search." },
+        content: { en: "The search team reports status continuously to the Master as the onboard search proceeds." },
+        whyItMatters: { en: "The Master needs an ongoing picture of the search, not just a final result, to coordinate the other parallel tracks." },
+      },
+      {
+        id: "records_check_findings_report",
+        phaseId: "cabin_and_records_check",
+        from: "deck", to: "bridge",
+        trigger: { en: "Records check underway." },
+        content: { en: "Chief Officer reports findings from the cabin and records check to the Master." },
+        whyItMatters: { en: "Last-known activity data can meaningfully narrow down the guest's likely status, informing where the search and shore coordination should focus." },
+      },
+      {
+        id: "shore_coordination_status_report",
+        phaseId: "shore_side_coordination",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Shore coordination underway." },
+        content: { en: "Master/Chief Officer coordinates with shore agent and port contacts, reporting status as it develops." },
+        whyItMatters: { en: "Shore-side information is the only way to confirm or rule out the guest being ashore — this needs to run in parallel with the onboard effort, not sequentially after it." },
+      },
+      {
+        id: "assessment_findings_report",
+        phaseId: "discrepancy_resolution_assessment",
+        from: "deck", to: "bridge",
+        trigger: { en: "Assessment complete." },
+        content: { en: "Chief Officer reports the combined assessment findings from all three tracks to the Master." },
+        whyItMatters: { en: "The departure delay decision depends on a genuinely combined picture, not any single track's findings taken alone." },
+      },
+      {
+        id: "delay_decision_communicated",
+        phaseId: "departure_delay_decision",
+        from: "bridge", to: "deck",
+        trigger: { en: "Departure delay decision made." },
+        content: { en: "Master communicates the departure delay decision clearly to the crew." },
+        whyItMatters: { en: "An ambiguous decision at this point risks confusion among a crew coordinating multiple parallel efforts." },
+      },
+      {
+        id: "authorities_escalation_notification",
+        phaseId: "escalation_to_authorities",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Status remains genuinely unresolved." },
+        content: { en: "Master escalates to local authorities if the guest's status remains genuinely unresolved." },
+        whyItMatters: { en: "A genuinely unresolved situation needs professional search resources beyond what the crew alone can provide." },
+      },
+      {
+        id: "company_incident_report",
+        phaseId: "notification_incident_reporting",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Incident ready for reporting." },
+        content: { en: "Master notifies the company and reports the full incident, regardless of the eventual outcome." },
+        whyItMatters: { en: "A situation this serious needs a complete report even when it resolves safely, not only if it doesn't." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the overall response: receives the alert, coordinates the crew across the three parallel tracks, and makes the departure delay and escalation decisions." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads the discrepancy assessment, records check, and coordination of findings — the operation's cargo/passenger-inventory management lead, continuing directly from op1's lead role since this emergency is a failure within that same domain." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "Supports the onboard search effort and coordinates search team communication." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads the physical onboard search team." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes search tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Monitors ship-wide systems that could assist the search (CCTV access points, key-card system logs) if applicable — support role, since this operation's core is passenger accountability, not a marine mechanical system." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Coordinates the crew across the three parallel tracks." },
+          { en: "Makes the departure delay and escalation decisions." },
+        ],
+        iMonitor: [
+          { en: "Overall situation development — search status, records findings, and shore coordination together." },
+        ],
+        iReport: [
+          { en: "Escalates to authorities if needed; notifies the company and reports the incident." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize departure before the discrepancy is genuinely resolved or a deliberate delay/escalation decision is made." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads the discrepancy assessment, records check, and coordination of findings across tracks." },
+        ],
+        iMonitor: [
+          { en: "Search status, records findings, and shore coordination status throughout." },
+        ],
+        iReport: [
+          { en: "Reports records findings and combined assessment to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not conclude the guest's status based on any single track's findings alone." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Supports the onboard search effort and coordinates search team communication." },
+        ],
+        iMonitor: [
+          { en: "Search team status and coverage." },
+        ],
+        iReport: [
+          { en: "Reports search progress to the Bosun/Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent search-scope decisions." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads the physical onboard search team." },
+        ],
+        iMonitor: [
+          { en: "Search coverage and progress." },
+        ],
+        iReport: [
+          { en: "Reports search status to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not declare the search complete without covering the full planned area." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes search tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate search area conditions." },
+        ],
+        iReport: [
+          { en: "Reports findings to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent search-scope decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Monitors ship-wide systems that could assist the search (CCTV access points, key-card system logs) if applicable." },
+        ],
+        iMonitor: [
+          { en: "Relevant system logs and access records." },
+        ],
+        iReport: [
+          { en: "Reports any relevant system findings to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not direct the search or resolution decisions — support role only in this operation." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "cruise_ship_missing_guest_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the missing guest at final reconciliation response's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Recognition & Alert" } },
+          { id: "search", label: { en: "Onboard Search & Verification" } },
+          { id: "records", label: { en: "Cabin & Records Check" } },
+          { id: "shore_coord", label: { en: "Shore-Side Coordination" } },
+          { id: "assess", label: { en: "Discrepancy Resolution Assessment" } },
+          { id: "delay_decision", label: { en: "Departure Delay Decision" } },
+          { id: "escalate", label: { en: "Escalation to Authorities" } },
+          { id: "notification", label: { en: "Notification & Incident Reporting" } },
+        ],
+        correctOrder: ["alert", ["search", "records", "shore_coord"], "assess", "delay_decision", "escalate", "notification"],
+      },
+      {
+        type: "error_identification",
+        id: "cruise_ship_single_track_conclusion_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "The records check shows the guest's key card was last used near the gangway around the expected return time, suggesting they probably returned. There's a temptation to conclude the guest is aboard and clear the discrepancy without waiting for the onboard search or shore coordination results. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Conclude the guest is aboard based on the key-card record alone and clear the discrepancy without the search/shore coordination results." }, isError: true, explanation: { en: "A suggestive record from one track isn't the same as genuine confirmation — clearing the discrepancy on this alone skips exactly the combined verification this operation's discipline requires." } },
+          { id: "b", label: { en: "Wait for findings from all three tracks before concluding the guest's actual status." }, isError: false, explanation: { en: "Correct — this is exactly the discipline the assessment requires." } },
+          { id: "c", label: { en: "Treat the key-card record as one input among several, not a standalone confirmation." }, isError: false, explanation: { en: "Correct — this distinction is exactly what the combined assessment depends on." } },
+          { id: "d", label: { en: "Report the key-card finding while continuing the other tracks in parallel." }, isError: false, explanation: { en: "Correct — sharing a promising finding doesn't require stopping the other verification tracks." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "cruise_ship_pre_departure_decision_gate",
+        targetRanks: ["master"],
+        scenario: { en: "Some findings have come in. Before making the departure delay decision, review which conditions are actually satisfied." },
+        items: [
+          { id: "search_completed", label: { en: "Onboard search completed." }, isSatisfied: true },
+          { id: "records_completed", label: { en: "Records check completed." }, isSatisfied: true },
+          { id: "shore_confirmed", label: { en: "Shore-side coordination confirmed." }, isSatisfied: false },
+          { id: "combined_assessment_resolved", label: { en: "Combined assessment genuinely resolved, not just individual tracks." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Coordinating search team communication, you receive a report from one team member that an area has been checked, but the report is vague about exactly which parts of that area were covered." },
+        mission: { en: "As OOW, decide how to handle it." },
+        expectedActions: [
+          { en: "Ask for specifics on exactly what was checked before marking that area as cleared, rather than accepting a vague report as sufficient." },
+        ],
+        why: [
+          { en: "A vague \"checked\" report could mean anything from a thorough sweep to a quick glance — treating it as equivalent to a specific, confirmed clear risks leaving part of the area genuinely unsearched." },
+        ],
+        commonMistakes: [
+          { en: "Marking an area cleared based on a vague report without confirming what was actually covered." },
+        ],
+        safetyPoints: [
+          { en: "A search is only as good as its least specific report — clarifying vague reports is what keeps the overall coverage picture accurate." },
+        ],
+      },
+      {
+        situation: { en: "Searching an assigned area, you find something that might belong to the missing guest — a personal item — in a location that seems unusual for them to have left it." },
+        mission: { en: "As AB, decide how to handle the finding." },
+        expectedActions: [
+          { en: "Report the finding immediately with its exact location, rather than deciding on your own what it might mean." },
+        ],
+        why: [
+          { en: "An unusual location for a personal item could be a meaningful clue about the guest's movements — deciding privately what it means, rather than reporting it fully, risks losing information that could matter to the overall assessment." },
+        ],
+        commonMistakes: [
+          { en: "Forming your own theory about a finding instead of reporting it fully and promptly." },
+        ],
+        safetyPoints: [
+          { en: "Complete, prompt reporting of any finding — without interpretation — gives those assessing the full picture the most accurate information to work with." },
+        ],
+      },
+      {
+        situation: { en: "Asked to check key-card access logs, you find the system only logs entry at a few major checkpoints, not everywhere the guest could have gone." },
+        mission: { en: "As Chief Engineer, decide how to characterize this limitation when reporting." },
+        expectedActions: [
+          { en: "Report both what the logs show and their genuine limitation clearly, rather than presenting the available data as if it covers the guest's full movements." },
+        ],
+        why: [
+          { en: "Overstating what incomplete data actually shows could lead the assessment to put more weight on it than it deserves — an honest account of the data's limits is as important as the data itself." },
+        ],
+        commonMistakes: [
+          { en: "Reporting available log data without clearly flagging what it doesn't cover." },
+        ],
+        safetyPoints: [
+          { en: "An honestly-scoped finding is more useful to the assessment than one that implies more completeness than it has." },
+        ],
+      },
+      {
+        situation: { en: "Shore-side coordination hasn't yet confirmed anything, the onboard search is still ongoing, and there's real commercial and scheduling pressure to depart on time." },
+        mission: { en: "As Master, decide how to weigh this pressure." },
+        expectedActions: [
+          { en: "Hold departure until the situation is genuinely resolved or a deliberate, informed decision is made, rather than departing to keep schedule while the guest's status remains unknown." },
+        ],
+        why: [
+          { en: "Departing while a guest's whereabouts are genuinely unresolved risks leaving them ashore in a foreign port with no way to be reunited with the ship, a far more serious outcome than a schedule delay." },
+        ],
+        commonMistakes: [
+          { en: "Prioritizing schedule adherence over resolving a genuinely open safety question." },
+        ],
+        safetyPoints: [
+          { en: "A delayed departure is recoverable; departing without genuinely knowing a guest's status is not, if it turns out they were actually left behind." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "cruise_ship_search_lead_allocation_judgment",
+        title: { en: "A Possible Sighting, Mid-Search" },
+        seatRankId: "bosun",
+        root: {
+          id: "root",
+          situation: { en: "Partway through the systematic search, a crew member reports a possible sighting of the guest at a specific venue a while ago. You need to decide how to respond without losing the coverage the systematic search is already building." },
+          options: [
+            {
+              id: "redirect_entire_team",
+              label: { en: "Redirect the entire search team to that specific venue based on the sighting, abandoning the systematic sweep of other areas." },
+              consequence: { en: "The sighting turns out to be a dead end at that specific venue, and the systematic sweep of other areas has now fallen behind with no one covering it in the meantime." },
+              feedback: { en: "A single lead, however promising, doesn't justify abandoning comprehensive coverage entirely — if the lead doesn't pan out, the areas left uncovered are a real cost." },
+            },
+            {
+              id: "send_small_team_continue_sweep",
+              label: { en: "Send a small team to check the specific lead while the rest continue the systematic search of other areas as planned." },
+              isRecommended: true,
+              consequence: { en: "The small team finds nothing at the venue itself, but a nearby record suggests the guest may have moved on to a different area not yet covered by the original sweep." },
+              feedback: { en: "Correct — checking a specific lead without abandoning comprehensive coverage lets you follow up on new information without losing ground elsewhere." },
+              next: {
+                id: "venue_dead_end_new_record",
+                situation: { en: "The small team finds nothing at the specific venue, but a nearby record suggests the guest may have moved on to a different area not yet covered by the original systematic sweep." },
+                options: [
+                  {
+                    id: "conclude_unreliable_keep_original",
+                    label: { en: "Since the specific venue didn't pan out, conclude the sighting was unreliable and stop pursuing that thread, keeping to the original systematic sweep." },
+                    consequence: { en: "The newly-suggested area goes unchecked, even though a specific, fresh piece of information now points toward it." },
+                    feedback: { en: "The venue not panning out doesn't mean the lead is dead — the record found there is itself new information worth following, not a reason to abandon the thread." },
+                  },
+                  {
+                    id: "redirect_resources_cover_new_area_maintain_sweep",
+                    label: { en: "Redirect resources to specifically cover the newly-suggested area while ensuring the rest of the original systematic sweep still continues without gaps." },
+                    isRecommended: true,
+                    consequence: { en: "The newly-suggested area is covered without leaving the rest of the original sweep unaddressed, keeping both the fresh lead and comprehensive coverage intact." },
+                    feedback: { en: "Correct — following a fresh, specific lead while maintaining coverage elsewhere is exactly the balance this kind of search requires." },
+                  },
+                  {
+                    id: "send_entire_team_new_area_exclusively",
+                    label: { en: "Send the entire search team to the new area exclusively, abandoning the rest of the original planned sweep, since this new information now seems more promising." },
+                    consequence: { en: "The new area is thoroughly covered, but the rest of the original sweep is left unfinished, potentially missing the guest if they're actually somewhere else entirely." },
+                    feedback: { en: "A more promising lead still doesn't justify abandoning the rest of the planned coverage — the guest could just as easily be in an area the original sweep hadn't reached yet." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "dismiss_sighting_no_followup",
+              label: { en: "Dismiss the sighting as unreliable since it's secondhand and continue the search exactly as originally planned without investigating it at all." },
+              consequence: { en: "If the sighting had been accurate, a genuinely useful lead is never followed up on at all." },
+              feedback: { en: "A secondhand report isn't confirmed, but it isn't nothing either — dismissing it without any follow-up discards potentially useful information for no real cost saved." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "A vague report isn't the same as a confirmed clear" },
+        bestPractices: [
+          { en: "Ask for specifics on exactly what was checked before treating an area as cleared." },
+        ],
+        commonErrors: [
+          { en: "Accepting a vague \"checked\" report as equivalent to a confirmed, specific clear." },
+        ],
+      },
+      {
+        theme: { en: "Report a finding fully and promptly — don't interpret it yourself" },
+        bestPractices: [
+          { en: "Report a finding with its exact details immediately, leaving interpretation to those assessing the full picture." },
+        ],
+        commonErrors: [
+          { en: "Forming a private theory about a finding instead of reporting it fully and promptly." },
+        ],
+      },
+      {
+        theme: { en: "Report a data source's limitations honestly, not just what it shows" },
+        bestPractices: [
+          { en: "Clearly flag what a data source doesn't cover alongside what it does show." },
+        ],
+        commonErrors: [
+          { en: "Presenting incomplete data as if it covers more than it actually does." },
+        ],
+      },
+      {
+        theme: { en: "A specific lead deserves follow-up without abandoning comprehensive coverage" },
+        bestPractices: [
+          { en: "Investigate a new, specific lead with a portion of resources while maintaining the rest of the planned, comprehensive coverage." },
+        ],
+        commonErrors: [
+          { en: "Either abandoning comprehensive coverage to chase a single lead, or dismissing a lead entirely without any follow-up." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
