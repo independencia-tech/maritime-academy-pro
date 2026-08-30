@@ -167,6 +167,19 @@
 // asymmetry deferral as Step 14, just over
 // getRecommendedLessonsForTrajectory() + getSpecializedOperationsForTrajectory().
 //
+// Step 16 (2026-08-30), scoped and validated before writing any code —
+// resolves the lesson-vs-SpecOps completion-concept asymmetry flagged since
+// Step 14, but minimally: adds completedLessonIds to the combined
+// recommendation for a rank, applied only to the lessons side (via
+// getAvailableLessonsForRank instead of the plain lesson function).
+// SpecOps stays at the plain rank-only lookup — this step does NOT also
+// add vesselTypeId/allowedLevels branching for SpecOps (SpecOps already
+// has 4 rank-based filter variants; deciding how a combined function
+// should branch across them is a separate, bigger question deferred to a
+// future step if wanted). Consistent with how Step 6 added
+// completedLessonIds alone without also tackling vesselType at the same
+// time.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -607,5 +620,34 @@ export function getRecommendationsForTrajectory(
   return {
     lessons: getRecommendedLessonsForTrajectory(currentRankId, targetRankId),
     specializedOperations: getSpecializedOperationsForTrajectory(currentRankId, targetRankId),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a rank, with completed lessons
+ * excluded and prerequisites enforced on the lessons side — resolves the
+ * lesson-vs-SpecOps completion-concept asymmetry flagged since Step 14, but
+ * minimally: only the lessons side changes (uses
+ * getAvailableLessonsForRank() instead of getRecommendedLessonsForRank()).
+ * The specializedOperations side stays the plain rank-only lookup
+ * (getSpecializedOperationsByRank()) — SpecOps already has 4 rank-based
+ * filter variants (Steps 3, 5, 8, 12); deciding how a combined function
+ * should branch across them is a separate, bigger question deferred to a
+ * future step if wanted, not decided as a side effect of this one.
+ *
+ * Additive: getRecommendationsForRank() is unchanged.
+ */
+export interface CombinedRecommendationForRankExcludingCompleted {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForRankExcludingCompleted(
+  rankId: RankId,
+  completedLessonIds: LessonId[]
+): CombinedRecommendationForRankExcludingCompleted {
+  return {
+    lessons: getAvailableLessonsForRank(rankId, completedLessonIds),
+    specializedOperations: getSpecializedOperationsByRank(rankId),
   };
 }
