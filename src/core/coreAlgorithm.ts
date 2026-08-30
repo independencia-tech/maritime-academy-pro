@@ -57,6 +57,24 @@
 // future step if wanted, since Specialized Operations doesn't currently
 // track a "completed" concept the way lessons do.
 //
+// Step 7 (2026-08-30), scoped and validated before writing any code — adds
+// prerequisite-aware lesson availability, a new kind of decision (not just
+// "relevant" but "currently unlockable") built on the real, if sparse,
+// `prerequisites: LessonId[]` field (7/134 lessons populated at scoping
+// time) plus Step 6's completedLessonIds input. Exam-relevance filtering
+// (requiredForExam/examCategory/certificateCategory/estimatedExamWeight)
+// was considered for this step and found currently inert — 0% populated
+// across all 134 lessons at scoping time — so it was not built; flagged
+// transparently rather than built against non-existent data. Deliberately
+// narrower than it could be: prerequisites only (recommendedBefore/
+// recommendedAfter are soft ordering hints, not hard gates, and are out of
+// scope here to avoid silently turning a suggestion into a requirement),
+// completed lessons excluded from the result (an already-completed lesson
+// isn't "available to take next"), rank-only (no trajectory variant this
+// step — trajectory availability raises its own question, whether a lesson
+// is "available" if its prerequisite is later on the path but not yet
+// reached, that deserves its own scoping pass).
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -245,5 +263,30 @@ export function getRecommendedLessonsForTrajectoryExcludingCompleted(
   const completed = new Set(completedLessonIds);
   return getRecommendedLessonsForTrajectory(currentRankId, targetRankId).filter(
     (lesson) => !completed.has(lesson.lessonId)
+  );
+}
+
+/**
+ * Returns the lessons targeted at a given rank that are currently available
+ * to take: not yet completed, and every entry in `prerequisites` (if any)
+ * is already in `completedLessonIds`. A lesson with no prerequisites is
+ * always available (subject to not being completed already).
+ *
+ * User-validated decisions for this step:
+ * - `prerequisites` only — `recommendedBefore`/`recommendedAfter` are soft
+ *   ordering hints, not hard gates, and are not read here.
+ * - All prerequisites must be satisfied (AND-gate), not just one.
+ * - Already-completed lessons are excluded from the result.
+ * - Rank-only — no trajectory variant in this step.
+ */
+export function getAvailableLessonsForRank(
+  rankId: RankId,
+  completedLessonIds: LessonId[]
+): LessonRegistryItem[] {
+  const completed = new Set(completedLessonIds);
+  return getRecommendedLessonsForRank(rankId).filter(
+    (lesson) =>
+      !completed.has(lesson.lessonId) &&
+      lesson.prerequisites.every((prereqId) => completed.has(prereqId))
   );
 }
