@@ -17849,6 +17849,507 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  drillship_dp_excursion_emergency_disconnect: {
+    operationId: "drillship_dp_excursion_emergency_disconnect",
+    vesselTypeId: "drillship",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Drillship — DP Excursion Forcing Emergency Disconnect" },
+    introduction: {
+      en: "During operations with the riser connected, the vessel begins to drift or drive off its held position — a genuine DP excursion, not a minor, self-correcting deviation. As the vessel moves toward the edge of its safe watch circle, the crew has to decide, and if necessary execute, an emergency disconnect: releasing the riser/BOP connection in a controlled way before the excursion damages the riser, the wellhead, or the vessel itself. This directly interrupts and stress-tests op1's own infrastructure — the DP position monitoring built in op1 is exactly what has to catch this developing, and the riser/BOP connection that op1 carefully established now has to be deliberately and safely broken apart under real time pressure.",
+    },
+    objectives: [
+      { en: "Describe the sequence of recognizing a DP excursion, escalating through defined watch-circle limits, and executing the emergency disconnect if required." },
+      { en: "Explain how op1's DP position monitoring is what surfaces this emergency, and why the watch-circle limits exist as defined decision points rather than a single go/no-go moment." },
+      { en: "Identify how the crew reallocates between managing the DP excursion itself and preparing/executing the disconnect simultaneously." },
+      { en: "Identify who does what, including the boundary between \"yellow\" (prepare) and \"red\" (execute) watch-circle escalation." },
+      { en: "Recognize correct versus incorrect judgment calls under the time pressure a genuine DP excursion creates." },
+    ],
+    context: {
+      en: "Directly interrupts and stress-tests op1's DP position monitoring and riser/BOP connection infrastructure — a genuine industry-standard emergency (drive-off/drift-off leading to EDS), distinct from anything else in the catalog. Roster carries forward unchanged (5 ranks). Chief Engineer stays at lead — mirroring the Jackup precedent, since executing the emergency disconnect is itself a riser/BOP system action, an escalation of the same mechanism Chief Engineer already led in op1. No new CommunicationParty needed.",
+    },
+
+    operationPhaseOrder: [
+      "dp_excursion_recognition_alert",
+      ["disconnect_preparation_sequence", "continued_position_monitoring", "riser_tension_management"],
+      "red_watch_circle_decision",
+      "emergency_disconnect_execution",
+      "post_disconnect_stabilization_verification",
+      "notification_incident_reporting",
+    ],
+    operationPhases: {
+      dp_excursion_recognition_alert: {
+        id: "dp_excursion_recognition_alert",
+        title: { en: "Recognition & Alert" },
+        overview: { en: "Crossing into the yellow watch circle is the trigger for the alert, not a wait-and-see moment." },
+        steps: [
+          { en: "DP position monitoring detects the vessel moving beyond normal watch-circle limits." },
+          { en: "Alert raised immediately." },
+        ],
+        bestPractices: [
+          { en: "Treat crossing into the yellow watch circle as the trigger for the alert, not a wait-and-see moment." },
+        ],
+      },
+      disconnect_preparation_sequence: {
+        id: "disconnect_preparation_sequence",
+        title: { en: "Disconnect Preparation Sequence" },
+        overview: { en: "Prepare fully at the yellow stage so execution, if needed, isn't delayed by last-minute setup." },
+        steps: [
+          { en: "Chief Engineer begins staging the emergency disconnect sequence without yet committing to disconnect." },
+        ],
+        bestPractices: [
+          { en: "Prepare fully at the yellow stage so execution, if needed, isn't delayed by last-minute setup." },
+        ],
+      },
+      continued_position_monitoring: {
+        id: "continued_position_monitoring",
+        title: { en: "Continued Position Monitoring" },
+        overview: { en: "Report position against the specific limit thresholds, not just a general sense of the situation." },
+        steps: [
+          { en: "DP position tracked continuously against the defined watch-circle limits throughout the escalating situation." },
+        ],
+        bestPractices: [
+          { en: "Report position against the specific limit thresholds, not just a general sense of \"still moving\" or \"holding.\"" },
+        ],
+      },
+      riser_tension_management: {
+        id: "riser_tension_management",
+        title: { en: "Riser Tension Management" },
+        overview: { en: "Riser condition is a genuine input to the disconnect decision, not just a system to protect after the fact." },
+        steps: [
+          { en: "Riser tension and angle monitored and managed as the vessel's position shifts." },
+        ],
+        bestPractices: [
+          { en: "Treat riser condition as a genuine input to the disconnect decision, not just a system to protect after the fact." },
+        ],
+      },
+      red_watch_circle_decision: {
+        id: "red_watch_circle_decision",
+        title: { en: "Red Watch-Circle Decision" },
+        overview: { en: "The defined red-limit threshold itself, not a judgment call made against the pressure of the moment." },
+        steps: [
+          { en: "Based on position trend and riser condition, the decision is made: excursion arrested/recovered, or the red limit reached requiring disconnect." },
+        ],
+        bestPractices: [
+          { en: "Base the decision on the defined red-limit threshold itself, not a judgment call made against the pressure of the moment." },
+        ],
+      },
+      emergency_disconnect_execution: {
+        id: "emergency_disconnect_execution",
+        title: { en: "Emergency Disconnect Execution" },
+        overview: { en: "The full defined sequence, not an improvised shortcut, even under time pressure." },
+        steps: [
+          { en: "If the red limit is reached, the emergency disconnect is executed — releasing the riser/BOP connection in the controlled sequence the procedure specifies." },
+        ],
+        bestPractices: [
+          { en: "Execute the full defined sequence, not an improvised shortcut, even under time pressure." },
+        ],
+      },
+      post_disconnect_stabilization_verification: {
+        id: "post_disconnect_stabilization_verification",
+        title: { en: "Post-Disconnect Stabilization & Verification" },
+        overview: { en: "Verify the actual post-disconnect state directly, not assume a clean disconnect because the procedure was followed." },
+        steps: [
+          { en: "Confirmation that the disconnect completed cleanly, the vessel is clear and stable, and the riser/BOP components are in a known, safe state." },
+        ],
+        bestPractices: [
+          { en: "Verify the actual post-disconnect state directly, not assume a clean disconnect because the procedure was followed." },
+        ],
+      },
+      notification_incident_reporting: {
+        id: "notification_incident_reporting",
+        title: { en: "Notification & Incident Reporting" },
+        overview: { en: "The full sequence of events, including the yellow-stage preparation, not just the final disconnect itself." },
+        steps: [
+          { en: "Company and relevant shore parties notified; incident reported in full." },
+        ],
+        bestPractices: [
+          { en: "Report the full sequence of events, including the yellow-stage preparation, not just the final disconnect itself." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "excursion_alert",
+        phaseId: "dp_excursion_recognition_alert",
+        from: "deck", to: "bridge",
+        trigger: { en: "Vessel crosses into the yellow watch circle." },
+        content: { en: "Chief Officer, monitoring DP position, alerts the Master immediately upon crossing into the yellow watch circle." },
+        whyItMatters: { en: "The yellow-stage response only has value if it starts the moment the threshold is crossed, not after further drift." },
+      },
+      {
+        id: "disconnect_prep_status",
+        phaseId: "disconnect_preparation_sequence",
+        from: "engine", to: "bridge",
+        trigger: { en: "Disconnect sequence staged." },
+        content: { en: "Chief Engineer reports the disconnect sequence staged and ready to execute if needed." },
+        whyItMatters: { en: "The Master needs to know execution readiness is genuinely in place, not assumed, before the red-limit decision arrives." },
+      },
+      {
+        id: "position_trend_report",
+        phaseId: "continued_position_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing position monitoring." },
+        content: { en: "Position status reported continuously to the Master against the specific watch-circle limit thresholds." },
+        whyItMatters: { en: "The red-limit decision depends on tracking the trend against defined thresholds, not a general impression of the situation." },
+      },
+      {
+        id: "riser_condition_report",
+        phaseId: "riser_tension_management",
+        from: "engine", to: "bridge",
+        trigger: { en: "Ongoing riser condition monitoring." },
+        content: { en: "Chief Engineer reports riser tension and angle status to the Master." },
+        whyItMatters: { en: "Riser condition is a genuine input to the disconnect decision, not just something to check after the fact." },
+      },
+      {
+        id: "red_limit_reached_alert",
+        phaseId: "red_watch_circle_decision",
+        from: "deck", to: "bridge",
+        trigger: { en: "Vessel reaches the red watch-circle limit." },
+        content: { en: "A distinct, immediate alert raised the moment the vessel reaches the red watch-circle limit, separate from the routine position trend report." },
+        whyItMatters: { en: "Reaching the red limit is the specific trigger for the disconnect decision — it shouldn't wait for the next routine report to surface." },
+      },
+      {
+        id: "disconnect_execution_confirmation",
+        phaseId: "emergency_disconnect_execution",
+        from: "engine", to: "bridge",
+        trigger: { en: "Emergency disconnect sequence executed." },
+        content: { en: "Chief Engineer confirms the emergency disconnect sequence has been executed." },
+        whyItMatters: { en: "The Master needs positive confirmation the sequence ran, not an assumption based on the decision having been made." },
+      },
+      {
+        id: "post_disconnect_status_report",
+        phaseId: "post_disconnect_stabilization_verification",
+        from: "engine", to: "bridge",
+        trigger: { en: "Post-disconnect state verified." },
+        content: { en: "Chief Engineer reports the verified post-disconnect state of the vessel and riser/BOP components." },
+        whyItMatters: { en: "A clean procedure followed doesn't by itself confirm a clean outcome — this report is that direct confirmation." },
+      },
+      {
+        id: "company_shore_notification",
+        phaseId: "notification_incident_reporting",
+        from: "bridge", to: "shore_authorities",
+        trigger: { en: "Incident ready for reporting." },
+        content: { en: "Master notifies the company and relevant shore parties, reporting the full incident." },
+        whyItMatters: { en: "A full report, including the yellow-stage preparation, gives a complete picture rather than just the final disconnect event." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the overall emergency response: receives the alert, coordinates the crew's parallel monitoring and preparation effort, and makes the red-limit disconnect decision against the defined threshold." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads continued DP position monitoring throughout the escalating excursion, reporting the trend against the specific watch-circle thresholds — the operation's data-verification role, carried forward from op1's positioning discipline." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Supports the deck-side response and readiness effort during the escalation and disconnect sequence." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes support tasks under the Bosun's direction throughout the emergency." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Leads the disconnect preparation, riser tension management, and the emergency disconnect execution itself — the operation's technical mechanism lead, continuing directly from op1's riser/BOP lead role since this emergency is an escalation of that same mechanism." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "lead",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Coordinates the crew's parallel monitoring and preparation effort." },
+          { en: "Makes the red-limit disconnect decision." },
+        ],
+        iMonitor: [
+          { en: "Overall excursion development — position trend, disconnect readiness, and riser condition together." },
+        ],
+        iReport: [
+          { en: "Notifies the company and shore parties; reports the incident." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not delay the disconnect decision past the defined red-limit threshold waiting for further certainty." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads continued DP position monitoring throughout the escalation." },
+        ],
+        iMonitor: [
+          { en: "Position trend against the specific watch-circle limit thresholds." },
+        ],
+        iReport: [
+          { en: "Reports position status continuously to the Master; raises the distinct red-limit alert." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not report position status without reference to the specific defined thresholds." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Supports the deck-side response and readiness effort." },
+        ],
+        iMonitor: [
+          { en: "Immediate deck-side conditions during the escalation and disconnect sequence." },
+        ],
+        iReport: [
+          { en: "Reports observations to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent readiness decisions outside assigned tasks." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes support tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Assigned task conditions." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent monitoring decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Leads disconnect preparation, riser tension management, and executes the emergency disconnect if the red limit is reached." },
+        ],
+        iMonitor: [
+          { en: "Disconnect readiness, riser tension/angle, and post-disconnect state." },
+        ],
+        iReport: [
+          { en: "Reports preparation status, riser condition, disconnect execution, and post-disconnect verification to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not report the disconnect state verified without direct confirmation, based only on the procedure having been followed." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "drillship_eds_phase_sequence",
+        targetRanks: ["master", "chief_engineer", "chief_officer"],
+        prompt: { en: "Put the DP excursion / emergency disconnect operation's phases in the correct order." },
+        items: [
+          { id: "alert", label: { en: "Recognition & Alert" } },
+          { id: "prep", label: { en: "Disconnect Preparation Sequence" } },
+          { id: "position_monitor", label: { en: "Continued Position Monitoring" } },
+          { id: "riser_tension", label: { en: "Riser Tension Management" } },
+          { id: "red_decision", label: { en: "Red Watch-Circle Decision" } },
+          { id: "execute_disconnect", label: { en: "Emergency Disconnect Execution" } },
+          { id: "post_verify", label: { en: "Post-Disconnect Stabilization & Verification" } },
+          { id: "notification", label: { en: "Notification & Incident Reporting" } },
+        ],
+        correctOrder: ["alert", ["prep", "position_monitor", "riser_tension"], "red_decision", "execute_disconnect", "post_verify", "notification"],
+      },
+      {
+        type: "error_identification",
+        id: "drillship_red_limit_judgment_delay",
+        targetRanks: ["master"],
+        scenario: { en: "The vessel is approaching the red watch-circle limit, but the position seems to be recovering slightly. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Wait past the red-limit threshold to see if the recovering trend continues, delaying the decision." }, isError: true, explanation: { en: "The red limit is a defined threshold precisely so the decision doesn't depend on reading a trend in the moment — waiting past it to see if things improve defeats the reason the threshold exists." } },
+          { id: "b", label: { en: "Execute the disconnect decision at the defined red-limit threshold regardless of a recent favorable trend." }, isError: false, explanation: { en: "Correct — the threshold is the decision point, not a suggestion to weigh against other signals." } },
+          { id: "c", label: { en: "Continue reporting position status accurately even as it approaches the threshold." }, isError: false, explanation: { en: "Correct — accurate reporting right up to the threshold is exactly what the decision depends on." } },
+          { id: "d", label: { en: "Treat the red-limit threshold as the decision point, not a judgment call to be made in the moment." }, isError: false, explanation: { en: "Correct — this is precisely the discipline the procedure requires." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "drillship_pre_disconnect_execution_gate",
+        targetRanks: ["chief_engineer"],
+        scenario: { en: "The vessel is approaching the red watch-circle limit. Before executing the emergency disconnect, review which conditions are actually satisfied." },
+        items: [
+          { id: "sequence_staged", label: { en: "Disconnect sequence fully staged and ready to execute." }, isSatisfied: true },
+          { id: "riser_within_limits", label: { en: "Riser tension/angle within limits for a controlled disconnect." }, isSatisfied: true },
+          { id: "red_limit_confirmed", label: { en: "Position confirmed at or beyond the defined red-limit threshold." }, isSatisfied: false },
+          { id: "master_decision_received", label: { en: "Master's explicit disconnect decision received." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "Monitoring position during the escalation, you notice the vessel is oscillating — drifting toward the limit, then partially recovering, then drifting again — rather than moving steadily in one direction." },
+        mission: { en: "As Chief Officer, decide how to report this pattern." },
+        expectedActions: [
+          { en: "Report the oscillating pattern accurately as it is, rather than characterizing it as either clearly improving or clearly worsening." },
+        ],
+        why: [
+          { en: "An oscillating trend is genuinely different information from a steady one, and the Master's assessment depends on knowing which kind of trend is actually happening." },
+        ],
+        commonMistakes: [
+          { en: "Simplifying an oscillating pattern into \"improving\" or \"worsening\" based on the most recent single reading." },
+        ],
+        safetyPoints: [
+          { en: "Accurate trend reporting, including its actual shape, serves the decision better than a simplified but misleading summary." },
+        ],
+      },
+      {
+        situation: { en: "During the escalating situation, you're asked to help stage disconnect-related equipment, but you're not entirely certain about one specific step in the unfamiliar procedure." },
+        mission: { en: "As Bosun, decide how to proceed." },
+        expectedActions: [
+          { en: "Ask for clarification on the specific step rather than proceeding on a guess, even under the time pressure of the situation." },
+        ],
+        why: [
+          { en: "A wrong guess on an unfamiliar step during preparation for a genuine emergency procedure could compromise readiness exactly when it's needed most." },
+        ],
+        commonMistakes: [
+          { en: "Proceeding on a guess to avoid slowing down the preparation." },
+        ],
+        safetyPoints: [
+          { en: "A brief clarification costs far less than a preparation error discovered only when the sequence is actually needed." },
+        ],
+      },
+      {
+        situation: { en: "Riser tension readings are within limits but trending toward the edge of the acceptable range as the vessel continues to drift, and disconnect preparation is not yet fully complete." },
+        mission: { en: "As Chief Engineer, decide how to prioritize your attention." },
+        expectedActions: [
+          { en: "Continue tracking the riser tension trend closely while completing preparation, treating both as active priorities rather than finishing one before starting to watch the other." },
+        ],
+        why: [
+          { en: "A riser trending toward its limit is exactly the kind of signal that could accelerate the timeline — preparation completing on the original schedule might not be fast enough if the trend continues." },
+        ],
+        commonMistakes: [
+          { en: "Focusing exclusively on completing preparation before turning attention to the riser trend." },
+        ],
+        safetyPoints: [
+          { en: "Both the readiness effort and the riser's own condition are moving targets during an active excursion — neither can safely wait for the other to finish first." },
+        ],
+      },
+      {
+        situation: { en: "Reaching the point of deciding whether to disconnect, you're aware that executing means a costly, time-consuming reconnection later, while holding a bit longer might allow the position to recover on its own." },
+        mission: { en: "As Master, decide how to weigh this." },
+        expectedActions: [
+          { en: "Base the decision strictly on whether the defined red-limit threshold has been reached, not on the cost or inconvenience of executing the disconnect." },
+        ],
+        why: [
+          { en: "The threshold exists specifically so this decision doesn't get made under the influence of cost or schedule pressure — introducing that pressure back into the decision defeats its purpose." },
+        ],
+        commonMistakes: [
+          { en: "Weighing the cost of disconnecting against the threshold itself, rather than treating the threshold as the deciding factor on its own." },
+        ],
+        safetyPoints: [
+          { en: "The disconnect threshold is calibrated to keep the riser and wellhead safe — a decision influenced by cost pressure risks eroding exactly the margin the threshold was set to protect." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "drillship_disconnect_readiness_anomaly_judgment",
+        title: { en: "The Trend That Won't Sit Still" },
+        seatRankId: "chief_engineer",
+        root: {
+          id: "root",
+          situation: { en: "During disconnect preparation, a routine system check on one component shows an unusual reading — not a clear fault, but not the expected baseline either. Meanwhile, position continues developing toward the yellow/red boundary." },
+          options: [
+            {
+              id: "continue_without_addressing",
+              label: { en: "Continue preparation without addressing the unusual reading, since it's not a clear fault, and prioritize completing the readiness sequence." },
+              consequence: { en: "Preparation completes on schedule, but the unresolved reading remains an unknown — if it were a genuine developing fault, it would only surface when the system is actually needed." },
+              feedback: { en: "An unusual reading that isn't clearly a fault still isn't clearly fine — moving on without resolving it trades a brief investigation now for a potential unknown at the worst possible moment." },
+            },
+            {
+              id: "pause_investigate_report",
+              label: { en: "Pause briefly to investigate the unusual reading, and report to the Master both the investigation and the position trend continuing to develop." },
+              isRecommended: true,
+              consequence: { en: "The investigation traces the reading to a minor calibration issue in a secondary sensor, not the disconnect component's actual function — but time is now more pressing as position continues toward the boundary." },
+              feedback: { en: "Correct — a brief, communicated investigation resolves the uncertainty without losing track of the developing situation." },
+              next: {
+                id: "sensor_calibration_found",
+                situation: { en: "The investigation finds a minor calibration issue in a secondary sensor — the readout was affected, but the disconnect component's actual function isn't. Position is now closer to the yellow/red boundary and time is more pressing." },
+                options: [
+                  {
+                    id: "confirm_function_complete_prep",
+                    label: { en: "Confirm the sensor issue doesn't affect actual disconnect capability, complete preparation, and continue reporting to the Master." },
+                    isRecommended: true,
+                    consequence: { en: "Preparation completes with genuine confirmation the system is functionally sound, ready if the red limit is reached." },
+                    feedback: { en: "Correct — confirming the specific, understood finding doesn't affect actual function is exactly what closes this out properly, even under time pressure." },
+                  },
+                  {
+                    id: "declare_not_ready_alternative",
+                    label: { en: "Since time is now more pressing and the readout issue is unresolved, declare the system not ready and recommend an alternative, less-proven disconnect method." },
+                    consequence: { en: "The crew moves to a less-proven method despite the actual disconnect system being functionally sound, trading a confirmed-working option for a less certain one." },
+                    feedback: { en: "The investigation already found the underlying function was fine — abandoning a confirmed-working system for a less-proven alternative, under new time pressure, discounts what was just learned." },
+                  },
+                  {
+                    id: "ignore_finding_complete_prep",
+                    label: { en: "Ignore the calibration finding entirely and complete preparation without confirming whether it truly doesn't affect functionality, since time is now tight." },
+                    consequence: { en: "Preparation completes without ever actually confirming the system's functional soundness, on an assumption rather than a check." },
+                    feedback: { en: "Time pressure is a reason to confirm efficiently, not skip confirming — the investigation was already underway; finishing it costs little more." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "declare_faulty_immediately",
+              label: { en: "Immediately declare the disconnect system faulty and request the Master hold position by other means to avoid needing to use this system." },
+              consequence: { en: "The Master is given an alarming report based on an unconfirmed reading, and begins planning around a system that may not actually be faulty at all." },
+              feedback: { en: "Declaring a fault before diagnosing skips straight to the most serious interpretation of a reading that hadn't actually been investigated yet." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "A defined threshold is the decision point, not a judgment call to weigh in the moment" },
+        bestPractices: [
+          { en: "Execute the decision at the defined threshold itself, without weighing cost, schedule, or a recent favorable trend against it." },
+        ],
+        commonErrors: [
+          { en: "Delaying a threshold-triggered decision to see if a favorable trend continues." },
+        ],
+      },
+      {
+        theme: { en: "Report a trend as it actually looks, not simplified into \"improving\" or \"worsening\"" },
+        bestPractices: [
+          { en: "Report the genuine shape of a developing trend, including an oscillating or ambiguous pattern, rather than simplifying it into a single direction." },
+        ],
+        commonErrors: [
+          { en: "Characterizing a mixed or oscillating trend as clearly improving or clearly worsening based on the most recent reading alone." },
+        ],
+      },
+      {
+        theme: { en: "An unfamiliar step deserves clarification, not a guess, under time pressure" },
+        bestPractices: [
+          { en: "Ask for clarification on an unfamiliar procedural step rather than proceeding on a guess, even when time is pressing." },
+        ],
+        commonErrors: [
+          { en: "Guessing through an unfamiliar step to avoid slowing down preparation." },
+        ],
+      },
+      {
+        theme: { en: "An unusual reading deserves investigation — neither dismissal nor overreaction" },
+        bestPractices: [
+          { en: "Investigate an unusual but not clearly faulty reading directly, and act on what the investigation actually finds rather than the initial impression in either direction." },
+        ],
+        commonErrors: [
+          { en: "Either dismissing an unusual reading without checking it, or declaring a fault before it's been diagnosed." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
