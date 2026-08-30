@@ -21350,6 +21350,524 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
       },
     ],
   },
+
+  cruise_ship_port_call_tendering_operations: {
+    operationId: "cruise_ship_port_call_tendering_operations",
+    vesselTypeId: "cruise_ship",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Cruise Ship — Large-Scale Port-of-Call Tendering Operations" },
+    introduction: {
+      en: "At a port of call without a berth suitable for the ship itself, a cruise ship anchors offshore and runs a structured, mass-transit-style shuttle service to bring hundreds of guests ashore and back using a fleet of tenders. This is genuinely different from Yacht's small-crew, casual water-activity tendering: here it's staged embarkation and disembarkation at designated points, manifest tracking to know exactly who's ashore and who's aboard at any moment, and multiple tenders running simultaneously on a schedule, all while the ship itself remains safely anchored for the duration. It's routine in the sense that this happens at nearly every port of call requiring anchoring, but the logistics genuinely matter — losing track of who's ashore, or running tenders past a safe operating window, are real risks at this scale that a small-crew operation wouldn't face in the same way.",
+    },
+    objectives: [
+      { en: "Describe the sequence of anchoring, tender fleet deployment, staged embarkation/disembarkation, and manifest reconciliation." },
+      { en: "Explain why manifest tracking at this scale requires active, continuous reconciliation rather than a one-time headcount." },
+      { en: "Identify how Master and Chief Officer jointly lead the overall passenger-logistics operation, while Bosun leads the tender fleet's physical operation." },
+      { en: "Identify who does what across a multi-tender, staged operation, including the boundary between crew's tender-operation authority and Passenger Services' guest-facing coordination." },
+      { en: "Recognize correct versus incorrect judgment calls when manifest counts, tender scheduling, or weather conditions become ambiguous." },
+    ],
+    context: {
+      en: "Genuinely distinct from Passenger Ship's embarkation/muster/evacuation content (port-based boarding and onboard emergency response, not offshore anchoring and tender-based mass transit) and from Yacht's tendering (small-crew, casual, low guest volume, no manifest-reconciliation infrastructure at this scale). Roster: 6-rank roster including OOW, since Cruise Ship carries a full bridge team like Passenger Ship, unlike Yacht's small-crew 5-rank roster. Reuses the existing passenger_services CommunicationParty, since this is mass-passenger scale like Passenger Ship, not Yacht's bespoke small-scale guest service.",
+    },
+
+    operationPhaseOrder: [
+      "anchoring_position_confirmation",
+      "tender_fleet_deployment_readiness",
+      ["staged_embarkation_disembarkation_management", "tender_scheduling_rotation", "manifest_tracking_reconciliation"],
+      "weather_condition_monitoring",
+      "final_recall_signal",
+      "final_manifest_reconciliation_departure_readiness",
+    ],
+    operationPhases: {
+      anchoring_position_confirmation: {
+        id: "anchoring_position_confirmation",
+        title: { en: "Anchoring Position Confirmation" },
+        overview: { en: "Confirm the anchor is actively holding before committing to tender operations." },
+        steps: [
+          { en: "Master confirms the vessel is safely anchored at the designated position for the port call." },
+        ],
+        bestPractices: [
+          { en: "Confirm the anchor is actively holding before committing to tender operations, not just that the anchor has been dropped." },
+        ],
+      },
+      tender_fleet_deployment_readiness: {
+        id: "tender_fleet_deployment_readiness",
+        title: { en: "Tender Fleet Deployment & Readiness" },
+        overview: { en: "Complete each tender's own pre-service safety check individually." },
+        steps: [
+          { en: "Bosun leads launching and readiness-checking the tender fleet before service begins." },
+        ],
+        bestPractices: [
+          { en: "Complete each tender's own pre-service safety check individually, not as a single check applied to the fleet as a whole." },
+        ],
+      },
+      staged_embarkation_disembarkation_management: {
+        id: "staged_embarkation_disembarkation_management",
+        title: { en: "Staged Embarkation & Disembarkation Management" },
+        overview: { en: "Maintain a controlled, staged flow rather than allowing guests to self-organize." },
+        steps: [
+          { en: "Guests staged and managed at designated embarkation/disembarkation points as they board and leave tenders." },
+        ],
+        bestPractices: [
+          { en: "Maintain a controlled, staged flow rather than allowing guests to self-organize at the platform." },
+        ],
+      },
+      tender_scheduling_rotation: {
+        id: "tender_scheduling_rotation",
+        title: { en: "Tender Scheduling & Rotation" },
+        overview: { en: "Factor weather and sea-state conditions into scheduling decisions continuously." },
+        steps: [
+          { en: "Multiple tenders scheduled and rotated to maintain continuous service without overloading any single tender or route." },
+        ],
+        bestPractices: [
+          { en: "Factor weather and sea-state conditions into scheduling decisions continuously, not just at the start of service." },
+        ],
+      },
+      manifest_tracking_reconciliation: {
+        id: "manifest_tracking_reconciliation",
+        title: { en: "Manifest Tracking & Reconciliation" },
+        overview: { en: "A continuous, active task, not a one-time headcount repeated occasionally." },
+        steps: [
+          { en: "The manifest of who's ashore and who's aboard actively reconciled on an ongoing basis." },
+        ],
+        bestPractices: [
+          { en: "Treat manifest reconciliation as a continuous, active task, not a one-time headcount repeated occasionally." },
+        ],
+      },
+      weather_condition_monitoring: {
+        id: "weather_condition_monitoring",
+        title: { en: "Weather Condition Monitoring" },
+        overview: { en: "Track the weather trend against the operation's own safe-operating limits." },
+        steps: [
+          { en: "Weather and sea-state conditions monitored continuously throughout tender operations." },
+        ],
+        bestPractices: [
+          { en: "Track the weather trend against the operation's own safe-operating limits, not just current conditions." },
+        ],
+      },
+      final_recall_signal: {
+        id: "final_recall_signal",
+        title: { en: "Final Recall Signal" },
+        overview: { en: "Issue the recall with a genuine safety margin before the actual departure cutoff." },
+        steps: [
+          { en: "As the scheduled departure time approaches, the recall signal is issued to bring all guests back aboard." },
+        ],
+        bestPractices: [
+          { en: "Issue the recall with a genuine safety margin before the actual departure cutoff, not right at the deadline." },
+        ],
+      },
+      final_manifest_reconciliation_departure_readiness: {
+        id: "final_manifest_reconciliation_departure_readiness",
+        title: { en: "Final Manifest Reconciliation & Departure Readiness" },
+        overview: { en: "A genuine confirmation gate, not a formality once tenders stop running." },
+        steps: [
+          { en: "Final manifest reconciled to confirm every guest is aboard before the vessel gets underway." },
+        ],
+        bestPractices: [
+          { en: "Treat final reconciliation as a genuine confirmation gate, not a formality once tenders stop running." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      {
+        id: "anchor_hold_confirmation",
+        phaseId: "anchoring_position_confirmation",
+        from: "deck", to: "bridge",
+        trigger: { en: "Anchor dropped." },
+        content: { en: "Chief Officer confirms the anchor is actively holding to the Master." },
+        whyItMatters: { en: "Committing to tender operations before the anchor is confirmed holding risks the whole operation if the vessel's position isn't actually secure." },
+      },
+      {
+        id: "tender_readiness_report",
+        phaseId: "tender_fleet_deployment_readiness",
+        from: "deck", to: "bridge",
+        trigger: { en: "Tender fleet checked." },
+        content: { en: "Bosun reports the tender fleet checked and ready for service." },
+        whyItMatters: { en: "The Master needs genuine confirmation each tender was individually checked, not an assumption the fleet is ready as a whole." },
+      },
+      {
+        id: "embarkation_status_report",
+        phaseId: "staged_embarkation_disembarkation_management",
+        from: "deck", to: "passenger_services",
+        trigger: { en: "Ongoing embarkation/disembarkation." },
+        content: { en: "Deck crew coordinates staging status with Passenger Services as guests move through embarkation/disembarkation points." },
+        whyItMatters: { en: "Passenger Services manages guest-facing flow to the platform — this coordination keeps the staged process from breaking down into a crowd." },
+      },
+      {
+        id: "tender_schedule_status_report",
+        phaseId: "tender_scheduling_rotation",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing schedule/rotation management." },
+        content: { en: "Bosun reports tender schedule and rotation status, including any weather-driven adjustment, to the Master." },
+        whyItMatters: { en: "The Master needs ongoing visibility into the schedule to catch a developing issue before it affects guest safety." },
+      },
+      {
+        id: "manifest_status_report",
+        phaseId: "manifest_tracking_reconciliation",
+        from: "passenger_services", to: "deck",
+        trigger: { en: "Ongoing manifest reconciliation." },
+        content: { en: "Passenger Services provides the reference guest manifest and headcount data for ongoing reconciliation against the deck's tender-tracked count." },
+        whyItMatters: { en: "Only Passenger Services holds the authoritative manifest — reconciliation is only as good as this data being current and shared continuously." },
+      },
+      {
+        id: "weather_trend_report",
+        phaseId: "weather_condition_monitoring",
+        from: "deck", to: "bridge",
+        trigger: { en: "Ongoing weather monitoring." },
+        content: { en: "Weather and sea-state trend reported continuously to the Master throughout tender operations." },
+        whyItMatters: { en: "The operation's safe-operating limits depend on the trend, not a single snapshot." },
+      },
+      {
+        id: "recall_signal_coordination",
+        phaseId: "final_recall_signal",
+        from: "bridge", to: "passenger_services",
+        trigger: { en: "Departure time approaching." },
+        content: { en: "Master coordinates the recall signal timing with Passenger Services, who will notify guests ashore." },
+        whyItMatters: { en: "Passenger Services needs advance coordination to actually reach guests ashore with enough time to return before the cutoff." },
+      },
+      {
+        id: "departure_readiness_confirmation",
+        phaseId: "final_manifest_reconciliation_departure_readiness",
+        from: "deck", to: "bridge",
+        trigger: { en: "Final reconciliation complete." },
+        content: { en: "Chief Officer confirms the final manifest reconciled — every guest aboard — to the Master." },
+        whyItMatters: { en: "This is the Master's final gate before getting underway, and it needs to be a genuine confirmation, not an assumption." },
+      },
+    ],
+
+    roleOnVessel: [
+      {
+        rankId: "master",
+        identity: { en: "Commands the operation overall: confirms anchoring, oversees the tender operation throughout, decides recall timing, and authorizes departure once final manifest reconciliation is confirmed." },
+      },
+      {
+        rankId: "chief_officer",
+        identity: { en: "Leads manifest tracking/reconciliation and staged embarkation/disembarkation coordination with Passenger Services — the operation's logistics lead, alongside Master." },
+      },
+      {
+        rankId: "oow",
+        identity: { en: "Supports bridge-side coordination and anchor watch continuity throughout the port call — an extension of the same port-stay support role established for Passenger Ship, now applied to an anchored tender operation." },
+      },
+      {
+        rankId: "bosun",
+        identity: { en: "Leads tender fleet deployment, readiness, and scheduling/rotation — the operation's hands-on physical lead." },
+      },
+      {
+        rankId: "ab",
+        identity: { en: "Executes tender-handling and staging tasks under the Bosun's direction." },
+      },
+      {
+        rankId: "chief_engineer",
+        identity: { en: "Monitors engine/systems standby readiness (anchor windlass, tender fuel/systems, generator) throughout the operation — support role, since this operation's core is passenger logistics, not a marine mechanical system." },
+      },
+    ],
+
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "lead",
+      oow: "perform",
+      bosun: "perform",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+    responsibilityMatrix: {
+      master: {
+        iExecute: [
+          { en: "Confirms anchoring; oversees the tender operation throughout; decides recall timing; authorizes departure." },
+        ],
+        iMonitor: [
+          { en: "Manifest status, tender scheduling, and weather trend throughout." },
+        ],
+        iReport: [
+          { en: "Confirms departure readiness once final reconciliation is reported." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not authorize getting underway before final manifest reconciliation is genuinely confirmed." },
+        ],
+      },
+      chief_officer: {
+        iExecute: [
+          { en: "Leads manifest tracking/reconciliation and staged embarkation/disembarkation coordination." },
+        ],
+        iMonitor: [
+          { en: "Manifest status and embarkation/disembarkation flow throughout." },
+        ],
+        iReport: [
+          { en: "Reports manifest status and coordinates with Passenger Services; confirms final reconciliation to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not treat manifest reconciliation as complete without an active, current check." },
+        ],
+      },
+      oow: {
+        iExecute: [
+          { en: "Supports bridge-side coordination and anchor watch continuity." },
+        ],
+        iMonitor: [
+          { en: "Assigned tasks and anchor watch status during the operation." },
+        ],
+        iReport: [
+          { en: "Reports task status to the Chief Officer." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent manifest or scheduling decisions." },
+        ],
+      },
+      bosun: {
+        iExecute: [
+          { en: "Leads tender fleet deployment, readiness, and scheduling/rotation." },
+        ],
+        iMonitor: [
+          { en: "Tender fleet readiness and schedule status throughout." },
+        ],
+        iReport: [
+          { en: "Reports tender readiness and schedule status to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not launch a tender without completing its individual pre-service check." },
+        ],
+      },
+      ab: {
+        iExecute: [
+          { en: "Executes tender-handling and staging tasks under the Bosun's direction." },
+        ],
+        iMonitor: [
+          { en: "Immediate task conditions at embarkation/disembarkation points." },
+        ],
+        iReport: [
+          { en: "Reports hazards to the Bosun." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not make independent staging decisions." },
+        ],
+      },
+      chief_engineer: {
+        iExecute: [
+          { en: "Monitors engine/systems standby readiness throughout the operation." },
+        ],
+        iMonitor: [
+          { en: "Anchor windlass, tender fuel/systems, and generator status." },
+        ],
+        iReport: [
+          { en: "Reports any system irregularity to the Master." },
+        ],
+        iDoNotAuthorize: [
+          { en: "Does not direct passenger-logistics decisions — support role only in this operation." },
+        ],
+      },
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "cruise_ship_tendering_phase_sequence",
+        targetRanks: ["master", "chief_officer", "bosun"],
+        prompt: { en: "Put the port-of-call tendering operation's phases in the correct order." },
+        items: [
+          { id: "anchor", label: { en: "Anchoring Position Confirmation" } },
+          { id: "tender_ready", label: { en: "Tender Fleet Deployment & Readiness" } },
+          { id: "embark_manage", label: { en: "Staged Embarkation & Disembarkation Management" } },
+          { id: "tender_schedule", label: { en: "Tender Scheduling & Rotation" } },
+          { id: "manifest_track", label: { en: "Manifest Tracking & Reconciliation" } },
+          { id: "weather", label: { en: "Weather Condition Monitoring" } },
+          { id: "recall", label: { en: "Final Recall Signal" } },
+          { id: "final_reconcile", label: { en: "Final Manifest Reconciliation & Departure Readiness" } },
+        ],
+        correctOrder: ["anchor", "tender_ready", ["embark_manage", "tender_schedule", "manifest_track"], "weather", "recall", "final_reconcile"],
+      },
+      {
+        type: "error_identification",
+        id: "cruise_ship_periodic_manifest_shortcut",
+        targetRanks: ["chief_officer"],
+        scenario: { en: "Manifest counts have seemed roughly consistent with expected numbers throughout the day. There's a temptation to rely on periodic spot-checks rather than continuous active reconciliation. Which of the following actions is the error?" },
+        choices: [
+          { id: "a", label: { en: "Rely on periodic spot-checks of the manifest count since numbers have seemed roughly consistent throughout the day." }, isError: true, explanation: { en: "Numbers seeming consistent at spot-check intervals doesn't confirm the manifest is accurate in between — this is exactly the gap continuous reconciliation exists to close." } },
+          { id: "b", label: { en: "Maintain continuous, active reconciliation regardless of how consistent numbers have seemed so far." }, isError: false, explanation: { en: "Correct — this is exactly the sustained discipline the operation requires." } },
+          { id: "c", label: { en: "Treat the manifest as needing an up-to-date reconciliation at any given moment, not just periodically." }, isError: false, explanation: { en: "Correct — this is precisely what makes the manifest trustworthy at any point during the operation." } },
+          { id: "d", label: { en: "Coordinate with Passenger Services to keep the reference data current throughout, not just at set checkpoints." }, isError: false, explanation: { en: "Correct — reconciliation is only as good as the reference data feeding it." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "cruise_ship_pre_departure_readiness_gate",
+        targetRanks: ["master"],
+        scenario: { en: "Tender operations have concluded. Before authorizing the vessel to get underway, review which conditions are actually satisfied." },
+        items: [
+          { id: "final_manifest_reconciled", label: { en: "Final manifest reconciled and confirmed." }, isSatisfied: true },
+          { id: "tenders_recovered", label: { en: "All tenders confirmed recovered and secured." }, isSatisfied: true },
+          { id: "anchor_ready", label: { en: "Anchor confirmed ready for weighing." }, isSatisfied: false },
+          { id: "weather_acceptable", label: { en: "Weather trend confirmed acceptable for getting underway." }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "While supporting anchor watch during the operation, you notice the anchor bearing has shifted slightly more than you'd expect for current conditions, though it's not yet at a concerning level." },
+        mission: { en: "As OOW, decide how to respond." },
+        expectedActions: [
+          { en: "Report the shift to the Chief Officer promptly, even though it isn't yet concerning, rather than waiting to see if it becomes more pronounced." },
+        ],
+        why: [
+          { en: "A slight shift reported early gives the bridge team time to assess and respond calmly; the same shift discovered later, after tender operations are further along, is a much harder situation to manage." },
+        ],
+        commonMistakes: [
+          { en: "Waiting for a shift to become clearly concerning before reporting it." },
+        ],
+        safetyPoints: [
+          { en: "An operation running dozens of tender transits depends on the anchor holding — early reporting of any change protects everything happening around it." },
+        ],
+      },
+      {
+        situation: { en: "At the disembarkation point, a line of guests waiting to board a tender is growing longer than usual, and some guests are showing visible impatience." },
+        mission: { en: "As AB, decide how to handle the situation." },
+        expectedActions: [
+          { en: "Maintain the staged, controlled boarding process despite the growing line and visible impatience, rather than relaxing the pace to move guests through faster." },
+        ],
+        why: [
+          { en: "A controlled process that's a little slower is what actually keeps embarkation safe — rushing it to reduce a line risks the exact loss of control the staging process exists to prevent." },
+        ],
+        commonMistakes: [
+          { en: "Speeding up or relaxing the staged process in response to guest impatience." },
+        ],
+        safetyPoints: [
+          { en: "Guest impatience is a real pressure, but it doesn't change what the staged process protects against." },
+        ],
+      },
+      {
+        situation: { en: "The generator supporting continuous tender fueling has been running longer than usual due to an extended port call, and you notice a minor but real change in its typical operating parameters." },
+        mission: { en: "As Chief Engineer, decide how to respond." },
+        expectedActions: [
+          { en: "Report the change and monitor it closely, rather than dismissing it because the generator is still technically running fine." },
+        ],
+        why: [
+          { en: "A real change in operating parameters, even a minor one, is exactly the kind of early signal worth catching during an extended operation that's placing more demand on the system than usual." },
+        ],
+        commonMistakes: [
+          { en: "Dismissing a minor parameter change because the system is still technically functioning." },
+        ],
+        safetyPoints: [
+          { en: "An extended operation puts sustained demand on support systems — catching a developing issue early keeps a minor change from becoming a real failure later in a long port call." },
+        ],
+      },
+      {
+        situation: { en: "The weather trend shows conditions gradually deteriorating, still within the operation's safe limits, but tender operations still have a meaningful number of guests to bring back aboard." },
+        mission: { en: "As Master, decide how to weigh the situation." },
+        expectedActions: [
+          { en: "Consider accelerating the recall timeline proactively given the deteriorating trend, rather than waiting until conditions approach the actual safe-limit threshold." },
+        ],
+        why: [
+          { en: "A developing weather trend with guests still ashore is a genuinely time-sensitive situation — waiting until the limit is nearly reached leaves less margin to safely recall everyone than acting on the trend earlier." },
+        ],
+        commonMistakes: [
+          { en: "Waiting until weather conditions approach the safe-limit threshold before adjusting the recall timeline." },
+        ],
+        safetyPoints: [
+          { en: "Guests ashore during a deteriorating trend are a real, developing exposure — proactive timing protects the margin needed to bring everyone back safely." },
+        ],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "cruise_ship_platform_localized_conditions_judgment",
+        title: { en: "The Platform Is Rougher Than the Forecast Says" },
+        seatRankId: "bosun",
+        root: {
+          id: "root",
+          situation: { en: "At the disembarkation platform, you notice the chop and swell affecting guest transfer are noticeably worse than what the general weather monitoring is reporting — the broader measure still shows conditions within acceptable limits, but what you're actually seeing at this specific point tells a different story." },
+          options: [
+            {
+              id: "continue_per_official_reading",
+              label: { en: "Continue operations as normal since the official weather monitoring still shows acceptable conditions." },
+              consequence: { en: "The mismatch between the broad measure and the actual local conditions continues, and guest transfer at this specific platform remains rougher than what the official status suggests is happening." },
+              feedback: { en: "A broad weather measure describes overall conditions, not necessarily what's happening at one specific, potentially exposed point — deferring to it over your own direct observation discards real information." },
+            },
+            {
+              id: "pause_report_reassess",
+              label: { en: "Pause transfers at that specific platform, report the localized condition to the Master, and reassess before resuming." },
+              isRecommended: true,
+              consequence: { en: "The Master requests more detail, and further assessment traces the cause to a localized current/wake effect specific to this platform, distinct from the general sea state." },
+              feedback: { en: "Correct — a direct observation that conflicts with the broad measure is worth pausing on and reporting, not overridden by the official reading." },
+              next: {
+                id: "localized_cause_identified",
+                situation: { en: "Further assessment traces the rougher conditions to a localized current/wake effect specific to this platform — distinct from the general sea state, and likely to recur here but not necessarily elsewhere." },
+                options: [
+                  {
+                    id: "resume_when_it_seems_calmer",
+                    label: { en: "Resume transfers at the same platform once the swell 'seems' to settle, without addressing the specific cause found." },
+                    consequence: { en: "The localized effect recurs, since nothing about the actual cause was addressed — only its momentary appearance." },
+                    feedback: { en: "The assessment identified a specific, recurring cause tied to this location — resuming based on how things currently look ignores exactly what that finding was for." },
+                  },
+                  {
+                    id: "relocate_to_alternate_platform",
+                    label: { en: "Relocate transfer operations to an alternate platform/point less exposed to the specific current/wake effect identified, while keeping the general operation running." },
+                    isRecommended: true,
+                    consequence: { en: "Transfers resume smoothly at the alternate point, and the specific, identified cause no longer affects guest transfer." },
+                    feedback: { en: "Correct — using the specific finding to make a targeted adjustment is exactly what the assessment was for, keeping the overall operation running without the localized risk." },
+                  },
+                  {
+                    id: "suspend_all_operations",
+                    label: { en: "Suspend all tender operations for the remainder of the port call, even though the issue is localized to one specific platform and an alternative is available." },
+                    consequence: { en: "The entire operation is halted over a cause that was actually specific and addressable, losing guest service capacity unnecessarily." },
+                    feedback: { en: "A specific, localized, and addressable cause doesn't call for suspending the entire operation — that overshoots what the finding actually supports." },
+                  },
+                ],
+              },
+            },
+            {
+              id: "unilateral_platform_move",
+              label: { en: "Unilaterally move all tender operations to a completely different platform without coordinating with the bridge, based on your own read." },
+              consequence: { en: "Operations shift without the bridge's awareness or coordination, creating confusion about where guests are actually being staged and complicating the Master's overall picture." },
+              feedback: { en: "Acting independently on a significant operational change, even for a good reason, bypasses coordination the Master needs to maintain an accurate picture of the whole operation." },
+            },
+          ],
+        },
+      },
+    ],
+
+    bestPracticesRecap: [
+      {
+        theme: { en: "Report a developing change early, before it becomes clearly concerning" },
+        bestPractices: [
+          { en: "Report a change as soon as it's noticed, even if it isn't yet at a concerning level." },
+        ],
+        commonErrors: [
+          { en: "Waiting for a change to become clearly concerning before reporting it." },
+        ],
+      },
+      {
+        theme: { en: "A staged process protects against exactly what pressure tempts you to relax" },
+        bestPractices: [
+          { en: "Maintain a controlled, staged process even under visible pressure to speed it up." },
+        ],
+        commonErrors: [
+          { en: "Relaxing a controlled process in response to impatience or a growing line." },
+        ],
+      },
+      {
+        theme: { en: "A real change during extended demand deserves attention, not dismissal because the system still runs" },
+        bestPractices: [
+          { en: "Report and monitor a genuine parameter change closely, even when the system is still technically functioning." },
+        ],
+        commonErrors: [
+          { en: "Dismissing a minor but real change because the system hasn't yet failed." },
+        ],
+      },
+      {
+        theme: { en: "Direct local observation deserves weight against a broader measure, and a specific finding calls for a targeted fix" },
+        bestPractices: [
+          { en: "Trust and report a direct observation that conflicts with a broader official measure, and once a specific cause is found, apply a proportionate, targeted correction rather than a broad overreaction." },
+        ],
+        commonErrors: [
+          { en: "Deferring to a broad measure over direct observation, or suspending an entire operation over a cause that was actually specific and addressable." },
+        ],
+      },
+    ],
+  },
 };
 
 export function getSpecializedOperation(id: SpecializedOperationId): SpecializedOperation | undefined {
