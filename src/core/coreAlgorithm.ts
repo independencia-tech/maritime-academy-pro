@@ -127,6 +127,13 @@
 // completion data drives decisions, never an assumption that an earlier
 // path segment is "as good as done." No new semantics — pure reuse.
 //
+// Step 12 (2026-08-30), scoped and validated before writing any code — adds
+// rank + vessel-type + involvement-level filtering for Specialized
+// Operations (single-rank triple filter). Simpler than Step 10: single-rank
+// means no OR/union ambiguity — there is only one rank's level to check,
+// not a path of several. Pure composition of Step 5's exact vesselTypeId
+// match and Step 8's explicit allow-list; no new decisions.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -451,4 +458,30 @@ export function getAvailableLessonsForTrajectory(
       !completed.has(lesson.lessonId) &&
       lesson.prerequisites.every((prereqId) => completed.has(prereqId))
   );
+}
+
+/**
+ * Returns Specialized Operations relevant to a rank and a specific vessel
+ * type (via getSpecializedOperationsByRankAndVesselType()) whose
+ * responsibilityLevels entry for that rank is one of the given
+ * allowedLevels — a single-rank triple filter combining Step 5's exact
+ * vesselTypeId match and Step 8's explicit allow-list.
+ *
+ * Simpler than getSpecializedOperationsForTrajectoryAndLevels(): single-rank
+ * means there is only one rank's level to check, so no OR/union-across-path
+ * decision is needed here.
+ *
+ * Additive: getSpecializedOperationsByRankAndVesselType() and
+ * getSpecializedOperationsByRankAndLevels() are unchanged.
+ */
+export function getSpecializedOperationsByRankAndVesselTypeAndLevels(
+  rankId: RankId,
+  vesselTypeId: VesselTypeId,
+  allowedLevels: ResponsibilityLevel[]
+): SpecializedOperation[] {
+  const allowed = new Set(allowedLevels);
+  return getSpecializedOperationsByRankAndVesselType(rankId, vesselTypeId).filter((op) => {
+    const level = op.responsibilityLevels?.[rankId];
+    return level !== undefined && allowed.has(level);
+  });
 }
