@@ -1050,7 +1050,18 @@ userStreak=1,
     if (logoTapsRef.count >= 7) { logoTapsRef.count = 0; setShowAdmin(true); }
   };
 
-  const hasPremium = (typeof window !== "undefined") && PremiumManager.hasAccess();
+  // SSR-safe, same pattern as the greeting above: `false` is both the SSR
+  // value (typeof window is always undefined server-side) and the client's
+  // first-render default, so the two can never disagree at hydration time.
+  // This structurally changes which JSX blocks render ({effectivePlan===
+  // "free"&&(...)} in two places, plus PlanBadge/PlanCard props) — a bigger
+  // hydration risk than the greeting's text-only mismatch, since React can't
+  // just patch a text node when a whole child tree didn't match. The real
+  // client-side value is applied post-mount, re-checked whenever
+  // `premiumTick` changes (upgrade modal closes, trial starts, admin panel
+  // closes) — same trigger the previous render-time computation relied on.
+  const [hasPremium,setHasPremium]=useState(false);
+  useEffect(()=>{ setHasPremium(PremiumManager.hasAccess()); },[premiumTick]);
   const effectivePlan = hasPremium && userPlan === "free" ? "premium" : userPlan;
 
   // Recommended for You — MAP Core V3.1 Recommendation Engine (Étape 8,
@@ -1106,7 +1117,6 @@ userStreak=1,
   ];
 
   const currentModules=MODULES[activeTab]||[];
-  void premiumTick;
 
   // Global progress — same per-module lesson completion logic as ModuleCard, aggregated
   const allModules=Object.values(MODULES).flat();
