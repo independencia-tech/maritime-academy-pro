@@ -2371,7 +2371,7 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
       ...existing,
       name,
       email: user.email,
-      date: new Date().toLocaleString(),
+      createdAt: user.created_at,
     }));
     const savedCard = JSON.parse(localStorage.getItem("map_status_card") || "{}");
     if (savedCard?.lang) setLang(savedCard.lang);
@@ -2800,6 +2800,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
             userXP={userXP}
             userStreak={userStreak}
             completedLessons={completedLessons}
+            createdAt={last.createdAt}
             onBack={() => setPage("questionnaire")}
             onEdit={() => setPage("questionnaire")}
             onStart={() => setPage("dashboard")}

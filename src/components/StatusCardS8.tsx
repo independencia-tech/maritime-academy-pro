@@ -297,6 +297,7 @@ export default function StatusCardS8({
   userXP=0,
   userStreak=1,
   completedLessons=[],
+  createdAt=null,
   onStart=()=>{},
   onBack=()=>{},
   onEdit=null,
@@ -359,10 +360,10 @@ export default function StatusCardS8({
   const ship=getVesselTypeMeta(profile.ship)?.label?.[lang]||"—";
   const country=profile.country||"—";
   const duration=t.durLabels?.[profile.duration]||"—";
-  const memberDate=new Date().toLocaleDateString(
+  const memberDate=createdAt?new Date(createdAt).toLocaleDateString(
     lang==="fr"?"fr-FR":lang==="es"?"es-ES":lang==="pt"?"pt-BR":"en-GB",
     {day:"2-digit",month:"long",year:"numeric"}
-  );
+  ):"—";
 
   // Notification message
   const notifKey=`notif${currentLevel.key.charAt(0).toUpperCase()+currentLevel.key.slice(1)}`;
