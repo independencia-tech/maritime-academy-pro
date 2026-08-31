@@ -1204,16 +1204,33 @@ function ShipsPage({
   selected, onSelectedChange,
   selectedOperationId, onSelectedOperationIdChange,
   highlightedOperationId, onHighlightedOperationIdChange,
+  returnToRecommended, onReturnToRecommendedConsumed,
 }:{
   lang:string; onBack:()=>void;
   selected: string | null; onSelectedChange: (v: string | null) => void;
   selectedOperationId: string | null; onSelectedOperationIdChange: (v: string | null) => void;
   highlightedOperationId?: string | null; onHighlightedOperationIdChange?: (v: string | null) => void;
+  returnToRecommended?: boolean; onReturnToRecommendedConsumed?: () => void;
 }) {
   const t = NAV_T[lang] || NAV_T.fr;
   const setSelected = onSelectedChange;
   const setSelectedOperationId = onSelectedOperationIdChange;
   const setHighlightedOperationId = onHighlightedOperationIdChange ?? (() => {});
+  // Point 3 correctif (2026-09-01) — back from the Ship Card itself (NOT
+  // from an individual operation, which must keep returning to the Ship
+  // Card unchanged) goes straight to Dashboard if we arrived here via
+  // Recommended for You's navigateToShipCard(), consuming the flag; the
+  // normal manual-browse behavior (reset to the generic vessel list) is
+  // untouched otherwise.
+  const backFromShipCard = () => {
+    if (returnToRecommended) {
+      onReturnToRecommendedConsumed?.();
+      onBack();
+    } else {
+      setSelected(null);
+      setHighlightedOperationId(null);
+    }
+  };
   // Point 1 correctif (2026-09-01) — auto-scroll to the highlighted
   // operation's button once its Ship Card is on screen. Runs once per
   // (selected, highlightedOperationId) pair, not on every render.
@@ -1244,7 +1261,7 @@ function ShipsPage({
     const ShipCard = SHIPS_LIBRARY_INDEX[selected] as any;
     return (
       <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
-        <TopBar onBack={() => { setSelected(null); setHighlightedOperationId(null); }} title={t.ships} backLabel={t.back}/>
+        <TopBar onBack={backFromShipCard} title={t.ships} backLabel={t.back}/>
         <ShipCard lang={lang}/>
         {specializedOps.length > 0 && (
           <div style={{padding:"0 16px 40px",maxWidth:480,margin:"0 auto"}}>
@@ -1329,9 +1346,11 @@ function ShipsPage({
 // component is unchanged from the previous local-state version.
 function RoleOnBoardPage({
   lang, onBack, selected, onSelectedChange,
+  returnToRecommended, onReturnToRecommendedConsumed,
 }:{
   lang:string; onBack:()=>void;
   selected: string | null; onSelectedChange: (v: string | null) => void;
+  returnToRecommended?: boolean; onReturnToRecommendedConsumed?: () => void;
 }) {
   const t = NAV_T[lang] || NAV_T.fr;
   const setSelected = onSelectedChange;
@@ -1344,12 +1363,25 @@ function RoleOnBoardPage({
   // and never inherits whatever scroll depth the previous view was left at.
   useEffect(() => { window.scrollTo(0, 0); }, [selected]);
 
+  // Point 3 correctif (2026-09-01) — single hop: back from the rank detail
+  // goes straight to Dashboard if we arrived via Recommended for You's
+  // navigateToRoleOnBoard(), consuming the flag; normal manual-browse
+  // behavior (reset to the rank list) is untouched otherwise.
+  const backFromRankDetail = () => {
+    if (returnToRecommended) {
+      onReturnToRecommendedConsumed?.();
+      onBack();
+    } else {
+      setSelected(null);
+    }
+  };
+
   if (selected) {
     return (
       <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
-        <TopBar onBack={() => setSelected(null)} title={t.roleOnBoard} backLabel={t.back}/>
+        <TopBar onBack={backFromRankDetail} title={t.roleOnBoard} backLabel={t.back}/>
         <Suspense fallback={null}>
-          <RoleOnBoardShared rankId={selected} lang={lang} onBack={() => setSelected(null)}/>
+          <RoleOnBoardShared rankId={selected} lang={lang} onBack={backFromRankDetail}/>
         </Suspense>
       </div>
     );
@@ -2898,6 +2930,28 @@ const [userStreak, setUserStreak] = useState(1);
   // directly on SpecializedLessonShared for that exact operation — bypassing
   // the generic vessel-type list ShipsPage otherwise starts on. Not called
   // from anywhere yet.
+  // Point 3 correctif (2026-09-01) — contextual "back": every deep-link
+  // entry point from Recommended for You (navigateToLesson,
+  // navigateToShipCard, navigateToRoleOnBoard) sets this flag; smartBack()
+  // is the single place that decides, on the way back out, whether to
+  // return to Dashboard (flag true, consumed/cleared here) or to the
+  // screen's normal structural parent (flag false — the untouched,
+  // pre-existing behavior for manual Browse navigation). Consumption
+  // rules, validated explicitly: lessons and Role Onboard consume on the
+  // very first back-press on the destination screen (single hop); Ships
+  // consumes only at the Ship Card's own back-press, NOT at an individual
+  // operation's back-press (which must keep returning to the Ship Card,
+  // unchanged, since that's a real parent/child relationship, not the bug).
+  const [returnToRecommended, setReturnToRecommended] = useState(false);
+  const smartBack = (fallbackPage: string) => () => {
+    if (returnToRecommended) {
+      setReturnToRecommended(false);
+      setPage("dashboard");
+    } else {
+      setPage(fallbackPage);
+    }
+  };
+
   const [shipsSelected, setShipsSelected] = useState<string | null>(null);
   const [shipsSelectedOperationId, setShipsSelectedOperationId] = useState<string | null>(null);
   // Point 1 correctif (2026-09-01) — separate from shipsSelectedOperationId
@@ -2931,6 +2985,7 @@ const [userStreak, setUserStreak] = useState(1);
   // (shipsHighlightedOperationId) rather than reusing
   // shipsSelectedOperationId, precisely to not conflate the two behaviors.
   const navigateToShipCard = (vesselTypeId: string, highlightOperationId?: string | null) => {
+    setReturnToRecommended(true);
     setShipsSelected(vesselTypeId);
     setShipsSelectedOperationId(null);
     setShipsHighlightedOperationId(highlightOperationId ?? null);
@@ -2945,6 +3000,7 @@ const [userStreak, setUserStreak] = useState(1);
   // RoleOnBoardShared content instead of the generic Deck/Engine rank list.
   const [roleOnBoardSelected, setRoleOnBoardSelected] = useState<string | null>(null);
   const navigateToRoleOnBoard = (rankId: string) => {
+    setReturnToRecommended(true);
     setRoleOnBoardSelected(rankId);
     setPage("role_on_board");
   };
@@ -2962,6 +3018,7 @@ const [userStreak, setUserStreak] = useState(1);
   // re-triggers the auto-redirect.
   const [pendingLessonPick, setPendingLessonPick] = useState<string | null>(null);
   const navigateToLesson = (moduleId: string, lessonId: string) => {
+    setReturnToRecommended(true);
     setPendingLessonPick(lessonId);
     if (moduleId === "d1") setPage("nav_lessons");
     else if (moduleId === "d2") setPage("iml_lessons");
@@ -3036,6 +3093,20 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
     // something to pop when the user presses the hardware back button.
     try { window.history.pushState({ map: page, guard: Date.now() }, ""); } catch {}
 
+    // Point 3 correctif (2026-09-01) — hardware/gesture back must respect
+    // returnToRecommended identically to the on-screen "Retour" button
+    // (smartBack() above, in the same component). Mirrors its exact
+    // semantics: if we arrived via Recommended for You, the flag is
+    // consumed and this goes straight to "dashboard" instead of the
+    // structural fallback; otherwise behavior is byte-identical to before
+    // this correctif (same fallback page, same pushState call).
+    const popBackTo = (fallbackPage: string) => {
+      const target = returnToRecommended ? "dashboard" : fallbackPage;
+      if (returnToRecommended) setReturnToRecommended(false);
+      try { window.history.pushState({ map: target }, ""); } catch {}
+      setPage(target);
+    };
+
     const onPop = (e: PopStateEvent) => {
       const cur = pageRef.current;
       const hasProfile = !!localStorage.getItem("map_status_card");
@@ -3044,50 +3115,43 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
         setShowExitConfirm(true);
         return;
       }
-      if (LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "nav_lessons" }, ""); } catch {}
-        setPage("nav_lessons");
-        return;
-      }
-      if (ENGINE_LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "engine_lessons" }, ""); } catch {}
-        setPage("engine_lessons");
-        return;
-      }
-      if (SB_LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "sb_lessons" }, ""); } catch {}
-        setPage("sb_lessons");
-        return;
-      }
-      if (SMCP_LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "smcp_lessons" }, ""); } catch {}
-        setPage("smcp_lessons");
-        return;
-      }
-      
-          if (SEAMANSHIP_LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "seamanship_lessons" }, ""); } catch {}
-        setPage("seamanship_lessons");
-        return;
-      }
-      
-          if (SHIPCAREER_LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "shipcareer_lessons" }, ""); } catch {}
-        setPage("shipcareer_lessons");
-        return;
-      }
-    
-          if (MARPOL_LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "marpol_lessons" }, ""); } catch {}
-        setPage("marpol_lessons");
-        return;
-      }
-      if (SEEMP_LESSONS.includes(cur)) {
-        try { window.history.pushState({ map: "seemp_lessons" }, ""); } catch {}
-        setPage("seemp_lessons");
+      if (LESSONS.includes(cur)) { popBackTo("nav_lessons"); return; }
+      if (ENGINE_LESSONS.includes(cur)) { popBackTo("engine_lessons"); return; }
+      if (SB_LESSONS.includes(cur)) { popBackTo("sb_lessons"); return; }
+      if (SMCP_LESSONS.includes(cur)) { popBackTo("smcp_lessons"); return; }
+      if (SEAMANSHIP_LESSONS.includes(cur)) { popBackTo("seamanship_lessons"); return; }
+      if (SHIPCAREER_LESSONS.includes(cur)) { popBackTo("shipcareer_lessons"); return; }
+      if (MARPOL_LESSONS.includes(cur)) { popBackTo("marpol_lessons"); return; }
+      if (SEEMP_LESSONS.includes(cur)) { popBackTo("seemp_lessons"); return; }
+      // Point 3 correctif — role_on_board previously had no hardware-back
+      // handling at all here (fell through to the final no-op re-push
+      // below, i.e. hardware back silently did nothing on this page).
+      // Mirrors RoleOnBoardPage's own backFromRankDetail() exactly: on the
+      // rank detail (roleOnBoardSelected set), consume the flag and go to
+      // Dashboard if set, otherwise return to the rank list; on the list
+      // itself, go to Dashboard.
+      if (cur === "role_on_board") {
+        if (roleOnBoardSelected) {
+          if (returnToRecommended) {
+            setReturnToRecommended(false);
+            try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
+            setPage("dashboard");
+          } else {
+            setRoleOnBoardSelected(null);
+            try { window.history.pushState({ map: "role_on_board" }, ""); } catch {}
+          }
+        } else {
+          try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
+          setPage("dashboard");
+        }
         return;
       }
       if (["modules","ships","exams","nav_lessons","engine_lessons","marpol_lessons","seemp_lessons","iml_lessons","sb_lessons","smcp_lessons","seamanship_lessons","shipcareer_lessons","admin","admin-login"].includes(cur)) {
+        // "ships" already unconditionally goes to dashboard here regardless
+        // of internal drill-down depth (pre-existing behavior, unrelated to
+        // this correctif, not changed) — only clear a lingering flag so it
+        // can't leak into whatever the user does next.
+        if (returnToRecommended) setReturnToRecommended(false);
         try { window.history.pushState({ map: "dashboard" }, ""); } catch {}
         setPage("dashboard");
         return;
@@ -3101,7 +3165,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
     };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
-  }, [page]);
+  }, [page, returnToRecommended, roleOnBoardSelected]);
 
   // ── SETTINGS ACTIONS ───────────────────────────────────
   const handleChangeLanguage = (code: string) => {
@@ -3356,6 +3420,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onSelectedOperationIdChange={setShipsSelectedOperationId}
           highlightedOperationId={shipsHighlightedOperationId}
           onHighlightedOperationIdChange={setShipsHighlightedOperationId}
+          returnToRecommended={returnToRecommended}
+          onReturnToRecommendedConsumed={() => setReturnToRecommended(false)}
         />
       )}
       {page === "exams" && (
@@ -3367,6 +3433,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={() => setPage("dashboard")}
           selected={roleOnBoardSelected}
           onSelectedChange={setRoleOnBoardSelected}
+          returnToRecommended={returnToRecommended}
+          onReturnToRecommendedConsumed={() => setReturnToRecommended(false)}
         />
       )}
       {page === "nav_lessons" && (
@@ -3515,7 +3583,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s1_l1" && (
         <LessonSafetyS1_L1
           lang={lang}
-          onBack={() => setPage("s1_lessons")}
+          onBack={smartBack("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l1"); setPage("s1_lessons"); }}
           onNext={() => { markLessonCompleted("s1-l1"); setPage("lesson_s1_l2"); }}
         />
@@ -3523,7 +3591,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s1_l2" && (
         <LessonSafetyS1_L2
           lang={lang}
-          onBack={() => setPage("s1_lessons")}
+          onBack={smartBack("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l2"); setPage("s1_lessons"); }}
           onNext={() => { markLessonCompleted("s1-l2"); setPage("lesson_s1_l3"); }}
         />
@@ -3531,7 +3599,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s1_l3" && (
         <LessonSafetyS1_L3
           lang={lang}
-          onBack={() => setPage("s1_lessons")}
+          onBack={smartBack("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l3"); setPage("s1_lessons"); }}
           onNext={() => { markLessonCompleted("s1-l3"); setPage("lesson_s1_l4"); }}
         />
@@ -3539,7 +3607,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s1_l4" && (
         <LessonSafetyS1_L4
           lang={lang}
-          onBack={() => setPage("s1_lessons")}
+          onBack={smartBack("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l4"); setPage("s1_lessons"); }}
           onNext={() => { markLessonCompleted("s1-l4"); setPage("lesson_s1_l5"); }}
         />
@@ -3547,7 +3615,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s1_l5" && (
         <LessonSafetyS1_L5
           lang={lang}
-          onBack={() => setPage("s1_lessons")}
+          onBack={smartBack("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l5"); setPage("s1_lessons"); }}
           onNext={() => { markLessonCompleted("s1-l5"); setPage("lesson_s1_l6"); }}
         />
@@ -3555,7 +3623,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s1_l6" && (
         <LessonSafetyS1_L6
           lang={lang}
-          onBack={() => setPage("s1_lessons")}
+          onBack={smartBack("s1_lessons")}
           onComplete={() => { markLessonCompleted("s1-l6"); setPage("s1_lessons"); }}
           onNext={() => { markLessonCompleted("s1-l6"); setPage("s1_lessons"); }}
         />
@@ -3579,7 +3647,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s2_l1" && (
         <LessonSafetyS2_L1
           lang={lang}
-          onBack={() => setPage("s2_lessons")}
+          onBack={smartBack("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l1"); setPage("s2_lessons"); }}
           onNext={() => { markLessonCompleted("s2-l1"); setPage("lesson_s2_l2"); }}
         />
@@ -3587,7 +3655,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s2_l2" && (
         <LessonSafetyS2_L2
           lang={lang}
-          onBack={() => setPage("s2_lessons")}
+          onBack={smartBack("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l2"); setPage("s2_lessons"); }}
           onNext={() => { markLessonCompleted("s2-l2"); setPage("lesson_s2_l3"); }}
         />
@@ -3595,7 +3663,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s2_l3" && (
         <LessonSafetyS2_L3
           lang={lang}
-          onBack={() => setPage("s2_lessons")}
+          onBack={smartBack("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l3"); setPage("s2_lessons"); }}
           onNext={() => { markLessonCompleted("s2-l3"); setPage("lesson_s2_l4"); }}
         />
@@ -3603,7 +3671,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s2_l4" && (
         <LessonSafetyS2_L4
           lang={lang}
-          onBack={() => setPage("s2_lessons")}
+          onBack={smartBack("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l4"); setPage("s2_lessons"); }}
           onNext={() => { markLessonCompleted("s2-l4"); setPage("lesson_s2_l5"); }}
         />
@@ -3611,7 +3679,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_s2_l5" && (
         <LessonSafetyS2_L5
           lang={lang}
-          onBack={() => setPage("s2_lessons")}
+          onBack={smartBack("s2_lessons")}
           onComplete={() => { markLessonCompleted("s2-l5"); setPage("s2_lessons"); }}
           onNext={() => { markLessonCompleted("s2-l5"); setPage("s2_lessons"); }}
         />
@@ -3638,7 +3706,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s3_l1" && (
   <LessonSafetyS3_L1
     lang={lang}
-    onBack={() => setPage("s3_lessons")}
+    onBack={smartBack("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l1"); setPage("s3_lessons"); }}
     onNext={() => { markLessonCompleted("s3-l1"); setPage("lesson_safety_s3_l2"); }}
   />
@@ -3646,7 +3714,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s3_l2" && (
   <LessonSafetyS3_L2
     lang={lang}
-    onBack={() => setPage("s3_lessons")}
+    onBack={smartBack("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l2"); setPage("s3_lessons"); }}
     onNext={() => { markLessonCompleted("s3-l2"); setPage("lesson_safety_s3_l3"); }}
   />
@@ -3654,7 +3722,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s3_l3" && (
   <LessonSafetyS3_L3
     lang={lang}
-    onBack={() => setPage("s3_lessons")}
+    onBack={smartBack("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l3"); setPage("s3_lessons"); }}
     onNext={() => { markLessonCompleted("s3-l3"); setPage("lesson_safety_s3_l4"); }}
   />
@@ -3662,7 +3730,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s3_l4" && (
   <LessonSafetyS3_L4
     lang={lang}
-    onBack={() => setPage("s3_lessons")}
+    onBack={smartBack("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l4"); setPage("s3_lessons"); }}
     onNext={() => { markLessonCompleted("s3-l4"); setPage("lesson_safety_s3_l5"); }}
   />
@@ -3670,7 +3738,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s3_l5" && (
   <LessonSafetyS3_L5
     lang={lang}
-    onBack={() => setPage("s3_lessons")}
+    onBack={smartBack("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l5"); setPage("s3_lessons"); }}
     onNext={() => { markLessonCompleted("s3-l5"); setPage("lesson_safety_s3_l6"); }}
   />
@@ -3678,7 +3746,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s3_l6" && (
   <LessonSafetyS3_L6
     lang={lang}
-    onBack={() => setPage("s3_lessons")}
+    onBack={smartBack("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l6"); setPage("s3_lessons"); }}
     onNext={() => { markLessonCompleted("s3-l6"); setPage("lesson_safety_s3_l7"); }}
   />
@@ -3686,7 +3754,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s3_l7" && (
   <LessonSafetyS3_L7
     lang={lang}
-    onBack={() => setPage("s3_lessons")}
+    onBack={smartBack("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l7"); setPage("s3_lessons"); }}
     onNext={() => { markLessonCompleted("s3-l7"); setPage("lesson_safety_s3_l8"); }}
   />
@@ -3694,7 +3762,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_safety_s3_l8" && (
   <LessonSafetyS3_L8
     lang={lang}
-    onBack={() => setPage("s3_lessons")}
+    onBack={smartBack("s3_lessons")}
     onComplete={() => { markLessonCompleted("s3-l8"); setPage("dashboard"); }}
     onNext={() => { markLessonCompleted("s3-l8"); setPage("dashboard"); }}
   />
@@ -3718,37 +3786,37 @@ else if (m?.id === "e7") setPage("e7_lessons");
   />
 )}
 {page === "lesson_safety_s4_l1" && (
-  <LessonSafetyS4_L1 lang={lang} onBack={() => setPage("s4_lessons")}
+  <LessonSafetyS4_L1 lang={lang} onBack={smartBack("s4_lessons")}
     onComplete={() => { markLessonCompleted("s4-l1"); setPage("s4_lessons"); }}
     onNext={() => { markLessonCompleted("s4-l1"); setPage("lesson_safety_s4_l2"); }}/>
 )}
 {page === "lesson_safety_s4_l2" && (
-  <LessonSafetyS4_L2 lang={lang} onBack={() => setPage("s4_lessons")}
+  <LessonSafetyS4_L2 lang={lang} onBack={smartBack("s4_lessons")}
     onComplete={() => { markLessonCompleted("s4-l2"); setPage("s4_lessons"); }}
     onNext={() => { markLessonCompleted("s4-l2"); setPage("lesson_safety_s4_l3"); }}/>
 )}
 {page === "lesson_safety_s4_l3" && (
-  <LessonSafetyS4_L3 lang={lang} onBack={() => setPage("s4_lessons")}
+  <LessonSafetyS4_L3 lang={lang} onBack={smartBack("s4_lessons")}
     onComplete={() => { markLessonCompleted("s4-l3"); setPage("s4_lessons"); }}
     onNext={() => { markLessonCompleted("s4-l3"); setPage("lesson_safety_s4_l4"); }}/>
 )}
 {page === "lesson_safety_s4_l4" && (
-  <LessonSafetyS4_L4 lang={lang} onBack={() => setPage("s4_lessons")}
+  <LessonSafetyS4_L4 lang={lang} onBack={smartBack("s4_lessons")}
     onComplete={() => { markLessonCompleted("s4-l4"); setPage("s4_lessons"); }}
     onNext={() => { markLessonCompleted("s4-l4"); setPage("lesson_safety_s4_l5"); }}/>
 )}
 {page === "lesson_safety_s4_l5" && (
-  <LessonSafetyS4_L5 lang={lang} onBack={() => setPage("s4_lessons")}
+  <LessonSafetyS4_L5 lang={lang} onBack={smartBack("s4_lessons")}
     onComplete={() => { markLessonCompleted("s4-l5"); setPage("s4_lessons"); }}
     onNext={() => { markLessonCompleted("s4-l5"); setPage("lesson_safety_s4_l6"); }}/>
 )}
 {page === "lesson_safety_s4_l6" && (
-  <LessonSafetyS4_L6 lang={lang} onBack={() => setPage("s4_lessons")}
+  <LessonSafetyS4_L6 lang={lang} onBack={smartBack("s4_lessons")}
     onComplete={() => { markLessonCompleted("s4-l6"); setPage("s4_lessons"); }}
     onNext={() => { markLessonCompleted("s4-l6"); setPage("lesson_safety_s4_l7"); }}/>
 )}
 {page === "lesson_safety_s4_l7" && (
-  <LessonSafetyS4_L7 lang={lang} onBack={() => setPage("s4_lessons")}
+  <LessonSafetyS4_L7 lang={lang} onBack={smartBack("s4_lessons")}
     onComplete={() => { markLessonCompleted("s4-l7"); setPage("dashboard"); }}
     onNext={() => { markLessonCompleted("s4-l7"); setPage("dashboard"); }}/>
 )}
@@ -3768,22 +3836,22 @@ else if (m?.id === "e7") setPage("e7_lessons");
   />
 )}
 {page === "lesson_safety_s5_l1" && (
-  <LessonSafetyS5_L1 lang={lang} onBack={() => setPage("s5_lessons")}
+  <LessonSafetyS5_L1 lang={lang} onBack={smartBack("s5_lessons")}
     onComplete={() => { markLessonCompleted("s5-l1"); setPage("s5_lessons"); }}
     onNext={() => { markLessonCompleted("s5-l1"); setPage("lesson_safety_s5_l2"); }}/>
 )}
 {page === "lesson_safety_s5_l2" && (
-  <LessonSafetyS5_L2 lang={lang} onBack={() => setPage("s5_lessons")}
+  <LessonSafetyS5_L2 lang={lang} onBack={smartBack("s5_lessons")}
     onComplete={() => { markLessonCompleted("s5-l2"); setPage("s5_lessons"); }}
     onNext={() => { markLessonCompleted("s5-l2"); setPage("lesson_safety_s5_l3"); }}/>
 )}
 {page === "lesson_safety_s5_l3" && (
-  <LessonSafetyS5_L3 lang={lang} onBack={() => setPage("s5_lessons")}
+  <LessonSafetyS5_L3 lang={lang} onBack={smartBack("s5_lessons")}
     onComplete={() => { markLessonCompleted("s5-l3"); setPage("s5_lessons"); }}
     onNext={() => { markLessonCompleted("s5-l3"); setPage("lesson_safety_s5_l4"); }}/>
 )}
 {page === "lesson_safety_s5_l4" && (
-  <LessonSafetyS5_L4 lang={lang} onBack={() => setPage("s5_lessons")}
+  <LessonSafetyS5_L4 lang={lang} onBack={smartBack("s5_lessons")}
     onComplete={() => { markLessonCompleted("s5-l4"); setPage("dashboard"); }}
     onNext={() => { markLessonCompleted("s5-l4"); setPage("dashboard"); }}/>
 )}
@@ -3805,32 +3873,32 @@ else if (m?.id === "e7") setPage("e7_lessons");
   />
 )}
 {page === "lesson_safety_s6_l1" && (
-  <LessonSafetyS6_L1 lang={lang} onBack={() => setPage("s6_lessons")}
+  <LessonSafetyS6_L1 lang={lang} onBack={smartBack("s6_lessons")}
     onComplete={() => { markLessonCompleted("s6-l1"); setPage("s6_lessons"); }}
     onNext={() => { markLessonCompleted("s6-l1"); setPage("lesson_safety_s6_l2"); }}/>
 )}
 {page === "lesson_safety_s6_l2" && (
-  <LessonSafetyS6_L2 lang={lang} onBack={() => setPage("s6_lessons")}
+  <LessonSafetyS6_L2 lang={lang} onBack={smartBack("s6_lessons")}
     onComplete={() => { markLessonCompleted("s6-l2"); setPage("s6_lessons"); }}
     onNext={() => { markLessonCompleted("s6-l2"); setPage("lesson_safety_s6_l3"); }}/>
 )}
 {page === "lesson_safety_s6_l3" && (
-  <LessonSafetyS6_L3 lang={lang} onBack={() => setPage("s6_lessons")}
+  <LessonSafetyS6_L3 lang={lang} onBack={smartBack("s6_lessons")}
     onComplete={() => { markLessonCompleted("s6-l3"); setPage("s6_lessons"); }}
     onNext={() => { markLessonCompleted("s6-l3"); setPage("lesson_safety_s6_l4"); }}/>
 )}
 {page === "lesson_safety_s6_l4" && (
-  <LessonSafetyS6_L4 lang={lang} onBack={() => setPage("s6_lessons")}
+  <LessonSafetyS6_L4 lang={lang} onBack={smartBack("s6_lessons")}
     onComplete={() => { markLessonCompleted("s6-l4"); setPage("s6_lessons"); }}
     onNext={() => { markLessonCompleted("s6-l4"); setPage("lesson_safety_s6_l5"); }}/>
 )}
 {page === "lesson_safety_s6_l5" && (
-  <LessonSafetyS6_L5 lang={lang} onBack={() => setPage("s6_lessons")}
+  <LessonSafetyS6_L5 lang={lang} onBack={smartBack("s6_lessons")}
     onComplete={() => { markLessonCompleted("s6-l5"); setPage("s6_lessons"); }}
     onNext={() => { markLessonCompleted("s6-l5"); setPage("lesson_safety_s6_l6"); }}/>
 )}
 {page === "lesson_safety_s6_l6" && (
-  <LessonSafetyS6_L6 lang={lang} onBack={() => setPage("s6_lessons")}
+  <LessonSafetyS6_L6 lang={lang} onBack={smartBack("s6_lessons")}
     onComplete={() => { markLessonCompleted("s6-l6"); setPage("dashboard"); }}
     onNext={() => { markLessonCompleted("s6-l6"); setPage("dashboard"); }}/>
 )} 
@@ -3856,42 +3924,42 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e2_l1" && (
   <LessonE2_L1
     lang={lang}
-    onBack={() => setPage("e2_lessons")}
+    onBack={smartBack("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l1"); setPage("e2_lessons"); }}
   />
 )}
       {page === "lesson_e2_l2" && (
   <LessonE2_L2
     lang={lang}
-    onBack={() => setPage("e2_lessons")}
+    onBack={smartBack("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l2"); setPage("e2_lessons"); }}
   />
 )}
       {page === "lesson_e2_l3" && (
   <LessonE2_L3
     lang={lang}
-    onBack={() => setPage("e2_lessons")}
+    onBack={smartBack("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l3"); setPage("e2_lessons"); }}
   />
 )}
    {page === "lesson_e2_l4" && (
   <LessonE2_L4
     lang={lang}
-    onBack={() => setPage("e2_lessons")}
+    onBack={smartBack("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l4"); setPage("e2_lessons"); }}
   />
 )}  
       {page === "lesson_e2_l5" && (
   <LessonE2_L5
     lang={lang}
-    onBack={() => setPage("e2_lessons")}
+    onBack={smartBack("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l5"); setPage("e2_lessons"); }}
   />
 )}
       {page === "lesson_e2_l6" && (
   <LessonE2_L6
     lang={lang}
-    onBack={() => setPage("e2_lessons")}
+    onBack={smartBack("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l6"); setPage("e2_lessons"); }}
     onNext={() => { markLessonCompleted("e2-l6"); setPage("lesson_e2_l7"); }}
   />
@@ -3899,7 +3967,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e2_l7" && (
   <LessonE2_L7
     lang={lang}
-    onBack={() => setPage("e2_lessons")}
+    onBack={smartBack("e2_lessons")}
     onComplete={() => { markLessonCompleted("e2-l7"); setPage("e2_lessons"); }}
     onNext={() => { markLessonCompleted("e2-l7"); setPage("lesson_e3_l1"); }}
   />
@@ -3924,42 +3992,42 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e3_l1" && (
   <LessonE3_L1
     lang={lang}
-    onBack={() => setPage("e3_lessons")}
+    onBack={smartBack("e3_lessons")}
     onComplete={() => { markLessonCompleted("e3-l1"); setPage("e3_lessons"); }}
   />
 )}
       {page === "lesson_e3_l2" && (
   <LessonE3_L2
     lang={lang}
-    onBack={() => setPage("e3_lessons")}
+    onBack={smartBack("e3_lessons")}
     onComplete={() => { markLessonCompleted("e3-l2"); setPage("e3_lessons"); }}
   />
 )}
       {page === "lesson_e3_l3" && (
   <LessonE3_L3
     lang={lang}
-    onBack={() => setPage("e3_lessons")}
+    onBack={smartBack("e3_lessons")}
     onComplete={() => { markLessonCompleted("e3-l3"); setPage("e3_lessons"); }}
   />
 )}
       {page === "lesson_e3_l4" && (
   <LessonE3_L4
     lang={lang}
-    onBack={() => setPage("e3_lessons")}
+    onBack={smartBack("e3_lessons")}
     onComplete={() => { markLessonCompleted("e3-l4"); setPage("e3_lessons"); }}
   />
 )}
       {page === "lesson_e3_l5" && (
   <LessonE3_L5
     lang={lang}
-    onBack={() => setPage("e3_lessons")}
+    onBack={smartBack("e3_lessons")}
     onComplete={() => { markLessonCompleted("e3-l5"); setPage("e3_lessons"); }}
   />
 )}
       {page === "lesson_e6_l1" && (
   <LessonE6_L1
     lang={lang}
-    onBack={() => setPage("e6_lessons")}
+    onBack={smartBack("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l1"); setPage("e6_lessons"); }}
     onNext={() => { markLessonCompleted("e6-l1"); setPage("lesson_e6_l2"); }}
   />
@@ -3967,14 +4035,14 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e3_l6" && (
   <LessonE3_L6
     lang={lang}
-    onBack={() => setPage("e3_lessons")}
+    onBack={smartBack("e3_lessons")}
     onComplete={() => { markLessonCompleted("e3-l6"); setPage("e3_lessons"); }}
   />
 )}
       {page === "lesson_e6_l2" && (
   <LessonE6_L2
     lang={lang}
-    onBack={() => setPage("e6_lessons")}
+    onBack={smartBack("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l2"); setPage("e6_lessons"); }}
     onNext={() => { markLessonCompleted("e6-l2"); setPage("lesson_e6_l3"); }}
   />
@@ -3982,7 +4050,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e6_l3" && (
   <LessonE6_L3
     lang={lang}
-    onBack={() => setPage("e6_lessons")}
+    onBack={smartBack("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l3"); setPage("e6_lessons"); }}
     onNext={() => { markLessonCompleted("e6-l3"); setPage("lesson_e6_l4"); }}
   />
@@ -3990,7 +4058,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e6_l4" && (
   <LessonE6_L4
     lang={lang}
-    onBack={() => setPage("e6_lessons")}
+    onBack={smartBack("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l4"); setPage("e6_lessons"); }}
     onNext={() => { markLessonCompleted("e6-l4"); setPage("lesson_e6_l5"); }}
   />
@@ -3998,7 +4066,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e6_l5" && (
   <LessonE6_L5
     lang={lang}
-    onBack={() => setPage("e6_lessons")}
+    onBack={smartBack("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l5"); setPage("e6_lessons"); }}
     onNext={() => { markLessonCompleted("e6-l5"); setPage("lesson_e6_l6"); }}
   />
@@ -4006,7 +4074,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e6_l6" && (
   <LessonE6_L6
     lang={lang}
-    onBack={() => setPage("e6_lessons")}
+    onBack={smartBack("e6_lessons")}
     onComplete={() => { markLessonCompleted("e6-l6"); setPage("e6_lessons"); }}
     onNext={() => { markLessonCompleted("e6-l6"); setPage("lesson_e7_l1"); }}
   />
@@ -4031,28 +4099,28 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_e7_l1" && (
   <LessonE7_L1
     lang={lang}
-    onBack={() => setPage("e7_lessons")}
+    onBack={smartBack("e7_lessons")}
     onComplete={() => { markLessonCompleted("e7-l1"); setPage("e7_lessons"); }}
     onNext={() => { markLessonCompleted("e7-l1"); setPage("lesson_e7_l2"); }}
   />
 )}
       {page === "lesson_e7_l2" && (
-  <LessonE7_L2 lang={lang} onBack={() => setPage("e7_lessons")}
+  <LessonE7_L2 lang={lang} onBack={smartBack("e7_lessons")}
     onComplete={() => { markLessonCompleted("e7-l2"); setPage("e7_lessons"); }}
     onNext={() => { markLessonCompleted("e7-l2"); setPage("lesson_e7_l3"); }}/>
 )}
       {page === "lesson_e7_l3" && (
-  <LessonE7_L3 lang={lang} onBack={() => setPage("e7_lessons")}
+  <LessonE7_L3 lang={lang} onBack={smartBack("e7_lessons")}
     onComplete={() => { markLessonCompleted("e7-l3"); setPage("e7_lessons"); }}
     onNext={() => { markLessonCompleted("e7-l3"); setPage("lesson_e7_l4"); }}/>
 )}
       {page === "lesson_e7_l4" && (
-  <LessonE7_L4 lang={lang} onBack={() => setPage("e7_lessons")}
+  <LessonE7_L4 lang={lang} onBack={smartBack("e7_lessons")}
     onComplete={() => { markLessonCompleted("e7-l4"); setPage("e7_lessons"); }}
     onNext={() => { markLessonCompleted("e7-l4"); setPage("lesson_e7_l5"); }}/>
 )}
       {page === "lesson_e7_l5" && (
-  <LessonE7_L5 lang={lang} onBack={() => setPage("e7_lessons")}
+  <LessonE7_L5 lang={lang} onBack={smartBack("e7_lessons")}
     onComplete={() => { markLessonCompleted("e7-l5"); setPage("e7_lessons"); }}
     onNext={() => { markLessonCompleted("e7-l5"); setPage("e7_lessons"); }}/>
 )}
@@ -4134,7 +4202,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_solas" && (
         <LessonSOLAS
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l1"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l1"); setPage("lesson_marpol_legal"); }}
         />
@@ -4142,7 +4210,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_marpol_legal" && (
         <LessonMARPOLLegal
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l2"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l2"); setPage("lesson_stcw"); }}
         />
@@ -4150,7 +4218,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_stcw" && (
         <LessonSTCW
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l3"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l3"); setPage("lesson_mlc"); }}
         />
@@ -4158,7 +4226,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_mlc" && (
         <LessonMLC
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l4"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l4"); setPage("lesson_colreg_legal"); }}
         />
@@ -4166,7 +4234,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_colreg_legal" && (
         <LessonCOLREGLegal
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l5"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l5"); setPage("lesson_unclos"); }}
         />
@@ -4174,7 +4242,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_unclos" && (
         <LessonUNCLOS
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l6"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l6"); setPage("lesson_liability_insurance"); }}
         />
@@ -4182,7 +4250,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_liability_insurance" && (
         <LessonLiabilityInsurance
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l7"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l7"); setPage("lesson_ports_flag_states"); }}
         />
@@ -4190,7 +4258,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_ports_flag_states" && (
         <LessonPortsFlagStates
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l8"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l8"); setPage("lesson_piracy"); }}
         />
@@ -4198,7 +4266,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_piracy" && (
         <LessonPiracy
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l9"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l9"); setPage("lesson_arbitration"); }}
         />
@@ -4206,7 +4274,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_arbitration" && (
         <LessonArbitration
           lang={lang}
-          onBack={() => setPage("iml_lessons")}
+          onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l10"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l10"); setPage("iml_lessons"); }}
         />
@@ -4214,7 +4282,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_iala" && (
         <LessonIALA
           lang={lang}
-          onBack={() => setPage("sb_lessons")}
+          onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l1"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l1"); setPage("lesson_lights_shapes"); }}
         />
@@ -4222,7 +4290,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_lights_shapes" && (
         <LessonLightsShapes
           lang={lang}
-          onBack={() => setPage("sb_lessons")}
+          onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l2"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l2"); setPage("lesson_sound_signals"); }}
         />
@@ -4230,7 +4298,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_sound_signals" && (
         <LessonSoundSignals
           lang={lang}
-          onBack={() => setPage("sb_lessons")}
+          onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l3"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l3"); setPage("lesson_flags"); }}
         />
@@ -4238,7 +4306,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_flags" && (
         <LessonFlags
           lang={lang}
-          onBack={() => setPage("sb_lessons")}
+          onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l4"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l4"); setPage("lesson_vhf"); }}
         />
@@ -4246,7 +4314,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_vhf" && (
         <LessonVHF
           lang={lang}
-          onBack={() => setPage("sb_lessons")}
+          onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l5"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l5"); setPage("lesson_ais"); }}
         />
@@ -4254,7 +4322,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_ais" && (
         <LessonAIS
           lang={lang}
-          onBack={() => setPage("sb_lessons")}
+          onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l6"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l6"); setPage("lesson_gmdss"); }}
         />
@@ -4262,7 +4330,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_gmdss" && (
         <LessonGMDSS
           lang={lang}
-          onBack={() => setPage("sb_lessons")}
+          onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
         />
@@ -4270,7 +4338,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_sea_l1" && (
         <LessonSEA_L1
           lang={lang}
-          onBack={() => setPage("seamanship_lessons")}
+          onBack={smartBack("seamanship_lessons")}
           onComplete={() => { markLessonCompleted("d6-l1"); setPage("seamanship_lessons"); }}
           onNext={() => { markLessonCompleted("d6-l1"); setPage("lesson_sea_l2"); }}
         />
@@ -4278,7 +4346,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_sea_l2" && (
         <LessonSEA_L2
           lang={lang}
-          onBack={() => setPage("seamanship_lessons")}
+          onBack={smartBack("seamanship_lessons")}
           onComplete={() => { markLessonCompleted("d6-l2"); setPage("seamanship_lessons"); }}
           onNext={() => { markLessonCompleted("d6-l2"); setPage("lesson_sea_l3"); }}
         />
@@ -4293,7 +4361,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_sea_l3" && (
   <LessonSEA_L3
     lang={lang}
-    onBack={() => setPage("seamanship_lessons")}
+    onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l3"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l3"); setPage("lesson_sea_l4"); }}
   />
@@ -4301,7 +4369,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_sea_l4" && (
   <LessonSEA_L4
     lang={lang}
-    onBack={() => setPage("seamanship_lessons")}
+    onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l4"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l4"); setPage("lesson_sea_l5"); }}
   />
@@ -4309,7 +4377,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_sea_l5" && (
   <LessonSEA_L5
     lang={lang}
-    onBack={() => setPage("seamanship_lessons")}
+    onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
   />
@@ -4317,7 +4385,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_sea_l6" && (
   <LessonSEA_L6
     lang={lang}
-    onBack={() => setPage("seamanship_lessons")}
+    onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
   />
@@ -4325,7 +4393,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_sea_l7" && (
   <LessonSEA_L7
     lang={lang}
-    onBack={() => setPage("seamanship_lessons")}
+    onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l7"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l7"); setPage("seamanship_lessons"); }}
   />
@@ -4333,7 +4401,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_meteo_l1" && (
   <LessonMETEO_L1
     lang={lang}
-    onBack={() => setPage("meteorology_lessons")}
+    onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l1"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l1"); setPage("lesson_meteo_l2"); }}
   />
@@ -4341,7 +4409,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_meteo_l2" && (
   <LessonMETEO_L2
     lang={lang}
-    onBack={() => setPage("meteorology_lessons")}
+    onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l2"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l2"); setPage("lesson_meteo_l3"); }}
   />
@@ -4349,7 +4417,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_meteo_l3" && (
   <LessonMETEO_L3
     lang={lang}
-    onBack={() => setPage("meteorology_lessons")}
+    onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l3"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l3"); setPage("lesson_meteo_l4"); }}
   />
@@ -4357,7 +4425,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_meteo_l4" && (
   <LessonMETEO_L4
     lang={lang}
-    onBack={() => setPage("meteorology_lessons")}
+    onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l4"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l4"); setPage("lesson_meteo_l5"); }}
   />
@@ -4365,7 +4433,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_meteo_l5" && (
   <LessonMETEO_L5
     lang={lang}
-    onBack={() => setPage("meteorology_lessons")}
+    onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l5"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l5"); setPage("lesson_meteo_l6"); }}
   />
@@ -4373,7 +4441,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_meteo_l6" && (
   <LessonMETEO_L6
     lang={lang}
-    onBack={() => setPage("meteorology_lessons")}
+    onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l6"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l6"); setPage("lesson_meteo_l7"); }}
   />
@@ -4381,7 +4449,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
 {page === "lesson_meteo_l7" && (
   <LessonMETEO_L7
     lang={lang}
-    onBack={() => setPage("meteorology_lessons")}
+    onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l7"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l7"); setPage("meteorology_lessons"); }}
   />
@@ -4389,42 +4457,42 @@ else if (m?.id === "e7") setPage("e7_lessons");
    {page === "lesson_shipcareer_l1" && (
   <LessonShipCareer_L1
     lang={lang}
-    onBack={() => setPage("shipcareer_lessons")}
+    onBack={smartBack("shipcareer_lessons")}
     onComplete={() => { markLessonCompleted("d5-l1"); setPage("shipcareer_lessons"); }}
   />
 )}
 {page === "lesson_shipcareer_l2" && (
   <LessonShipCareer_L2
     lang={lang}
-    onBack={() => setPage("shipcareer_lessons")}
+    onBack={smartBack("shipcareer_lessons")}
     onComplete={() => { markLessonCompleted("d5-l2"); setPage("shipcareer_lessons"); }}
   />
 )}
 {page === "lesson_shipcareer_l3" && (
   <LessonShipCareer_L3
     lang={lang}
-    onBack={() => setPage("shipcareer_lessons")}
+    onBack={smartBack("shipcareer_lessons")}
     onComplete={() => { markLessonCompleted("d5-l3"); setPage("shipcareer_lessons"); }}
   />
 )}
 {page === "lesson_shipcareer_l4" && (
   <LessonShipCareer_L4
     lang={lang}
-    onBack={() => setPage("shipcareer_lessons")}
+    onBack={smartBack("shipcareer_lessons")}
     onComplete={() => { markLessonCompleted("d5-l4"); setPage("shipcareer_lessons"); }}
   />
 )}
 {page === "lesson_shipcareer_l5" && (
   <LessonShipCareer_L5
     lang={lang}
-    onBack={() => setPage("shipcareer_lessons")}
+    onBack={smartBack("shipcareer_lessons")}
     onComplete={() => { markLessonCompleted("d5-l5"); setPage("shipcareer_lessons"); }}
   />
 )} 
       {page === "lesson_smcp_l1" && (
         <LessonSMCP_L1
           lang={lang}
-          onBack={() => setPage("smcp_lessons")}
+          onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l1"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l1"); setPage("lesson_smcp_l2"); }}
         />
@@ -4432,7 +4500,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_smcp_l2" && (
         <LessonSMCP_L2
           lang={lang}
-          onBack={() => setPage("smcp_lessons")}
+          onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l2"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l2"); setPage("lesson_smcp_l3"); }}
         />
@@ -4440,7 +4508,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_smcp_l3" && (
         <LessonSMCP_L3
           lang={lang}
-          onBack={() => setPage("smcp_lessons")}
+          onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l3"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l3"); setPage("lesson_smcp_l4"); }}
         />
@@ -4448,7 +4516,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_smcp_l4" && (
         <LessonSMCP_L4
           lang={lang}
-          onBack={() => setPage("smcp_lessons")}
+          onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l4"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l4"); setPage("lesson_smcp_l5"); }}
         />
@@ -4456,7 +4524,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_smcp_l5" && (
         <LessonSMCP_L5
           lang={lang}
-          onBack={() => setPage("smcp_lessons")}
+          onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l5"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l5"); setPage("lesson_smcp_l6"); }}
         />
@@ -4464,7 +4532,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_smcp_l6" && (
         <LessonSMCP_L6
           lang={lang}
-          onBack={() => setPage("smcp_lessons")}
+          onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l6"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l6"); setPage("lesson_smcp_l7"); }}
         />
@@ -4472,7 +4540,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_smcp_l7" && (
         <LessonSMCP_L7
           lang={lang}
-          onBack={() => setPage("smcp_lessons")}
+          onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l7"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l7"); setPage("lesson_smcp_l8"); }}
         />
@@ -4480,7 +4548,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_smcp_l8" && (
         <LessonSMCP_L8
           lang={lang}
-          onBack={() => setPage("smcp_lessons")}
+          onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l8"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l8"); setPage("smcp_lessons"); }}
         />
@@ -4488,7 +4556,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_navigation" && (
         <LessonNavigation
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l1"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l1"); setPage("lesson_navire"); }}
         />
@@ -4496,7 +4564,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_navire" && (
         <LessonNavire
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l2"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l2"); setPage("lesson_coord"); }}
         />
@@ -4504,7 +4572,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_coord" && (
         <LessonCoord
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l3"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l3"); setPage("lesson_carte"); }}
         />
@@ -4512,7 +4580,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_carte" && (
         <LessonCarteMarine
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l4"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l4"); setPage("lesson_compas"); }}
         />
@@ -4520,7 +4588,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_compas" && (
         <LessonCompas
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l5"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l5"); setPage("lesson_navpratique"); }}
         />
@@ -4528,7 +4596,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_navpratique" && (
         <LessonNavPratique
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l6"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l6"); setPage("lesson_marees"); }}
         />
@@ -4536,7 +4604,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_marees" && (
         <LessonMarees
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l7"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l7"); setPage("lesson_colreg"); }}
         />
@@ -4544,7 +4612,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_colreg" && (
         <LessonCOLREG
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
         />
@@ -4552,7 +4620,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_steering" && (
         <LessonSteering
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
         />
@@ -4560,7 +4628,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_watch_org" && (
         <LessonWatchOrganization
           lang={lang}
-          onBack={() => setPage("nav_lessons")}
+          onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l10"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l10"); setPage("dashboard"); }}
         />
@@ -4568,7 +4636,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_moteur" && (
         <LessonMoteur
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
+          onBack={smartBack("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l1"); setPage("engine_lessons"); }}
           onNext={() => { markLessonCompleted("e1-l1"); setPage("lesson_auxiliaires"); }}
         />
@@ -4576,7 +4644,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_auxiliaires" && (
         <LessonAuxiliaires
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
+          onBack={smartBack("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l2"); setPage("engine_lessons"); }}
           onNext={() => { markLessonCompleted("e1-l2"); setPage("lesson_stabilite"); }}
         />
@@ -4584,7 +4652,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_stabilite" && (
         <LessonStabilite
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
+          onBack={smartBack("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l3"); setPage("engine_lessons"); }}
           onNext={() => { markLessonCompleted("e1-l3"); setPage("lesson_incendie"); }}
         />
@@ -4592,7 +4660,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_incendie" && (
         <LessonIncendie
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
+          onBack={smartBack("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l4"); setPage("engine_lessons"); }}
           onNext={() => { markLessonCompleted("e1-l4"); setPage("lesson_sauvetage"); }}
         />
@@ -4600,7 +4668,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_sauvetage" && (
         <LessonSauvetage
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
+          onBack={smartBack("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l5"); setPage("engine_lessons"); }}
           onNext={() => { markLessonCompleted("e1-l5"); setPage("lesson_marpol"); }}
         />
@@ -4608,7 +4676,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_marpol" && (
         <LessonMARPOL
           lang={lang}
-          onBack={() => setPage("marpol_lessons")}
+          onBack={smartBack("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l1"); setPage("marpol_lessons"); }}
           onNext={() => { markLessonCompleted("e4-l1"); setPage("lesson_solas"); }}
         />
@@ -4616,7 +4684,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_marpol_l2" && (
         <LessonMARPOL_L2
           lang={lang}
-          onBack={() => setPage("marpol_lessons")}
+          onBack={smartBack("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l2"); setPage("marpol_lessons"); }}
           onNext={() => { markLessonCompleted("e4-l2"); setPage("lesson_marpol_l3"); }}
         />
@@ -4624,7 +4692,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_marpol_l3" && (
         <LessonMARPOL_L3
           lang={lang}
-          onBack={() => setPage("marpol_lessons")}
+          onBack={smartBack("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l3"); setPage("marpol_lessons"); }}
           onNext={() => { markLessonCompleted("e4-l3"); setPage("lesson_marpol_l4"); }}
         />
@@ -4632,7 +4700,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_marpol_l4" && (
         <LessonMARPOL_L4
           lang={lang}
-          onBack={() => setPage("marpol_lessons")}
+          onBack={smartBack("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l4"); setPage("marpol_lessons"); }}
           onNext={() => { markLessonCompleted("e4-l4"); setPage("lesson_marpol_l5"); }}
         />
@@ -4640,7 +4708,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_marpol_l5" && (
         <LessonMARPOL_L5
           lang={lang}
-          onBack={() => setPage("marpol_lessons")}
+          onBack={smartBack("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l5"); setPage("marpol_lessons"); }}
           onNext={() => { markLessonCompleted("e4-l5"); setPage("lesson_marpol_l6"); }}
         />
@@ -4648,7 +4716,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_marpol_l6" && (
         <LessonMARPOL_L6
           lang={lang}
-          onBack={() => setPage("marpol_lessons")}
+          onBack={smartBack("marpol_lessons")}
           onComplete={() => { markLessonCompleted("e4-l6"); setPage("marpol_lessons"); }}
           onNext={() => { markLessonCompleted("e4-l6"); setPage("marpol_lessons"); }}
         />
@@ -4656,7 +4724,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     {page === "lesson_seemp_l1" && (
         <LessonSEEMP_L1
           lang={lang}
-          onBack={() => setPage("seemp_lessons")}
+          onBack={smartBack("seemp_lessons")}
           onComplete={() => { markLessonCompleted("e5-l1"); setPage("seemp_lessons"); }}
           onNext={() => { markLessonCompleted("e5-l1"); setPage("lesson_seemp_l2"); }}
         />
@@ -4664,7 +4732,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_seemp_l2" && (
         <LessonSEEMP_L2
           lang={lang}
-          onBack={() => setPage("seemp_lessons")}
+          onBack={smartBack("seemp_lessons")}
           onComplete={() => { markLessonCompleted("e5-l2"); setPage("seemp_lessons"); }}
           onNext={() => { markLessonCompleted("e5-l2"); setPage("lesson_seemp_l3"); }}
         />
@@ -4672,7 +4740,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_seemp_l3" && (
         <LessonSEEMP_L3
           lang={lang}
-          onBack={() => setPage("seemp_lessons")}
+          onBack={smartBack("seemp_lessons")}
           onComplete={() => { markLessonCompleted("e5-l3"); setPage("seemp_lessons"); }}
           onNext={() => { markLessonCompleted("e5-l3"); setPage("lesson_seemp_l4"); }}
         />
@@ -4680,7 +4748,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_seemp_l4" && (
         <LessonSEEMP_L4
           lang={lang}
-          onBack={() => setPage("seemp_lessons")}
+          onBack={smartBack("seemp_lessons")}
           onComplete={() => { markLessonCompleted("e5-l4"); setPage("seemp_lessons"); }}
           onNext={() => { markLessonCompleted("e5-l4"); setPage("lesson_seemp_l5"); }}
         />
@@ -4688,7 +4756,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_seemp_l5" && (
         <LessonSEEMP_L5
           lang={lang}
-          onBack={() => setPage("seemp_lessons")}
+          onBack={smartBack("seemp_lessons")}
           completedLessons={completedLessons}
           userXP={userXP}
           onComplete={() => { markLessonCompleted("e5-l5"); setPage("dashboard"); }}
@@ -4698,7 +4766,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_watchkeeping" && (
         <LessonWatchkeeping
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
+          onBack={smartBack("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l7"); setPage("engine_lessons"); }}
           onNext={() => { markLessonCompleted("e1-l7"); setPage("lesson_emergency"); }}
         />
@@ -4706,7 +4774,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_maintenance" && (
         <LessonMaintenance
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
+          onBack={smartBack("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l6"); setPage("engine_lessons"); }}
           onNext={() => { markLessonCompleted("e1-l6"); setPage("lesson_watchkeeping"); }}
         />
@@ -4714,7 +4782,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
       {page === "lesson_emergency" && (
         <LessonEmergency
           lang={lang}
-          onBack={() => setPage("engine_lessons")}
+          onBack={smartBack("engine_lessons")}
           onComplete={() => { markLessonCompleted("e1-l8"); setPage("engine_lessons"); }}
           onNext={() => { markLessonCompleted("e1-l8"); setPage("engine_lessons"); }}
         />
