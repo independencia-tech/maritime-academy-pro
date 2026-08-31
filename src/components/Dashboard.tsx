@@ -1070,10 +1070,22 @@ userStreak=1,
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
-  const hour=new Date().getHours();
-  const greeting=hour<12?t.greeting_morning:
-    hour<17?t.greeting_afternoon:
-    hour<21?t.greeting_evening:t.greeting_night;
+  // SSR-safe: new Date().getHours() must never run in the render body — the
+  // server's timezone (Vercel/Nitro, typically UTC) almost never matches the
+  // client's, so computing it inline here would make the very first client
+  // render diverge from what the server sent, triggering a hydration
+  // mismatch. Both server render and the client's first (pre-effect) render
+  // use this same fixed default; the real, local-time greeting is applied
+  // only after mount, as an ordinary post-hydration client update.
+  const [greeting,setGreeting]=useState(t.greeting_morning);
+  useEffect(()=>{
+    const hour=new Date().getHours();
+    setGreeting(
+      hour<12?t.greeting_morning:
+      hour<17?t.greeting_afternoon:
+      hour<21?t.greeting_evening:t.greeting_night
+    );
+  },[lang]);
 
   const name=(username||"Marin").split(" ")[0];
   const initials=name.slice(0,2).toUpperCase();
