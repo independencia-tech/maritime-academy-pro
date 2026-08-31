@@ -1284,9 +1284,20 @@ function ShipsPage({
 // published card (all except "ab" for now) still open — RoleOnBoardShared
 // itself renders the "no content published yet" fallback, never an error
 // and never a missing list entry.
-function RoleOnBoardPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
+// `selected` is a controlled prop (MAP Core, Étape 7-bis) — owned by the
+// parent (AppInner) instead of local useState, mirroring exactly what
+// Étape 7 did for ShipsPage's `selected`/`selectedOperationId`: a future
+// caller ("Recommended for You"'s Role Onboard link) can drive this page
+// straight to the visé rank's content. Everything else about this
+// component is unchanged from the previous local-state version.
+function RoleOnBoardPage({
+  lang, onBack, selected, onSelectedChange,
+}:{
+  lang:string; onBack:()=>void;
+  selected: string | null; onSelectedChange: (v: string | null) => void;
+}) {
   const t = NAV_T[lang] || NAV_T.fr;
-  const [selected, setSelected] = useState<string | null>(null);
+  const setSelected = onSelectedChange;
   const deckRanks = getRanksByDepartment("deck");
   const engineRanks = getRanksByDepartment("engine");
 
@@ -2421,7 +2432,7 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
 
     supabase
       .from("user_profiles")
-      .select("name, lang, dept, tier, ship, target, level, duration, time")
+      .select("name, lang, dept, tier, ship, target, who, level, duration, time")
       .eq("user_id", user.id)
       .single()
       .then(({ data, error }) => {
@@ -2432,7 +2443,7 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
         }
         if (data) {
           // Only merge in columns Supabase actually has a value for — a
-          // NULL here (e.g. a profile saved before ship/target/level/
+          // NULL here (e.g. a profile saved before ship/target/who/level/
           // duration/time were persisted) must not clobber a correct local
           // value already in state/localStorage.
           const definedData = Object.fromEntries(
@@ -2568,6 +2579,29 @@ const [userStreak, setUserStreak] = useState(1);
     setPage("ships");
   };
 
+  // Core Algorithm redéfini (2026-08-31) — the new "Recommended for You"
+  // dream-vessel card lands on the Ship Card itself, not a specific
+  // operation (unlike navigateToSpecializedOperation above, still kept
+  // for potential future use, just no longer called by Dashboard.tsx).
+  // Lighter variant: same lifted state, leaves selectedOperationId null.
+  const navigateToShipCard = (vesselTypeId: string) => {
+    setShipsSelected(vesselTypeId);
+    setShipsSelectedOperationId(null);
+    setPage("ships");
+  };
+
+  // Étape 7-bis (2026-08-31) — same lifted-state pattern as Ships above,
+  // applied to RoleOnBoardPage's `selected`. navigateToRoleOnBoard() is the
+  // deep-link entry point the new "Recommended for You" doctrine's Role
+  // Onboard shortcut will call: sets the rank AND switches to the
+  // "role_on_board" page in one step, landing directly on that rank's
+  // RoleOnBoardShared content instead of the generic Deck/Engine rank list.
+  const [roleOnBoardSelected, setRoleOnBoardSelected] = useState<string | null>(null);
+  const navigateToRoleOnBoard = (rankId: string) => {
+    setRoleOnBoardSelected(rankId);
+    setPage("role_on_board");
+  };
+
 const persistProfile = async (p: any) => {
   setProfile(p);
   try {
@@ -2584,6 +2618,7 @@ const persistProfile = async (p: any) => {
         dept: updatedCard.dept || p?.dept || "deck",
         ship: updatedCard.ship,
         target: updatedCard.target,
+        who: updatedCard.who,
         level: updatedCard.level,
         duration: updatedCard.duration,
         time: updatedCard.time,
@@ -2899,7 +2934,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
             onNavHome={() => setPage("dashboard")}
             onNavModules={() => setPage("modules")}
             onNavShips={() => setPage("ships")}
-            onNavToSpecializedOperation={navigateToSpecializedOperation}
+            onNavToShipCard={navigateToShipCard}
+            onNavToRoleOnBoard={navigateToRoleOnBoard}
             onNavExams={() => setPage("exams")}
             onNavProfile={() => setPage("status")}
             onAdmin={() => setPage("admin-login")}
@@ -2961,7 +2997,12 @@ else if (m?.id === "e7") setPage("e7_lessons");
         <ExamCenterPage lang={lang} onBack={() => setPage("dashboard")}/>
       )}
       {page === "role_on_board" && (
-        <RoleOnBoardPage lang={lang} onBack={() => setPage("dashboard")}/>
+        <RoleOnBoardPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          selected={roleOnBoardSelected}
+          onSelectedChange={setRoleOnBoardSelected}
+        />
       )}
       {page === "nav_lessons" && (
         <NavigationLessonsPage

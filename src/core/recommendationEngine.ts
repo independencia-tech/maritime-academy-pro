@@ -1,4 +1,9 @@
 // ── recommendationEngine.ts ──────────────────────────────────────
+// MIS DE CÔTÉ — non utilisé dans le Core Algorithm actuel (redéfini le
+// 2026-08-31). Conservé pour réutilisation future éventuelle de la
+// logique de dédup/types. Voir project_core_algorithm_architecture.md
+// pour la doctrine active.
+//
 // MAP Core V3.1 — Recommendation Engine pipeline (memory:
 // project_core_algorithm_architecture.md, "V3.1 — Recommendation Engine
 // Specification", CPLA-validated 2026-08-31). Implements the roadmap's

@@ -2,7 +2,14 @@
 import { useState, useEffect } from "react";
 import AdminPanel, { UpgradeModal, PremiumManager } from "./AdminPanel";
 import { LEXICON } from "./LexiqueMaritime";
-import { getRecommendationsForUser, formatScoreBreakdownForDebug } from "../core/recommendationEngine";
+// Core Algorithm redéfini le 2026-08-31 (V3.1 mis de côté) — trajectoire
+// simple, sans scoring : getRankPath()/getRecommendedLessonsForTrajectory()
+// sont les mêmes fonctions Steps 1-2 de coreAlgorithm.ts déjà utilisées
+// partout ailleurs, jamais des fonctions V3.1. Voir
+// project_core_algorithm_architecture.md, "Core Algorithm — Redéfinition".
+import { getRankPath, getRecommendedLessonsForTrajectory } from "../core/coreAlgorithm";
+import { getRankMeta } from "../core/rankRegistry";
+import { getVesselTypeMeta } from "../core/vesselTypeRegistry";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -38,6 +45,11 @@ const T = {
     slogan:"La formation maritime complète — pont et machine",
     yourProgress:"TA PROGRESSION", quickStats:"STATS RAPIDES",
     recommendedTitle:"RECOMMANDÉ POUR TOI",
+    navBrowseAll:"TOUS LES DÉPARTEMENTS",
+    recommendedEmpty:"Complète ton profil (rang actuel et rang visé) pour voir ta feuille de route personnalisée.",
+    dreamVesselTitle:"TON NAVIRE DE RÊVE",
+    dreamVesselHint:"Découvre les opérations spécialisées de ce navire dans sa fiche",
+    roleOnBoardLinkLabel:"Rôle à bord visé",
     statLessons:"Leçons", statCerts:"Certificats",
     statPoints:"Points", statStreak:"Série",
     tabDeck:"🧭 Pont", tabEngine:"⚙️ Machine",
@@ -78,6 +90,11 @@ const T = {
     slogan:"Complete maritime training — deck and engine",
     yourProgress:"YOUR PROGRESS", quickStats:"QUICK STATS",
     recommendedTitle:"RECOMMENDED FOR YOU",
+    navBrowseAll:"BROWSE ALL DEPARTMENTS",
+    recommendedEmpty:"Complete your profile (current rank and target rank) to see your personalized roadmap.",
+    dreamVesselTitle:"YOUR DREAM VESSEL",
+    dreamVesselHint:"Discover this ship's specialized operations in its ship card",
+    roleOnBoardLinkLabel:"Targeted role on board",
     statLessons:"Lessons", statCerts:"Certificates",
     statPoints:"Points", statStreak:"Streak",
     tabDeck:"🧭 Deck", tabEngine:"⚙️ Engine",
@@ -118,6 +135,11 @@ const T = {
     slogan:"Formación marítima completa — puente y máquinas",
     yourProgress:"TU PROGRESO", quickStats:"ESTADÍSTICAS",
     recommendedTitle:"RECOMENDADO PARA TI",
+    navBrowseAll:"TODOS LOS DEPARTAMENTOS",
+    recommendedEmpty:"Completa tu perfil (rango actual y rango objetivo) para ver tu hoja de ruta personalizada.",
+    dreamVesselTitle:"TU BARCO SOÑADO",
+    dreamVesselHint:"Descubre las operaciones especializadas de este barco en su ficha",
+    roleOnBoardLinkLabel:"Rol a bordo objetivo",
     statLessons:"Lecciones", statCerts:"Certificados",
     statPoints:"Puntos", statStreak:"Racha",
     tabDeck:"🧭 Puente", tabEngine:"⚙️ Máquinas",
@@ -156,6 +178,11 @@ const T = {
     slogan:"Formação marítima completa — convés e máquinas",
     yourProgress:"SEU PROGRESSO", quickStats:"ESTATÍSTICAS",
     recommendedTitle:"RECOMENDADO PARA VOCÊ",
+    navBrowseAll:"TODOS OS DEPARTAMENTOS",
+    recommendedEmpty:"Complete seu perfil (posto atual e posto almejado) para ver seu roteiro personalizado.",
+    dreamVesselTitle:"SEU NAVIO DOS SONHOS",
+    dreamVesselHint:"Descubra as operações especializadas deste navio na sua ficha",
+    roleOnBoardLinkLabel:"Função a bordo almejada",
     statLessons:"Lições", statCerts:"Certificados",
     statPoints:"Pontos", statStreak:"Sequência",
     tabDeck:"🧭 Convés", tabEngine:"⚙️ Máquinas",
@@ -1010,7 +1037,8 @@ userStreak=1,
   onNavHome=()=>{},
   onNavModules=()=>{},
   onNavShips=()=>{},
-  onNavToSpecializedOperation=()=>{},
+  onNavToShipCard=()=>{},
+  onNavToRoleOnBoard=()=>{},
   onNavExams=()=>{},
   onNavProfile=()=>{},
   activeNav="home",
@@ -1033,6 +1061,14 @@ userStreak=1,
   );
   const activeTab = activeTabProp ?? localActiveTab;
   const setActiveTab = onActiveTabChange ?? setLocalActiveTab;
+  // Core Algorithm redéfini (2026-08-31) — top-level entry point of the
+  // reorganized Dashboard: "recommended" (the new exhaustive trajectory
+  // roadmap) | "browse" (the pre-existing Deck/Engine/Safety tabs+MODULES
+  // grid below, unfiltered) | "tools" (unchanged, now a top-level peer
+  // instead of a 4th tab alongside Deck/Engine/Safety). Local-only —
+  // unlike activeTab above, not lifted to MaritimeApp.tsx; a reasonable
+  // simplification for this step, not a requirement from the doctrine.
+  const [dashboardView,setDashboardView]=useState("recommended");
   const [vis,setVis]=useState(false);
   const [unlockModal,setUnlockModal]=useState(null);
   const [stats]=useState({lessons:0,certs:0});
@@ -1064,20 +1100,70 @@ userStreak=1,
   useEffect(()=>{ setHasPremium(PremiumManager.hasAccess()); },[premiumTick]);
   const effectivePlan = hasPremium && userPlan === "free" ? "premium" : userPlan;
 
-  // Recommended for You — MAP Core V3.1 Recommendation Engine (Étape 8,
-  // 2026-08-31, CPLA-validated). This is the ONLY call: no branching, no
-  // slicing, no content-selection logic lives in this component anymore
-  // — every decision (candidate generation, dedup, scoring, threshold,
-  // Safety priority, diversification, dynamic topN) happens inside
-  // getRecommendationsForUser() itself. Architectural boundary this
-  // enforces: "Profile → MAP Core → recommandations → Dashboard", never
-  // the reverse. See memory: project_core_algorithm_architecture.md,
-  // "V3.1 — Recommendation Engine Specification".
-  const recommendationResult = getRecommendationsForUser(
-    { who: profile?.who ?? null, target: profile?.target ?? null, dept: profile?.dept ?? null, ship: profile?.ship ?? null },
-    { completedLessonIds: completedLessons }
-  );
-  const recommendedItems = recommendationResult.items;
+  // Recommended for You — Core Algorithm redéfini (2026-08-31, CPLA-
+  // validated, V3.1 mis de côté). Trajectoire simple, sans scoring/seuil/
+  // cap : getRankPath()/getRecommendedLessonsForTrajectory() (Steps 1-2
+  // de coreAlgorithm.ts, jamais étendues ni remplacées) donnent déjà
+  // exactement "tous les rangs entre who et target" et "toutes les
+  // leçons dont targetRanks touche un de ces rangs" — Safety est inclus
+  // automatiquement via ce même mécanisme (les leçons Safety portent de
+  // vrais RankId Deck/Engine dans targetRanks), pas par un filtre
+  // department séparé (décision validée point 1 : pas d'inclusion
+  // inconditionnelle de Safety).
+  //
+  // Aucune trajectoire calculable sans who ET target — who n'était pas
+  // persisté côté Supabase jusqu'à la migration du 2026-08-31 (voir
+  // project_core_algorithm_ui_wiring.md, Étape A) ; s'il manque encore
+  // (ancien profil jamais re-sauvegardé), recommendedGroups reste vide et
+  // l'UI affiche un état "complète ton profil" plutôt que de planter ou
+  // de deviner une trajectoire.
+  const hasTrajectory = !!(profile?.who && profile?.target);
+  const trajectoryLessons = hasTrajectory
+    ? getRecommendedLessonsForTrajectory(profile.who, profile.target)
+    : [];
+
+  // Chaque leçon de lessonRegistry.ts a un lessonId au format composite
+  // "{moduleId}-l{N}" (133/133 depuis le nettoyage de réconciliation
+  // d'ids du 2026-08-31) — LessonRegistryItem n'a pas de champ title/
+  // label, donc le titre réel affiché ici vient de MODULES via cet id,
+  // jamais inventé. Une leçon dont l'id ne correspond à aucun module réel
+  // (ne devrait plus arriver, vérifié 133/133, mais défensif) est
+  // silencieusement exclue plutôt que rendue avec un titre manquant.
+  const findLessonDisplayInfo = (lessonId) => {
+    const dash = lessonId.indexOf("-");
+    if (dash < 0) return null;
+    const moduleId = lessonId.slice(0, dash);
+    const nestedId = lessonId.slice(dash + 1);
+    for (const dept of ["deck","engine","safety"]) {
+      const mod = MODULES[dept]?.find(m=>m.id===moduleId);
+      const lesson = mod?.lessons?.find(l=>l.id===nestedId);
+      if (mod && lesson) return { dept, module: mod, lesson };
+    }
+    return null;
+  };
+
+  // Groupé par module, dans l'ordre de MODULES (département de
+  // l'utilisateur d'abord, puis Safety) — les 55 leçons "bloc département
+  // entier" et les leçons réellement tiered se retrouvent mélangées dans
+  // le même flux, sans traitement spécial (décision validée point 2).
+  const userDept = profile?.dept==="engine" ? "engine" : "deck";
+  const recommendedGroupsById = {};
+  for (const lessonEntry of trajectoryLessons) {
+    const info = findLessonDisplayInfo(lessonEntry.lessonId);
+    if (!info) {
+      if (!import.meta.env.PROD) {
+        console.error("[Recommended for You] lesson id with no MODULES correspondence, skipped:", lessonEntry.lessonId);
+      }
+      continue;
+    }
+    if (!recommendedGroupsById[info.module.id]) {
+      recommendedGroupsById[info.module.id] = { dept: info.dept, module: info.module, lessons: [] };
+    }
+    recommendedGroupsById[info.module.id].lessons.push(info.lesson);
+  }
+  const recommendedGroups = [...MODULES[userDept], ...MODULES.safety]
+    .map(m=>recommendedGroupsById[m.id])
+    .filter(Boolean);
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
@@ -1109,11 +1195,13 @@ userStreak=1,
   };
   const currentLevelLabel=(levelLabels[lang]||levelLabels.fr)[userLevel]||"⛵ Cadet";
 
+  // "Tools" moved out to be a top-level peer of Recommended for You /
+  // Browse All Departments (see dashboardView above) — no longer a 4th
+  // tab alongside Deck/Engine/Safety here.
   const tabs=[
     {key:"deck",label:t.tabDeck},
     {key:"engine",label:t.tabEngine},
     {key:"safety",label:t.tabSafety},
-    {key:"tools",label:t.tabTools},
   ];
 
   const currentModules=MODULES[activeTab]||[];
@@ -1255,35 +1343,6 @@ userStreak=1,
             </div>
           </div>
 
-          {/* RECOMMENDED FOR YOU — MAP Core V3.1 Recommendation Engine.
-              Every item here is guaranteed contentType:"specializedOperation"
-              by getRecommendationsForUser() itself (lessons are always
-              navigable:false and never reach the final result) — the
-              contentType check below is a defensive display-layer guard,
-              not a selection decision: Dashboard renders what the engine
-              already decided, it doesn't decide what to skip. */}
-          {recommendedItems.length>0&&(
-            <div style={{marginBottom:16}}>
-              <div style={{fontSize:10,letterSpacing:3,color:C.muted,marginBottom:8,fontFamily:"'Cinzel',serif"}}>{t.recommendedTitle}</div>
-              <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                {recommendedItems.filter(item=>item.identity.contentType==="specializedOperation").map(item=>(
-                  <button
-                    key={item.identity.operationId}
-                    onClick={()=>onNavToSpecializedOperation(item.identity.vesselTypeId,item.identity.operationId)}
-                    title={!import.meta.env.PROD?formatScoreBreakdownForDebug(item):undefined}
-                    style={{
-                      display:"flex",alignItems:"center",gap:12,padding:"14px",
-                      background:"rgba(13,31,60,0.8)",border:"1px solid rgba(201,146,42,0.35)",
-                      borderRadius:16,cursor:"pointer",color:C.white,textAlign:"left",width:"100%",
-                    }}>
-                    <div style={{width:36,height:36,borderRadius:10,background:"rgba(201,146,42,0.15)",border:"1px solid rgba(201,146,42,0.35)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>⚓</div>
-                    <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{item.title?.[lang]||item.title?.en}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* UPGRADE BANNER (free users only) */}
           {effectivePlan==="free"&&(
             <div style={{
@@ -1325,39 +1384,150 @@ userStreak=1,
           {/* DIVIDER */}
           <div style={{height:1,margin:"0 0 16px",background:`linear-gradient(90deg,transparent,${C.gold}44,${C.blue2}44,transparent)`}}/>
 
-          {/* TABS */}
+          {/* DASHBOARD TOP-LEVEL NAV — Core Algorithm redéfini (2026-08-31):
+              Recommended for You / Browse All Departments / Tools. The
+              single, coherent entry point replacing the old 4-tab
+              (Deck/Engine/Safety/Tools) presentation — nothing below
+              coexists with a second parallel navigation. */}
           <div style={{marginBottom:14}}>
             <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:4,scrollbarWidth:"none"}}>
-              {tabs.map(tab=>(
-                <button key={tab.key} onClick={()=>setActiveTab(tab.key)} style={{
+              {[
+                {key:"recommended",label:t.recommendedTitle},
+                {key:"browse",label:t.navBrowseAll},
+                {key:"tools",label:t.tabTools},
+              ].map(view=>(
+                <button key={view.key} onClick={()=>setDashboardView(view.key)} style={{
                   padding:"9px 14px",borderRadius:12,
-                  background:activeTab===tab.key?`linear-gradient(135deg,${C.blue}55,${C.gold}33)`:"rgba(255,255,255,0.05)",
-                  border:`1.5px solid ${activeTab===tab.key?C.gold:"rgba(255,255,255,0.1)"}`,
-                  color:activeTab===tab.key?C.white:C.muted,
-                  fontSize:12,fontWeight:activeTab===tab.key?700:400,
+                  background:dashboardView===view.key?`linear-gradient(135deg,${C.blue}55,${C.gold}33)`:"rgba(255,255,255,0.05)",
+                  border:`1.5px solid ${dashboardView===view.key?C.gold:"rgba(255,255,255,0.1)"}`,
+                  color:dashboardView===view.key?C.white:C.muted,
+                  fontSize:12,fontWeight:dashboardView===view.key?700:400,
                   cursor:"pointer",whiteSpace:"nowrap",
                   fontFamily:"'Nunito',sans-serif",flexShrink:0,
                   transition:"all 0.2s",
-                }}>{tab.label}</button>
+                }}>{view.label}</button>
               ))}
             </div>
           </div>
 
-          {/* MODULES */}
-          <div style={{display:"flex",flexDirection:"column",gap:12,marginBottom:20}}>
-            {currentModules.map(module=>(
-              <ModuleCard
-                key={module.id}
-                module={module}
-                lang={lang}
-                t={t}
-                userPlan={effectivePlan}
-                completedLessons={completedLessons}
-                onStart={onStartModule}
-                onUnlock={setUnlockModal}
-              />
-            ))}
-          </div>
+          {/* RECOMMENDED FOR YOU — exhaustive trajectory roadmap, no scoring/
+              threshold/cap (see recommendedGroups computation above). */}
+          {dashboardView==="recommended" && (
+            <div style={{marginBottom:20}}>
+              {profile?.ship && (
+                <button onClick={()=>onNavToShipCard(profile.ship)} style={{
+                  display:"flex",alignItems:"center",gap:12,padding:"14px",
+                  background:"rgba(13,31,60,0.8)",border:`1px solid ${C.gold}55`,
+                  borderRadius:16,cursor:"pointer",color:C.white,textAlign:"left",width:"100%",
+                  marginBottom:10,
+                }}>
+                  <div style={{width:36,height:36,borderRadius:10,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}55`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>⚓</div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{fontSize:9,letterSpacing:2,color:C.gold,fontFamily:"'Cinzel',serif",marginBottom:2}}>{t.dreamVesselTitle}</div>
+                    <div style={{fontSize:13,fontWeight:700}}>{getVesselTypeMeta(profile.ship)?.label?.[lang]||getVesselTypeMeta(profile.ship)?.label?.fr||profile.ship}</div>
+                    <div style={{fontSize:10,color:C.muted,marginTop:2}}>{t.dreamVesselHint}</div>
+                  </div>
+                </button>
+              )}
+
+              {profile?.target && (
+                <button onClick={()=>onNavToRoleOnBoard(profile.target)} style={{
+                  display:"flex",alignItems:"center",gap:12,padding:"14px",
+                  background:"rgba(13,31,60,0.8)",border:`1px solid ${C.blue2}55`,
+                  borderRadius:16,cursor:"pointer",color:C.white,textAlign:"left",width:"100%",
+                  marginBottom:16,
+                }}>
+                  <div style={{width:36,height:36,borderRadius:10,background:"rgba(77,166,255,0.15)",border:`1px solid ${C.blue2}55`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>🧑‍✈️</div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{fontSize:9,letterSpacing:2,color:C.blue2,fontFamily:"'Cinzel',serif",marginBottom:2}}>{t.roleOnBoardLinkLabel}</div>
+                    <div style={{fontSize:13,fontWeight:700}}>{getRankMeta(profile.target)?.label?.[lang]||getRankMeta(profile.target)?.label?.fr||profile.target}</div>
+                  </div>
+                </button>
+              )}
+
+              {recommendedGroups.length===0 ? (
+                <div style={{padding:"16px",borderRadius:16,background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:C.muted,fontSize:12,textAlign:"center"}}>
+                  {t.recommendedEmpty}
+                </div>
+              ) : (
+                recommendedGroups.map(group=>(
+                  <div key={group.module.id} style={{marginBottom:16}}>
+                    <div style={{fontSize:10,letterSpacing:3,color:C.muted,marginBottom:8,fontFamily:"'Cinzel',serif"}}>
+                      {group.module.title?.[lang]||group.module.title?.fr}
+                    </div>
+                    <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                      {group.lessons.map(lesson=>(
+                        <button key={lesson.id} onClick={()=>onStartModule(group.module)} style={{
+                          display:"flex",alignItems:"center",gap:10,padding:"12px 14px",
+                          background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",
+                          borderRadius:14,cursor:"pointer",color:C.white,textAlign:"left",width:"100%",
+                          fontSize:13,fontFamily:"'Nunito',sans-serif",
+                        }}>
+                          {lesson.title?.[lang]||lesson.title?.fr}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
+          {/* BROWSE ALL DEPARTMENTS — the pre-existing Deck/Engine/Safety
+              tabs+MODULES grid, unfiltered by rank/trajectory/profile. */}
+          {dashboardView==="browse" && (
+            <>
+              <div style={{marginBottom:14}}>
+                <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:4,scrollbarWidth:"none"}}>
+                  {tabs.map(tab=>(
+                    <button key={tab.key} onClick={()=>setActiveTab(tab.key)} style={{
+                      padding:"9px 14px",borderRadius:12,
+                      background:activeTab===tab.key?`linear-gradient(135deg,${C.blue}55,${C.gold}33)`:"rgba(255,255,255,0.05)",
+                      border:`1.5px solid ${activeTab===tab.key?C.gold:"rgba(255,255,255,0.1)"}`,
+                      color:activeTab===tab.key?C.white:C.muted,
+                      fontSize:12,fontWeight:activeTab===tab.key?700:400,
+                      cursor:"pointer",whiteSpace:"nowrap",
+                      fontFamily:"'Nunito',sans-serif",flexShrink:0,
+                      transition:"all 0.2s",
+                    }}>{tab.label}</button>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{display:"flex",flexDirection:"column",gap:12,marginBottom:20}}>
+                {currentModules.map(module=>(
+                  <ModuleCard
+                    key={module.id}
+                    module={module}
+                    lang={lang}
+                    t={t}
+                    userPlan={effectivePlan}
+                    completedLessons={completedLessons}
+                    onStart={onStartModule}
+                    onUnlock={setUnlockModal}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* TOOLS — unchanged content, now a top-level peer instead of a 4th tab. */}
+          {dashboardView==="tools" && (
+            <div style={{display:"flex",flexDirection:"column",gap:12,marginBottom:20}}>
+              {MODULES.tools.map(module=>(
+                <ModuleCard
+                  key={module.id}
+                  module={module}
+                  lang={lang}
+                  t={t}
+                  userPlan={effectivePlan}
+                  completedLessons={completedLessons}
+                  onStart={onStartModule}
+                  onUnlock={setUnlockModal}
+                />
+              ))}
+            </div>
+          )}
 
           {/* BOTTOM ACTIONS */}
           <div style={{display:"flex",flexDirection:"column",gap:10}}>
