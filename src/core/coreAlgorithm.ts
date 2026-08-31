@@ -187,6 +187,19 @@
 // getAvailableLessonsForTrajectory instead of the plain trajectory
 // function), SpecOps side stays the plain trajectory lookup.
 //
+// Step 18 (2026-08-30), scoped and validated before writing any code — the
+// first step in the "SpecOps-branching combined function" family flagged
+// open since Step 16. User-validated pattern: explicit separate functions
+// per combination (Pattern A), matching the discipline held since Step 1 —
+// never a single function branching internally on optional params
+// (Pattern B, considered and explicitly not chosen). Follows the same
+// build order SpecOps itself went through (Step 3 plain → Step 5
+// +vesselType → Step 8 +levels → Step 12 combined): this step adds the
+// combined rank+vesselType function. Lessons side stays the plain
+// getRecommendedLessonsForRank() — no completedLessonIds yet, keeping this
+// step minimal, same as how Step 14 started with plain basics only before
+// Step 16 added completion-awareness separately.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -686,5 +699,37 @@ export function getRecommendationsForTrajectoryExcludingCompleted(
   return {
     lessons: getAvailableLessonsForTrajectory(currentRankId, targetRankId, completedLessonIds),
     specializedOperations: getSpecializedOperationsForTrajectory(currentRankId, targetRankId),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a rank and a specific vessel
+ * type: plain rank-only lesson recommendations, and Specialized Operations
+ * narrowed to that rank and vessel type. The first function in the
+ * SpecOps-branching combined family flagged open since Step 16.
+ *
+ * User-validated: explicit separate function per combination (Pattern A),
+ * not a single function with optional vesselTypeId/allowedLevels params
+ * branching internally (Pattern B, considered and not chosen) — matches
+ * the discipline held since Step 1.
+ *
+ * Lessons side stays plain (getRecommendedLessonsForRank()) — no
+ * completedLessonIds yet, keeping this step minimal.
+ *
+ * Additive: getRecommendationsForRank() and
+ * getSpecializedOperationsByRankAndVesselType() are unchanged.
+ */
+export interface CombinedRecommendationForRankAndVesselType {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForRankAndVesselType(
+  rankId: RankId,
+  vesselTypeId: VesselTypeId
+): CombinedRecommendationForRankAndVesselType {
+  return {
+    lessons: getRecommendedLessonsForRank(rankId),
+    specializedOperations: getSpecializedOperationsByRankAndVesselType(rankId, vesselTypeId),
   };
 }
