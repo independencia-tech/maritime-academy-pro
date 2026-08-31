@@ -180,6 +180,13 @@
 // completedLessonIds alone without also tackling vesselType at the same
 // time.
 //
+// Step 17 (2026-08-30), scoped and validated before writing any code — adds
+// the trajectory variant of getRecommendationsForRankExcludingCompleted(),
+// mirroring it the same way Step 11 mirrored Step 7. No new decisions —
+// same lessons-side-only completion-awareness (via
+// getAvailableLessonsForTrajectory instead of the plain trajectory
+// function), SpecOps side stays the plain trajectory lookup.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -649,5 +656,35 @@ export function getRecommendationsForRankExcludingCompleted(
   return {
     lessons: getAvailableLessonsForRank(rankId, completedLessonIds),
     specializedOperations: getSpecializedOperationsByRank(rankId),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a current→target rank
+ * trajectory, with completed lessons excluded and prerequisites enforced
+ * on the lessons side. Mirrors
+ * getRecommendationsForRankExcludingCompleted() exactly, the same way Step
+ * 11 mirrored Step 7.
+ *
+ * No new decisions this step — lessons side uses
+ * getAvailableLessonsForTrajectory(); specializedOperations side stays the
+ * plain trajectory lookup (getSpecializedOperationsForTrajectory()), same
+ * SpecOps-branching deferral as Step 16.
+ *
+ * Additive: getRecommendationsForTrajectory() is unchanged.
+ */
+export interface CombinedRecommendationForTrajectoryExcludingCompleted {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForTrajectoryExcludingCompleted(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  completedLessonIds: LessonId[]
+): CombinedRecommendationForTrajectoryExcludingCompleted {
+  return {
+    lessons: getAvailableLessonsForTrajectory(currentRankId, targetRankId, completedLessonIds),
+    specializedOperations: getSpecializedOperationsForTrajectory(currentRankId, targetRankId),
   };
 }
