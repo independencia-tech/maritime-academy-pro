@@ -2,10 +2,7 @@
 import { useState, useEffect } from "react";
 import AdminPanel, { UpgradeModal, PremiumManager } from "./AdminPanel";
 import { LEXICON } from "./LexiqueMaritime";
-import {
-  getSpecializedOperationsForTrajectory,
-  getSpecializedOperationsForTrajectoryAndVesselType,
-} from "../core/coreAlgorithm";
+import { getRecommendationsForUser, formatScoreBreakdownForDebug } from "../core/recommendationEngine";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -1013,6 +1010,7 @@ userStreak=1,
   onNavHome=()=>{},
   onNavModules=()=>{},
   onNavShips=()=>{},
+  onNavToSpecializedOperation=()=>{},
   onNavExams=()=>{},
   onNavProfile=()=>{},
   activeNav="home",
@@ -1055,19 +1053,20 @@ userStreak=1,
   const hasPremium = (typeof window !== "undefined") && PremiumManager.hasAccess();
   const effectivePlan = hasPremium && userPlan === "free" ? "premium" : userPlan;
 
-  // Recommended for You — Core Algorithm, Specialized Operations only for now
-  // (lessonRegistry.ts isn't wired to any real, navigable lesson yet — see
-  // memory: project_core_algorithm_architecture.md). Falls back to the
-  // trajectory-only function (no vessel-type narrowing) when profile.ship
-  // isn't set, rather than showing nothing. Capped at the first 5 — the
-  // Core Algorithm has no ranking/scoring, so this is registry order, not
-  // "best match first".
-  const recommendedOps = (profile?.who && profile?.target)
-    ? (profile?.ship
-        ? getSpecializedOperationsForTrajectoryAndVesselType(profile.who, profile.target, profile.ship)
-        : getSpecializedOperationsForTrajectory(profile.who, profile.target)
-      ).slice(0, 5)
-    : [];
+  // Recommended for You — MAP Core V3.1 Recommendation Engine (Étape 8,
+  // 2026-08-31, CPLA-validated). This is the ONLY call: no branching, no
+  // slicing, no content-selection logic lives in this component anymore
+  // — every decision (candidate generation, dedup, scoring, threshold,
+  // Safety priority, diversification, dynamic topN) happens inside
+  // getRecommendationsForUser() itself. Architectural boundary this
+  // enforces: "Profile → MAP Core → recommandations → Dashboard", never
+  // the reverse. See memory: project_core_algorithm_architecture.md,
+  // "V3.1 — Recommendation Engine Specification".
+  const recommendationResult = getRecommendationsForUser(
+    { who: profile?.who ?? null, target: profile?.target ?? null, dept: profile?.dept ?? null, ship: profile?.ship ?? null },
+    { completedLessonIds: completedLessons }
+  );
+  const recommendedItems = recommendationResult.items;
 
   useEffect(()=>{ setTimeout(()=>setVis(true),80); },[]);
 
@@ -1234,19 +1233,29 @@ userStreak=1,
             </div>
           </div>
 
-          {/* RECOMMENDED FOR YOU — Core Algorithm, Specialized Operations only */}
-          {recommendedOps.length>0&&(
+          {/* RECOMMENDED FOR YOU — MAP Core V3.1 Recommendation Engine.
+              Every item here is guaranteed contentType:"specializedOperation"
+              by getRecommendationsForUser() itself (lessons are always
+              navigable:false and never reach the final result) — the
+              contentType check below is a defensive display-layer guard,
+              not a selection decision: Dashboard renders what the engine
+              already decided, it doesn't decide what to skip. */}
+          {recommendedItems.length>0&&(
             <div style={{marginBottom:16}}>
               <div style={{fontSize:10,letterSpacing:3,color:C.muted,marginBottom:8,fontFamily:"'Cinzel',serif"}}>{t.recommendedTitle}</div>
               <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                {recommendedOps.map(op=>(
-                  <button key={op.operationId} onClick={onNavShips} style={{
-                    display:"flex",alignItems:"center",gap:12,padding:"14px",
-                    background:"rgba(13,31,60,0.8)",border:"1px solid rgba(201,146,42,0.35)",
-                    borderRadius:16,cursor:"pointer",color:C.white,textAlign:"left",width:"100%",
-                  }}>
+                {recommendedItems.filter(item=>item.identity.contentType==="specializedOperation").map(item=>(
+                  <button
+                    key={item.identity.operationId}
+                    onClick={()=>onNavToSpecializedOperation(item.identity.vesselTypeId,item.identity.operationId)}
+                    title={!import.meta.env.PROD?formatScoreBreakdownForDebug(item):undefined}
+                    style={{
+                      display:"flex",alignItems:"center",gap:12,padding:"14px",
+                      background:"rgba(13,31,60,0.8)",border:"1px solid rgba(201,146,42,0.35)",
+                      borderRadius:16,cursor:"pointer",color:C.white,textAlign:"left",width:"100%",
+                    }}>
                     <div style={{width:36,height:36,borderRadius:10,background:"rgba(201,146,42,0.15)",border:"1px solid rgba(201,146,42,0.35)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>⚓</div>
-                    <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{op.title?.[lang]||op.title?.en}</div>
+                    <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{item.title?.[lang]||item.title?.en}</div>
                   </button>
                 ))}
               </div>

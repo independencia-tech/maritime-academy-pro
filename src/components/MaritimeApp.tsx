@@ -1182,10 +1182,25 @@ function ModulesListPage({ lang, onBack, onStart }:{lang:string;onBack:()=>void;
   );
 }
 
-function ShipsPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
+// `selected`/`selectedOperationId` are controlled props (MAP Core V3.1,
+// Étape 7) — owned by the parent (AppInner) instead of local useState, so a
+// future caller (Dashboard's "Recommended for You", Étape 8) can drive this
+// page straight to a specific operation. Everything else about this
+// component — how it reads/mutates that state via onSelectedChange/
+// onSelectedOperationIdChange — is unchanged from the previous local-state
+// version; only where the state lives moved.
+function ShipsPage({
+  lang, onBack,
+  selected, onSelectedChange,
+  selectedOperationId, onSelectedOperationIdChange,
+}:{
+  lang:string; onBack:()=>void;
+  selected: string | null; onSelectedChange: (v: string | null) => void;
+  selectedOperationId: string | null; onSelectedOperationIdChange: (v: string | null) => void;
+}) {
   const t = NAV_T[lang] || NAV_T.fr;
-  const [selected, setSelected] = useState<string | null>(null);
-  const [selectedOperationId, setSelectedOperationId] = useState<string | null>(null);
+  const setSelected = onSelectedChange;
+  const setSelectedOperationId = onSelectedOperationIdChange;
 
   const entries = Object.values(VESSEL_TYPE_REGISTRY).filter((v:any) => v.id !== "all" && SHIPS_LIBRARY_INDEX[v.id]);
 
@@ -2530,6 +2545,29 @@ const [userStreak, setUserStreak] = useState(1);
   // which used to reset this to profile.dept and always land back on Deck).
   const [dashboardTab, setDashboardTab] = useState<"deck"|"engine"|"safety"|"tools">("deck");
 
+  // MAP Core V3.1 — Recommendation Engine, Étape 7 (state plumbing only,
+  // Dashboard NOT wired to this yet — see project_core_algorithm_ui_wiring.md).
+  // Lifted out of ShipsPage for the same reason as dashboardTab above: state
+  // that used to live inside a page component, now owned here so it can be
+  // driven from outside that component. ShipsPage still owns and mutates it
+  // exactly as before via the setter props (browse → select ship → select
+  // operation is unchanged) — this only moves WHERE the state lives, not how
+  // ShipsPage itself uses it.
+  //
+  // navigateToSpecializedOperation() is the deep-link entry point a future
+  // Dashboard "Recommended for You" card (Étape 8) will call: it sets both
+  // pieces of state AND switches to the "ships" page in one step, landing
+  // directly on SpecializedLessonShared for that exact operation — bypassing
+  // the generic vessel-type list ShipsPage otherwise starts on. Not called
+  // from anywhere yet.
+  const [shipsSelected, setShipsSelected] = useState<string | null>(null);
+  const [shipsSelectedOperationId, setShipsSelectedOperationId] = useState<string | null>(null);
+  const navigateToSpecializedOperation = (vesselTypeId: string, operationId: string) => {
+    setShipsSelected(vesselTypeId);
+    setShipsSelectedOperationId(operationId);
+    setPage("ships");
+  };
+
 const persistProfile = async (p: any) => {
   setProfile(p);
   try {
@@ -2861,6 +2899,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
             onNavHome={() => setPage("dashboard")}
             onNavModules={() => setPage("modules")}
             onNavShips={() => setPage("ships")}
+            onNavToSpecializedOperation={navigateToSpecializedOperation}
             onNavExams={() => setPage("exams")}
             onNavProfile={() => setPage("status")}
             onAdmin={() => setPage("admin-login")}
@@ -2909,7 +2948,14 @@ else if (m?.id === "e7") setPage("e7_lessons");
         />
       )}
       {page === "ships" && (
-        <ShipsPage lang={lang} onBack={() => setPage("dashboard")}/>
+        <ShipsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          selected={shipsSelected}
+          onSelectedChange={setShipsSelected}
+          selectedOperationId={shipsSelectedOperationId}
+          onSelectedOperationIdChange={setShipsSelectedOperationId}
+        />
       )}
       {page === "exams" && (
         <ExamCenterPage lang={lang} onBack={() => setPage("dashboard")}/>
