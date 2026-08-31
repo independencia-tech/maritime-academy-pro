@@ -2551,6 +2551,36 @@ useEffect(() => {
   const [userPlan, setUserPlan] = useState<"free"|"premium"|"premium_plus">("free");
 const [userXP, setUserXP] = useState(0);
 const [userStreak, setUserStreak] = useState(1);
+
+  // SSR-safe replacement for the `map_last_reg`/`map_user_photo` reads that
+  // used to happen inline, per-page, guarded by `typeof window !== "undefined"`
+  // (page==="status" and page==="dashboard" blocks below) — that guard
+  // prevented a crash but not the hydration mismatch: the server always
+  // skipped the branch (window is undefined there), while the client's very
+  // first render ran it for real, so `username`/`photo`/`createdAt` differed
+  // between server HTML and client hydration. Same fix pattern as
+  // Dashboard.tsx's greeting/hasPremium: a fixed, SSR-matching initial value
+  // ({}/null on both sides), the real value applied only after mount.
+  //
+  // Refresh trigger, not just mount-once ([]): `[page]` re-reads localStorage
+  // on every page transition. This is deliberately broader than "only when
+  // landing on status/dashboard" for simplicity, but it's correct precisely
+  // because of real write-ordering in this file, checked directly rather
+  // than assumed — every place that writes map_last_reg/map_user_photo
+  // (syncLocalProfile() on SIGNED_IN/PASSWORD_RECOVERY, the legacy lead-
+  // capture form's handleSubmit, QuestionnaireS7.tsx's photo upload/remove)
+  // does so, synchronously, strictly BEFORE the setPage() call that would
+  // ever bring the user to "status" or "dashboard" — so by the time `page`
+  // actually changes to one of those values and this effect re-runs, the
+  // write has already landed. No event listener or extra plumbing needed.
+  const [lastReg, setLastReg] = useState<any>({});
+  const [userPhoto, setUserPhoto] = useState<string | null>(null);
+  useEffect(() => {
+    try {
+      setLastReg(JSON.parse(localStorage.getItem("map_last_reg") || "{}"));
+      setUserPhoto(localStorage.getItem("map_user_photo"));
+    } catch {}
+  }, [page]);
   // Lifted out of Dashboard so the selected tab (deck/engine/safety/tools) survives leaving
   // and returning to the dashboard page (Dashboard unmounts/remounts on every page change,
   // which used to reset this to profile.dept and always land back on Deck).
@@ -2855,46 +2885,26 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
           setProfile={persistProfile}
         />
       )}
-      {page==="status"      && (() => {
-        let last:any = {};
-        let storedPhoto: string | null = null;
-        try {
-          if (typeof window !== "undefined") {
-            last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
-            storedPhoto = localStorage.getItem("map_user_photo");
-          }
-        } catch {}
-        return (
-          <StatusCardS8
+      {page==="status"      && (
+        <StatusCardS8
             lang={lang}
-            username={last.name || "Marin"}
-            photo={storedPhoto || profile.photo || null}
+            username={lastReg.name || "Marin"}
+            photo={userPhoto || profile.photo || null}
             profile={profile}
             userXP={userXP}
             userStreak={userStreak}
             completedLessons={completedLessons}
-            createdAt={last.createdAt}
+            createdAt={lastReg.createdAt}
             onBack={() => setPage("questionnaire")}
             onEdit={() => setPage("questionnaire")}
             onStart={() => setPage("dashboard")}
           />
-        );
-      })()}
-      {page === "dashboard" && (() => {
-        let last:any = {};
-        let storedPhoto: string | null = null;
-        try {
-          if (typeof window !== "undefined") {
-            last = JSON.parse(localStorage.getItem("map_last_reg") || "{}");
-            storedPhoto = localStorage.getItem("map_user_photo");
-          }
-        } catch {}
-        
-        return (
+      )}
+      {page === "dashboard" && (
           <Dashboard
             lang={lang}
-            username={last.name || profile?.name || "Marin"}
-            photo={storedPhoto || profile?.photo || null}
+            username={lastReg.name || profile?.name || "Marin"}
+            photo={userPhoto || profile?.photo || null}
             profile={profile || {}}
             userLevel="cadet"
             userPlan={userPlan}
@@ -2950,8 +2960,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
   setPage("lang");
 }}
           />
-        );
-      })()}
+      )}
       {page === "modules" && (
         <ModulesListPage
           lang={lang}

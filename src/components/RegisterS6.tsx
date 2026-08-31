@@ -201,11 +201,19 @@ function getStrength(pass: string) {
 }
 
 function Stars() {
-  const s=Array.from({length:35},()=>({
-    x:Math.random()*100,y:Math.random()*100,
-    sz:Math.random()>0.7?2.5:1.5,
-    dur:2+Math.random()*4,delay:Math.random()*6,
-  }));
+  // SSR-safe: Math.random() must never run in the render body — it would
+  // produce a different star field on the server and on the client's first
+  // (hydration) render, a guaranteed mismatch every time. Same fix pattern
+  // as Dashboard.tsx's already-correct Stars: fixed empty initial render on
+  // both sides, real positions applied only after mount.
+  const [s,setS]=useState<{x:number;y:number;sz:number;dur:number;delay:number}[]>([]);
+  useEffect(()=>{
+    setS(Array.from({length:35},()=>({
+      x:Math.random()*100,y:Math.random()*100,
+      sz:Math.random()>0.7?2.5:1.5,
+      dur:2+Math.random()*4,delay:Math.random()*6,
+    })));
+  },[]);
   return (
     <>
       <div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0}}>
@@ -229,17 +237,35 @@ function Stars() {
   );
 }
 
+// Precomputed compass-mark coordinates — fixes a real SSR hydration mismatch:
+// Math.sin()/Math.cos() aren't guaranteed bit-identical across JS engines
+// (server Node vs client browser V8 can differ in the last decimal digit).
+// The 8 angles (0/45/.../315°) are fixed, not derived from any runtime/user
+// data, so precomputing them once and removing the runtime trig calls
+// eliminates the divergence structurally. Exact output of the formula it
+// replaces (50+18*sin(r), 50-18*cos(r), 50+40*sin(r), 50-40*cos(r)) —
+// verified visually identical, not an approximation.
+const LOGO_COMPASS_LINES = [
+  {x1:50, y1:32, x2:50, y2:10},
+  {x1:62.72792206135786, y1:37.27207793864214, x2:78.2842712474619, y2:21.715728752538098},
+  {x1:68, y1:50, x2:90, y2:50},
+  {x1:62.72792206135786, y1:62.72792206135786, x2:78.2842712474619, y2:78.2842712474619},
+  {x1:50, y1:68, x2:50.00000000000001, y2:90},
+  {x1:37.27207793864214, y1:62.72792206135786, x2:21.7157287525381, y2:78.2842712474619},
+  {x1:32, y1:50, x2:10, y2:50.00000000000001},
+  {x1:37.27207793864214, y1:37.27207793864215, x2:21.71572875253809, y2:21.715728752538105},
+];
+
 function MaritimeLogo({size=42}:{size?:number}) {
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
       <circle cx="50" cy="50" r="42" stroke={C.gold} strokeWidth="2.5" fill="none" opacity="0.4"/>
-      {[0,45,90,135,180,225,270,315].map((a,i)=>{
-        const r=a*Math.PI/180;
-        return <line key={i}
-          x1={50+18*Math.sin(r)} y1={50-18*Math.cos(r)}
-          x2={50+40*Math.sin(r)} y2={50-40*Math.cos(r)}
-          stroke={C.gold2} strokeWidth="2" strokeLinecap="round" opacity="0.55"/>;
-      })}
+      {LOGO_COMPASS_LINES.map((l,i)=>(
+        <line key={i}
+          x1={l.x1} y1={l.y1}
+          x2={l.x2} y2={l.y2}
+          stroke={C.gold2} strokeWidth="2" strokeLinecap="round" opacity="0.55"/>
+      ))}
       <circle cx="50" cy="50" r="18" stroke={C.gold} strokeWidth="2" fill={C.navy3}/>
       <circle cx="50" cy="39" r="4.5" stroke={C.blue2} strokeWidth="2" fill="none"/>
       <line x1="50" y1="43" x2="50" y2="61" stroke={C.blue2} strokeWidth="2"/>

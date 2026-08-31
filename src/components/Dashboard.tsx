@@ -22,6 +22,26 @@ const C = {
   free:"#1e8a4a", premium:"#c9922a", premiumPlus:"#8e44ad",
 };
 
+// Precomputed compass-mark coordinates for the logo SVG below — fixes a real
+// SSR hydration mismatch: Math.sin()/Math.cos() aren't guaranteed bit-identical
+// across JS engines (server Node vs client browser V8 can differ in the last
+// decimal digit), which showed up as a genuine React hydration warning on
+// this exact <line> element. The 6 angles (0/60/120/180/240/300°) are fixed,
+// not derived from any runtime/user data, so precomputing them once and
+// removing the runtime Math.sin/Math.cos calls entirely eliminates the
+// divergence structurally rather than just reducing its likelihood via
+// rounding. Values below are the exact output of the same formula
+// (50+18*sin(r), 50-18*cos(r), 50+38*sin(r), 50-38*cos(r)) it replaces —
+// verified visually identical, not an approximation.
+const LOGO_COMPASS_LINES = [
+  {x1:50, y1:32, x2:50, y2:12},
+  {x1:65.5884572681199, y1:41, x2:82.90896534380866, y2:30.999999999999996},
+  {x1:65.5884572681199, y1:59, x2:82.90896534380867, y2:69},
+  {x1:50, y1:68, x2:50.00000000000001, y2:88},
+  {x1:34.411542731880104, y1:59.00000000000001, x2:17.09103465619134, y2:69.00000000000001},
+  {x1:34.411542731880104, y1:41, x2:17.091034656191333, y2:30.999999999999996},
+];
+
 // ══════════════════════════════════════════════
 //  PLAN SYSTEM
 // ══════════════════════════════════════════════
@@ -1245,7 +1265,7 @@ userStreak=1,
         <div onClick={handleLogoTap} style={{display:"flex",alignItems:"center",gap:10,cursor:"default",userSelect:"none"}}>
           <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
             <circle cx="50" cy="50" r="42" stroke={C.gold} strokeWidth="3" fill="none" opacity="0.5"/>
-            {[0,60,120,180,240,300].map((a,i)=>{const r=a*Math.PI/180;return <line key={i} x1={50+18*Math.sin(r)} y1={50-18*Math.cos(r)} x2={50+38*Math.sin(r)} y2={50-38*Math.cos(r)} stroke={C.gold2} strokeWidth="2.5" strokeLinecap="round" opacity="0.6"/>;})}
+            {LOGO_COMPASS_LINES.map((l,i)=><line key={i} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} stroke={C.gold2} strokeWidth="2.5" strokeLinecap="round" opacity="0.6"/>)}
             <circle cx="50" cy="50" r="16" stroke={C.gold} strokeWidth="2" fill={C.navy3}/>
             <circle cx="50" cy="40" r="4" stroke={C.blue2} strokeWidth="2" fill="none"/>
             <line x1="50" y1="44" x2="50" y2="60" stroke={C.blue2} strokeWidth="2"/>
