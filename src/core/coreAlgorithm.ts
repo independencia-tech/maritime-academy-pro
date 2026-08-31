@@ -216,6 +216,13 @@
 // underlying SpecOps lookup swapped for
 // getSpecializedOperationsByRankAndVesselTypeAndLevels().
 //
+// Step 21 (2026-08-30), scoped and validated before writing any code —
+// starts the trajectory leg of the SpecOps-branching combined family
+// (Pattern A): combined trajectory+vesselType, mirroring Step 18 at the
+// trajectory level. No new decisions — lessons side plain
+// (getRecommendedLessonsForTrajectory()), SpecOps side uses
+// getSpecializedOperationsForTrajectoryAndVesselType().
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -809,6 +816,40 @@ export function getRecommendationsForRankAndVesselTypeAndLevels(
       rankId,
       vesselTypeId,
       allowedLevels
+    ),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a current→target rank trajectory
+ * and a specific vessel type: plain trajectory lesson recommendations, and
+ * Specialized Operations narrowed to that trajectory and vessel type.
+ * Starts the trajectory leg of the SpecOps-branching combined family,
+ * mirroring getRecommendationsForRankAndVesselType() at the trajectory
+ * level.
+ *
+ * Lessons side stays plain (getRecommendedLessonsForTrajectory()) — no
+ * completedLessonIds yet, keeping this step minimal.
+ *
+ * Additive: getRecommendationsForTrajectory() and
+ * getSpecializedOperationsForTrajectoryAndVesselType() are unchanged.
+ */
+export interface CombinedRecommendationForTrajectoryAndVesselType {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForTrajectoryAndVesselType(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  vesselTypeId: VesselTypeId
+): CombinedRecommendationForTrajectoryAndVesselType {
+  return {
+    lessons: getRecommendedLessonsForTrajectory(currentRankId, targetRankId),
+    specializedOperations: getSpecializedOperationsForTrajectoryAndVesselType(
+      currentRankId,
+      targetRankId,
+      vesselTypeId
     ),
   };
 }
