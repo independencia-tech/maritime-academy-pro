@@ -223,6 +223,14 @@
 // (getRecommendedLessonsForTrajectory()), SpecOps side uses
 // getSpecializedOperationsForTrajectoryAndVesselType().
 //
+// Step 22 (2026-08-30), scoped and validated before writing any code —
+// continues the trajectory leg of the SpecOps-branching combined family:
+// combined trajectory+levels, mirroring Step 19 at the trajectory level.
+// No new decisions — lessons side plain
+// (getRecommendedLessonsForTrajectory()), SpecOps side uses
+// getSpecializedOperationsForTrajectoryAndLevels(), which already carries
+// the OR/union-across-path semantics validated in Step 10.
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -850,6 +858,40 @@ export function getRecommendationsForTrajectoryAndVesselType(
       currentRankId,
       targetRankId,
       vesselTypeId
+    ),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a current→target rank trajectory
+ * and an involvement-level allow-list: plain trajectory lesson
+ * recommendations, and Specialized Operations narrowed to that trajectory
+ * and those levels (OR/union semantics across the path, inherited from
+ * getSpecializedOperationsForTrajectoryAndLevels() — Step 10). Mirrors
+ * getRecommendationsForRankAndLevels() at the trajectory level.
+ *
+ * Lessons side stays plain (getRecommendedLessonsForTrajectory()) — no
+ * completedLessonIds yet, keeping this step minimal.
+ *
+ * Additive: getRecommendationsForTrajectory() and
+ * getSpecializedOperationsForTrajectoryAndLevels() are unchanged.
+ */
+export interface CombinedRecommendationForTrajectoryAndLevels {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForTrajectoryAndLevels(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  allowedLevels: ResponsibilityLevel[]
+): CombinedRecommendationForTrajectoryAndLevels {
+  return {
+    lessons: getRecommendedLessonsForTrajectory(currentRankId, targetRankId),
+    specializedOperations: getSpecializedOperationsForTrajectoryAndLevels(
+      currentRankId,
+      targetRankId,
+      allowedLevels
     ),
   };
 }
