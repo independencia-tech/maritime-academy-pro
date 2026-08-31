@@ -415,6 +415,16 @@ function TopBar({ onBack, title, backLabel }) {
   );
 }
 
+// Point 2 correctif (2026-09-01) — neutral transition screen shown by any
+// of the 20 *LessonsPage components instead of their real list, for the
+// single frame between mount and the auto-redirect their own useEffect
+// triggers when `autoPick` is set (Recommended for You's lesson deep-link).
+// Deliberately blank/matching-background rather than a spinner — this
+// state is expected to be visible for well under a second.
+function AutoPickTransition() {
+  return <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)"}}/>;
+}
+
 // ── LANGUAGE SELECT ────────────────────────────────────────────
 function LanguageSelect({ setLang, setPage }) {
   const [vis, setVis] = useState(false);
@@ -1453,7 +1463,20 @@ function ExamCenterPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
   );
 }
 
-function NavigationLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d1");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Navigation";
@@ -1500,7 +1523,20 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
   );
 }
 
-function EngineLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function EngineLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e1");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Main Engine & Propulsion";
@@ -1547,7 +1583,20 @@ function EngineLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
   );
 }
 
-function MarpolLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function MarpolLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e4");
   const title = mod?.title?.[lang] || mod?.title?.fr || "MARPOL";
@@ -1594,7 +1643,20 @@ function MarpolLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:stri
   );
 }
 
-function SeempLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function SeempLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e5");
   const title = mod?.title?.[lang] || mod?.title?.fr || "SEEMP & Energy Efficiency";
@@ -1640,7 +1702,20 @@ function SeempLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:strin
     </div>
   );
 }
-function IMLLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function IMLLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d2");
   const title = mod?.title?.[lang] || mod?.title?.fr || "International Maritime Law";
@@ -1687,7 +1762,20 @@ function IMLLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;
   );
 }
 
-function SBLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function SBLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d3");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Signaling & Buoyage";
@@ -1734,7 +1822,20 @@ function SBLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
   );
 }
 
-function SMCPLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function SMCPLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d4");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Maritime English SMCP";
@@ -1781,7 +1882,20 @@ function SMCPLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string
   );
 }
 
-function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d6");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Seamanship";
@@ -1827,7 +1941,20 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
     </div>
   );
 }
-function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d7");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Marine Meteorology";
@@ -1874,7 +2001,20 @@ function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons }:{lang
     </div>
   );
 }
-function ShipCareerLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function ShipCareerLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d5");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Ship Career Navigator";
@@ -1920,7 +2060,20 @@ function ShipCareerLessonsPage({ lang, onBack, onPick, completedLessons }:{lang:
     </div>
   );
 }
-function E2LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function E2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e2");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Auxiliary Systems";
@@ -1961,7 +2114,20 @@ function E2LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
   );
 }
 
-function E3LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function E3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e3");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Boilers";
@@ -2002,7 +2168,20 @@ function E3LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
   );
 }
 
-function E6LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function E6LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e6");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Cargo Systems";
@@ -2043,7 +2222,20 @@ function E6LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
   );
 }
 
-function E7LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function E7LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e7");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Automation & UMS";
@@ -2083,7 +2275,20 @@ function E7LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
     </div>
   );
 }
-function S1LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function S1LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s1");
   const title = mod?.title?.[lang] || mod?.title?.fr || "COLREG Safety";
@@ -2123,7 +2328,20 @@ function S1LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
     </div>
   );
 }
-function S2LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function S2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s2");
   const title = mod?.title?.[lang] || mod?.title?.fr || "EPIRB, SART & GMDSS";
@@ -2163,7 +2381,20 @@ function S2LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
     </div>
   );
 }
-function S3LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function S3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s3");
   const title = mod?.title?.[lang] || mod?.title?.fr || "STCW First Aid";
@@ -2203,7 +2434,20 @@ function S3LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
     </div>
   );
 }
-function S4LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function S4LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s4");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Firefighting";
@@ -2243,7 +2487,20 @@ function S4LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
     </div>
   );
 }
-function S5LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+function S5LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s5");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Lifeboats, Liferafts & HRU";
@@ -2283,7 +2540,20 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;o
     </div>
   );
 }
-  function S6LessonsPage({ lang, onBack, onPick, completedLessons }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[]}) {
+  function S6LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s6");
   const title = mod?.title?.[lang] || mod?.title?.fr || "Ship Safety Operations & Emergency Readiness";
@@ -2679,6 +2949,42 @@ const [userStreak, setUserStreak] = useState(1);
     setPage("role_on_board");
   };
 
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link
+  // straight to a specific lesson, bypassing its module's own list page.
+  // Deliberately duplicates the moduleId->intermediate-page mapping
+  // already in onStartModule() below (small, ~20 entries) rather than
+  // touching/refactoring onStartModule itself — keeps the existing manual
+  // Browse flow (module card -> onStartModule -> list page) completely
+  // untouched. pendingLessonPick is consumed exactly once by whichever
+  // *LessonsPage mounts next (its own useEffect calls its own onPick(),
+  // unchanged, then reports back via onAutoPickConsumed to clear this
+  // state) — so a later, unrelated manual visit to that same module never
+  // re-triggers the auto-redirect.
+  const [pendingLessonPick, setPendingLessonPick] = useState<string | null>(null);
+  const navigateToLesson = (moduleId: string, lessonId: string) => {
+    setPendingLessonPick(lessonId);
+    if (moduleId === "d1") setPage("nav_lessons");
+    else if (moduleId === "d2") setPage("iml_lessons");
+    else if (moduleId === "d3") setPage("sb_lessons");
+    else if (moduleId === "d4") setPage("smcp_lessons");
+    else if (moduleId === "d5") setPage("shipcareer_lessons");
+    else if (moduleId === "d6") setPage("seamanship_lessons");
+    else if (moduleId === "d7") setPage("meteorology_lessons");
+    else if (moduleId === "e1") setPage("engine_lessons");
+    else if (moduleId === "e2") setPage("e2_lessons");
+    else if (moduleId === "e3") setPage("e3_lessons");
+    else if (moduleId === "e4") setPage("marpol_lessons");
+    else if (moduleId === "e5") setPage("seemp_lessons");
+    else if (moduleId === "e6") setPage("e6_lessons");
+    else if (moduleId === "e7") setPage("e7_lessons");
+    else if (moduleId === "s1") setPage("s1_lessons");
+    else if (moduleId === "s2") setPage("s2_lessons");
+    else if (moduleId === "s3") setPage("s3_lessons");
+    else if (moduleId === "s4") setPage("s4_lessons");
+    else if (moduleId === "s5") setPage("s5_lessons");
+    else if (moduleId === "s6") setPage("s6_lessons");
+  };
+
 const persistProfile = async (p: any) => {
   setProfile(p);
   try {
@@ -2993,6 +3299,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
             onNavShips={() => setPage("ships")}
             onNavToShipCard={navigateToShipCard}
             onNavToRoleOnBoard={navigateToRoleOnBoard}
+            onNavToLesson={navigateToLesson}
             onNavExams={() => setPage("exams")}
             onNavProfile={() => setPage("status")}
             onAdmin={() => setPage("admin-login")}
@@ -3067,6 +3374,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_navigation");
             else if (lid === "l2") setPage("lesson_navire");
@@ -3086,6 +3395,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_moteur");
             else if (lid === "l2") setPage("lesson_auxiliaires");
@@ -3104,6 +3415,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_marpol");
             else if (lid === "l2") setPage("lesson_marpol_l2");
@@ -3119,6 +3432,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_seemp_l1");
             else if (lid === "l2") setPage("lesson_seemp_l2");
@@ -3133,6 +3448,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
   if (lid === "l1") setPage("lesson_sea_l1");
   else if (lid === "l2") setPage("lesson_sea_l2");
@@ -3149,6 +3466,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
   if (lid === "l1") setPage("lesson_meteo_l1");
   else if (lid === "l2") setPage("lesson_meteo_l2");
@@ -3165,6 +3484,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_shipcareer_l1");
       else if (lid === "l2") setPage("lesson_shipcareer_l2");
@@ -3179,6 +3500,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_s1_l1");
             else if (lid === "l2") setPage("lesson_s1_l2");
@@ -3242,6 +3565,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_s2_l1");
             else if (lid === "l2") setPage("lesson_s2_l2");
@@ -3296,6 +3621,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_safety_s3_l1");
       else if (lid === "l2") setPage("lesson_safety_s3_l2");
@@ -3377,6 +3704,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_safety_s4_l1");
       else if (lid === "l2") setPage("lesson_safety_s4_l2");
@@ -3428,6 +3757,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_safety_s5_l1");
       else if (lid === "l2") setPage("lesson_safety_s5_l2");
@@ -3461,6 +3792,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_safety_s6_l1");
       else if (lid === "l2") setPage("lesson_safety_s6_l2");
@@ -3507,6 +3840,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_e2_l1");
       else if (lid === "l2") setPage("lesson_e2_l2");
@@ -3574,6 +3909,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_e3_l1");
       else if (lid === "l2") setPage("lesson_e3_l2");
@@ -3679,6 +4016,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_e6_l1");
       else if (lid === "l2") setPage("lesson_e6_l2");
@@ -3722,6 +4061,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    autoPick={pendingLessonPick}
+    onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
       if (lid === "l1") setPage("lesson_e7_l1");
       else if (lid === "l2") setPage("lesson_e7_l2");
@@ -3737,6 +4078,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_solas");
             else if (lid === "l2") setPage("lesson_marpol_legal");
@@ -3756,6 +4099,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_iala");
             else if (lid === "l2") setPage("lesson_lights_shapes");
@@ -3772,6 +4117,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
             if (lid === "l1") setPage("lesson_smcp_l1");
             else if (lid === "l2") setPage("lesson_smcp_l2");

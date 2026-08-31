@@ -1059,6 +1059,7 @@ userStreak=1,
   onNavShips=()=>{},
   onNavToShipCard=()=>{},
   onNavToRoleOnBoard=()=>{},
+  onNavToLesson=()=>{},
   onNavExams=()=>{},
   onNavProfile=()=>{},
   activeNav="home",
@@ -1492,7 +1493,7 @@ userStreak=1,
                     </div>
                     <div style={{display:"flex",flexDirection:"column",gap:8}}>
                       {group.lessons.map(lesson=>(
-                        <button key={lesson.id} onClick={()=>onStartModule(group.module)} style={{
+                        <button key={lesson.id} onClick={()=>onNavToLesson(group.module.id, lesson.id)} style={{
                           display:"flex",alignItems:"center",gap:10,padding:"12px 14px",
                           background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",
                           borderRadius:14,cursor:"pointer",color:C.white,textAlign:"left",width:"100%",
