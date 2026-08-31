@@ -102,6 +102,16 @@ REVOKE EXECUTE ON FUNCTION public.update_updated_at_column() FROM PUBLIC, anon, 
 --   deliberately excluded from the INSERT/UPDATE column grants, so no
 --   RLS policy could accidentally expose it even by mistake later.
 --   Only service_role (bypasses RLS and column grants) can set it.
+--
+-- SÉCURITÉ - AVANT LANCEMENT COMMERCIAL : le GRANT column-level ci-dessous
+-- exclut bien `tier` comme documenté au-dessus, mais la base live montre
+-- actuellement un GRANT UPDATE/INSERT sur `tier` pour `authenticated` en
+-- plus de celui-ci (probablement hérité d'une configuration manuelle via
+-- le SQL editor, antérieure au suivi de migrations par la CLI). Revoir et
+-- corriger ce GRANT ouvert avant toute vraie monétisation — voir TODO.md
+-- à la racine du projet. Non corrigé intentionnellement pour l'instant :
+-- l'admin panel et la gestion tier sont un mock volontaire, rien n'est
+-- vendu actuellement.
 -- ============================================================
 CREATE TABLE public.user_profiles (
   user_id UUID NOT NULL PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,

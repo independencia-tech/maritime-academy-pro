@@ -28,6 +28,7 @@ const T = {
     deptDeckSub:"Capitaine, officier, matelot...",
     deptEngine:"⚙️ MACHINE — Énergie & Propulsion",
     deptEngineSub:"Chef mécanicien, officier machine, oiler...",
+    selected:"✓ Sélectionné",
     // Rang actuel
     s1Deck:"⚓ Qui es-tu ? (Pont)",
     s1Engine:"⚙️ Qui es-tu ? (Machine)",
@@ -93,6 +94,7 @@ const T = {
     dur30:"📚 30 min / jour",
     dur60:"🎯 1 heure / jour",
     durFree:"🌊 À mon rythme",
+    durRecommended:"⭐ Recommandé — 15 min / jour suffit pour progresser régulièrement",
     // Heure
     s6:"⏰ Heure préférée ?",
     qMorning:"🌅 Matin",qAfternoon:"☀️ Après-midi",
@@ -100,6 +102,7 @@ const T = {
     // Pays
     s7:"🌍 Ton pays de résidence ?",
     s7ph:"Ex: Cameroun, France, Maroc...",
+    countryNote:"🌍 La réglementation sera adaptée à ton pays",
     // Photo
     s9:"📸 Ta photo (optionnel)",
     s9cta:"Ajouter ma photo",
@@ -125,6 +128,7 @@ const T = {
     deptDeckSub:"Captain, officer, sailor...",
     deptEngine:"⚙️ ENGINE — Energy & Propulsion",
     deptEngineSub:"Chief engineer, engineer officer, oiler...",
+    selected:"✓ Selected",
     s1Deck:"⚓ Who are you? (Deck)",
     s1Engine:"⚙️ Who are you? (Engine)",
     s1bDeck:"🎯 Your target rank? (Deck)",
@@ -176,10 +180,12 @@ const T = {
     s5:"⏱️ Daily study duration?",
     dur15:"⚡ 15 min / day",dur30:"📚 30 min / day",
     dur60:"🎯 1 hour / day",durFree:"🌊 At my own pace",
+    durRecommended:"⭐ Recommended — 15 min / day is enough to build steady progress",
     s6:"⏰ Preferred time?",
     qMorning:"🌅 Morning",qAfternoon:"☀️ Afternoon",
     qEvening:"🌆 Evening",qNight:"🌙 Night",
     s7:"🌍 Country of residence?",s7ph:"E.g: Nigeria, UK, Philippines...",
+    countryNote:"🌍 Regulations will be tailored to your country",
     s9:"📸 Your photo (optional)",
     s9cta:"Add my photo",s9camera:"Camera",s9gallery:"Gallery",
     s9note:"Confidential · For your personalized status card 🎁 · Max 5 MB",
@@ -199,6 +205,7 @@ const T = {
     deptDeckSub:"Capitán, oficial, marinero...",
     deptEngine:"⚙️ MÁQUINAS — Energía y Propulsión",
     deptEngineSub:"Jefe de máquinas, oficial, engrasador...",
+    selected:"✓ Seleccionado",
     s1Deck:"⚓ ¿Quién eres? (Puente)",
     s1Engine:"⚙️ ¿Quién eres? (Máquinas)",
     s1bDeck:"🎯 ¿Tu rango objetivo? (Puente)",
@@ -247,9 +254,11 @@ const T = {
     s5:"⏱️ ¿Duración de estudio diario?",
     dur15:"⚡ 15 min / día",dur30:"📚 30 min / día",
     dur60:"🎯 1 hora / día",durFree:"🌊 A mi ritmo",
+    durRecommended:"⭐ Recomendado — 15 min / día bastan para progresar de forma constante",
     s6:"⏰ ¿Hora preferida?",
     qMorning:"🌅 Mañana",qAfternoon:"☀️ Tarde",qEvening:"🌆 Noche",qNight:"🌙 Madrugada",
     s7:"🌍 ¿Tu país de residencia?",s7ph:"Ej: España, México...",
+    countryNote:"🌍 La normativa se adaptará a tu país",
     s9:"📸 Tu foto (opcional)",s9cta:"Agregar mi foto",
     s9camera:"Cámara",
     s9gallery:"Galería",
@@ -269,6 +278,7 @@ const T = {
     deptDeckSub:"Capitão, oficial, marinheiro...",
     deptEngine:"⚙️ MÁQUINAS — Energia e Propulsão",
     deptEngineSub:"Chefe de máquinas, oficial, oiler...",
+    selected:"✓ Selecionado",
     s1Deck:"⚓ Quem é você? (Convés)",
     s1Engine:"⚙️ Quem é você? (Máquinas)",
     s1bDeck:"🎯 Seu posto almejado? (Convés)",
@@ -317,9 +327,11 @@ const T = {
     s5:"⏱️ Duração de estudo diário?",
     dur15:"⚡ 15 min / dia",dur30:"📚 30 min / dia",
     dur60:"🎯 1 hora / dia",durFree:"🌊 No meu ritmo",
+    durRecommended:"⭐ Recomendado — 15 min / dia bastam para progredir de forma constante",
     s6:"⏰ Horário preferido?",
     qMorning:"🌅 Manhã",qAfternoon:"☀️ Tarde",qEvening:"🌆 Noite",qNight:"🌙 Madrugada",
     s7:"🌍 Seu país de residência?",s7ph:"Ex: Brasil, Portugal, Angola...",
+    countryNote:"🌍 A regulamentação será adaptada ao seu país",
     s9:"📸 Sua foto (opcional)",s9cta:"Adicionar minha foto",
     s9camera:"Câmera",
     s9gallery:"Galeria",
@@ -786,7 +798,7 @@ export default function QuestionnaireS7({
                 </div>
                 {answers.dept==="deck"&&(
                   <div style={{marginTop:8,fontSize:11,color:C.blue2,fontWeight:700}}>
-                    ✓ Sélectionné
+                    {t.selected}
                   </div>
                 )}
               </button>
@@ -817,7 +829,7 @@ export default function QuestionnaireS7({
                 </div>
                 {answers.dept==="engine"&&(
                   <div style={{marginTop:8,fontSize:11,color:C.orange,fontWeight:700}}>
-                    ✓ Sélectionné
+                    {t.selected}
                   </div>
                 )}
               </button>
@@ -914,7 +926,7 @@ export default function QuestionnaireS7({
               <div style={{marginTop:10,padding:"8px 12px",borderRadius:10,
                 background:"rgba(201,146,42,0.1)",border:`1px solid ${C.gold}33`,
                 fontSize:12,color:C.gold2}}>
-                ⭐ Recommandé — 15 min / jour suffit pour progresser régulièrement
+                {t.durRecommended}
               </div>
             )}
           </Card>
@@ -953,7 +965,7 @@ export default function QuestionnaireS7({
               aria-label={t.s7}/>
             {country.trim().length>0&&(
               <div style={{marginTop:8,fontSize:11,color:C.muted}}>
-                🌍 La réglementation sera adaptée à ton pays
+                {t.countryNote}
               </div>
             )}
           </Card>
