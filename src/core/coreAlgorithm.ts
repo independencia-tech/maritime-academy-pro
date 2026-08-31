@@ -200,6 +200,14 @@
 // step minimal, same as how Step 14 started with plain basics only before
 // Step 16 added completion-awareness separately.
 //
+// Step 19 (2026-08-30), scoped and validated before writing any code —
+// continues the SpecOps-branching combined family (Pattern A), next
+// dimension in the same build order (Step 3 plain → Step 5 +vesselType →
+// Step 8 +levels → Step 12 combined): combined rank+levels. No new
+// decisions — same shape as Step 18 (plain lessons, no completedLessonIds
+// yet), swapping vesselTypeId for allowedLevels and the underlying
+// SpecOps lookup for getSpecializedOperationsByRankAndLevels().
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -731,5 +739,34 @@ export function getRecommendationsForRankAndVesselType(
   return {
     lessons: getRecommendedLessonsForRank(rankId),
     specializedOperations: getSpecializedOperationsByRankAndVesselType(rankId, vesselTypeId),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a rank and an involvement-level
+ * allow-list: plain rank-only lesson recommendations, and Specialized
+ * Operations narrowed to that rank and those levels. Continues the
+ * SpecOps-branching combined family (Pattern A), same shape as
+ * getRecommendationsForRankAndVesselType() with allowedLevels in place of
+ * vesselTypeId.
+ *
+ * Lessons side stays plain (getRecommendedLessonsForRank()) — no
+ * completedLessonIds yet, keeping this step minimal.
+ *
+ * Additive: getRecommendationsForRank() and
+ * getSpecializedOperationsByRankAndLevels() are unchanged.
+ */
+export interface CombinedRecommendationForRankAndLevels {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForRankAndLevels(
+  rankId: RankId,
+  allowedLevels: ResponsibilityLevel[]
+): CombinedRecommendationForRankAndLevels {
+  return {
+    lessons: getRecommendedLessonsForRank(rankId),
+    specializedOperations: getSpecializedOperationsByRankAndLevels(rankId, allowedLevels),
   };
 }
