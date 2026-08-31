@@ -485,7 +485,7 @@ export default function StatusCardS8({
       });
       // Stats row — quiet chips instead of bare oversized numbers
       y+=20;
-      const stats=[[t.statLessons,"0"],[t.statCerts,"0"],[t.statPoints,"0"]];
+      const stats=[[t.statLessons,String(completedLessons.length)],[t.statCerts,"0"],[t.statPoints,String(userXP)]];
       const gap=14;
       const chipW=(W-160-gap*2)/3, chipH=92;
       ctx.textAlign="center";

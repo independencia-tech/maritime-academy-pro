@@ -2416,14 +2416,21 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
           return;
         }
         if (data) {
-          setProfile((p: any) => ({ ...p, ...data }));
+          // Only merge in columns Supabase actually has a value for — a
+          // NULL here (e.g. a profile saved before ship/target/level/
+          // duration/time were persisted) must not clobber a correct local
+          // value already in state/localStorage.
+          const definedData = Object.fromEntries(
+            Object.entries(data).filter(([, v]) => v !== null && v !== undefined)
+          );
+          setProfile((p: any) => ({ ...p, ...definedData }));
           if (data.lang) setLang(data.lang);
           if (data.tier) setUserPlan(data.tier);
           if (data.dept) setDashboardTab(data.dept);
           try {
             const raw = localStorage.getItem("map_status_card");
             const saved = raw ? JSON.parse(raw) : {};
-            localStorage.setItem("map_status_card", JSON.stringify({ ...saved, ...data }));
+            localStorage.setItem("map_status_card", JSON.stringify({ ...saved, ...definedData }));
           } catch {}
         }
       });
