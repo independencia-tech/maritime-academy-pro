@@ -770,7 +770,7 @@ const AB_CARD: RoleOnBoardCard = {
       safetyPoints: [{ en: "Anchor watch requires treating every check with the same attention, especially during quiet periods — dragging rarely announces itself dramatically.", fr: "La veille au mouillage exige de traiter chaque contrôle avec la même attention, surtout pendant les périodes calmes — le dérapage s'annonce rarement de façon spectaculaire.", es: "La guardia de fondeo exige tratar cada control con la misma atención, especialmente durante los períodos tranquilos — el garreo rara vez se anuncia de forma dramática.", pt: "A vigia de fundeio exige tratar cada verificação com a mesma atenção, especialmente durante períodos calmos — garrar raramente se anuncia de forma dramática." }],
       mapReferences: [
         { kind: "lesson", lessonId: "d6-l3", label: { en: "Anchoring & Anchor Types", fr: "Mouillage et types d'ancres", es: "Fondeo y tipos de anclas", pt: "Fundeio e tipos de âncoras" } },
-        { kind: "lesson", lessonId: "deck_meteo_l5", label: { en: "Tropical and Dangerous Phenomena", fr: "Phénomènes tropicaux et dangereux", es: "Fenómenos tropicales y peligrosos", pt: "Fenómenos tropicais e perigosos" } },
+        { kind: "lesson", lessonId: "d7-l5", label: { en: "Tropical and Dangerous Phenomena", fr: "Phénomènes tropicaux et dangereux", es: "Fenómenos tropicales y peligrosos", pt: "Fenómenos tropicais e perigosos" } },
       ],
     },
     {

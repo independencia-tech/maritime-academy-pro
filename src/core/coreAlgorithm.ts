@@ -117,7 +117,10 @@
 // availability at the trajectory level. Real data was checked before
 // deciding: deck_meteo_l4 (targeted at oow/chief_officer) requires
 // deck_meteo_l3 (targeted at deck_cadet/os/ab/bosun, an earlier tier) — a
-// genuine cross-rank prerequisite chain, not a hypothetical. This resolves
+// genuine cross-rank prerequisite chain, not a hypothetical. [Renamed
+// 2026-09-01 to d7-l4/d7-l3 in lessonRegistry.ts — kept as deck_meteo_l4/l3
+// here since that's what this decision was actually validated against at
+// the time; not rewritten to pretend otherwise.] This resolves
 // the ambiguity rather than complicating it: the strict reading (identical
 // logic to getAvailableLessonsForRank(), applied to
 // getRecommendedLessonsForTrajectory()'s result — prerequisites checked
@@ -548,7 +551,9 @@ export function getSpecializedOperationsForTrajectoryAndLevels(
  * regardless of where either lesson sits on the path — no assumption that
  * an earlier path segment is "as good as done." Real data has a genuine
  * cross-rank prerequisite chain (deck_meteo_l4, targeted at oow/chief_officer,
- * requires deck_meteo_l3, targeted at an earlier tier), and this strict
+ * requires deck_meteo_l3, targeted at an earlier tier — renamed 2026-09-01
+ * to d7-l4/d7-l3 in lessonRegistry.ts, kept under the original names here
+ * since that's what was actually validated at the time), and this strict
  * reading handles it correctly by construction: deck_meteo_l4 stays
  * unavailable until deck_meteo_l3 is actually completed.
  */

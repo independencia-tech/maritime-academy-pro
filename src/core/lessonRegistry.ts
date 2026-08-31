@@ -46,29 +46,23 @@ export interface LessonRegistryItem {
   status: "draft" | "active" | "deprecated";
 }
 
-// Registre indexé par lessonId - vide en V1 hormis les deux exemples ci-dessous,
-// nécessaires uniquement pour valider que la structure compile.
+// Registre indexé par lessonId. Stale note removed 2026-09-01: this used to
+// say "empty except two compile-check examples" — long outdated, the
+// registry has 133 real entries as of the same-day meteo/colreg id cleanup
+// (deck_meteo_l1-l7 renamed to d7-l1..d7-l7; deck_colreg_l1, an orphan with
+// no real MODULES correspondence — the real COLREG lesson is "d1-l8" — was
+// deleted outright, not renamed, since renaming it would have collided with
+// that already-existing, already-correct entry).
 export const LESSON_REGISTRY: Record<LessonId, LessonRegistryItem> = {
-  deck_colreg_l1: {
-    lessonId: "deck_colreg_l1",
-    department: "deck",
-    moduleId: "colreg",
-    difficulty: "foundation",
-    targetRanks: [],
-    vesselTypes: [],
-    stcwReference: [],
-    requiredForExam: false,
-    recommendedForPromotion: false,
-    examCategory: [],
-    badgeCategory: [],
-    certificateCategory: [],
-    prerequisites: [],
-    recommendedBefore: [],
-    recommendedAfter: [],
-    status: "draft",
-  },
-  deck_meteo_l1: {
-    lessonId: "deck_meteo_l1",
+  // Renamed from deck_meteo_l1-l7 (2026-09-01, on explicit request): the old
+  // free-text lessonId had no correspondence with Dashboard.tsx's MODULES,
+  // even though moduleId already correctly said "d7" — MaritimeApp.tsx
+  // already calls markLessonCompleted("d7-l1")..("d7-l7") for these real
+  // lessons (lines ~3891-3940), and LessonProgressBadge.tsx already maps to
+  // the same "d7-lN" ids — this rename makes lessonId match what the app
+  // already tracks, not a new convention invented here.
+  "d7-l1": {
+    lessonId: "d7-l1",
     department: "deck",
     moduleId: "d7",
     difficulty: "foundation",
@@ -85,8 +79,8 @@ export const LESSON_REGISTRY: Record<LessonId, LessonRegistryItem> = {
     recommendedAfter: [],
     status: "draft",
   },
-  deck_meteo_l2: {
-    lessonId: "deck_meteo_l2",
+  "d7-l2": {
+    lessonId: "d7-l2",
     department: "deck",
     moduleId: "d7",
     difficulty: "foundation",
@@ -98,13 +92,13 @@ export const LESSON_REGISTRY: Record<LessonId, LessonRegistryItem> = {
     examCategory: [],
     badgeCategory: [],
     certificateCategory: [],
-    prerequisites: ["deck_meteo_l1"],
+    prerequisites: ["d7-l1"],
     recommendedBefore: [],
     recommendedAfter: [],
     status: "draft",
   },
-  deck_meteo_l3: {
-    lessonId: "deck_meteo_l3",
+  "d7-l3": {
+    lessonId: "d7-l3",
     department: "deck",
     moduleId: "d7",
     difficulty: "foundation",
@@ -116,13 +110,13 @@ export const LESSON_REGISTRY: Record<LessonId, LessonRegistryItem> = {
     examCategory: [],
     badgeCategory: [],
     certificateCategory: [],
-    prerequisites: ["deck_meteo_l2"],
+    prerequisites: ["d7-l2"],
     recommendedBefore: [],
     recommendedAfter: [],
     status: "draft",
   },
-  deck_meteo_l4: {
-    lessonId: "deck_meteo_l4",
+  "d7-l4": {
+    lessonId: "d7-l4",
     department: "deck",
     moduleId: "d7",
     difficulty: "intermediate",
@@ -134,13 +128,13 @@ export const LESSON_REGISTRY: Record<LessonId, LessonRegistryItem> = {
     examCategory: [],
     badgeCategory: [],
     certificateCategory: [],
-    prerequisites: ["deck_meteo_l3"],
+    prerequisites: ["d7-l3"],
     recommendedBefore: [],
     recommendedAfter: [],
     status: "draft",
   },
-  deck_meteo_l5: {
-    lessonId: "deck_meteo_l5",
+  "d7-l5": {
+    lessonId: "d7-l5",
     department: "deck",
     moduleId: "d7",
     difficulty: "intermediate",
@@ -152,13 +146,13 @@ export const LESSON_REGISTRY: Record<LessonId, LessonRegistryItem> = {
     examCategory: [],
     badgeCategory: [],
     certificateCategory: [],
-    prerequisites: ["deck_meteo_l4"],
+    prerequisites: ["d7-l4"],
     recommendedBefore: [],
     recommendedAfter: [],
     status: "draft",
   },
-  deck_meteo_l6: {
-    lessonId: "deck_meteo_l6",
+  "d7-l6": {
+    lessonId: "d7-l6",
     department: "deck",
     moduleId: "d7",
     difficulty: "intermediate",
@@ -170,13 +164,13 @@ export const LESSON_REGISTRY: Record<LessonId, LessonRegistryItem> = {
     examCategory: [],
     badgeCategory: [],
     certificateCategory: [],
-    prerequisites: ["deck_meteo_l5"],
+    prerequisites: ["d7-l5"],
     recommendedBefore: [],
     recommendedAfter: [],
     status: "draft",
   },
-  deck_meteo_l7: {
-    lessonId: "deck_meteo_l7",
+  "d7-l7": {
+    lessonId: "d7-l7",
     department: "deck",
     moduleId: "d7",
     difficulty: "advanced",
@@ -188,7 +182,7 @@ export const LESSON_REGISTRY: Record<LessonId, LessonRegistryItem> = {
     examCategory: [],
     badgeCategory: [],
     certificateCategory: [],
-    prerequisites: ["deck_meteo_l6"],
+    prerequisites: ["d7-l6"],
     recommendedBefore: [],
     recommendedAfter: [],
     status: "draft",

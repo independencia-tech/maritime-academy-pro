@@ -70,16 +70,25 @@ import type {
  * learningProgression dimension) but NOT used here. In particular, the
  * prerequisites hard-filter named in spec point A ("prerequisites non
  * satisfaits → exclu de lessonCandidates") is deliberately NOT applied
- * in this step: `learningState.completedLessonIds` is only available in
- * MODULES-format ids today (e.g. "s1-l1"), never in the LessonId format
- * `lesson.prerequisites` uses (e.g. "deck_meteo_l3") — spec point K
- * forbids exactly this kind of cross-namespace comparison. Applying the
- * gate against real completedLessonIds today would not "do nothing" for
- * the 9/136 lessons that carry real prerequisites: it would permanently
+ * in this step, kept as a blanket skip for now even though it's no longer
+ * accurate for the registry at all: as of 2026-09-01 (meteo/colreg id
+ * cleanup — deck_meteo_l1-l7 renamed to d7-l1..d7-l7, the orphan
+ * "deck_colreg_l1" deleted outright), all 133 lessonRegistry.ts entries
+ * use the same MODULES-format id `completedLessonIds` uses (e.g. "d7-l1")
+ * — spec point K's "cross-namespace comparison" concern that justified
+ * this blanket skip no longer describes any real entry. A real, narrower
+ * fix (apply the gate for real) is possible but NOT done here — out of
+ * scope for an id cleanup, flagged for a future step; the K rationale
+ * itself needs revisiting, not just its examples patched. Applying the
+ * gate blindly today would not "do nothing" for
+ * the 9/133 lessons that carry real prerequisites: it would permanently
  * exclude them (every comparison would fail), which is a worse failure
- * mode than the signal being simply absent. Until lessonRegistry.ts is
- * reconciled with Dashboard.tsx's MODULES, every lesson is treated as
- * prerequisite-eligible regardless of its `prerequisites` field. This
+ * mode than the signal being simply absent. Every lesson is still treated
+ * as prerequisite-eligible regardless of its `prerequisites` field — not
+ * because the id namespaces are still incompatible (they aren't anymore,
+ * see above), but because narrowing this gate is a real decision that
+ * hasn't been explicitly made yet, not an automatic consequence of the id
+ * cleanup. This
  * mirrors spec D's UNAVAILABLE handling for learningProgressionScore —
  * same limitation, same reasoning, applied here to generation instead
  * of scoring. Flagged for explicit confirmation, not silently decided
@@ -256,7 +265,7 @@ function targetRankScore(candidate: DeduplicatedCandidate, profile: Recommendati
 function learningProgressionScore(candidate: DeduplicatedCandidate): DimensionScore {
   const reason =
     candidate.identity.contentType === "lesson"
-      ? "no reliable completion data for lessons: completedLessonIds uses MODULES-format ids (e.g. \"s1-l1\"), lessonRegistry.ts uses LessonId-format ids (e.g. \"deck_meteo_l1\") — comparing them would be the unsafe cross-namespace comparison spec point K forbids"
+      ? "learningProgression kept UNAVAILABLE for all lessons as a blanket rule, even though every one of the 133 lessonRegistry.ts entries now uses the same MODULES-format id as completedLessonIds (e.g. \"d7-l1\") since the 2026-09-01 meteo/colreg id cleanup — the id-namespace justification no longer applies to any entry. Not narrowed to per-lesson accuracy here — that's a real, separate decision, not made as a side effect of an id cleanup."
       : "no completion tracking exists for Specialized Operations at all — no Supabase column, no localStorage key";
   return { available: false, reason };
 }

@@ -34,7 +34,10 @@ export type CandidateContentType = "lesson" | "specializedOperation";
  */
 export interface LessonCandidateIdentity {
   contentType: "lesson";
-  /** Matches LessonId from lessonRegistry.ts (e.g. "deck_meteo_l1"). */
+  /** Matches LessonId from lessonRegistry.ts (e.g. "e1-l1") — as of the
+   * 2026-09-01 id cleanup, every entry uses this MODULES-format id; the
+   * last holdout ("deck_colreg_l1", an orphan with no real MODULES
+   * correspondence) was deleted, not renamed. */
   lessonId: string;
   /** Matches LessonRegistryItem.moduleId. */
   moduleId: string;
