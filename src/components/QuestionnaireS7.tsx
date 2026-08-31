@@ -345,11 +345,14 @@ const T = {
 
 // ── SHARED UI ─────────────────────────────────
 function Stars() {
-  const s=Array.from({length:40},()=>({
-    x:Math.random()*100,y:Math.random()*100,
-    sz:Math.random()>0.7?2.5:1.5,
-    dur:2+Math.random()*4,delay:Math.random()*6,
-  }));
+  const [s,setS]=useState<{x:number;y:number;sz:number;dur:number;delay:number}[]>([]);
+  useEffect(()=>{
+    setS(Array.from({length:40},()=>({
+      x:Math.random()*100,y:Math.random()*100,
+      sz:Math.random()>0.7?2.5:1.5,
+      dur:2+Math.random()*4,delay:Math.random()*6,
+    })));
+  },[]);
   return (
     <>
       <div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0}}>
