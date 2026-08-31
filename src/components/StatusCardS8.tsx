@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { toast } from "sonner";
+import { getRankMeta } from "../core/rankRegistry";
+import { getVesselTypeMeta } from "../core/vesselTypeRegistry";
 
 const C = {
   navy:"#060e1a", navy2:"#0a1628", navy3:"#0d1f3c",
@@ -46,29 +48,6 @@ const T = {
     resetConfirm:"⚠️ Confirmer la suppression ?",
     resetCancel:"Annuler",
     editBtn:"✏️ Modifier mon profil",
-    goalLabels:{
-      nav:"Maîtriser la navigation",
-      stcw:"Certifications STCW",
-      law:"Droit maritime",
-      career:"Progresser dans ma carrière",
-      safety:"Sécurité et survie en mer",
-    },
-    shipLabels:{
-      container:"Porte-conteneurs 🚢",
-      tanker:"Pétrolier 🛢️",
-      cruise:"Croisière 🛳️",
-      offshore:"Offshore 🏗️",
-      yacht:"Yacht / Voilier ⛵",
-      sar:"Sauvetage SAR 🆘",
-      chemical:"Chimiquier ⚗️",
-      gas:"Gazier LNG 💨",
-      car:"Roulier 🚗",
-      research:"Navire scientifique 🔬",
-      tug:"Remorqueur ⚓",
-      fishing:"Pêche hauturière 🎣",
-      pwc:"Jet-ski / Surf sauvetage 🏄",
-      navy:"Marine nationale 🏛️",
-    },
     durLabels:{
       "15min":"15 min / jour",
       "30min":"30 min / jour",
@@ -108,29 +87,6 @@ const T = {
     resetConfirm:"⚠️ Confirm deletion?",
     resetCancel:"Cancel",
     editBtn:"✏️ Edit my profile",
-    goalLabels:{
-      nav:"Master navigation",
-      stcw:"STCW Certifications",
-      law:"Maritime law",
-      career:"Advance my career",
-      safety:"Safety & survival at sea",
-    },
-    shipLabels:{
-      container:"Container ship 🚢",
-      tanker:"Oil tanker 🛢️",
-      cruise:"Cruise ship 🛳️",
-      offshore:"Offshore 🏗️",
-      yacht:"Yacht / Sailboat ⛵",
-      sar:"SAR Rescue 🆘",
-      chemical:"Chemical tanker ⚗️",
-      gas:"LNG Gas carrier 💨",
-      car:"Car carrier 🚗",
-      research:"Research vessel 🔬",
-      tug:"Tugboat ⚓",
-      fishing:"Fishing vessel 🎣",
-      pwc:"Jet-ski / Surf rescue 🏄",
-      navy:"Navy 🏛️",
-    },
     durLabels:{
       "15min":"15 min / day",
       "30min":"30 min / day",
@@ -170,29 +126,6 @@ const T = {
     resetConfirm:"⚠️ ¿Confirmar el borrado?",
     resetCancel:"Cancelar",
     editBtn:"✏️ Editar mi perfil",
-    goalLabels:{
-      nav:"Dominar la navegación",
-      stcw:"Certificaciones STCW",
-      law:"Derecho marítimo",
-      career:"Avanzar en mi carrera",
-      safety:"Seguridad y supervivencia",
-    },
-    shipLabels:{
-      container:"Portacontenedores 🚢",
-      tanker:"Petrolero 🛢️",
-      cruise:"Crucero 🛳️",
-      offshore:"Offshore 🏗️",
-      yacht:"Yate / Velero ⛵",
-      sar:"Salvamento SAR 🆘",
-      chemical:"Quimiquero ⚗️",
-      gas:"Gasero LNG 💨",
-      car:"Ro-Ro 🚗",
-      research:"Buque científico 🔬",
-      tug:"Remolcador ⚓",
-      fishing:"Pesca de altura 🎣",
-      pwc:"Moto de agua 🏄",
-      navy:"Marina nacional 🏛️",
-    },
     durLabels:{
       "15min":"15 min / día",
       "30min":"30 min / día",
@@ -232,29 +165,6 @@ const T = {
     resetConfirm:"⚠️ Confirmar a exclusão?",
     resetCancel:"Cancelar",
     editBtn:"✏️ Editar meu perfil",
-    goalLabels:{
-      nav:"Dominar a navegação",
-      stcw:"Certificações STCW",
-      law:"Direito marítimo",
-      career:"Avançar na carreira",
-      safety:"Segurança e sobrevivência",
-    },
-    shipLabels:{
-      container:"Porta-contêineres 🚢",
-      tanker:"Petroleiro 🛢️",
-      cruise:"Cruzeiro 🛳️",
-      offshore:"Offshore 🏗️",
-      yacht:"Iate / Veleiro ⛵",
-      sar:"Salvamento SAR 🆘",
-      chemical:"Químico ⚗️",
-      gas:"Gaseiro LNG 💨",
-      car:"Ro-Ro 🚗",
-      research:"Navio científico 🔬",
-      tug:"Rebocador ⚓",
-      fishing:"Pesca de altura 🎣",
-      pwc:"Jet-ski / Salva-vidas 🏄",
-      navy:"Marinha nacional 🏛️",
-    },
     durLabels:{
       "15min":"15 min / dia",
       "30min":"30 min / dia",
@@ -384,6 +294,9 @@ export default function StatusCardS8({
   username="Jean-Pierre",
   photo=null,
   profile={},
+  userXP=0,
+  userStreak=1,
+  completedLessons=[],
   onStart=()=>{},
   onBack=()=>{},
   onEdit=null,
@@ -442,8 +355,8 @@ export default function StatusCardS8({
   // Profile data
   const name=(username||"Marin").split(" ")[0];
   const initials=name.slice(0,2).toUpperCase();
-  const goal=t.goalLabels?.[profile.goal]||"—";
-  const ship=t.shipLabels?.[profile.ship]||"—";
+  const goal=getRankMeta(profile.target)?.label?.[lang]||"—";
+  const ship=getVesselTypeMeta(profile.ship)?.label?.[lang]||"—";
   const country=profile.country||"—";
   const duration=t.durLabels?.[profile.duration]||"—";
   const memberDate=new Date().toLocaleDateString(
@@ -853,12 +766,12 @@ export default function StatusCardS8({
             {/* Stats grid */}
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",
               gap:8,width:"100%",position:"relative",zIndex:1}}>
-              <StatBox val="0" label={t.statLessons}/>
+              <StatBox val={completedLessons.length} label={t.statLessons}/>
               <StatBox val="0" label={t.statCerts}/>
-              <StatBox val="⭐ 0" label={t.statPoints}/>
+              <StatBox val={`⭐ ${userXP}`} label={t.statPoints}/>
               <StatBox val={lang.toUpperCase()} label={t.statLang}/>
               <StatBox val="1" label={t.statDays}/>
-              <StatBox val="🔥 1" label={t.statStreak} highlight/>
+              <StatBox val={`🔥 ${userStreak}`} label={t.statStreak} highlight/>
             </div>
 
             <GLine/>

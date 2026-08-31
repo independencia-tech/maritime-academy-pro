@@ -2406,7 +2406,7 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
 
     supabase
       .from("user_profiles")
-      .select("name, lang, dept, tier")
+      .select("name, lang, dept, tier, ship, target, level, duration, time")
       .eq("user_id", user.id)
       .single()
       .then(({ data, error }) => {
@@ -2537,6 +2537,11 @@ const persistProfile = async (p: any) => {
         name: updatedCard.name || last?.name || "",
         lang: updatedCard.lang || p?.lang || "fr",
         dept: updatedCard.dept || p?.dept || "deck",
+        ship: updatedCard.ship,
+        target: updatedCard.target,
+        level: updatedCard.level,
+        duration: updatedCard.duration,
+        time: updatedCard.time,
         updated_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
        if (error) console.error("user_profiles upsert error:", error);
@@ -2785,6 +2790,9 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
             username={last.name || "Marin"}
             photo={storedPhoto || profile.photo || null}
             profile={profile}
+            userXP={userXP}
+            userStreak={userStreak}
+            completedLessons={completedLessons}
             onBack={() => setPage("questionnaire")}
             onEdit={() => setPage("questionnaire")}
             onStart={() => setPage("dashboard")}
