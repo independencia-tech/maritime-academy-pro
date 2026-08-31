@@ -17,6 +17,7 @@ export const SHIPS_LIBRARY_INDEX: Partial<Record<VesselTypeId, ReturnType<typeof
   general_cargo: lazy(() => import("@/components/GeneralCargo")),
   bulk_carrier: lazy(() => import("@/components/BulkCarrier")),
   osv: lazy(() => import("@/components/OffshoreSupportVessel")),
+  surfer: lazy(() => import("@/components/Surfer")),
   ahts: lazy(() => import("@/components/Ahts")),
   psv: lazy(() => import("@/components/Psv")),
   tugboat: lazy(() => import("@/components/Tugboat")),

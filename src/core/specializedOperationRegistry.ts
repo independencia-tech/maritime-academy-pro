@@ -157,8 +157,16 @@ export interface OperationPhase {
 // scale and texture, not a renamed duplicate. Load-bearing across two of
 // this operation's communication touchpoints (tender readiness, guest
 // headcount reconciliation).
+// "shore_base" added for the Surfer surf-zone personnel transfer operation:
+// the coastal logistics base dispatching/receiving personnel manifests and
+// light cargo. Distinct from "terminal" (a land-based crane/stowage-planning
+// office coordinating cargo operations at a quay) — a shore base here
+// coordinates personnel counts and departure/return timing against sea
+// state, not cargo-handling equipment, and there is no quay/berth involved
+// at all (the vessel launches directly through the surf). Load-bearing at
+// both ends of the operation (departure manifest, return reconciliation).
 export type CommunicationParty =
-  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team" | "warranty_surveyor" | "passenger_services" | "guest_services";
+  | "deck" | "engine" | "bridge" | "installation" | "deck_team" | "assisted_vessel" | "transferee" | "terminal" | "shore_fire_brigade" | "shore_authorities" | "process_control" | "science_team" | "warranty_surveyor" | "passenger_services" | "guest_services" | "shore_base";
 
 export interface CommunicationTouchpoint {
   id: string;
@@ -22385,6 +22393,282 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
         commonErrors: [
           { en: "Either abandoning comprehensive coverage to chase a single lead, or dismissing a lead entirely without any follow-up." },
         ],
+      },
+    ],
+  },
+
+  surfer_surf_zone_personnel_transfer: {
+    operationId: "surfer_surf_zone_personnel_transfer",
+    vesselTypeId: "surfer",
+    department: "deck",
+    status: "draft",
+
+    title: { en: "Surfer — Surf-Zone Personnel Transfer" },
+    introduction: {
+      en: "Every vessel type in this catalog so far treats a hazard zone as something to avoid, hold position clear of, or transit through as briefly as possible. The Surfer inverts that: crossing the surf line — the nearshore band of breaking waves — is not a risk to be minimized around the operation, it IS the operation. This module covers the full round trip of a surf-zone personnel transfer: departure preparation at the shore base, the outbound crossing, personnel transfer at the offshore installation, the return crossing, and arrival. The vessel's entire operational identity is built around a skill no other vessel type in this catalog needs at all: reading wave sets and choosing the moment to cross, rather than avoiding the crossing altogether.",
+    },
+    objectives: [
+      { en: "Describe the full chronology of a surf-zone personnel transfer, from shore-base departure preparation through the outbound crossing, installation transfer, return crossing, and arrival." },
+      { en: "Explain why reading wave sets and timing the crossing is this vessel type's defining skill, and why it cannot be reduced to a fixed procedure the way most other operations in this catalog can." },
+      { en: "Identify the specific hazards of surf-zone work (broaching, capsize, loss of steerage mid-crossing, personnel-transfer injury in a formed sea) and the controls used against them." },
+      { en: "Identify who does what during this operation on a Surfer specifically, including the Master's direct, hands-on crossing authority in a very small crew." },
+      { en: "Recognize correct versus incorrect judgment calls around whether to attempt a crossing, given a given sea state and wave set." },
+    ],
+    context: {
+      en: "First vessel type in the catalog whose signature hazard is one it deliberately enters rather than works around, holds clear of, or manages the consequences of after the fact. Crew roster kept small and hands-on (Master, Chief Officer/Mate, Able Seaman, Chief Engineer), following the same reasoning as the Tugboat operation: this vessel type's own real crewing is small, and inflating the roster to match a larger vessel's template would misrepresent it. Deliberately not modeled on PSV/OSV's close-quarters offshore approach operations — those keep the vessel clear of a hazard (proximity to a platform under DP); this one's hazard is the crossing itself, a genuinely different operational shape.",
+    },
+
+    operationPhaseOrder: [
+      "shore_base_departure_prep",
+      "outbound_surf_crossing",
+      "installation_transfer",
+      "return_surf_crossing",
+      "shore_base_arrival",
+    ],
+    operationPhases: {
+      shore_base_departure_prep: {
+        id: "shore_base_departure_prep",
+        title: { en: "Shore-Base Departure Preparation" },
+        steps: [
+          { en: "Personnel manifest and light cargo/mail confirmed against the shore base's dispatch list." },
+          { en: "Sea state and wave-set conditions assessed against the vessel's own crossing limits — not a generic weather check, a specific go/no-go read of the surf line itself." },
+          { en: "Toolbox talk covering today's specific crossing conditions, not a generic briefing repeated unchanged from the last trip." },
+          { en: "Chief Engineer confirms readiness of all propulsion units — redundancy matters more here than on most vessel types, since losing power mid-crossing is this operation's single worst-case failure." },
+          { en: "Personnel briefed on transfer procedure and safety equipment before boarding." },
+        ],
+        bestPractices: [
+          { en: "The go/no-go call is made fresh for today's actual conditions, never carried over from a previous trip's assessment." },
+        ],
+      },
+      outbound_surf_crossing: {
+        id: "outbound_surf_crossing",
+        title: { en: "Outbound Surf-Line Crossing" },
+        overview: { en: "The operation's defining moment. Not a single action but a read-then-act sequence: observe the wave sets, identify a viable window, commit to the crossing." },
+        steps: [
+          { en: "Master observes the wave sets from a safe holding position clear of the surf line, timing the pattern rather than approaching immediately." },
+          { en: "Master identifies a viable window in the wave pattern and commits to the crossing at full appropriate power." },
+          { en: "Chief Officer/Mate monitors the vessel's heading and trim through the crossing, ready to call out any deviation." },
+          { en: "Vessel clears the surf line into open water beyond the breaking zone." },
+        ],
+        bestPractices: [
+          { en: "The Master commits fully once a window is chosen — hesitation or a partial commitment mid-crossing is more dangerous than either waiting longer beforehand or committing decisively." },
+        ],
+        commonMistakes: [
+          { en: "Approaching the surf line before actually identifying a viable window, on the assumption that any moment is as good as another." },
+        ],
+        hasIllustrationPlaceholder: true,
+      },
+      installation_transfer: {
+        id: "installation_transfer",
+        title: { en: "Approach & Personnel Transfer at the Installation" },
+        steps: [
+          { en: "Vessel approaches the offshore installation's boat landing or transfer point in open water, clear of the surf zone's own hazards." },
+          { en: "Able Seaman secures the vessel alongside the landing point, accounting for the installation's own motion in a formed sea." },
+          { en: "Personnel transfer conducted one at a time, timed to the vessel's motion relative to the fixed or floating landing point." },
+          { en: "Outbound cargo/mail handed over; return personnel and cargo received aboard." },
+        ],
+        bestPractices: [
+          { en: "Each individual transfer is timed to the relative motion between vessel and landing point at that moment — never rushed to keep pace with a fixed schedule." },
+        ],
+      },
+      return_surf_crossing: {
+        id: "return_surf_crossing",
+        title: { en: "Return Surf-Line Crossing" },
+        steps: [
+          { en: "Master re-assesses the wave sets before the return crossing — conditions may have changed since the outbound leg, and the earlier read is never assumed to still hold." },
+          { en: "Return crossing conducted with the same read-then-commit discipline as the outbound crossing." },
+          { en: "Vessel clears the surf line into the shore-base approach." },
+        ],
+        bestPractices: [
+          { en: "The return crossing gets its own fresh wave-set assessment, never treated as a formality just because the outbound crossing succeeded." },
+        ],
+        commonMistakes: [
+          { en: "Assuming the return crossing will behave like the outbound one without re-checking, when sea state can shift meaningfully within a single round trip." },
+        ],
+      },
+      shore_base_arrival: {
+        id: "shore_base_arrival",
+        title: { en: "Shore-Base Arrival" },
+        steps: [
+          { en: "Personnel and cargo manifest reconciled against departure records." },
+          { en: "Vessel and equipment checked for any damage sustained during the crossings." },
+          { en: "Trip documented — conditions encountered, timing, any incidents." },
+        ],
+      },
+    },
+
+    communicationTouchpoints: [
+      { id: "manifest_confirmation", phaseId: "shore_base_departure_prep", from: "shore_base", to: "bridge", trigger: { en: "Before departure" }, content: { en: "Confirmation of the personnel and cargo manifest for this trip." }, whyItMatters: { en: "The vessel never departs on an unconfirmed manifest — small-craft personnel accounting has no margin for error." } },
+      { id: "crossing_conditions_assessment", phaseId: "shore_base_departure_prep", from: "bridge", to: "shore_base", trigger: { en: "Before departure" }, content: { en: "Master's go/no-go read of current sea state and wave sets." }, whyItMatters: { en: "The shore base needs this call directly from the person reading the actual conditions, not a generic weather forecast." } },
+      { id: "engine_readiness_confirmation", phaseId: "shore_base_departure_prep", from: "engine", to: "bridge", trigger: { en: "Before departure" }, content: { en: "Confirmation all propulsion units are available and nominal." }, whyItMatters: { en: "Losing power mid-crossing is this operation's worst-case failure — readiness is confirmed explicitly, not assumed." } },
+      { id: "heading_trim_callout", phaseId: "outbound_surf_crossing", from: "deck", to: "bridge", trigger: { en: "Continuous during the crossing" }, content: { en: "Chief Officer/Mate calling out heading and trim as the vessel crosses." }, whyItMatters: { en: "The Master's attention is fully on timing and power through the crossing — this callout is the only other set of eyes on deviation." } },
+      { id: "installation_approach_notice", phaseId: "installation_transfer", from: "bridge", to: "installation", trigger: { en: "Clear of the surf zone, approaching the landing point" }, content: { en: "Notification the vessel is approaching for personnel transfer." }, whyItMatters: { en: "The installation's own landing-point team needs advance notice to be ready and positioned." } },
+      { id: "transfer_readiness_confirmation", phaseId: "installation_transfer", from: "installation", to: "deck", trigger: { en: "Before each individual transfer" }, content: { en: "Confirmation the landing point is ready for the next person to transfer." }, whyItMatters: { en: "Each transfer is timed to relative motion — nobody moves until both sides confirm the moment is right." } },
+      { id: "return_conditions_reassessment", phaseId: "return_surf_crossing", from: "bridge", to: "shore_base", trigger: { en: "Before the return crossing" }, content: { en: "Fresh go/no-go read for the return crossing." }, whyItMatters: { en: "Conditions can shift within a single round trip — the earlier read is never assumed to still hold." } },
+      { id: "arrival_manifest_reconciliation", phaseId: "shore_base_arrival", from: "bridge", to: "shore_base", trigger: { en: "On arrival" }, content: { en: "Reconciliation of returning personnel and cargo against the departure manifest." }, whyItMatters: { en: "Closes the loop on personnel accounting for the full round trip." } },
+    ],
+
+    roleOnVessel: [
+      { rankId: "master", identity: { en: "The vessel's entire operational identity runs through this role. Personally conns the vessel through both crossings, reading the wave sets and choosing the moment to commit — hands-on execution and command authority are the same person, at the single most consequential moment of the operation, more concentrated in one role than almost any other operation in this catalog." } },
+      { rankId: "chief_officer", identity: { en: "Direct support through the crossings — monitoring heading and trim while the Master's attention is on timing and power — and lead coordinator of personnel transfer at the installation, timing each individual transfer to the vessel's motion relative to the landing point." } },
+      { rankId: "ab", identity: { en: "Secures the vessel alongside the installation's landing point and assists each personnel transfer directly. A more physically central role during the transfer phase than during either crossing, where the AB's job is largely to be secure and ready rather than actively engaged." } },
+      { rankId: "chief_engineer", identity: { en: "Owns propulsion-unit readiness before departure and continuous availability through both crossings. Given the small crew typical of this vessel type, this role often covers all propulsion systems personally rather than delegating between multiple engineers." } },
+    ],
+
+    responsibilityMatrix: {
+      master: {
+        iExecute: [{ en: "Reads wave sets and personally conns the vessel through both surf-line crossings; makes the go/no-go call before each crossing." }],
+        iMonitor: [{ en: "Sea state and wave-set conditions continuously, before and during each crossing." }],
+        iReport: [{ en: "Go/no-go assessment to the shore base before each crossing; trip conditions and any incidents on arrival." }],
+        iDoNotAuthorize: [{ en: "Committing to a crossing without having actually identified a viable window in the wave pattern; departing on an unconfirmed manifest." }],
+      },
+      chief_officer: {
+        iExecute: [{ en: "Calls out heading and trim during each crossing; coordinates and times each individual personnel transfer at the installation." }],
+        iMonitor: [{ en: "Vessel heading and trim through the crossings; relative motion between vessel and landing point during transfer." }],
+        iReport: [{ en: "Any deviation observed during a crossing, immediately, to the Master." }],
+        iDoNotAuthorize: [{ en: "The go/no-go crossing decision itself, which stays with the Master." }],
+      },
+      ab: {
+        iExecute: [{ en: "Secures the vessel alongside the installation's landing point; assists each individual personnel transfer." }],
+        iMonitor: [{ en: "Security of the mooring/standoff at the landing point throughout the transfer." }],
+        iReport: [{ en: "Any issue with the mooring or an individual transfer to the Chief Officer/Mate." }],
+        iDoNotAuthorize: [{ en: "Initiating a transfer before the landing point confirms readiness." }],
+      },
+      chief_engineer: {
+        iExecute: [{ en: "Prepares and confirms readiness of all propulsion units before departure; monitors them continuously through both crossings." }],
+        iMonitor: [{ en: "Propulsion-unit performance throughout the trip." }],
+        iReport: [{ en: "Pre-departure readiness confirmation; any anomaly to the bridge immediately." }],
+        iDoNotAuthorize: [{ en: "The crossing timing decision; direction of the bridge team." }],
+      },
+    },
+    // No supervisionRequirements entry: like the Tugboat operation, this
+    // vessel type's own small, hands-on crew has no junior/cadet rating on
+    // this roster — genuine crewing reality, not an oversight.
+    responsibilityLevels: {
+      master: "lead",
+      chief_officer: "support",
+      ab: "perform",
+      chief_engineer: "support",
+    },
+
+    exercises: [
+      {
+        type: "sequence_reordering",
+        id: "seq_phase_order_surfer",
+        targetRanks: ["ab", "chief_officer"],
+        prompt: { en: "Put the five phases of a Surfer surf-zone personnel transfer in the correct order." },
+        items: [
+          { id: "shore_base_departure_prep", label: { en: "Shore-Base Departure Preparation" } },
+          { id: "outbound_surf_crossing", label: { en: "Outbound Surf-Line Crossing" } },
+          { id: "installation_transfer", label: { en: "Approach & Personnel Transfer at the Installation" } },
+          { id: "return_surf_crossing", label: { en: "Return Surf-Line Crossing" } },
+          { id: "shore_base_arrival", label: { en: "Shore-Base Arrival" } },
+        ],
+        correctOrder: ["shore_base_departure_prep", "outbound_surf_crossing", "installation_transfer", "return_surf_crossing", "shore_base_arrival"],
+      },
+      {
+        type: "error_identification",
+        id: "err_stale_conditions_read_surfer",
+        targetRanks: ["master", "chief_officer"],
+        scenario: { en: "Before the return crossing, the Master decides the outbound read of the wave sets still applies and does not reassess. The Chief Officer calls out a heading deviation during the outbound crossing. The Chief Engineer confirms propulsion readiness before departure." },
+        choices: [
+          { id: "c1", label: { en: "Master reusing the outbound wave-set read for the return crossing without reassessing" }, isError: true, explanation: { en: "Conditions can shift within a single round trip — the return crossing always gets its own fresh assessment." } },
+          { id: "c2", label: { en: "Chief Officer calling out a heading deviation during the crossing" }, isError: false, explanation: { en: "Correct — exactly the monitoring role this position holds during a crossing." } },
+          { id: "c3", label: { en: "Chief Engineer confirming propulsion readiness before departure" }, isError: false, explanation: { en: "Correct — matches the assigned pre-departure readiness responsibility." } },
+        ],
+      },
+      {
+        type: "readiness_checklist",
+        id: "readiness_predeparture_surfer",
+        targetRanks: ["master", "chief_engineer"],
+        scenario: { en: "The vessel is standing by at the shore base with a departure scheduled shortly. Review the readiness snapshot below before committing to depart." },
+        items: [
+          { id: "manifest_confirmed", label: { en: "Personnel and cargo manifest confirmed" }, isSatisfied: true },
+          { id: "conditions_assessed", label: { en: "Sea state and wave-set conditions assessed" }, isSatisfied: true },
+          { id: "propulsion_confirmed", label: { en: "All propulsion units confirmed ready" }, isSatisfied: false },
+          { id: "personnel_briefed", label: { en: "Personnel briefed on transfer procedure" }, isSatisfied: true },
+          { id: "toolbox_talk_done", label: { en: "Toolbox talk covering today's specific conditions completed" }, isSatisfied: false },
+        ],
+      },
+    ],
+
+    practicalScenarios: [
+      {
+        situation: { en: "The Master is holding clear of the surf line, watching the wave sets, and a set that looks almost viable passes by without a clear commit signal in it." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master continues holding and observing rather than treating an almost-viable window as good enough to commit to." }],
+        why: [{ en: "Tests whether the read-then-commit discipline holds when a marginal window creates pressure to act rather than keep waiting." }],
+        commonMistakes: [{ en: "Committing to a marginal window out of impatience or a sense that waiting longer looks indecisive." }],
+        safetyPoints: [{ en: "A mistimed crossing is catastrophic in a way that a longer wait never is — there is no cost to waiting for a genuinely viable window." }],
+      },
+      {
+        situation: { en: "During personnel transfer at the installation, the person next in line is ready to move, but the vessel's motion relative to the landing point hasn't settled into a safe rhythm yet." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The transfer waits until the landing point and Chief Officer/Mate confirm the timing is right, even if the person is ready and waiting." }],
+        why: [{ en: "Tests whether a person's own readiness is allowed to override the actual safety condition (settled relative motion)." }],
+        commonMistakes: [{ en: "Moving a ready person across because they're waiting and it feels awkward to delay, rather than waiting for confirmed timing." }],
+        safetyPoints: [{ en: "Relative motion, not a person's own readiness, is what actually determines whether a transfer is safe at that instant." }],
+      },
+      {
+        situation: { en: "The return crossing is approaching and conditions look, from a quick glance, similar to the outbound trip a couple of hours earlier." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master conducts a full fresh assessment of the wave sets for the return crossing rather than relying on a quick glance and the earlier read." }],
+        why: [{ en: "Tests whether the fresh-assessment discipline holds when conditions superficially look unchanged." }],
+        commonMistakes: [{ en: "Skipping a proper reassessment because conditions look similar at a glance, when a meaningful shift can be easy to miss without a deliberate check." }],
+        safetyPoints: [{ en: "Sea state can change meaningfully within the span of a single round trip — a glance is not a substitute for a deliberate read." }],
+      },
+      {
+        situation: { en: "Just before departure, the Chief Engineer reports one of several propulsion units is running below normal performance, though the others are fine." },
+        mission: { en: "Determine the correct response." },
+        expectedActions: [{ en: "The Master treats the reduced propulsion redundancy as a genuine factor in the go/no-go decision, not a minor issue to depart with regardless." }],
+        why: [{ en: "Tests whether propulsion redundancy is treated as load-bearing to the crossing decision, not just a routine maintenance note." }],
+        commonMistakes: [{ en: "Departing anyway because most units are fine, without weighing what reduced redundancy means specifically for a mid-crossing failure scenario." }],
+        safetyPoints: [{ en: "Losing power mid-crossing is this operation's worst-case failure — redundancy going into a crossing is a safety factor, not a convenience." }],
+      },
+    ],
+
+    interactiveScenarios: [
+      {
+        id: "scenario_1_marginal_window",
+        title: { en: "A Marginal Window During the Outbound Crossing Wait" },
+        seatRankId: "master",
+        root: {
+          id: "level_1",
+          situation: {
+            en: "You are the Master, holding clear of the surf line. You've been watching the wave sets for several minutes. A window passes that looks almost right, but not clearly viable. The shore base is expecting departure soon.",
+          },
+          options: [
+            {
+              id: "a_commit",
+              label: { en: "Commit to the almost-right window — waiting longer risks falling behind schedule." },
+              consequence: { en: "The crossing is attempted on a window that wasn't actually confirmed as viable." },
+              feedback: { en: "Schedule pressure is not a valid reason to commit to a window that hasn't actually been read as viable — the read-then-commit discipline exists precisely for this moment." },
+              next: {
+                id: "level_2_a",
+                situation: { en: "The crossing turns out rougher than expected, though the vessel clears the surf line without serious incident." },
+                options: [
+                  { id: "a1", label: { en: "Note it as a close call and continue with the return trip on the same reasoning." }, consequence: { en: "The underlying judgment error goes unaddressed and could recur." }, feedback: { en: "Getting through a marginal crossing without incident isn't validation of the decision — it's luck, and the same reasoning would recur." } },
+                  { id: "a2", label: { en: "Recognize the window was committed to prematurely and apply stricter discipline to the return crossing assessment." }, consequence: { en: "The return crossing gets a genuinely fresh, disciplined read." }, feedback: { en: "Correct — a close call is exactly the signal to tighten discipline, not treat the outcome as proof the call was fine." }, isRecommended: true },
+                ],
+              },
+            },
+            {
+              id: "b_wait",
+              label: { en: "Continue holding and watching for a genuinely viable window." },
+              consequence: { en: "Departure is delayed slightly while a clearer window is awaited." },
+              feedback: { en: "Correct — there is no cost to waiting for a genuinely viable window that outweighs the cost of a mistimed crossing." },
+              isRecommended: true,
+              next: {
+                id: "level_2_b",
+                situation: { en: "A clearly viable window appears a few minutes later." },
+                options: [
+                  { id: "b1", label: { en: "Commit to the crossing now that a genuinely viable window has been identified." }, consequence: { en: "The crossing proceeds on a properly read window." }, feedback: { en: "Correct — this is exactly what the earlier wait was for." }, isRecommended: true },
+                  { id: "b2", label: { en: "Keep waiting further out of excess caution, even though this window reads as viable." }, consequence: { en: "Departure is delayed without a safety justification for the further delay." }, feedback: { en: "Once a window genuinely reads as viable, further delay isn't extra safety — it's just delay." } },
+                ],
+              },
+            },
+          ],
+        },
       },
     ],
   },

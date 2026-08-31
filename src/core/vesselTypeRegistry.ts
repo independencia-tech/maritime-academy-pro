@@ -15,7 +15,7 @@ export type VesselTypeId =
   | "general_cargo" | "container_ship" | "bulk_carrier"
   | "oil_tanker" | "chemical_tanker" | "lng_carrier" | "lpg_carrier"
   // Offshore
-  | "ahts" | "psv" | "tugboat" | "osv"
+  | "ahts" | "psv" | "tugboat" | "osv" | "surfer"
   // Passenger
   | "passenger_ship" | "roro_passenger" | "cruise_ship"
   // Fishing
@@ -48,6 +48,7 @@ export const VESSEL_TYPE_REGISTRY: Record<VesselTypeId, VesselTypeDefinition> = 
   psv: { id: "psv", category: "offshore", label: { fr: "Navire Ravitailleur (PSV)", en: "Platform Supply Vessel (PSV)", es: "Buque de Suministro (PSV)", pt: "Navio de Abastecimento (PSV)" } },
   tugboat: { id: "tugboat", category: "offshore", label: { fr: "Remorqueur", en: "Tugboat", es: "Remolcador", pt: "Rebocador" } },
   osv: { id: "osv", category: "offshore", label: { fr: "Navire de Soutien Offshore (OSV)", en: "Offshore Support Vessel (OSV)", es: "Buque de Apoyo Offshore (OSV)", pt: "Navio de Apoio Offshore (OSV)" } },
+  surfer: { id: "surfer", category: "offshore", label: { fr: "Vedette de Franchissement de Barre (Surfer)", en: "Surf Boat (Surfer)", es: "Lancha de Cruce de Rompientes (Surfer)", pt: "Lancha de Transposição de Arrebentação (Surfer)" } },
 
   // ── PASSENGER ─────────────────────────────────────────────
   passenger_ship: { id: "passenger_ship", category: "passenger", label: { fr: "Navire à Passagers", en: "Passenger Ship", es: "Buque de Pasajeros", pt: "Navio de Passageiros" } },
