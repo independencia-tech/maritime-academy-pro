@@ -231,6 +231,14 @@
 // getSpecializedOperationsForTrajectoryAndLevels(), which already carries
 // the OR/union-across-path semantics validated in Step 10.
 //
+// Step 23 (2026-08-30), scoped and validated before writing any code —
+// completes the SpecOps-branching combined family entirely: combined
+// trajectory+vesselType+levels, mirroring Step 20 at the trajectory level.
+// No new decisions — lessons side plain
+// (getRecommendedLessonsForTrajectory()), SpecOps side uses
+// getSpecializedOperationsForTrajectoryAndVesselTypeAndLevels() (Step 13's
+// exact-intersection-verified quadruple).
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -891,6 +899,47 @@ export function getRecommendationsForTrajectoryAndLevels(
     specializedOperations: getSpecializedOperationsForTrajectoryAndLevels(
       currentRankId,
       targetRankId,
+      allowedLevels
+    ),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a current→target rank
+ * trajectory, a specific vessel type, and an involvement-level allow-list:
+ * plain trajectory lesson recommendations, and Specialized Operations
+ * narrowed to all three (via
+ * getSpecializedOperationsForTrajectoryAndVesselTypeAndLevels() — Step
+ * 13's exact-intersection-verified quadruple). Completes the entire
+ * SpecOps-branching combined family, mirroring
+ * getRecommendationsForRankAndVesselTypeAndLevels() at the trajectory
+ * level.
+ *
+ * Lessons side stays plain (getRecommendedLessonsForTrajectory()) — no
+ * completedLessonIds yet, consistent with every other function in this
+ * family.
+ *
+ * Additive: getRecommendationsForTrajectory() and
+ * getSpecializedOperationsForTrajectoryAndVesselTypeAndLevels() are
+ * unchanged.
+ */
+export interface CombinedRecommendationForTrajectoryAndVesselTypeAndLevels {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForTrajectoryAndVesselTypeAndLevels(
+  currentRankId: RankId,
+  targetRankId: RankId,
+  vesselTypeId: VesselTypeId,
+  allowedLevels: ResponsibilityLevel[]
+): CombinedRecommendationForTrajectoryAndVesselTypeAndLevels {
+  return {
+    lessons: getRecommendedLessonsForTrajectory(currentRankId, targetRankId),
+    specializedOperations: getSpecializedOperationsForTrajectoryAndVesselTypeAndLevels(
+      currentRankId,
+      targetRankId,
+      vesselTypeId,
       allowedLevels
     ),
   };
