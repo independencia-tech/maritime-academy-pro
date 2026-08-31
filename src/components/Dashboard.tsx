@@ -7,7 +7,7 @@ import { LEXICON } from "./LexiqueMaritime";
 // sont les mêmes fonctions Steps 1-2 de coreAlgorithm.ts déjà utilisées
 // partout ailleurs, jamais des fonctions V3.1. Voir
 // project_core_algorithm_architecture.md, "Core Algorithm — Redéfinition".
-import { getRankPath, getRecommendedLessonsForTrajectory } from "../core/coreAlgorithm";
+import { getRankPath, getRecommendedLessonsForTrajectory, getSpecializedOperationsForTrajectoryAndVesselType } from "../core/coreAlgorithm";
 import { getRankMeta } from "../core/rankRegistry";
 import { getVesselTypeMeta } from "../core/vesselTypeRegistry";
 
@@ -1142,6 +1142,21 @@ userStreak=1,
     ? getRecommendedLessonsForTrajectory(profile.who, profile.target)
     : [];
 
+  // Point 1 correctif (2026-09-01) — quelle opération "a motivé" la
+  // recommandation du navire de rêve, pour la mettre en évidence sur sa
+  // Ship Card. Aucune donnée de ce type n'existait avant ce correctif :
+  // la carte navire de rêve ne faisait que pointer vers profile.ship, sans
+  // jamais sélectionner d'opération. Décision validée : 1er résultat de
+  // getSpecializedOperationsForTrajectoryAndVesselType() (Step 9,
+  // coreAlgorithm.ts — déjà construit/actif, juste jamais appelé par
+  // Dashboard.tsx depuis l'Étape C), dans l'ordre du registre — même
+  // logique "pas de scoring" que le reste de la doctrine actuelle. `null`
+  // si la trajectoire est incomplète ou si aucune opération ne matche ce
+  // navire pour ce chemin de rangs.
+  const recommendedShipOperationId = (hasTrajectory && profile?.ship)
+    ? (getSpecializedOperationsForTrajectoryAndVesselType(profile.who, profile.target, profile.ship)[0]?.operationId ?? null)
+    : null;
+
   // Chaque leçon de lessonRegistry.ts a un lessonId au format composite
   // "{moduleId}-l{N}" (133/133 depuis le nettoyage de réconciliation
   // d'ids du 2026-08-31) — LessonRegistryItem n'a pas de champ title/
@@ -1435,7 +1450,7 @@ userStreak=1,
           {dashboardView==="recommended" && (
             <div style={{marginBottom:20}}>
               {profile?.ship && (
-                <button onClick={()=>onNavToShipCard(profile.ship)} style={{
+                <button onClick={()=>onNavToShipCard(profile.ship, recommendedShipOperationId)} style={{
                   display:"flex",alignItems:"center",gap:12,padding:"14px",
                   background:"rgba(13,31,60,0.8)",border:`1px solid ${C.gold}55`,
                   borderRadius:16,cursor:"pointer",color:C.white,textAlign:"left",width:"100%",

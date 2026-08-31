@@ -1110,10 +1110,10 @@ function AdminPage({ setPage }) {
 
 // ── MODULES LIST & SHIPS PAGES ─────────────────────────────────
 const NAV_T:any = {
-  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine", specializedOps:"Opérations Spécialisées", examCenter:"Centre d'Examens" },
-  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine", specializedOps:"Specialized Operations", examCenter:"Exam Center" },
-  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas", specializedOps:"Operaciones Especializadas", examCenter:"Centro de Exámenes" },
-  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas", specializedOps:"Operações Especializadas", examCenter:"Centro de Exames" },
+  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine", specializedOps:"Opérations Spécialisées", examCenter:"Centre d'Examens", recommendedForYou:"Recommandé pour vous" },
+  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine", specializedOps:"Specialized Operations", examCenter:"Exam Center", recommendedForYou:"Recommended for you" },
+  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas", specializedOps:"Operaciones Especializadas", examCenter:"Centro de Exámenes", recommendedForYou:"Recomendado para ti" },
+  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas", specializedOps:"Operações Especializadas", examCenter:"Centro de Exames", recommendedForYou:"Recomendado para você" },
 };
 
 // Exam Center — visual shell only (no functional logic, no data). See
@@ -1193,14 +1193,26 @@ function ShipsPage({
   lang, onBack,
   selected, onSelectedChange,
   selectedOperationId, onSelectedOperationIdChange,
+  highlightedOperationId, onHighlightedOperationIdChange,
 }:{
   lang:string; onBack:()=>void;
   selected: string | null; onSelectedChange: (v: string | null) => void;
   selectedOperationId: string | null; onSelectedOperationIdChange: (v: string | null) => void;
+  highlightedOperationId?: string | null; onHighlightedOperationIdChange?: (v: string | null) => void;
 }) {
   const t = NAV_T[lang] || NAV_T.fr;
   const setSelected = onSelectedChange;
   const setSelectedOperationId = onSelectedOperationIdChange;
+  const setHighlightedOperationId = onHighlightedOperationIdChange ?? (() => {});
+  // Point 1 correctif (2026-09-01) — auto-scroll to the highlighted
+  // operation's button once its Ship Card is on screen. Runs once per
+  // (selected, highlightedOperationId) pair, not on every render.
+  const highlightedOpRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    if (highlightedOperationId && highlightedOpRef.current) {
+      highlightedOpRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [selected, highlightedOperationId]);
 
   const entries = Object.values(VESSEL_TYPE_REGISTRY).filter((v:any) => v.id !== "all" && SHIPS_LIBRARY_INDEX[v.id]);
 
@@ -1222,22 +1234,37 @@ function ShipsPage({
     const ShipCard = SHIPS_LIBRARY_INDEX[selected] as any;
     return (
       <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif"}}>
-        <TopBar onBack={() => setSelected(null)} title={t.ships} backLabel={t.back}/>
+        <TopBar onBack={() => { setSelected(null); setHighlightedOperationId(null); }} title={t.ships} backLabel={t.back}/>
         <ShipCard lang={lang}/>
         {specializedOps.length > 0 && (
           <div style={{padding:"0 16px 40px",maxWidth:480,margin:"0 auto"}}>
             <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",margin:"8px 0 12px"}}>{t.specializedOps}</div>
             <div style={{display:"flex",flexDirection:"column",gap:10}}>
-              {specializedOps.map((op) => (
-                <button key={op.operationId} onClick={() => setSelectedOperationId(op.operationId)} style={{
-                  display:"flex",alignItems:"center",gap:12,padding:"14px",
-                  background:"rgba(13,31,60,0.8)",border:"1px solid rgba(201,146,42,0.35)",
-                  borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
-                }}>
-                  <div style={{width:36,height:36,borderRadius:10,background:"rgba(201,146,42,0.15)",border:"1px solid rgba(201,146,42,0.35)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>⚓</div>
-                  <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{op.title?.[lang] || op.title?.en}</div>
-                </button>
-              ))}
+              {specializedOps.map((op) => {
+                const isRecommended = !!highlightedOperationId && op.operationId === highlightedOperationId;
+                return (
+                  <button
+                    key={op.operationId}
+                    ref={isRecommended ? highlightedOpRef : undefined}
+                    onClick={() => setSelectedOperationId(op.operationId)}
+                    style={{
+                      display:"flex",alignItems:"center",gap:12,padding:"14px",
+                      background: isRecommended ? "rgba(201,146,42,0.16)" : "rgba(13,31,60,0.8)",
+                      border: isRecommended ? "1.5px solid #e8b94f" : "1px solid rgba(201,146,42,0.35)",
+                      borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
+                      boxShadow: isRecommended ? "0 0 0 1px rgba(232,185,79,0.25)" : undefined,
+                    }}
+                  >
+                    <div style={{width:36,height:36,borderRadius:10,background:"rgba(201,146,42,0.15)",border:"1px solid rgba(201,146,42,0.35)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>⚓</div>
+                    <div style={{flex:1,minWidth:0}}>
+                      {isRecommended && (
+                        <div style={{fontSize:9,letterSpacing:1.5,color:"#e8b94f",fontFamily:"'Cinzel',serif",fontWeight:700,marginBottom:2}}>{t.recommendedForYou}</div>
+                      )}
+                      <div style={{fontSize:13,fontWeight:700}}>{op.title?.[lang] || op.title?.en}</div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
@@ -2603,6 +2630,11 @@ const [userStreak, setUserStreak] = useState(1);
   // from anywhere yet.
   const [shipsSelected, setShipsSelected] = useState<string | null>(null);
   const [shipsSelectedOperationId, setShipsSelectedOperationId] = useState<string | null>(null);
+  // Point 1 correctif (2026-09-01) — separate from shipsSelectedOperationId
+  // above (which means "skip straight to this operation's page"). This one
+  // means "while showing the Ship Card, visually highlight/scroll to this
+  // operation in its list" — set only by navigateToShipCard().
+  const [shipsHighlightedOperationId, setShipsHighlightedOperationId] = useState<string | null>(null);
   const navigateToSpecializedOperation = (vesselTypeId: string, operationId: string) => {
     setShipsSelected(vesselTypeId);
     setShipsSelectedOperationId(operationId);
@@ -2613,10 +2645,25 @@ const [userStreak, setUserStreak] = useState(1);
   // dream-vessel card lands on the Ship Card itself, not a specific
   // operation (unlike navigateToSpecializedOperation above, still kept
   // for potential future use, just no longer called by Dashboard.tsx).
-  // Lighter variant: same lifted state, leaves selectedOperationId null.
-  const navigateToShipCard = (vesselTypeId: string) => {
+  // Lighter variant: same lifted state, leaves selectedOperationId null —
+  // that field still means "skip straight to this operation's own page"
+  // (navigateToSpecializedOperation's contract), which is NOT what this
+  // function does.
+  //
+  // Point 1 correctif (2026-09-01) — optional `highlightOperationId`: the
+  // operation that motivated the dream-vessel recommendation (if any,
+  // computed by Dashboard.tsx from getSpecializedOperationsForTrajectory-
+  // AndVesselType()), shown as a highlighted/scrolled-to entry ON the Ship
+  // Card's own operations list — a different UX from
+  // navigateToSpecializedOperation's "skip straight to the operation's
+  // page" (no such "highlighted in list" state existed anywhere in the
+  // app before this). Kept as a separate state var
+  // (shipsHighlightedOperationId) rather than reusing
+  // shipsSelectedOperationId, precisely to not conflate the two behaviors.
+  const navigateToShipCard = (vesselTypeId: string, highlightOperationId?: string | null) => {
     setShipsSelected(vesselTypeId);
     setShipsSelectedOperationId(null);
+    setShipsHighlightedOperationId(highlightOperationId ?? null);
     setPage("ships");
   };
 
@@ -3000,6 +3047,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onSelectedChange={setShipsSelected}
           selectedOperationId={shipsSelectedOperationId}
           onSelectedOperationIdChange={setShipsSelectedOperationId}
+          highlightedOperationId={shipsHighlightedOperationId}
+          onHighlightedOperationIdChange={setShipsHighlightedOperationId}
         />
       )}
       {page === "exams" && (
