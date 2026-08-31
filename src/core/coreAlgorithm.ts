@@ -208,6 +208,14 @@
 // yet), swapping vesselTypeId for allowedLevels and the underlying
 // SpecOps lookup for getSpecializedOperationsByRankAndLevels().
 //
+// Step 20 (2026-08-30), scoped and validated before writing any code —
+// completes the rank-only leg of the SpecOps-branching combined family
+// (Pattern A), same build order as before (Step 3 plain → Step 5
+// +vesselType → Step 8 +levels → Step 12 combined): combined
+// rank+vesselType+levels. No new decisions — same shape as Steps 18/19,
+// underlying SpecOps lookup swapped for
+// getSpecializedOperationsByRankAndVesselTypeAndLevels().
+//
 // Nothing in this file is imported or called from anywhere yet — inert
 // until a future step wires it in.
 
@@ -768,5 +776,39 @@ export function getRecommendationsForRankAndLevels(
   return {
     lessons: getRecommendedLessonsForRank(rankId),
     specializedOperations: getSpecializedOperationsByRankAndLevels(rankId, allowedLevels),
+  };
+}
+
+/**
+ * Returns the combined recommendation for a rank, a specific vessel type,
+ * and an involvement-level allow-list: plain rank-only lesson
+ * recommendations, and Specialized Operations narrowed to all three.
+ * Completes the rank-only leg of the SpecOps-branching combined family —
+ * same build order as before (Step 3 plain → Step 5 +vesselType → Step 8
+ * +levels → Step 12 combined).
+ *
+ * Lessons side stays plain (getRecommendedLessonsForRank()) — no
+ * completedLessonIds yet, keeping this step minimal.
+ *
+ * Additive: getRecommendationsForRank() and
+ * getSpecializedOperationsByRankAndVesselTypeAndLevels() are unchanged.
+ */
+export interface CombinedRecommendationForRankAndVesselTypeAndLevels {
+  lessons: LessonRegistryItem[];
+  specializedOperations: SpecializedOperation[];
+}
+
+export function getRecommendationsForRankAndVesselTypeAndLevels(
+  rankId: RankId,
+  vesselTypeId: VesselTypeId,
+  allowedLevels: ResponsibilityLevel[]
+): CombinedRecommendationForRankAndVesselTypeAndLevels {
+  return {
+    lessons: getRecommendedLessonsForRank(rankId),
+    specializedOperations: getSpecializedOperationsByRankAndVesselTypeAndLevels(
+      rankId,
+      vesselTypeId,
+      allowedLevels
+    ),
   };
 }
