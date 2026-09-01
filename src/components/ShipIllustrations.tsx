@@ -588,3 +588,270 @@ export function FsoSVG() {
     </ShipBackdrop>
   );
 }
+
+// LOT 4 — the rest (general_cargo, container_ship, bulk_carrier, fishing_vessel, yacht,
+// research_vessel, passenger_ship, roro_passenger, cruise_ship). Three sub-groups: the
+// commercial-cargo trio shares a hull/aft-accommodation template and differs by deck treatment
+// (GeneralCargo's own king-post derricks vs ContainerShip's gearless container stacks vs
+// BulkCarrier's flat hatch covers); the small-craft trio (FishingVessel, Yacht, ResearchVessel)
+// sits at Tugboat/Surfer scale, each with its own working-boat identity; the passenger trio
+// escalates in superstructure size and complexity from PassengerShip to RoroPassenger (bow
+// visor) to CruiseShip (the tallest, most elaborate silhouette in the whole registry).
+
+export function GeneralCargoSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull */}
+      <path d="M18,88 L25,68 L232,68 L240,88 Z" fill="#2c3e50" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation, 3 decks */}
+      <rect x="188" y="32" width="42" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="192" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="203" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="214" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="192" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="203" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="214" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="190" y="24" width="38" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      <rect x="204" y="12" width="10" height="14" fill="#455a64" rx="1.5" />
+      {/* Cargo hatches */}
+      <rect x="32" y="60" width="42" height="8" fill="#1b2530" stroke="#5a6b78" strokeWidth="1" />
+      <rect x="86" y="60" width="42" height="8" fill="#1b2530" stroke="#5a6b78" strokeWidth="1" />
+      <rect x="140" y="60" width="38" height="8" fill="#1b2530" stroke="#5a6b78" strokeWidth="1" />
+      {/* King-post derrick cranes (own cargo gear) - the GeneralCargo identifier, unlike ContainerShip */}
+      {[53, 107, 159].map((x, i) => (
+        <g key={i}>
+          <line x1={x} y1="60" x2={x} y2="26" stroke="#8fa3b0" strokeWidth="2" />
+          <line x1={x - 15} y1="38" x2={x} y2="28" stroke="#c7ccd1" strokeWidth="2" strokeLinecap="round" />
+          <line x1={x + 15} y1="38" x2={x} y2="28" stroke="#c7ccd1" strokeWidth="2" strokeLinecap="round" />
+        </g>
+      ))}
+    </ShipBackdrop>
+  );
+}
+
+export function ContainerShipSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull */}
+      <path d="M18,88 L25,66 L232,66 L240,88 Z" fill="#1a2530" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation + funnel */}
+      <rect x="188" y="30" width="42" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="192" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="203" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="214" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="192" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="203" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="214" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="190" y="22" width="38" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      <rect x="204" y="10" width="10" height="14" fill="#455a64" rx="1.5" />
+      {/* Neat container stacks, no cargo gear - the ContainerShip identifier */}
+      {[
+        { x: 26, c: "#e74c3c" }, { x: 49, c: "#3498db" }, { x: 72, c: "#2ecc71" }, { x: 95, c: "#f39c12" },
+        { x: 118, c: "#9b59b6" }, { x: 141, c: "#e74c3c" }, { x: 164, c: "#3498db" },
+      ].map((b, i) => (
+        <g key={i}>
+          <rect x={b.x} y="52" width="20" height="14" fill={b.c} stroke="rgba(0,0,0,0.3)" strokeWidth="0.5" opacity="0.92" />
+          <rect x={b.x} y="38" width="20" height="14" fill={b.c} stroke="rgba(0,0,0,0.3)" strokeWidth="0.5" opacity="0.8" />
+          <line x1={b.x + 10} y1="38" x2={b.x + 10} y2="66" stroke="rgba(0,0,0,0.25)" strokeWidth="0.6" />
+        </g>
+      ))}
+    </ShipBackdrop>
+  );
+}
+
+export function BulkCarrierSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull */}
+      <path d="M18,88 L25,66 L232,66 L240,88 Z" fill="#2e3d4d" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation */}
+      <rect x="188" y="30" width="42" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="192" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="203" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="214" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="192" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="203" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="214" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="190" y="22" width="38" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      <rect x="204" y="10" width="10" height="14" fill="#455a64" rx="1.5" />
+      {/* Large flat hatch covers spanning almost the full deck - the BulkCarrier identifier */}
+      {[28, 60, 92, 124, 156].map((x, i) => (
+        <rect key={i} x={x} y="56" width="30" height="10" fill="#455a64" stroke={C.gold} strokeWidth="1" />
+      ))}
+    </ShipBackdrop>
+  );
+}
+
+export function FishingVesselSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Compact hull - small working boat, open water fore/aft like the Lot 1 Tugboat */}
+      <path d="M56,88 L64,74 L110,74 L116,66 L188,66 L196,88 Z" fill="#2c3e50" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M56,88 L196,88 L196,84 L56,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Small forward wheelhouse */}
+      <rect x="66" y="46" width="34" height="28" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="70" y="51" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="81" y="51" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="70" y="61" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="81" y="61" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      <line x1="83" y1="30" x2="83" y2="46" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="83" cy="29" r="1.4" fill={C.red} />
+      {/* Net drum at the stern */}
+      <rect x="150" y="58" width="34" height="16" rx="8" fill="#8fa3b0" stroke={C.gold} strokeWidth="1.2" />
+      <ellipse cx="167" cy="60" rx="12" ry="2.4" fill="#c7ccd1" opacity="0.7" />
+      {/* Stern trawl gantry - the FishingVessel identifier */}
+      <line x1="182" y1="66" x2="188" y2="44" stroke="#8fa3b0" strokeWidth="2" />
+      <line x1="196" y1="66" x2="188" y2="44" stroke="#8fa3b0" strokeWidth="2" />
+      <line x1="188" y1="44" x2="188" y2="38" stroke={C.gold} strokeWidth="1" strokeDasharray="2,1.5" />
+    </ShipBackdrop>
+  );
+}
+
+export function YachtSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Sleek low hull - light, elegant, unlike any work vessel in this registry. Flatter and
+          shorter than every other hull here (14px tall vs ~20px elsewhere) to read as a small
+          pleasure craft rather than a ship. */}
+      <path d="M58,88 L64,78 L80,74 L182,74 L198,80 L202,88 Z" fill="#e8ecef" stroke={C.gold} strokeWidth="1.5" />
+      {/* Darker waterline band, like a real hull's boot-top stripe */}
+      <path d="M60,84 L200,84 L202,88 L58,88 Z" fill="#37485a" />
+      {/* Portholes along the hull side */}
+      {[76, 94, 112, 148, 166, 184].map((x, i) => (
+        <circle key={i} cx={x} cy="80.5" r="1.6" fill="#1b2530" opacity="0.7" />
+      ))}
+      {/* Main deck cabin, continuous windows */}
+      <rect x="92" y="58" width="88" height="16" fill="#f0f2f4" stroke={C.gold} strokeWidth="1" />
+      {[97, 111, 125, 139, 153, 167].map((x, i) => (
+        <rect key={i} x={x} y="62" width="9" height="8" fill="rgba(77,200,255,0.55)" rx="1" />
+      ))}
+      {/* Flybridge */}
+      <rect x="110" y="42" width="52" height="16" fill="#f5f6f7" stroke={C.gold} strokeWidth="1" />
+      <rect x="116" y="46" width="9" height="7" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="130" y="46" width="9" height="7" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="144" y="46" width="9" height="7" fill="rgba(77,200,255,0.5)" rx="1" />
+      {/* Radar arch + antenna */}
+      <path d="M126,42 Q136,28 146,42" fill="none" stroke="#8fa3b0" strokeWidth="1.8" />
+      <line x1="136" y1="28" x2="136" y2="18" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="136" cy="17" r="1.6" fill={C.red} />
+      {/* Open bow deck rail */}
+      <line x1="66" y1="76" x2="90" y2="74" stroke={C.gold} strokeWidth="1" opacity="0.7" />
+    </ShipBackdrop>
+  );
+}
+
+export function ResearchVesselSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull */}
+      <path d="M30,88 L37,70 L200,70 L208,88 Z" fill="#2c3e50" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M30,88 L208,88 L208,84 L30,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Forward/mid accommodation, densely instrumented */}
+      <rect x="52" y="34" width="52" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="56" y="39" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="67" y="39" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="78" y="39" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="89" y="39" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="56" y="49" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="67" y="49" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="78" y="49" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="89" y="49" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      {/* Multiple antennas / satellite dome - the instrumented look, the ResearchVessel identifier */}
+      <circle cx="70" cy="20" r="6" fill="#c7ccd1" stroke={C.gold} strokeWidth="1" />
+      <line x1="70" y1="14" x2="70" y2="8" stroke="#8fa3b0" strokeWidth="1" />
+      <line x1="90" y1="26" x2="90" y2="10" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="90" cy="9" r="1.4" fill={C.red} />
+      <line x1="50" y1="30" x2="50" y2="16" stroke={C.muted} strokeWidth="1" />
+      <line x1="44" y1="20" x2="56" y2="20" stroke={C.muted} strokeWidth="1" />
+      {/* Aft working deck with small crane */}
+      <rect x="120" y="62" width="12" height="8" fill="#3a4a5c" stroke={C.gold} strokeWidth="0.8" />
+      <line x1="126" y1="62" x2="140" y2="46" stroke="#c7ccd1" strokeWidth="2" />
+      {/* Stern A-frame for oceanographic instrument deployment */}
+      <line x1="178" y1="70" x2="188" y2="42" stroke="#8fa3b0" strokeWidth="2.2" />
+      <line x1="200" y1="70" x2="190" y2="42" stroke="#8fa3b0" strokeWidth="2.2" />
+      <line x1="188" y1="42" x2="190" y2="42" stroke={C.gold} strokeWidth="1.4" />
+      <line x1="189" y1="42" x2="189" y2="62" stroke={C.gold} strokeWidth="1" strokeDasharray="2,1.5" />
+    </ShipBackdrop>
+  );
+}
+
+export function PassengerShipSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull */}
+      <path d="M18,88 L25,68 L232,68 L240,88 Z" fill="#26313f" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Tall superstructure spanning most of the hull length - unlike cargo ships' isolated block */}
+      <rect x="40" y="30" width="170" height="38" fill="#37485a" stroke={C.gold} strokeWidth="1.2" />
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+        <g key={i}>
+          <rect x={46 + i * 18} y="36" width="10" height="7" fill="rgba(77,200,255,0.6)" rx="1" />
+          <rect x={46 + i * 18} y="47" width="10" height="7" fill="rgba(77,200,255,0.55)" rx="1" />
+          <rect x={46 + i * 18} y="58" width="10" height="7" fill="rgba(77,200,255,0.5)" rx="1" />
+        </g>
+      ))}
+      <rect x="100" y="18" width="40" height="12" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      <rect x="112" y="8" width="10" height="14" fill="#455a64" rx="1.5" />
+      {/* Lifeboats along the side */}
+      {[45, 90, 160, 200].map((x, i) => (
+        <ellipse key={i} cx={x} cy="70" rx="7" ry="3" fill={C.orange} stroke={C.gold} strokeWidth="0.6" opacity="0.85" />
+      ))}
+    </ShipBackdrop>
+  );
+}
+
+export function RoroPassengerSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull with a blunt, visored bow - the RoroPassenger identifier, unlike any pointed bow elsewhere */}
+      <path d="M18,88 L26,68 L40,68 L28,80 L34,88 Z" fill={C.orange} fillOpacity="0.4" stroke={C.orange} strokeWidth="2" />
+      <path d="M40,68 L228,68 L236,88 L34,88 Z" fill="#26313f" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L236,88 L236,84 L18,84 Z" fill="#0d1620" opacity="0.4" />
+      <line x1="28" y1="80" x2="40" y2="68" stroke={C.orange} strokeWidth="2" strokeDasharray="3,2" />
+      <polygon points="22,82 30,78 30,86" fill={C.gold} />
+      {/* Moderate superstructure - passenger family */}
+      <rect x="60" y="34" width="150" height="34" fill="#37485a" stroke={C.gold} strokeWidth="1.2" />
+      {[0, 1, 2, 3, 4, 5, 6].map(i => (
+        <g key={i}>
+          <rect x={66 + i * 20} y="39" width="10" height="7" fill="rgba(77,200,255,0.6)" rx="1" />
+          <rect x={66 + i * 20} y="50" width="10" height="7" fill="rgba(77,200,255,0.55)" rx="1" />
+        </g>
+      ))}
+      <rect x="120" y="22" width="36" height="12" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      <rect x="132" y="12" width="10" height="14" fill="#455a64" rx="1.5" />
+    </ShipBackdrop>
+  );
+}
+
+export function CruiseShipSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull */}
+      <path d="M18,88 L25,72 L232,72 L240,88 Z" fill="#1a2530" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Very tall superstructure, many decks - the biggest silhouette in the registry. Kept a
+          few px clear of the viewBox's y=0 edge - content flush against it was getting clipped
+          by the Card wrapper's rounded-corner overflow:hidden. */}
+      <rect x="30" y="20" width="200" height="52" fill="#e8ecef" stroke={C.gold} strokeWidth="1.2" />
+      {[0, 1, 2, 3, 4, 5].map(row => (
+        <g key={row}>
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(col => (
+            <rect key={col} x={35 + col * 19.5} y={25 + row * 7.8} width="9" height="5.5" fill="rgba(77,200,255,0.55)" rx="0.8" />
+          ))}
+        </g>
+      ))}
+      {/* Pool deck marking on top */}
+      <ellipse cx="70" cy="14" rx="14" ry="3.4" fill="#4da6ff" opacity="0.5" stroke={C.blue2} strokeWidth="0.8" />
+      {/* Twin funnels */}
+      <rect x="150" y="6" width="10" height="14" fill="#455a64" rx="1.5" />
+      <rect x="168" y="6" width="10" height="14" fill="#455a64" rx="1.5" />
+      {/* Lifeboats row */}
+      {[36, 60, 84, 108, 180, 204].map((x, i) => (
+        <ellipse key={i} cx={x} cy="76" rx="6.5" ry="2.8" fill={C.orange} stroke={C.gold} strokeWidth="0.5" opacity="0.85" />
+      ))}
+    </ShipBackdrop>
+  );
+}
