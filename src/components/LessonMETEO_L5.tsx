@@ -48,6 +48,72 @@ function CycloneSVG({ lang }) {
   );
 }
 
+// SVG — STORM (ORAGE), interactive (click/tap). Two clickable parts
+// matching s3's content exactly: the cumulonimbus cloud (origin) and the
+// downdraft/rafale (the hazard) — no updraft mechanics added, since s3
+// never describes them.
+function StormSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+  const L = {
+    fr:{ cloud:"Cumulonimbus", gust:"Rafale descendante",
+      cloudDesc:"L'orage se développe à partir de ce nuage à développement vertical intense. Tout cumulonimbus observé doit être considéré comme un risque potentiel et surveillé en conséquence.",
+      gustDesc:"Rafales descendantes pouvant être très violentes, sur une durée généralement brève. Tous les orages ne deviennent pas des phénomènes extrêmes, mais la vigilance reste de mise.",
+      hint:"Touche un élément" },
+    en:{ cloud:"Cumulonimbus", gust:"Downdraft gust",
+      cloudDesc:"The storm develops from this intensely vertical cloud. Any observed cumulonimbus must be considered a potential risk and monitored accordingly.",
+      gustDesc:"Downdraft gusts that can be very violent, generally over a short duration. Not every storm becomes extreme, but vigilance remains necessary.",
+      hint:"Tap an element" },
+    es:{ cloud:"Cumulonimbo", gust:"Ráfaga descendente",
+      cloudDesc:"La tormenta se desarrolla a partir de esta nube de desarrollo vertical intenso. Todo cumulonimbo observado debe considerarse un riesgo potencial y vigilarse en consecuencia.",
+      gustDesc:"Ráfagas descendentes que pueden ser muy violentas, generalmente de corta duración. No toda tormenta se vuelve extrema, pero la vigilancia sigue siendo necesaria.",
+      hint:"Toca un elemento" },
+    pt:{ cloud:"Cumulonimbo", gust:"Rajada descendente",
+      cloudDesc:"A trovoada desenvolve-se a partir desta nuvem de desenvolvimento vertical intenso. Todo cumulonimbo observado deve ser considerado um risco potencial e vigiado em conformidade.",
+      gustDesc:"Rajadas descendentes que podem ser muito violentas, geralmente de curta duração. Nem toda trovoada se torna extrema, mas a vigilância continua a ser necessária.",
+      hint:"Toque num elemento" },
+  }[lang] || {
+    cloud:"Cumulonimbus", gust:"Rafale descendante",
+    cloudDesc:"L'orage se développe à partir de ce nuage à développement vertical intense. Tout cumulonimbus observé doit être considéré comme un risque potentiel et surveillé en conséquence.",
+    gustDesc:"Rafales descendantes pouvant être très violentes, sur une durée généralement brève. Tous les orages ne deviennent pas des phénomènes extrêmes, mais la vigilance reste de mise.",
+    hint:"Touche un élément",
+  };
+  const parts = { cloud:{ name:L.cloud, desc:L.cloudDesc, color:C.muted }, gust:{ name:L.gust, desc:L.gustDesc, color:C.red } };
+  const toggle=(k)=>setSel(sel===k?null:k);
+  return (
+    <div>
+      <svg width="100%" height="200" viewBox="0 0 200 200">
+        <rect width="200" height="200" fill="#061020" rx="8"/>
+        {/* cumulonimbus */}
+        <g onClick={()=>toggle("cloud")} style={{cursor:"pointer"}}>
+          <path d="M40,90 Q38,72 58,70 Q62,54 84,58 Q98,42 116,52 Q100,52 96,66 L96,90 Q96,95 90,95 L46,95 Q36,95 40,90 Z"
+            fill="rgba(200,210,230,1)" opacity={sel==="cloud"?0.95:0.55}/>
+          <path d="M60,52 Q76,30 98,38 Q116,26 128,44 Q140,44 136,56 L72,56 Q56,56 60,52 Z"
+            fill="rgba(200,210,230,1)" opacity={sel==="cloud"?0.95:0.55}/>
+          {sel==="cloud" && <rect x="36" y="26" width="106" height="72" rx="10" fill="none" stroke={parts.cloud.color} strokeWidth="2" strokeDasharray="4,3"/>}
+          <text x="90" y="112" fontSize="9" fontWeight="700" fill="rgba(240,244,255,0.85)" textAnchor="middle">{L.cloud}</text>
+        </g>
+        {/* downdraft gust */}
+        <g onClick={()=>toggle("gust")} style={{cursor:"pointer"}}>
+          {[60,90,120].map((x,i)=>(
+            <g key={i}>
+              <line x1={x} y1="120" x2={x} y2="172" stroke={parts.gust.color} strokeWidth="2.5" opacity={sel==="gust"?1:0.45} strokeLinecap="round"/>
+              <polygon points={`${x-5},166 ${x+5},166 ${x},178`} fill={parts.gust.color} opacity={sel==="gust"?1:0.45}/>
+            </g>
+          ))}
+          <text x="90" y="192" fontSize="9" fontWeight="700" fill={parts.gust.color} textAnchor="middle">{L.gust}</text>
+        </g>
+      </svg>
+      {!sel && <div style={{fontSize:10,color:"rgba(240,244,255,0.4)",textAlign:"center",marginTop:4}}>{L.hint}</div>}
+      {sel && (
+        <div style={{marginTop:10,padding:12,borderRadius:10,background:"rgba(10,22,40,0.85)",border:`1px solid ${parts[sel].color}55`}}>
+          <div style={{fontSize:13,fontWeight:700,color:parts[sel].color,marginBottom:4}}>{parts[sel].name}</div>
+          <div style={{fontSize:11,color:"rgba(240,244,255,0.75)",lineHeight:1.6}}>{parts[sel].desc}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // BANK - 15 QUESTIONS
 const BANK = {
   fr:[
@@ -303,6 +369,7 @@ export default function LessonMETEO_L5({ lang="fr", onBack=()=>{}, onComplete=()
 
             <SL icon="⛈️" text={lc.p3} color={C.orange}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
+            <Card style={{marginBottom:14}}><StormSVG lang={lang}/></Card>
 
             <SL icon="🌊" text={lc.p4} color={C.teal}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>

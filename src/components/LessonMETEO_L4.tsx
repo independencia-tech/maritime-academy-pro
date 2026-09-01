@@ -43,6 +43,57 @@ function IsobarsSVG({ lang }) {
   );
 }
 
+// SVG — FRONT SYMBOLS, static. Standard WMO chart symbols for the three
+// front types described in s4 (chaud/froid/occlus) — semicircles on the
+// warm-front side, triangles on the cold-front side, alternating on the
+// occluded front, all pointing the direction of travel.
+function FrontSymbolsSVG({ lang }) {
+  const L = {
+    fr:{ warm:"Front chaud", cold:"Front froid", occluded:"Front occlus" },
+    en:{ warm:"Warm front", cold:"Cold front", occluded:"Occluded front" },
+    es:{ warm:"Frente cálido", cold:"Frente frío", occluded:"Frente ocluido" },
+    pt:{ warm:"Frente quente", cold:"Frente fria", occluded:"Frente oclusa" },
+  }[lang] || { warm:"Front chaud", cold:"Front froid", occluded:"Front occlus" };
+
+  const Bumps = ({ color }) => (
+    <g>
+      <line x1="6" y1="30" x2="94" y2="30" stroke={color} strokeWidth="2"/>
+      {[16,38,60,82].map((x,i)=>(<path key={i} d={`M${x-8},30 A8,8 0 0 1 ${x+8},30`} fill="none" stroke={color} strokeWidth="2"/>))}
+    </g>
+  );
+  const Triangles = ({ color }) => (
+    <g>
+      <line x1="6" y1="30" x2="94" y2="30" stroke={color} strokeWidth="2"/>
+      {[16,38,60,82].map((x,i)=>(<polygon key={i} points={`${x-7},30 ${x},19 ${x+7},30`} fill={color}/>))}
+    </g>
+  );
+  const Occluded = ({ colorA, colorB }) => (
+    <g>
+      <line x1="6" y1="30" x2="94" y2="30" stroke={colorA} strokeWidth="2"/>
+      <polygon points="20,30 27,19 34,30" fill={colorA}/>
+      <path d="M46,30 A8,8 0 0 1 62,30" fill="none" stroke={colorB} strokeWidth="2"/>
+      <polygon points="76,30 83,19 90,30" fill={colorA}/>
+    </g>
+  );
+
+  const rows = [
+    { label:L.warm, render:<Bumps color={C.red}/>, color:C.red },
+    { label:L.cold, render:<Triangles color={C.blue2}/>, color:C.blue2 },
+    { label:L.occluded, render:<Occluded colorA={C.blue2} colorB={C.red}/>, color:C.gold2 },
+  ];
+
+  return (
+    <div>
+      {rows.map((r,i)=>(
+        <div key={i} style={{display:"flex",alignItems:"center",gap:12,marginBottom:i===rows.length-1?0:10}}>
+          <svg width="100" height="40" viewBox="0 0 100 40" style={{flexShrink:0}}>{r.render}</svg>
+          <div style={{fontSize:11,fontWeight:700,color:r.color}}>{r.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // BANK - 15 QUESTIONS
 const BANK = {
   fr:[
@@ -301,6 +352,7 @@ export default function LessonMETEO_L4({ lang="fr", onBack=()=>{}, onComplete=()
 
             <SL icon="⚔️" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>
+            <Card style={{marginBottom:14}}><FrontSymbolsSVG lang={lang}/></Card>
 
             <SL icon="🎯" text={lc.p5} color={C.gold}/>
             <Card style={{marginBottom:14,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}>

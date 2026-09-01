@@ -5,6 +5,135 @@ import { C, T, Stars, Card, SL, QuizComp, QuestionBank } from "./LessonShared";
 // LessonShared's T.module is hardcoded to Safety ("Sécurité"/"Safety"/...) — override per department.
 const MODULE_LABEL = { fr:"Météorologie", en:"Meteorology", es:"Meteorología", pt:"Meteorologia" };
 
+// SVG — BAROMETER / BAROGRAPH, interactive (click/tap, LessonE2_L5.tsx
+// pattern). Two clickable parts matching s1's two named instruments —
+// no third part invented.
+function BarometerSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+  const L = {
+    fr:{ dial:"Baromètre anéroïde", trace:"Barographe",
+      dialDesc:"Mesure la pression atmosphérique en hectopascals (hPa).",
+      traceDesc:"Enregistre en continu l'évolution de la pression sur un cylindre rotatif. La tendance (hausse, baisse, stable) est plus importante que la valeur absolue.",
+      hint:"Touche un instrument" },
+    en:{ dial:"Aneroid barometer", trace:"Barograph",
+      dialDesc:"Measures atmospheric pressure in hectopascals (hPa).",
+      traceDesc:"Continuously records pressure evolution on a rotating cylinder. The trend (rising, falling, stable) matters more than the absolute value.",
+      hint:"Tap an instrument" },
+    es:{ dial:"Barómetro aneroide", trace:"Barógrafo",
+      dialDesc:"Mide la presión atmosférica en hectopascales (hPa).",
+      traceDesc:"Registra continuamente la evolución de la presión en un cilindro rotatorio. La tendencia (subida, bajada, estable) importa más que el valor absoluto.",
+      hint:"Toca un instrumento" },
+    pt:{ dial:"Barómetro aneroide", trace:"Barógrafo",
+      dialDesc:"Mede a pressão atmosférica em hectopascais (hPa).",
+      traceDesc:"Regista continuamente a evolução da pressão num cilindro rotativo. A tendência (subida, descida, estável) importa mais do que o valor absoluto.",
+      hint:"Toque num instrumento" },
+  }[lang] || {
+    dial:"Baromètre anéroïde", trace:"Barographe",
+    dialDesc:"Mesure la pression atmosphérique en hectopascals (hPa).",
+    traceDesc:"Enregistre en continu l'évolution de la pression sur un cylindre rotatif. La tendance (hausse, baisse, stable) est plus importante que la valeur absolue.",
+    hint:"Touche un instrument",
+  };
+  const parts = { dial:{ name:L.dial, desc:L.dialDesc, color:C.gold2 }, trace:{ name:L.trace, desc:L.traceDesc, color:C.teal } };
+  const toggle=(k)=>setSel(sel===k?null:k);
+  return (
+    <div>
+      <svg width="100%" height="150" viewBox="0 0 220 150">
+        <rect width="220" height="150" fill="#061020" rx="8"/>
+        {/* dial */}
+        <g onClick={()=>toggle("dial")} style={{cursor:"pointer"}}>
+          <circle cx="60" cy="75" r="46" fill="none" stroke={sel==="dial"?parts.dial.color:"rgba(255,255,255,0.25)"} strokeWidth={sel==="dial"?3:1.5}/>
+          <circle cx="60" cy="75" r="46" fill={parts.dial.color} opacity={sel==="dial"?0.18:0.06}/>
+          {[...Array(12)].map((_,i)=>{
+            const a=(i/12)*2*Math.PI; const x1=60+38*Math.sin(a),y1=75-38*Math.cos(a),x2=60+44*Math.sin(a),y2=75-44*Math.cos(a);
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(240,244,255,0.4)" strokeWidth="1"/>;
+          })}
+          <line x1="60" y1="75" x2="80" y2="52" stroke={parts.dial.color} strokeWidth="2.5" strokeLinecap="round"/>
+          <circle cx="60" cy="75" r="4" fill={parts.dial.color}/>
+          <text x="60" y="128" fontSize="9" fontWeight="700" fill={parts.dial.color} textAnchor="middle">{L.dial}</text>
+        </g>
+        {/* barograph trace */}
+        <g onClick={()=>toggle("trace")} style={{cursor:"pointer"}}>
+          <rect x="128" y="30" width="80" height="90" rx="6" fill={parts.trace.color} opacity={sel==="trace"?0.18:0.06} stroke={sel==="trace"?parts.trace.color:"rgba(255,255,255,0.25)"} strokeWidth={sel==="trace"?3:1.5}/>
+          <path d="M136,55 Q150,45 160,60 T184,58 T200,75" fill="none" stroke={parts.trace.color} strokeWidth="2"/>
+          {[0,1,2,3].map(i=>(<line key={i} x1={136+i*18} y1="34" x2={136+i*18} y2="116" stroke="rgba(240,244,255,0.15)" strokeWidth="1"/>))}
+          <text x="168" y="128" fontSize="9" fontWeight="700" fill={parts.trace.color} textAnchor="middle">{L.trace}</text>
+        </g>
+      </svg>
+      {!sel && <div style={{fontSize:10,color:"rgba(240,244,255,0.4)",textAlign:"center",marginTop:4}}>{L.hint}</div>}
+      {sel && (
+        <div style={{marginTop:10,padding:12,borderRadius:10,background:"rgba(10,22,40,0.85)",border:`1px solid ${parts[sel].color}55`}}>
+          <div style={{fontSize:13,fontWeight:700,color:parts[sel].color,marginBottom:4}}>{parts[sel].name}</div>
+          <div style={{fontSize:11,color:"rgba(240,244,255,0.75)",lineHeight:1.6}}>{parts[sel].desc}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// SVG — ANEMOMETER / WIND VANE, interactive (click/tap). Two clickable
+// parts matching s3's two named instruments.
+function AnemometerSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+  const L = {
+    fr:{ cups:"Anémomètre", vane:"Girouette",
+      cupsDesc:"Mesure la vitesse du vent.",
+      vaneDesc:"Mesure la direction du vent. Le cap suivi et la vitesse du navire modifient directement la lecture de ces deux instruments — il faut toujours distinguer le vent réel du vent apparent.",
+      hint:"Touche un instrument" },
+    en:{ cups:"Anemometer", vane:"Wind vane",
+      cupsDesc:"Measures wind speed.",
+      vaneDesc:"Measures wind direction. The ship's course and speed directly change the reading of both instruments — true wind must always be distinguished from apparent wind.",
+      hint:"Tap an instrument" },
+    es:{ cups:"Anemómetro", vane:"Veleta",
+      cupsDesc:"Mide la velocidad del viento.",
+      vaneDesc:"Mide la dirección del viento. El rumbo y la velocidad del buque modifican directamente la lectura de ambos instrumentos — siempre hay que distinguir el viento real del viento aparente.",
+      hint:"Toca un instrumento" },
+    pt:{ cups:"Anemómetro", vane:"Cata-vento",
+      cupsDesc:"Mede a velocidade do vento.",
+      vaneDesc:"Mede a direção do vento. O rumo e a velocidade do navio modificam diretamente a leitura de ambos os instrumentos — é preciso sempre distinguir o vento real do vento aparente.",
+      hint:"Toque num instrumento" },
+  }[lang] || {
+    cups:"Anémomètre", vane:"Girouette",
+    cupsDesc:"Mesure la vitesse du vent.",
+    vaneDesc:"Mesure la direction du vent. Le cap suivi et la vitesse du navire modifient directement la lecture de ces deux instruments — il faut toujours distinguer le vent réel du vent apparent.",
+    hint:"Touche un instrument",
+  };
+  const parts = { cups:{ name:L.cups, desc:L.cupsDesc, color:C.blue2 }, vane:{ name:L.vane, desc:L.vaneDesc, color:C.orange } };
+  const toggle=(k)=>setSel(sel===k?null:k);
+  return (
+    <div>
+      <svg width="100%" height="150" viewBox="0 0 220 150">
+        <rect width="220" height="150" fill="#061020" rx="8"/>
+        {/* anemometer cups */}
+        <g onClick={()=>toggle("cups")} style={{cursor:"pointer"}}>
+          <line x1="60" y1="120" x2="60" y2="60" stroke="rgba(240,244,255,0.3)" strokeWidth="2"/>
+          {[0,120,240].map((deg,i)=>{
+            const a=deg*Math.PI/180; const x=60+24*Math.sin(a), y=48-24*Math.cos(a);
+            return <g key={i}><line x1="60" y1="48" x2={x} y2={y} stroke={parts.cups.color} strokeWidth="1.5" opacity={sel==="cups"?1:0.6}/><circle cx={x} cy={y} r="7" fill={parts.cups.color} opacity={sel==="cups"?0.9:0.4}/></g>;
+          })}
+          <circle cx="60" cy="48" r="34" fill={parts.cups.color} opacity={sel==="cups"?0.12:0.08}
+            stroke={sel==="cups"?parts.cups.color:"transparent"} strokeWidth="2" strokeDasharray="3,3"/>
+          <text x="60" y="128" fontSize="9" fontWeight="700" fill={parts.cups.color} textAnchor="middle">{L.cups}</text>
+        </g>
+        {/* wind vane */}
+        <g onClick={()=>toggle("vane")} style={{cursor:"pointer"}}>
+          <line x1="160" y1="120" x2="160" y2="60" stroke="rgba(240,244,255,0.3)" strokeWidth="2"/>
+          <polygon points="160,38 172,58 160,52 148,58" fill={parts.vane.color} opacity={sel==="vane"?0.95:0.55}/>
+          <circle cx="160" cy="58" r="30" fill={parts.vane.color} opacity={sel==="vane"?0.12:0.08}
+            stroke={sel==="vane"?parts.vane.color:"transparent"} strokeWidth="2" strokeDasharray="3,3"/>
+          <text x="160" y="128" fontSize="9" fontWeight="700" fill={parts.vane.color} textAnchor="middle">{L.vane}</text>
+        </g>
+      </svg>
+      {!sel && <div style={{fontSize:10,color:"rgba(240,244,255,0.4)",textAlign:"center",marginTop:4}}>{L.hint}</div>}
+      {sel && (
+        <div style={{marginTop:10,padding:12,borderRadius:10,background:"rgba(10,22,40,0.85)",border:`1px solid ${parts[sel].color}55`}}>
+          <div style={{fontSize:13,fontWeight:700,color:parts[sel].color,marginBottom:4}}>{parts[sel].name}</div>
+          <div style={{fontSize:11,color:"rgba(240,244,255,0.75)",lineHeight:1.6}}>{parts[sel].desc}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // BANK - 15 QUESTIONS
 const BANK = {
   fr:[
@@ -253,12 +382,14 @@ export default function LessonMETEO_L3({ lang="fr", onBack=()=>{}, onComplete=()
 
             <SL icon="📊" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
+            <Card style={{marginBottom:14}}><BarometerSVG lang={lang}/></Card>
 
             <SL icon="🌡️" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
 
             <SL icon="🎐" text={lc.p3} color={C.orange}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
+            <Card style={{marginBottom:14}}><AnemometerSVG lang={lang}/></Card>
 
             <SL icon="📝" text={lc.p4} color={C.red}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s4}</div></Card>

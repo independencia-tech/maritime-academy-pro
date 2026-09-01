@@ -5,6 +5,302 @@ import { C, T, Stars, Card, SL, QuizComp, QuestionBank } from "./LessonShared";
 // LessonShared's T.module is hardcoded to Safety ("Sécurité"/"Safety"/...) — override per department.
 const MODULE_LABEL = { fr:"Météorologie", en:"Meteorology", es:"Meteorología", pt:"Meteorologia" };
 
+// SVG — CLOUD TYPES GALLERY, static, 10 WMO genera grouped by family.
+// Shape vocabulary distinguishes families visually (wispy strands = Cirro-,
+// scattered patches = Alto-, flat band = Strato-, puffy/tall = vertical
+// development) — not photorealistic, matches the "stylisé simple" brief.
+function CloudShape({ kind, color }) {
+  switch (kind) {
+    case "wispy":
+      return (
+        <g stroke={color} strokeWidth="2" fill="none" strokeLinecap="round">
+          <path d="M8,28 Q28,18 50,24" opacity="0.9"/>
+          <path d="M12,36 Q34,26 56,32" opacity="0.65"/>
+          <path d="M18,44 Q40,36 60,40" opacity="0.4"/>
+        </g>
+      );
+    case "patchy":
+      return (
+        <g fill={color}>
+          {[[14,22,9,5],[30,18,11,6],[47,24,9,5],[60,20,10,5]].map(([cx,cy,rx,ry],i)=>(
+            <ellipse key={i} cx={cx} cy={cy} rx={rx} ry={ry} opacity={0.55+i*0.08}/>
+          ))}
+        </g>
+      );
+    case "flat":
+      return <rect x="8" y="26" width="60" height="13" rx="6.5" fill={color} opacity="0.6"/>;
+    case "flatThick":
+      return (
+        <g>
+          <rect x="6" y="20" width="64" height="20" rx="8" fill={color} opacity="0.72"/>
+          <g stroke={color} strokeWidth="1.5" opacity="0.5">
+            <line x1="16" y1="42" x2="14" y2="48"/><line x1="30" y1="42" x2="28" y2="48"/>
+            <line x1="44" y1="42" x2="42" y2="48"/><line x1="58" y1="42" x2="56" y2="48"/>
+          </g>
+        </g>
+      );
+    case "puffy":
+      return (
+        <path d="M10,42 Q9,30 22,29 Q25,18 40,21 Q50,10 61,22 Q73,21 73,33 Q77,39 68,42 Z"
+          fill={color} opacity="0.85"/>
+      );
+    case "puffyTall":
+      return (
+        <g fill={color}>
+          <path d="M10,50 Q9,40 20,39 Q22,30 34,32 L34,50 Z" opacity="0.85"/>
+          <rect x="30" y="14" width="10" height="38" opacity="0.85"/>
+          <path d="M20,18 Q30,4 44,10 Q56,2 62,14 Q70,14 68,22 L26,22 Q18,22 20,18 Z" opacity="0.9"/>
+        </g>
+      );
+    default:
+      return null;
+  }
+}
+
+function CloudTypesSVG({ lang }) {
+  const L = {
+    fr:{
+      familyHigh:"Nuages hauts — famille Cirro-", familyMid:"Nuages moyens — famille Alto-",
+      familyLow:"Nuages bas — famille Strato-", familyVert:"Développement vertical",
+      names:{ cirrus:"Cirrus", cirrocumulus:"Cirrocumulus", cirrostratus:"Cirrostratus",
+        altocumulus:"Altocumulus", altostratus:"Altostratus", nimbostratus:"Nimbostratus",
+        stratus:"Stratus", stratocumulus:"Stratocumulus", cumulus:"Cumulus", cumulonimbus:"Cumulonimbus" },
+    },
+    en:{
+      familyHigh:"High clouds — Cirro- family", familyMid:"Mid-level clouds — Alto- family",
+      familyLow:"Low clouds — Strato- family", familyVert:"Vertical development",
+      names:{ cirrus:"Cirrus", cirrocumulus:"Cirrocumulus", cirrostratus:"Cirrostratus",
+        altocumulus:"Altocumulus", altostratus:"Altostratus", nimbostratus:"Nimbostratus",
+        stratus:"Stratus", stratocumulus:"Stratocumulus", cumulus:"Cumulus", cumulonimbus:"Cumulonimbus" },
+    },
+    es:{
+      familyHigh:"Nubes altas — familia Cirro-", familyMid:"Nubes medias — familia Alto-",
+      familyLow:"Nubes bajas — familia Estrato-", familyVert:"Desarrollo vertical",
+      names:{ cirrus:"Cirros", cirrocumulus:"Cirrocúmulos", cirrostratus:"Cirroestratos",
+        altocumulus:"Altocúmulos", altostratus:"Altoestratos", nimbostratus:"Nimboestratos",
+        stratus:"Estratos", stratocumulus:"Estratocúmulos", cumulus:"Cúmulos", cumulonimbus:"Cumulonimbos" },
+    },
+    pt:{
+      familyHigh:"Nuvens altas — família Cirro-", familyMid:"Nuvens médias — família Alto-",
+      familyLow:"Nuvens baixas — família Estrato-", familyVert:"Desenvolvimento vertical",
+      names:{ cirrus:"Cirros", cirrocumulus:"Cirrocúmulos", cirrostratus:"Cirroestratos",
+        altocumulus:"Altocúmulos", altostratus:"Altoestratos", nimbostratus:"Nimboestratos",
+        stratus:"Estratos", stratocumulus:"Estratocúmulos", cumulus:"Cúmulos", cumulonimbus:"Cumulonimbos" },
+    },
+  }[lang] || {
+    familyHigh:"Nuages hauts — famille Cirro-", familyMid:"Nuages moyens — famille Alto-",
+    familyLow:"Nuages bas — famille Strato-", familyVert:"Développement vertical",
+    names:{ cirrus:"Cirrus", cirrocumulus:"Cirrocumulus", cirrostratus:"Cirrostratus",
+      altocumulus:"Altocumulus", altostratus:"Altostratus", nimbostratus:"Nimbostratus",
+      stratus:"Stratus", stratocumulus:"Stratocumulus", cumulus:"Cumulus", cumulonimbus:"Cumulonimbus" },
+  };
+
+  const groups = [
+    { title:L.familyHigh, color:C.blue2, items:[
+      { key:"cirrus", shape:"wispy" }, { key:"cirrocumulus", shape:"wispy" }, { key:"cirrostratus", shape:"wispy" },
+    ]},
+    { title:L.familyMid, color:C.gold2, items:[
+      { key:"altocumulus", shape:"patchy" }, { key:"altostratus", shape:"flat" }, { key:"nimbostratus", shape:"flatThick" },
+    ]},
+    { title:L.familyLow, color:C.teal, items:[
+      { key:"stratus", shape:"flat" }, { key:"stratocumulus", shape:"patchy" },
+    ]},
+    { title:L.familyVert, color:C.orange, items:[
+      { key:"cumulus", shape:"puffy" }, { key:"cumulonimbus", shape:"puffyTall" },
+    ]},
+  ];
+
+  return (
+    <div>
+      {groups.map((g,gi)=>(
+        <div key={gi} style={{marginBottom: gi===groups.length-1?0:14}}>
+          <div style={{fontSize:10,letterSpacing:1,color:g.color,fontWeight:700,marginBottom:8,fontFamily:"'Cinzel',serif"}}>{g.title}</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:10}}>
+            {g.items.map(it=>(
+              <div key={it.key} style={{textAlign:"center",width:76}}>
+                <svg width="100%" height="56" viewBox="0 0 80 56">
+                  <rect width="80" height="56" fill="#061020" rx="6"/>
+                  <CloudShape kind={it.shape} color={g.color}/>
+                </svg>
+                <div style={{fontSize:9.5,color:"rgba(240,244,255,0.75)",marginTop:4}}>{L.names[it.key]}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// SVG — ATMOSPHERE LAYERS, interactive (click/tap, LessonE2_L5.tsx pattern:
+// local `sel` state, click toggles selection, panel below shows details).
+// Boundaries drawn as adjacent bands for visual clarity — real WMO ranges
+// overlap (mid 2-7km / high 5-13km); the diagram is schematic, the panel
+// text below carries the accurate ranges from the enriched L2 s1 content.
+function AtmosphereLayersSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+  const L = {
+    fr:{
+      low:"Nuages bas", mid:"Nuages moyens", high:"Nuages hauts", vert:"Développement vertical",
+      lowAlt:"De la surface à 2 km", midAlt:"2 à 7 km", highAlt:"5 à 13 km", vertAlt:"De la surface jusqu'à 13 km, traverse plusieurs couches",
+      lowClouds:"Stratus, Stratocumulus", midClouds:"Altocumulus, Altostratus, Nimbostratus",
+      highClouds:"Cirrus, Cirrocumulus, Cirrostratus", vertClouds:"Cumulus, Cumulonimbus",
+      hint:"Touche une couche", note:"Valeurs moyennes aux latitudes moyennes — variables selon la latitude et la saison.",
+    },
+    en:{
+      low:"Low clouds", mid:"Mid-level clouds", high:"High clouds", vert:"Vertical development",
+      lowAlt:"Surface to 2 km", midAlt:"2 to 7 km", highAlt:"5 to 13 km", vertAlt:"Surface up to 13 km, spans multiple layers",
+      lowClouds:"Stratus, Stratocumulus", midClouds:"Altocumulus, Altostratus, Nimbostratus",
+      highClouds:"Cirrus, Cirrocumulus, Cirrostratus", vertClouds:"Cumulus, Cumulonimbus",
+      hint:"Tap a layer", note:"Average values for mid-latitudes — vary by latitude and season.",
+    },
+    es:{
+      low:"Nubes bajas", mid:"Nubes medias", high:"Nubes altas", vert:"Desarrollo vertical",
+      lowAlt:"De la superficie a 2 km", midAlt:"2 a 7 km", highAlt:"5 a 13 km", vertAlt:"De la superficie hasta 13 km, atraviesa varias capas",
+      lowClouds:"Estratos, Estratocúmulos", midClouds:"Altocúmulos, Altoestratos, Nimboestratos",
+      highClouds:"Cirros, Cirrocúmulos, Cirroestratos", vertClouds:"Cúmulos, Cumulonimbos",
+      hint:"Toca una capa", note:"Valores promedio para latitudes medias — variables según la latitud y la estación.",
+    },
+    pt:{
+      low:"Nuvens baixas", mid:"Nuvens médias", high:"Nuvens altas", vert:"Desenvolvimento vertical",
+      lowAlt:"Da superfície a 2 km", midAlt:"2 a 7 km", highAlt:"5 a 13 km", vertAlt:"Da superfície até 13 km, atravessa várias camadas",
+      lowClouds:"Estratos, Estratocúmulos", midClouds:"Altocúmulos, Altoestratos, Nimboestratos",
+      highClouds:"Cirros, Cirrocúmulos, Cirroestratos", vertClouds:"Cúmulos, Cumulonimbos",
+      hint:"Toque numa camada", note:"Valores médios para latitudes médias — variáveis conforme a latitude e a estação.",
+    },
+  }[lang] || {
+    low:"Nuages bas", mid:"Nuages moyens", high:"Nuages hauts", vert:"Développement vertical",
+    lowAlt:"De la surface à 2 km", midAlt:"2 à 7 km", highAlt:"5 à 13 km", vertAlt:"De la surface jusqu'à 13 km, traverse plusieurs couches",
+    lowClouds:"Stratus, Stratocumulus", midClouds:"Altocumulus, Altostratus, Nimbostratus",
+    highClouds:"Cirrus, Cirrocumulus, Cirrostratus", vertClouds:"Cumulus, Cumulonimbus",
+    hint:"Touche une couche", note:"Valeurs moyennes aux latitudes moyennes — variables selon la latitude et la saison.",
+  };
+
+  const layers = {
+    low:{ name:L.low, alt:L.lowAlt, clouds:L.lowClouds, color:C.teal },
+    mid:{ name:L.mid, alt:L.midAlt, clouds:L.midClouds, color:C.gold2 },
+    high:{ name:L.high, alt:L.highAlt, clouds:L.highClouds, color:C.blue2 },
+    vert:{ name:L.vert, alt:L.vertAlt, clouds:L.vertClouds, color:C.orange },
+  };
+
+  const toggle = (k) => setSel(sel===k?null:k);
+  const zoneStyle = (k) => ({ cursor:"pointer", opacity: sel && sel!==k ? 0.35 : 1, transition:"opacity 0.2s" });
+
+  return (
+    <div>
+      <svg width="100%" height="220" viewBox="0 0 220 220">
+        <rect width="220" height="220" fill="#061020" rx="8"/>
+        {/* surface line */}
+        <line x1="10" y1="200" x2="210" y2="200" stroke={C.muted} strokeWidth="1.5"/>
+        <text x="75" y="212" fontSize="8" fill={C.muted} textAnchor="middle">0 km</text>
+        <text x="75" y="18" fontSize="8" fill={C.muted} textAnchor="middle">13 km</text>
+
+        {/* low band 0-2km */}
+        <g onClick={()=>toggle("low")} style={zoneStyle("low")}>
+          <rect x="10" y="168" width="130" height="32" fill={layers.low.color} opacity={sel==="low"?0.5:0.28}/>
+          <text x="75" y="188" fontSize="9" fontWeight="700" fill={layers.low.color} textAnchor="middle">{L.low}</text>
+        </g>
+        {/* mid band 2-7km */}
+        <g onClick={()=>toggle("mid")} style={zoneStyle("mid")}>
+          <rect x="10" y="88" width="130" height="80" fill={layers.mid.color} opacity={sel==="mid"?0.5:0.28}/>
+          <text x="75" y="132" fontSize="9" fontWeight="700" fill={layers.mid.color} textAnchor="middle">{L.mid}</text>
+        </g>
+        {/* high band 7-13km (visual boundary; real range 5-13km, see panel) */}
+        <g onClick={()=>toggle("high")} style={zoneStyle("high")}>
+          <rect x="10" y="28" width="130" height="60" fill={layers.high.color} opacity={sel==="high"?0.5:0.28}/>
+          <text x="75" y="62" fontSize="9" fontWeight="700" fill={layers.high.color} textAnchor="middle">{L.high}</text>
+        </g>
+        {/* vertical development column, crosses all bands */}
+        <g onClick={()=>toggle("vert")} style={zoneStyle("vert")}>
+          <path d="M155,200 L155,150 Q155,120 170,100 L195,60 Q200,50 190,45 L165,45 Q155,45 155,55 L155,150"
+            fill={layers.vert.color} opacity={sel==="vert"?0.55:0.32} stroke={layers.vert.color} strokeWidth="1"/>
+          <text x="177" y="215" fontSize="8" fontWeight="700" fill={layers.vert.color} textAnchor="middle">{L.vert.split(" ")[0]}</text>
+        </g>
+      </svg>
+      {!sel && <div style={{fontSize:10,color:"rgba(240,244,255,0.4)",textAlign:"center",marginTop:4}}>{L.hint}</div>}
+      {sel && (
+        <div style={{marginTop:10,padding:12,borderRadius:10,background:"rgba(10,22,40,0.85)",border:`1px solid ${layers[sel].color}55`}}>
+          <div style={{fontSize:13,fontWeight:700,color:layers[sel].color,marginBottom:4}}>{layers[sel].name}</div>
+          <div style={{fontSize:11,color:"rgba(240,244,255,0.7)",marginBottom:4}}>{layers[sel].alt}</div>
+          <div style={{fontSize:11,color:"rgba(240,244,255,0.55)"}}>{layers[sel].clouds}</div>
+        </div>
+      )}
+      <div style={{fontSize:9,color:"rgba(240,244,255,0.35)",fontStyle:"italic",marginTop:8,lineHeight:1.5}}>{L.note}</div>
+    </div>
+  );
+}
+
+// SVG — FOG TYPES, interactive. Only the two types with real distinct
+// explanatory text in s2 (radiation, advection) are made clickable — the
+// two other names mentioned in the same paragraph (vallée, industriel)
+// have no distinct descriptive text beyond their name, so no reveal panel
+// is built for them here (nothing to show that isn't already invented).
+function FogSVG({ lang }) {
+  const [sel, setSel] = useState(null);
+  const L = {
+    fr:{
+      radiation:"Brouillard de rayonnement", advection:"Brouillard d'advection",
+      radiationDesc:"Nuit claire, refroidissement du sol.",
+      advectionDesc:"Air chaud et humide sur mer froide — fréquent en mer, le plus dangereux : peut apparaître rapidement et couvrir de vastes zones.",
+      hint:"Touche un type de brouillard",
+    },
+    en:{
+      radiation:"Radiation fog", advection:"Advection fog",
+      radiationDesc:"Clear night, ground cooling.",
+      advectionDesc:"Warm, humid air over cold sea — common at sea, the most dangerous: can appear quickly and cover vast areas.",
+      hint:"Tap a fog type",
+    },
+    es:{
+      radiation:"Niebla de radiación", advection:"Niebla de advección",
+      radiationDesc:"Noche despejada, enfriamiento del suelo.",
+      advectionDesc:"Aire cálido y húmedo sobre mar fría — frecuente en el mar, la más peligrosa: puede aparecer rápidamente y cubrir grandes zonas.",
+      hint:"Toca un tipo de niebla",
+    },
+    pt:{
+      radiation:"Nevoeiro de radiação", advection:"Nevoeiro de advecção",
+      radiationDesc:"Noite limpa, arrefecimento do solo.",
+      advectionDesc:"Ar quente e húmido sobre mar fria — frequente no mar, o mais perigoso: pode aparecer rapidamente e cobrir vastas áreas.",
+      hint:"Toque num tipo de nevoeiro",
+    },
+  }[lang] || {
+    radiation:"Brouillard de rayonnement", advection:"Brouillard d'advection",
+    radiationDesc:"Nuit claire, refroidissement du sol.",
+    advectionDesc:"Air chaud et humide sur mer froide — fréquent en mer, le plus dangereux : peut apparaître rapidement et couvrir de vastes zones.",
+    hint:"Touche un type de brouillard",
+  };
+  const types = {
+    radiation:{ name:L.radiation, desc:L.radiationDesc, color:C.blue2 },
+    advection:{ name:L.advection, desc:L.advectionDesc, color:C.teal },
+  };
+  const toggle=(k)=>setSel(sel===k?null:k);
+  return (
+    <div>
+      <div style={{display:"flex",gap:10}}>
+        {["radiation","advection"].map(k=>(
+          <div key={k} onClick={()=>toggle(k)} style={{flex:1,textAlign:"center",cursor:"pointer"}}>
+            <svg width="100%" height="70" viewBox="0 0 100 70">
+              <rect width="100" height="70" fill="#061020" rx="6"/>
+              <rect x="0" y="50" width="100" height="20" fill={sel===k?types[k].color:"rgba(255,255,255,0.15)"} opacity="0.5"/>
+              {[0,1,2].map(i=>(
+                <line key={i} x1="10" y1={30+i*10} x2="90" y2={30+i*10}
+                  stroke={sel===k?types[k].color:"rgba(240,244,255,0.4)"} strokeWidth="3" strokeLinecap="round"
+                  opacity={0.85-i*0.15}/>
+              ))}
+            </svg>
+            <div style={{fontSize:10,fontWeight:sel===k?700:400,color:sel===k?types[k].color:"rgba(240,244,255,0.6)",marginTop:4}}>{types[k].name}</div>
+          </div>
+        ))}
+      </div>
+      {!sel && <div style={{fontSize:10,color:"rgba(240,244,255,0.4)",textAlign:"center",marginTop:6}}>{L.hint}</div>}
+      {sel && (
+        <div style={{marginTop:10,padding:12,borderRadius:10,background:"rgba(10,22,40,0.85)",border:`1px solid ${types[sel].color}55`,fontSize:11,color:"rgba(240,244,255,0.8)",lineHeight:1.6}}>
+          {types[sel].desc}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // BANK - 15 QUESTIONS
 const BANK = {
   fr:[
@@ -95,7 +391,7 @@ const getContent = lang => {
       p0:"CE QUE L'ŒIL VOIT ANNONCE CE QUE L'INSTRUMENT CONFIRMERA.",s0t:"Nuages, visibilité et observation météo",
       s0:"Reconnaître les types de nuages, les phénomènes réduisant la visibilité, et savoir consigner une observation utile à bord.",
       p1:"Les grandes familles de nuages",
-      s1:"Cumulus (beau temps, développement vertical), Stratus (couche basse et uniforme, souvent gris), Cirrus (haute altitude, fins et filandreux, souvent signe avant-coureur d'un front chaud ou d'un changement de temps), Cumulonimbus (développement vertical intense, orages, grains violents). Les cumulus de beau temps sont généralement associés à des conditions stables, mais certains peuvent évoluer vers des cumulonimbus lorsque l'instabilité atmosphérique augmente.\n\nLa hauteur et la forme d'un nuage donnent une indication directe sur l'évolution à venir.",
+      s1:"Cumulus (beau temps, développement vertical), Stratus (couche basse et uniforme, souvent gris), Cirrus (haute altitude, fins et filandreux, souvent signe avant-coureur d'un front chaud ou d'un changement de temps), Cumulonimbus (développement vertical intense, orages, grains violents). Les cumulus de beau temps sont généralement associés à des conditions stables, mais certains peuvent évoluer vers des cumulonimbus lorsque l'instabilité atmosphérique augmente.\n\nLa hauteur et la forme d'un nuage donnent une indication directe sur l'évolution à venir.\n\nClassification officielle (OMM/NOAA) par altitude — valeurs moyennes aux latitudes moyennes, variables selon la latitude et la saison : nuages hauts (famille Cirro-, 5 à 13 km) — Cirrus, Cirrocumulus, Cirrostratus ; nuages moyens (famille Alto-, 2 à 7 km) — Altocumulus, Altostratus, Nimbostratus ; nuages bas (famille Strato-, de la surface à 2 km) — Stratus, Stratocumulus ; nuages à développement vertical (de la surface jusqu'à 13 km, traversant plusieurs couches) — Cumulus, Cumulonimbus.",
       p2:"Brouillard et brume : origines",
       s2:"Brouillard de rayonnement (nuit claire, refroidissement du sol), brouillard d'advection (air chaud et humide sur mer froide — fréquent en mer), brouillard de vallée, brouillard industriel.\n\nLe brouillard d'advection peut apparaître rapidement et couvrir de vastes zones — c'est le plus dangereux en mer.",
       p3:"Pluie, grains et trombes marines",
@@ -123,7 +419,7 @@ const getContent = lang => {
       p0:"WHAT THE EYE SEES ANNOUNCES WHAT THE INSTRUMENT WILL CONFIRM.",s0t:"Clouds, Visibility and Weather Observation",
       s0:"Recognizing cloud types, visibility-reducing phenomena, and how to log a useful onboard observation.",
       p1:"Main Cloud Families",
-      s1:"Cumulus (fair weather, vertical growth), Stratus (low uniform layer, often grey), Cirrus (high altitude, thin and wispy, often an early sign of an approaching warm front or a change in weather), Cumulonimbus (intense vertical growth, storms, violent squalls). Fair-weather cumulus is generally associated with stable conditions, but some can develop into cumulonimbus when atmospheric instability increases.\n\nA cloud's height and shape directly indicate upcoming weather changes.",
+      s1:"Cumulus (fair weather, vertical growth), Stratus (low uniform layer, often grey), Cirrus (high altitude, thin and wispy, often an early sign of an approaching warm front or a change in weather), Cumulonimbus (intense vertical growth, storms, violent squalls). Fair-weather cumulus is generally associated with stable conditions, but some can develop into cumulonimbus when atmospheric instability increases.\n\nA cloud's height and shape directly indicate upcoming weather changes.\n\nOfficial WMO/NOAA altitude classification — average values for mid-latitudes, varying by latitude and season: high clouds (Cirro- family, 5 to 13 km) — Cirrus, Cirrocumulus, Cirrostratus; mid-level clouds (Alto- family, 2 to 7 km) — Altocumulus, Altostratus, Nimbostratus; low clouds (Strato- family, surface to 2 km) — Stratus, Stratocumulus; clouds with vertical development (surface up to 13 km, spanning multiple layers) — Cumulus, Cumulonimbus.",
       p2:"Fog and Mist: Origins",
       s2:"Radiation fog (clear night, ground cooling), advection fog (warm humid air over cold sea — common at sea), valley fog, industrial fog.\n\nAdvection fog can form quickly and cover vast areas — the most dangerous at sea.",
       p3:"Rain, Squalls and Waterspouts",
@@ -151,7 +447,7 @@ const getContent = lang => {
       p0:"LO QUE EL OJO VE ANUNCIA LO QUE EL INSTRUMENTO CONFIRMARÁ.",s0t:"Nubes, visibilidad y observación meteorológica",
       s0:"Reconocer los tipos de nubes, los fenómenos que reducen la visibilidad, y saber registrar una observación útil a bordo.",
       p1:"Las grandes familias de nubes",
-      s1:"Cúmulo (buen tiempo, desarrollo vertical), Estrato (capa baja y uniforme, a menudo gris), Cirro (gran altitud, finos y filamentosos, a menudo señal temprana de un frente cálido o de un cambio de tiempo), Cumulonimbo (desarrollo vertical intenso, tormentas, chubascos violentos). Los cúmulos de buen tiempo suelen asociarse a condiciones estables, pero algunos pueden evolucionar hacia cumulonimbos cuando aumenta la inestabilidad atmosférica.\n\nLa altura y forma de una nube indican directamente la evolución venidera.",
+      s1:"Cúmulo (buen tiempo, desarrollo vertical), Estrato (capa baja y uniforme, a menudo gris), Cirro (gran altitud, finos y filamentosos, a menudo señal temprana de un frente cálido o de un cambio de tiempo), Cumulonimbo (desarrollo vertical intenso, tormentas, chubascos violentos). Los cúmulos de buen tiempo suelen asociarse a condiciones estables, pero algunos pueden evolucionar hacia cumulonimbos cuando aumenta la inestabilidad atmosférica.\n\nLa altura y forma de una nube indican directamente la evolución venidera.\n\nClasificación oficial (OMM/NOAA) por altitud — valores promedio para latitudes medias, variables según la latitud y la estación: nubes altas (familia Cirro-, 5 a 13 km) — Cirrus, Cirrocúmulos, Cirroestratos; nubes medias (familia Alto-, 2 a 7 km) — Altocúmulos, Altoestratos, Nimboestratos; nubes bajas (familia Estrato-, de la superficie a 2 km) — Estratos, Estratocúmulos; nubes de desarrollo vertical (de la superficie hasta 13 km, atravesando varias capas) — Cúmulos, Cumulonimbos.",
       p2:"Niebla y bruma: orígenes",
       s2:"Niebla de radiación (noche clara, enfriamiento del suelo), niebla de advección (aire cálido y húmedo sobre mar frío — frecuente en el mar), niebla de valle, niebla industrial.\n\nLa niebla de advección puede aparecer rápidamente y cubrir vastas zonas — la más peligrosa en el mar.",
       p3:"Lluvia, chubascos y trombas marinas",
@@ -179,7 +475,7 @@ const getContent = lang => {
       p0:"O QUE O OLHO VÊ ANUNCIA O QUE O INSTRUMENTO CONFIRMARÁ.",s0t:"Nuvens, visibilidade e observação meteorológica",
       s0:"Reconhecer os tipos de nuvens, os fenómenos que reduzem a visibilidade, e saber registar uma observação útil a bordo.",
       p1:"As grandes famílias de nuvens",
-      s1:"Cúmulo (bom tempo, desenvolvimento vertical), Estrato (camada baixa e uniforme, frequentemente cinzenta), Cirro (grande altitude, finos e filamentosos, frequentemente sinal precoce de uma frente quente ou de uma mudança de tempo), Cumulonimbo (desenvolvimento vertical intenso, tempestades, borrascas violentas). Os cúmulos de bom tempo estão geralmente associados a condições estáveis, mas alguns podem evoluir para cumulonimbos quando a instabilidade atmosférica aumenta.\n\nA altura e forma de uma nuvem indicam diretamente a evolução vindoura.",
+      s1:"Cúmulo (bom tempo, desenvolvimento vertical), Estrato (camada baixa e uniforme, frequentemente cinzenta), Cirro (grande altitude, finos e filamentosos, frequentemente sinal precoce de uma frente quente ou de uma mudança de tempo), Cumulonimbo (desenvolvimento vertical intenso, tempestades, borrascas violentas). Os cúmulos de bom tempo estão geralmente associados a condições estáveis, mas alguns podem evoluir para cumulonimbos quando a instabilidade atmosférica aumenta.\n\nA altura e forma de uma nuvem indicam diretamente a evolução vindoura.\n\nClassificação oficial (OMM/NOAA) por altitude — valores médios para latitudes médias, variáveis conforme a latitude e a estação: nuvens altas (família Cirro-, 5 a 13 km) — Cirros, Cirrocúmulos, Cirroestratos; nuvens médias (família Alto-, 2 a 7 km) — Altocúmulos, Altoestratos, Nimboestratos; nuvens baixas (família Estrato-, da superfície a 2 km) — Estratos, Estratocúmulos; nuvens de desenvolvimento vertical (da superfície até 13 km, atravessando várias camadas) — Cúmulos, Cumulonimbos.",
       p2:"Nevoeiro e neblina: origens",
       s2:"Nevoeiro de radiação (noite clara, arrefecimento do solo), nevoeiro de advecção (ar quente e húmido sobre mar frio — frequente no mar), nevoeiro de vale, nevoeiro industrial.\n\nO nevoeiro de advecção pode surgir rapidamente e cobrir vastas áreas — o mais perigoso no mar.",
       p3:"Chuva, borrascas e trombas marítimas",
@@ -253,9 +549,12 @@ export default function LessonMETEO_L2({ lang="fr", onBack=()=>{}, onComplete=()
 
             <SL icon="☁️" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
+            <Card style={{marginBottom:14}}><CloudTypesSVG lang={lang}/></Card>
+            <Card style={{marginBottom:14}}><AtmosphereLayersSVG lang={lang}/></Card>
 
             <SL icon="🌫️" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
+            <Card style={{marginBottom:14}}><FogSVG lang={lang}/></Card>
 
             <SL icon="🌧️" text={lc.p3} color={C.orange}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s3}</div></Card>
