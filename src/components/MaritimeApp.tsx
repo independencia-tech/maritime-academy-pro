@@ -18,6 +18,7 @@ import { SHIPS_LIBRARY_INDEX } from "@/core/shipsLibraryIndex";
 import { getRanksByDepartment, getRankMeta } from "@/core/rankRegistry";
 import { getSpecializedOperationsByVesselType } from "@/core/specializedOperationRegistry";
 import type { SupportedLanguage } from "@/core/roleOnBoardRegistry";
+import { getModuleAverageScore } from "@/core/examProgress";
 const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
 const SpecializedLessonShared = lazy(() => import("./SpecializedLessonShared"));
 
@@ -1508,6 +1509,17 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  // Temporary verification-only display for the module-average calculation
+  // (getModuleAverageScore) — NOT an unlock gate yet, see project memory
+  // (project_exams_system_architecture.md, 2026-09-01) for why this stays
+  // a passive indicator until the average is validated in real usage.
+  const [moduleAverage, setModuleAverage] = useState<{averagePercent:number|null;attemptedLessons:number;totalLessons:number}|null>(null);
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+      getModuleAverageScore(user.id, "d1").then(setModuleAverage);
+    });
+  }, []);
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d1");
@@ -1519,12 +1531,23 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
     pt:{header:"Lições", available:"Disponível", soon:"Em breve", done:"Concluído ✓"},
   };
   const L = labels[lang] || labels.fr;
+  const avgT:any = {
+    fr:(r:any)=> r.averagePercent===null ? `Moyenne du module : pas encore de données (0/${r.totalLessons} leçons tentées)` : `Moyenne actuelle : ${r.averagePercent}% (${r.attemptedLessons}/${r.totalLessons} leçons tentées)`,
+    en:(r:any)=> r.averagePercent===null ? `Module average: no data yet (0/${r.totalLessons} lessons attempted)` : `Current average: ${r.averagePercent}% (${r.attemptedLessons}/${r.totalLessons} lessons attempted)`,
+    es:(r:any)=> r.averagePercent===null ? `Promedio del módulo: sin datos aún (0/${r.totalLessons} lecciones intentadas)` : `Promedio actual: ${r.averagePercent}% (${r.attemptedLessons}/${r.totalLessons} lecciones intentadas)`,
+    pt:(r:any)=> r.averagePercent===null ? `Média do módulo: sem dados ainda (0/${r.totalLessons} lições tentadas)` : `Média atual: ${r.averagePercent}% (${r.attemptedLessons}/${r.totalLessons} lições tentadas)`,
+  };
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8","l9","l10"]);
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        {moduleAverage && (
+          <div style={{fontSize:12,fontWeight:700,color:"#c9922a",background:"rgba(201,146,42,0.1)",border:"1px solid rgba(201,146,42,0.35)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+            📊 {(avgT[lang] || avgT.fr)(moduleAverage)}
+          </div>
+        )}
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
