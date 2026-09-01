@@ -2,6 +2,7 @@
 // Ships Library — static vessel info card. vesselTypeId: "ahts"
 // Standalone documentary component: no Dashboard/progression/billing dependency.
 import { C, Card, SL, GLine } from "./LessonShared";
+import { AhtsSVG } from "./ShipIllustrations";
 
 const SECTION_LABELS = {
   fr: { profile:"Fiche navire", mission:"Mission", characteristics:"Caractéristiques générales", departments:"Départements à bord", positions:"Postes typiques", operations:"Opérations typiques", risks:"Risques principaux", careers:"Débouchés professionnels", facts:"Anecdotes" },
@@ -75,6 +76,7 @@ export default function Ahts({ lang="fr" }) {
         <div style={{maxWidth:480,margin:"0 auto"}}>
 
           <div style={{display:"inline-flex",alignItems:"center",padding:"5px 12px",borderRadius:20,marginBottom:10,background:"rgba(26,111,212,0.15)",border:`1px solid ${C.blue2}44`,fontSize:11,color:C.blue2,fontWeight:700}}>🚢 Ships Library</div>
+          <div style={{marginBottom:14,borderRadius:16,overflow:"hidden",border:`1px solid ${C.border}`}}><AhtsSVG/></div>
           <h1 style={{fontFamily:"'Cinzel',serif",fontSize:22,fontWeight:700,color:C.white,lineHeight:1.3,margin:"0 0 16px"}}>{lc.title}</h1>
 
           <SL icon="📋" text={L.profile}/>
