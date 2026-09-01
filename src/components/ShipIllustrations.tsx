@@ -215,3 +215,157 @@ export function SurferSVG() {
     </ShipBackdrop>
   );
 }
+
+// LOT 2 — Tanker family (oil_tanker, chemical_tanker, lpg_carrier, lng_carrier). All four share
+// a family-level cue that also distinguishes them from Lot 1: accommodation and funnel sit AFT
+// (accurate to real tanker layout) rather than forward. Within the family: OilTanker reads by its
+// flat deck with pipeline manifold + vent risers and nothing bulging above deck (cargo fully
+// enclosed below); ChemicalTanker by a denser cluster of many small segregated-parcel domes;
+// LpgCarrier by a few large horizontal cylindrical pressure tanks; LngCarrier by large spherical
+// Moss-type domes, the most immediately recognizable tanker silhouette.
+
+export function OilTankerSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull - long, low, flat deck: cargo is fully enclosed below deck */}
+      <path d="M18,88 L25,68 L232,68 L240,88 Z" fill="#1a2530" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation block, 3 decks */}
+      <rect x="184" y="32" width="42" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="188" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="199" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="210" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="188" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="199" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="210" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="188" y="57" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="199" y="57" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      {/* Bridge top */}
+      <rect x="186" y="24" width="38" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      {/* Funnel aft */}
+      <rect x="200" y="10" width="10" height="14" fill="#455a64" rx="1.5" />
+      <line x1="205" y1="2" x2="205" y2="10" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="205" cy="1.5" r="1.4" fill={C.red} />
+      {/* Deck pipeline manifold running forward - the OilTanker identifier */}
+      <line x1="30" y1="63.5" x2="178" y2="63.5" stroke="#c7ccd1" strokeWidth="1.6" />
+      <line x1="30" y1="66.5" x2="178" y2="66.5" stroke="#c7ccd1" strokeWidth="1.6" />
+      <line x1="95" y1="56" x2="95" y2="68" stroke={C.orange} strokeWidth="2.2" />
+      <circle cx="95" cy="56" r="2.6" fill={C.orange} stroke={C.gold} strokeWidth="0.8" />
+      <line x1="125" y1="56" x2="125" y2="68" stroke={C.orange} strokeWidth="2.2" />
+      <circle cx="125" cy="56" r="2.6" fill={C.orange} stroke={C.gold} strokeWidth="0.8" />
+      {/* Tank vent risers */}
+      {[45, 70, 150, 165].map((x, i) => (
+        <g key={i}>
+          <line x1={x} y1="68" x2={x} y2="59" stroke="#c7ccd1" strokeWidth="1.8" />
+          <ellipse cx={x} cy="58" rx="3.8" ry="2.2" fill="#c7ccd1" stroke={C.gold} strokeWidth="0.6" />
+        </g>
+      ))}
+    </ShipBackdrop>
+  );
+}
+
+export function ChemicalTankerSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull - same aft-accommodation family silhouette as OilTanker */}
+      <path d="M18,88 L25,68 L232,68 L240,88 Z" fill="#233246" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation block, 3 decks */}
+      <rect x="184" y="32" width="42" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="188" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="199" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="210" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="188" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="199" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="210" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="188" y="57" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="199" y="57" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      {/* Bridge top */}
+      <rect x="186" y="24" width="38" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      {/* Funnel aft */}
+      <rect x="200" y="10" width="10" height="14" fill="#455a64" rx="1.5" />
+      <line x1="205" y1="2" x2="205" y2="10" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="205" cy="1.5" r="1.4" fill={C.red} />
+      {/* Dense cluster of small segregated-parcel domes - the ChemicalTanker identifier */}
+      {[[38, 61], [50, 59], [62, 61], [74, 59], [86, 61], [98, 59], [110, 61], [122, 59], [134, 61], [146, 59], [158, 61], [170, 59]].map(([x, y], i) => (
+        <g key={i}>
+          <ellipse cx={x} cy={y} rx="4.2" ry="3" fill={i % 3 === 0 ? C.teal : "#8fa3b0"} stroke={C.gold} strokeWidth="0.8" />
+          <line x1={x} y1={y - 3} x2={x} y2={y - 6} stroke="#c7ccd1" strokeWidth="1.3" />
+        </g>
+      ))}
+      {/* Valve manifold cross-pieces */}
+      <line x1="52" y1="68" x2="52" y2="63" stroke="#c7ccd1" strokeWidth="1.4" />
+      <line x1="43" y1="65.5" x2="61" y2="65.5" stroke="#c7ccd1" strokeWidth="1.4" />
+      <line x1="142" y1="68" x2="142" y2="63" stroke="#c7ccd1" strokeWidth="1.4" />
+      <line x1="133" y1="65.5" x2="151" y2="65.5" stroke="#c7ccd1" strokeWidth="1.4" />
+    </ShipBackdrop>
+  );
+}
+
+export function LpgCarrierSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull - same aft-accommodation family silhouette */}
+      <path d="M18,88 L25,68 L232,68 L240,88 Z" fill="#26313f" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation block, 3 decks */}
+      <rect x="184" y="32" width="42" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="188" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="199" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="210" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="188" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="199" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="210" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="188" y="57" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="199" y="57" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      {/* Bridge top */}
+      <rect x="186" y="24" width="38" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      {/* Funnel aft */}
+      <rect x="200" y="10" width="10" height="14" fill="#455a64" rx="1.5" />
+      <line x1="205" y1="2" x2="205" y2="10" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="205" cy="1.5" r="1.4" fill={C.red} />
+      {/* Large horizontal cylindrical pressure tanks bulging above deck - the LpgCarrier identifier */}
+      {[{ x: 34, w: 40 }, { x: 82, w: 40 }, { x: 130, w: 40 }].map((t, i) => (
+        <g key={i}>
+          <rect x={t.x} y="48" width={t.w} height="20" rx="10" fill="#c7ccd1" stroke={C.gold} strokeWidth="1.3" />
+          <ellipse cx={t.x + t.w / 2} cy="49.5" rx={t.w / 2 - 3} ry="2.2" fill="#e8ecef" opacity="0.6" />
+          <line x1={t.x + 5} y1="68" x2={t.x + 5} y2="72" stroke="#5a6b78" strokeWidth="2.2" />
+          <line x1={t.x + t.w - 5} y1="68" x2={t.x + t.w - 5} y2="72" stroke="#5a6b78" strokeWidth="2.2" />
+        </g>
+      ))}
+    </ShipBackdrop>
+  );
+}
+
+export function LngCarrierSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull - same aft-accommodation family silhouette */}
+      <path d="M18,88 L25,68 L232,68 L240,88 Z" fill="#233246" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation block - deliberately modest relative to the huge tanks, as in reality */}
+      <rect x="184" y="34" width="40" height="34" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="188" y="39" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="199" y="39" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="210" y="39" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="188" y="49" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="199" y="49" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="210" y="49" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      {/* Bridge top */}
+      <rect x="186" y="26" width="36" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      {/* Funnel aft */}
+      <rect x="199" y="12" width="10" height="14" fill="#455a64" rx="1.5" />
+      <line x1="204" y1="4" x2="204" y2="12" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="204" cy="3.5" r="1.4" fill={C.red} />
+      {/* Large spherical Moss-type domes - the LngCarrier identifier, the most recognizable of the family */}
+      {[45, 80, 115, 150].map((x, i) => (
+        <g key={i}>
+          <rect x={x - 4} y="66" width="8" height="6" fill="#5a6b78" />
+          <circle cx={x} cy="52" r="15" fill="#c7ccd1" stroke={C.gold} strokeWidth="1.4" />
+          <ellipse cx={x} cy="52" rx="15" ry="3.6" fill="none" stroke="#8fa3b0" strokeWidth="0.9" opacity="0.7" />
+          <line x1={x} y1="37" x2={x} y2="67" stroke="#8fa3b0" strokeWidth="0.7" opacity="0.6" />
+        </g>
+      ))}
+    </ShipBackdrop>
+  );
+}
