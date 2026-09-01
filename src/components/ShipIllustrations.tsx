@@ -369,3 +369,222 @@ export function LngCarrierSVG() {
     </ShipBackdrop>
   );
 }
+
+// LOT 3 — Construction / special offshore family (dredger, cable_layer, heavy_lift, jackup,
+// drillship, fpso, fso). The most visually diverse family: each vessel gets a genuinely custom
+// silhouette rather than a shared hull template. Dredger reads by its diagonal suction pipe
+// trailing into the water; CableLayer by its large flat cable-storage carousels + bow chute;
+// HeavyLift by twin oversized cranes doing a tandem lift; Jackup by its truss legs piercing
+// straight through the hull, above and below (the only vessel here that doesn't sit low in the
+// water); Drillship by its tall narrow derrick tower + helideck; Fpso by dense industrial topside
+// modules + a flare tower; Fso by the deliberate absence of both (storage-only, near-empty deck),
+// mirroring the Psv/Osv complexity contrast from Lot 1.
+
+export function DredgerSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull - moderate length, low freeboard */}
+      <path d="M18,88 L25,68 L200,68 L208,88 Z" fill="#2c3e50" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L208,88 L208,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Forward accommodation, 2 decks */}
+      <rect x="34" y="36" width="40" height="32" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="38" y="41" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="49" y="41" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="60" y="41" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="38" y="51" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="49" y="51" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="60" y="51" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="36" y="28" width="34" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      <rect x="80" y="20" width="9" height="16" fill="#455a64" rx="1.5" />
+      <line x1="52" y1="12" x2="52" y2="28" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="52" cy="11" r="1.4" fill={C.red} />
+      {/* Hopper deck aft with dredged spoil texture */}
+      <rect x="98" y="60" width="88" height="8" fill="#1b2530" stroke="#5D4037" strokeWidth="1" />
+      <ellipse cx="120" cy="64" rx="18" ry="3.5" fill="#6b4a2f" opacity="0.85" />
+      <ellipse cx="160" cy="64" rx="18" ry="3.5" fill="#7a5638" opacity="0.85" />
+      {/* Pipe-handling gantry */}
+      <line x1="140" y1="60" x2="140" y2="46" stroke="#8fa3b0" strokeWidth="1.6" />
+      <line x1="130" y1="46" x2="150" y2="46" stroke="#8fa3b0" strokeWidth="1.6" />
+      {/* Suction pipe/ladder trailing diagonally into the water - the Dredger identifier */}
+      <line x1="150" y1="60" x2="205" y2="98" stroke="#c7ccd1" strokeWidth="4" strokeLinecap="round" />
+      <line x1="150" y1="60" x2="205" y2="98" stroke={C.orange} strokeWidth="1" strokeDasharray="3,2" />
+      <polygon points="200,92 214,96 210,104 198,100" fill="#8fa3b0" stroke={C.gold} strokeWidth="0.8" />
+    </ShipBackdrop>
+  );
+}
+
+export function CableLayerSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull */}
+      <path d="M18,88 L25,68 L228,68 L236,88 Z" fill="#26313f" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L236,88 L236,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation, 3 decks */}
+      <rect x="150" y="32" width="42" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="154" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="165" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="176" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="154" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="165" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="176" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="154" y="57" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="165" y="57" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="152" y="24" width="38" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      <rect x="200" y="16" width="10" height="16" fill="#455a64" rx="1.5" />
+      <line x1="171" y1="8" x2="171" y2="24" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="171" cy="7" r="1.4" fill={C.red} />
+      {/* Large cable carousels - the CableLayer identifier */}
+      <ellipse cx="65" cy="66" rx="34" ry="9" fill="#37485a" stroke={C.gold} strokeWidth="1.3" />
+      <ellipse cx="65" cy="60" rx="30" ry="7" fill="#4a5d70" stroke={C.gold} strokeWidth="1" />
+      <ellipse cx="65" cy="60" rx="10" ry="2.4" fill="#1b2530" />
+      <ellipse cx="120" cy="66" rx="24" ry="7" fill="#37485a" stroke={C.gold} strokeWidth="1.3" />
+      <ellipse cx="120" cy="61" rx="21" ry="5.4" fill="#4a5d70" stroke={C.gold} strokeWidth="1" />
+      <ellipse cx="120" cy="61" rx="7" ry="1.8" fill="#1b2530" />
+      {/* Bow cable chute feeding into the water */}
+      <path d="M26,72 Q17,80 19,91" fill="none" stroke="#c7ccd1" strokeWidth="3" strokeLinecap="round" />
+      <circle cx="19" cy="91" r="2.8" fill="none" stroke={C.gold} strokeWidth="1.3" />
+    </ShipBackdrop>
+  );
+}
+
+export function HeavyLiftSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull */}
+      <path d="M18,88 L25,70 L232,70 L240,88 Z" fill="#2e3d4d" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Compact aft accommodation - small relative to the cranes */}
+      <rect x="196" y="40" width="34" height="30" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="200" y="45" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="211" y="45" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="200" y="55" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="211" y="55" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <line x1="213" y1="26" x2="213" y2="40" stroke={C.muted} strokeWidth="1.2" />
+      <circle cx="213" cy="25" r="1.4" fill={C.red} />
+      {/* Lifted cargo module, centered under both cranes */}
+      <rect x="106" y="58" width="32" height="12" fill="#5a6b78" stroke={C.gold} strokeWidth="1" />
+      {/* Twin heavy-lift cranes converging on the cargo - the HeavyLift identifier */}
+      <rect x="44" y="60" width="13" height="10" fill="#3a4a5c" stroke={C.gold} strokeWidth="1" />
+      <line x1="50" y1="60" x2="50" y2="16" stroke="#c7ccd1" strokeWidth="3.6" strokeLinecap="round" />
+      <line x1="50" y1="16" x2="118" y2="44" stroke="#c7ccd1" strokeWidth="3.2" strokeLinecap="round" />
+      <line x1="118" y1="44" x2="118" y2="58" stroke={C.gold} strokeWidth="1" strokeDasharray="2,1.5" />
+      <rect x="176" y="60" width="13" height="10" fill="#3a4a5c" stroke={C.gold} strokeWidth="1" />
+      <line x1="182" y1="60" x2="182" y2="16" stroke="#c7ccd1" strokeWidth="3.6" strokeLinecap="round" />
+      <line x1="182" y1="16" x2="126" y2="44" stroke="#c7ccd1" strokeWidth="3.2" strokeLinecap="round" />
+      <line x1="126" y1="44" x2="126" y2="58" stroke={C.gold} strokeWidth="1" strokeDasharray="2,1.5" />
+    </ShipBackdrop>
+  );
+}
+
+export function JackupSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Truss legs - drawn full-height first so the platform below appears to sit clear of the
+          water, pierced by legs both above and below - the Jackup identifier, unlike every other
+          vessel in this registry which sits low with its hull in the water */}
+      {[55, 140, 222].map((x, i) => (
+        <g key={i}>
+          <line x1={x - 4} y1="14" x2={x - 4} y2="104" stroke="#8fa3b0" strokeWidth="2" />
+          <line x1={x + 4} y1="14" x2={x + 4} y2="104" stroke="#8fa3b0" strokeWidth="2" />
+          {[24, 44, 64, 84].map((y, j) => (
+            <line key={j} x1={x - 4} y1={y} x2={x + 4} y2={y + 14} stroke="#8fa3b0" strokeWidth="1" />
+          ))}
+        </g>
+      ))}
+      {/* Elevated platform - solid, hides the mid-section of each leg to read as "pierced through" */}
+      <rect x="30" y="54" width="200" height="22" fill="#2e3d4d" stroke={C.gold} strokeWidth="1.5" />
+      {/* Small derrick on the platform */}
+      <line x1="112" y1="54" x2="120" y2="16" stroke="#c7ccd1" strokeWidth="2" />
+      <line x1="128" y1="54" x2="120" y2="16" stroke="#c7ccd1" strokeWidth="2" />
+      <rect x="114" y="12" width="12" height="5" fill="#5a6b78" stroke={C.gold} strokeWidth="0.7" />
+      {/* Accommodation module on the platform */}
+      <rect x="160" y="34" width="34" height="20" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="164" y="38" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="175" y="38" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="164" y="46" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      <rect x="175" y="46" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+    </ShipBackdrop>
+  );
+}
+
+export function DrillshipSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull - ship-shaped, unlike the Jackup's elevated platform */}
+      <path d="M18,88 L25,68 L232,68 L240,88 Z" fill="#26313f" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M18,88 L240,88 L240,84 L18,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation, 3 decks */}
+      <rect x="188" y="32" width="42" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="192" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="203" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="214" y="37" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="192" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="203" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="214" y="47" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="190" y="24" width="38" height="8" fill="#2c3a48" stroke={C.gold} strokeWidth="0.8" />
+      {/* Helideck at the bow */}
+      <ellipse cx="42" cy="62" rx="16" ry="5.5" fill="#2c3a48" stroke={C.gold} strokeWidth="1.2" />
+      <text x="42" y="65.5" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={C.gold}>H</text>
+      {/* Tall narrow derrick tower amidships - the Drillship identifier */}
+      <line x1="118" y1="68" x2="130" y2="10" stroke="#c7ccd1" strokeWidth="2.4" strokeLinecap="round" />
+      <line x1="142" y1="68" x2="130" y2="10" stroke="#c7ccd1" strokeWidth="2.4" strokeLinecap="round" />
+      <line x1="122" y1="52" x2="138" y2="52" stroke="#8fa3b0" strokeWidth="1" />
+      <line x1="125" y1="36" x2="135" y2="36" stroke="#8fa3b0" strokeWidth="1" />
+      <rect x="122" y="6" width="16" height="6" fill="#5a6b78" stroke={C.gold} strokeWidth="0.8" />
+    </ShipBackdrop>
+  );
+}
+
+export function FpsoSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull - the largest hull in the registry, converted-tanker proportions */}
+      <path d="M14,88 L21,66 L236,66 L244,88 Z" fill="#1a2530" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M14,88 L244,88 L244,84 L14,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation */}
+      <rect x="196" y="30" width="36" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="200" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="211" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="200" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="211" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="200" y="55" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      {/* Flare tower, angled outward past the stern - the Fpso identifier alongside the modules */}
+      <line x1="234" y1="66" x2="250" y2="20" stroke="#8fa3b0" strokeWidth="2.2" />
+      <ellipse cx="250" cy="16" rx="4" ry="6" fill={C.orange} opacity="0.85" />
+      <ellipse cx="250" cy="12" rx="2.4" ry="3.6" fill={C.gold} opacity="0.9" />
+      {/* Dense industrial topside modules covering most of the deck - the other Fpso identifier */}
+      <rect x="26" y="58" width="160" height="4" fill="#1b2530" />
+      {[[30, 46, 16, 12], [50, 50, 12, 8], [66, 44, 14, 14], [84, 52, 10, 6], [98, 46, 16, 12], [118, 50, 12, 8], [134, 44, 14, 14], [152, 50, 12, 8], [168, 46, 14, 12]].map(([x, y, w, h], i) => (
+        <rect key={i} x={x} y={y} width={w} height={h} fill={i % 2 === 0 ? "#5a6b78" : "#4a5d70"} stroke={C.gold} strokeWidth="0.5" opacity="0.9" />
+      ))}
+      <line x1="26" y1="60" x2="186" y2="60" stroke="#c7ccd1" strokeWidth="0.8" opacity="0.6" />
+    </ShipBackdrop>
+  );
+}
+
+export function FsoSVG() {
+  return (
+    <ShipBackdrop>
+      {/* Hull - same converted-tanker proportions as Fpso */}
+      <path d="M14,88 L21,66 L236,66 L244,88 Z" fill="#1a2530" stroke={C.gold} strokeWidth="1.5" />
+      <path d="M14,88 L244,88 L244,84 L14,84 Z" fill="#0d1620" opacity="0.6" />
+      {/* Aft accommodation */}
+      <rect x="196" y="30" width="36" height="36" fill="#37485a" stroke={C.gold} strokeWidth="1" />
+      <rect x="200" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="211" y="35" width="7" height="6" fill="rgba(77,200,255,0.6)" rx="1" />
+      <rect x="200" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="211" y="45" width="7" height="6" fill="rgba(77,200,255,0.55)" rx="1" />
+      <rect x="200" y="55" width="7" height="6" fill="rgba(77,200,255,0.5)" rx="1" />
+      {/* Near-empty deck: no modules, no flare - storage only. The Fso identifier is this absence,
+          set against the same hull Fpso uses - just a pipeline and a couple of vents, like a tanker */}
+      <line x1="30" y1="61.5" x2="186" y2="61.5" stroke="#c7ccd1" strokeWidth="1.6" />
+      <line x1="30" y1="64" x2="186" y2="64" stroke="#c7ccd1" strokeWidth="1.6" />
+      {[55, 90, 130, 160].map((x, i) => (
+        <g key={i}>
+          <line x1={x} y1="66" x2={x} y2="57" stroke="#c7ccd1" strokeWidth="1.8" />
+          <ellipse cx={x} cy="56" rx="3.8" ry="2.2" fill="#c7ccd1" stroke={C.gold} strokeWidth="0.6" />
+        </g>
+      ))}
+    </ShipBackdrop>
+  );
+}
