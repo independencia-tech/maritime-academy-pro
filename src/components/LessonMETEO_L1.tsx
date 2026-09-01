@@ -5,6 +5,90 @@ import { C, T, Stars, Card, SL, QuizComp, QuestionBank } from "./LessonShared";
 // LessonShared's T.module is hardcoded to Safety ("Sécurité"/"Safety"/...) — override per department.
 const MODULE_LABEL = { fr:"Météorologie", en:"Meteorology", es:"Meteorología", pt:"Meteorologia" };
 
+// Static schematic cross-section of the full atmosphere (5 layers) - visual anchor before L2's
+// interactive troposphere-only diagram. Bands are drawn at equal height (not to true altitude
+// scale) since the thermosphere alone is ~40x thicker than the troposphere - a linear scale would
+// render the troposphere as an illegible sliver. Scale is called out explicitly in the caption.
+function AtmosphereFullSVG({ lang }) {
+  const dict = {
+    fr:{ note:"Schéma non proportionnel — échelle compressée pour la lisibilité. Valeurs moyennes.",
+      surface:"Surface (0 km)", alt:"Altitude",
+      tropo:"Troposphère", tropoAlt:"0 à ~12 km (moyenne)",
+      strato:"Stratosphère", stratoAlt:"~12 à 50 km",
+      meso:"Mésosphère", mesoAlt:"~50 à 85 km",
+      thermo:"Thermosphère", thermoAlt:"~85 à 600 km",
+      exo:"Exosphère", exoAlt:"~600 km → espace",
+    },
+    en:{ note:"Not to scale — compressed for legibility. Average values.",
+      surface:"Surface (0 km)", alt:"Altitude",
+      tropo:"Troposphere", tropoAlt:"0 to ~12 km (average)",
+      strato:"Stratosphere", stratoAlt:"~12 to 50 km",
+      meso:"Mesosphere", mesoAlt:"~50 to 85 km",
+      thermo:"Thermosphere", thermoAlt:"~85 to 600 km",
+      exo:"Exosphere", exoAlt:"~600 km → space",
+    },
+    es:{ note:"Sin escala real — comprimido para legibilidad. Valores promedio.",
+      surface:"Superficie (0 km)", alt:"Altitud",
+      tropo:"Troposfera", tropoAlt:"0 a ~12 km (promedio)",
+      strato:"Estratosfera", stratoAlt:"~12 a 50 km",
+      meso:"Mesosfera", mesoAlt:"~50 a 85 km",
+      thermo:"Termosfera", thermoAlt:"~85 a 600 km",
+      exo:"Exosfera", exoAlt:"~600 km → espacio",
+    },
+    pt:{ note:"Sem escala real — comprimido para legibilidade. Valores médios.",
+      surface:"Superfície (0 km)", alt:"Altitude",
+      tropo:"Troposfera", tropoAlt:"0 a ~12 km (média)",
+      strato:"Estratosfera", stratoAlt:"~12 a 50 km",
+      meso:"Mesosfera", mesoAlt:"~50 a 85 km",
+      thermo:"Termosfera", thermoAlt:"~85 a 600 km",
+      exo:"Exosfera", exoAlt:"~600 km → espaço",
+    },
+  };
+  const L = dict[lang] || dict.fr;
+  return (
+    <div>
+      <svg viewBox="0 0 260 340" style={{width:"100%",height:"auto",display:"block"}}>
+        <rect x="50" y="20" width="160" height="50" fill={C.navy3} stroke={C.gold2} strokeWidth="1" opacity="0.9"/>
+        <circle cx="65" cy="32" r="1" fill={C.white} opacity="0.6"/>
+        <circle cx="120" cy="45" r="1" fill={C.white} opacity="0.5"/>
+        <circle cx="180" cy="30" r="1" fill={C.white} opacity="0.6"/>
+        <circle cx="195" cy="55" r="1" fill={C.white} opacity="0.4"/>
+        <text x="130" y="40" textAnchor="middle" fontSize="10" fontWeight="700" fill={C.white}>{L.exo}</text>
+        <text x="130" y="54" textAnchor="middle" fontSize="9" fill="rgba(240,244,255,0.75)">{L.exoAlt}</text>
+
+        <rect x="50" y="70" width="160" height="50" fill={C.red} opacity="0.28"/>
+        <rect x="50" y="70" width="160" height="50" fill="none" stroke={C.red} strokeWidth="1"/>
+        <text x="130" y="90" textAnchor="middle" fontSize="10" fontWeight="700" fill={C.white}>{L.thermo}</text>
+        <text x="130" y="104" textAnchor="middle" fontSize="9" fill="rgba(240,244,255,0.75)">{L.thermoAlt}</text>
+
+        <rect x="50" y="120" width="160" height="50" fill={C.purple} opacity="0.28"/>
+        <rect x="50" y="120" width="160" height="50" fill="none" stroke={C.purple} strokeWidth="1"/>
+        <text x="130" y="140" textAnchor="middle" fontSize="10" fontWeight="700" fill={C.white}>{L.meso}</text>
+        <text x="130" y="154" textAnchor="middle" fontSize="9" fill="rgba(240,244,255,0.75)">{L.mesoAlt}</text>
+
+        <rect x="50" y="170" width="160" height="50" fill={C.teal} opacity="0.28"/>
+        <rect x="50" y="170" width="160" height="50" fill="none" stroke={C.teal} strokeWidth="1"/>
+        <text x="130" y="190" textAnchor="middle" fontSize="10" fontWeight="700" fill={C.white}>{L.strato}</text>
+        <text x="130" y="204" textAnchor="middle" fontSize="9" fill="rgba(240,244,255,0.75)">{L.stratoAlt}</text>
+
+        <rect x="50" y="220" width="160" height="50" fill={C.blue2} opacity="0.32"/>
+        <rect x="50" y="220" width="160" height="50" fill="none" stroke={C.blue2} strokeWidth="1.5"/>
+        <text x="130" y="240" textAnchor="middle" fontSize="10" fontWeight="700" fill={C.white}>{L.tropo}</text>
+        <text x="130" y="254" textAnchor="middle" fontSize="9" fill="rgba(240,244,255,0.85)">{L.tropoAlt}</text>
+        <text x="130" y="266" textAnchor="middle" fontSize="10" fill="rgba(240,244,255,0.65)">☁ 🌧 💨</text>
+
+        <line x1="50" y1="270" x2="210" y2="270" stroke={C.gold} strokeWidth="2"/>
+        <text x="130" y="284" textAnchor="middle" fontSize="9" fontWeight="700" fill={C.gold}>{L.surface}</text>
+
+        <line x1="30" y1="270" x2="30" y2="22" stroke="rgba(240,244,255,0.4)" strokeWidth="1"/>
+        <polygon points="30,16 26,26 34,26" fill="rgba(240,244,255,0.4)"/>
+        <text x="30" y="12" textAnchor="middle" fontSize="8" fill="rgba(240,244,255,0.5)">{L.alt}</text>
+      </svg>
+      <div style={{textAlign:"center",fontSize:10,color:C.muted,marginTop:6,fontStyle:"italic"}}>{L.note}</div>
+    </div>
+  );
+}
+
 // BANK - 15 QUESTIONS
 const BANK = {
   fr:[
@@ -120,6 +204,8 @@ const getContent = lang => {
       s0:"Comprendre l'atmosphère, la pression et le vent pour anticiper plutôt que subir.\n\nCette leçon pose les bases scientifiques indispensables à toute décision météo en mer.",
       p1:"L'atmosphère : composition et structure",
       s1:"L'atmosphère terrestre est composée principalement d'azote (78%) et d'oxygène (21%), avec des traces de vapeur d'eau, de CO2 et d'autres gaz.\n\nLa couche qui concerne directement la navigation est la troposphère, où se produisent tous les phénomènes météo (nuages, précipitations, vents). Elle s'étend jusqu'à environ 8-15 km d'altitude selon la latitude.",
+      p1b:"Pourquoi l'atmosphère est structurée en couches",
+      s1b:"La température et la pression de l'air varient avec l'altitude — c'est ce gradient qui définit les couches successives de l'atmosphère (valeurs moyennes, variables selon la latitude et la saison) :\n\nTroposphère — de la surface à environ 8-9 km aux pôles, jusqu'à 17-18 km à l'équateur (moyenne ~12 km) : c'est là que se produisent tous les phénomènes météo — nuages, précipitations, vents. C'est la seule couche qui concerne réellement la navigation au quotidien.\n\nStratosphère — environ 12 à 50 km : contient la couche d'ozone, air stable, peu de turbulence.\n\nMésosphère — environ 50 à 85 km : couche la plus froide de l'atmosphère, où les météores brûlent en y pénétrant.\n\nThermosphère — environ 85 à 600 km : température très élevée mais air extrêmement raréfié ; c'est là que se forment les aurores boréales.\n\nExosphère — environ 600 km jusqu'à la limite de l'espace : couche de transition vers le vide spatial.\n\nPour la météo marine du quotidien, seule la troposphère compte réellement. Mais savoir que les autres couches existent, et pourquoi, permet de resituer la météo dans l'ensemble du système atmosphérique plutôt que de la traiter comme un phénomène isolé.",
       p2:"Température, humidité et condensation",
       s2:"L'air chaud contient plus de vapeur d'eau que l'air froid. Quand l'air se refroidit, il atteint son point de rosée : la vapeur d'eau se condense en gouttelettes, formant brouillard, nuages ou précipitations.\n\nCe mécanisme est à la base de toute prévision météo.",
       p3:"Pression atmosphérique",
@@ -148,6 +234,8 @@ const getContent = lang => {
       s0:"Understanding the atmosphere, pressure, and wind to anticipate rather than endure.\n\nThis lesson lays the scientific groundwork essential to every weather-related decision at sea.",
       p1:"The Atmosphere: Composition and Structure",
       s1:"Earth's atmosphere is mainly composed of nitrogen (78%) and oxygen (21%), with traces of water vapor, CO2, and other gases.\n\nThe layer directly relevant to navigation is the troposphere, where all weather phenomena occur (clouds, precipitation, wind). It extends up to about 8–15 km depending on latitude.",
+      p1b:"Why the Atmosphere Is Structured in Layers",
+      s1b:"Air temperature and pressure vary with altitude — this gradient defines the atmosphere's successive layers (average values, variable with latitude and season):\n\nTroposphere — from the surface to about 8–9 km at the poles, up to 17–18 km at the equator (average ~12 km): this is where all weather phenomena occur — clouds, precipitation, wind. It is the only layer that truly matters for day-to-day navigation.\n\nStratosphere — about 12 to 50 km: contains the ozone layer, stable air, little turbulence.\n\nMesosphere — about 50 to 85 km: the coldest layer of the atmosphere, where meteors burn up on entry.\n\nThermosphere — about 85 to 600 km: very high temperature but extremely thin air; this is where the aurora borealis forms.\n\nExosphere — about 600 km to the edge of space: transition layer toward the vacuum of space.\n\nFor everyday marine weather, only the troposphere truly matters. But knowing that the other layers exist, and why, places weather within the full atmospheric system rather than treating it as an isolated phenomenon.",
       p2:"Temperature, Humidity, and Condensation",
       s2:"Warm air holds more water vapor than cold air. When air cools, it reaches its dew point: water vapor condenses into droplets, forming fog, clouds, or precipitation.\n\nThis mechanism is the basis of all weather forecasting.",
       p3:"Atmospheric Pressure",
@@ -176,6 +264,8 @@ const getContent = lang => {
       s0:"Comprender la atmósfera, la presión y el viento para anticipar en lugar de sufrir.\n\nEsta lección sienta las bases científicas indispensables para toda decisión meteorológica en el mar.",
       p1:"La atmósfera: composición y estructura",
       s1:"La atmósfera terrestre está compuesta principalmente de nitrógeno (78%) y oxígeno (21%), con trazas de vapor de agua, CO2 y otros gases.\n\nLa capa que concierne directamente a la navegación es la troposfera, donde ocurren todos los fenómenos meteorológicos. Se extiende hasta unos 8-15 km según la latitud.",
+      p1b:"Por qué la atmósfera está estructurada en capas",
+      s1b:"La temperatura y la presión del aire varían con la altitud — este gradiente define las capas sucesivas de la atmósfera (valores promedio, variables según la latitud y la estación):\n\nTroposfera — desde la superficie hasta unos 8-9 km en los polos, hasta 17-18 km en el ecuador (promedio ~12 km): aquí ocurren todos los fenómenos meteorológicos — nubes, precipitación, viento. Es la única capa que realmente concierne a la navegación diaria.\n\nEstratosfera — aproximadamente 12 a 50 km: contiene la capa de ozono, aire estable, poca turbulencia.\n\nMesosfera — aproximadamente 50 a 85 km: la capa más fría de la atmósfera, donde los meteoros se queman al entrar.\n\nTermosfera — aproximadamente 85 a 600 km: temperatura muy elevada pero aire extremadamente enrarecido; aquí se forman las auroras boreales.\n\nExosfera — aproximadamente 600 km hasta el límite del espacio: capa de transición hacia el vacío espacial.\n\nPara la meteorología marina cotidiana, solo la troposfera importa realmente. Pero saber que las demás capas existen, y por qué, permite situar el clima dentro del sistema atmosférico completo en lugar de tratarlo como un fenómeno aislado.",
       p2:"Temperatura, humedad y condensación",
       s2:"El aire cálido contiene más vapor de agua que el aire frío. Cuando el aire se enfría, alcanza su punto de rocío: el vapor de agua se condensa en gotas, formando niebla, nubes o precipitación.\n\nEste mecanismo es la base de toda previsión meteorológica.",
       p3:"Presión atmosférica",
@@ -204,6 +294,8 @@ const getContent = lang => {
       s0:"Compreender a atmosfera, a pressão e o vento para antecipar em vez de sofrer.\n\nEsta lição estabelece as bases científicas indispensáveis para toda a decisão meteorológica no mar.",
       p1:"A atmosfera: composição e estrutura",
       s1:"A atmosfera terrestre é composta principalmente por azoto (78%) e oxigénio (21%), com vestígios de vapor de água, CO2 e outros gases.\n\nA camada diretamente relevante para a navegação é a troposfera, onde ocorrem todos os fenómenos meteorológicos. Estende-se até cerca de 8-15 km, dependendo da latitude.",
+      p1b:"Por que a atmosfera está estruturada em camadas",
+      s1b:"A temperatura e a pressão do ar variam com a altitude — é esse gradiente que define as camadas sucessivas da atmosfera (valores médios, variáveis conforme a latitude e a estação):\n\nTroposfera — da superfície até cerca de 8-9 km nos polos, até 17-18 km no equador (média ~12 km): é aí que ocorrem todos os fenómenos meteorológicos — nuvens, precipitação, vento. É a única camada que realmente diz respeito à navegação diária.\n\nEstratosfera — cerca de 12 a 50 km: contém a camada de ozono, ar estável, pouca turbulência.\n\nMesosfera — cerca de 50 a 85 km: a camada mais fria da atmosfera, onde os meteoros se queimam ao entrar.\n\nTermosfera — cerca de 85 a 600 km: temperatura muito elevada mas ar extremamente rarefeito; é aí que se formam as auroras boreais.\n\nExosfera — cerca de 600 km até ao limite do espaço: camada de transição para o vácuo espacial.\n\nPara a meteorologia marítima do dia a dia, só a troposfera importa realmente. Mas saber que as outras camadas existem, e porquê, permite situar o clima dentro do sistema atmosférico completo, em vez de o tratar como um fenómeno isolado.",
       p2:"Temperatura, humidade e condensação",
       s2:"O ar quente contém mais vapor de água do que o ar frio. Quando o ar arrefece, atinge o seu ponto de orvalho: o vapor de água condensa-se em gotículas, formando nevoeiro, nuvens ou precipitação.\n\nEste mecanismo é a base de toda a previsão meteorológica.",
       p3:"Pressão atmosférica",
@@ -277,6 +369,10 @@ export default function LessonMETEO_L1({ lang="fr", onBack=()=>{}, onComplete=()
 
             <SL icon="🌍" text={lc.p1} color={C.blue2}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1}</div></Card>
+
+            <SL icon="🪐" text={lc.p1b} color={C.blue2}/>
+            <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s1b}</div></Card>
+            <Card style={{marginBottom:14}}><AtmosphereFullSVG lang={lang}/></Card>
 
             <SL icon="💧" text={lc.p2} color={C.teal}/>
             <Card style={{marginBottom:14}}><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s2}</div></Card>
