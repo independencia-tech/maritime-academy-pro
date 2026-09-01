@@ -2717,6 +2717,7 @@ function AppInner() {
     return "dashboard";
   };
 try { localStorage.removeItem("map_completed_lessons"); } catch {}
+try { localStorage.removeItem("map_lesson_scores"); } catch {}
   const syncLocalProfile = (user: any) => {
   try {
     if (!user) return;
@@ -2757,6 +2758,22 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
         try { localStorage.setItem("map_completed_lessons", JSON.stringify(data?.completed_lessons || [])); } catch {}
         if (data?.xp !== undefined) setUserXP(data.xp || 0);
         if (data?.streak !== undefined) setUserStreak(data.streak || 1);
+      });
+    supabase
+      .from("lesson_scores")
+      .select("lesson_id, score, max_score, attempts")
+      .eq("user_id", user.id)
+      .then(({ data, error }) => {
+        if (error) { console.error("[loadUserProgress] lesson_scores fetch failed:", error); return; }
+        const scores: Record<string, { score: number; maxScore: number; attempts: number }> = {};
+        (data || []).forEach((row: any) => {
+          scores[row.lesson_id] = { score: row.score, maxScore: row.max_score, attempts: row.attempts };
+        });
+        setLessonScores(scores);
+        Object.entries(scores).forEach(([lessonId, entry]) => {
+          lessonScoreAttemptsRef.current[lessonId] = entry.attempts;
+        });
+        try { localStorage.setItem("map_lesson_scores", JSON.stringify(scores)); } catch {}
       });
 
     supabase
@@ -2825,6 +2842,26 @@ try { localStorage.removeItem("map_completed_lessons"); } catch {}
   const [lang, setLang] = useState("fr");
 const [profile, setProfile] = useState({});
 const [completedLessons, setCompletedLessons] = useState<string[]>([]);
+// Per-lesson quiz score, keyed by composite lesson id (same id space as
+// completedLessons, e.g. "d1-l1"). Separate from completedLessons on purpose:
+// that array is a pure done/not-done boolean, this is the score data the
+// future Exam Center 70%-unlock threshold will average per module. Sample
+// wiring: only module d1 (Navigation & Cartographie) calls saveLessonScore
+// today — not yet extended to the rest of the app.
+const [lessonScores, setLessonScores] = useState<Record<string, { score: number; maxScore: number; attempts: number }>>({});
+// Guards saveLessonScore against a rapid double-fire on the same lesson (double-tap on mobile,
+// or a UI click retrying mid-transition) — a plain ref so the lock survives re-renders without
+// itself triggering one. 2s comfortably covers the quiz's own 1200ms done-phase transition.
+const lastLessonScoreSaveRef = useRef<Record<string, number>>({});
+// Tracks the known attempts count per lesson client-side, synchronously. Read-then-increment
+// against Supabase (SELECT existing.attempts, then upsert existing+1) was a TOCTOU race: two
+// overlapping calls can both read the same "before" value and both write "+1", losing an
+// increment... or, as found during verification, some single logical save can still result in
+// two upsert round-trips reaching the server. Computing the new value once, synchronously, from
+// this ref — instead of from a server round-trip — makes the upsert idempotent: even if the
+// network call somehow fires twice, both carry the identical attempts value, so a duplicate
+// send just overwrites with the same number instead of double-incrementing.
+const lessonScoreAttemptsRef = useRef<Record<string, number>>({});
 const markLessonCompleted = async (id: string) => {
   setCompletedLessons((prev) => {
     if (prev.includes(id)) return prev;
@@ -2861,6 +2898,33 @@ setUserStreak(newStreak);
   });
     });
     return next;
+  });
+};
+const saveLessonScore = (lessonId: string, score: number, maxScore: number) => {
+  const now = Date.now();
+  const lastSave = lastLessonScoreSaveRef.current[lessonId] || 0;
+  if (now - lastSave < 2000) return;
+  lastLessonScoreSaveRef.current[lessonId] = now;
+
+  const newAttempts = (lessonScoreAttemptsRef.current[lessonId] || 0) + 1;
+  lessonScoreAttemptsRef.current[lessonId] = newAttempts;
+  const entry = { score, maxScore, attempts: newAttempts };
+
+  setLessonScores((prev) => ({ ...prev, [lessonId]: entry }));
+  try {
+    const stored = JSON.parse(localStorage.getItem("map_lesson_scores") || "{}");
+    localStorage.setItem("map_lesson_scores", JSON.stringify({ ...stored, [lessonId]: entry }));
+  } catch {}
+
+  supabase.auth.getUser().then(({ data: { user } }) => {
+    if (!user) return;
+    supabase.from("lesson_scores").upsert({
+      user_id: user.id,
+      lesson_id: lessonId,
+      score,
+      max_score: maxScore,
+      attempts: newAttempts,
+    }, { onConflict: "user_id,lesson_id" }).then(() => {});
   });
 };
 useEffect(() => {
@@ -3192,11 +3256,13 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
       [
         "map_status_card","map_last_reg","map_user_photo","map_user_plan",
         "map_completed_lessons","map_premium_trial","map_premium_promo",
-        "map_admin_grant","map_registrations",
+        "map_admin_grant","map_registrations","map_lesson_scores",
       ].forEach(k => localStorage.removeItem(k));
     } catch {}
     setProfile({});
   setCompletedLessons([]);
+  setLessonScores({});
+  lessonScoreAttemptsRef.current = {};
   setUserXP(0);
   setUserStreak(1);
   setPage("lang");
@@ -4559,6 +4625,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l1"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l1"); setPage("lesson_navire"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l1", score, maxScore)}
         />
       )}
       {page === "lesson_navire" && (
@@ -4567,6 +4634,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l2"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l2"); setPage("lesson_coord"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l2", score, maxScore)}
         />
       )}
       {page === "lesson_coord" && (
@@ -4575,6 +4643,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l3"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l3"); setPage("lesson_carte"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l3", score, maxScore)}
         />
       )}
       {page === "lesson_carte" && (
@@ -4583,6 +4652,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l4"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l4"); setPage("lesson_compas"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l4", score, maxScore)}
         />
       )}
       {page === "lesson_compas" && (
@@ -4591,6 +4661,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l5"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l5"); setPage("lesson_navpratique"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l5", score, maxScore)}
         />
       )}
       {page === "lesson_navpratique" && (
@@ -4599,6 +4670,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l6"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l6"); setPage("lesson_marees"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l6", score, maxScore)}
         />
       )}
       {page === "lesson_marees" && (
@@ -4607,6 +4679,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l7"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l7"); setPage("lesson_colreg"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l7", score, maxScore)}
         />
       )}
       {page === "lesson_colreg" && (
@@ -4615,6 +4688,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l8", score, maxScore)}
         />
       )}
       {page === "lesson_steering" && (
@@ -4623,6 +4697,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l9", score, maxScore)}
         />
       )}
       {page === "lesson_watch_org" && (
@@ -4631,6 +4706,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l10"); setPage("dashboard"); }}
           onNext={() => { markLessonCompleted("d1-l10"); setPage("dashboard"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l10", score, maxScore)}
         />
       )}
       {page === "lesson_moteur" && (

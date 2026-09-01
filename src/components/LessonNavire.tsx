@@ -1133,7 +1133,7 @@ function QuestionBankNav2({ lang, onComplete }) {
   );
 }
 
-export default function LessonNavire({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonNavire({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const lc = getContent(lang);
@@ -1222,7 +1222,7 @@ export default function LessonNavire({ lang="fr", onBack=()=>{}, onComplete=()=>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>{lang==="fr"?"Quiz — Le Navire":lang==="en"?"Quiz — The Ship":lang==="es"?"Quiz — El Buque":"Quiz — O Navio"}</div>
               <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions · Leçon 2":lang==="en"?"questions · Lesson 2":lang==="es"?"preguntas · Lección 2":"perguntas · Lição 2"}</div>
             </div>
-            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
 
           {phase==="done"&&<div style={{paddingTop:10}}>

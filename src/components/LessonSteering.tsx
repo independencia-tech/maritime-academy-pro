@@ -685,7 +685,7 @@ const getContent = lang => {
   return d[lang] || d.en;
 };
 
-export default function LessonSteering({ lang = "en", onBack = () => {}, onComplete = () => {}, onNext = () => {} }) {
+export default function LessonSteering({ lang = "en", onBack = () => {}, onComplete = () => {}, onNext = () => {}, onQuizScored = (score:number,maxScore:number) => {} }) {
   const t = T[lang] || T.en;
   const bank = BANK[lang] || BANK.en;
   const quiz = buildQuiz(lang);
@@ -780,7 +780,7 @@ export default function LessonSteering({ lang = "en", onBack = () => {}, onCompl
               </div>
               <div style={{ fontSize: 12, color: C.muted }}>5 {lang === "fr" ? "questions · Leçon 9/9" : lang === "en" ? "questions · Lesson 9/9" : lang === "es" ? "preguntas · Lección 9/9" : "perguntas · Lição 9/9"}</div>
             </div>
-            <QuizComp questions={quiz} t={t} onComplete={s => { setQuizScore(s); setTimeout(() => setPhase("done"), 1200); }} />
+            <QuizComp questions={quiz} t={t} onComplete={s => { setQuizScore(s); onQuizScored(s, quiz.length); setTimeout(() => setPhase("done"), 1200); }} />
           </>}
 
           {phase === "done" && <div style={{ paddingTop: 10 }}>

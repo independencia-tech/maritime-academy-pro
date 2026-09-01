@@ -1719,6 +1719,7 @@ export default function LessonNavigation({
   onBack = () => { },
   onComplete = () => { },
   onNext = () => { },
+  onQuizScored = (score: number, maxScore: number) => { },
 }) {
   const t = T[lang] || T.fr;
   const content = CONTENT[lang] || CONTENT.fr;
@@ -1867,6 +1868,7 @@ export default function LessonNavigation({
                 questions={quiz} lang={lang} t={t}
                 onComplete={(score) => {
                   setQuizScore(score);
+                  onQuizScored(score, quiz.length);
                   setTimeout(() => { setPhase("done"); scrollTop(); }, 1200);
                 }}
               />

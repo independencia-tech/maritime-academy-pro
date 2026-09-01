@@ -457,7 +457,7 @@ function QuizComp({questions,t,onComplete}){
 // ══════════════════════════════════════════
 // MAIN LESSON COMPONENT
 // ══════════════════════════════════════════
-export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const [phase, setPhase] = useState("content");
@@ -639,7 +639,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
                 </div>
                 <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions · Leçon 4 · ⭐ Premium":lang==="es"?"preguntas · Lección 4":lang==="pt"?"perguntas · Lição 4":"questions · Lesson 4 · ⭐ Premium"}</div>
               </div>
-              <QuizComp questions={quiz} t={t} onComplete={(s)=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+              <QuizComp questions={quiz} t={t} onComplete={(s)=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),1200);}}/>
             </>
           )}
 
