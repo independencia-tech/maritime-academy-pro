@@ -4271,6 +4271,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l1"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l1"); setPage("lesson_marpol_legal"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l1", score, maxScore)}
         />
       )}
       {page === "lesson_marpol_legal" && (
@@ -4279,6 +4280,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l2"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l2"); setPage("lesson_stcw"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l2", score, maxScore)}
         />
       )}
       {page === "lesson_stcw" && (
@@ -4287,6 +4289,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l3"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l3"); setPage("lesson_mlc"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l3", score, maxScore)}
         />
       )}
       {page === "lesson_mlc" && (
@@ -4295,6 +4298,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l4"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l4"); setPage("lesson_colreg_legal"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l4", score, maxScore)}
         />
       )}
       {page === "lesson_colreg_legal" && (
@@ -4303,6 +4307,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l5"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l5"); setPage("lesson_unclos"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l5", score, maxScore)}
         />
       )}
       {page === "lesson_unclos" && (
@@ -4311,6 +4316,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l6"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l6"); setPage("lesson_liability_insurance"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l6", score, maxScore)}
         />
       )}
       {page === "lesson_liability_insurance" && (
@@ -4319,6 +4325,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l7"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l7"); setPage("lesson_ports_flag_states"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l7", score, maxScore)}
         />
       )}
       {page === "lesson_ports_flag_states" && (
@@ -4327,6 +4334,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l8"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l8"); setPage("lesson_piracy"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l8", score, maxScore)}
         />
       )}
       {page === "lesson_piracy" && (
@@ -4335,6 +4343,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l9"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l9"); setPage("lesson_arbitration"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l9", score, maxScore)}
         />
       )}
       {page === "lesson_arbitration" && (
@@ -4343,6 +4352,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("iml_lessons")}
           onComplete={() => { markLessonCompleted("d2-l10"); setPage("iml_lessons"); }}
           onNext={() => { markLessonCompleted("d2-l10"); setPage("iml_lessons"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d2-l10", score, maxScore)}
         />
       )}
       {page === "lesson_iala" && (
@@ -4351,6 +4361,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l1"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l1"); setPage("lesson_lights_shapes"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d3-l1", score, maxScore)}
         />
       )}
       {page === "lesson_lights_shapes" && (
@@ -4359,6 +4370,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l2"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l2"); setPage("lesson_sound_signals"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d3-l2", score, maxScore)}
         />
       )}
       {page === "lesson_sound_signals" && (
@@ -4367,6 +4379,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l3"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l3"); setPage("lesson_flags"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d3-l3", score, maxScore)}
         />
       )}
       {page === "lesson_flags" && (
@@ -4375,6 +4388,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l4"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l4"); setPage("lesson_vhf"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d3-l4", score, maxScore)}
         />
       )}
       {page === "lesson_vhf" && (
@@ -4383,6 +4397,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l5"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l5"); setPage("lesson_ais"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d3-l5", score, maxScore)}
         />
       )}
       {page === "lesson_ais" && (
@@ -4391,6 +4406,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l6"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l6"); setPage("lesson_gmdss"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d3-l6", score, maxScore)}
         />
       )}
       {page === "lesson_gmdss" && (
@@ -4399,6 +4415,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("sb_lessons")}
           onComplete={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
           onNext={() => { markLessonCompleted("d3-l7"); setPage("sb_lessons"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d3-l7", score, maxScore)}
         />
       )}
       {page === "lesson_sea_l1" && (
@@ -4407,6 +4424,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("seamanship_lessons")}
           onComplete={() => { markLessonCompleted("d6-l1"); setPage("seamanship_lessons"); }}
           onNext={() => { markLessonCompleted("d6-l1"); setPage("lesson_sea_l2"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l1", score, maxScore)}
         />
       )}
       {page === "lesson_sea_l2" && (
@@ -4415,6 +4433,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("seamanship_lessons")}
           onComplete={() => { markLessonCompleted("d6-l2"); setPage("seamanship_lessons"); }}
           onNext={() => { markLessonCompleted("d6-l2"); setPage("lesson_sea_l3"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l2", score, maxScore)}
         />
       )} 
      {page === "lexique" && (
@@ -4430,6 +4449,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l3"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l3"); setPage("lesson_sea_l4"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l3", score, maxScore)}
   />
 )}
 {page === "lesson_sea_l4" && (
@@ -4438,6 +4458,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l4"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l4"); setPage("lesson_sea_l5"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l4", score, maxScore)}
   />
 )}
 {page === "lesson_sea_l5" && (
@@ -4446,6 +4467,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l5", score, maxScore)}
   />
 )}
 {page === "lesson_sea_l6" && (
@@ -4454,6 +4476,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l6", score, maxScore)}
   />
 )}
 {page === "lesson_sea_l7" && (
@@ -4462,6 +4485,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l7"); setPage("seamanship_lessons"); }}
     onNext={() => { markLessonCompleted("d6-l7"); setPage("seamanship_lessons"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l7", score, maxScore)}
   />
 )}
 {page === "lesson_meteo_l1" && (
@@ -4470,6 +4494,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l1"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l1"); setPage("lesson_meteo_l2"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d7-l1", score, maxScore)}
   />
 )}
 {page === "lesson_meteo_l2" && (
@@ -4478,6 +4503,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l2"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l2"); setPage("lesson_meteo_l3"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d7-l2", score, maxScore)}
   />
 )}
 {page === "lesson_meteo_l3" && (
@@ -4486,6 +4512,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l3"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l3"); setPage("lesson_meteo_l4"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d7-l3", score, maxScore)}
   />
 )}
 {page === "lesson_meteo_l4" && (
@@ -4494,6 +4521,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l4"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l4"); setPage("lesson_meteo_l5"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d7-l4", score, maxScore)}
   />
 )}
 {page === "lesson_meteo_l5" && (
@@ -4502,6 +4530,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l5"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l5"); setPage("lesson_meteo_l6"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d7-l5", score, maxScore)}
   />
 )}
 {page === "lesson_meteo_l6" && (
@@ -4510,6 +4539,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l6"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l6"); setPage("lesson_meteo_l7"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d7-l6", score, maxScore)}
   />
 )}
 {page === "lesson_meteo_l7" && (
@@ -4518,6 +4548,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onBack={smartBack("meteorology_lessons")}
     onComplete={() => { markLessonCompleted("d7-l7"); setPage("meteorology_lessons"); }}
     onNext={() => { markLessonCompleted("d7-l7"); setPage("meteorology_lessons"); }}
+    onQuizScored={(score:number, maxScore:number) => saveLessonScore("d7-l7", score, maxScore)}
   />
 )}
    {page === "lesson_shipcareer_l1" && (
@@ -4561,6 +4592,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l1"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l1"); setPage("lesson_smcp_l2"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d4-l1", score, maxScore)}
         />
       )}
       {page === "lesson_smcp_l2" && (
@@ -4569,6 +4601,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l2"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l2"); setPage("lesson_smcp_l3"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d4-l2", score, maxScore)}
         />
       )}
       {page === "lesson_smcp_l3" && (
@@ -4577,6 +4610,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l3"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l3"); setPage("lesson_smcp_l4"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d4-l3", score, maxScore)}
         />
       )}
       {page === "lesson_smcp_l4" && (
@@ -4585,6 +4619,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l4"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l4"); setPage("lesson_smcp_l5"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d4-l4", score, maxScore)}
         />
       )}
       {page === "lesson_smcp_l5" && (
@@ -4593,6 +4628,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l5"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l5"); setPage("lesson_smcp_l6"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d4-l5", score, maxScore)}
         />
       )}
       {page === "lesson_smcp_l6" && (
@@ -4601,6 +4637,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l6"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l6"); setPage("lesson_smcp_l7"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d4-l6", score, maxScore)}
         />
       )}
       {page === "lesson_smcp_l7" && (
@@ -4609,6 +4646,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l7"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l7"); setPage("lesson_smcp_l8"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d4-l7", score, maxScore)}
         />
       )}
       {page === "lesson_smcp_l8" && (
@@ -4617,6 +4655,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onBack={smartBack("smcp_lessons")}
           onComplete={() => { markLessonCompleted("d4-l8"); setPage("smcp_lessons"); }}
           onNext={() => { markLessonCompleted("d4-l8"); setPage("smcp_lessons"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("d4-l8", score, maxScore)}
         />
       )}
       {page === "lesson_navigation" && (

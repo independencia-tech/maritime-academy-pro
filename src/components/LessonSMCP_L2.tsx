@@ -582,7 +582,7 @@ const getContent = lang => {
   return d[lang]||d.en;
 };
 
-export default function LessonSMCP_L2({ lang="en", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonSMCP_L2({ lang="en", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   const t=T[lang]||T.en;const quiz=QUIZ[lang]||QUIZ.en;const lc=getContent(lang);
   const [phase, setPhase] = useState("content");
   const [bankDone, setBankDone] = useState(false);const [quizScore,setQuizScore]=useState(0);const [vis,setVis]=useState(false);
@@ -655,7 +655,7 @@ export default function LessonSMCP_L2({ lang="en", onBack=()=>{}, onComplete=()=
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>Quiz — Port & VTS SMCP</div>
               <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 2":lang==="en"?"Lesson 2":lang==="es"?"Lección 2":"Lição 2"}</div>
             </div>
-            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
           {phase==="done"&&<div style={{paddingTop:10}}>
             <div style={{textAlign:"center",marginBottom:20}}>

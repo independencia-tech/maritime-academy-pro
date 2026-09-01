@@ -1198,7 +1198,7 @@ function AccidentCase({ lang }) {
 // ══════════════════════════════════════
 // MAIN EXPORT — ARCHITECTURE L1 EXACTE
 // ══════════════════════════════════════
-export default function LessonSEA_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonSEA_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   useEffect(()=>{if(typeof window!=="undefined")window.__MAP_LANG__=lang;},[lang]);
   const t=T[lang]||T.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
@@ -1352,7 +1352,7 @@ export default function LessonSEA_L3({ lang="fr", onBack=()=>{}, onComplete=()=>
               <div style={{fontSize:12,color:C.muted}}>5 questions · Seamanship L3</div>
             </div>
             <QuizComp questions={quiz} t={t} lang={lang}
-              onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),400);}}/>
+              onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),400);}}/>
           </>}
 
           {phase==="done"&&<div style={{paddingTop:10}}>

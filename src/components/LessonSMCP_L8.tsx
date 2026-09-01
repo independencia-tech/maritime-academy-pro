@@ -648,7 +648,7 @@ const getContent = lang => {
   return d[lang]||d.en;
 };
 
-export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   const t=T[lang]||T.en;const exam=FINAL_EXAM[lang]||FINAL_EXAM.en;const lc=getContent(lang);
   const [phase, setPhase] = useState("content");
   const [bankDone, setBankDone] = useState(false);const [examScore,setExamScore]=useState(0);const [vis,setVis]=useState(false);
@@ -714,7 +714,7 @@ export default function LessonSMCP_L8({ lang="en", onBack=()=>{}, onComplete=()=
               <div style={{fontFamily:"'Cinzel',serif",fontSize:20,fontWeight:700,color:C.exam,marginBottom:4}}>🎓 {lang==="fr"?"EXAMEN FINAL SMCP":lang==="en"?"SMCP FINAL EXAM":lang==="es"?"EXAMEN FINAL SMCP":"EXAME FINAL SMCP"}</div>
               <div style={{fontSize:12,color:C.muted}}>10 {lang==="fr"?"questions — modules L1 à L7":lang==="en"?"questions — modules L1 to L7":lang==="es"?"preguntas — módulos L1 a L7":"perguntas — módulos L1 a L7"}</div>
             </div>
-            <FinalExamComp questions={exam} t={t} lang={lang} onComplete={s=>{setExamScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+            <FinalExamComp questions={exam} t={t} lang={lang} onComplete={s=>{setExamScore(s);onQuizScored(s,exam.length);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
           {phase==="done"&&<div style={{paddingTop:10}}>
             <div style={{textAlign:"center",marginBottom:20}}>
