@@ -944,7 +944,7 @@ const getContent = (lang) => {
 // ══════════════════════════════════════
 // MAIN EXPORT
 // ══════════════════════════════════════
-export default function LessonE6_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonE6_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   const t = T[lang] || T.fr;
   const quiz = QUIZ[lang] || QUIZ.fr;
   const lc = getContent(lang);
@@ -1090,7 +1090,7 @@ export default function LessonE6_L2({ lang="fr", onBack=()=>{}, onComplete=()=>{
               </div>
               <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions":lang==="en"?"questions":lang==="es"?"preguntas":"questões"} · {lang==="fr"?"Leçon 2/6":lang==="en"?"Lesson 2/6":lang==="es"?"Lección 2/6":"Lição 2/6"}</div>
             </div>
-            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
 
           {phase==="done"&&<div style={{paddingTop:10}}>

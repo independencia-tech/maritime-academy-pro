@@ -611,7 +611,7 @@ const getContent = lang => {
   return d[lang] || d.fr;
 };
 
-export default function LessonMARPOL_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonMARPOL_L3({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   const t=T[lang]||T.fr;const quiz=QUIZ[lang]||QUIZ.fr;const lc=getContent(lang);
   const [phase, setPhase] = useState("content");
   const [bankDone, setBankDone] = useState(false);const [quizScore,setQuizScore]=useState(0);const [vis,setVis]=useState(false);
@@ -700,7 +700,7 @@ export default function LessonMARPOL_L3({ lang="fr", onBack=()=>{}, onComplete=(
               </div>
               <div style={{fontSize:12,color:C.muted}}>5 questions · {lang==="fr"?"Leçon 3":lang==="en"?"Lesson 3":lang==="es"?"Lección 3":"Lição 3"}</div>
             </div>
-            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),1200);}}/>
+            <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),1200);}}/>
           </div>}
 
           {phase==="done"&&<div style={{paddingTop:10}}>

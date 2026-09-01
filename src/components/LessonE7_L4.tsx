@@ -1188,7 +1188,7 @@ const QUIZ={
 // ══════════════════════════════════════
 // MAIN EXPORT — ARCHITECTURE L1 EXACTE
 // ══════════════════════════════════════
-export default function LessonE7_L4({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonE7_L4({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   const t=T[lang]||T.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
   const lc=getContent(lang);
@@ -1346,7 +1346,7 @@ export default function LessonE7_L4({ lang="fr", onBack=()=>{}, onComplete=()=>{
               <div style={{fontSize:12,color:muted}}>5 questions · e7 L4</div>
             </div>
             <QuizComp questions={quiz} t={t} lang={lang}
-              onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),400);}}/>
+              onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),400);}}/>
           </>}
 
           {phase==="done"&&<div style={{paddingTop:10}}>

@@ -563,7 +563,7 @@ function MaintenanceSVG({ lang }: { lang: string }) {
 }
 // LessonE2_L2 - Compresseurs & Systemes Air | PART 2
 
-export default function LessonE2_L2({ lang="fr", onBack, onComplete }:{ lang?:string; onBack:()=>void; onComplete?:(xp?:number)=>void; }) {
+export default function LessonE2_L2({ lang="fr", onBack, onComplete, onQuizScored }:{ lang?:string; onBack:()=>void; onComplete?:(xp?:number)=>void; onQuizScored?:(score:number,maxScore:number)=>void; }) {
   const t = T[lang] || T.fr;
   const moduleFull=lang==="fr"?"Module E2 — Auxiliaires & Électricité":lang==="en"?"Module E2 — Auxiliary Systems & Electricity":lang==="es"?"Módulo E2 — Auxiliares y Electricidad":"Módulo E2 — Auxiliares e Eletricidade";
   const lessonOf=lang==="fr"?"Leçon 2/7":lang==="en"?"Lesson 2/7":lang==="es"?"Lección 2/7":"Lição 2/7";
@@ -603,7 +603,7 @@ export default function LessonE2_L2({ lang="fr", onBack, onComplete }:{ lang?:st
   const pickBank=(i:number)=>{if(bankSel!==null)return;setBankSel(i);if(i===shuffledBank[bankCur].correct)setBankScore(s=>s+1);};
   const bankNext=()=>{if(bankCur+1>=bank.length){setBankDone(true);return;}setBankCur(c=>c+1);setBankSel(null);};
   const handleQConf=()=>{if(qSel===null)return;setQConf(true);if(qSel===shuffledQuiz[qCur].correct)setQScore(s=>s+1);};
-  const handleQNext=()=>{if(qCur+1>=quiz.length){setPhase("done");if(onComplete)onComplete(xpFinal);return;}setQCur(c=>c+1);setQSel(null);setQConf(false);};
+  const handleQNext=()=>{if(qCur+1>=quiz.length){setPhase("done");if(onQuizScored)onQuizScored(qScore,quiz.length);if(onComplete)onComplete(xpFinal);return;}setQCur(c=>c+1);setQSel(null);setQConf(false);};
 
   const header=(subtitle:string)=>(
     <div style={{position:"sticky",top:0,zIndex:100,background:"rgba(6,14,26,0.97)",backdropFilter:"blur(14px)",borderBottom:`1px solid ${C.cyan}33`}}>

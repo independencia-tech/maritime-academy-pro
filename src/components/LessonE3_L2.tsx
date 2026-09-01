@@ -696,7 +696,7 @@ function BankTab({ lang }: { lang: string }) {
   );
 }
 
-function QuizTab({ lang, onComplete }:{ lang:string; onComplete:(xp:number)=>void }) {
+function QuizTab({ lang, onComplete }:{ lang:string; onComplete:(xp:number,score:number,maxScore:number)=>void }) {
   const quiz=getQuiz(lang);
   const [shuffled]=useState(()=>quiz.map(shuffleQuestionOptions));
   const [cur,setCur]=useState(0);
@@ -726,7 +726,7 @@ function QuizTab({ lang, onComplete }:{ lang:string; onComplete:(xp:number)=>voi
           </div>
         ))}
       </div>
-      <button onClick={()=>onComplete(xp)} style={{width:"100%",padding:"15px 0",border:"none",borderRadius:14,background:"linear-gradient(135deg,#f97316,#c9922a)",fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:"#060e1a",cursor:"pointer"}}>🔥 {l.finish}</button>
+      <button onClick={()=>onComplete(xp,score,quiz.length)} style={{width:"100%",padding:"15px 0",border:"none",borderRadius:14,background:"linear-gradient(135deg,#f97316,#c9922a)",fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:"#060e1a",cursor:"pointer"}}>🔥 {l.finish}</button>
       <button onClick={()=>{setCur(0);setSelected(null);setConfirmed(false);setScore(0);setDone(false);}} style={{width:"100%",padding:"12px 0",marginTop:8,border:"1px solid rgba(255,255,255,0.12)",borderRadius:14,background:"none",color:"rgba(240,244,255,0.45)",fontSize:12,cursor:"pointer",fontFamily:"Courier New"}}>{l.retry}</button>
     </div>
   );
@@ -768,7 +768,7 @@ function QuizTab({ lang, onComplete }:{ lang:string; onComplete:(xp:number)=>voi
   );
 }
 
-export default function LessonE3_L2({ lang="fr", onBack, onComplete }:{ lang?:string; onBack:()=>void; onComplete?:(xp?:number)=>void; }) {
+export default function LessonE3_L2({ lang="fr", onBack, onComplete, onQuizScored }:{ lang?:string; onBack:()=>void; onComplete?:(xp?:number)=>void; onQuizScored?:(score:number,maxScore:number)=>void; }) {
   const t=T[lang]||T.fr;
   const [phase,setPhase]=useState<"content"|"quiz">("content");
   const [quizDone,setQuizDone]=useState(false);
@@ -803,7 +803,7 @@ export default function LessonE3_L2({ lang="fr", onBack, onComplete }:{ lang?:st
       </div>}
       <div>
         {phase==="content"&&<ContentPhase lang={lang} onStartQuiz={()=>setPhase("quiz")}/>}
-        {phase==="quiz"&&<QuizTab lang={lang} onComplete={(xp)=>{setQuizDone(true);if(onComplete)onComplete(xp);}}/>}
+        {phase==="quiz"&&<QuizTab lang={lang} onComplete={(xp,score,maxScore)=>{setQuizDone(true);if(onComplete)onComplete(xp);if(onQuizScored)onQuizScored(score,maxScore);}}/>}
       </div>
     </div>
   );

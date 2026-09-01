@@ -1015,7 +1015,7 @@ const getContent = (lang) => {
 // ══════════════════════════════════════
 // MAIN EXPORT
 // ══════════════════════════════════════
-export default function LessonE6_L5({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{} }) {
+export default function LessonE6_L5({ lang="fr", onBack=()=>{}, onComplete=()=>{}, onNext=()=>{}, onQuizScored=(score:number,maxScore:number)=>{} }) {
   const t = T[lang]||T.fr;
   const quiz = QUIZ[lang]||QUIZ.fr;
   const lc = getContent(lang);
@@ -1141,7 +1141,7 @@ export default function LessonE6_L5({ lang="fr", onBack=()=>{}, onComplete=()=>{
               </div>
               <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions":lang==="en"?"questions":lang==="es"?"preguntas":"questoes"}</div>
             </div>
-            <QuizComp questions={quiz} t={t} lang={lang} onComplete={s=>{setQuizScore(s);setTimeout(()=>setPhase("done"),400);}}/>
+            <QuizComp questions={quiz} t={t} lang={lang} onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),400);}}/>
           </>}
 
           {phase==="done"&&<div style={{paddingTop:10}}>

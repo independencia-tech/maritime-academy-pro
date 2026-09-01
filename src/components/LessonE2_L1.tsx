@@ -611,7 +611,7 @@ function FaultsSVG({ lang }: { lang: string }) {
 }
 // LessonE2_L1 - Pompes & Systemes Fluides | PART 2
 
-export default function LessonE2_L1({ lang="fr", onBack, onComplete }:{ lang?:string; onBack:()=>void; onComplete?:(xp?:number)=>void; }) {
+export default function LessonE2_L1({ lang="fr", onBack, onComplete, onQuizScored }:{ lang?:string; onBack:()=>void; onComplete?:(xp?:number)=>void; onQuizScored?:(score:number,maxScore:number)=>void; }) {
   const t = T[lang] || T.fr;
   const moduleFull=lang==="fr"?"Module E2 — Auxiliaires & Électricité":lang==="en"?"Module E2 — Auxiliary Systems & Electricity":lang==="es"?"Módulo E2 — Auxiliares y Electricidad":"Módulo E2 — Auxiliares e Eletricidade";
   const lessonOf=lang==="fr"?"Leçon 1/7":lang==="en"?"Lesson 1/7":lang==="es"?"Lección 1/7":"Lição 1/7";
@@ -665,7 +665,7 @@ export default function LessonE2_L1({ lang="fr", onBack, onComplete }:{ lang?:st
   // ── QUIZ LOGIC ───────────────────────────────────────────────
   const handleQConf=()=>{if(qSel===null)return;setQConf(true);if(qSel===shuffledQuiz[qCur].correct)setQScore(s=>s+1);};
   const handleQNext=()=>{
-    if(qCur+1>=quiz.length){setPhase("done");if(onComplete)onComplete(xpFinal);return;}
+    if(qCur+1>=quiz.length){setPhase("done");if(onQuizScored)onQuizScored(qScore,quiz.length);if(onComplete)onComplete(xpFinal);return;}
     setQCur(c=>c+1);setQSel(null);setQConf(false);
   };
 
