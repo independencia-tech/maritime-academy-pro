@@ -25,6 +25,9 @@ import {
   drawExamQuestions,
   getLatestExamAttempt,
   canAttemptExam,
+  canAttemptRemedial,
+  getWrongAnswersForAttempt,
+  drawRemedialQuestions,
   recordExamAttempt,
 } from "@/core/examEngine";
 const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
@@ -1519,13 +1522,13 @@ const EXAM_UI_T:any = {
 // caller via examEngine.ts) and reports raw {questionId,lessonId,wasCorrect}
 // answers so the caller can record them without this component knowing
 // anything about Supabase.
-function ModuleExamComp({ lang, questions, onFinish }:{lang:string;questions:any[];onFinish:(score:number,maxScore:number,answers:{questionId:string;lessonId:string;wasCorrect:boolean}[])=>void}) {
+function ModuleExamComp({ lang, questions, onFinish }:{lang:string;questions:any[];onFinish:(score:number,maxScore:number,answers:{questionId:string;lessonId:string;wasCorrect:boolean;selectedIndex:number}[])=>void}) {
   const t = EXAM_UI_T[lang] || EXAM_UI_T.fr;
   const [cur,setCur] = useState(0);
   const [sel,setSel] = useState<number|null>(null);
   const [answered,setAnswered] = useState(false);
   const [score,setScore] = useState(0);
-  const [answers,setAnswers] = useState<{questionId:string;lessonId:string;wasCorrect:boolean}[]>([]);
+  const [answers,setAnswers] = useState<{questionId:string;lessonId:string;wasCorrect:boolean;selectedIndex:number}[]>([]);
   const q = questions[cur];
   const isOk = sel === q.correct;
   const pick = (i:number) => {
@@ -1533,7 +1536,7 @@ function ModuleExamComp({ lang, questions, onFinish }:{lang:string;questions:any
     setSel(i); setAnswered(true);
     const ok = i === q.correct;
     if (ok) setScore(s=>s+1);
-    setAnswers(a=>[...a,{questionId:q.questionId,lessonId:q.lessonId,wasCorrect:ok}]);
+    setAnswers(a=>[...a,{questionId:q.questionId,lessonId:q.lessonId,wasCorrect:ok,selectedIndex:i}]);
   };
   const next = () => {
     if (cur < questions.length-1) {
@@ -1597,6 +1600,76 @@ function ModuleExamComp({ lang, questions, onFinish }:{lang:string;questions:any
   );
 }
 
+// Detailed result screen content — step 3 of the staged UI wiring (question
+// review, Remedial, "Competencies Acquired"), pilot module d1 only.
+const EXAM_RESULT_T:any = {
+  fr:{
+    competenciesHeader:"COMPÉTENCES ACQUISES",
+    reviewHeader:"REVUE DES RÉPONSES",
+    reviewLessonLink:"↩ Revoir cette leçon",
+    remedialTitleWithCount:(n:number)=>`Tu as ${n} question${n>1?"s":""} à revoir. Un rattrapage (mêmes questions) est disponible.`,
+    remedialTitleGeneric:"Ton dernier examen n'a pas été réussi — un rattrapage est disponible.",
+    remedialBtn:"📚 FAIRE LE RATTRAPAGE",
+    remedialStarting:"Préparation du rattrapage…",
+    remedialCooldown:(d:Date)=>`Rattrapage déjà tenté récemment. Prochain essai disponible le ${d.toLocaleDateString(lang)} à ${d.toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}.`,
+    remedialNoQuestions:"Aucune question à revoir n'a pu être retrouvée.",
+    remedialPassed:"Rattrapage réussi ✓",
+    remedialFailed:"Rattrapage non réussi",
+  },
+  en:{
+    competenciesHeader:"COMPETENCIES ACQUIRED",
+    reviewHeader:"ANSWER REVIEW",
+    reviewLessonLink:"↩ Review this lesson",
+    remedialTitleWithCount:(n:number)=>`You have ${n} question${n>1?"s":""} to review. A remedial retry (same questions) is available.`,
+    remedialTitleGeneric:"Your last exam wasn't passed — a remedial retry is available.",
+    remedialBtn:"📚 TAKE THE REMEDIAL",
+    remedialStarting:"Preparing the remedial…",
+    remedialCooldown:(d:Date)=>`Remedial already attempted recently. Next attempt available on ${d.toLocaleDateString(lang)} at ${d.toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}.`,
+    remedialNoQuestions:"Couldn't retrieve the questions to review.",
+    remedialPassed:"Remedial passed ✓",
+    remedialFailed:"Remedial not passed",
+  },
+  es:{
+    competenciesHeader:"COMPETENCIAS ADQUIRIDAS",
+    reviewHeader:"REVISIÓN DE RESPUESTAS",
+    reviewLessonLink:"↩ Repasar esta lección",
+    remedialTitleWithCount:(n:number)=>`Tienes ${n} pregunta${n>1?"s":""} para repasar. Hay una recuperación disponible (mismas preguntas).`,
+    remedialTitleGeneric:"No aprobaste tu último examen — hay una recuperación disponible.",
+    remedialBtn:"📚 HACER LA RECUPERACIÓN",
+    remedialStarting:"Preparando la recuperación…",
+    remedialCooldown:(d:Date)=>`Recuperación ya intentada recientemente. Próximo intento disponible el ${d.toLocaleDateString(lang)} a las ${d.toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}.`,
+    remedialNoQuestions:"No se pudieron recuperar las preguntas a repasar.",
+    remedialPassed:"Recuperación aprobada ✓",
+    remedialFailed:"Recuperación no aprobada",
+  },
+  pt:{
+    competenciesHeader:"COMPETÊNCIAS ADQUIRIDAS",
+    reviewHeader:"REVISÃO DAS RESPOSTAS",
+    reviewLessonLink:"↩ Rever esta lição",
+    remedialTitleWithCount:(n:number)=>`Tens ${n} pergunta${n>1?"s":""} para rever. Está disponível uma recuperação (mesmas perguntas).`,
+    remedialTitleGeneric:"O teu último exame não foi aprovado — está disponível uma recuperação.",
+    remedialBtn:"📚 FAZER A RECUPERAÇÃO",
+    remedialStarting:"A preparar a recuperação…",
+    remedialCooldown:(d:Date)=>`Recuperação já tentada recentemente. Próxima tentativa disponível em ${d.toLocaleDateString(lang)} às ${d.toLocaleTimeString(lang,{hour:"2-digit",minute:"2-digit"})}.`,
+    remedialNoQuestions:"Não foi possível recuperar as perguntas a rever.",
+    remedialPassed:"Recuperação aprovada ✓",
+    remedialFailed:"Recuperação não aprovada",
+  },
+};
+
+// Pilot competencies list for d1 (Navigation & Cartographie) — shown on a
+// PASSED result, per doctrine ("on passing an exam, the learner should see
+// a list of skills gained, not just a numeric score"). Authored fresh for
+// this module under the user's explicit 2026-09-02 go-ahead (superseding
+// the earlier "MARPOL-example-only, don't author others" note in project
+// memory) — kept short, same style as the MARPOL example.
+const COMPETENCIES_D1:any = {
+  fr:["✔ Appliquer les règles COLREG pour éviter les collisions","✔ Lire et interpréter une carte marine (symboles, échelle, datum)","✔ Calculer une position par estime et par relèvements","✔ Comprendre les marées et la règle des douzièmes","✔ Corriger un cap avec la déviation et la déclinaison du compas"],
+  en:["✔ Apply COLREG rules to avoid collisions","✔ Read and interpret a nautical chart (symbols, scale, datum)","✔ Calculate a position by dead reckoning and bearings","✔ Understand tides and the rule of twelfths","✔ Correct a heading using compass deviation and declination"],
+  es:["✔ Aplicar las reglas COLREG para evitar colisiones","✔ Leer e interpretar una carta náutica (símbolos, escala, datum)","✔ Calcular una posición por estima y por marcaciones","✔ Comprender las mareas y la regla de los doceavos","✔ Corregir un rumbo con la desviación y declinación de la brújula"],
+  pt:["✔ Aplicar as regras COLREG para evitar colisões","✔ Ler e interpretar uma carta náutica (símbolos, escala, datum)","✔ Calcular uma posição por estima e por marcações","✔ Compreender as marés e a regra dos doze avos","✔ Corrigir um rumo com o desvio e a declinação da bússola"],
+};
+
 function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
@@ -1618,24 +1691,37 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
   // submission, exam_attempts/exam_attempt_answers recording) is explicitly
   // NOT built yet, added in a later step once this is verified in-browser.
   const [moduleAverage, setModuleAverage] = useState<{averagePercent:number|null;attemptedLessons:number;totalLessons:number}|null>(null);
+  // Latest "foundation" (main, non-remedial) attempt — drives the Remedial
+  // offer both right after finishing a failed exam and, independently, when
+  // the learner returns to this list later still within the 24h window.
+  const [latestFoundationAttempt, setLatestFoundationAttempt] = useState<any>(null);
+  const [latestRemedialAttempt, setLatestRemedialAttempt] = useState<any>(null);
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) return;
       getModuleAverageScore(user.id, "d1").then(setModuleAverage);
+      getLatestExamAttempt(user.id, "d1", "foundation").then(setLatestFoundationAttempt);
+      getLatestExamAttempt(user.id, "d1", "foundation_remedial").then(setLatestRemedialAttempt);
     });
   }, []);
 
-  // Step 2 of the staged UI wiring: the exam-taking screen itself (question
+  // Step 2+3 of the staged UI wiring: the exam-taking screen (question
   // display, submission, exam_attempts/exam_attempt_answers recording, the
-  // weekly cooldown). Deliberately NOT building the detailed result screen
-  // (remedial plan, competencies acquired) yet — result here is just
-  // score/passed, per explicit scoping for this pass.
+  // weekly cooldown) plus the detailed result screen (question-by-question
+  // review, Remedial, Competencies Acquired). examMode distinguishes a
+  // regular exam attempt (category "foundation") from a Remedial retry
+  // (category "foundation_remedial", own 24h cooldown, never offers a
+  // further remedial on itself — no recursive chain).
   const [examView, setExamView] = useState<"list"|"running"|"result">("list");
+  const [examMode, setExamMode] = useState<"exam"|"remedial">("exam");
   const [examQuestions, setExamQuestions] = useState<any[]>([]);
-  const [examResult, setExamResult] = useState<{score:number;maxScore:number;passed:boolean}|null>(null);
+  const [examResult, setExamResult] = useState<{score:number;maxScore:number;passed:boolean;answers:{questionId:string;lessonId:string;wasCorrect:boolean;selectedIndex:number}[]}|null>(null);
   const [examStarting, setExamStarting] = useState(false);
   const [examBlockedUntil, setExamBlockedUntil] = useState<Date|null>(null);
   const [examError, setExamError] = useState<string|null>(null);
+  const [remedialStarting, setRemedialStarting] = useState(false);
+  const [remedialBlockedUntil, setRemedialBlockedUntil] = useState<Date|null>(null);
+  const [remedialError, setRemedialError] = useState<string|null>(null);
 
   const startExam = async () => {
     setExamStarting(true);
@@ -1657,23 +1743,62 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
       setExamStarting(false);
       return;
     }
+    setExamMode("exam");
     setExamQuestions(questions);
     setExamView("running");
     setExamStarting(false);
   };
 
-  const finishExam = async (score:number, maxScore:number, answers:{questionId:string;lessonId:string;wasCorrect:boolean}[]) => {
+  const startRemedial = async () => {
+    setRemedialStarting(true);
+    setRemedialError(null);
+    setRemedialBlockedUntil(null);
+    if (!latestFoundationAttempt) { setRemedialStarting(false); return; }
+    const cooldown = canAttemptRemedial(latestFoundationAttempt, latestRemedialAttempt);
+    if (!cooldown.eligible || !cooldown.allowed) {
+      setRemedialBlockedUntil(cooldown.nextAvailableAt);
+      setRemedialStarting(false);
+      return;
+    }
+    const wrongAnswers = await getWrongAnswersForAttempt(latestFoundationAttempt.id);
+    const questions = drawRemedialQuestions(wrongAnswers, lang);
+    if (questions.length === 0) {
+      setRemedialError("no_questions");
+      setRemedialStarting(false);
+      return;
+    }
+    setExamMode("remedial");
+    setExamQuestions(questions);
+    setExamView("running");
+    setRemedialStarting(false);
+  };
+
+  const finishExam = async (score:number, maxScore:number, answers:{questionId:string;lessonId:string;wasCorrect:boolean;selectedIndex:number}[]) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
-    const { passed } = await recordExamAttempt(user.id, "d1", "foundation", score, maxScore, answers);
-    setExamResult({ score, maxScore, passed });
+    const category = examMode === "remedial" ? "foundation_remedial" : "foundation";
+    const { passed, attemptId } = await recordExamAttempt(user.id, "d1", category, score, maxScore, answers);
+    // Set the matching local tracker (not re-fetched) so cooldown/eligibility
+    // checks right on the result screen are correct immediately, no
+    // round-trip: a "foundation" attempt updates the Remedial-eligibility
+    // signal itself; a "foundation_remedial" attempt updates the 24h
+    // retry-delay signal (canAttemptRemedial's own cooldown basis).
+    if (attemptId) {
+      const record = { id: attemptId, attempted_at: new Date().toISOString(), passed, score, max_score: maxScore };
+      if (examMode === "exam") setLatestFoundationAttempt(record);
+      else setLatestRemedialAttempt(record);
+    }
+    setExamResult({ score, maxScore, passed, answers });
     setExamView("result");
   };
 
   const backToList = () => {
     setExamView("list");
+    setExamMode("exam");
     setExamQuestions([]);
     setExamResult(null);
+    setRemedialBlockedUntil(null);
+    setRemedialError(null);
   };
 
   if (autoPick) return <AutoPickTransition/>;
@@ -1727,16 +1852,78 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
 
   if (examView === "result" && examResult) {
     const ET = EXAM_UI_T[lang] || EXAM_UI_T.fr;
+    const RT = EXAM_RESULT_T[lang] || EXAM_RESULT_T.fr;
+    const wrongAnswers = examResult.answers.filter((a)=>!a.wasCorrect);
+    const remedialCooldown = canAttemptRemedial(latestFoundationAttempt, latestRemedialAttempt);
+    const showRemedialOffer = examMode === "exam" && !examResult.passed && remedialCooldown.eligible;
+    const resultLabel = examMode === "remedial"
+      ? (examResult.passed ? RT.remedialPassed : RT.remedialFailed)
+      : (examResult.passed ? ET.passed : ET.failed);
     return (
       <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
         <TopBar onBack={backToList} title={title} backLabel={t.back}/>
-        <div style={{padding:"16px",maxWidth:480,margin:"0 auto",textAlign:"center"}}>
-          <div style={{fontSize:52,marginBottom:8}}>{examResult.passed ? "🏆" : "📚"}</div>
-          <div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,marginBottom:4}}>{examResult.score}/{examResult.maxScore}</div>
-          <div style={{fontSize:13,marginBottom:16,fontWeight:700,color:examResult.passed?"#1e8a4a":"#c0392b"}}>
-            {examResult.passed ? ET.passed : ET.failed}
+        <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+          <div style={{textAlign:"center",marginBottom:16}}>
+            <div style={{fontSize:52,marginBottom:8}}>{examResult.passed ? "🏆" : "📚"}</div>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,marginBottom:4}}>{examResult.score}/{examResult.maxScore}</div>
+            <div style={{fontSize:13,fontWeight:700,color:examResult.passed?"#1e8a4a":"#c0392b"}}>{resultLabel}</div>
           </div>
-          <button onClick={backToList} style={{padding:"14px 24px",border:"none",borderRadius:14,background:"linear-gradient(135deg,#1a6fd4,#c9922a)",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:"#fff",cursor:"pointer"}}>
+
+          {examResult.passed && (
+            <div style={{background:"rgba(30,138,74,0.08)",border:"1px solid rgba(30,138,74,0.3)",borderRadius:14,padding:14,marginBottom:16}}>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:11,letterSpacing:2,color:"#1e8a4a",marginBottom:8}}>{RT.competenciesHeader}</div>
+              {(COMPETENCIES_D1[lang] || COMPETENCIES_D1.fr).map((c:string,i:number)=>(
+                <div key={i} style={{fontSize:12,marginBottom:6,lineHeight:1.5}}>{c}</div>
+              ))}
+            </div>
+          )}
+
+          {showRemedialOffer && (
+            <div style={{background:"rgba(201,146,42,0.08)",border:"1px solid rgba(201,146,42,0.3)",borderRadius:14,padding:14,marginBottom:16}}>
+              <div style={{fontSize:12,fontWeight:600,marginBottom:10,lineHeight:1.5}}>{RT.remedialTitleWithCount(wrongAnswers.length)}</div>
+              <button onClick={startRemedial} disabled={remedialStarting} style={{
+                width:"100%",padding:"12px 0",border:"none",borderRadius:12,
+                background:"linear-gradient(135deg,#c9922a,#1a6fd4)",
+                fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
+                color:"#fff",cursor:remedialStarting?"default":"pointer",opacity:remedialStarting?0.6:1,
+              }}>
+                {remedialStarting ? RT.remedialStarting : RT.remedialBtn}
+              </button>
+              {remedialBlockedUntil && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{RT.remedialCooldown(remedialBlockedUntil)}</div>}
+              {remedialError === "no_questions" && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{RT.remedialNoQuestions}</div>}
+            </div>
+          )}
+
+          <div style={{marginBottom:16}}>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:11,letterSpacing:2,color:"#c9922a",marginBottom:10}}>{RT.reviewHeader}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+              {examResult.answers.map((a)=>{
+                const q = examQuestions.find((eq:any)=>eq.questionId===a.questionId);
+                if (!q) return null;
+                return (
+                  <div key={a.questionId} style={{background:"rgba(13,31,60,0.85)",border:`1px solid ${a.wasCorrect?"#1e8a4a44":"#c0392b44"}`,borderRadius:12,padding:12}}>
+                    <div style={{fontSize:12,fontWeight:700,marginBottom:8,lineHeight:1.4}}>{a.wasCorrect?"✓":"✗"} {q.q}</div>
+                    <div style={{display:"flex",flexDirection:"column",gap:5,marginBottom:8}}>
+                      {q.opts.map((opt:string,oi:number)=>{
+                        let color="rgba(240,244,255,0.55)", weight:any=400, prefix="•";
+                        if (oi===q.correct) { color="#1e8a4a"; weight=700; prefix="✓"; }
+                        else if (oi===a.selectedIndex) { color="#c0392b"; weight=700; prefix="✗"; }
+                        return <div key={oi} style={{fontSize:11,color,fontWeight:weight}}>{prefix} {opt}</div>;
+                      })}
+                    </div>
+                    <div style={{fontSize:11,color:"rgba(240,244,255,0.5)",lineHeight:1.5,marginBottom:a.wasCorrect?0:8}}>{q.expl}</div>
+                    {!a.wasCorrect && (
+                      <button onClick={()=>onPick(a.lessonId.replace("d1-",""))} style={{fontSize:11,color:"#4da6ff",background:"none",border:"none",cursor:"pointer",padding:0}}>
+                        {RT.reviewLessonLink}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <button onClick={backToList} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:"linear-gradient(135deg,#1a6fd4,#c9922a)",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:"#fff",cursor:"pointer"}}>
             {ET.back}
           </button>
         </div>
@@ -1784,6 +1971,21 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
             {examError === "no_questions" && (
               <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_START_T[lang]||EXAM_START_T.fr).noQuestions}</div>
             )}
+          </div>
+        )}
+        {latestFoundationAttempt && canAttemptRemedial(latestFoundationAttempt, latestRemedialAttempt).eligible && (
+          <div style={{marginBottom:16,background:"rgba(201,146,42,0.08)",border:"1px solid rgba(201,146,42,0.3)",borderRadius:14,padding:14}}>
+            <div style={{fontSize:12,fontWeight:600,marginBottom:10,lineHeight:1.5}}>{(EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialTitleGeneric}</div>
+            <button onClick={startRemedial} disabled={remedialStarting} style={{
+              width:"100%",padding:"12px 0",border:"none",borderRadius:12,
+              background:"linear-gradient(135deg,#c9922a,#1a6fd4)",
+              fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
+              color:"#fff",cursor:remedialStarting?"default":"pointer",opacity:remedialStarting?0.6:1,
+            }}>
+              {remedialStarting ? (EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialStarting : (EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialBtn}
+            </button>
+            {remedialBlockedUntil && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialCooldown(remedialBlockedUntil)}</div>}
+            {remedialError === "no_questions" && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialNoQuestions}</div>}
           </div>
         )}
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>

@@ -2,8 +2,11 @@
 // ── examEngine.ts ───────────────────────────────────────────────
 // First real mini-exam mechanism (Foundation Exams doctrine, pilot module
 // d1 only — see project memory, project_exams_system_architecture.md).
-// Deliberately does NOT build the 13th Foundation Summary exam or the
-// Remedial mechanism yet — both are explicitly out of scope for this pass.
+// Includes the Remedial mechanism (24h cooldown, re-tests exactly the wrong
+// questions from the last failed attempt, recorded under a separate
+// "foundation_remedial" category so it never consumes the weekly full-exam
+// cooldown). Deliberately does NOT build the 13th Foundation Summary exam
+// yet — still explicitly out of scope for this pass.
 //
 // @ts-nocheck: same reason as examProgress.ts — exam_attempts/
 // exam_attempt_answers aren't in the generated Supabase Database type
@@ -22,6 +25,11 @@ import {
 export const EXAM_PASS_THRESHOLD = 70;
 export const EXAM_COOLDOWN_DAYS = 7;
 export const EXAM_QUESTION_COUNT = 20;
+
+// Remedial retry delay (doctrine, reconfirmed 2026-09-01): 24h, distinct
+// from and shorter than the weekly full-exam cooldown above. Only ever
+// relevant after a FAILED attempt — see canAttemptRemedial below.
+export const EXAM_REMEDIAL_COOLDOWN_HOURS = 24;
 
 // 70/30 dosage (validated 2026-09-01): a mini-exam's situational content is
 // majority target-rank-level, minority preceding-rank-level, so the
@@ -129,6 +137,35 @@ export function drawExamQuestions(lessonIds, lang, targetRankId, count = EXAM_QU
   return shuffle([...situationalDrawn, ...drawnGeneral]);
 }
 
+// Looks up the exact original question objects for a set of questionIds,
+// searching the general + master-tier + preceding-tier pools together (a
+// questionId can live in any of the three). Used to rehydrate the Remedial
+// exam's content — see drawRemedialQuestions below — without duplicating
+// any question text: the pools remain the single source of truth, this
+// just re-finds what was already drawn once.
+export function getQuestionsByIds(lessonIds, lang, questionIds) {
+  const idSet = new Set(questionIds);
+  const pool = [
+    ...getQuestionPoolForLessons(lessonIds, lang),
+    ...getTargetTierQuestionPoolForLessons(lessonIds, lang),
+    ...getPrecedingTierQuestionPoolForLessons(lessonIds, lang),
+  ];
+  return pool.filter((q) => idSet.has(q.questionId));
+}
+
+// Remedial exam content (doctrine: "condensed synthesis of missed points,"
+// no examId of its own) — re-tests the EXACT questions the learner got
+// wrong on their last attempt, not a fresh draw from the same lessons.
+// wrongAnswers: [{questionId, lessonId}]. lessonIds passed to
+// getQuestionsByIds intentionally ignores trajectory filtering (uses every
+// lessonId present in wrongAnswers) since these questions already exist
+// from a real prior draw — trajectory eligibility isn't re-checked here.
+export function drawRemedialQuestions(wrongAnswers, lang) {
+  const lessonIds = [...new Set(wrongAnswers.map((a) => a.lessonId))];
+  const questionIds = wrongAnswers.map((a) => a.questionId);
+  return shuffle(getQuestionsByIds(lessonIds, lang, questionIds));
+}
+
 // Most recent attempt for this user/module/category, or null if none yet.
 export async function getLatestExamAttempt(userId, moduleId, category) {
   const { data, error } = await supabase
@@ -147,13 +184,56 @@ export async function getLatestExamAttempt(userId, moduleId, category) {
 }
 
 // Weekly cooldown (doctrine: 1 full-module-exam attempt per week, distinct
-// from the 24h remedial retry delay — remedial isn't built yet).
+// from the 24h remedial retry delay below).
 export function canAttemptExam(latestAttempt) {
   if (!latestAttempt) return { allowed: true, nextAvailableAt: null };
   const lastDate = new Date(latestAttempt.attempted_at);
   const nextAvailableAt = new Date(lastDate.getTime() + EXAM_COOLDOWN_DAYS * 86400000);
   const allowed = Date.now() >= nextAvailableAt.getTime();
   return { allowed, nextAvailableAt: allowed ? null : nextAvailableAt };
+}
+
+// Remedial availability: only ever relevant after a FAILED "foundation"
+// attempt (a passed attempt has nothing to remediate — eligible:false,
+// distinct from allowed:false, so the caller can tell "not applicable" from
+// "applicable but still on cooldown"). The 24h cooldown is a RETRY delay
+// between remedial attempts, not a mandatory wait before the first one: a
+// learner who just failed the main exam can start the remedial immediately.
+// It only kicks in once a remedial attempt already exists for this failure
+// cycle (latestRemedialAttempt more recent than the failed foundation
+// attempt) — an older remedial from a PREVIOUS failure cycle must not
+// wrongly block a fresh one, hence the attempted_at comparison.
+export function canAttemptRemedial(latestFoundationAttempt, latestRemedialAttempt) {
+  if (!latestFoundationAttempt || latestFoundationAttempt.passed) {
+    return { eligible: false, allowed: false, nextAvailableAt: null };
+  }
+  const foundationDate = new Date(latestFoundationAttempt.attempted_at);
+  const remedialIsForThisCycle =
+    latestRemedialAttempt && new Date(latestRemedialAttempt.attempted_at) > foundationDate;
+  if (!remedialIsForThisCycle) {
+    return { eligible: true, allowed: true, nextAvailableAt: null };
+  }
+  const lastDate = new Date(latestRemedialAttempt.attempted_at);
+  const nextAvailableAt = new Date(lastDate.getTime() + EXAM_REMEDIAL_COOLDOWN_HOURS * 3600000);
+  const allowed = Date.now() >= nextAvailableAt.getTime();
+  return { eligible: true, allowed, nextAvailableAt: allowed ? null : nextAvailableAt };
+}
+
+// Wrong answers ({questionId, lessonId}) for one specific attempt — used to
+// rehydrate a Remedial exam's content when the learner starts it from the
+// module list later, not immediately after finishing (where the caller
+// already has this in memory from the just-completed attempt).
+export async function getWrongAnswersForAttempt(attemptId) {
+  const { data, error } = await supabase
+    .from("exam_attempt_answers")
+    .select("question_id, lesson_id")
+    .eq("attempt_id", attemptId)
+    .eq("was_correct", false);
+  if (error) {
+    console.error("[getWrongAnswersForAttempt] fetch failed:", error);
+    return [];
+  }
+  return (data || []).map((r) => ({ questionId: r.question_id, lessonId: r.lesson_id }));
 }
 
 // Records one exam attempt + its per-question answers. answers: array of
