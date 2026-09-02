@@ -280,7 +280,7 @@ function AccidentCase({ lang }) {
 // ══════════════════════════════════════
 // QUIZ DATA
 // ══════════════════════════════════════
-const QUIZ={
+export const QUIZ={
   fr:[
     {q:"CC=085° · δ=+3°E · d=+2°E — Quel est le Cap Vrai (CV) ?",opts:["080°","088°","090°","092°"],correct:2,expl:"CV = CC + δ + d = 085 + 3 + 2 = 090°. Règle : Est = Ajouter. Les deux corrections sont Est → on additionne les deux."},
     {q:"Quelle est la différence entre déviation (δ) et déclinaison (d) ?",opts:["C'est la même chose","δ = erreur du compas due au navire · d = angle Nord Vrai/Nord Magnétique terrestre","δ = déclinaison à haute latitude · d = erreur locale","d = erreur du compas · δ = erreur de la carte"],correct:1,expl:"Déviation (δ) = erreur propre au compas du navire (acier, moteurs). Varie selon le cap. Déclinaison (d) = angle entre Nord Vrai et Nord Magnétique terrestre. Varie selon la position géographique et le temps."},
@@ -314,7 +314,7 @@ const QUIZ={
 // ══════════════════════════════════════
 // BANQUE 15 QUESTIONS
 // ══════════════════════════════════════
-const BANK_ALL={
+export const BANK_ALL={
   fr:[
   {q:"Formule de conversion CC → CV. Que représente chaque terme ?",opts:["CV = CC - δ - d","CV = CC + δ + d (δ=déviation, d=déclinaison, Est=+, Ouest=-)","CV = CC × (δ + d)","CV = CC / δ"],correct:1,expl:"CV = CC + δ + d. δ = déviation (+ si Est, - si Ouest). d = déclinaison (+ si Est, - si Ouest). Est = Ajouter. Ouest = Soustraire. Pour CV→CC, on fait l'inverse."},
   {q:"La déviation d'un compas varie selon :",opts:["La position géographique du navire","Le cap du navire (les masses métalliques se réorientent selon la direction)","La saison et la météo","La vitesse uniquement"],correct:1,expl:"La déviation varie selon le CAP du navire car les masses métalliques et les champs électriques du bord se réorientent différemment selon la direction pointée. C'est pourquoi on utilise une table de déviation avec δ pour chaque cap compas."},

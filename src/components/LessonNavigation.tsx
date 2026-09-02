@@ -735,7 +735,7 @@ const CONTENT = {
   ],
 };
 
-const QUIZ = {
+export const QUIZ = {
   fr: [
     {
       q: "Quel peuple a colonisé le Pacifique sur 5 000 km sans aucun instrument ?",
@@ -915,7 +915,7 @@ function GLine() {
 }
 
 // ── PRACTICE QUESTION BANK — 15Q ──────────────
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quel peuple naviguait à vue côtière en s'orientant par les étoiles dès 3000 av. J.-C. ?",opts:["Les Vikings","Les Phéniciens","Les Romains","Les Égyptiens"],correct:1,expl:"Les Phéniciens sont considérés comme les premiers grands navigateurs de l'Antiquité, naviguant à vue le long des côtes en s'orientant sur les étoiles dès 3000 av. J.-C."},
     {q:"Comment les Polynésiens s'orientaient-ils en haute mer sans instrument ?",opts:["Par le magnétisme terrestre","Par lecture des vagues et des étoiles","Par calcul mathématique uniquement","Ils ne naviguaient qu'en vue de terre"],correct:1,expl:"Les navigateurs polynésiens lisaient les motifs de houle, le vol des oiseaux et la position des étoiles pour traverser le Pacifique sans instrument."},

@@ -226,7 +226,7 @@ function OrgChart({ lang }) {
 // ══════════════════════════════════════
 // QUIZ DATA
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Tu vois un feu ROUGE la nuit sur ta droite (tribord). Que cela signifie-t-il ?",opts:["Le navire vient de ta droite et a la priorité","Le navire est sur ta gauche — son bâbord te fait face","Le navire est en détresse","Le navire fait marche arrière"],correct:1,expl:"Le feu rouge = feu de BÂBORD. Si tu vois le feu rouge d'un navire sur ton tribord, son côté bâbord est face à toi → le navire est à ta gauche."},
     {q:"Tirant d'eau 12m · Profondeur chenal 14m · UKC min 10%. Peut-on naviguer ?",opts:["Non, trop peu profond","Oui — UKC=2m=16,7% > 10% requis","Non — UKC insuffisant","Oui mais il faut alléger"],correct:1,expl:"UKC = 14-12 = 2m. UKC% = 2÷12×100 = 16,7% > 10% requis. Navigation autorisée."},
@@ -1023,7 +1023,7 @@ function ExerciseScenarioNav2({ lang }) {
 }
 
 // ── PRACTICE QUESTION BANK — 15Q (L2) ──────────────
-const BANK_NAV2 = {
+export const BANK_NAV2 = {
   fr:[
     {q:"Comment se nomme l'avant d'un navire ?",opts:["Poupe","Proue","Tribord","Bâbord"],correct:1,expl:"La proue est l'avant du navire, la poupe est l'arrière."},
     {q:"De quel côté se trouve tribord en regardant vers l'avant ?",opts:["Gauche","Droite","Centre","Arrière"],correct:1,expl:"Tribord est le côté droit du navire en regardant vers l'avant, bâbord le côté gauche."},

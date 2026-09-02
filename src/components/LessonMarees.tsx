@@ -565,7 +565,7 @@ function AccidentCase({ lang }) {
 // ══════════════════════════════════════
 // QUIZ
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Selon la règle des douzièmes, combien de douzièmes du marnage monte la mer pendant la 3ème heure de marée montante ?",opts:["1/12","2/12","3/12","4/12"],correct:2,expl:"Règle des douzièmes : 1/12 · 2/12 · 3/12 · 3/12 · 2/12 · 1/12. Pendant la 3ème heure, la mer monte de 3/12 du marnage — c'est la période de montée la plus rapide (avec la 4ème heure)."},
     {q:"La marée de vive-eau se produit quand :",opts:["La Lune est en quadrature (90° par rapport au Soleil)","La Lune et le Soleil sont alignés (nouvelle ou pleine lune)","La Lune est à son apogée","Le Soleil est à l'équinoxe"],correct:1,expl:"Vive-eau = Syzygie = alignement Lune-Terre-Soleil (nouvelle lune ou pleine lune). Les forces gravitationnelles s'additionnent → grand marnage. Coefficient 95-120. Morte-eau = Quadrature = Lune à 90° → forces s'opposent → petit marnage."},
@@ -599,7 +599,7 @@ const QUIZ = {
 // ══════════════════════════════════════
 // BANK 15 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
   {q:"Qu'est-ce que le marnage ?",opts:["Le coefficient de la marée du jour","La différence de hauteur entre la PM et la BM (PM - BM)","La durée d'une marée complète","L'heure de la pleine mer"],correct:1,expl:"Marnage = PM - BM = différence de hauteur entre la Pleine Mer et la Basse Mer. Grand marnage (vive-eau, coeff >90) : fort. Petit marnage (morte-eau, coeff <45) : faible. Ex: PM=5,5m · BM=1,5m → Marnage=4,0m."},
   {q:"Que signifie un coefficient de marée de 120 ?",opts:["Marée très faible, peu de marnage","Vive-eau maximale — grand marnage, courants de marée forts","Morte-eau — petit marnage","Coefficient impossible, maximum est 95"],correct:1,expl:"Coefficient 120 = vive-eau exceptionnelle (maximum théorique). Grand marnage, courants de marée très forts. Dangereux pour la navigation côtière et les manœuvres portuaires. Coefficient 45 = morte-eau moyenne. Coefficient 20 = morte-eau minimale."},

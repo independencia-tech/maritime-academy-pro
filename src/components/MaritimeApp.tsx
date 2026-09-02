@@ -19,6 +19,14 @@ import { getRanksByDepartment, getRankMeta } from "@/core/rankRegistry";
 import { getSpecializedOperationsByVesselType } from "@/core/specializedOperationRegistry";
 import type { SupportedLanguage } from "@/core/roleOnBoardRegistry";
 import { getModuleAverageScore } from "@/core/examProgress";
+import {
+  EXAM_PASS_THRESHOLD,
+  getExamEligibleLessonIds,
+  drawExamQuestions,
+  getLatestExamAttempt,
+  canAttemptExam,
+  recordExamAttempt,
+} from "@/core/examEngine";
 const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
 const SpecializedLessonShared = lazy(() => import("./SpecializedLessonShared"));
 
@@ -1496,7 +1504,100 @@ function ExamCenterPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
   );
 }
 
-function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+const EXAM_UI_T:any = {
+  fr:{quiz:"EXAMEN",question:"Question",of:"sur",next:"SUIVANT →",finish:"TERMINER",correct:"Correct !",wrong:"Incorrect",expl:"Explication",passed:"Examen réussi ✓",failed:"Examen non réussi",back:"◀ Retour"},
+  en:{quiz:"EXAM",question:"Question",of:"of",next:"NEXT →",finish:"FINISH",correct:"Correct!",wrong:"Incorrect",expl:"Explanation",passed:"Exam passed ✓",failed:"Exam not passed",back:"◀ Back"},
+  es:{quiz:"EXAMEN",question:"Pregunta",of:"de",next:"SIGUIENTE →",finish:"TERMINAR",correct:"¡Correcto!",wrong:"Incorrecto",expl:"Explicación",passed:"Examen aprobado ✓",failed:"Examen no aprobado",back:"◀ Volver"},
+  pt:{quiz:"EXAME",question:"Pergunta",of:"de",next:"SEGUINTE →",finish:"TERMINAR",correct:"Correto!",wrong:"Incorreto",expl:"Explicação",passed:"Exame aprovado ✓",failed:"Exame não aprovado",back:"◀ Voltar"},
+};
+
+// Foundation Exams pilot (module d1) — the exam-taking screen itself (step 2
+// of the staged UI wiring, after the unlock/notifications from step 1).
+// Deliberately mirrors each lesson's own local QuizComp pattern (sequential
+// Q&A, immediate feedback, progress bar) for visual/UX consistency, but is
+// generic on `questions` (already trajectory+tier-filtered and drawn by the
+// caller via examEngine.ts) and reports raw {questionId,lessonId,wasCorrect}
+// answers so the caller can record them without this component knowing
+// anything about Supabase.
+function ModuleExamComp({ lang, questions, onFinish }:{lang:string;questions:any[];onFinish:(score:number,maxScore:number,answers:{questionId:string;lessonId:string;wasCorrect:boolean}[])=>void}) {
+  const t = EXAM_UI_T[lang] || EXAM_UI_T.fr;
+  const [cur,setCur] = useState(0);
+  const [sel,setSel] = useState<number|null>(null);
+  const [answered,setAnswered] = useState(false);
+  const [score,setScore] = useState(0);
+  const [answers,setAnswers] = useState<{questionId:string;lessonId:string;wasCorrect:boolean}[]>([]);
+  const q = questions[cur];
+  const isOk = sel === q.correct;
+  const pick = (i:number) => {
+    if (answered) return;
+    setSel(i); setAnswered(true);
+    const ok = i === q.correct;
+    if (ok) setScore(s=>s+1);
+    setAnswers(a=>[...a,{questionId:q.questionId,lessonId:q.lessonId,wasCorrect:ok}]);
+  };
+  const next = () => {
+    if (cur < questions.length-1) {
+      setCur(c=>c+1); setSel(null); setAnswered(false);
+    } else {
+      onFinish(score+(isOk?1:0), questions.length, answers);
+    }
+  };
+  return (
+    <div style={{background:"rgba(13,31,60,0.85)",border:"1px solid #1a6fd444",borderRadius:16,padding:18}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+        <div style={{fontSize:11,letterSpacing:3,color:"#4da6ff",fontFamily:"'Cinzel',serif"}}>{t.quiz}</div>
+        <div style={{fontSize:12,color:"rgba(240,244,255,0.5)"}}>{t.question} {cur+1} {t.of} {questions.length}</div>
+      </div>
+      <div style={{display:"flex",gap:4,marginBottom:16}}>
+        {questions.map((_,i)=>(
+          <div key={i} style={{flex:1,height:3,borderRadius:3,background:i<cur?"#1a6fd4":i===cur?"#c9922a":"rgba(255,255,255,0.1)"}}/>
+        ))}
+      </div>
+      <div style={{fontSize:14,fontWeight:700,lineHeight:1.5,marginBottom:16}}>{q.q}</div>
+      <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:14}}>
+        {q.opts.map((opt:string,i:number)=>{
+          let bg="rgba(255,255,255,0.05)",bd="rgba(255,255,255,0.1)";
+          if (answered) {
+            if (i===q.correct) { bg="rgba(30,138,74,0.2)"; bd="#1e8a4a"; }
+            else if (i===sel) { bg="rgba(192,57,43,0.2)"; bd="#c0392b"; }
+          }
+          return (
+            <button key={i} onClick={()=>pick(i)} style={{
+              padding:"12px 14px",borderRadius:14,background:bg,border:`1.5px solid ${bd}`,
+              color:"#f0f4ff",fontSize:13,textAlign:"left",cursor:answered?"default":"pointer",
+              fontFamily:"'Nunito',sans-serif",display:"flex",alignItems:"center",gap:10,lineHeight:1.4,
+            }}>
+              <div style={{width:26,height:26,borderRadius:"50%",flexShrink:0,
+                background:answered&&i===q.correct?"#1e8a4a":answered&&i===sel?"#c0392b":"rgba(255,255,255,0.1)",
+                display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700}}>
+                {answered&&i===q.correct?"✓":answered&&i===sel?"✗":String.fromCharCode(65+i)}
+              </div>
+              <span>{opt}</span>
+            </button>
+          );
+        })}
+      </div>
+      {answered && (
+        <div style={{padding:"12px 14px",borderRadius:12,marginBottom:14,
+          background:isOk?"rgba(30,138,74,0.12)":"rgba(192,57,43,0.1)",
+          border:`1px solid ${isOk?"#1e8a4a":"#c0392b"}44`}}>
+          <div style={{fontSize:12,fontWeight:700,marginBottom:4,color:isOk?"#1e8a4a":"#c0392b"}}>{isOk?t.correct:t.wrong}</div>
+          <div style={{fontSize:11,color:"rgba(240,244,255,0.5)",fontWeight:600,marginBottom:2}}>{t.expl}</div>
+          <div style={{fontSize:12,lineHeight:1.6}}>{q.expl}</div>
+        </div>
+      )}
+      {answered && (
+        <button onClick={next} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,
+          background:"linear-gradient(135deg,#1a6fd4,#c9922a)",fontFamily:"'Cinzel',serif",
+          fontSize:13,fontWeight:700,letterSpacing:2,color:"#fff",cursor:"pointer"}}>
+          {cur<questions.length-1?t.next:t.finish}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -1509,10 +1610,13 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
-  // Temporary verification-only display for the module-average calculation
-  // (getModuleAverageScore) — NOT an unlock gate yet, see project memory
-  // (project_exams_system_architecture.md, 2026-09-01) for why this stays
-  // a passive indicator until the average is validated in real usage.
+  // Module-average calculation (getModuleAverageScore) — now the actual
+  // unlock signal for the mini-exam's 3 proactive notifications below (see
+  // project memory, project_exams_system_architecture.md, "Foundation Exams
+  // system"). Step 1 of the staged UI wiring: unlock condition + the 3
+  // notifications only — the exam screen itself (question display, answers,
+  // submission, exam_attempts/exam_attempt_answers recording) is explicitly
+  // NOT built yet, added in a later step once this is verified in-browser.
   const [moduleAverage, setModuleAverage] = useState<{averagePercent:number|null;attemptedLessons:number;totalLessons:number}|null>(null);
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -1520,6 +1624,58 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
       getModuleAverageScore(user.id, "d1").then(setModuleAverage);
     });
   }, []);
+
+  // Step 2 of the staged UI wiring: the exam-taking screen itself (question
+  // display, submission, exam_attempts/exam_attempt_answers recording, the
+  // weekly cooldown). Deliberately NOT building the detailed result screen
+  // (remedial plan, competencies acquired) yet — result here is just
+  // score/passed, per explicit scoping for this pass.
+  const [examView, setExamView] = useState<"list"|"running"|"result">("list");
+  const [examQuestions, setExamQuestions] = useState<any[]>([]);
+  const [examResult, setExamResult] = useState<{score:number;maxScore:number;passed:boolean}|null>(null);
+  const [examStarting, setExamStarting] = useState(false);
+  const [examBlockedUntil, setExamBlockedUntil] = useState<Date|null>(null);
+  const [examError, setExamError] = useState<string|null>(null);
+
+  const startExam = async () => {
+    setExamStarting(true);
+    setExamError(null);
+    setExamBlockedUntil(null);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setExamStarting(false); return; }
+    const latestAttempt = await getLatestExamAttempt(user.id, "d1", "foundation");
+    const cooldown = canAttemptExam(latestAttempt);
+    if (!cooldown.allowed) {
+      setExamBlockedUntil(cooldown.nextAvailableAt);
+      setExamStarting(false);
+      return;
+    }
+    const eligibleLessonIds = getExamEligibleLessonIds("d1", currentRankId, targetRankId);
+    const questions = drawExamQuestions(eligibleLessonIds, lang, targetRankId);
+    if (questions.length === 0) {
+      setExamError("no_questions");
+      setExamStarting(false);
+      return;
+    }
+    setExamQuestions(questions);
+    setExamView("running");
+    setExamStarting(false);
+  };
+
+  const finishExam = async (score:number, maxScore:number, answers:{questionId:string;lessonId:string;wasCorrect:boolean}[]) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    const { passed } = await recordExamAttempt(user.id, "d1", "foundation", score, maxScore, answers);
+    setExamResult({ score, maxScore, passed });
+    setExamView("result");
+  };
+
+  const backToList = () => {
+    setExamView("list");
+    setExamQuestions([]);
+    setExamResult(null);
+  };
+
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d1");
@@ -1537,8 +1693,57 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
     es:(r:any)=> r.averagePercent===null ? `Promedio del módulo: sin datos aún (0/${r.totalLessons} lecciones intentadas)` : `Promedio actual: ${r.averagePercent}% (${r.attemptedLessons}/${r.totalLessons} lecciones intentadas)`,
     pt:(r:any)=> r.averagePercent===null ? `Média do módulo: sem dados ainda (0/${r.totalLessons} lições tentadas)` : `Média atual: ${r.averagePercent}% (${r.attemptedLessons}/${r.totalLessons} lições tentadas)`,
   };
+  const notifT:any = {
+    fr:{encouragement:"💡 Tu es proche de débloquer ton examen sur ce module !",informative:`ℹ️ Il te faut au moins ${EXAM_PASS_THRESHOLD}% de moyenne sur ce module pour débloquer l'examen.`,unlock:"🔓 Ton examen sur ce module est maintenant disponible !"},
+    en:{encouragement:"💡 You're close to unlocking the exam for this module!",informative:`ℹ️ You need at least ${EXAM_PASS_THRESHOLD}% average on this module to unlock the exam.`,unlock:"🔓 Your exam for this module is now available!"},
+    es:{encouragement:"💡 ¡Estás cerca de desbloquear el examen de este módulo!",informative:`ℹ️ Necesitas al menos ${EXAM_PASS_THRESHOLD}% de promedio en este módulo para desbloquear el examen.`,unlock:"🔓 ¡Tu examen de este módulo ya está disponible!"},
+    pt:{encouragement:"💡 Estás perto de desbloquear o exame deste módulo!",informative:`ℹ️ Precisas de pelo menos ${EXAM_PASS_THRESHOLD}% de média neste módulo para desbloquear o exame.`,unlock:"🔓 O teu exame deste módulo já está disponível!"},
+  };
+  const NT = notifT[lang] || notifT.fr;
+  const EXAM_START_T:any = {
+    fr:{examBtn:"📝 PASSER L'EXAMEN",starting:"Préparation de l'examen…",cooldown:(d:Date)=>`Tu as déjà tenté cet examen récemment. Prochain essai disponible le ${d.toLocaleDateString(lang)}.`,noQuestions:"Aucune question disponible pour ta trajectoire actuelle sur ce module."},
+    en:{examBtn:"📝 TAKE THE EXAM",starting:"Preparing the exam…",cooldown:(d:Date)=>`You already attempted this exam recently. Next attempt available on ${d.toLocaleDateString(lang)}.`,noQuestions:"No questions available for your current trajectory on this module."},
+    es:{examBtn:"📝 HACER EL EXAMEN",starting:"Preparando el examen…",cooldown:(d:Date)=>`Ya intentaste este examen recientemente. Próximo intento disponible el ${d.toLocaleDateString(lang)}.`,noQuestions:"No hay preguntas disponibles para tu trayectoria actual en este módulo."},
+    pt:{examBtn:"📝 FAZER O EXAME",starting:"A preparar o exame…",cooldown:(d:Date)=>`Já tentaste este exame recentemente. Próxima tentativa disponível em ${d.toLocaleDateString(lang)}.`,noQuestions:"Não há perguntas disponíveis para a tua trajetória atual neste módulo."},
+  };
+  const remaining = moduleAverage ? moduleAverage.totalLessons - moduleAverage.attemptedLessons : null;
+  const unlocked = !!moduleAverage && moduleAverage.averagePercent !== null && moduleAverage.averagePercent >= EXAM_PASS_THRESHOLD;
+  const showEncouragement = unlocked && remaining !== null && remaining >= 2 && remaining <= 3;
+  const showInformative = !!moduleAverage && remaining === 0 && moduleAverage.averagePercent !== null && moduleAverage.averagePercent < EXAM_PASS_THRESHOLD;
+  const showUnlockNotice = unlocked && remaining === 0;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8","l9","l10"]);
+
+  if (examView === "running" && examQuestions.length > 0) {
+    return (
+      <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+        <TopBar onBack={backToList} title={title} backLabel={t.back}/>
+        <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+          <ModuleExamComp lang={lang} questions={examQuestions} onFinish={finishExam}/>
+        </div>
+      </div>
+    );
+  }
+
+  if (examView === "result" && examResult) {
+    const ET = EXAM_UI_T[lang] || EXAM_UI_T.fr;
+    return (
+      <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+        <TopBar onBack={backToList} title={title} backLabel={t.back}/>
+        <div style={{padding:"16px",maxWidth:480,margin:"0 auto",textAlign:"center"}}>
+          <div style={{fontSize:52,marginBottom:8}}>{examResult.passed ? "🏆" : "📚"}</div>
+          <div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,marginBottom:4}}>{examResult.score}/{examResult.maxScore}</div>
+          <div style={{fontSize:13,marginBottom:16,fontWeight:700,color:examResult.passed?"#1e8a4a":"#c0392b"}}>
+            {examResult.passed ? ET.passed : ET.failed}
+          </div>
+          <button onClick={backToList} style={{padding:"14px 24px",border:"none",borderRadius:14,background:"linear-gradient(135deg,#1a6fd4,#c9922a)",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:"#fff",cursor:"pointer"}}>
+            {ET.back}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
@@ -1546,6 +1751,39 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
         {moduleAverage && (
           <div style={{fontSize:12,fontWeight:700,color:"#c9922a",background:"rgba(201,146,42,0.1)",border:"1px solid rgba(201,146,42,0.35)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
             📊 {(avgT[lang] || avgT.fr)(moduleAverage)}
+          </div>
+        )}
+        {showEncouragement && (
+          <div style={{fontSize:12,fontWeight:600,color:"#4da6ff",background:"rgba(26,111,212,0.1)",border:"1px solid rgba(77,166,255,0.3)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+            {NT.encouragement}
+          </div>
+        )}
+        {showInformative && (
+          <div style={{fontSize:12,fontWeight:600,color:"rgba(240,244,255,0.75)",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+            {NT.informative}
+          </div>
+        )}
+        {showUnlockNotice && (
+          <div style={{fontSize:12,fontWeight:700,color:"#1e8a4a",background:"rgba(30,138,74,0.12)",border:"1px solid rgba(30,138,74,0.35)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+            {NT.unlock}
+          </div>
+        )}
+        {showUnlockNotice && (
+          <div style={{marginBottom:16}}>
+            <button onClick={startExam} disabled={examStarting} style={{
+              width:"100%",padding:"14px 0",border:"none",borderRadius:14,
+              background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
+              fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,
+              color:"#fff",cursor:examStarting?"default":"pointer",opacity:examStarting?0.6:1,
+            }}>
+              {examStarting ? (EXAM_START_T[lang]||EXAM_START_T.fr).starting : (EXAM_START_T[lang]||EXAM_START_T.fr).examBtn}
+            </button>
+            {examBlockedUntil && (
+              <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_START_T[lang]||EXAM_START_T.fr).cooldown(examBlockedUntil)}</div>
+            )}
+            {examError === "no_questions" && (
+              <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_START_T[lang]||EXAM_START_T.fr).noQuestions}</div>
+            )}
           </div>
         )}
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
@@ -3531,6 +3769,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {

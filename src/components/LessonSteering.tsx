@@ -473,7 +473,7 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUESTION BANK — 16 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   en: [
     { q: "What does \"Midships\" mean?", opts: ["A heading of 000°", "The rudder brought back to zero, not a heading", "Full rudder to one side", "Gently reducing the rudder angle"], correct: 1, expl: "\"Midships\" brings the rudder back to zero degrees — it centres the rudder, it is not a course. Confusing it with a heading is a frequent beginner mistake." },
     { q: "Why is a helm order repeated both BEFORE and AFTER execution?", opts: ["It is only a tradition with no real purpose", "Before confirms the order was heard and understood; after confirms the rudder angle is physically applied", "It is only required for hard-over orders", "Only the OOW repeats orders, never the helmsman"], correct: 1, expl: "This double confirmation (before/after) is the SMCP safety rule for helm orders: the first repeat confirms understanding, the second confirms physical execution." },

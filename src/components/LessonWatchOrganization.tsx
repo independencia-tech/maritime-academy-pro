@@ -441,7 +441,7 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUESTION BANK — 16 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   en: [
     { q: "Who is legally responsible for the navigational watch?", opts: ["The lookout", "The OOW (Officer of the Watch), even though ultimate command of the vessel always remains with the Master", "The helmsman", "No single person, it is a shared responsibility"], correct: 1, expl: "The OOW is the direct responsible for the conduct of the watch, but ultimate command of the vessel always remains with the Master, who may intervene at any time." },
     { q: "What does \"effective lookout\" mean under COLREG Rule 5?", opts: ["Only looking visually", "Observing continuously, by all available means appropriate to the prevailing circumstances", "Using radar only, at night", "Only necessary during the day"], correct: 1, expl: "COLREG Rule 5 requires maintaining a proper lookout by all available means appropriate to the prevailing circumstances — sight, hearing, radar, AIS — not just one of them." },

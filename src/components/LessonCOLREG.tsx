@@ -473,7 +473,7 @@ function AccidentCase({ lang }) {
 // ══════════════════════════════════════
 // QUIZ
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Rule 15 — Croisement : A vient de TRIBORD de B. Qui cède la route ?",opts:["A — qui vient de tribord","B — navire manœuvrant, cède à celui de tribord","Les deux virent à tribord","Le plus lent"],correct:1,expl:"Rule 15 : en situation de croisement, le navire qui a l'autre sur son TRIBORD est le navire MANŒUVRANT. Il doit céder. Le navire venant de tribord = PRIVILÉGIÉ. Mémo : Tribord = Privilégié."},
     {q:"Rule 14 — Face à face : deux navires se font face. Que font-ils ?",opts:["Le plus rapide maintient","Chacun vire à bâbord","Les DEUX virent à TRIBORD — se croiser par bâbord","Ils attendent"],correct:2,expl:"Rule 14 : face à face, les DEUX sont manœuvrants. Les deux virent à TRIBORD pour se croiser BÂBORD à BÂBORD. Même si pas sûr : virer à tribord dès le doute."},
@@ -507,7 +507,7 @@ const QUIZ = {
 // ══════════════════════════════════════
 // BANK 15 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie 'navire manœuvrant' (give-way vessel) ?",opts:["Le navire le plus rapide","Le navire qui doit s'écarter par une action franche et positive","Le navire le plus grand","Le navire militaire"],correct:1,expl:"Navire manœuvrant = doit prendre une action franche, positive et suffisamment tôt pour s'écarter. Action tardive = infraction Rule 8."},
     {q:"Rule 5 : définition d'une bonne veille ?",opts:["Surveiller uniquement par radar","Veille permanente par vue, ouïe et tous les moyens disponibles","4 heures sur 24","Regarder uniquement à l'avant"],correct:1,expl:"Rule 5 : veille permanente par la vue, l'ouïe et tous les moyens disponibles. Vue + radar + AIS + VHF. 24h/24, par tous temps."},

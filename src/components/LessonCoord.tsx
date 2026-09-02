@@ -134,7 +134,7 @@ const T = {
 // ══════════════════════════════════════════════
 //  QUIZ DATA
 // ══════════════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     { q:"Qu'est-ce que l'Équateur en navigation ?",
       opts:["Le méridien de référence à 0° de longitude","Le parallèle à 0° de latitude qui divise la Terre en deux hémisphères égaux","La ligne de changement de date à 180°","Le cercle polaire arctique à 66°33'N"],
@@ -209,7 +209,7 @@ const QUIZ = {
 //  SVG INTERACTIVE GLOBE
 // ══════════════════════════════════════════════
 // ── PRACTICE QUESTION BANK — 15Q (L3) ──────────────
-const BANK_NAV3 = {
+export const BANK_NAV3 = {
   fr:[
     {q:"Que mesure la latitude sur le globe ?",opts:["La distance à l'Est/Ouest de Greenwich","La distance au Nord/Sud de l'équateur","L'altitude au-dessus du niveau de la mer","La distance parcourue depuis le port de départ"],correct:1,expl:"La latitude mesure la position Nord ou Sud par rapport à l'équateur (0°), de 0° à 90°."},
     {q:"Que mesure la longitude sur le globe ?",opts:["La distance au Nord/Sud de l'équateur","La distance Est/Ouest par rapport au méridien de Greenwich","La profondeur de l'eau","La vitesse du navire"],correct:1,expl:"La longitude mesure la position Est ou Ouest par rapport au méridien de référence de Greenwich (0°), de 0° à 180°."},

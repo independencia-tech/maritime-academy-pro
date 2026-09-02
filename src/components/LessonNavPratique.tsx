@@ -535,7 +535,7 @@ function AccidentCase({ lang }) {
 // ══════════════════════════════════════
 // QUIZ
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Un navire fait 14 nœuds pendant 3h30. Quelle distance a-t-il parcourue ?",opts:["42 milles nautiques","46 milles nautiques","49 milles nautiques","52 milles nautiques"],correct:2,expl:"D = V × T = 14 × 3,5 = 49 milles nautiques. Attention : 3h30 = 3,5 heures. La vitesse en nœuds × temps en heures = distance en milles nautiques."},
     {q:"Pour calculer un point de position par relèvements, le minimum requis est :",opts:["1 amer (relèvement unique)","2 amers (2 droites = 1 intersection)","3 amers (triangle d'erreur = plus précis)","4 amers (rectangle de certitude)"],correct:1,expl:"2 relèvements sur 2 amers différents = 2 droites dont l'intersection donne la position. Avec 3 amers, on obtient un triangle d'erreur (3 droites forment un triangle) — plus fiable mais non obligatoire."},
@@ -569,7 +569,7 @@ const QUIZ = {
 // ══════════════════════════════════════
 // BANQUE 15 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
   {q:"Formule de navigation à l'estime — que signifie D = V × T ?",opts:["Distance = Vitesse × Temps (en milles, nœuds, heures)","Direction = Vecteur × Temps","Dérive = Vent × Turbulence","Déclinaison = Variation × Temps"],correct:0,expl:"D=V×T est la formule fondamentale de l'estime. D (milles nautiques) = V (nœuds) × T (heures). Exemple : 12 kn × 3 h = 36 mn. C'est la méthode de secours si le GPS tombe en panne."},
   {q:"Qu'est-ce que l'estime (Dead Reckoning) ?",opts:["Navigation par sextant uniquement","Calcul de la position estimée depuis la dernière position connue + cap + vitesse + temps","Navigation par bouées de chenal uniquement","Calcul de la profondeur par sondeur"],correct:1,expl:"Dead Reckoning = calcul de la position estimée : dernière position connue + cap suivi + vitesse × temps. Plus le temps écoulé depuis la dernière position connue est long, plus l'erreur s'accumule."},

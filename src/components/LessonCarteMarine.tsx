@@ -238,7 +238,7 @@ function AccidentCase({ lang }) {
 // ══════════════════════════════════════════
 // QUIZ — 5 QUESTIONS (4 langues)
 // ══════════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     { q:"Sur une carte marine, que signifie la description 'Fl(3) W R G 15s 42m 18M' ?",
       opts:["Feu fixe, 3 éclats par seconde, portée 20 km","Éclats groupés par 3 · période 15s · portée 18 milles nautiques","Feu occulté 3 fois toutes les 15 minutes · hauteur 42m","Feu isophase 3 secteurs · visible à 15 milles"],
@@ -312,7 +312,7 @@ const QUIZ = {
 // ══════════════════════════════════════════
 // BANQUE 15 QUESTIONS PREMIUM
 // ══════════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
   { q:"Qu'est-ce que la projection Mercator et quel est son principal avantage pour la navigation ?", opts:["Conserve les surfaces — utile pour calculer les distances exactes","Conserve les angles → routes loxodromiques = lignes droites sur la carte","Projection polaire — utilisée pour les hautes latitudes","Projection utilisée uniquement pour les grandes échelles"], correct:1, expl:"Mercator conserve les ANGLES. Une route à cap constant (loxodromie) est une ligne droite sur une carte Mercator → tracer une route = simple ligne droite. Inconvénient : les surfaces sont déformées vers les pôles." },
   { q:"Quelle est la différence entre une grande et une petite échelle cartographique ?", opts:["Grande échelle = carte plus grande physiquement","Grande échelle (1:50 000) = plus détaillée (côtière) · Petite échelle (1:500 000) = vue d'ensemble (hauturière)","Petite échelle = plus précise pour la navigation côtière","Les deux termes désignent la même chose"], correct:1, expl:"1:50 000 = grande échelle = 1 cm sur la carte = 500m réels → navigation côtière, ports. 1:500 000 = petite échelle = 1cm = 5km → navigation hauturière. Plus le dénominateur est grand → plus petite est l'échelle et moins il y a de détails." },
