@@ -342,7 +342,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Qu'est-ce qu'un pavillon de complaisance (Flag of Convenience) ?",opts:["Un pavillon militaire","Registre ouvert permettant aux armateurs étrangers d'immatriculer leurs navires pour bénéficier de taxes basses, réglementation allégée et équipages de toute nationalité","Un pavillon de compétition","Un pavillon historique"],correct:1,expl:"Pavillon de complaisance = open registry. Les armateurs immatriculent leurs navires dans des États qui ne sont pas leur pays d'origine pour bénéficier : taxes très basses/nulles, équipage de toute nationalité (salaires bas), réglementation moins stricte, immatriculation rapide. 73% de la flotte mondiale navigue sous pavillon de complaisance. Principaux : Panama, Liberia, Marshall Islands, Bahamas."},
     {q:"L'article 94 de l'UNCLOS impose à l'État du pavillon d'exercer quelle obligation principale ?",opts:["Payer les taxes de l'OMI","Exercer sa juridiction et son contrôle effectifs sur les navires battant son pavillon en matière de sécurité, environnement et conditions de travail","Construire des navires","Assurer le pilotage dans les ports"],correct:1,expl:"UNCLOS Article 94 = obligations de l'État du pavillon. Doit : exercer sa juridiction sur ses navires, maintenir un registre, assurer la conformité SOLAS/MARPOL/STCW/MLC, vérifier les qualifications des marins, mener les enquêtes sur les accidents. Si un État ne remplit pas ces obligations : ses navires peuvent être mis sur liste noire PSC, et l'État risque d'être exclu de la whitelist OMI."},
@@ -373,7 +373,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le 'lien substantiel' (genuine link) entre un navire et son État du pavillon ?",opts:["Un contrat d'assurance","Exigence UNCLOS Art.91 : lien réel et effectif entre l'État du pavillon et le navire — l'État doit effectivement exercer sa juridiction","Un accord commercial","Un certificat de navigabilité"],correct:1,expl:"Genuine link (UNCLOS Art.91) = principe selon lequel il doit exister un lien effectif entre l'État du pavillon et le navire. Théoriquement, un État ne peut pas accorder son pavillon sans avoir un lien réel avec le navire. En pratique : les pavillons de complaisance ont longtemps contourné ce principe. L'OMI a tenté de le renforcer mais sans mécanisme d'exécution clair. Reste une source de débat en droit maritime international."},
     {q:"Qu'est-ce que le 'right to deny port entry' (droit de refus d'accès au port) ?",opts:["Un droit absolu de l'État côtier","Droit de l'État côtier de refuser l'accès à son port à un navire étranger sous certaines conditions — mais avec limites (détresse maritime, UNCLOS)","Un droit commercial du port","Un droit réservé aux États membres OMI"],correct:1,expl:"Droit de refus d'accès au port = droit souverain de l'État côtier. L'État peut refuser l'accès pour : raisons de sécurité, protection environnementale, sanctions internationales. LIMITE IMPORTANTE : si un navire est en détresse (Art.98 UNCLOS, SAR 1979), l'obligation d'assistance peut primer. L'affaire Prestige (2002) a montré les conséquences dramatiques d'un refus de port de refuge en cas de détresse."},

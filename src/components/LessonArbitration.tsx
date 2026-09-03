@@ -331,7 +331,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Qu'est-ce que la LMAA et pourquoi est-elle importante en droit maritime ?",opts:["Une organisation portuaire","London Maritime Arbitrators Association — institution leader mondiale de l'arbitrage maritime · traite 2 000+ dossiers/an · sentences confidentielles","Un syndicat de marins","Un organisme de l'OMI"],correct:1,expl:"LMAA = London Maritime Arbitrators Association. Basée à Londres depuis 1960. Traite plus de 2 000 dossiers d'arbitrage par an. Principaux avantages : arbitres spécialisés shipping (capitaines, ingénieurs, juristes maritimes), confidentialité totale, procédure flexible (documents-only possible), droit anglais = référence mondiale shipping. 3 niveaux : Small Claims (< £40 000), Intermediate (< £400 000), Full arbitration. La majorité des chartes-parties mondiales prévoient une clause LMAA."},
     {q:"La Convention de New York de 1958 sur la reconnaissance des sentences arbitrales permet quoi exactement ?",opts:["D'annuler les sentences arbitrales","D'exécuter une sentence arbitrale étrangère dans 156 États signataires sans refaire le procès — sous réserve d'exceptions limitées","De créer un tribunal international","De remplacer l'arbitrage par la médiation"],correct:1,expl:"Convention de New York 1958 (CNY) = traité fondamental. Permet l'exécution automatique des sentences arbitrales étrangères dans 156 États signataires. Principe : la sentence est exécutoire comme un jugement national. Exceptions limitées (ordre public, non-notification, arbitrabilité). Importance maritime : une sentence LMAA peut être exécutée directement en Chine, aux USA, en France sans refaire le procès. Fondement de l'efficacité de l'arbitrage international."},
@@ -362,7 +362,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que la 'clause compromissoire' dans un contrat maritime ?",opts:["Un accord précontractuel","Clause insérée AVANT le litige qui oblige les parties à résoudre leurs différends par arbitrage — précise : lieu · règles · droit applicable","Un accord post-litige","Un certificat d'assurance"],correct:1,expl:"Clause compromissoire = clause contractuelle prévoyant l'arbitrage en cas de litige. Insérée avant tout litige dans la charte-partie ou le B/L. Différent du compromis d'arbitrage (signé après le litige). Obligatoire pour les deux parties. Standard LMAA : 'All disputes shall be referred to arbitration in London in accordance with the Arbitration Act 1996 and LMAA Terms'. Si absence de clause → tribunal national compétent selon les règles de conflit de lois."},
     {q:"Qu'est-ce que le 'droit anglais' comme référence mondiale en shipping ?",opts:["Le droit anglais s'applique partout","Le droit anglais (English law) est la loi de référence choisie par ~80% des contrats maritimes mondiaux pour sa clarté, prévisibilité et jurisprudence abondante","Le droit anglais est le plus favorable aux armateurs","Le droit anglais est le seul droit maritime"],correct:1,expl:"English law = référence mondiale shipping. Raisons : 80%+ des chartes-parties mondiales choisissent le droit anglais. Avantages : centuries of shipping jurisprudence, clarity, predictability, pro-commerce approach. UK Admiralty Court et UK Commercial Court = spécialisés shipping. LMAA siège à Londres. Même sans lien avec l'UK, les parties choisissent English law + London arbitration pour la sécurité juridique."},

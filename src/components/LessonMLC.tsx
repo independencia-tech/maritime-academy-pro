@@ -387,7 +387,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle organisation a adopté la Convention MLC 2006 ?",opts:["OMI (Organisation Maritime Internationale)","OIT (Organisation Internationale du Travail)","ONU (Organisation des Nations Unies)","OMC (Organisation Mondiale du Commerce)"],correct:1,expl:"MLC 2006 = adoptée par l'OIT (Organisation Internationale du Travail / ILO) en février 2006 lors de la 94ème session de la Conférence Internationale du Travail à Genève. Entrée en vigueur le 20 août 2013. L'OIT est une agence de l'ONU distincte de l'OMI (qui gère SOLAS, MARPOL, STCW, COLREG). La MLC = 4ème pilier du droit maritime avec SOLAS + MARPOL + STCW."},
     {q:"Quel est le salaire minimum mensuel MLC pour un marin ordinaire (AB) en 2024 ?",opts:["$500","$614","$673","$750"],correct:2,expl:"Salaire minimum MLC 2024 : $673/mois pour un marin ordinaire qualifié (AB - Able-Bodied Seaman). Ce montant est fixé par la Commission Paritaire Maritime de l'OIT et mis à jour régulièrement. Il constitue le plancher mondial — les conventions collectives nationales ou sectorielles peuvent prévoir des salaires supérieurs. Le non-paiement = violation MLC Titre 2 + retenue PSC possible."},
@@ -418,7 +418,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que l'ITF (International Transport Workers' Federation) dans le contexte MLC ?",opts:["Un syndicat de transport terrestre","Fédération syndicale internationale des gens de mer — inspecte les navires, aide les marins abandonnés, négocie les conventions collectives","Un organisme de l'OMI","Un assureur maritime"],correct:1,expl:"ITF = International Transport Workers' Federation. Fédération syndicale internationale basée à Londres. Rôle MLC : inspecte les navires dans les ports pour vérifier les salaires et conditions de travail, aide les marins abandonnés (fonds de rapatriement d'urgence), négocie les CBAs (Collective Bargaining Agreements) avec les armateurs. Inspecteurs ITF dans 100+ ports mondiaux."},
     {q:"Qu'est-ce que la 'CBA' (Collective Bargaining Agreement) dans le contexte MLC ?",opts:["Un contrat individuel de travail","Convention collective négociée entre syndicats (ITF) et armateurs — peut prévoir des conditions supérieures au minimum MLC","Un certificat de compétence","Un contrat d'assurance"],correct:1,expl:"CBA = Collective Bargaining Agreement (Convention Collective). Négociée entre l'ITF ou syndicats nationaux et les armateurs/associations d'armateurs. Peut prévoir des salaires, congés et conditions supérieurs au minimum MLC. Certains armateurs signent des CBAs ITF = leurs navires ont le drapeau ITF bleu. Les inspecteurs ITF vérifient que la CBA est bien appliquée à bord."},

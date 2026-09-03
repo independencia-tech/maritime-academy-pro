@@ -327,7 +327,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quel article de l'UNCLOS donne le droit au Port State Control d'enquêter sur les violations MARPOL dans les eaux intérieures ?",opts:["Article 94","Article 211","Article 218","Article 230"],correct:2,expl:"UNCLOS Article 218 = base juridique du Port State Control pour les infractions MARPOL. Donne le droit à l'État du port d'enquêter sur toute violation de MARPOL commise en haute mer ou dans une autre ZEE par un navire étranger ancré dans ses ports. L'Article 220 donne les droits dans la ZEE, l'Article 230 encadre les sanctions."},
     {q:"Dans l'affaire Princess Cruise Lines (USA), quel est le montant total de l'amende record ?",opts:["$1 million","$10 millions","$40 millions","$100 millions"],correct:2,expl:"$40 millions = amende record mondiale pour violation MARPOL (Princess Cruise Lines / Carnival group, 2016-2019). Amendes initialement $40M en 2016 puis aggravées en 2019 suite à violation des conditions de probation. Comprend : amendes pénales, coûts de supervision, programme de conformité environnementale. Plus grande amende MARPOL de l'histoire."},
@@ -358,7 +358,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le 'droit de poursuite' (hot pursuit) en droit maritime ?",opts:["Un droit de chasse","Droit d'un État côtier de poursuivre en haute mer un navire étranger qui a violé ses lois dans ses eaux — doit être immédiat et continu","Un droit commercial maritime","Un type de procédure judiciaire"],correct:1,expl:"Droit de poursuite (hot pursuit) = UNCLOS Article 111. L'État côtier peut poursuivre un navire étranger jusque en haute mer si : la poursuite commence dans ses eaux (territoriales, ZEE, plateau continental), elle est immédiate et continue, et elle cesse si le navire entre dans les eaux d'un État tiers. Clé : CONTINUITÉ de la poursuite."},
     {q:"Qu'est-ce que le Fonds IOPC (International Oil Pollution Compensation Fund) ?",opts:["Un fonds d'assurance navire","Fonds international pour indemniser les victimes de pollution pétrolière maritime — alimenté par les importateurs de pétrole","Un fonds OMI pour les armateurs","Un fonds de recherche maritime"],correct:1,expl:"IOPC Fund = Fonds International d'Indemnisation pour les Dommages dus à la Pollution par les Hydrocarbures. Créé par Convention 1971, révisé 1992. Indemnise les États côtiers et particuliers victimes de déversements. Alimenté par contributions des importateurs de pétrole (pas les armateurs). Plafond d'indemnisation : environ $1,1 milliard. Complémentaire à la Convention CLC."},

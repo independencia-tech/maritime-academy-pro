@@ -376,7 +376,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Un P&I Club est une mutuelle d'assurance maritime. Quelle est sa principale couverture ?",opts:["Les dommages au corps du navire (H&M)","La responsabilité civile envers les tiers — pollution · équipage · cargaison · litiges","La cargaison transportée","Les risques de guerre"],correct:1,expl:"P&I Club (Protection & Indemnity) = mutuelle maritime couvrant la responsabilité CIVILE envers les tiers. Couvertures principales : pollution maritime (certificat CLC), accidents équipage, dommages cargaison (réclamations tiers), assistance aux marins abandonnés (MLC), litiges juridiques. Les 13 clubs du International Group couvrent 90% de la flotte mondiale. Différent du H&M (corps du navire) et Cargo (marchandises)."},
     {q:"La Convention LLMC 1976/1996 permet à l'armateur de limiter sa responsabilité civile selon quel critère principal ?",opts:["Le montant des dommages réels","Le tonnage brut du navire (GT) — calculé en SDR","La valeur du navire","La nationalité de l'armateur"],correct:1,expl:"LLMC 1976 (amendée par Protocole 1996) = Limitation of Liability for Maritime Claims. Limite de responsabilité calculée en SDR (Droits de Tirage Spéciaux) en fonction du tonnage brut (GT). Ex : 5000 GT = environ 3M SDR pour dommages matériels. EXCEPTION : la limitation ne s'applique PAS si l'armateur a commis une faute personnelle intentionnelle ou téméraire (Art.4 LLMC)."},
@@ -407,7 +407,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que l'avarie commune (General Average) en droit maritime ?",opts:["Une avarie normale du navire","Sacrifice volontaire effectué pour sauver le navire et la cargaison — coût partagé proportionnellement entre toutes les parties (navire + cargaison)","Une assurance obligatoire","Un dommage causé par une tempête"],correct:1,expl:"Avarie commune (General Average) = principe : quand une mesure extraordinaire est prise volontairement pour sauver le navire ET la cargaison (ex : jeter une partie de la cargaison), le sacrifice est réparti entre toutes les parties. Règles d'York-Anvers (non obligatoires mais très utilisées). Liquidateur d'avarie commune (Average Adjuster) calcule les parts. Chaque partie doit contribuer proportionnellement à sa valeur sauvée."},
     {q:"Qu'est-ce que le connaissement (Bill of Lading - B/L) en droit maritime ?",opts:["Un simple bon de livraison","Document à triple fonction : reçu de marchandises · contrat de transport · titre de propriété négociable","Un certificat de navigabilité","Un document douanier"],correct:1,expl:"Bill of Lading (B/L) = document fondamental du commerce maritime. 3 fonctions : 1) REÇU = prouve que le transporteur a reçu les marchandises. 2) CONTRAT = preuves des conditions de transport (Règles de La Haye-Visby ou Rotterdam). 3) TITRE = document négociable = la propriété de la cargaison peut être transférée en endossant le B/L. Le détenteur du B/L original = propriétaire légal de la cargaison."},

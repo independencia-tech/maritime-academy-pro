@@ -1670,48 +1670,34 @@ const COMPETENCIES_D1:any = {
   pt:["✔ Aplicar as regras COLREG para evitar colisões","✔ Ler e interpretar uma carta náutica (símbolos, escala, datum)","✔ Calcular uma posição por estima e por marcações","✔ Compreender as marés e a regra dos doze avos","✔ Corrigir um rumo com o desvio e a declinação da bússola"],
 };
 
-function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
-  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
-  // specific lesson, bypassing this module's own list. Reuses onPick
-  // exactly as-is (no duplication of its id->page mapping) via an
-  // auto-trigger on mount. Renders a neutral transition screen instead of
-  // this page's real list while the redirect is in flight, so the user
-  // never sees this list flash before landing on the lesson.
-  useEffect(() => {
-    if (autoPick) {
-      onPick(autoPick);
-      onAutoPickConsumed?.();
-    }
-  }, [autoPick]);
-  // Module-average calculation (getModuleAverageScore) — now the actual
-  // unlock signal for the mini-exam's 3 proactive notifications below (see
-  // project memory, project_exams_system_architecture.md, "Foundation Exams
-  // system"). Step 1 of the staged UI wiring: unlock condition + the 3
-  // notifications only — the exam screen itself (question display, answers,
-  // submission, exam_attempts/exam_attempt_answers recording) is explicitly
-  // NOT built yet, added in a later step once this is verified in-browser.
+// Pilot #2 competencies list for d2 (Droit Maritime International) — same
+// register as d1 (no STCW/IMO/"certified" language), validated 2026-09-02.
+const COMPETENCIES_D2:any = {
+  fr:["✔ Identifier les obligations SOLAS/MARPOL/STCW/MLC applicables à bord","✔ Appliquer les règles COLREG dans leur dimension juridique (responsabilité en cas de collision)","✔ Comprendre les limites de juridiction maritime (UNCLOS)","✔ Réagir correctement face à une inspection Port State Control","✔ Documenter un incident pour la responsabilité civile et l'assurance"],
+  en:["✔ Identify the SOLAS/MARPOL/STCW/MLC obligations that apply on board","✔ Apply COLREG rules in their legal dimension (liability in case of collision)","✔ Understand the limits of maritime jurisdiction (UNCLOS)","✔ Respond correctly to a Port State Control inspection","✔ Document an incident for civil liability and insurance purposes"],
+  es:["✔ Identificar las obligaciones SOLAS/MARPOL/STCW/MLC aplicables a bordo","✔ Aplicar las reglas COLREG en su dimensión jurídica (responsabilidad en caso de colisión)","✔ Comprender los límites de la jurisdicción marítima (UNCLOS)","✔ Reaccionar correctamente ante una inspección de Port State Control","✔ Documentar un incidente para la responsabilidad civil y el seguro"],
+  pt:["✔ Identificar as obrigações SOLAS/MARPOL/STCW/MLC aplicáveis a bordo","✔ Aplicar as regras COLREG na sua dimensão jurídica (responsabilidade em caso de colisão)","✔ Compreender os limites da jurisdição marítima (UNCLOS)","✔ Reagir corretamente perante uma inspeção de Port State Control","✔ Documentar um incidente para responsabilidade civil e seguro"],
+};
+
+// ── Shared exam engine wiring (2026-09-02 refactor) ─────────────────────
+// Extracted from NavigationLessonsPage (d1's original, one-off implementation)
+// into a moduleId-parametrized hook + presentational components so a second
+// (and future) module's exam UI reuses the exact same logic — no duplicated
+// state machine to drift out of sync. See project memory,
+// project_exams_system_architecture.md, for the doctrine this implements.
+function useModuleExam({ moduleId, lang, currentRankId, targetRankId }:{moduleId:string;lang:string;currentRankId?:string;targetRankId?:string}) {
   const [moduleAverage, setModuleAverage] = useState<{averagePercent:number|null;attemptedLessons:number;totalLessons:number}|null>(null);
-  // Latest "foundation" (main, non-remedial) attempt — drives the Remedial
-  // offer both right after finishing a failed exam and, independently, when
-  // the learner returns to this list later still within the 24h window.
   const [latestFoundationAttempt, setLatestFoundationAttempt] = useState<any>(null);
   const [latestRemedialAttempt, setLatestRemedialAttempt] = useState<any>(null);
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) return;
-      getModuleAverageScore(user.id, "d1").then(setModuleAverage);
-      getLatestExamAttempt(user.id, "d1", "foundation").then(setLatestFoundationAttempt);
-      getLatestExamAttempt(user.id, "d1", "foundation_remedial").then(setLatestRemedialAttempt);
+      getModuleAverageScore(user.id, moduleId).then(setModuleAverage);
+      getLatestExamAttempt(user.id, moduleId, "foundation").then(setLatestFoundationAttempt);
+      getLatestExamAttempt(user.id, moduleId, "foundation_remedial").then(setLatestRemedialAttempt);
     });
-  }, []);
+  }, [moduleId]);
 
-  // Step 2+3 of the staged UI wiring: the exam-taking screen (question
-  // display, submission, exam_attempts/exam_attempt_answers recording, the
-  // weekly cooldown) plus the detailed result screen (question-by-question
-  // review, Remedial, Competencies Acquired). examMode distinguishes a
-  // regular exam attempt (category "foundation") from a Remedial retry
-  // (category "foundation_remedial", own 24h cooldown, never offers a
-  // further remedial on itself — no recursive chain).
   const [examView, setExamView] = useState<"list"|"running"|"result">("list");
   const [examMode, setExamMode] = useState<"exam"|"remedial">("exam");
   const [examQuestions, setExamQuestions] = useState<any[]>([]);
@@ -1729,14 +1715,14 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
     setExamBlockedUntil(null);
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { setExamStarting(false); return; }
-    const latestAttempt = await getLatestExamAttempt(user.id, "d1", "foundation");
+    const latestAttempt = await getLatestExamAttempt(user.id, moduleId, "foundation");
     const cooldown = canAttemptExam(latestAttempt);
     if (!cooldown.allowed) {
       setExamBlockedUntil(cooldown.nextAvailableAt);
       setExamStarting(false);
       return;
     }
-    const eligibleLessonIds = getExamEligibleLessonIds("d1", currentRankId, targetRankId);
+    const eligibleLessonIds = getExamEligibleLessonIds(moduleId, currentRankId, targetRankId);
     const questions = drawExamQuestions(eligibleLessonIds, lang, targetRankId);
     if (questions.length === 0) {
       setExamError("no_questions");
@@ -1777,12 +1763,7 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
     const category = examMode === "remedial" ? "foundation_remedial" : "foundation";
-    const { passed, attemptId } = await recordExamAttempt(user.id, "d1", category, score, maxScore, answers);
-    // Set the matching local tracker (not re-fetched) so cooldown/eligibility
-    // checks right on the result screen are correct immediately, no
-    // round-trip: a "foundation" attempt updates the Remedial-eligibility
-    // signal itself; a "foundation_remedial" attempt updates the 24h
-    // retry-delay signal (canAttemptRemedial's own cooldown basis).
+    const { passed, attemptId } = await recordExamAttempt(user.id, moduleId, category, score, maxScore, answers);
     if (attemptId) {
       const record = { id: attemptId, attempted_at: new Date().toISOString(), passed, score, max_score: maxScore };
       if (examMode === "exam") setLatestFoundationAttempt(record);
@@ -1801,17 +1782,26 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
     setRemedialError(null);
   };
 
-  if (autoPick) return <AutoPickTransition/>;
-  const t = NAV_T[lang] || NAV_T.fr;
-  const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d1");
-  const title = mod?.title?.[lang] || mod?.title?.fr || "Navigation";
-  const labels:any = {
-    fr:{header:"Leçons", available:"Disponible", soon:"Bientôt", done:"Terminé ✓"},
-    en:{header:"Lessons", available:"Available", soon:"Coming soon", done:"Completed ✓"},
-    es:{header:"Lecciones", available:"Disponible", soon:"Próximamente", done:"Completado ✓"},
-    pt:{header:"Lições", available:"Disponível", soon:"Em breve", done:"Concluído ✓"},
+  const remaining = moduleAverage ? moduleAverage.totalLessons - moduleAverage.attemptedLessons : null;
+  const unlocked = !!moduleAverage && moduleAverage.averagePercent !== null && moduleAverage.averagePercent >= EXAM_PASS_THRESHOLD;
+  const showEncouragement = unlocked && remaining !== null && remaining >= 2 && remaining <= 3;
+  const showInformative = !!moduleAverage && remaining === 0 && moduleAverage.averagePercent !== null && moduleAverage.averagePercent < EXAM_PASS_THRESHOLD;
+  const showUnlockNotice = unlocked && remaining === 0;
+  const remedialCooldownNow = canAttemptRemedial(latestFoundationAttempt, latestRemedialAttempt);
+
+  return {
+    moduleId, moduleAverage, showEncouragement, showInformative, showUnlockNotice,
+    examView, examMode, examQuestions, examResult,
+    examStarting, examBlockedUntil, examError, startExam,
+    remedialStarting, remedialBlockedUntil, remedialError, startRemedial, remedialCooldownNow,
+    finishExam, backToList,
   };
-  const L = labels[lang] || labels.fr;
+}
+
+// Notifications + exam button + list-view Remedial offer — the "extra bits"
+// each module's lessons-list page inserts above its own lesson list. Pure
+// presentational, reads only from the hook's return value.
+function ExamListExtras({ exam, lang }:{exam:any;lang:string}) {
   const avgT:any = {
     fr:(r:any)=> r.averagePercent===null ? `Moyenne du module : pas encore de données (0/${r.totalLessons} leçons tentées)` : `Moyenne actuelle : ${r.averagePercent}% (${r.attemptedLessons}/${r.totalLessons} leçons tentées)`,
     en:(r:any)=> r.averagePercent===null ? `Module average: no data yet (0/${r.totalLessons} lessons attempted)` : `Current average: ${r.averagePercent}% (${r.attemptedLessons}/${r.totalLessons} lessons attempted)`,
@@ -1831,163 +1821,196 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
     es:{examBtn:"📝 HACER EL EXAMEN",starting:"Preparando el examen…",cooldown:(d:Date)=>`Ya intentaste este examen recientemente. Próximo intento disponible el ${d.toLocaleDateString(lang)}.`,noQuestions:"No hay preguntas disponibles para tu trayectoria actual en este módulo."},
     pt:{examBtn:"📝 FAZER O EXAME",starting:"A preparar o exame…",cooldown:(d:Date)=>`Já tentaste este exame recentemente. Próxima tentativa disponível em ${d.toLocaleDateString(lang)}.`,noQuestions:"Não há perguntas disponíveis para a tua trajetória atual neste módulo."},
   };
-  const remaining = moduleAverage ? moduleAverage.totalLessons - moduleAverage.attemptedLessons : null;
-  const unlocked = !!moduleAverage && moduleAverage.averagePercent !== null && moduleAverage.averagePercent >= EXAM_PASS_THRESHOLD;
-  const showEncouragement = unlocked && remaining !== null && remaining >= 2 && remaining <= 3;
-  const showInformative = !!moduleAverage && remaining === 0 && moduleAverage.averagePercent !== null && moduleAverage.averagePercent < EXAM_PASS_THRESHOLD;
-  const showUnlockNotice = unlocked && remaining === 0;
+  const ST = EXAM_START_T[lang] || EXAM_START_T.fr;
+  const RT = EXAM_RESULT_T[lang] || EXAM_RESULT_T.fr;
+  return (
+    <>
+      {exam.moduleAverage && (
+        <div style={{fontSize:12,fontWeight:700,color:"#c9922a",background:"rgba(201,146,42,0.1)",border:"1px solid rgba(201,146,42,0.35)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+          📊 {(avgT[lang] || avgT.fr)(exam.moduleAverage)}
+        </div>
+      )}
+      {exam.showEncouragement && (
+        <div style={{fontSize:12,fontWeight:600,color:"#4da6ff",background:"rgba(26,111,212,0.1)",border:"1px solid rgba(77,166,255,0.3)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+          {NT.encouragement}
+        </div>
+      )}
+      {exam.showInformative && (
+        <div style={{fontSize:12,fontWeight:600,color:"rgba(240,244,255,0.75)",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+          {NT.informative}
+        </div>
+      )}
+      {exam.showUnlockNotice && (
+        <div style={{fontSize:12,fontWeight:700,color:"#1e8a4a",background:"rgba(30,138,74,0.12)",border:"1px solid rgba(30,138,74,0.35)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+          {NT.unlock}
+        </div>
+      )}
+      {exam.showUnlockNotice && (
+        <div style={{marginBottom:16}}>
+          <button onClick={exam.startExam} disabled={exam.examStarting} style={{
+            width:"100%",padding:"14px 0",border:"none",borderRadius:14,
+            background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
+            fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,
+            color:"#fff",cursor:exam.examStarting?"default":"pointer",opacity:exam.examStarting?0.6:1,
+          }}>
+            {exam.examStarting ? ST.starting : ST.examBtn}
+          </button>
+          {exam.examBlockedUntil && (
+            <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{ST.cooldown(exam.examBlockedUntil)}</div>
+          )}
+          {exam.examError === "no_questions" && (
+            <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{ST.noQuestions}</div>
+          )}
+        </div>
+      )}
+      {exam.remedialCooldownNow.eligible && (
+        <div style={{marginBottom:16,background:"rgba(201,146,42,0.08)",border:"1px solid rgba(201,146,42,0.3)",borderRadius:14,padding:14}}>
+          <div style={{fontSize:12,fontWeight:600,marginBottom:10,lineHeight:1.5}}>{RT.remedialTitleGeneric}</div>
+          <button onClick={exam.startRemedial} disabled={exam.remedialStarting} style={{
+            width:"100%",padding:"12px 0",border:"none",borderRadius:12,
+            background:"linear-gradient(135deg,#c9922a,#1a6fd4)",
+            fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
+            color:"#fff",cursor:exam.remedialStarting?"default":"pointer",opacity:exam.remedialStarting?0.6:1,
+          }}>
+            {exam.remedialStarting ? RT.remedialStarting : RT.remedialBtn}
+          </button>
+          {exam.remedialBlockedUntil && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{RT.remedialCooldown(exam.remedialBlockedUntil)}</div>}
+          {exam.remedialError === "no_questions" && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{RT.remedialNoQuestions}</div>}
+        </div>
+      )}
+    </>
+  );
+}
+
+function ExamRunningScreen({ exam, lang, title, backLabel }:{exam:any;lang:string;title:string;backLabel:string}) {
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={exam.backToList} title={title} backLabel={backLabel}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ModuleExamComp lang={lang} questions={exam.examQuestions} onFinish={exam.finishExam}/>
+      </div>
+    </div>
+  );
+}
+
+function ExamResultScreen({ exam, lang, title, backLabel, onPick, competencies }:{exam:any;lang:string;title:string;backLabel:string;onPick:(lid:string)=>void;competencies:any}) {
+  const { examResult, examMode, examQuestions } = exam;
+  if (!examResult) return null;
+  const ET = EXAM_UI_T[lang] || EXAM_UI_T.fr;
+  const RT = EXAM_RESULT_T[lang] || EXAM_RESULT_T.fr;
+  const wrongAnswers = examResult.answers.filter((a:any)=>!a.wasCorrect);
+  const showRemedialOffer = examMode === "exam" && !examResult.passed && exam.remedialCooldownNow.eligible;
+  const resultLabel = examMode === "remedial"
+    ? (examResult.passed ? RT.remedialPassed : RT.remedialFailed)
+    : (examResult.passed ? ET.passed : ET.failed);
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={exam.backToList} title={title} backLabel={backLabel}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:16}}>
+          <div style={{fontSize:52,marginBottom:8}}>{examResult.passed ? "🏆" : "📚"}</div>
+          <div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,marginBottom:4}}>{examResult.score}/{examResult.maxScore}</div>
+          <div style={{fontSize:13,fontWeight:700,color:examResult.passed?"#1e8a4a":"#c0392b"}}>{resultLabel}</div>
+        </div>
+
+        {examResult.passed && (
+          <div style={{background:"rgba(30,138,74,0.08)",border:"1px solid rgba(30,138,74,0.3)",borderRadius:14,padding:14,marginBottom:16}}>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:11,letterSpacing:2,color:"#1e8a4a",marginBottom:8}}>{RT.competenciesHeader}</div>
+            {(competencies[lang] || competencies.fr).map((c:string,i:number)=>(
+              <div key={i} style={{fontSize:12,marginBottom:6,lineHeight:1.5}}>{c}</div>
+            ))}
+          </div>
+        )}
+
+        {showRemedialOffer && (
+          <div style={{background:"rgba(201,146,42,0.08)",border:"1px solid rgba(201,146,42,0.3)",borderRadius:14,padding:14,marginBottom:16}}>
+            <div style={{fontSize:12,fontWeight:600,marginBottom:10,lineHeight:1.5}}>{RT.remedialTitleWithCount(wrongAnswers.length)}</div>
+            <button onClick={exam.startRemedial} disabled={exam.remedialStarting} style={{
+              width:"100%",padding:"12px 0",border:"none",borderRadius:12,
+              background:"linear-gradient(135deg,#c9922a,#1a6fd4)",
+              fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
+              color:"#fff",cursor:exam.remedialStarting?"default":"pointer",opacity:exam.remedialStarting?0.6:1,
+            }}>
+              {exam.remedialStarting ? RT.remedialStarting : RT.remedialBtn}
+            </button>
+            {exam.remedialBlockedUntil && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{RT.remedialCooldown(exam.remedialBlockedUntil)}</div>}
+            {exam.remedialError === "no_questions" && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{RT.remedialNoQuestions}</div>}
+          </div>
+        )}
+
+        <div style={{marginBottom:16}}>
+          <div style={{fontFamily:"'Cinzel',serif",fontSize:11,letterSpacing:2,color:"#c9922a",marginBottom:10}}>{RT.reviewHeader}</div>
+          <div style={{display:"flex",flexDirection:"column",gap:10}}>
+            {examResult.answers.map((a:any)=>{
+              const q = examQuestions.find((eq:any)=>eq.questionId===a.questionId);
+              if (!q) return null;
+              return (
+                <div key={a.questionId} style={{background:"rgba(13,31,60,0.85)",border:`1px solid ${a.wasCorrect?"#1e8a4a44":"#c0392b44"}`,borderRadius:12,padding:12}}>
+                  <div style={{fontSize:12,fontWeight:700,marginBottom:8,lineHeight:1.4}}>{a.wasCorrect?"✓":"✗"} {q.q}</div>
+                  <div style={{display:"flex",flexDirection:"column",gap:5,marginBottom:8}}>
+                    {q.opts.map((opt:string,oi:number)=>{
+                      let color="rgba(240,244,255,0.55)", weight:any=400, prefix="•";
+                      if (oi===q.correct) { color="#1e8a4a"; weight=700; prefix="✓"; }
+                      else if (oi===a.selectedIndex) { color="#c0392b"; weight=700; prefix="✗"; }
+                      return <div key={oi} style={{fontSize:11,color,fontWeight:weight}}>{prefix} {opt}</div>;
+                    })}
+                  </div>
+                  <div style={{fontSize:11,color:"rgba(240,244,255,0.5)",lineHeight:1.5,marginBottom:a.wasCorrect?0:8}}>{q.expl}</div>
+                  {!a.wasCorrect && (
+                    <button onClick={()=>onPick(a.lessonId.slice(a.lessonId.indexOf("-")+1))} style={{fontSize:11,color:"#4da6ff",background:"none",border:"none",cursor:"pointer",padding:0}}>
+                      {RT.reviewLessonLink}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <button onClick={exam.backToList} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:"linear-gradient(135deg,#1a6fd4,#c9922a)",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:"#fff",cursor:"pointer"}}>
+          {ET.back}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
+  // specific lesson, bypassing this module's own list. Reuses onPick
+  // exactly as-is (no duplication of its id->page mapping) via an
+  // auto-trigger on mount. Renders a neutral transition screen instead of
+  // this page's real list while the redirect is in flight, so the user
+  // never sees this list flash before landing on the lesson.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "d1", lang, currentRankId, targetRankId });
+  if (autoPick) return <AutoPickTransition/>;
+  const t = NAV_T[lang] || NAV_T.fr;
+  const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d1");
+  const title = mod?.title?.[lang] || mod?.title?.fr || "Navigation";
+  const labels:any = {
+    fr:{header:"Leçons", available:"Disponible", soon:"Bientôt", done:"Terminé ✓"},
+    en:{header:"Lessons", available:"Available", soon:"Coming soon", done:"Completed ✓"},
+    es:{header:"Lecciones", available:"Disponible", soon:"Próximamente", done:"Completado ✓"},
+    pt:{header:"Lições", available:"Disponível", soon:"Em breve", done:"Concluído ✓"},
+  };
+  const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8","l9","l10"]);
 
-  if (examView === "running" && examQuestions.length > 0) {
-    return (
-      <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
-        <TopBar onBack={backToList} title={title} backLabel={t.back}/>
-        <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
-          <ModuleExamComp lang={lang} questions={examQuestions} onFinish={finishExam}/>
-        </div>
-      </div>
-    );
-  }
-
-  if (examView === "result" && examResult) {
-    const ET = EXAM_UI_T[lang] || EXAM_UI_T.fr;
-    const RT = EXAM_RESULT_T[lang] || EXAM_RESULT_T.fr;
-    const wrongAnswers = examResult.answers.filter((a)=>!a.wasCorrect);
-    const remedialCooldown = canAttemptRemedial(latestFoundationAttempt, latestRemedialAttempt);
-    const showRemedialOffer = examMode === "exam" && !examResult.passed && remedialCooldown.eligible;
-    const resultLabel = examMode === "remedial"
-      ? (examResult.passed ? RT.remedialPassed : RT.remedialFailed)
-      : (examResult.passed ? ET.passed : ET.failed);
-    return (
-      <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
-        <TopBar onBack={backToList} title={title} backLabel={t.back}/>
-        <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
-          <div style={{textAlign:"center",marginBottom:16}}>
-            <div style={{fontSize:52,marginBottom:8}}>{examResult.passed ? "🏆" : "📚"}</div>
-            <div style={{fontFamily:"'Cinzel',serif",fontSize:28,fontWeight:900,marginBottom:4}}>{examResult.score}/{examResult.maxScore}</div>
-            <div style={{fontSize:13,fontWeight:700,color:examResult.passed?"#1e8a4a":"#c0392b"}}>{resultLabel}</div>
-          </div>
-
-          {examResult.passed && (
-            <div style={{background:"rgba(30,138,74,0.08)",border:"1px solid rgba(30,138,74,0.3)",borderRadius:14,padding:14,marginBottom:16}}>
-              <div style={{fontFamily:"'Cinzel',serif",fontSize:11,letterSpacing:2,color:"#1e8a4a",marginBottom:8}}>{RT.competenciesHeader}</div>
-              {(COMPETENCIES_D1[lang] || COMPETENCIES_D1.fr).map((c:string,i:number)=>(
-                <div key={i} style={{fontSize:12,marginBottom:6,lineHeight:1.5}}>{c}</div>
-              ))}
-            </div>
-          )}
-
-          {showRemedialOffer && (
-            <div style={{background:"rgba(201,146,42,0.08)",border:"1px solid rgba(201,146,42,0.3)",borderRadius:14,padding:14,marginBottom:16}}>
-              <div style={{fontSize:12,fontWeight:600,marginBottom:10,lineHeight:1.5}}>{RT.remedialTitleWithCount(wrongAnswers.length)}</div>
-              <button onClick={startRemedial} disabled={remedialStarting} style={{
-                width:"100%",padding:"12px 0",border:"none",borderRadius:12,
-                background:"linear-gradient(135deg,#c9922a,#1a6fd4)",
-                fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
-                color:"#fff",cursor:remedialStarting?"default":"pointer",opacity:remedialStarting?0.6:1,
-              }}>
-                {remedialStarting ? RT.remedialStarting : RT.remedialBtn}
-              </button>
-              {remedialBlockedUntil && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{RT.remedialCooldown(remedialBlockedUntil)}</div>}
-              {remedialError === "no_questions" && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{RT.remedialNoQuestions}</div>}
-            </div>
-          )}
-
-          <div style={{marginBottom:16}}>
-            <div style={{fontFamily:"'Cinzel',serif",fontSize:11,letterSpacing:2,color:"#c9922a",marginBottom:10}}>{RT.reviewHeader}</div>
-            <div style={{display:"flex",flexDirection:"column",gap:10}}>
-              {examResult.answers.map((a)=>{
-                const q = examQuestions.find((eq:any)=>eq.questionId===a.questionId);
-                if (!q) return null;
-                return (
-                  <div key={a.questionId} style={{background:"rgba(13,31,60,0.85)",border:`1px solid ${a.wasCorrect?"#1e8a4a44":"#c0392b44"}`,borderRadius:12,padding:12}}>
-                    <div style={{fontSize:12,fontWeight:700,marginBottom:8,lineHeight:1.4}}>{a.wasCorrect?"✓":"✗"} {q.q}</div>
-                    <div style={{display:"flex",flexDirection:"column",gap:5,marginBottom:8}}>
-                      {q.opts.map((opt:string,oi:number)=>{
-                        let color="rgba(240,244,255,0.55)", weight:any=400, prefix="•";
-                        if (oi===q.correct) { color="#1e8a4a"; weight=700; prefix="✓"; }
-                        else if (oi===a.selectedIndex) { color="#c0392b"; weight=700; prefix="✗"; }
-                        return <div key={oi} style={{fontSize:11,color,fontWeight:weight}}>{prefix} {opt}</div>;
-                      })}
-                    </div>
-                    <div style={{fontSize:11,color:"rgba(240,244,255,0.5)",lineHeight:1.5,marginBottom:a.wasCorrect?0:8}}>{q.expl}</div>
-                    {!a.wasCorrect && (
-                      <button onClick={()=>onPick(a.lessonId.replace("d1-",""))} style={{fontSize:11,color:"#4da6ff",background:"none",border:"none",cursor:"pointer",padding:0}}>
-                        {RT.reviewLessonLink}
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <button onClick={backToList} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:"linear-gradient(135deg,#1a6fd4,#c9922a)",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:"#fff",cursor:"pointer"}}>
-            {ET.back}
-          </button>
-        </div>
-      </div>
-    );
-  }
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_D1}/>;
 
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
-        {moduleAverage && (
-          <div style={{fontSize:12,fontWeight:700,color:"#c9922a",background:"rgba(201,146,42,0.1)",border:"1px solid rgba(201,146,42,0.35)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
-            📊 {(avgT[lang] || avgT.fr)(moduleAverage)}
-          </div>
-        )}
-        {showEncouragement && (
-          <div style={{fontSize:12,fontWeight:600,color:"#4da6ff",background:"rgba(26,111,212,0.1)",border:"1px solid rgba(77,166,255,0.3)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
-            {NT.encouragement}
-          </div>
-        )}
-        {showInformative && (
-          <div style={{fontSize:12,fontWeight:600,color:"rgba(240,244,255,0.75)",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
-            {NT.informative}
-          </div>
-        )}
-        {showUnlockNotice && (
-          <div style={{fontSize:12,fontWeight:700,color:"#1e8a4a",background:"rgba(30,138,74,0.12)",border:"1px solid rgba(30,138,74,0.35)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
-            {NT.unlock}
-          </div>
-        )}
-        {showUnlockNotice && (
-          <div style={{marginBottom:16}}>
-            <button onClick={startExam} disabled={examStarting} style={{
-              width:"100%",padding:"14px 0",border:"none",borderRadius:14,
-              background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
-              fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,
-              color:"#fff",cursor:examStarting?"default":"pointer",opacity:examStarting?0.6:1,
-            }}>
-              {examStarting ? (EXAM_START_T[lang]||EXAM_START_T.fr).starting : (EXAM_START_T[lang]||EXAM_START_T.fr).examBtn}
-            </button>
-            {examBlockedUntil && (
-              <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_START_T[lang]||EXAM_START_T.fr).cooldown(examBlockedUntil)}</div>
-            )}
-            {examError === "no_questions" && (
-              <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_START_T[lang]||EXAM_START_T.fr).noQuestions}</div>
-            )}
-          </div>
-        )}
-        {latestFoundationAttempt && canAttemptRemedial(latestFoundationAttempt, latestRemedialAttempt).eligible && (
-          <div style={{marginBottom:16,background:"rgba(201,146,42,0.08)",border:"1px solid rgba(201,146,42,0.3)",borderRadius:14,padding:14}}>
-            <div style={{fontSize:12,fontWeight:600,marginBottom:10,lineHeight:1.5}}>{(EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialTitleGeneric}</div>
-            <button onClick={startRemedial} disabled={remedialStarting} style={{
-              width:"100%",padding:"12px 0",border:"none",borderRadius:12,
-              background:"linear-gradient(135deg,#c9922a,#1a6fd4)",
-              fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
-              color:"#fff",cursor:remedialStarting?"default":"pointer",opacity:remedialStarting?0.6:1,
-            }}>
-              {remedialStarting ? (EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialStarting : (EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialBtn}
-            </button>
-            {remedialBlockedUntil && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialCooldown(remedialBlockedUntil)}</div>}
-            {remedialError === "no_questions" && <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{(EXAM_RESULT_T[lang]||EXAM_RESULT_T.fr).remedialNoQuestions}</div>}
-          </div>
-        )}
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
@@ -2197,7 +2220,7 @@ function SeempLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, on
     </div>
   );
 }
-function IMLLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function IMLLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2210,6 +2233,7 @@ function IMLLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAu
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "d2", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d2");
@@ -2223,10 +2247,15 @@ function IMLLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAu
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8","l9","l10"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_D2}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
@@ -4737,6 +4766,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {

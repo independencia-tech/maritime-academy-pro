@@ -335,7 +335,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"La Convention de Bruxelles de 1910 (droit des abordages) établit quel principe fondamental ?",opts:["Responsabilité exclusive du navire le plus grand","Partage de responsabilité proportionnel aux fautes commises par chaque navire","Toujours 50/50 entre les deux navires","Responsabilité exclusive du navire qui a été percuté"],correct:1,expl:"Convention de Bruxelles 1910 (COLREG de la responsabilité) = partage des responsabilités proportionnel aux fautes. Si navire A commet 3 violations COLREG et navire B en commet 1, le tribunal peut décider A = 75% responsable, B = 25%. Chaque navire paie sa part des dommages selon ce pourcentage. Base de tous les procès maritimes d'abordage."},
     {q:"En haute mer, quel État a compétence pour poursuivre les violations COLREG ?",opts:["L'État côtier le plus proche","L'État du PAVILLON exclusivement (avec exceptions limitées)","L'État du port suivant","L'OMI directement"],correct:1,expl:"En haute mer (UNCLOS Article 92) : seul l'État du PAVILLON a compétence pour poursuivre les infractions COLREG. Exceptions : piraterie (compétence universelle), trafic de drogue, transport d'esclaves. Un État côtier peut surveiller et signaler, mais ne peut pas arrêter un navire étranger en haute mer sauf flagrant délit de piraterie."},
@@ -366,7 +366,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le 'Tribunal Maritime' (Marine Court / MAIB) ?",opts:["Un tribunal commercial ordinaire","Juridiction spécialisée dans les accidents maritimes — enquête sur les causes, tire les leçons, peut suspendre les brevets","Un tribunal OMI","Un arbitrage commercial"],correct:1,expl:"Tribunal Maritime (ex. MAIB UK, BEA-mer France, BSU Allemagne) = autorité d'enquête sur les accidents maritimes. Rôle : analyser les causes des accidents, émettre des recommandations de sécurité, tirer les leçons. Peut : suspendre les brevets, identifier les responsabilités. Différent du tribunal pénal (crime) et du tribunal civil (dommages). Base des procédures après abordage."},
     {q:"Qu'est-ce que le 'CPA' (Closest Point of Approach) dans le contexte juridique COLREG ?",opts:["Un accord commercial entre navires","Distance minimale de rapprochement calculée par radar — si CPA trop faible = risque d'abordage · obligation d'agir (Règle 8)","Un certificat de navigation","Un protocole de communication"],correct:1,expl:"CPA (Closest Point of Approach) = distance minimale prévue entre deux navires. Calculé par radar ARPA. Si CPA est inférieur à un seuil sûr = risque d'abordage → obligation légale d'agir (Règle 7 + 8 COLREG). En cas d'abordage : le tribunal vérifie si le CPA a été calculé et si des actions ont été prises. Ne pas calculer le CPA = violation de la Règle 7 = faute."},

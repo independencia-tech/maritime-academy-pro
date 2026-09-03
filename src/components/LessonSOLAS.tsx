@@ -408,7 +408,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"En quelle année la convention SOLAS actuellement en vigueur a-t-elle été adoptée ?",opts:["1912","1948","1974","2002"],correct:2,expl:"SOLAS 1974 = la convention actuellement en vigueur. Adoptée à Londres le 1er novembre 1974, entrée en vigueur le 25 mai 1980. Elle remplace les versions précédentes (1914, 1929, 1948, 1960). Elle est continuellement mise à jour via la 'procédure d'amendement tacite' de l'OMI. 163 États contractants représentant plus de 98% du tonnage mondial."},
     {q:"Quel événement a été le catalyseur de la création de SOLAS ?",opts:["La Première Guerre Mondiale","Le naufrage du RMS Titanic en 1912","La création de l'OMI en 1948","L'accident de l'Estonia en 1994"],correct:1,expl:"Le naufrage du RMS Titanic le 15 avril 1912 (1 496 morts) a choqué le monde et révélé les lacunes de la sécurité maritime : canots de sauvetage insuffisants, pas de veille radio permanente, vitesse excessive dans les glaces. La première conférence SOLAS a été convoquée en 1913 et a abouti à SOLAS 1914 (jamais entré en vigueur à cause de la WWI)."},
@@ -439,7 +439,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que la 'procédure d'amendement tacite' de l'OMI ?",opts:["Une procédure administrative interne","Méthode permettant d'amender SOLAS sans vote explicit — l'amendement entre en vigueur sauf si un certain nombre d'États s'y opposent","Un type de certification","Une procédure de plainte"],correct:1,expl:"Procédure d'amendement tacite (tacit acceptance) = système permettant à l'OMI d'adopter des amendements à SOLAS rapidement. L'amendement est réputé accepté sauf si un nombre prédéfini d'États s'y oppose dans le délai imparti. Permet une mise à jour continuelle de SOLAS sans délais excessifs. Clé pour adapter rapidement les règles aux nouvelles technologies."},
     {q:"Qu'est-ce que le VDR (Voyage Data Recorder) obligatoire par SOLAS ?",opts:["Un registre de navigation papier","Enregistreur de données du voyage (boîte noire maritime) — conserve les 12 dernières heures de données de navigation, audio passerelle, radar","Un système GPS avancé","Un journal électronique de bord"],correct:1,expl:"VDR = Voyage Data Recorder = 'boîte noire' maritime. Obligatoire SOLAS Chapitre V pour navires > 3 000 TB (passagers depuis 2002, cargo depuis 2004). Enregistre : position GPS, cap, vitesse, données radar, communications VHF, audio passerelle, alarmes. Conserve les 12 dernières heures. Permet d'analyser les accidents."},

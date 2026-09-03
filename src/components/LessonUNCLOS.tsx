@@ -320,7 +320,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"En quelle année et où a été adoptée la Convention UNCLOS ?",opts:["1958 — Genève","1973 — New York","1982 — Montego Bay (Jamaïque)","1994 — Hambourg"],correct:2,expl:"UNCLOS = adoptée le 10 décembre 1982 à Montego Bay, Jamaïque, lors de la 3ème Conférence des Nations Unies sur le Droit de la Mer (UNCLOS III). Entrée en vigueur le 16 novembre 1994 (après la 60ème ratification). 320 articles + 9 annexes. Surnommée 'Constitution Maritime Mondiale'. Les États-Unis n'ont toujours pas ratifié UNCLOS."},
     {q:"La Zone Économique Exclusive (ZEE) s'étend jusqu'à combien de milles nautiques ?",opts:["12 milles","24 milles","200 milles","350 milles"],correct:2,expl:"ZEE = 200 milles nautiques depuis la ligne de base (côte). Concept créé par UNCLOS 1982. Dans la ZEE : l'État côtier a des droits souverains sur les ressources vivantes (pêche), non-vivantes (pétrole, gaz, minéraux) et les énergies marines. MAIS les navires étrangers conservent la liberté de navigation et de survol. La ZEE représente environ 36% de la surface des océans."},
@@ -351,7 +351,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que la 'ligne de base' (baseline) en droit UNCLOS ?",opts:["Le niveau moyen de la mer","Ligne à partir de laquelle se mesurent toutes les zones maritimes — généralement la laisse de basse mer · peut être une ligne de base droite (archipels)","La limite entre ZEE et haute mer","La côte officielle d'un État"],correct:1,expl:"Ligne de base = référence fondamentale pour mesurer toutes les zones maritimes (mer territoriale, zone contiguë, ZEE, plateau continental). Normalement = laisse de basse mer (low-water line). Exception : lignes de base droites (archipels, côtes très découpées — Norvège, Indonésie). Points de base marqués sur les cartes marines. C'est depuis la ligne de base que commence le comptage des 12+24+200 milles."},
     {q:"Qu'est-ce que le 'passage en transit' dans les détroits internationaux ?",opts:["Le passage innocent simplifié","Droit de passage continu et rapide dans les détroits utilisés pour la navigation internationale — sous-marins peuvent passer immergés","Un passage commercial payant","Un droit réservé aux États riverains"],correct:1,expl:"Passage en transit (UNCLOS Art.37-44) = régime spécial pour les détroits internationaux (Malacca, Gibraltar, Hormuz, Bab-el-Mandeb). Différent du passage innocent : les sous-marins peuvent passer IMMERGÉS, les avions militaires peuvent survoler. L'État riverain ne peut pas suspendre le passage en transit. Importance stratégique majeure pour les marines militaires mondiales."},

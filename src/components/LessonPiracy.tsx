@@ -305,7 +305,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Selon l'UNCLOS Article 101, qu'est-ce qui distingue la piraterie d'un vol maritime ordinaire ?",opts:["La valeur de la cargaison volée","La piraterie doit être commise en HAUTE MER par un navire PRIVÉ avec un motif PRIVÉ — un vol dans les eaux territoriales est un 'vol maritime' (armed robbery), pas de la piraterie","La nationalité des pirates","L'utilisation d'armes à feu"],correct:1,expl:"UNCLOS Art.101 = définition juridique précise de la piraterie. 3 conditions CUMULATIVES : 1) Acte illicite de violence, détention ou déprédation. 2) Commis en HAUTE MER (ou dans un lieu ne relevant d'aucun État). 3) Par l'équipage ou passagers d'un navire PRIVÉ à des fins PRIVÉES. Si l'acte a lieu dans les eaux territoriales → 'armed robbery against ships' (vol maritime à main armée). Compétence : État côtier. Si la haute mer → piraterie : compétence UNIVERSELLE."},
     {q:"Le Code ISPS (SOLAS Chapitre XI-2) établit combien de niveaux de sûreté maritime ?",opts:["2 niveaux","3 niveaux","4 niveaux","5 niveaux"],correct:1,expl:"Code ISPS (International Ship and Port Facility Security Code, adopté 2002, en vigueur 2004) = 3 niveaux de sûreté. Niveau 1 = Normal (mesures minimales permanentes). Niveau 2 = Élevé (risque accru, mesures additionnelles). Niveau 3 = Exceptionnel (menace spécifique ou imminente, mesures maximales). Chaque niveau a des mesures précises pour le navire (SSO) ET pour l'installation portuaire (PFSO). L'État fixe le niveau selon son évaluation du risque."},
@@ -336,7 +336,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que l'IMB (International Maritime Bureau) et son rôle dans la lutte anti-piraterie ?",opts:["Un tribunal maritime","Organe de la CCI spécialisé dans la lutte contre la fraude maritime et la piraterie — recueille et publie les rapports d'incidents de piraterie mondiaux","Un organisme OMI","Un P&I Club"],correct:1,expl:"IMB (International Maritime Bureau) = organe de la Chambre de Commerce Internationale (ICC) créé en 1981. Rôle : recueillir les rapports d'incidents de piraterie et de vol maritime à main armée. Publier des rapports statistiques trimestriels et annuels. Le Piracy Reporting Centre (PRC) est disponible 24h/24. Les capitaines doivent OBLIGATOIREMENT signaler tout incident à l'IMB. Base de données mondiale des incidents piraterie."},
     {q:"Qu'est-ce que l'UKMTO (United Kingdom Maritime Trade Operations) ?",opts:["Un organisme douanier","Centre de coordination maritime britannique — premier contact en cas d'incident de piraterie dans l'Océan Indien et le Golfe d'Aden · numéro d'urgence","Un tribunal maritime","Un service de météo maritime"],correct:1,expl:"UKMTO = UK Maritime Trade Operations. Basé à Dubaï (UAE). Premier point de contact maritime pour les navires en transit dans la zone à risque (Golfe d'Aden, Océan Indien). Numéro d'urgence : +971 50 552 3215. Les navires doivent s'inscrire AVANT d'entrer dans la zone. En cas d'incident : appel IMMÉDIAT. Coordonne avec les forces militaires (EU NavFor, OTAN) pour les réponses d'urgence."},

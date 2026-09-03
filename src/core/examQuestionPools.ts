@@ -24,6 +24,17 @@ import { QUIZ as D1_L8_QUIZ, BANK as D1_L8_BANK } from "../components/LessonCOLR
 import { BANK as D1_L9_BANK } from "../components/LessonSteering";
 import { BANK as D1_L10_BANK } from "../components/LessonWatchOrganization";
 
+import { QUIZ as D2_L1_QUIZ, BANK as D2_L1_BANK } from "../components/LessonSOLAS";
+import { QUIZ as D2_L2_QUIZ, BANK as D2_L2_BANK } from "../components/LessonMARPOLLegal";
+import { QUIZ as D2_L3_QUIZ, BANK as D2_L3_BANK } from "../components/LessonSTCW";
+import { QUIZ as D2_L4_QUIZ, BANK as D2_L4_BANK } from "../components/LessonMLC";
+import { QUIZ as D2_L5_QUIZ, BANK as D2_L5_BANK } from "../components/LessonCOLREGLegal";
+import { QUIZ as D2_L6_QUIZ, BANK as D2_L6_BANK } from "../components/LessonUNCLOS";
+import { QUIZ as D2_L7_QUIZ, BANK as D2_L7_BANK } from "../components/LessonLiabilityInsurance";
+import { QUIZ as D2_L8_QUIZ, BANK as D2_L8_BANK } from "../components/LessonPortsFlagStates";
+import { QUIZ as D2_L9_QUIZ, BANK as D2_L9_BANK } from "../components/LessonPiracy";
+import { QUIZ as D2_L10_QUIZ, BANK as D2_L10_BANK } from "../components/LessonArbitration";
+
 const LANGS = ["fr", "en", "es", "pt"];
 
 // Tags each question with a stable questionId (lessonId + its index in the
@@ -58,10 +69,20 @@ const LESSON_POOLS = {
   "d1-l8": buildLessonPool("d1-l8", D1_L8_QUIZ, D1_L8_BANK),
   "d1-l9": buildLessonPool("d1-l9", null, D1_L9_BANK),
   "d1-l10": buildLessonPool("d1-l10", null, D1_L10_BANK),
+  "d2-l1": buildLessonPool("d2-l1", D2_L1_QUIZ, D2_L1_BANK),
+  "d2-l2": buildLessonPool("d2-l2", D2_L2_QUIZ, D2_L2_BANK),
+  "d2-l3": buildLessonPool("d2-l3", D2_L3_QUIZ, D2_L3_BANK),
+  "d2-l4": buildLessonPool("d2-l4", D2_L4_QUIZ, D2_L4_BANK),
+  "d2-l5": buildLessonPool("d2-l5", D2_L5_QUIZ, D2_L5_BANK),
+  "d2-l6": buildLessonPool("d2-l6", D2_L6_QUIZ, D2_L6_BANK),
+  "d2-l7": buildLessonPool("d2-l7", D2_L7_QUIZ, D2_L7_BANK),
+  "d2-l8": buildLessonPool("d2-l8", D2_L8_QUIZ, D2_L8_BANK),
+  "d2-l9": buildLessonPool("d2-l9", D2_L9_QUIZ, D2_L9_BANK),
+  "d2-l10": buildLessonPool("d2-l10", D2_L10_QUIZ, D2_L10_BANK),
 };
 
 // Returns the pooled, tagged questions for a set of lessonIds, in one
-// language. Lessons with no pool defined here (anything outside d1 today)
+// language. Lessons with no pool defined here (any module beyond d1/d2)
 // simply contribute nothing — callers don't need to special-case that.
 export function getQuestionPoolForLessons(lessonIds, lang) {
   const safeLang = LANGS.includes(lang) ? lang : "fr";

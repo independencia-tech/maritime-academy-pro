@@ -388,7 +388,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"En quelle année sont entrés en vigueur les Amendements de Manille de la Convention STCW ?",opts:["2010","2011","2012","2015"],correct:2,expl:"Les Amendements de Manille ont été adoptés le 25 juin 2010 lors de la conférence diplomatique de Manille (Philippines). Ils sont entrés en vigueur le 1er janvier 2012. Ils représentent la révision la plus complète de STCW depuis 1995. Principales nouveautés : compétences leadership, intégration MLC 2006, nouvelles certifications (ETO), renforcement de la formation sur la piraterie et la sûreté."},
     {q:"La formation BST (Basic Safety Training) est obligatoire pour :",opts:["Les capitaines uniquement","Tous les marins sans exception — avant d'embarquer sur tout navire","Les officiers de pont uniquement","Les officiers machine uniquement"],correct:1,expl:"BST = obligatoire pour TOUS les marins, quel que soit leur rang ou leur fonction (STCW Chapitre VI, Règle VI/1). 4 modules : 1) Techniques personnelles de survie (PST), 2) Lutte contre l'incendie et prévention (FFP), 3) Premiers secours élémentaires (EFA), 4) Sécurité individuelle et responsabilités sociales (PSSR). Validité 5 ans. À revalider avant expiration."},
@@ -419,7 +419,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que la 'revalidation' d'un certificat STCW ?",opts:["Un nouveau certificat","Procédure obligatoire tous les 5 ans pour maintenir la validité d'un certificat STCW — formation continue + service en mer requis","Un test médical","Un audit ISM"],correct:1,expl:"Revalidation STCW = procédure tous les 5 ans pour maintenir la validité d'un certificat de compétence. Exige : preuve de service en mer récent (minimum 12 mois sur 5 ans) OU formation de mise à niveau approuvée. Si certificat expiré = doit repasser toute la formation. Vérifiée par le PSC lors des inspections."},
     {q:"Qu'est-ce que le certificat GMDSS GOC ?",opts:["Un certificat radio basique","General Operator Certificate — certification STCW pour exploiter les équipements GMDSS sur navires en navigation internationale","Un certificat réservé aux capitaines","Un certificat de sécurité SOLAS"],correct:1,expl:"GOC = General Operator Certificate. Requis par STCW pour tout officier opérant les équipements GMDSS (VHF DSC, MF/HF, Inmarsat, EPIRB, SART, Navtex). Obligatoire sur navires en navigation internationale. ROC (Restricted Operator Certificate) = version limitée pour navigation côtière. Délivré après formation spécialisée GMDSS + examen."},
