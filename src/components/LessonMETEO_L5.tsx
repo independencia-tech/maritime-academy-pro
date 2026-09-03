@@ -115,7 +115,7 @@ function StormSVG({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Où se trouvent les vents les plus violents dans un cyclone tropical?",opts:["Dans le mur de l'œil","Dans l'œil","Uniquement dans les bandes spiralées extérieures","Ils sont uniformes partout"],correct:0,expl:"L'œil est relativement calme ; le mur de l'œil concentre les vents les plus violents."},
     {q:"Quelle condition favorise la formation d'un cyclone tropical?",opts:["Une mer chaude supérieure à 26°C","Une mer froide","Un fort cisaillement de vent","Une proximité immédiate de l'équateur"],correct:0,expl:"La chaleur de la mer alimente le système en énergie."},
@@ -187,7 +187,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS) — reprend Q1, Q3, Q5, Q10, Q15 de la banque
-const QUIZ = {
+export const QUIZ = {
   fr:[BANK.fr[0], BANK.fr[2], BANK.fr[4], BANK.fr[9], BANK.fr[14]],
   en:[BANK.en[0], BANK.en[2], BANK.en[4], BANK.en[9], BANK.en[14]],
   es:[BANK.es[0], BANK.es[2], BANK.es[4], BANK.es[9], BANK.es[14]],

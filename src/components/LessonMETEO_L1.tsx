@@ -90,7 +90,7 @@ function AtmosphereFullSVG({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quel gaz compose la majorité de l'atmosphère terrestre ?",opts:["Azote","Oxygène","CO2","Vapeur d'eau"],correct:0,expl:"L'azote représente 78% de l'atmosphère."},
     {q:"Dans quelle couche de l'atmosphère se produisent les phénomènes météo ?",opts:["Troposphère","Stratosphère","Mésosphère","Thermosphère"],correct:0,expl:"La troposphère s'étend jusqu'à 8-15 km et concentre toute la météo."},
@@ -162,7 +162,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quel gaz compose la majorité de l'atmosphère ?",opts:["Azote","Oxygène","CO2","Vapeur d'eau"],correct:0,expl:"L'azote représente 78% de l'atmosphère."},
     {q:"Que se passe-t-il au point de rosée ?",opts:["La vapeur se condense","L'air se réchauffe","La pression augmente","Le vent cesse"],correct:0,expl:"La condensation forme brouillard, nuages ou précipitations."},

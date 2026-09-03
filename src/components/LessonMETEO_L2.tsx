@@ -302,7 +302,7 @@ function FogSVG({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quel nuage annonce souvent un front qui approche ?",opts:["Cirrus","Cumulus","Stratus","Cumulonimbus"],correct:0,expl:"Les cirrus fins et hauts précèdent souvent un front."},
     {q:"Quel nuage est associé aux orages violents ?",opts:["Cumulonimbus","Stratus","Cirrus","Cumulus"],correct:0,expl:"Le cumulonimbus produit orages et grains violents."},
@@ -374,7 +374,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS) — reprend Q1, Q3, Q5, Q10, Q15 de la banque
-const QUIZ = {
+export const QUIZ = {
   fr:[BANK.fr[0], BANK.fr[2], BANK.fr[4], BANK.fr[9], BANK.fr[14]],
   en:[BANK.en[0], BANK.en[2], BANK.en[4], BANK.en[9], BANK.en[14]],
   es:[BANK.es[0], BANK.es[2], BANK.es[4], BANK.es[9], BANK.es[14]],

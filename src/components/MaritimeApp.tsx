@@ -1697,6 +1697,15 @@ const COMPETENCIES_D4:any = {
   pt:["✔ Aplicar as frases normalizadas SMCP nas operações habituais de ponte","✔ Comunicar com clareza com o VTS e as autoridades portuárias","✔ Usar corretamente as frases SMCP de emergência sob pressão","✔ Dar e confirmar a receção de ordens de manobra sem ambiguidade","✔ Reportar uma emergência médica segundo a fraseologia normalizada"],
 };
 
+// Batch #2 competencies list for d7 (Marine Meteorology) — same register as
+// d1-d4, validated 2026-09-03.
+const COMPETENCIES_D7:any = {
+  fr:["✔ Interpréter les indicateurs de pression et de tendance barométrique pour anticiper une évolution météo","✔ Observer et consigner correctement les nuages, la visibilité et les conditions de mer","✔ Utiliser les instruments météorologiques embarqués et détecter leurs anomalies","✔ Identifier les systèmes de pression, masses d'air et fronts sur une carte synoptique","✔ Évaluer un risque cyclonique ou de gros temps et appliquer la manœuvre d'évitement appropriée"],
+  en:["✔ Interpret pressure readings and barometric trends to anticipate weather changes","✔ Observe and accurately log clouds, visibility and sea conditions","✔ Use onboard meteorological instruments and detect their anomalies","✔ Identify pressure systems, air masses and fronts on a synoptic chart","✔ Assess a cyclone or heavy-weather risk and apply the appropriate avoidance manoeuvre"],
+  es:["✔ Interpretar las lecturas de presión y las tendencias barométricas para anticipar cambios meteorológicos","✔ Observar y registrar correctamente las nubes, la visibilidad y el estado del mar","✔ Usar los instrumentos meteorológicos de a bordo y detectar sus anomalías","✔ Identificar sistemas de presión, masas de aire y frentes en una carta sinóptica","✔ Evaluar un riesgo de ciclón o mal tiempo y aplicar la maniobra de evitación adecuada"],
+  pt:["✔ Interpretar as leituras de pressão e as tendências barométricas para antecipar mudanças meteorológicas","✔ Observar e registar corretamente as nuvens, a visibilidade e o estado do mar","✔ Usar os instrumentos meteorológicos de bordo e detetar as suas anomalias","✔ Identificar sistemas de pressão, massas de ar e frentes numa carta sinótica","✔ Avaliar um risco de ciclone ou mau tempo e aplicar a manobra de evitação adequada"],
+};
+
 // ── Shared exam engine wiring (2026-09-02 refactor) ─────────────────────
 // Extracted from NavigationLessonsPage (d1's original, one-off implementation)
 // into a moduleId-parametrized hook + presentational components so a second
@@ -2495,7 +2504,7 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
     </div>
   );
 }
-function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2508,6 +2517,7 @@ function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons, autoPi
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "d7", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d7");
@@ -2521,17 +2531,21 @@ function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons, autoPi
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_D7}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
             const isPlayable = playable.has(l.id);
             const isDone = completedLessons.includes(`d7-${l.id}`);
-            // access tier not yet decided (Billing policy pending) — don't assume free/premium, show no tag
-            const tag = l.access==="free" ? "FREE" : l.access==="premium_plus" ? "P+" : l.access==="premium" ? "PRO" : null;
+            const tag = l.access==="free" ? "FREE" : l.access==="premium_plus" ? "P+" : "PRO";
             const tagColor = l.access==="free" ? "#1e8a4a" : l.access==="premium_plus" ? "#9b59b6" : "#c9922a";
             return (
               <button key={l.id} disabled={!isPlayable} onClick={()=>onPick(l.id)} style={{
@@ -2546,7 +2560,7 @@ function MeteorologyLessonsPage({ lang, onBack, onPick, completedLessons, autoPi
                   <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{l.title?.[lang] || l.title?.fr}</div>
                   <div style={{fontSize:10,color:"rgba(240,244,255,0.5)"}}>{isDone ? L.done : (isPlayable ? L.available : L.soon)}</div>
                 </div>
-                {tag && <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>}
+                <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>
               </button>
             );
           })}
@@ -4124,6 +4138,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {

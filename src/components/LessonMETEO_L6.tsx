@@ -9,7 +9,7 @@ const MODULE_LABEL = { fr:"Météorologie", en:"Meteorology", es:"Meteorología"
 // Seamanship lessons — this lesson uses clear textual presentation only, no visual mockup.
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quel est l'objectif principal de lire une carte synoptique?",opts:["Identifier rapidement les informations utiles à la navigation","Apprendre à construire une carte météo","Remplacer totalement les bulletins","Mesurer directement la température de l'air"],correct:0,expl:"L'objectif est opérationnel, pas la construction de cartes."},
     {q:"Qu'indique un avertissement dans un bulletin météo?",opts:["Un danger immédiat","Une tendance générale sur plusieurs jours","Une simple observation historique","Une absence de risque"],correct:0,expl:"L'avertissement signale un danger immédiat à prendre en compte sans délai."},
@@ -81,7 +81,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS) — reprend Q1, Q4, Q7, Q9, Q15 de la banque
-const QUIZ = {
+export const QUIZ = {
   fr:[BANK.fr[0], BANK.fr[3], BANK.fr[6], BANK.fr[8], BANK.fr[14]],
   en:[BANK.en[0], BANK.en[3], BANK.en[6], BANK.en[8], BANK.en[14]],
   es:[BANK.es[0], BANK.es[3], BANK.es[6], BANK.es[8], BANK.es[14]],

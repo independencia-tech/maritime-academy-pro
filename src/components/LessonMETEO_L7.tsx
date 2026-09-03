@@ -11,7 +11,7 @@ const MODULE_LABEL = { fr:"Météorologie", en:"Meteorology", es:"Meteorología"
 // case study below is a static 4-step chronological text (Jour 1 à Jour 4), no clickable interface.
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que doit construire un officier à partir de l'observation, des instruments, des systèmes et des bulletins?",opts:["Une image mentale unique et cohérente de la situation","Une liste de mesures sans lien entre elles","Uniquement une carte synoptique","Rien, chaque source suffit isolément"],correct:0,expl:"C'est la synthèse complète qui permet une décision fiable."},
     {q:"Existe-t-il une route optimale dans l'absolu face au gros temps?",opts:["Non, seulement la plus sûre et la plus adaptée","Oui, toujours la même route","Oui, la plus rapide uniquement","Non, aucune règle ne s'applique"],correct:0,expl:"La route dépend des conditions et de la mission, jamais fixe."},
@@ -83,7 +83,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS) — reprend Q1, Q7, Q9, Q10, Q15 de la banque
-const QUIZ = {
+export const QUIZ = {
   fr:[BANK.fr[0], BANK.fr[6], BANK.fr[8], BANK.fr[9], BANK.fr[14]],
   en:[BANK.en[0], BANK.en[6], BANK.en[8], BANK.en[9], BANK.en[14]],
   es:[BANK.es[0], BANK.es[6], BANK.es[8], BANK.es[9], BANK.es[14]],

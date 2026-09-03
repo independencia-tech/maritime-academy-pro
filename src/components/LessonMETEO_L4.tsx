@@ -95,7 +95,7 @@ function FrontSymbolsSVG({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce qu'un anticyclone ?",opts:["Une zone de haute pression où l'air descend et diverge","Une zone de basse pression instable","Un type de front","Une masse d'air froide uniquement"],correct:0,expl:"L'air descendant favorise un temps stable."},
     {q:"Une dépression est généralement associée à :",opts:["L'instabilité","La stabilité","Un temps toujours clair","L'absence de vent"],correct:0,expl:"L'air montant et convergent favorise l'instabilité."},
@@ -167,7 +167,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS) — reprend Q1, Q6, Q7, Q11, Q15 de la banque
-const QUIZ = {
+export const QUIZ = {
   fr:[BANK.fr[0], BANK.fr[5], BANK.fr[6], BANK.fr[10], BANK.fr[14]],
   en:[BANK.en[0], BANK.en[5], BANK.en[6], BANK.en[10], BANK.en[14]],
   es:[BANK.es[0], BANK.es[5], BANK.es[6], BANK.es[10], BANK.es[14]],

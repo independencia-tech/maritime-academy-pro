@@ -135,7 +135,7 @@ function AnemometerSVG({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que mesure un baromètre anéroïde ?",opts:["La pression atmosphérique","La température","La vitesse du vent","L'humidité"],correct:0,expl:"Il mesure la pression en hectopascals."},
     {q:"Qu'enregistre un barographe ?",opts:["L'évolution continue de la pression","La direction du vent uniquement","La température de la mer","L'humidité relative"],correct:0,expl:"Il trace en continu sur un cylindre rotatif."},
@@ -207,7 +207,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS) — reprend Q1, Q3, Q6, Q11, Q15 de la banque
-const QUIZ = {
+export const QUIZ = {
   fr:[BANK.fr[0], BANK.fr[2], BANK.fr[5], BANK.fr[10], BANK.fr[14]],
   en:[BANK.en[0], BANK.en[2], BANK.en[5], BANK.en[10], BANK.en[14]],
   es:[BANK.es[0], BANK.es[2], BANK.es[5], BANK.es[10], BANK.es[14]],

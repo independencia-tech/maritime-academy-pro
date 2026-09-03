@@ -52,6 +52,14 @@ import { QUIZ as D4_L6_QUIZ, BANK as D4_L6_BANK } from "../components/LessonSMCP
 import { QUIZ as D4_L7_QUIZ, BANK_SMCP7 as D4_L7_BANK } from "../components/LessonSMCP_L7";
 import { BANK_SMCP8 as D4_L8_BANK } from "../components/LessonSMCP_L8";
 
+import { QUIZ as D7_L1_QUIZ, BANK as D7_L1_BANK } from "../components/LessonMETEO_L1";
+import { QUIZ as D7_L2_QUIZ, BANK as D7_L2_BANK } from "../components/LessonMETEO_L2";
+import { QUIZ as D7_L3_QUIZ, BANK as D7_L3_BANK } from "../components/LessonMETEO_L3";
+import { QUIZ as D7_L4_QUIZ, BANK as D7_L4_BANK } from "../components/LessonMETEO_L4";
+import { QUIZ as D7_L5_QUIZ, BANK as D7_L5_BANK } from "../components/LessonMETEO_L5";
+import { QUIZ as D7_L6_QUIZ, BANK as D7_L6_BANK } from "../components/LessonMETEO_L6";
+import { QUIZ as D7_L7_QUIZ, BANK as D7_L7_BANK } from "../components/LessonMETEO_L7";
+
 const LANGS = ["fr", "en", "es", "pt"];
 
 // Tags each question with a stable questionId (lessonId + its index in the
@@ -111,6 +119,13 @@ const LESSON_POOLS = {
   "d4-l6": buildLessonPool("d4-l6", D4_L6_QUIZ, D4_L6_BANK),
   "d4-l7": buildLessonPool("d4-l7", D4_L7_QUIZ, D4_L7_BANK),
   "d4-l8": buildLessonPool("d4-l8", null, D4_L8_BANK),
+  "d7-l1": buildLessonPool("d7-l1", D7_L1_QUIZ, D7_L1_BANK),
+  "d7-l2": buildLessonPool("d7-l2", D7_L2_QUIZ, D7_L2_BANK),
+  "d7-l3": buildLessonPool("d7-l3", D7_L3_QUIZ, D7_L3_BANK),
+  "d7-l4": buildLessonPool("d7-l4", D7_L4_QUIZ, D7_L4_BANK),
+  "d7-l5": buildLessonPool("d7-l5", D7_L5_QUIZ, D7_L5_BANK),
+  "d7-l6": buildLessonPool("d7-l6", D7_L6_QUIZ, D7_L6_BANK),
+  "d7-l7": buildLessonPool("d7-l7", D7_L7_QUIZ, D7_L7_BANK),
 };
 
 // Returns the pooled, tagged questions for a set of lessonIds, in one
