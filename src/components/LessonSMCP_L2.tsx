@@ -373,7 +373,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   en:[
     {q:"What is the correct SMCP phrase for the initial VTS contact?",opts:["Hello VTS","[VTS name], [VTS name], this is [vessel name], [vessel name]. Over.","VTS, ship calling","Port, vessel here"],correct:1,expl:"VTS initial contact SMCP format: '[VTS station name], [VTS station name], this is [vessel name], [vessel name]. Over.' Rules: repeat station name TWICE, repeat vessel name TWICE, end with 'Over' (expecting reply). Initial call on CH 16 only. VTS will instruct you to switch to working channel. Never start the conversation without stating both the station you're calling and your vessel name clearly."},
     {q:"What mandatory information must be included in a port arrival report?",opts:["Just the vessel name","Vessel name, position, ETA, draught, intended berth/anchorage, and any deficiencies or special requirements","Just ETA","Position and ETA only"],correct:1,expl:"Port arrival report SMCP mandatory information: vessel name (and call sign), current position (lat/long or bearing from landmark), ETA at port entrance (UTC 4-digit), draught forward and aft (in metres), intended berth or anchorage, any hazardous cargo (if applicable), any defects affecting maneuverability, request for pilot/tug if required. This comprehensive report allows the port authority to prepare appropriate resources."},
@@ -404,7 +404,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   en:[
     {q:"What is a 'Notice of Readiness' (NOR) in port communications?",opts:["A safety drill notice","Formal declaration by the master that the vessel has arrived at the designated place and is ready to load or discharge cargo — triggers laytime","A weather report","A crew list"],correct:1,expl:"Notice of Readiness (NOR) = formal SMCP/legal declaration: '[Vessel name] has arrived at [port/anchorage] and is in all respects ready to [load/discharge]. This Notice of Readiness is tendered at [time] UTC on [date].' NOR triggers the start of laytime (the time allowed for cargo operations). Critical in charter parties. Must be tendered in writing and acknowledged by the charterer/shipper/agent."},
     {q:"What information does a VTS operator need before granting port entry?",opts:["Just the vessel name","Vessel name, position, ETA, draught, cargo type, defects, pilot requirements, and compliance with port regulations","Only position","ETA and draught"],correct:1,expl:"VTS port entry requirements: vessel name and call sign, current position and ETA, draught (forward and aft), cargo type (especially dangerous goods), any navigational defects, pilot/tug requirements, ISPS code compliance, port state control clearance if required. VTS may also check: vessel tonnage against channel depth, berth availability, tidal windows for vessels with deep draught."},

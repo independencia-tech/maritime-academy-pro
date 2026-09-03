@@ -431,7 +431,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quel feu un navire à moteur en route montre-t-il que les voiliers n'ont PAS ?",opts:["Feux de côté rouge et vert","Le feu de tête de mât blanc à 225° — feu blanc dirigé vers l'avant et les côtés","Feu de poupe blanc","Feu tout horizon"],correct:1,expl:"Feu de tête de mât (masthead light) = feu blanc à 225° monté sur le mât avant. EXCLUSIF aux navires à propulsion mécanique (moteur). Les voiliers naviguant à la VOILE SEULE n'ont PAS ce feu. Si un voilier utilise son moteur (même si les voiles sont hissées), il DOIT allumer son feu de tête de mât — car il devient alors un 'navire à moteur' au sens COLREG. De jour : cône pointant vers le bas."},
     {q:"Un navire en route vous montre un feu rouge sur votre tribord. Que se passe-t-il ?",opts:["Il s'éloigne de vous","Un navire arrive par votre bâbord — vous voyez son feu rouge de bâbord = il est en croisement et peut vous présenter un risque d'abordage","Un navire arrive par votre tribord — vous êtes le navire privilégié","Rien de particulier"],correct:1,expl:"Feu rouge de bâbord (port sidelight) = visible sur 112,5° depuis bâbord. Si vous VOYEZ un feu rouge sur votre TRIBORD : cela signifie que le navire en question vous présente SON bâbord = il arrive de votre gauche (bâbord pour lui) et vous voyez son côté gauche. RÈGLE : quand deux navires se croisent et que l'un voit le rouge de l'autre sur son tribord → ce navire (vous) est le 'gêné' et doit s'écarter. 'Rouge stop = céder.'"},
@@ -462,7 +462,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quelle est la portée minimale des feux de côté (rouge/vert) d'un navire de plus de 50 mètres ?",opts:["1 mille","3 milles","6 milles","10 milles"],correct:1,expl:"COLREG Règle 22 - Portée des feux : Navire > 50m : feu de tête de mât = 6 milles · feux de côté = 3 milles · feu de poupe = 3 milles · feux tout horizon = 3 milles. Navire 12-50m : tête de mât = 5 milles · côtés = 2 milles. Navire < 12m : tête de mât = 2 milles · côtés = 1 mille · autres = 2 milles. Ces portées sont des minimums — pas des maximums."},
     {q:"Qu'est-ce qu'un feu 'tout horizon' (all-round light) ?",opts:["Un feu visible sur 360°","Un feu visible sur 225° uniquement","Un feu visible sur 135°","Un feu clignotant"],correct:0,expl:"Feu tout horizon = visible sur 360° — dans toutes les directions horizontales. Utilisé pour : navires au mouillage (blanc), NUC (rouge x2), RAM (rouge-blanc-rouge), pêche (vert+blanc ou 2 verts), pilote (blanc+rouge). Différent du feu de tête de mât (225°) et du feu de poupe (135°). En naviguant la nuit, un feu tout horizon blanc sans feux de côté = navire au mouillage ou à la dérive."},

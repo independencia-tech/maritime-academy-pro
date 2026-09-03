@@ -414,7 +414,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quel pavillon un navire doit-il arborer à l'arrivée dans un port étranger ?",opts:["Pavillon A (Alpha)","Pavillon Q (Quebec) — pavillon jaune signalant que le navire est sain et demandant la libre pratique","Pavillon V (Victor)","Pavillon B (Bravo)"],correct:1,expl:"Pavillon Q (Quebec) = pavillon JAUNE UNI. Obligation légale d'arborer ce pavillon à l'arrivée dans un port étranger avant l'autorisation des autorités douanières. Signifie : 'Mon navire est sain — je demande la libre pratique (autorisation de communiquer avec le port et de débarquer)'. Retiré quand les autorités accordent l'autorisation. Si QL ensemble : quarantaine stricte (navire infecté)."},
     {q:"Que signifient les pavillons NC arborés ensemble sur un navire ?",opts:["Navire commercial","Signal de détresse — équivalent du MAYDAY en pavillons — besoin d'assistance immédiate","Navire en quarantaine","Pilote à bord et demande de communications"],correct:1,expl:"NC ensemble = SIGNAL DE DÉTRESSE INTERNATIONAL (Code International des Signaux). Équivalent du MAYDAY radio mais en signaux visuels de pavillons. Valeur légale identique. Utilisé quand : radio impossible (panne), visibilité suffisante pour être vu. N = November (NON), C = Charlie (OUI) — ensemble le sens change et devient 'détresse'. À reconnaître à distance dans n'importe quelle condition météo favorable."},
@@ -445,7 +445,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le 'Code International des Signaux' (CIS) ?",opts:["Un code de navigation","Système international standardisé de communication par pavillons, signaux lumineux et sonores — publié par l'OMI — permet à des navires de nationalités différentes de communiquer","Un code douanier","Un code de conduite maritime"],correct:1,expl:"Code International des Signaux (CIS) = publié et maintenu par l'OMI (depuis 1969). Couvre : pavillons alphabétiques A-Z + numériques + substituts, signaux sonores, signaux lumineux morse. Permet la communication internationale entre navires de nationalités différentes sans connaissance linguistique commune. Disponible à bord de tous les navires professionnels. Version numérique disponible."},
     {q:"Combien de pavillons comporte l'alphabet du Code International des Signaux ?",opts:["24","26 lettres + 10 chiffres + 3 pavillons substituts","26 uniquement","40"],correct:1,expl:"CIS = 26 pavillons alphabétiques (A-Z) + 10 pavillons numériques (0-9) + 3 pavillons SUBSTITUTS (ou répéteurs) + pavillon réponse/décimale. Les 3 substituts permettent de répéter une lettre dans un groupe sans avoir à dupliquer le pavillon. Exemple : 'AA' = pavillon A + premier substitut. Total dans un jeu complet : environ 40 pavillons différents."},

@@ -418,7 +418,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quel est le canal VHF de veille obligatoire pour tous les navires en mer ?",opts:["Canal 9","Canal 12","Canal 16 — fréquence 156.800 MHz · appels de détresse · urgence · sécurité","Canal 70"],correct:2,expl:"Canal 16 (156.800 MHz) = canal de VEILLE OBLIGATOIRE pour tous les navires soumis au GMDSS (en mer). Obligations : maintenir une écoute permanente 24h/24 pendant la navigation. Utilisation : appels initiaux, détresse (MAYDAY), urgence (PAN-PAN), sécurité (SÉCURITÉ). Après contact établi : basculer sur un canal de travail. En port : canal 16 + canal du port (12, 67, etc. selon le port). La veille peut être effectuée par scanner automatique (dual watch)."},
     {q:"Quelle est la procédure correcte pour un MAYDAY ?",opts:["Radio VHF canal 12 · dire MAYDAY une fois · donner position","Canal 16 · puissance 25W · MAYDAY 3 fois · nom navire 3 fois · position · nature détresse · nombre personnes · assistance requise · Terminé","Canal 70 uniquement","Canal 67 · MAYDAY 2 fois"],correct:1,expl:"MAYDAY procédure (COLREG + SOLAS) : Canal 16, puissance maximale 25W. Dire : MAYDAY MAYDAY MAYDAY, puis NOM DU NAVIRE 3 fois, puis MAYDAY + nom navire, puis : POSITION (lat/long ou relèvement), NATURE DE LA DÉTRESSE, NOMBRE DE PERSONNES, ASSISTANCE REQUISE, 'Terminé'. Toujours activer DSC canal 70 EN PREMIER si disponible. Attendre réponse 1 min. Si pas de réponse : répéter. Activer EPIRB."},
@@ -449,7 +449,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le GMDSS (Système Mondial de Détresse et de Sécurité en Mer) ?",opts:["Un système de navigation","Système international de communications maritimes de sécurité requis par SOLAS — couvre toutes les zones de navigation — intègre VHF DSC · MF/HF · NAVTEX · EPIRB · SART","Un système de cartes","Un système de pilotage"],correct:1,expl:"GMDSS (Global Maritime Distress and Safety System) = système requis par SOLAS pour navires > 300 TB en voyages internationaux. Zones : A1 (VHF), A2 (MF + VHF), A3 (Inmarsat + MF/HF + VHF), A4 (HF + toutes). Composants : VHF DSC canal 70 + 16 · MF DSC 2187.5 kHz · HF DSC · NAVTEX 518 kHz · EPIRB · SART · RLS · répondeur radar. Objective: sauvetage en moins de 30 min grâce à l'alerte automatique."},
     {q:"Qu'est-ce qu'un EPIRB (Emergency Position-Indicating Radio Beacon) ?",opts:["Un système de navigation","Balise de détresse maritime transmettant position GPS sur 406 MHz aux satellites COSPAS-SARSAT — déclenchement manuel ou automatique à l'eau","Un radar","Un VHF portable"],correct:1,expl:"EPIRB (Emergency Position Indicating Radio Beacon) = balise de détresse individuelle/navire. Fréquence : 406 MHz (signal numérique avec MMSI) + 121.5 MHz (radiobalise de localisation). Satellites COSPAS-SARSAT reçoivent le signal. Centre MRCC alerté en 30-90 min. Durée signal : 48h minimum. Activation : manuelle (pull) ou automatique si immersion dans l'eau (libération hydrostatique). OBLIGATOIRE sur navires SOLAS. MMSI gravé dedans = identification immédiate."},

@@ -401,7 +401,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   en:[
     {q:"Which phrase do you use when a distress situation has been resolved?",opts:["MAYDAY cancelled","SEELONCE FEENEE / Silence finished. [Station], this is [MRCC]. The distress situation is ended. Normal communications may resume.","Stop calling","Over and out"],correct:1,expl:"Cancelling MAYDAY/PAN-PAN: 'SEELONCE FEENEE' (French pronunciation of 'silence fini') or 'SILENCE FINISHED' is broadcast by the coordinating station (MRCC) when the distress is resolved. Only the MRCC or designated station can cancel the distress silence. Then: 'MV [name], this is [MRCC]. The distress is ended. Cancel your PAN-PAN/MAYDAY.' Vessel confirms: 'MRCC, MV [name]. PAN-PAN/MAYDAY cancelled. All persons accounted for. Thank you.'"},
     {q:"A vessel hears a MAYDAY but the MRCC has not responded after 1 minute. What should the vessel do?",opts:["Ignore it","Transmit MAYDAY RELAY: 'MAYDAY RELAY MAYDAY RELAY MAYDAY RELAY. All stations. This is [vessel name]. I have received the following MAYDAY from MV [name]...'","Call on CH 12","Sail to the position immediately"],correct:1,expl:"MAYDAY RELAY procedure: if you hear a MAYDAY and the coast station does not seem to have responded, you MUST relay it. Format: 'MAYDAY RELAY MAYDAY RELAY MAYDAY RELAY. All stations. This is [your vessel name]. I received the following MAYDAY at [time] UTC from [vessel name]: [repeat content of original MAYDAY]. Over.' This is a legal obligation under SOLAS. You then monitor CH 16 and assist if in the vicinity."},
@@ -432,7 +432,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   en:[
     {q:"What is the SMCP phrase to cancel a false DSC alert?",opts:["Sorry, false alarm","[CH 16] All stations. This is [vessel name]. Cancel distress alert transmitted at [time] UTC. False alarm. My position is [lat/long]. My vessel is not in distress. Out.","Stop the alert","No distress"],correct:1,expl:"False DSC alert cancellation SMCP: immediately after accidental activation, switch to CH 16 and broadcast: 'All stations. This is [vessel name]. Cancel distress alert transmitted at [time] UTC. False alarm. My vessel is not in distress. My position is [lat/long]. Over.' Then contact MRCC directly on CH 16 to confirm cancellation. Failure to cancel = unnecessary full SAR response = massive cost + possible legal penalties. Always register your MMSI before use."},
     {q:"How do you report a steering failure in SMCP?",opts:["Steering broken","I have a steering failure. I am unable to manoeuvre. My vessel may be [heading towards danger / drifting]. I require [tug / anchor / immediate assistance].","Can't steer","Wheel not working"],correct:1,expl:"Steering failure SMCP: 'I have a steering failure. I am unable to manoeuvre. My vessel is [drifting / heading towards danger at X knots]. My position is [lat/long]. I require [tug assistance / pilot / anchor] to prevent [grounding / collision].' Additional info: engine status (ahead/stopped), current and wind (vessel drift), nearest danger (distance and bearing). This is PAN-PAN (urgent) or MAYDAY (if imminent danger to life)."},

@@ -335,7 +335,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   en:[
     {q:"How do you report a cargo shortage on discharge?",opts:["Cargo is missing","I have found a shortage of [X] tonnes/packages on discharge of [cargo description] from hold [X]. The bill of lading figure is [X]. The tally count is [X]. I am issuing a letter of protest.","Less cargo","Short delivery"],correct:1,expl:"Cargo shortage SMCP: 'I have found a shortage of [X] tonnes/packages on discharge from hold [X]. Bill of lading quantity: [X]. Actual tally count: [X]. Difference: [X] short. I am issuing a letter of protest to the stevedores/terminal. A surveyor is required to verify the shortage.' A letter of protest is a formal document protecting the shipowner's/charterer's legal interests. Always issued when tally count differs from B/L figures."},
     {q:"How do you report that holds are ready for grain loading?",opts:["Holds are clean","All cargo holds have been inspected and are clean, dry and free from infestation. Holds are suitable for loading grain. NCBS inspection certificate is available.","Holds inspected","Ready to load"],correct:1,expl:"Grain loading readiness SMCP: 'All cargo holds have been inspected. Holds [X, Y, Z] are clean, dry, odour-free and free from infestation. Bilge pumps are operational. Bilge wells are clean. Holds are suitable for loading [grain/foodstuffs]. NCBS (National Cargo Bureau Surveyor) inspection certificate is available on request.' Grain loading requires especially clean holds due to contamination risks."},
@@ -366,7 +366,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   en:[
     {q:"What is a 'cargo receipt' and how is it used in SMCP?",opts:["A receipt for money","Formal document acknowledging receipt of cargo on board — precursor to Bill of Lading. SMCP: 'I confirm receipt of [cargo description], [X] packages/tonnes, in [apparent good / damaged] condition.'","A customs form","A survey document"],correct:1,expl:"Cargo receipt (Mate's Receipt) SMCP: 'I confirm receipt of [cargo description], [X] packages/tonnes, UN number [XXXX] if DG, shipped by [shipper name], in [apparent good order and condition / damaged condition as noted]. Issued at [port] on [date].' The Mate's Receipt is issued by the Chief Officer when cargo is loaded. It is then exchanged for the Bill of Lading issued by the Master. Any reservations must be noted at this stage."},
     {q:"How do you report water ingress in a cargo hold?",opts:["Hold is wet","I have water ingress in hold [X]. Bilge pumps are [running / not coping]. Rate of ingress is [slow / moderate / fast]. Cargo is [affected / not yet affected]. I require immediate inspection.","Flooding in hold","Hold has water"],correct:1,expl:"Water ingress in hold SMCP: 'I have water ingress in hold [X]. The source appears to be [hatch cover leak / pipe failure / hull damage]. Bilge pumps are operating. Rate of ingress is [slow/moderate/fast]. [X] centimetres of water in bilge. Cargo has [not been affected / been partially affected / been seriously damaged]. I require immediate inspection and [pumping assistance / repair].' Log all actions with timestamps."},

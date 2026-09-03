@@ -419,7 +419,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"En IALA Région A (Europe, Afrique, Asie), quelle couleur est attribuée à la marque de bâbord ?",opts:["Verte","Rouge","Jaune","Noire"],correct:1,expl:"IALA Région A (Europe, Afrique, Asie, Australie) : marque de BÂBORD = ROUGE. Forme cylindrique (can). Topmark = cylindre rouge. Feu = rouge. En entrant dans un port : la bouée rouge est laissée à GAUCHE (bâbord). Moyen mnémotechnique : 'Rouge à gauche quand on rentre'. Attention : en Région B (Amériques, Japon, Corée, Philippines), c'est l'INVERSE — bâbord = vert."},
     {q:"Combien d'éclats montre une bouée cardinale EST la nuit ?",opts:["3 éclats rapides","6 éclats rapides + 1 long","9 éclats rapides","Scintillant continu"],correct:0,expl:"Cardinale EST = 3 éclats rapides (Q(3) ou VQ(3)). Moyen mnémotechnique : 3 heures = Est sur une horloge/boussole (Est = 3h). Rappel des autres cardinales : Nord = scintillant continu (Q ou VQ), Sud = 6 + long (Q(6)+LFl), Ouest = 9 rapides (Q(9) ou VQ(9)). Pour mémoriser Sud-Ouest : 6+long et 9 = positions horaires 6h (Sud) et 9h (Ouest)."},
@@ -450,7 +450,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le 'sens du balisage conventionnel' en IALA ?",opts:["La direction du vent","Direction dans laquelle les marques latérales s'appliquent — généralement vers le port en remontant du large (conventionnel) ou indiqué sur les cartes marines","La direction du courant","La direction des vagues"],correct:1,expl:"Sens du balisage conventionnel = direction dans laquelle les règles IALA s'appliquent. Généralement : venant du large VERS le port (entrée portuaire). Peut aussi être défini pour des estuaires, fleuves, voies de circulation maritime. Indiqué sur les cartes marines par une flèche ou annotation spéciale. CLEF : savoir dans quel 'sens' on est par rapport aux bouées pour interpréter correctement bâbord et tribord."},
     {q:"Quelle est la forme d'une marque de bâbord en IALA A ?",opts:["Conique (pointue)","Cylindrique (plate sur le dessus)","Sphérique","Croisée"],correct:1,expl:"Marque de bâbord IALA A = forme CYLINDRIQUE (can). Appelée 'can buoy' en anglais. Plate sur le dessus. Rouge (IALA A) ou verte (IALA B). Topmark = cylindre (même couleur que la bouée). À l'opposé : marque de tribord = CONIQUE (nun buoy) — pointue vers le haut. Verte (IALA A) ou rouge (IALA B). Ces formes permettent l'identification DE JOUR sans couleurs."},

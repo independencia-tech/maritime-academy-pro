@@ -246,7 +246,7 @@ function RapidFireSVG({ lang }) {
 // EXERCISE — MIXED MODULE
 // ══════════════════════════════════════
 // ── PRACTICE QUESTION BANK — 15Q (FULL MODULE REVIEW) ──────────────
-const BANK_SMCP8 = {
+export const BANK_SMCP8 = {
   fr:[
     {q:"Quel signal indique un danger de mort immédiat pour le navire ou les personnes ?",opts:["PAN-PAN","SECURITE","MAYDAY","Aucun signal"],correct:2,expl:"MAYDAY est réservé au danger de mort grave et imminent — priorité absolue sur toutes les autres communications."},
     {q:"Quel signal transmet une information de sécurité importante (météo, danger à la navigation) ?",opts:["MAYDAY","SECURITE","PAN-PAN","URGENCE"],correct:1,expl:"SECURITE (prononcé 'SAY-CU-RI-TAY') précède une information de sécurité importante, non urgente pour l'expéditeur."},

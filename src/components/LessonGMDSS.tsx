@@ -463,7 +463,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la durée minimale de fonctionnement garantie d'une EPIRB 406 MHz ?",opts:["12 heures","24 heures","48 heures — obligation SOLAS pour signaler la détresse pendant toute la durée des opérations SAR","96 heures"],correct:2,expl:"EPIRB 406 MHz : durée minimale de transmission = 48 HEURES selon SOLAS/GMDSS. Cette durée est calculée pour couvrir l'ensemble d'une opération SAR standard. La fréquence 406 MHz transmet un signal numérique codé avec le MMSI, la position GPS (si connectée), la nature de la détresse. La fréquence secondaire 121.5 MHz permet le homing final par les aéronefs SAR. Entretien : vérification annuelle, remplacement batterie selon fabricant (5-10 ans), immatriculation obligatoire."},
     {q:"Que signifie le signal sonore d'abandon du navire ?",opts:["1 son long","5 sons courts","7 sons courts répétés + 1 son long — signal général d'alarme d'abandon du navire","3 sons longs"],correct:2,expl:"Signal d'alarme d'abandon du navire = 7 SONS COURTS + 1 SON LONG répétés plusieurs fois. Ce signal est distinct du signal de détresse radio (MAYDAY). Il déclenche l'évacuation de tout l'équipage et des passagers vers les postes d'abandon. Complété par des annonces au haut-parleur. IMPORTANT : ce signal ne doit être déclenché QUE par le capitaine ou avec son autorisation. Les exercices d'abandon sont obligatoires (SOLAS) avant le départ de chaque voyage."},
@@ -494,7 +494,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que l'obligation de 'port de refuge' pour un navire en difficulté ?",opts:["Un port militaire","Obligation des États côtiers d'accepter les navires en difficulté dans leurs ports pour éviter un sinistre majeur en mer — conflit entre souveraineté et humanité","Un port commercial","Un port de secours militaire"],correct:1,expl:"Port de refuge (Place of Refuge) : navire en difficulté peut demander à entrer dans le port le plus proche. Les États côtiers ont une OBLIGATION morale et croissante obligation légale (Directive européenne 2002/59/CE) d'accepter les navires en détresse. PROBLÈME HISTORIQUE : Espagne a refusé au Prestige (2002) → naufrage et 77 000t de fuel. Équilibre : risque environnemental vs risque de naufrage en mer. Les MRCC évaluent au cas par cas."},
     {q:"Qu'est-ce qu'un 'IMO number' (numéro OMI) et comment diffère-t-il du MMSI ?",opts:["Ils sont identiques","IMO = numéro permanent du navire (7 chiffres) qui reste avec lui toute sa vie · MMSI = numéro radio à 9 chiffres · changeable si changement de pavillon","Le MMSI est permanent","L'IMO change à chaque voyage"],correct:1,expl:"Numéro OMI (IMO number) : numéro à 7 chiffres attribué à la construction du navire, PERMANENT pour toute sa vie même si le navire change de nom, de pavillon ou d'armateur. Format : IMO 9234567. MMSI : numéro radio à 9 chiffres lié au pavillon. CHANGEABLE si changement de pavillon. Format : 9 chiffres (ex: 227456789 pour France). Différence clé : l'OMI suit le navire, le MMSI suit le pavillon."},

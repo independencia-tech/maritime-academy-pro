@@ -316,7 +316,7 @@ function MedicalQuizSVG({ lang }) {
 // EXERCISE
 // ══════════════════════════════════════
 // ── PRACTICE QUESTION BANK — 15Q ──────────────
-const BANK_SMCP7 = {
+export const BANK_SMCP7 = {
   fr:[
     {q:"Quel signal utiliser pour un membre d'équipage malade nécessitant un conseil médical, sans danger de mort ?",opts:["MAYDAY","PAN-PAN","SECURITE","AUCUN"],correct:1,expl:"PAN-PAN medico est le signal SMCP standard pour un cas médical sérieux mais non mortel nécessitant un conseil ou une assistance."},
     {q:"Comment prononcer '37°C' en phraséologie SMCP ?",opts:["Three seven degrees","Thirty-seven degrees Celsius","37 Celsius","Three-point-seven Celsius"],correct:1,expl:"En SMCP, les nombres se prononcent en toutes lettres suivis de l'unité complète : 'thirty-seven degrees Celsius'."},
@@ -490,7 +490,7 @@ function Card({children,style={}}){return<div style={{background:"rgba(13,31,60,
 function GLine(){return<div style={{height:1,margin:"14px 0",background:`linear-gradient(90deg,transparent,${C.gold}33,${C.med}33,transparent)`}}/>;}
 function SL({icon,text,color}){return<div style={{display:"flex",alignItems:"center",gap:10,margin:"20px 0 12px"}}><span style={{fontSize:20}}>{icon}</span><div style={{fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,color:color||C.gold,letterSpacing:2}}>{text}</div><div style={{flex:1,height:1,background:`linear-gradient(90deg,${color||C.gold}44,transparent)`}}/></div>;}
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quel signal utiliser pour un membre d'équipage malade sans danger de mort immédiat ?",opts:["MAYDAY","PAN-PAN","SECURITE","Aucun signal"],correct:1,expl:"PAN-PAN medico signale un cas médical sérieux mais non mortel nécessitant conseil ou assistance."},
     {q:"Comment prononcer un nombre en SMCP (ex : température 37°C) ?",opts:["Le chiffre seul","En toutes lettres, suivi de l'unité complète","Uniquement en chiffres romains","Cela n'a pas d'importance"],correct:1,expl:"Les nombres se prononcent toujours en toutes lettres en SMCP pour éviter toute confusion radio, ex : 'thirty-seven degrees Celsius'."},

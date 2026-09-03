@@ -35,6 +35,23 @@ import { QUIZ as D2_L8_QUIZ, BANK as D2_L8_BANK } from "../components/LessonPort
 import { QUIZ as D2_L9_QUIZ, BANK as D2_L9_BANK } from "../components/LessonPiracy";
 import { QUIZ as D2_L10_QUIZ, BANK as D2_L10_BANK } from "../components/LessonArbitration";
 
+import { QUIZ as D3_L1_QUIZ, BANK as D3_L1_BANK } from "../components/LessonIALA";
+import { QUIZ as D3_L2_QUIZ, BANK as D3_L2_BANK } from "../components/LessonLightsShapes";
+import { QUIZ as D3_L3_QUIZ, BANK as D3_L3_BANK } from "../components/LessonSoundSignals";
+import { QUIZ as D3_L4_QUIZ, BANK as D3_L4_BANK } from "../components/LessonFlags";
+import { QUIZ as D3_L5_QUIZ, BANK as D3_L5_BANK } from "../components/LessonVHF";
+import { QUIZ as D3_L6_QUIZ, BANK as D3_L6_BANK } from "../components/LessonAIS";
+import { QUIZ as D3_L7_QUIZ, BANK as D3_L7_BANK } from "../components/LessonGMDSS";
+
+import { QUIZ as D4_L1_QUIZ, BANK as D4_L1_BANK } from "../components/LessonSMCP_L1";
+import { QUIZ as D4_L2_QUIZ, BANK as D4_L2_BANK } from "../components/LessonSMCP_L2";
+import { QUIZ as D4_L3_QUIZ, BANK as D4_L3_BANK } from "../components/LessonSMCP_L3";
+import { QUIZ as D4_L4_QUIZ, BANK as D4_L4_BANK } from "../components/LessonSMCP_L4";
+import { QUIZ as D4_L5_QUIZ, BANK as D4_L5_BANK } from "../components/LessonSMCP_L5";
+import { QUIZ as D4_L6_QUIZ, BANK as D4_L6_BANK } from "../components/LessonSMCP_L6";
+import { QUIZ as D4_L7_QUIZ, BANK_SMCP7 as D4_L7_BANK } from "../components/LessonSMCP_L7";
+import { BANK_SMCP8 as D4_L8_BANK } from "../components/LessonSMCP_L8";
+
 const LANGS = ["fr", "en", "es", "pt"];
 
 // Tags each question with a stable questionId (lessonId + its index in the
@@ -79,10 +96,25 @@ const LESSON_POOLS = {
   "d2-l8": buildLessonPool("d2-l8", D2_L8_QUIZ, D2_L8_BANK),
   "d2-l9": buildLessonPool("d2-l9", D2_L9_QUIZ, D2_L9_BANK),
   "d2-l10": buildLessonPool("d2-l10", D2_L10_QUIZ, D2_L10_BANK),
+  "d3-l1": buildLessonPool("d3-l1", D3_L1_QUIZ, D3_L1_BANK),
+  "d3-l2": buildLessonPool("d3-l2", D3_L2_QUIZ, D3_L2_BANK),
+  "d3-l3": buildLessonPool("d3-l3", D3_L3_QUIZ, D3_L3_BANK),
+  "d3-l4": buildLessonPool("d3-l4", D3_L4_QUIZ, D3_L4_BANK),
+  "d3-l5": buildLessonPool("d3-l5", D3_L5_QUIZ, D3_L5_BANK),
+  "d3-l6": buildLessonPool("d3-l6", D3_L6_QUIZ, D3_L6_BANK),
+  "d3-l7": buildLessonPool("d3-l7", D3_L7_QUIZ, D3_L7_BANK),
+  "d4-l1": buildLessonPool("d4-l1", D4_L1_QUIZ, D4_L1_BANK),
+  "d4-l2": buildLessonPool("d4-l2", D4_L2_QUIZ, D4_L2_BANK),
+  "d4-l3": buildLessonPool("d4-l3", D4_L3_QUIZ, D4_L3_BANK),
+  "d4-l4": buildLessonPool("d4-l4", D4_L4_QUIZ, D4_L4_BANK),
+  "d4-l5": buildLessonPool("d4-l5", D4_L5_QUIZ, D4_L5_BANK),
+  "d4-l6": buildLessonPool("d4-l6", D4_L6_QUIZ, D4_L6_BANK),
+  "d4-l7": buildLessonPool("d4-l7", D4_L7_QUIZ, D4_L7_BANK),
+  "d4-l8": buildLessonPool("d4-l8", null, D4_L8_BANK),
 };
 
 // Returns the pooled, tagged questions for a set of lessonIds, in one
-// language. Lessons with no pool defined here (any module beyond d1/d2)
+// language. Lessons with no pool defined here (any module beyond d1/d2/d3/d4)
 // simply contribute nothing — callers don't need to special-case that.
 export function getQuestionPoolForLessons(lessonIds, lang) {
   const safeLang = LANGS.includes(lang) ? lang : "fr";

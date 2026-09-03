@@ -367,7 +367,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   en:[
     {q:"How does the engine room confirm a 'Full ahead' order?",opts:["Full ahead OK","Full ahead — engine on full ahead. RPM [X]. Over.","Going full speed","Engine running"],correct:1,expl:"Engine order confirmation SMCP: mandatory closed-loop communication. When bridge orders 'Full ahead': ER immediately responds 'Full ahead — engine is on full ahead. RPM [X]. Over.' This confirms: order heard, order executed, current RPM. Never just say 'OK' or nod. If unable to comply: 'Bridge, engine room. Unable to comply with full ahead. Maximum power available is [X] knots / [X] RPM due to [reason]. Over.'"},
     {q:"What should the engine room report immediately after a main engine failure?",opts:["Engine broken","Bridge, engine room. Main engine failure. Engine has [stopped/reduced power]. I am [investigating/unable to proceed]. Navigation is affected. Over.","Engine stopped","Problem with engine"],correct:1,expl:"Main engine failure SMCP: 'Bridge, engine room. I have a main engine failure. Engine has [stopped / lost power / reduced to X%]. Cause appears to be [fuel / cooling / mechanical / unknown]. I am [investigating / attempting restart]. Estimated repair time: [X minutes / unknown]. I recommend [anchoring / requesting tug / reducing speed]. Over.' Bridge must be informed immediately — they need to take action to prevent collision/grounding."},
@@ -398,7 +398,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   en:[
     {q:"How do you report a propeller or shaft problem?",opts:["Propeller broken","I have a propeller/shaft problem. [Vibration / cavitation / shaft seal leaking / propeller blade damaged]. Engine speed has been reduced to [X] RPM to minimise further damage. Inspection required at next port.","Prop issue","Shaft fault"],correct:1,expl:"Propeller/shaft SMCP: 'I have a propeller/shaft problem. Abnormal vibration is felt at speeds above [X] RPM. Propeller cavitation is suspected / shaft seal is leaking [X] litres per hour / propeller blade appears damaged. Engine speed has been reduced to [X] RPM as a precaution. An underwater inspection is required at the next port. I am proceeding with caution at reduced speed.' Report also affects trim/ETA reports to agents."},
     {q:"How do you report a main engine starting failure?",opts:["Can't start engine","Main engine is not starting. Starting air pressure is [X] bar. [Cause: fuel rack / injector / air start valve / unknown]. I am attempting to start on backup system. ETA for restart: [X] minutes.","Engine won't start","Start problem"],correct:1,expl:"Starting failure SMCP: 'Main engine is not starting. Starting air pressure is [X] bar (normal: [X] bar). I have [attempted X starts]. Fault appears to be [fuel rack stuck / starting air valve blocked / injectors / unknown]. I am [refilling air bottles / checking fuel system / contacting maker's engineer]. I estimate engine available in [X] minutes / hours. Bridge should [maintain current speed / anchor / request tug standby].'"},

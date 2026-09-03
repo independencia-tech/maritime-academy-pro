@@ -344,7 +344,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   en:[
     {q:"How do you report altering course to avoid a vessel on your port bow?",opts:["Turning right","I am altering course to starboard. New course will be [X] degrees true to avoid collision with a vessel on my port bow. Over.","Going left","Course change to port"],correct:1,expl:"COLREG Rule 8 requires collision avoidance action to be 'large, timely and positive.' SMCP format: 'I am altering course to [starboard/port]. New course will be [X] degrees [true/magnetic]. I am doing so to avoid collision with [vessel/danger on my port/starboard bow/quarter].' Always specify direction of alteration and new course. If vessel on port bow → alter starboard (COLREG Rule 16 — give-way vessel). If vessel on starboard bow → maintain course (stand-on vessel per Rule 17) OR alter if collision imminent."},
     {q:"How do you report entering a Traffic Separation Scheme?",opts:["I am in the shipping lane","I am entering the [name] Traffic Separation Scheme. I am in the [northbound/southbound/inbound/outbound] lane. My course is [X] degrees. Speed [X] knots.","Traffic lane ahead","Entering TSS"],correct:1,expl:"TSS SMCP report: 'I am entering the [name] TSS. I am in the [direction] lane. My course is [X] degrees. Speed is [X] knots.' Additional: 'I am crossing the TSS at right angles. My course is [X] degrees.' COLREG Rule 10 governs TSS: vessels must proceed in the appropriate lane, join/leave at the extremities, cross at right angles if crossing, avoid the separation zone. VTS must be informed when entering TSS under their jurisdiction."},
@@ -375,7 +375,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   en:[
     {q:"What is 'set and drift' and how do you report it in SMCP?",opts:["Speed and direction of wind","Set = direction the current is flowing TOWARD. Drift = speed of the current in knots. Report: 'Current is setting [X] degrees, drifting [X] knots.'","Tide tables","Vessel drift from leeway"],correct:1,expl:"Set and drift SMCP: 'Set' = direction the current is flowing TOWARD (e.g., set 090 = current flowing eastward). 'Drift' = current speed in knots. Full report: 'Current is setting [X] degrees, drifting [X] knots. Effect on vessel: we are making good track [X] degrees instead of course [X] degrees.' This explains discrepancy between intended course and actual track. Critical for pilotage, anchoring, and collision avoidance calculations."},
     {q:"How do you report a vessel not under command (NUC)?",opts:["Ship broken","I am not under command. I am unable to manoeuvre as required by the Rules. I am exhibiting two all-round red lights [and two black balls by day]. Please keep clear.","Engine failure","Can't steer"],correct:1,expl:"NUC SMCP: 'I am not under command. I am unable to manoeuvre as required by the Collision Regulations. I am [drifting / at anchor]. I am exhibiting NUC signals: two all-round red lights [and two black balls by day]. Please keep well clear and give me priority passage.' Also: 'My position is [lat/long]. I am requesting [tug / salvage / anchor assistance].' Broadcast on CH 16 and update AIS status to NUC (status code 2)."},

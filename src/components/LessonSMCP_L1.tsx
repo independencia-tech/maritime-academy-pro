@@ -380,7 +380,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   en:[
     {q:"Complete the SMCP phrase: 'Our position is Latitude ___°___'N, Longitude ___°___'E. Last fix at ___ UTC by ___.'",opts:["Lat 43N Lon 7E, GPS","Latitude 43 degrees 12.5 minutes North, Longitude 007 degrees 05.3 minutes East. Last fix at zero three four five UTC by GPS.","43N 7E fixed at 0345","Position is near France"],correct:1,expl:"SMCP position format MANDATORY: always 'Latitude [degrees] degrees [minutes] minutes North/South, Longitude [degrees] degrees [minutes] minutes East/West'. Always 3 digits for longitude degrees (007 not 7). Always specify positioning method (GPS/radar/visual/ECDIS). Always give time in UTC using 4-digit format. This is the IMO-standardized format used worldwide."},
     {q:"What is the correct SMCP phrase to hand over the watch?",opts:["I'm going now, it's your turn","I have now taken over the watch. I am the officer of the watch.","OK, you can go","Watch handed over"],correct:1,expl:"The SMCP closing phrase 'I have now taken over the watch. I am the officer of the watch.' is MANDATORY and legally important. Before this phrase: outgoing OOW remains responsible. After this phrase: incoming OOW assumes full legal responsibility for the vessel's navigation. This cannot be replaced by informal language. The phrase must be clearly stated and acknowledged."},
@@ -411,7 +411,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   en:[
     {q:"What is the full SMCP phrase to report a vessel on radar with collision risk?",opts:["Ship ahead!","I have a vessel on radar. Bearing [X] degrees [true/magnetic]. Range [X] miles. CPA [X] miles in [X] minutes. Risk of collision exists.","Radar contact","There's a ship"],correct:1,expl:"Complete SMCP radar report with collision risk: 'I have a vessel on radar. Bearing [X] degrees [true/magnetic]. Range [X] miles. CPA [X] miles in [X] minutes. Risk of collision exists.' Always give: bearing (3 digits + true/magnetic), range in nautical miles, CPA (Closest Point of Approach) and TCPA (Time to CPA). This standardized format ensures the other OOW has all necessary data to assess the situation."},
     {q:"How do you report your ETA to a port in SMCP?",opts:["I'll arrive at 1400","My ETA is one four zero zero UTC. I require berth at [pier/anchorage X].", "ETA 1400 hours","Coming at 14:00"],correct:1,expl:"SMCP ETA report: 'My ETA is [time in 4-digit UTC]. I require berth at [pier/anchorage/buoy X].' Always give time in UTC with all 4 digits spoken individually. ETA = Estimated Time of Arrival. Always add berthing requirements. If requesting pilot: 'I require a pilot. ETA pilot station is [time] UTC. My draught is [X] metres forward and [X] metres aft.'"},

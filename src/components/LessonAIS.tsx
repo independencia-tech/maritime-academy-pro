@@ -557,7 +557,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la principale différence entre l'AIS Classe A et l'AIS Classe B ?",opts:["La couleur des cibles","Classe A = navires commerciaux SOLAS · transmission toutes les 2-10 secondes · Classe B = plaisance/petits navires · transmission toutes les 30 secondes","Classe A utilise le canal 16","Classe B est plus précis"],correct:1,expl:"AIS Classe A : Obligatoire sur navires SOLAS > 300 TB en voyages internationaux et > 500 TB en voyages nationaux. Transmet toutes les 2-10 secondes en route, 3 min à l'arrêt. Portée : 20-40 milles. Données : cap, vitesse, statut, destination, ETA, tirant d'eau. AIS Classe B : Navires non SOLAS, plaisance. Transmet toutes les 30 secondes en route, 3 min à l'arrêt. Portée : 5-10 milles. Données limitées (pas de destination ni tirant d'eau)."},
     {q:"Qu'est-ce que l'ECDIS et sur quels navires est-il obligatoire ?",opts:["Un type de radar","Electronic Chart Display and Information System — affichage de cartes électroniques avec alarmes · obligatoire SOLAS sur navires > 500 TB","Un VHF spécialisé","Un système GPS"],correct:1,expl:"ECDIS (Electronic Chart Display and Information System) = système d'affichage de cartes électroniques remplaçant officiellement les cartes papier si toutes les conditions SOLAS sont remplies. Obligatoire : navires à passagers > 500 TB (2012), cargaisons > 3000 TB (2013), cargaisons > 500 TB (2014-2018). Fonctions : position GPS en temps réel, alarmes safety contour, mise à jour automatique des ENC, intégration AIS, ARPA. Deux types de cartes : ENC (vector) et RNC (raster)."},
@@ -588,7 +588,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le 'voyage data recorder' (VDR) et quelle est sa relation avec l'AIS ?",opts:["Un GPS spécial","Boîte noire maritime enregistrant données navigation (cap · vitesse · AIS · radar · VHF · alarmes) — obligatoire SOLAS · conserve 12h de données","Un type d'ECDIS","Un radar spécialisé"],correct:1,expl:"VDR (Voyage Data Recorder) = boîte noire maritime. Enregistre : position GPS, cap, vitesse, cap gyroscopique, données radar, images de l'écran navigation, communications VHF, alarmes, données AIS. Conserve au minimum 12h en boucle sur support résistant au choc et à l'immersion. S-VDR (Simplified VDR) pour navires <3000 TB. Obligatoire SOLAS > 3000 TB (passagers > 150m). Utilisé lors des enquêtes accidents. Les données AIS y sont intégrées."},
     {q:"Qu'est-ce que le TCPA dans le contexte ARPA/AIS ?",opts:["True Course Position Accuracy","Time to Closest Point of Approach — temps prévu avant que deux navires atteignent leur distance minimale de rapprochement","Total Course Planning Area","Tidal Current Position Analysis"],correct:1,expl:"TCPA (Time to CPA) = temps prévu avant que deux navires atteignent leur CPA. Combiné au CPA : CPA seul = distance future minimale. TCPA = quand cette distance sera atteinte. Règle pratique : si CPA < 0.5 NM ET TCPA < 12 minutes → situation d'abordage potentielle = manœuvre obligatoire selon COLREG. ARPA calcule automatiquement CPA et TCPA pour chaque écho suivi. L'officier doit prendre une décision avant que le TCPA soit trop court."},

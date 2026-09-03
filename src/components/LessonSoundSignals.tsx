@@ -467,7 +467,7 @@ function Exercise1({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"En visibilité normale, que signifie 1 son court émis par un navire ?",opts:["Il bat en arrière","Il vire à TRIBORD (COLREG Règle 34)","Il demande un pilote","Signal de danger"],correct:1,expl:"COLREG Règle 34 (signaux de manœuvres et d'avertissement) : 1 son court = je vire à TRIBORD. 2 sons courts = je vire à BÂBORD. 3 sons courts = mes machines battent en ARRIÈRE. Ces signaux s'utilisent UNIQUEMENT en bonne visibilité, lors de manœuvres. En brouillard, les signaux sont différents (Règle 35). Durée d'un son court : environ 1 seconde."},
     {q:"En visibilité réduite (brouillard), un navire à moteur STOPPÉ émet quel signal ?",opts:["1 son long","2 sons longs toutes les 2 minutes","3 sons courts","Cloche rapide"],correct:1,expl:"COLREG Règle 35 : Navire à moteur STOPPÉ (sans erre) = 2 SONS LONGS (— —) toutes les 2 minutes. Navire à moteur FAISANT ROUTE = 1 son long (—) toutes les 2 minutes. ATTENTION : 'stoppé' ne signifie pas immobile — le navire peut dériver. La différence 1 long vs 2 longs permet d'identifier si le navire est en mouvement ou non."},
@@ -498,7 +498,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que la 'vitesse de sécurité' en brouillard (COLREG Règle 6) ?",opts:["La vitesse maximale autorisée","Vitesse permettant de prendre des mesures efficaces pour éviter une collision et s'arrêter dans une distance appropriée aux circonstances","La vitesse du vent","La vitesse du courant"],correct:1,expl:"COLREG Règle 6 (vitesse de sécurité) = vitesse adaptée aux circonstances permettant de s'arrêter et manœuvrer à temps. Facteurs : visibilité, densité du trafic, manœuvrabilité, état de la mer, courant, fonds, tirant d'eau. En brouillard : souvent réduction drastique de la vitesse. Principe : être capable de s'arrêter dans la moitié de la distance de visibilité. Si 200m de visibilité → pouvoir s'arrêter en 100m."},
     {q:"Qu'est-ce que la Règle 19 COLREG sur la 'conduite par visibilité réduite' ?",opts:["Une règle météo","Règle imposant marche à la vitesse de sécurité + radar veille + signaux sonores + évitement si contact radar à l'avant du travers","Une règle de mouillage","Une règle de port"],correct:1,expl:"COLREG Règle 19 = conduite par visibilité réduite. Obligations : aller à vitesse de sécurité (Règle 6), veille radar continue, être prêt à stopper. Si contact radar : déterminer s'il y a risque d'abordage. Si contact radar par l'avant du travers : RÉDUIRE LA VITESSE au minimum ou stopper. Éviter les manœuvres vers le bâbord si contact à gauche."},

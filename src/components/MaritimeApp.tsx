@@ -1679,6 +1679,24 @@ const COMPETENCIES_D2:any = {
   pt:["✔ Identificar as obrigações SOLAS/MARPOL/STCW/MLC aplicáveis a bordo","✔ Aplicar as regras COLREG na sua dimensão jurídica (responsabilidade em caso de colisão)","✔ Compreender os limites da jurisdição marítima (UNCLOS)","✔ Reagir corretamente perante uma inspeção de Port State Control","✔ Documentar um incidente para responsabilidade civil e seguro"],
 };
 
+// Pilot #3 competencies list for d3 (Signalisation & Balisage) — same
+// register as d1/d2, validated 2026-09-03.
+const COMPETENCIES_D3:any = {
+  fr:["✔ Interpréter les marques de balisage IALA (régions A/B)","✔ Identifier les feux et marques des navires pour déterminer type et statut","✔ Appliquer les procédures de signaux sonores par visibilité réduite","✔ Utiliser correctement les procédures radio VHF","✔ Vérifier l'état opérationnel de l'AIS/GMDSS et recouper les données de navigation électronique"],
+  en:["✔ Interpret IALA buoyage marks (Region A/B)","✔ Identify vessel lights and shapes to determine type and status","✔ Apply sound signal procedures in restricted visibility","✔ Use VHF radio procedures correctly","✔ Verify AIS/GMDSS equipment readiness and cross-check electronic navigation data"],
+  es:["✔ Interpretar las marcas de balizamiento IALA (regiones A/B)","✔ Identificar las luces y marcas de los buques para determinar tipo y estado","✔ Aplicar los procedimientos de señales acústicas por visibilidad reducida","✔ Usar correctamente los procedimientos de radio VHF","✔ Verificar el estado operativo del AIS/GMDSS y contrastar los datos de navegación electrónica"],
+  pt:["✔ Interpretar as marcas de balizamento IALA (regiões A/B)","✔ Identificar as luzes e marcas dos navios para determinar tipo e estado","✔ Aplicar os procedimentos de sinais sonoros com visibilidade reduzida","✔ Usar corretamente os procedimentos de rádio VHF","✔ Verificar o estado operacional do AIS/GMDSS e cruzar os dados de navegação eletrónica"],
+};
+
+// Pilot #3 competencies list for d4 (Anglais Maritime SMCP) — same
+// register as d1/d2, validated 2026-09-03.
+const COMPETENCIES_D4:any = {
+  fr:["✔ Appliquer les phrases normalisées SMCP dans les opérations courantes de passerelle","✔ Communiquer clairement avec le VTS et les autorités portuaires","✔ Utiliser correctement les phrases SMCP d'urgence sous pression","✔ Donner et accuser réception d'ordres de manœuvre sans ambiguïté","✔ Signaler une urgence médicale selon la phraséologie normalisée"],
+  en:["✔ Apply Standard Marine Communication Phrases in routine bridge operations","✔ Communicate clearly with VTS and port authorities","✔ Use emergency SMCP phrases correctly under pressure","✔ Give and acknowledge maneuvering orders without ambiguity","✔ Report a medical emergency using standardized phraseology"],
+  es:["✔ Aplicar las frases normalizadas SMCP en las operaciones habituales de puente","✔ Comunicarse con claridad con el VTS y las autoridades portuarias","✔ Usar correctamente las frases SMCP de emergencia bajo presión","✔ Dar y confirmar la recepción de órdenes de maniobra sin ambigüedad","✔ Reportar una emergencia médica según la fraseología normalizada"],
+  pt:["✔ Aplicar as frases normalizadas SMCP nas operações habituais de ponte","✔ Comunicar com clareza com o VTS e as autoridades portuárias","✔ Usar corretamente as frases SMCP de emergência sob pressão","✔ Dar e confirmar a receção de ordens de manobra sem ambiguidade","✔ Reportar uma emergência médica segundo a fraseologia normalizada"],
+};
+
 // ── Shared exam engine wiring (2026-09-02 refactor) ─────────────────────
 // Extracted from NavigationLessonsPage (d1's original, one-off implementation)
 // into a moduleId-parametrized hook + presentational components so a second
@@ -2286,7 +2304,7 @@ function IMLLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId,
   );
 }
 
-function SBLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function SBLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2299,6 +2317,7 @@ function SBLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "d3", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d3");
@@ -2312,10 +2331,15 @@ function SBLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_D3}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
@@ -2346,7 +2370,7 @@ function SBLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   );
 }
 
-function SMCPLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function SMCPLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2359,6 +2383,7 @@ function SMCPLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onA
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "d4", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d4");
@@ -2372,10 +2397,15 @@ function SMCPLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onA
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_D4}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
@@ -4789,6 +4819,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
@@ -4807,6 +4839,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
