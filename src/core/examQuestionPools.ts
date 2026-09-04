@@ -98,6 +98,18 @@ import { QUIZ as S4_L5_QUIZ, BANK as S4_L5_BANK } from "../components/LessonSafe
 import { QUIZ as S4_L6_QUIZ, BANK as S4_L6_BANK } from "../components/LessonSafetyS4_L6";
 import { QUIZ as S4_L7_QUIZ, BANK as S4_L7_BANK } from "../components/LessonSafetyS4_L7";
 
+import { QUIZ as S5_L1_QUIZ, BANK as S5_L1_BANK } from "../components/LessonSafetyS5_L1";
+import { QUIZ as S5_L2_QUIZ, BANK as S5_L2_BANK } from "../components/LessonSafetyS5_L2";
+import { QUIZ as S5_L3_QUIZ, BANK as S5_L3_BANK } from "../components/LessonSafetyS5_L3";
+import { QUIZ as S5_L4_QUIZ, BANK as S5_L4_BANK } from "../components/LessonSafetyS5_L4";
+
+import { QUIZ as S6_L1_QUIZ, BANK as S6_L1_BANK } from "../components/LessonSafetyS6_L1";
+import { QUIZ as S6_L2_QUIZ, BANK as S6_L2_BANK } from "../components/LessonSafetyS6_L2";
+import { QUIZ as S6_L3_QUIZ, BANK as S6_L3_BANK } from "../components/LessonSafetyS6_L3";
+import { QUIZ as S6_L4_QUIZ, BANK as S6_L4_BANK } from "../components/LessonSafetyS6_L4";
+import { QUIZ as S6_L5_QUIZ, BANK as S6_L5_BANK } from "../components/LessonSafetyS6_L5";
+import { QUIZ as S6_L6_QUIZ, BANK as S6_L6_BANK } from "../components/LessonSafetyS6_L6";
+
 const LANGS = ["fr", "en", "es", "pt"];
 
 // Tags each question with a stable questionId (lessonId + its index in the
@@ -197,6 +209,16 @@ const LESSON_POOLS = {
   "s4-l5": buildLessonPool("s4-l5", S4_L5_QUIZ, S4_L5_BANK),
   "s4-l6": buildLessonPool("s4-l6", S4_L6_QUIZ, S4_L6_BANK),
   "s4-l7": buildLessonPool("s4-l7", S4_L7_QUIZ, S4_L7_BANK),
+  "s5-l1": buildLessonPool("s5-l1", S5_L1_QUIZ, S5_L1_BANK),
+  "s5-l2": buildLessonPool("s5-l2", S5_L2_QUIZ, S5_L2_BANK),
+  "s5-l3": buildLessonPool("s5-l3", S5_L3_QUIZ, S5_L3_BANK),
+  "s5-l4": buildLessonPool("s5-l4", S5_L4_QUIZ, S5_L4_BANK),
+  "s6-l1": buildLessonPool("s6-l1", S6_L1_QUIZ, S6_L1_BANK),
+  "s6-l2": buildLessonPool("s6-l2", S6_L2_QUIZ, S6_L2_BANK),
+  "s6-l3": buildLessonPool("s6-l3", S6_L3_QUIZ, S6_L3_BANK),
+  "s6-l4": buildLessonPool("s6-l4", S6_L4_QUIZ, S6_L4_BANK),
+  "s6-l5": buildLessonPool("s6-l5", S6_L5_QUIZ, S6_L5_BANK),
+  "s6-l6": buildLessonPool("s6-l6", S6_L6_QUIZ, S6_L6_BANK),
 };
 
 // Returns the pooled, tagged questions for a set of lessonIds, in one

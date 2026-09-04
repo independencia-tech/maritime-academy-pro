@@ -202,7 +202,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Abandon Ship Is Not the End of Leadership. It Is Where Leadership Matters Most' ?",opts:["Le leadership n'a plus d'importance une fois l'ordre donné","Le leadership devient encore plus essentiel après l'abandon, jusqu'au secours final","Ce principe ne concerne que le commandant","Le leadership s'arrête à l'embarquement"],correct:1,expl:"C'est après l'abandon, pendant l'attente du secours, que le leadership compte le plus."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Présenter uniquement la procédure technique d'abandon","Répondre à la question : comment quitter un navire de manière organisée pour maximiser les chances de survie de tout l'équipage","Enseigner l'historique des naufrages célèbres","Présenter les règlements SOLAS en détail"],correct:1,expl:"Le véritable sujet est la prise de décision et le leadership sous pression, pas une simple procédure."},
@@ -278,7 +278,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'Abandon Ship Is Not the End of Leadership. It Is Where Leadership Matters Most' ?",opts:["Le leadership s'arrête à l'ordre d'abandon","Le leadership devient encore plus essentiel après l'abandon, jusqu'au secours","Cela ne concerne que le commandant","Le leadership s'arrête à l'embarquement"],correct:1,expl:"C'est après l'abandon que le leadership compte le plus."},
     {q:"Quand faut-il envisager l'ordre d'abandon ?",opts:["Dès le moindre incident","Uniquement quand toutes les autres solutions ont échoué","Chaque fois que demandé","Systématiquement en mauvais temps"],correct:1,expl:"L'abandon est la dernière option, jamais un premier réflexe."},

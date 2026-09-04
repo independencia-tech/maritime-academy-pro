@@ -250,7 +250,7 @@ function CompositeCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Every Major Accident Begins As A Small Abnormality' ?",opts:["Les grandes catastrophes surviennent toujours sans aucun signe avant-coureur","Les grandes catastrophes commencent presque toujours par une petite anomalie non remarquée ou ignorée","Ce principe ne concerne que les incendies","Seuls les grands navires connaissent ce type de catastrophe"],correct:1,expl:"Le rôle du rondier est précisément de voir ces petites anomalies avant qu'elles ne deviennent de grands accidents."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Apprendre uniquement l'itinéraire d'une ronde","Répondre à la question : comment empêcher un incident de naître avant qu'il ne devienne une urgence","Enseigner les procédures d'urgence complètes","Présenter l'historique des rondes de sécurité"],correct:1,expl:"Le rondier est le premier maillon de toute la chaîne de sécurité du navire."},
@@ -322,7 +322,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'Every Major Accident Begins As A Small Abnormality' ?",opts:["Les catastrophes surviennent sans aucun signe","Elles commencent presque toujours par une petite anomalie non remarquée","Cela ne concerne que les incendies","Uniquement les grands navires sont concernés"],correct:1,expl:"Le rôle du rondier est de voir ces anomalies avant qu'elles ne deviennent des accidents."},
     {q:"Quelles sont les quatre responsabilités du rondier ?",opts:["Uniquement surveiller le pont","Personnes, navire, biens et cargaison, environnement","Uniquement remplir un registre","Uniquement les horaires"],correct:1,expl:"Le rondier protège ces quatre dimensions simultanément."},

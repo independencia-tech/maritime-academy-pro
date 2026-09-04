@@ -201,7 +201,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'A Liferaft Does Not Save Lives by Inflating. It Saves Lives When Its Crew Takes Control' ?",opts:["Le gonflage suffit toujours à sauver des vies","Le gonflage n'est qu'une étape ; c'est la maîtrise de la situation et de l'équipement par l'équipage qui sauve réellement des vies","Ce principe ne concerne que les radeaux automatiques","Il ne faut jamais tenter de contrôler un radeau"],correct:1,expl:"L'inflation n'est jamais l'objectif final : le contrôle réel de la situation l'est."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Expliquer uniquement comment gonfler un radeau","Transformer un radeau gonflé en un refuge organisé et contrôlé","Enseigner le signal d'abandon du navire","Présenter l'historique des radeaux de sauvetage"],correct:1,expl:"Le gonflage n'est jamais l'objectif ; le contrôle du radeau l'est."},
@@ -273,7 +273,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'A Liferaft Does Not Save Lives by Inflating. It Saves Lives When Its Crew Takes Control' ?",opts:["Le gonflage suffit toujours","C'est la maîtrise de l'équipage sur la situation qui sauve réellement des vies","Cela ne concerne que les radeaux automatiques","Il ne faut jamais contrôler un radeau"],correct:1,expl:"L'inflation n'est jamais l'objectif final : le contrôle réel l'est."},
     {q:"Que représente le painter du radeau ?",opts:["Une simple corde sans fonction précise","Il déclenche le gonflage, maintient le radeau, et permet de récupérer sa position","Un élément utile seulement après le gonflage","Un accessoire optionnel"],correct:1,expl:"Le painter remplit trois fonctions distinctes."},

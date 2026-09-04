@@ -288,7 +288,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'The Quality of the Response Depends on the Quality of the First Report' ?",opts:["Le contenu d'une annonce n'a pas vraiment d'importance","La qualité de toute la réponse d'urgence dépend directement de la précision du premier signalement","Ce principe ne concerne que les officiers","Il ne faut jamais annoncer une urgence rapidement"],correct:1,expl:"Une annonce vague compromet toute la chaîne de réponse qui suit."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Apprendre à résoudre seul une urgence","Répondre à la question : comment transformer une découverte individuelle en une réponse d'urgence collective","Enseigner les procédures de chaque type d'urgence","Présenter l'historique des communications maritimes"],correct:1,expl:"Le premier intervenant n'est pas celui qui résout l'urgence, il est celui qui déclenche correctement toute la chaîne de secours."},
@@ -360,7 +360,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'The Quality of the Response Depends on the Quality of the First Report' ?",opts:["Le contenu d'une annonce n'a pas d'importance","La qualité de la réponse dépend directement de la précision du premier signalement","Cela ne concerne que les officiers","Il ne faut jamais annoncer rapidement"],correct:1,expl:"Une annonce vague compromet toute la chaîne de réponse."},
     {q:"Quels sont les cinq éléments de la méthode d'annonce d'urgence ?",opts:["Uniquement le nom et l'heure","WHAT, WHERE, WHO, RISK, ACTION","Uniquement WHAT et WHERE","Il n'existe pas de méthode structurée"],correct:1,expl:"Ces cinq éléments structurent une annonce complète et exploitable."},

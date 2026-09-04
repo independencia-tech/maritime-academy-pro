@@ -203,7 +203,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Expliquer uniquement comment lancer une embarcation","Transformer une embarcation de sauvetage en un moyen réellement opérationnel : le canot existe, mais est-il prêt à sauver des vies ?","Enseigner le signal d'abandon du navire","Présenter l'historique des embarcations de sauvetage"],correct:1,expl:"L1 dépasse la simple manœuvre : elle enseigne à rendre l'embarcation véritablement opérationnelle."},
     {q:"Pourquoi le bouchon de vidange est-il vérifié avant tout exercice ?",opts:["Par pure formalité administrative","Son absence ou son mauvais serrage laisse l'embarcation prendre l'eau dès la mise à flot","Il n'a aucune importance réelle","Il concerne uniquement les embarcations anciennes"],correct:1,expl:"Chaque vérification empêche une catastrophe différente, ici l'envahissement par l'eau."},
@@ -275,7 +275,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'Most Lifeboat Accidents Happen Before Reaching the Water' ?",opts:["Une fois à l'eau, il n'y a plus aucun risque","La phase la plus dangereuse est la descente et le largage, avant de toucher la mer","Cela ne concerne que les radeaux","Les accidents surviennent uniquement après plusieurs heures en mer"],correct:1,expl:"La phase de descente et de largage concentre le plus grand nombre d'accidents graves."},
     {q:"Quelle est la zone la plus critique de toute la manœuvre ?",opts:["L'embarquement","Le mécanisme de largage (crochets)","Le démarrage moteur","La communication radio"],correct:1,expl:"Les crochets de largage concentrent le plus grand nombre d'accidents documentés."},

@@ -214,7 +214,7 @@ function CompositeCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Safety Is Not What You Know. It Is What You Do When No One Is Watching' ?",opts:["Seules les connaissances théoriques comptent","La sécurité se mesure aux gestes réels accomplis même sans surveillance, pas seulement aux connaissances","Ce principe ne concerne que les officiers","Il ne faut jamais agir sans supervision"],correct:1,expl:"La vraie mesure de la sécurité, c'est le comportement quand personne ne regarde."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Enseigner une nouvelle compétence technique","Faire comprendre que toutes les compétences de S6 reposent sur une culture vécue au quotidien","Répéter en détail tout le contenu de L1 à L5","Présenter l'historique du département Safety"],correct:1,expl:"Cette leçon ne présente aucune nouvelle compétence technique, elle révèle la philosophie qui reliait déjà les leçons précédentes."},
@@ -286,7 +286,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'Safety Is Not What You Know. It Is What You Do When No One Is Watching' ?",opts:["Seule la théorie compte","La sécurité se mesure aux gestes réels, même sans surveillance","Cela ne concerne que les officiers","Il ne faut jamais agir sans supervision"],correct:1,expl:"La vraie mesure de la sécurité, c'est le comportement quand personne ne regarde."},
     {q:"Qu'est-ce qu'un Near Miss ?",opts:["Un accident sans importance","Un avertissement gratuit, une occasion d'apprendre sans en payer le prix","Un événement à ne jamais signaler","Une notion réservée aux grandes compagnies"],correct:1,expl:"Every Near Miss Is a Free Lesson. The Next One May Not Be."},

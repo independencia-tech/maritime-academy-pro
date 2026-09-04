@@ -331,7 +331,7 @@ function Exercise1({ lang, t }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'The First Five Minutes Rarely Solve the Emergency. They Decide Whether It Gets Worse' ?",opts:["Les cinq premières minutes suffisent toujours à résoudre l'urgence","Les cinq premières minutes déterminent surtout si la situation s'aggrave ou non, pas si elle est résolue","Ce principe ne concerne que l'incendie","Il ne faut jamais agir dans les cinq premières minutes"],correct:1,expl:"L'objectif des cinq premières minutes est de ne pas aggraver la situation, pas de la résoudre complètement."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Transformer le marin en expert de chaque urgence","Répondre à la question : quelle est la meilleure première décision pendant les cinq premières minutes","Enseigner les procédures complètes de chaque situation","Présenter l'historique des accidents maritimes"],correct:1,expl:"Le but est d'empêcher qu'une situation se dégrade avant que les procédures complètes prennent le relais."},
@@ -403,7 +403,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'The First Five Minutes Rarely Solve the Emergency. They Decide Whether It Gets Worse' ?",opts:["Elles suffisent toujours à résoudre l'urgence","Elles déterminent surtout si la situation s'aggrave ou non","Cela ne concerne que l'incendie","Il ne faut jamais agir aussi vite"],correct:1,expl:"L'objectif est de ne pas aggraver la situation, pas de la résoudre entièrement."},
     {q:"Quelle est la logique universelle enseignée dans cette leçon ?",opts:["Improviser selon la situation","Recognize → Report → Protect Life → Prevent Escalation → Call for Assistance","Résoudre seul avant d'alerter","Attendre les instructions"],correct:1,expl:"Cette logique s'applique à toutes les urgences couvertes."},

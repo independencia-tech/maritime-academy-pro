@@ -276,7 +276,7 @@ function CompositeCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Paper Doesn't Prevent Accidents. People Who Follow It Do' ?",opts:["Un document signé suffit toujours à garantir la sécurité","Le document seul ne protège personne ; c'est le respect rigoureux de ses conditions par les personnes qui prévient l'accident","Ce principe ne concerne que les permis de travail à chaud","Il ne faut jamais utiliser de documents formels"],correct:1,expl:"Un PTW, un JSA, un Toolbox Talk ou un LMRA ne sont jamais des formalités : ce sont des barrières de sécurité successives."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Éliminer complètement tout danger avant un travail","Transformer un travail dangereux en un travail maîtrisé","Remplacer la formation pratique aux permis de travail","Présenter l'historique des systèmes de permis"],correct:1,expl:"Certains travaux resteront toujours dangereux ; l'objectif n'est pas de supprimer le danger, mais de le contrôler."},
@@ -348,7 +348,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'Paper Doesn't Prevent Accidents. People Who Follow It Do' ?",opts:["Un document signé suffit toujours","Le respect rigoureux des conditions par les personnes prévient l'accident, pas le document seul","Cela ne concerne que les permis à chaud","Il ne faut jamais de documents formels"],correct:1,expl:"PTW, JSA, Toolbox Talk et LMRA sont des barrières successives, jamais de simples formalités."},
     {q:"Un PTW est-il seulement une autorisation ?",opts:["Oui, uniquement un document","Non, un contrat entre celui qui autorise, exécute, et supervise, tous responsables","Non, il ne concerne que l'exécutant","Oui, sans responsabilité partagée"],correct:1,expl:"Les trois parties deviennent responsables."},

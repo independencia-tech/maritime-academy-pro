@@ -1780,6 +1780,32 @@ const COMPETENCIES_S4:any = {
   pt:["✔ Reconhecer o comportamento do fogo e detetar um incêndio incipiente cedo","✔ Escolher a estratégia de combate a incêndio adequada à situação","✔ Usar corretamente os extintores portáteis conforme a classe de fogo","✔ Operar os sistemas fixos de combate a incêndio","✔ Conter um incêndio e proteger os seus limites (boundary cooling)","✔ Usar corretamente o EPI e o ARA para garantir a própria sobrevivência","✔ Coordenar uma equipa de incêndio e o controlo de avarias num papel de comando"],
 };
 
+// s5 (Lifeboats, Liferafts & HRU) competencies list — fifth Safety module
+// wired onto Foundation Exams, batch 3 (final Safety batch) of the wiring
+// effort, validated 2026-09-04. Themes: lifeboat launching & handling,
+// liferaft deployment & boarding, HRU & survival equipment, abandon ship
+// & survival leadership (L1-L4).
+const COMPETENCIES_S5:any = {
+  fr:["✔ Mettre à l'eau et manœuvrer une embarcation de sauvetage en sécurité","✔ Déployer un radeau de survie et organiser l'embarquement de l'équipage","✔ Utiliser correctement le largueur hydrostatique (HRU) et le matériel de survie associé","✔ Diriger l'abandon du navire et exercer un leadership de survie efficace"],
+  en:["✔ Launch and handle a lifeboat safely","✔ Deploy a liferaft and organize crew boarding","✔ Correctly use the hydrostatic release unit (HRU) and associated survival equipment","✔ Lead an abandon-ship operation and exercise effective survival leadership"],
+  es:["✔ Botar y maniobrar un bote salvavidas con seguridad","✔ Desplegar una balsa salvavidas y organizar el embarque de la tripulación","✔ Usar correctamente el liberador hidrostático (HRU) y el equipo de supervivencia asociado","✔ Dirigir el abandono del buque y ejercer un liderazgo de supervivencia eficaz"],
+  pt:["✔ Lançar e manobrar um bote salva-vidas com segurança","✔ Implantar uma balsa salva-vidas e organizar o embarque da tripulação","✔ Usar corretamente o libertador hidrostático (HRU) e o equipamento de sobrevivência associado","✔ Liderar o abandono do navio e exercer uma liderança de sobrevivência eficaz"],
+};
+
+// s6 (Ship Safety Operations & Emergency Readiness) competencies list —
+// sixth and final Safety module wired onto Foundation Exams, closing out
+// batch 3, validated 2026-09-04. Themes: safety patrol & hazard
+// recognition, common shipboard emergencies & immediate actions, PPE/safe
+// behaviour & human factors, emergency reporting & initial response,
+// permit to work & risk assessment, safety culture & professional
+// responsibility (L1-L6).
+const COMPETENCIES_S6:any = {
+  fr:["✔ Réaliser une ronde de sécurité et reconnaître les dangers à bord","✔ Réagir immédiatement face aux urgences courantes du navire","✔ Appliquer les EPI et les comportements sécuritaires liés au facteur humain","✔ Signaler une urgence et engager la réponse initiale appropriée","✔ Appliquer un permis de travail et réaliser une évaluation des risques","✔ Adopter une culture de sécurité et une responsabilité professionnelle constante"],
+  en:["✔ Conduct a safety patrol and recognize hazards on board","✔ Respond immediately to common shipboard emergencies","✔ Apply PPE and safe behaviour linked to human factors","✔ Report an emergency and initiate the appropriate first response","✔ Apply a permit to work and conduct a risk assessment","✔ Uphold a safety culture and consistent professional responsibility"],
+  es:["✔ Realizar una ronda de seguridad y reconocer los peligros a bordo","✔ Responder de inmediato ante las emergencias habituales del buque","✔ Aplicar el EPI y los comportamientos seguros relacionados con el factor humano","✔ Reportar una emergencia e iniciar la respuesta inicial adecuada","✔ Aplicar un permiso de trabajo y realizar una evaluación de riesgos","✔ Mantener una cultura de seguridad y una responsabilidad profesional constante"],
+  pt:["✔ Realizar uma ronda de segurança e reconhecer os perigos a bordo","✔ Responder imediatamente às emergências comuns do navio","✔ Aplicar o EPI e os comportamentos seguros ligados ao fator humano","✔ Reportar uma emergência e iniciar a resposta inicial adequada","✔ Aplicar uma autorização de trabalho e realizar uma avaliação de riscos","✔ Manter uma cultura de segurança e uma responsabilidade profissional constante"],
+};
+
 // ── Shared exam engine wiring (2026-09-02 refactor) ─────────────────────
 // Extracted from NavigationLessonsPage (d1's original, one-off implementation)
 // into a moduleId-parametrized hook + presentational components so a second
@@ -3168,7 +3194,7 @@ function S4LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, 
     </div>
   );
 }
-function S5LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function S5LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -3181,6 +3207,7 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "s5", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s5");
@@ -3194,10 +3221,15 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_S5}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -3221,7 +3253,7 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
     </div>
   );
 }
-  function S6LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  function S6LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -3234,6 +3266,7 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "s6", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s6");
@@ -3247,10 +3280,15 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_S6}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -4580,6 +4618,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    currentRankId={profile.who}
+    targetRankId={profile.target}
     autoPick={pendingLessonPick}
     onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
@@ -4619,6 +4659,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    currentRankId={profile.who}
+    targetRankId={profile.target}
     autoPick={pendingLessonPick}
     onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {

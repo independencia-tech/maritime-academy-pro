@@ -228,7 +228,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Protect Yourself First. A Rescuer Who Becomes a Victim Saves No One' ?",opts:["Il ne faut jamais aider quelqu'un en difficulté","Se protéger soi-même est la condition pour pouvoir réellement aider les autres","Ce principe ne concerne que les officiers","Il faut toujours agir en premier sans réfléchir"],correct:1,expl:"Un sauveteur qui devient victime n'aide plus personne, il aggrave la situation."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Présenter une liste complète d'équipements de protection","Répondre à la question : comment un marin se protège-t-il avant d'intervenir","Enseigner l'historique des normes de sécurité","Remplacer la formation pratique aux EPI"],correct:1,expl:"La sécurité personnelle précède toujours l'intervention ; les équipements répondent à un danger identifié, jamais l'inverse."},
@@ -300,7 +300,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'Protect Yourself First. A Rescuer Who Becomes a Victim Saves No One' ?",opts:["Il ne faut jamais aider quelqu'un","Se protéger d'abord est la condition pour pouvoir réellement aider","Cela ne concerne que les officiers","Il faut agir sans réfléchir"],correct:1,expl:"Un sauveteur qui devient victime n'aide plus personne."},
     {q:"Pourquoi le danger détermine-t-il toujours l'équipement ?",opts:["Ce n'est pas vrai","Chaque équipement répond à un danger identifié au préalable","C'est une question d'habitude uniquement","Le règlement seul décide, sans lien avec le danger"],correct:1,expl:"Un professionnel porte un EPI parce qu'il a identifié un danger, pas par obligation aveugle."},

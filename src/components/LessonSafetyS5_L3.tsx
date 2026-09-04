@@ -206,7 +206,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'The Equipment Gives You a Chance. Your Decisions Keep You Alive' ?",opts:["L'équipement suffit toujours à sauver des vies","L'équipement donne une opportunité, mais ce sont les décisions de gestion qui déterminent réellement la survie","Ce principe ne concerne que le HRU","Il ne faut jamais utiliser l'équipement de survie"],correct:1,expl:"Le matériel offre une chance ; c'est la discipline et les décisions qui font la différence."},
     {q:"Quelle est la mission exacte de cette leçon ?",opts:["Présenter le HRU et l'inventaire SOLAS en détail","Répondre à la question : comment augmenter ses chances de rester vivant jusqu'à l'arrivée des secours","Enseigner le signal d'abandon du navire","Présenter l'historique des radeaux de sauvetage"],correct:1,expl:"Le HRU et l'inventaire ne sont que des moyens ; le vrai sujet est la gestion de la survie."},
@@ -276,7 +276,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'The Equipment Gives You a Chance. Your Decisions Keep You Alive' ?",opts:["L'équipement suffit toujours","Ce sont les décisions qui déterminent réellement la survie","Cela ne concerne que le HRU","Il ne faut jamais utiliser l'équipement"],correct:1,expl:"Le matériel offre une chance, la discipline fait la différence."},
     {q:"Pourquoi le HRU existe-t-il ?",opts:["Pour remplacer toujours le largage manuel","Parce que les humains peuvent ne plus être capables d'agir","Uniquement pour des raisons réglementaires","Pour accélérer le largage systématiquement"],correct:1,expl:"Le HRU est un dernier filet de sécurité, pas le premier réflexe."},
