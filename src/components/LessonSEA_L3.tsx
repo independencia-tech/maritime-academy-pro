@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { shuffleQuestionOptions } from "./LessonShared";
+import { shuffleQuestionOptions, QuizComp, QuestionBank } from "./LessonShared";
 
 const C = {
   bg0:"#03070f", bg1:"#060e1a", bg2:"#0a1628", bg3:"#0d1f3c",
@@ -19,30 +19,34 @@ const C = {
 };
 
 const T = {
-  fr:{ back:"◀ Retour", module:"Seamanship",
+  fr:{ back:"◀ Retour", module:"Seamanship", quiz:"QUIZ",
     question:"Question", ofQ:"sur", correct:"✓ Bonne reponse!", wrong:"✗ Mauvaise reponse",
     expl:"Explication:", next:"SUIVANT =>", finish:"VOIR MON SCORE =>",
-    startQuiz:"COMMENCER LE QUIZ", backDash:"<= RETOUR AU DASHBOARD",
+    startQuiz:"COMMENCER LE QUIZ", startBank:"✅ COMMENCER =>", backDash:"<= RETOUR AU DASHBOARD",
     youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz",
-    showCorr:"Voir la correction", hideCorr:"Masquer", xp:"XP gagnes" },
-  en:{ back:"◀ Back", module:"Seamanship",
+    showCorr:"Voir la correction", hideCorr:"Masquer", xp:"XP gagnes",
+    scorePerf:"Parfait ! 🌟", scoreGreat:"Excellent ! 💪", scoreGood:"Continue ! 📚" },
+  en:{ back:"◀ Back", module:"Seamanship", quiz:"QUIZ",
     question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer",
     expl:"Explanation:", next:"NEXT =>", finish:"SEE MY SCORE =>",
-    startQuiz:"START QUIZ", backDash:"<= BACK TO DASHBOARD",
+    startQuiz:"START QUIZ", startBank:"✅ START =>", backDash:"<= BACK TO DASHBOARD",
     youLearned:"You learned:", readFirst:"Read the content then start the quiz",
-    showCorr:"Show correction", hideCorr:"Hide", xp:"XP earned" },
-  es:{ back:"◀ Volver", module:"Seamanship",
+    showCorr:"Show correction", hideCorr:"Hide", xp:"XP earned",
+    scorePerf:"Perfect! 🌟", scoreGreat:"Excellent! 💪", scoreGood:"Keep going! 📚" },
+  es:{ back:"◀ Volver", module:"Seamanship", quiz:"QUIZ",
     question:"Pregunta", ofQ:"de", correct:"✓ Correcta!", wrong:"✗ Incorrecta",
     expl:"Explicacion:", next:"SIGUIENTE =>", finish:"VER PUNTUACION =>",
-    startQuiz:"EMPEZAR QUIZ", backDash:"<= VOLVER AL PANEL",
+    startQuiz:"EMPEZAR QUIZ", startBank:"✅ EMPEZAR =>", backDash:"<= VOLVER AL PANEL",
     youLearned:"Has aprendido:", readFirst:"Lee y luego comienza",
-    showCorr:"Ver correccion", hideCorr:"Ocultar", xp:"XP ganados" },
-  pt:{ back:"◀ Voltar", module:"Seamanship",
+    showCorr:"Ver correccion", hideCorr:"Ocultar", xp:"XP ganados",
+    scorePerf:"¡Perfecto! 🌟", scoreGreat:"¡Excelente! 💪", scoreGood:"¡Sigue! 📚" },
+  pt:{ back:"◀ Voltar", module:"Seamanship", quiz:"QUIZ",
     question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada",
     expl:"Explicacao:", next:"PROXIMO =>", finish:"VER PONTUACAO =>",
-    startQuiz:"COMECAR QUIZ", backDash:"<= VOLTAR AO PAINEL",
+    startQuiz:"COMECAR QUIZ", startBank:"✅ COMEÇAR =>", backDash:"<= VOLTAR AO PAINEL",
     youLearned:"Voce aprendeu:", readFirst:"Leia o conteudo e depois comece",
-    showCorr:"Ver correcao", hideCorr:"Ocultar", xp:"XP ganhos" },
+    showCorr:"Ver correcao", hideCorr:"Ocultar", xp:"XP ganhos",
+    scorePerf:"Perfeito! 🌟", scoreGreat:"Excelente! 💪", scoreGood:"Continue! 📚" },
 };
 
 function Stars() {
@@ -759,303 +763,165 @@ function Exercise1({ lang, t }) {
 
 // ══════════════════════════════════════
 // QUESTION BANK — 15 QCM PREMIUM
+// Restructured 2026-09-03 from the original single-array + lbl()/ans: shape
+// into the standard {fr:[...],en:[...],es:[...],pt:[...]} + correct: shape
+// used everywhere else in the codebase, so it can be consumed by
+// examQuestionPools.ts and rendered via LessonShared's shared QuestionBank
+// component. Content is unchanged question-for-question, option-for-option,
+// answer-for-answer — see project memory for the validated mapping.
+// 12 of these 15 questions had NO Portuguese `expl` in the source (a 3-arg
+// lbl() call instead of 4) — at runtime this silently fell back to the
+// French text for pt users. That pre-existing gap is replicated exactly
+// here (pt expl = fr expl) rather than invented; flagged, not fixed.
 // ══════════════════════════════════════
-function QuestionBank({ lang, onComplete }) {
-  const [idx,setIdx]=useState(0);
-  const [sel,setSel]=useState(null);
-  const [answered,setAnswered]=useState(false);
-  const [score,setScore]=useState(0);
-  const [done,setDone]=useState(false);
-  const [started,setStarted]=useState(false);
-  const lbl=(fr,en,es,pt)=>({fr,en,es,pt}[lang]||fr);
+export const BANK = {
+  fr: [
+    {q:"Quelle est la difference principale entre une ancre Hall et une ancre Danforth ?",opts:["Hall = grands navires marchands bras articules, Danforth = plaisance grandes lames plates","Hall est plus legere","Danforth convient mieux a la roche","Elles sont identiques"],correct:0,expl:"L'ancre Hall (1-20t) est le standard des navires marchands avec des bras articules compacts. La Danforth a deux grandes lames plates orientables, bien plus legere, excellente en sable pour la plaisance. La Hall tient sur des fonds varies, la Danforth excelle specifiquement en sable."},
+    {q:"Qu'est-ce que le 'scope' de mouillage ?",opts:["La profondeur du fond","Le rapport entre longueur de chaine et profondeur — scope = chaine / profondeur","Le poids de l'ancre","Le rayon du cercle d'evolution"],correct:1,expl:"Le scope = longueur de chaine filee / profondeur. Ex : 60m de chaine pour 10m de fond = scope 6:1. Un scope eleve assure un angle de traction horizontal sur l'ancre — meilleure tenue. Formule a connaitre absolument."},
+    {q:"Quelle longueur de chaine faut-il filer pour 12m de fond avec vent fort (scope 6:1) ?",opts:["36 m / 1.3 ecaille","60 m / 2.2 ecailles","72 m / 2.6 ecailles","96 m / 3.5 ecailles"],correct:2,expl:"Calcul : 12m x 6 = 72m de chaine. En ecailles : 72 / 27,5 = 2,6 => 3 ecailles completes = 82,5m. En pratique on arrondit toujours au-dessus pour la securite."},
+    {q:"Pourquoi la posidonie est-elle une espece protegee en Mediterranee ?",opts:["C'est une algue decorative","Plante a fleurs endemique : production O2, viveiro poissons, sequestration CO2, protegee loi 88-1261","Elle est dangereuse pour les navires","Elle indique un fond rocheux"],correct:1,expl:"La posidonie (Posidonia oceanica) est une plante a fleurs (pas une algue) endemique de la Mediterranee. Elle produit 20L d'O2/m2/jour, sert de viveiro pour les poissons et crustaces, fixe les fonds et capte le CO2. Protegee depuis 1988. Amende jusqu'a 150 000 euros si l'on y mouille."},
+    {q:"Quel est le role du frein de gueuse (devil's claw) ?",opts:["Freiner le guindeau","Verrouiller mecaniquement la chaine independamment du guindeau — securite en navigation","Compter les ecailles","Guider la chaine dans l'ecubier"],correct:1,expl:"Le devil's claw (frein de gueuse) est un crochet metallique qui se verrouille sur un maillon de la chaine. Il supporte le poids de la chaine independamment du frein du guindeau. Essentiel : si le guindeau lache, le devil's claw retient la chaine. Toujours engager apres mouillage."},
+    {q:"Qu'est-ce que la 'chaine au pic' ?",opts:["La chaine est dans le puits","La chaine est verticale sous le bateau — l'ancre est directement dessous, prete a tenir","La chaine est trop courte","L'ancre est a bord"],correct:1,expl:"'Chaine au pic' = la chaine est tendue verticalement sous l'ecubier, indiquant que le navire est directement au-dessus de l'ancre. C'est le signal que l'ancre va se lever. L'officier de pont l'annonce a la passerelle qui peut alors faire de la machine pour aider le levage."},
+    {q:"Quelles sont les methodes de detection du garreo ?",opts:["Regarder la mer uniquement","Relevement repetes sur marques fixes + alarme GPS + vibrations chaine + surveillance embarcations voisines","Compter les ecailles","Observer la couleur de l'eau"],correct:1,expl:"Methodes de detection garreo : (1) Relever des amers fixes toutes les 30 min — si les releves changent, le navire derive. (2) Alarme GPS configuree en cercle autour du point d'ancrage. (3) Vibrations ou a-coups dans la chaine. (4) Comparer sa position aux navires voisins. Plusieurs methodes simultanees."},
+    {q:"Quel fond offre la meilleure tenue pour une ancre Hall ?",opts:["Roche","Sable ou vase — meilleure penetration et adherence","Galets","Herbier"],correct:1,expl:"Le sable et la vase sont les meilleurs fonds pour une ancre Hall. En sable : l'ancre penetre rapidement et developpe une excellente resistance par friction. En vase : bonne tenue mais attention a la suction au levage. La roche, les galets et l'herbier sont a eviter."},
+    {q:"A quoi correspondent les symboles S, M, R, Wd sur une carte marine ?",opts:["Signaux, Marque, Rocher, Winde","Sand (sable), Mud (vase), Rock (roche), Weed (herbier) — nature du fond","Securite, Mouillage, Rade, Vent dominant","Sondage, Marche, Rapide, Deriveur"],correct:1,expl:"Sur les cartes marines (SHOM/IHO) : S = Sand (sable), M = Mud (vase/boue), R = Rock (roche), Cy = Clay (argile), G = Gravel (gravier), Sh = Shells (coquilles), Wd = Weed (herbier/algues). Ces annotations permettent de choisir le meilleur emplacement de mouillage."},
+    {q:"Qu'est-ce que le mouillage avec deux ancres ?",opts:["Une procedure d'urgence uniquement","Technique pour reduire le cercle d'evolution, tenir en courant alternatif ou renforcer la tenue par mauvais temps","Obligatoire en port","Utilisee uniquement par les voiliers"],correct:1,expl:"Le mouillage avec deux ancres est utilise pour : (1) Limiter le cercle d'evolution en espace confine — les deux ancres en V. (2) Tenir en courant alternatif (maree) — ancres dans l'axe du courant. (3) Renforcer la tenue par mauvais temps. Configuration courante : ancres deployees en V (30-60 degres entre les deux chaines)."},
+    {q:"Quelle est la procedure recommandee si vous suspectez un garreo ?",opts:["Attendre que le temps s'ameliore","Verifier le garreo, filer plus de chaine, demarrer les machines en standby, preparer le depart si necessaire","Couper le moteur du guindeau","Appeler les secours immediatement"],correct:1,expl:"Procedure de garreo : (1) Confirmer le garreo par relevement et GPS. (2) Alerter le capitaine. (3) Filer plus de chaine pour augmenter la tenue. (4) Demarrer les machines pour alleger la traction sur l'ancre. (5) Si le garreo continue : lever l'ancre et se mettre en route ou changer de position. Ne jamais attendre que la situation devienne critique."},
+    {q:"Que signifie 'chaine en catenary' ?",opts:["La chaine est droite et tendue","La chaine forme une courbe naturelle vers le bas — amortit les chocs et assure un tirage horizontal sur l'ancre","La chaine est enroulee","La chaine est courte"],correct:1,expl:"La catenaire est la courbe naturelle que forme la chaine entre l'ecubier et le fond sous son propre poids. Elle joue un role d'amortisseur : absorbe les chocs des vagues et du vent. Elle assure un angle de traction proche de l'horizontal sur l'ancre (meilleure tenue). Chaine tendue = pas de catenaire = mauvaise tenue = signe possible de garreo."},
+    {q:"Quels criteres choisir pour un bon emplacement de mouillage ?",opts:["Uniquement la profondeur","Protection meteo, type de fond, profondeur, cercle evolution, cables sous-marins, reglementation locale","La proximite du port","La couleur de l'eau uniquement"],correct:1,expl:"Criteres de choix d'un mouillage : (1) Protection meteo — abri naturel vent/houle. (2) Fond S ou M preferentiel. (3) Profondeur adaptee au tirant d'eau + scope. (4) Espace suffisant pour le cercle d'evolution (chaine+longueur navire). (5) Absence de cables sous-marins (consulter la carte). (6) Zones de mouillage autorisees (reglementation locale, zones protegees)."},
+    {q:"Qu'est-ce qu'un mouillage en rade foraine ?",opts:["Mouillage protege dans un port","Mouillage en mer ouverte sans abri naturel — precautions maximales requises","Mouillage avec deux ancres","Mouillage permanent"],correct:1,expl:"La rade foraine est un mouillage en zone exposee sans protection naturelle. Utilise pour : transbordement en mer, attente port, avitaillement ancre. Precautions : scope minimum 5:1, quart permanent, machines en standby, pret a appareiller a tout moment. Interdit par vents forts si alternative disponible."},
+    {q:"Quel ordre la passerelle donne-t-elle pour declencher le mouillage ?",opts:["'Machine stop'","'Mouillez !' ou 'Let go !' — ordre definitif de lacher l'ancre","'Parez a mouiller'","'Guindeau pret'"],correct:1,expl:"La procedure est sequentielle : (1) 'Parez a mouiller' = positionnement et standby. (2) 'Parez' du pont = ancre surplombant l'eau. (3) 'MOUILLEZ !' = ordre definitif — l'ancre est lachee. Le timonier/bosco confirme 'Ancre a l'eau'. La passerelle annonce prealablement la profondeur et le nombre d'ecailles a filer."},
+  ],
+  en: [
+    {q:"What is the main difference between a Hall and a Danforth anchor?",opts:["Hall = large merchant ships articulated arms, Danforth = leisure large flat flukes","Hall is lighter","Danforth is better on rock","They are identical"],correct:0,expl:"The Hall anchor (1-20t) is the merchant vessel standard with compact articulated arms. The Danforth has two large flat orientable flukes, much lighter, excellent in sand for leisure. The Hall holds on various bottoms, the Danforth excels specifically in sand."},
+    {q:"What is the anchoring 'scope'?",opts:["The bottom depth","The ratio between chain length and depth — scope = chain / depth","The anchor weight","The swinging circle radius"],correct:1,expl:"Scope = chain length veered / depth. Ex: 60m of chain for 10m depth = scope 6:1. High scope ensures horizontal pull angle on the anchor — better holding. Formula absolutely to know."},
+    {q:"How much chain to veer for 12m depth in strong wind (scope 6:1)?",opts:["36 m / 1.3 ecaille","60 m / 2.2 ecailles","72 m / 2.6 ecailles","96 m / 3.5 ecailles"],correct:2,expl:"Calculation: 12m x 6 = 72m of chain. In shackles: 72 / 27.5 = 2.6 => 3 complete shackles = 82.5m. In practice always round up for safety."},
+    {q:"Why is posidonia a protected species in the Mediterranean?",opts:["It is a decorative algae","Flowering plant endemic: O2 production, fish nursery, CO2 sequestration, protected law 88-1261","It is dangerous for vessels","It indicates a rocky bottom"],correct:1,expl:"Posidonia oceanica is a flowering plant (not algae) endemic to the Mediterranean. It produces 20L of O2/m2/day, serves as nursery for fish and crustaceans, stabilizes bottoms and captures CO2. Protected since 1988. Fine up to 150,000 euros for anchoring on it."},
+    {q:"What is the role of the devil's claw?",opts:["Brake the windlass","Mechanically lock the chain independently from the windlass — safety underway","Count the shackles","Guide the chain in the hawsepipe"],correct:1,expl:"The devil's claw is a metal hook that locks onto a chain link. It supports the chain weight independently from the windlass brake. Essential: if the windlass fails, the devil's claw holds the chain. Always engage after anchoring."},
+    {q:"What does 'chain up and down' mean?",opts:["The chain is in the locker","The chain is vertical under the vessel — anchor is directly below, ready to hold","The chain is too short","The anchor is aboard"],correct:1,expl:"'Chain up and down' = the chain is taut vertically under the hawsepipe, indicating the vessel is directly above the anchor. This signals the anchor is about to break out. The deck officer reports to the bridge which can then use the engine to assist lifting."},
+    {q:"What are the methods for detecting dragging?",opts:["Look at the sea only","Repeated bearings on fixed marks + GPS alarm + chain vibrations + monitoring neighboring vessels","Count the shackles","Observe water color"],correct:1,expl:"Dragging detection methods: (1) Take bearings on fixed marks every 30 min — if bearings change, vessel is drifting. (2) GPS alarm configured as circle around anchorage point. (3) Vibrations or jerks in the chain. (4) Compare position with neighboring vessels. Multiple simultaneous methods."},
+    {q:"Which bottom offers the best holding for a Hall anchor?",opts:["Rock","Sand or mud — best penetration and grip","Shingle","Weed"],correct:1,expl:"Sand and mud are the best bottoms for a Hall anchor. In sand: anchor penetrates quickly and develops excellent resistance through friction. In mud: good holding but beware suction when weighing. Rock, shingle and weed are to be avoided."},
+    {q:"What do the symbols S, M, R, Wd on a nautical chart mean?",opts:["Signals, Mark, Rock, Wind","Sand, Mud, Rock, Weed — bottom type","Safety, Anchoring, Roads, Dominant wind","Sounding, Speed, Fast, Drifter"],correct:1,expl:"On nautical charts (SHOM/IHO): S = Sand, M = Mud, R = Rock, Cy = Clay, G = Gravel, Sh = Shells, Wd = Weed. These annotations allow choosing the best anchoring location."},
+    {q:"What is anchoring with two anchors?",opts:["An emergency procedure only","Technique to reduce swinging circle, hold in alternating current or reinforce holding in bad weather","Mandatory in port","Used only by sailing vessels"],correct:1,expl:"Anchoring with two anchors is used to: (1) Limit swinging circle in confined space — two anchors in V shape. (2) Hold in alternating current (tide) — anchors in current axis. (3) Reinforce holding in bad weather. Common configuration: anchors deployed in V shape (30-60 degrees between chains)."},
+    {q:"What is the recommended procedure if you suspect dragging?",opts:["Wait for weather to improve","Verify dragging, veer more chain, start engines on standby, prepare to get underway if needed","Stop the windlass motor","Call rescue immediately"],correct:1,expl:"Dragging procedure: (1) Confirm dragging by bearing and GPS. (2) Alert captain. (3) Veer more chain to improve holding. (4) Start engines to reduce pull on anchor. (5) If dragging continues: weigh anchor and get underway or change position. Never wait for situation to become critical."},
+    {q:"What does 'chain catenary' mean?",opts:["The chain is straight and taut","The chain forms a natural downward curve — absorbs shocks and ensures horizontal pull on the anchor","The chain is coiled","The chain is short"],correct:1,expl:"The catenary is the natural curve formed by the chain between the hawsepipe and the bottom under its own weight. It acts as a shock absorber: absorbs wave and wind shocks. It ensures a near-horizontal pull angle on the anchor (better holding). Taut chain = no catenary = poor holding = possible dragging sign."},
+    {q:"What criteria to choose a good anchoring location?",opts:["Only the depth","Weather protection, bottom type, depth, swinging circle, submarine cables, local regulations","Proximity to port","Water color only"],correct:1,expl:"Criteria for choosing anchorage: (1) Weather protection — natural wind/swell shelter. (2) S or M bottom preferred. (3) Depth suited to draft + scope. (4) Sufficient space for swinging circle (chain + vessel length). (5) No submarine cables (check chart). (6) Authorized anchoring zones (local regulations, protected areas)."},
+    {q:"What is an open roadstead anchorage?",opts:["Protected anchorage in a port","Anchoring in open sea without natural shelter — maximum precautions required","Two-anchor anchoring","Permanent mooring"],correct:1,expl:"Open roadstead is an anchorage in an exposed zone without natural protection. Used for: sea transhipment, port waiting, bunkering at anchor. Precautions: minimum scope 5:1, permanent watch, engines on standby, ready to get underway at any time. Prohibited in strong winds if alternative available."},
+    {q:"What order does the bridge give to initiate anchoring?",opts:["'Stop engine'","'Mouiller!' or 'Let go!' — definitive order to release the anchor","'Standby to let go'","'Windlass ready'"],correct:1,expl:"The procedure is sequential: (1) 'Standby to let go' = positioning and standby. (2) 'Ready' from deck = anchor clear of water. (3) 'LET GO!' = definitive order — anchor released. The bosun confirms 'Anchor away'. Bridge announces depth and number of shackles to veer beforehand."},
+  ],
+  es: [
+    {q:"Cual es la diferencia principal entre un ancla Hall y una Danforth?",opts:["Hall = grandes buques mercantes brazos articulados, Danforth = nautica grandes unas planas","Hall es mas ligera","Danforth es mejor en roca","Son identicas"],correct:0,expl:"El ancla Hall (1-20t) es el estandar para buques mercantes con brazos articulados compactos. La Danforth tiene dos grandes unas planas orientables, mucho mas ligera, excelente en arena para la nautica."},
+    {q:"Que es el 'scope' de fondeo?",opts:["La profundidad del fondo","La relacion entre longitud de cadena y profundidad — scope = cadena / profundidad","El peso del ancla","El radio del circulo de evolucion"],correct:1,expl:"El scope = longitud de cadena largada / profundidad. Ej: 60m de cadena para 10m de fondo = scope 6:1. Un scope alto asegura un angulo de traccion horizontal sobre el ancla — mejor retencion."},
+    {q:"Cuanta cadena largar para 12m de fondo con viento fuerte (scope 6:1)?",opts:["36 m / 1.3 ecaille","60 m / 2.2 ecailles","72 m / 2.6 ecailles","96 m / 3.5 ecailles"],correct:2,expl:"Calculo: 12m x 6 = 72m de cadena. En grilletes: 72 / 27,5 = 2,6 => 3 grilletes completos = 82,5m."},
+    {q:"Por que la posidonia es una especie protegida en el Mediterraneo?",opts:["Es un alga decorativa","Planta con flores endemica: produccion O2, vivero peces, secuestro CO2, protegida ley 88-1261","Es peligrosa para los buques","Indica un fondo rocoso"],correct:1,expl:"La posidonia es una planta con flores (no alga) endemica del Mediterraneo. Produce 20L de O2/m2/dia, sirve de vivero para peces y crustaceos, fija los fondos y capta CO2. Protegida desde 1988."},
+    {q:"Cual es el papel de la garra del diablo?",opts:["Frenar el molinete","Bloquear mecanicamente la cadena independientemente del molinete — seguridad en navegacion","Contar los grilletes","Guiar la cadena en el escobero"],correct:1,expl:"La garra del diablo es un gancho metalico que se bloquea sobre un eslabon de la cadena. Soporta el peso de la cadena independientemente del freno del molinete. Siempre engancharlo despues del fondeo."},
+    {q:"Que significa 'cadena a pique'?",opts:["La cadena esta en el pocete","La cadena es vertical bajo el buque — el ancla esta directamente debajo, lista para agarrar","La cadena es demasiado corta","El ancla esta a bordo"],correct:1,expl:"'Cadena a pique' = la cadena esta tensa verticalmente bajo el escobero, indicando que el buque esta directamente sobre el ancla. Es la senal de que el ancla va a desprenderse."},
+    {q:"Cuales son los metodos de deteccion del garreo?",opts:["Solo mirar el mar","Marcaciones repetidas sobre marcas fijas + alarma GPS + vibraciones cadena + vigilar embarcaciones vecinas","Contar los grilletes","Observar el color del agua"],correct:1,expl:"Metodos de deteccion garreo: (1) Marcaciones sobre amers cada 30 min. (2) Alarma GPS. (3) Vibraciones en la cadena. (4) Comparar con embarcaciones vecinas."},
+    {q:"Que fondo ofrece la mejor retencion para un ancla Hall?",opts:["Roca","Arena o fango — mejor penetracion y adherencia","Canto rodado","Hierba"],correct:1,expl:"La arena y el fango son los mejores fondos para un ancla Hall. En arena: el ancla penetra rapidamente. En fango: buena retencion pero cuidado con la succion al virar."},
+    {q:"A que corresponden los simbolos S, M, R, Wd en una carta nautica?",opts:["Senales, Marca, Roca, Viento","Sand (arena), Mud (fango), Rock (roca), Weed (hierba) — naturaleza del fondo","Seguridad, Fondeadero, Rada, Viento dominante","Sondeo, Marcha, Rapido, Derivador"],correct:1,expl:"En cartas nauticas (SHOM/IHO): S = Sand (arena), M = Mud (fango/lodo), R = Rock (roca), Cy = Clay (arcilla), G = Gravel (grava), Sh = Shells (conchas), Wd = Weed (hierba/algas)."},
+    {q:"Que es el fondeo con dos anclas?",opts:["Un procedimiento de emergencia solo","Tecnica para reducir el circulo de evolucion, aguantar en corriente alterna o reforzar la tenencia por mal tiempo","Obligatorio en puerto","Usada solo por veleros"],correct:1,expl:"El fondeo con dos anclas se usa para: (1) Limitar el circulo de evolucion en espacio confinado. (2) Aguantar en corriente alterna. (3) Reforzar la retencion con mal tiempo."},
+    {q:"Cual es el procedimiento recomendado si sospecha un garreo?",opts:["Esperar a que mejore el tiempo","Verificar garreo, largar mas cadena, arrancar maquinas en espera, prepararse para zarpar si es necesario","Parar el motor del molinete","Llamar a rescate inmediatamente"],correct:1,expl:"Procedimiento de garreo: (1) Confirmar garreo. (2) Alertar al capitan. (3) Largar mas cadena. (4) Arrancar maquinas. (5) Si continua: levar y zarpar o cambiar posicion."},
+    {q:"Que significa 'cadena en catenaria'?",opts:["La cadena esta recta y tensa","La cadena forma una curva natural hacia abajo — amortigua choques y asegura un tiro horizontal sobre el ancla","La cadena esta enrollada","La cadena es corta"],correct:1,expl:"La catenaria es la curva natural que forma la cadena. Actua como amortiguador y asegura un angulo de traccion horizontal sobre el ancla. Cadena tesa = sin catenaria = posible garreo."},
+    {q:"Que criterios para elegir un buen lugar de fondeo?",opts:["Solo la profundidad","Proteccion meteorologica, tipo fondo, profundidad, circulo evolucion, cables submarinos, reglamentacion local","La proximidad al puerto","Solo el color del agua"],correct:1,expl:"Criterios de eleccion de fondeadero: (1) Proteccion meteorologica. (2) Fondo S o M preferente. (3) Profundidad. (4) Espacio circulo evolucion. (5) Ausencia cables submarinos. (6) Zonas autorizadas."},
+    {q:"Que es un fondeo en rada abierta?",opts:["Fondeo protegido en un puerto","Fondeo en mar abierto sin abrigo natural — precauciones maximas requeridas","Fondeo con dos anclas","Fondeo permanente"],correct:1,expl:"La rada abierta es un fondeo en zona expuesta sin proteccion natural. Precauciones: scope minimo 5:1, guardia permanente, maquinas en espera, listo para zarpar en cualquier momento."},
+    {q:"Que orden da el puente para iniciar el fondeo?",opts:["'Para maquina'","'Fondeen!' o 'Let go!' — orden definitiva de soltar el ancla","'Listos para fondear'","'Molinete listo'"],correct:1,expl:"La procedura es secuencial: (1) 'Listos para fondear'. (2) 'Listos' del puente = ancla sobre el agua. (3) 'FONDEEN!' = orden definitiva. El bosun confirma 'Ancla al agua'."},
+  ],
+  pt: [
+    {q:"Qual e a diferenca principal entre uma ancora Hall e uma Danforth?",opts:["Hall = grandes navios mercantes bracos articulados, Danforth = nautica grandes bracos planos","Hall e mais leve","Danforth e melhor em rocha","Sao identicas"],correct:0,expl:"A ancora Hall (1-20t) e o padrao dos navios mercantes com bracos articulados compactos. A Danforth tem dois grandes bracos planos orientaveis, muito mais leve, excelente em areia para a nautica."},
+    {q:"O que e o 'scope' de fundeio?",opts:["A profundidade do fundo","A relacao entre comprimento de corrente e profundidade — scope = corrente / profundidade","O peso da ancora","O raio do circulo de evolucao"],correct:1,expl:"O scope = comprimento de corrente filada / profundidade. Ex: 60m de corrente para 10m de fundo = scope 6:1. Um scope elevado assegura angulo de tracao horizontal sobre a ancora — melhor retencao."},
+    {q:"Quanto de corrente filar para 12m de fundo com vento forte (scope 6:1)?",opts:["36 m / 1.3 ecaille","60 m / 2.2 ecailles","72 m / 2.6 ecailles","96 m / 3.5 ecailles"],correct:2,expl:"Calculo: 12m x 6 = 72m de corrente. Em manilhas: 72 / 27,5 = 2,6 => 3 manilhas completas = 82,5m."},
+    {q:"Por que a posidonia e uma especie protegida no Mediterraneo?",opts:["E uma alga decorativa","Planta com flores endemica: producao O2, viveiro peixes, sequestro CO2, protegida lei 88-1261","E perigosa para os navios","Indica um fundo rochoso"],correct:1,expl:"A posidonia (Posidonia oceanica) e uma planta a fleurs (pas une algue) endemique de la Mediterranee. Elle produit 20L d'O2/m2/jour, sert de viveiro pour les poissons et crustaces, fixe les fonds et capte le CO2. Protegee depuis 1988. Amende jusqu'a 150 000 euros si l'on y mouille."},
+    {q:"Qual e o papel da garra do diabo?",opts:["Travar o molinete","Bloquear mecanicamente a corrente independentemente do molinete — seguranca em navegacao","Contar as manilhas","Guiar a corrente no escovem"],correct:1,expl:"Le devil's claw (frein de gueuse) est un crochet metallique qui se verrouille sur un maillon de la chaine. Il supporte le poids de la chaine independamment du frein du guindeau. Essentiel : si le guindeau lache, le devil's claw retient la chaine. Toujours engager apres mouillage."},
+    {q:"O que significa 'corrente apique'?",opts:["A corrente esta no pocete","A corrente e vertical sob o navio — a ancora esta diretamente abaixo, pronta para agarrar","A corrente e curta demais","A ancora esta a bordo"],correct:1,expl:"'Chaine au pic' = la chaine est tendue verticalement sous l'ecubier, indiquant que le navire est directement au-dessus de l'ancre. C'est le signal que l'ancre va se lever. L'officier de pont l'annonce a la passerelle qui peut alors faire de la machine pour aider le levage."},
+    {q:"Quais sao os metodos de detecao do arrasto?",opts:["Olhar apenas para o mar","Marcacoes repetidas sobre marcas fixas + alarme GPS + vibracoes corrente + vigiar embarcacoes vizinhas","Contar as manilhas","Observar a cor da agua"],correct:1,expl:"Methodes de detection garreo : (1) Relever des amers fixes toutes les 30 min — si les releves changent, le navire derive. (2) Alarme GPS configuree en cercle autour du point d'ancrage. (3) Vibrations ou a-coups dans la chaine. (4) Comparer sa position aux navires voisins. Plusieurs methodes simultanees."},
+    {q:"Qual fundo oferece a melhor retencao para uma ancora Hall?",opts:["Rocha","Areia ou vasa — melhor penetracao e aderencia","Calhaus","Ervas"],correct:1,expl:"Le sable et la vase sont les meilleurs fonds pour une ancre Hall. En sable : l'ancre penetre rapidement et developpe une excellente resistance par friction. En vase : bonne tenue mais attention a la suction au levage. La roche, les galets et l'herbier sont a eviter."},
+    {q:"A que correspondem os simbolos S, M, R, Wd numa carta nautica?",opts:["Sinais, Marca, Rocha, Vento","Sand (areia), Mud (vasa), Rock (rocha), Weed (ervas) — natureza do fundo","Seguranca, Fundeadouro, Rada, Vento dominante","Sondagem, Marcha, Rapido, Deriva"],correct:1,expl:"Sur les cartes marines (SHOM/IHO) : S = Sand (sable), M = Mud (vase/boue), R = Rock (roche), Cy = Clay (argile), G = Gravel (gravier), Sh = Shells (coquilles), Wd = Weed (herbier/algues). Ces annotations permettent de choisir le meilleur emplacement de mouillage."},
+    {q:"O que e o fundeio com duas ancoras?",opts:["Um procedimento de emergencia apenas","Tecnica para reduzir circulo de evolucao, aguentar em corrente alternada ou reforcar retencao com mau tempo","Obrigatorio no porto","Usada apenas por veleiros"],correct:1,expl:"Le mouillage avec deux ancres est utilise pour : (1) Limiter le cercle d'evolution en espace confine — les deux ancres en V. (2) Tenir en courant alternatif (maree) — ancres dans l'axe du courant. (3) Renforcer la tenue par mauvais temps. Configuration courante : ancres deployees en V (30-60 degres entre les deux chaines)."},
+    {q:"Qual e o procedimento recomendado se suspeitar de arrasto?",opts:["Esperar que o tempo melhore","Verificar arrasto, filar mais corrente, arrancar maquinas em espera, preparar para zarpar se necessario","Parar o motor do molinete","Chamar socorro imediatamente"],correct:1,expl:"Procedure de garreo : (1) Confirmer le garreo par relevement et GPS. (2) Alerter le capitaine. (3) Filer plus de chaine pour augmenter la tenue. (4) Demarrer les machines pour alleger la traction sur l'ancre. (5) Si le garreo continue : lever l'ancre et se mettre en route ou changer de position. Ne jamais attendre que la situation devienne critique."},
+    {q:"O que significa 'corrente em catenaria'?",opts:["A corrente esta reta e tensa","A corrente forma uma curva natural para baixo — absorve choques e assegura tracao horizontal sobre a ancora","A corrente esta enrolada","A corrente e curta"],correct:1,expl:"La catenaire est la courbe naturelle que forme la chaine entre l'ecubier et le fond sous son propre poids. Elle joue un role d'amortisseur : absorbe les chocs des vagues et du vent. Elle assure un angle de traction proche de l'horizontal sur l'ancre (meilleure tenue). Chaine tendue = pas de catenaire = mauvaise tenue = signe possible de garreo."},
+    {q:"Que criterios para escolher um bom local de fundeio?",opts:["Apenas a profundidade","Protecao meteorologica, tipo fundo, profundidade, circulo evolucao, cabos submarinos, regulamentacao local","A proximidade ao porto","Apenas a cor da agua"],correct:1,expl:"Criteres de choix d'un mouillage : (1) Protection meteo — abri naturel vent/houle. (2) Fond S ou M preferentiel. (3) Profondeur adaptee au tirant d'eau + scope. (4) Espace suffisant pour le cercle d'evolution (chaine+longueur navire). (5) Absence de cables sous-marins (consulter la carte). (6) Zones de mouillage autorisees (reglementation locale, zones protegees)."},
+    {q:"O que e um fundeio em rada aberta?",opts:["Fundeio protegido num porto","Fundeio em mar aberto sem abrigo natural — precaucoes maximas necessarias","Fundeio com duas ancoras","Fundeio permanente"],correct:1,expl:"La rade foraine est un mouillage en zone exposee sans protection naturelle. Utilise pour : transbordement en mer, attente port, avitaillement ancre. Precautions : scope minimum 5:1, quart permanent, machines en standby, pret a appareiller a tout moment. Interdit par vents forts si alternative disponible."},
+    {q:"Que ordem da ponte para iniciar o fundeio?",opts:["'Para maquina'","'Fundeiem!' ou 'Let go!' — ordem definitiva para largar a ancora","'Preparados para fundeiar'","'Molinete pronto'"],correct:1,expl:"La procedure est sequentielle : (1) 'Parez a mouiller' = positionnement et standby. (2) 'Parez' du pont = ancre surplombant l'eau. (3) 'MOUILLEZ !' = ordre definitif — l'ancre est lachee. Le timonier/bosco confirme 'Ancre a l'eau'. La passerelle annonce prealablement la profondeur et le nombre d'ecailles a filer."},
+  ],
+};
 
-  const qs=[
-    {q:lbl("Quelle est la difference principale entre une ancre Hall et une ancre Danforth ?","What is the main difference between a Hall and a Danforth anchor?","Cual es la diferencia principal entre un ancla Hall y una Danforth?","Qual e a diferenca principal entre uma ancora Hall e uma Danforth?"),
-      opts:[lbl("Hall = grands navires marchands bras articules, Danforth = plaisance grandes lames plates","Hall = large merchant ships articulated arms, Danforth = leisure large flat flukes","Hall = grandes buques mercantes brazos articulados, Danforth = nautica grandes unas planas","Hall = grandes navios mercantes bracos articulados, Danforth = nautica grandes bracos planos"),lbl("Hall est plus legere","Hall is lighter","Hall es mas ligera","Hall e mais leve"),lbl("Danforth convient mieux a la roche","Danforth is better on rock","Danforth es mejor en roca","Danforth e melhor em rocha"),lbl("Elles sont identiques","They are identical","Son identicas","Sao identicas")],
-      ans:0,expl:lbl("L'ancre Hall (1-20t) est le standard des navires marchands avec des bras articules compacts. La Danforth a deux grandes lames plates orientables, bien plus legere, excellente en sable pour la plaisance. La Hall tient sur des fonds varies, la Danforth excelle specifiquement en sable.","The Hall anchor (1-20t) is the merchant vessel standard with compact articulated arms. The Danforth has two large flat orientable flukes, much lighter, excellent in sand for leisure. The Hall holds on various bottoms, the Danforth excels specifically in sand.","El ancla Hall (1-20t) es el estandar para buques mercantes con brazos articulados compactos. La Danforth tiene dos grandes unas planas orientables, mucho mas ligera, excelente en arena para la nautica.","A ancora Hall (1-20t) e o padrao dos navios mercantes com bracos articulados compactos. A Danforth tem dois grandes bracos planos orientaveis, muito mais leve, excelente em areia para a nautica.")},
-    {q:lbl("Qu'est-ce que le 'scope' de mouillage ?","What is the anchoring 'scope'?","?Que es el 'scope' de fondeo?","O que e o 'scope' de fundeio?"),
-      opts:[lbl("La profondeur du fond","The bottom depth","La profundidad del fondo","A profundidade do fundo"),lbl("Le rapport entre longueur de chaine et profondeur — scope = chaine / profondeur","The ratio between chain length and depth — scope = chain / depth","La relacion entre longitud de cadena y profundidad — scope = cadena / profundidad","A relacao entre comprimento de corrente e profundidade — scope = corrente / profundidade"),lbl("Le poids de l'ancre","The anchor weight","El peso del ancla","O peso da ancora"),lbl("Le rayon du cercle d'evolution","The swinging circle radius","El radio del circulo de evolucion","O raio do circulo de evolucao")],
-      ans:1,expl:lbl("Le scope = longueur de chaine filee / profondeur. Ex : 60m de chaine pour 10m de fond = scope 6:1. Un scope eleve assure un angle de traction horizontal sur l'ancre — meilleure tenue. Formule a connaitre absolument.","Scope = chain length veered / depth. Ex: 60m of chain for 10m depth = scope 6:1. High scope ensures horizontal pull angle on the anchor — better holding. Formula absolutely to know.","El scope = longitud de cadena largada / profundidad. Ej: 60m de cadena para 10m de fondo = scope 6:1. Un scope alto asegura un angulo de traccion horizontal sobre el ancla — mejor retencion.","O scope = comprimento de corrente filada / profundidade. Ex: 60m de corrente para 10m de fundo = scope 6:1. Um scope elevado assegura angulo de tracao horizontal sobre a ancora — melhor retencao.")},
-    {q:lbl("Quelle longueur de chaine faut-il filer pour 12m de fond avec vent fort (scope 6:1) ?","How much chain to veer for 12m depth in strong wind (scope 6:1)?","?Cuanta cadena largar para 12m de fondo con viento fuerte (scope 6:1)?","Quanto de corrente filar para 12m de fundo com vento forte (scope 6:1)?"),
-      opts:["36 m / 1.3 ecaille","60 m / 2.2 ecailles","72 m / 2.6 ecailles","96 m / 3.5 ecailles"],
-      ans:2,expl:lbl("Calcul : 12m x 6 = 72m de chaine. En ecailles : 72 / 27,5 = 2,6 => 3 ecailles completes = 82,5m. En pratique on arrondit toujours au-dessus pour la securite.","Calculation: 12m x 6 = 72m of chain. In shackles: 72 / 27.5 = 2.6 => 3 complete shackles = 82.5m. In practice always round up for safety.","Calculo: 12m x 6 = 72m de cadena. En grilletes: 72 / 27,5 = 2,6 => 3 grilletes completos = 82,5m.","Calculo: 12m x 6 = 72m de corrente. Em manilhas: 72 / 27,5 = 2,6 => 3 manilhas completas = 82,5m.")},
-    {q:lbl("Pourquoi la posidonie est-elle une espece protegee en Mediterranee ?","Why is posidonia a protected species in the Mediterranean?","?Por que la posidonia es una especie protegida en el Mediterraneo?","Por que a posidonia e uma especie protegida no Mediterraneo?"),
-      opts:[lbl("C'est une algue decorative","It is a decorative algae","Es un alga decorativa","E uma alga decorativa"),lbl("Plante a fleurs endemique : production O2, viveiro poissons, sequestration CO2, protegee loi 88-1261","Flowering plant endemic: O2 production, fish nursery, CO2 sequestration, protected law 88-1261","Planta con flores endemica: produccion O2, vivero peces, secuestro CO2, protegida ley 88-1261","Planta com flores endemica: producao O2, viveiro peixes, sequestro CO2, protegida lei 88-1261"),lbl("Elle est dangereuse pour les navires","It is dangerous for vessels","Es peligrosa para los buques","E perigosa para os navios"),lbl("Elle indique un fond rocheux","It indicates a rocky bottom","Indica un fondo rocoso","Indica um fundo rochoso")],
-      ans:1,expl:lbl("La posidonie (Posidonia oceanica) est une plante a fleurs (pas une algue) endemique de la Mediterranee. Elle produit 20L d'O2/m2/jour, sert de viveiro pour les poissons et crustaces, fixe les fonds et capte le CO2. Protegee depuis 1988. Amende jusqu'a 150 000 euros si l'on y mouille.","Posidonia oceanica is a flowering plant (not algae) endemic to the Mediterranean. It produces 20L of O2/m2/day, serves as nursery for fish and crustaceans, stabilizes bottoms and captures CO2. Protected since 1988. Fine up to 150,000 euros for anchoring on it.","La posidonia es una planta con flores (no alga) endemica del Mediterraneo. Produce 20L de O2/m2/dia, sirve de vivero para peces y crustaceos, fija los fondos y capta CO2. Protegida desde 1988.")},
-    {q:lbl("Quel est le role du frein de gueuse (devil's claw) ?","What is the role of the devil's claw?","?Cual es el papel de la garra del diablo?","Qual e o papel da garra do diabo?"),
-      opts:[lbl("Freiner le guindeau","Brake the windlass","Frenar el molinete","Travar o molinete"),lbl("Verrouiller mecaniquement la chaine independamment du guindeau — securite en navigation","Mechanically lock the chain independently from the windlass — safety underway","Bloquear mecanicamente la cadena independientemente del molinete — seguridad en navegacion","Bloquear mecanicamente a corrente independentemente do molinete — seguranca em navegacao"),lbl("Compter les ecailles","Count the shackles","Contar los grilletes","Contar as manilhas"),lbl("Guider la chaine dans l'ecubier","Guide the chain in the hawsepipe","Guiar la cadena en el escobero","Guiar a corrente no escovem")],
-      ans:1,expl:lbl("Le devil's claw (frein de gueuse) est un crochet metallique qui se verrouille sur un maillon de la chaine. Il supporte le poids de la chaine independamment du frein du guindeau. Essentiel : si le guindeau lache, le devil's claw retient la chaine. Toujours engager apres mouillage.","The devil's claw is a metal hook that locks onto a chain link. It supports the chain weight independently from the windlass brake. Essential: if the windlass fails, the devil's claw holds the chain. Always engage after anchoring.","La garra del diablo es un gancho metalico que se bloquea sobre un eslabon de la cadena. Soporta el peso de la cadena independientemente del freno del molinete. Siempre engancharlo despues del fondeo.")},
-    {q:lbl("Qu'est-ce que la 'chaine au pic' ?","What does 'chain up and down' mean?","?Que significa 'cadena a pique'?","O que significa 'corrente apique'?"),
-      opts:[lbl("La chaine est dans le puits","The chain is in the locker","La cadena esta en el pocete","A corrente esta no pocete"),lbl("La chaine est verticale sous le bateau — l'ancre est directement dessous, prete a tenir","The chain is vertical under the vessel — anchor is directly below, ready to hold","La cadena es vertical bajo el buque — el ancla esta directamente debajo, lista para agarrar","A corrente e vertical sob o navio — a ancora esta diretamente abaixo, pronta para agarrar"),lbl("La chaine est trop courte","The chain is too short","La cadena es demasiado corta","A corrente e curta demais"),lbl("L'ancre est a bord","The anchor is aboard","El ancla esta a bordo","A ancora esta a bordo")],
-      ans:1,expl:lbl("'Chaine au pic' = la chaine est tendue verticalement sous l'ecubier, indiquant que le navire est directement au-dessus de l'ancre. C'est le signal que l'ancre va se lever. L'officier de pont l'annonce a la passerelle qui peut alors faire de la machine pour aider le levage.","'Chain up and down' = the chain is taut vertically under the hawsepipe, indicating the vessel is directly above the anchor. This signals the anchor is about to break out. The deck officer reports to the bridge which can then use the engine to assist lifting.","'Cadena a pique' = la cadena esta tensa verticalmente bajo el escobero, indicando que el buque esta directamente sobre el ancla. Es la senal de que el ancla va a desprenderse.")},
-    {q:lbl("Quelles sont les methodes de detection du garreo ?","What are the methods for detecting dragging?","?Cuales son los metodos de deteccion del garreo?","Quais sao os metodos de detecao do arrasto?"),
-      opts:[lbl("Regarder la mer uniquement","Look at the sea only","Solo mirar el mar","Olhar apenas para o mar"),lbl("Relevement repetes sur marques fixes + alarme GPS + vibrations chaine + surveillance embarcations voisines","Repeated bearings on fixed marks + GPS alarm + chain vibrations + monitoring neighboring vessels","Marcaciones repetidas + alarma GPS + vibraciones cadena + vigilar embarcaciones vecinas","Marcacoes repetidas + alarme GPS + vibracoes corrente + vigiar embarcacoes vizinhas"),lbl("Compter les ecailles","Count the shackles","Contar los grilletes","Contar as manilhas"),lbl("Observer la couleur de l'eau","Observe water color","Observar el color del agua","Observar a cor da agua")],
-      ans:1,expl:lbl("Methodes de detection garreo : (1) Relever des amers fixes toutes les 30 min — si les releves changent, le navire derive. (2) Alarme GPS configuree en cercle autour du point d'ancrage. (3) Vibrations ou a-coups dans la chaine. (4) Comparer sa position aux navires voisins. Plusieurs methodes simultanees.","Dragging detection methods: (1) Take bearings on fixed marks every 30 min — if bearings change, vessel is drifting. (2) GPS alarm configured as circle around anchorage point. (3) Vibrations or jerks in the chain. (4) Compare position with neighboring vessels. Multiple simultaneous methods.","Metodos de deteccion garreo: (1) Marcaciones sobre amers cada 30 min. (2) Alarma GPS. (3) Vibraciones en la cadena. (4) Comparar con embarcaciones vecinas.")},
-    {q:lbl("Quel fond offre la meilleure tenue pour une ancre Hall ?","Which bottom offers the best holding for a Hall anchor?","?Que fondo ofrece la mejor retencion para un ancla Hall?","Qual fundo oferece a melhor retencao para uma ancora Hall?"),
-      opts:[lbl("Roche","Rock","Roca","Rocha"),lbl("Sable ou vase — meilleure penetration et adherence","Sand or mud — best penetration and grip","Arena o fango — mejor penetracion y adherencia","Areia ou vasa — melhor penetracao e aderencia"),lbl("Galets","Shingle","Canto rodado","Calhaus"),lbl("Herbier","Weed","Hierba","Ervas")],
-      ans:1,expl:lbl("Le sable et la vase sont les meilleurs fonds pour une ancre Hall. En sable : l'ancre penetre rapidement et developpe une excellente resistance par friction. En vase : bonne tenue mais attention a la suction au levage. La roche, les galets et l'herbier sont a eviter.","Sand and mud are the best bottoms for a Hall anchor. In sand: anchor penetrates quickly and develops excellent resistance through friction. In mud: good holding but beware suction when weighing. Rock, shingle and weed are to be avoided.","La arena y el fango son los mejores fondos para un ancla Hall. En arena: el ancla penetra rapidamente. En fango: buena retencion pero cuidado con la succion al virar.")},
-    {q:lbl("A quoi correspondent les symboles S, M, R, Wd sur une carte marine ?","What do the symbols S, M, R, Wd on a nautical chart mean?","?A que corresponden los simbolos S, M, R, Wd en una carta nautica?","A que correspondem os simbolos S, M, R, Wd numa carta nautica?"),
-      opts:[lbl("Signaux, Marque, Rocher, Winde","Signals, Mark, Rock, Wind","Senales, Marca, Roca, Viento","Sinais, Marca, Rocha, Vento"),lbl("Sand (sable), Mud (vase), Rock (roche), Weed (herbier) — nature du fond","Sand, Mud, Rock, Weed — bottom type","Sand (arena), Mud (fango), Rock (roca), Weed (hierba) — naturaleza del fondo","Sand (areia), Mud (vasa), Rock (rocha), Weed (ervas) — natureza do fundo"),lbl("Securite, Mouillage, Rade, Vent dominant","Safety, Anchoring, Roads, Dominant wind","Seguridad, Fondeadero, Rada, Viento dominante","Seguranca, Fundeadouro, Rada, Vento dominante"),lbl("Sondage, Marche, Rapide, Deriveur","Sounding, Speed, Fast, Drifter","Sondeo, Marcha, Rapido, Derivador","Sondagem, Marcha, Rapido, Deriva")],
-      ans:1,expl:lbl("Sur les cartes marines (SHOM/IHO) : S = Sand (sable), M = Mud (vase/boue), R = Rock (roche), Cy = Clay (argile), G = Gravel (gravier), Sh = Shells (coquilles), Wd = Weed (herbier/algues). Ces annotations permettent de choisir le meilleur emplacement de mouillage.","On nautical charts (SHOM/IHO): S = Sand, M = Mud, R = Rock, Cy = Clay, G = Gravel, Sh = Shells, Wd = Weed. These annotations allow choosing the best anchoring location.","En cartas nauticas (SHOM/IHO): S = Sand, M = Mud, R = Rock, Cy = Clay, G = Gravel, Sh = Shells, Wd = Weed.")},
-    {q:lbl("Qu'est-ce que le mouillage avec deux ancres ?","What is anchoring with two anchors?","?Que es el fondeo con dos anclas?","O que e o fundeio com duas ancoras?"),
-      opts:[lbl("Une procedure d'urgence uniquement","An emergency procedure only","Un procedimiento de emergencia solo","Um procedimento de emergencia apenas"),lbl("Technique pour reduire le cercle d'evolution, tenir en courant alternatif ou renforcer la tenue par mauvais temps","Technique to reduce swinging circle, hold in alternating current or reinforce holding in bad weather","Tecnica para reducir el circulo de evolucion, aguantar en corriente alterna o reforzar la retencion con mal tiempo","Tecnica para reduzir circulo de evolucao, aguentar em corrente alternada ou reforcar retencao com mau tempo"),lbl("Obligatoire en port","Mandatory in port","Obligatorio en puerto","Obrigatorio no porto"),lbl("Utilisee uniquement par les voiliers","Used only by sailing vessels","Usada solo por veleros","Usada apenas por veleiros")],
-      ans:1,expl:lbl("Le mouillage avec deux ancres est utilise pour : (1) Limiter le cercle d'evolution en espace confine — les deux ancres en V. (2) Tenir en courant alternatif (maree) — ancres dans l'axe du courant. (3) Renforcer la tenue par mauvais temps. Configuration courante : ancres deployees en V (30-60 degres entre les deux chaines).","Anchoring with two anchors is used to: (1) Limit swinging circle in confined space — two anchors in V shape. (2) Hold in alternating current (tide) — anchors in current axis. (3) Reinforce holding in bad weather. Common configuration: anchors deployed in V shape (30-60 degrees between chains).","El fondeo con dos anclas se usa para: (1) Limitar el circulo de evolucion en espacio confinado. (2) Aguantar en corriente alterna. (3) Reforzar la retencion con mal tiempo.")},
-    {q:lbl("Quelle est la procedure recommandee si vous suspectez un garreo ?","What is the recommended procedure if you suspect dragging?","?Cual es el procedimiento recomendado si sospecha un garreo?","Qual e o procedimento recomendado se suspeitar de arrasto?"),
-      opts:[lbl("Attendre que le temps s'ameliore","Wait for weather to improve","Esperar a que mejore el tiempo","Esperar que o tempo melhore"),lbl("Verifier le garreo, filer plus de chaine, demarrer les machines en standby, preparer le depart si necessaire","Verify dragging, veer more chain, start engines on standby, prepare to get underway if needed","Verificar garreo, largar mas cadena, arrancar maquinas en espera, prepararse para zarpar si es necesario","Verificar arrasto, filar mais corrente, arrancar maquinas em espera, preparar para zarpar se necessario"),lbl("Couper le moteur du guindeau","Stop the windlass motor","Parar el motor del molinete","Parar o motor do molinete"),lbl("Appeler les secours immediatement","Call rescue immediately","Llamar a rescate inmediatamente","Chamar socorro imediatamente")],
-      ans:1,expl:lbl("Procedure de garreo : (1) Confirmer le garreo par relevement et GPS. (2) Alerter le capitaine. (3) Filer plus de chaine pour augmenter la tenue. (4) Demarrer les machines pour alleger la traction sur l'ancre. (5) Si le garreo continue : lever l'ancre et se mettre en route ou changer de position. Ne jamais attendre que la situation devienne critique.","Dragging procedure: (1) Confirm dragging by bearing and GPS. (2) Alert captain. (3) Veer more chain to improve holding. (4) Start engines to reduce pull on anchor. (5) If dragging continues: weigh anchor and get underway or change position. Never wait for situation to become critical.","Procedimiento de garreo: (1) Confirmar garreo. (2) Alertar al capitan. (3) Largar mas cadena. (4) Arrancar maquinas. (5) Si continua: levar y zarpar o cambiar posicion.")},
-    {q:lbl("Que signifie 'chaine en catenary' ?","What does 'chain catenary' mean?","?Que significa 'cadena en catenaria'?","O que significa 'corrente em catenaria'?"),
-      opts:[lbl("La chaine est droite et tendue","The chain is straight and taut","La cadena esta recta y tensa","A corrente esta reta e tensa"),lbl("La chaine forme une courbe naturelle vers le bas — amortit les chocs et assure un tirage horizontal sur l'ancre","The chain forms a natural downward curve — absorbs shocks and ensures horizontal pull on the anchor","La cadena forma una curva natural hacia abajo — amortigua choques y asegura un tiro horizontal sobre el ancla","A corrente forma uma curva natural para baixo — absorve choques e assegura tracao horizontal sobre a ancora"),lbl("La chaine est enroulee","The chain is coiled","La cadena esta enrollada","A corrente esta enrolada"),lbl("La chaine est courte","The chain is short","La cadena es corta","A corrente e curta")],
-      ans:1,expl:lbl("La catenaire est la courbe naturelle que forme la chaine entre l'ecubier et le fond sous son propre poids. Elle joue un role d'amortisseur : absorbe les chocs des vagues et du vent. Elle assure un angle de traction proche de l'horizontal sur l'ancre (meilleure tenue). Chaine tendue = pas de catenaire = mauvaise tenue = signe possible de garreo.","The catenary is the natural curve formed by the chain between the hawsepipe and the bottom under its own weight. It acts as a shock absorber: absorbs wave and wind shocks. It ensures a near-horizontal pull angle on the anchor (better holding). Taut chain = no catenary = poor holding = possible dragging sign.","La catenaria es la curva natural que forma la cadena. Actua como amortiguador y asegura un angulo de traccion horizontal sobre el ancla. Cadena tesa = sin catenaria = posible garreo.")},
-    {q:lbl("Quels criteres choisir pour un bon emplacement de mouillage ?","What criteria to choose a good anchoring location?","?Que criterios para elegir un buen lugar de fondeo?","Que criterios para escolher um bom local de fundeio?"),
-      opts:[lbl("Uniquement la profondeur","Only the depth","Solo la profundidad","Apenas a profundidade"),lbl("Protection meteo, type de fond, profondeur, cercle evolution, cables sous-marins, reglementation locale","Weather protection, bottom type, depth, swinging circle, submarine cables, local regulations","Proteccion meteorologica, tipo fondo, profundidad, circulo evolucion, cables submarinos, reglamentacion local","Protecao meteorologica, tipo fundo, profundidade, circulo evolucao, cabos submarinos, regulamentacao local"),lbl("La proximite du port","Proximity to port","La proximidad al puerto","A proximidade ao porto"),lbl("La couleur de l'eau uniquement","Water color only","Solo el color del agua","Apenas a cor da agua")],
-      ans:1,expl:lbl("Criteres de choix d'un mouillage : (1) Protection meteo — abri naturel vent/houle. (2) Fond S ou M preferentiel. (3) Profondeur adaptee au tirant d'eau + scope. (4) Espace suffisant pour le cercle d'evolution (chaine+longueur navire). (5) Absence de cables sous-marins (consulter la carte). (6) Zones de mouillage autorisees (reglementation locale, zones protegees).","Criteria for choosing anchorage: (1) Weather protection — natural wind/swell shelter. (2) S or M bottom preferred. (3) Depth suited to draft + scope. (4) Sufficient space for swinging circle (chain + vessel length). (5) No submarine cables (check chart). (6) Authorized anchoring zones (local regulations, protected areas).","Criterios de eleccion de fondeadero: (1) Proteccion meteorologica. (2) Fondo S o M preferente. (3) Profundidad. (4) Espacio circulo evolucion. (5) Ausencia cables submarinos. (6) Zonas autorizadas.")},
-    {q:lbl("Qu'est-ce qu'un mouillage en rade foraine ?","What is an open roadstead anchorage?","?Que es un fondeo en rada abierta?","O que e um fundeio em rada aberta?"),
-      opts:[lbl("Mouillage protege dans un port","Protected anchorage in a port","Fondeo protegido en un puerto","Fundeio protegido num porto"),lbl("Mouillage en mer ouverte sans abri naturel — precautions maximales requises","Anchoring in open sea without natural shelter — maximum precautions required","Fondeo en mar abierto sin abrigo natural — precauciones maximas requeridas","Fundeio em mar aberto sem abrigo natural — precaucoes maximas necessarias"),lbl("Mouillage avec deux ancres","Two-anchor anchoring","Fondeo con dos anclas","Fundeio com duas ancoras"),lbl("Mouillage permanent","Permanent mooring","Amarre permanente","Amarra permanente")],
-      ans:1,expl:lbl("La rade foraine est un mouillage en zone exposee sans protection naturelle. Utilise pour : transbordement en mer, attente port, avitaillement ancre. Precautions : scope minimum 5:1, quart permanent, machines en standby, pret a appareiller a tout moment. Interdit par vents forts si alternative disponible.","Open roadstead is an anchorage in an exposed zone without natural protection. Used for: sea transhipment, port waiting, bunkering at anchor. Precautions: minimum scope 5:1, permanent watch, engines on standby, ready to get underway at any time. Prohibited in strong winds if alternative available.","La rada abierta es un fondeo en zona expuesta sin proteccion natural. Precauciones: scope minimo 5:1, guardia permanente, maquinas en espera, listo para zarpar en cualquier momento.")},
-    {q:lbl("Quel ordre la passerelle donne-t-elle pour declencher le mouillage ?","What order does the bridge give to initiate anchoring?","?Que orden da el puente para iniciar el fondeo?","Que ordem da ponte para iniciar o fundeio?"),
-      opts:[lbl("'Machine stop'","'Stop engine'","'Para maquina'","'Para maquina'"),lbl("'Mouillez !' ou 'Let go !' — ordre definitif de lacher l'ancre","'Mouiller!' or 'Let go!' — definitive order to release the anchor","'Fondeen!' o 'Let go!' — orden definitiva de soltar el ancla","'Fundeiem!' ou 'Let go!' — ordem definitiva para largar a ancora"),lbl("'Parez a mouiller'","'Standby to let go'","'Listos para fondear'","'Preparados para fundeiar'"),lbl("'Guindeau pret'","'Windlass ready'","'Molinete listo'","'Molinete pronto'")],
-      ans:1,expl:lbl("La procedure est sequentielle : (1) 'Parez a mouiller' = positionnement et standby. (2) 'Parez' du pont = ancre surplombant l'eau. (3) 'MOUILLEZ !' = ordre definitif — l'ancre est lachee. Le timonier/bosco confirme 'Ancre a l'eau'. La passerelle annonce prealablement la profondeur et le nombre d'ecailles a filer.","The procedure is sequential: (1) 'Standby to let go' = positioning and standby. (2) 'Ready' from deck = anchor clear of water. (3) 'LET GO!' = definitive order — anchor released. The bosun confirms 'Anchor away'. Bridge announces depth and number of shackles to veer beforehand.","La procedura es secuencial: (1) 'Listos para fondear'. (2) 'Listos' del puente = ancla sobre el agua. (3) 'FONDEEN!' = orden definitiva. El bosun confirma 'Ancla al agua'.")},
-  ];
-
-  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q,"ans")));
-  const total=qs.length;
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
-  const handleNext=()=>{if(idx===total-1){setDone(true);if(onComplete)onComplete();return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
-  const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
-
-  if(!started) return (
-    <div style={{textAlign:"center",padding:"24px 0"}}>
-      <div style={{fontSize:40,marginBottom:12}}>📝</div>
-      <div style={{fontFamily:"'Cinzel',serif",fontSize:15,color:C.white,marginBottom:6,letterSpacing:1}}>
-        {lbl("Banque Premium","Premium Bank","Banco Premium","Banco Premium")}
-      </div>
-      <div style={{fontSize:12,color:C.muted,marginBottom:20}}>
-        15 {lbl("questions niveau expert","expert-level questions","preguntas nivel experto","questoes nivel especialista")}
-      </div>
-      <button onClick={()=>setStarted(true)}
-        style={{padding:"14px 32px",borderRadius:16,background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-          border:"none",color:C.bg0,fontSize:14,fontWeight:900,cursor:"pointer",letterSpacing:1,
-          boxShadow:`0 0 28px ${C.amber}44`}}>
-        {lbl("COMMENCER =>","START =>","EMPEZAR =>","COMECAR =>")}
-      </button>
-    </div>
-  );
-
-  if(done){
-    const trophy=getTrophy(score,total);
-    const pct=Math.round(score/total*100);
-    return (
-      <div style={{textAlign:"center",padding:"20px 10px"}}>
-        <div style={{fontSize:68,marginBottom:8}}>{trophy.icon}</div>
-        <div style={{fontFamily:"'Cinzel',serif",fontSize:21,color:trophy.color,fontWeight:800,marginBottom:4}}>
-          {trophy.label[lang]||trophy.label.fr}
-        </div>
-        <div style={{fontSize:30,fontWeight:800,color:C.white,marginBottom:4}}>{score}/{total}</div>
-        <div style={{fontSize:20,color:trophy.color,fontWeight:800,marginBottom:20}}>{pct}%</div>
-        <div style={{height:8,background:"rgba(255,255,255,0.07)",borderRadius:6,marginBottom:20,overflow:"hidden"}}>
-          <div style={{height:"100%",width:`${pct}%`,background:`linear-gradient(90deg,${C.gold},${trophy.color})`,borderRadius:6}}/>
-        </div>
-        <button onClick={handleRestart}
-          style={{width:"100%",padding:"13px",borderRadius:14,background:`rgba(201,146,42,0.12)`,
-            border:`1px solid ${C.gold}55`,color:C.gold2,fontSize:13,fontWeight:800,cursor:"pointer"}}>
-          {lbl("Recommencer","Restart","Reiniciar","Recomecar")}
-        </button>
-      </div>
-    );
-  }
-
-  const q=shuffled[idx];
-  return (
-    <div>
-      <div style={{marginBottom:14}}>
-        <div style={{display:"flex",justifyContent:"space-between",marginBottom:5}}>
-          <span style={{fontSize:10,color:C.gold2,fontWeight:800}}>
-            {lbl("Question","Question","Pregunta","Pergunta")} {idx+1}/{total}
-          </span>
-          <span style={{fontSize:10,color:C.amber2,fontWeight:800}}>✓ {score}/{idx}</span>
-        </div>
-        <div style={{height:5,background:"rgba(255,255,255,0.07)",borderRadius:4,overflow:"hidden"}}>
-          <div style={{height:"100%",width:`${(idx/total)*100}%`,
-            background:`linear-gradient(90deg,${C.gold},${C.amber})`,borderRadius:4,transition:"width 0.35s"}}/>
-        </div>
-      </div>
-      <div style={{background:"rgba(6,14,26,0.8)",borderRadius:16,padding:"16px",marginBottom:14,border:`1px solid ${C.border}`}}>
-        <div style={{fontSize:13,color:C.white,lineHeight:1.65,fontWeight:600}}>{q.q}</div>
-      </div>
-      {q.opts.map((opt,i)=>{
-        let bg="rgba(10,22,40,0.7)",brd=C.border,col=C.white;
-        if(answered){
-          if(i===q.ans){bg="rgba(0,230,118,0.12)";brd=C.green;col=C.green;}
-          else if(i===sel){bg="rgba(255,23,68,0.12)";brd=C.red;col=C.red;}
-        }
-        return (
-          <button key={i} onClick={()=>handleAnswer(i)}
-            style={{width:"100%",padding:"12px 15px",marginBottom:8,borderRadius:13,background:bg,
-              border:`1.5px solid ${brd}`,color:col,fontSize:12,textAlign:"left",
-              cursor:answered?"default":"pointer",transition:"all 0.2s"}}>
-            <span style={{fontWeight:800,marginRight:9,color:C.amber2,fontSize:11}}>{["A","B","C","D"][i]}.</span>{opt}
-          </button>
-        );
-      })}
-      {answered && (
-        <div style={{padding:"13px",borderRadius:13,
-          background:`rgba(${sel===q.ans?"0,230,118":"255,23,68"},0.08)`,
-          border:`1.5px solid ${sel===q.ans?C.green:C.red}55`,marginBottom:12}}>
-          <div style={{fontSize:12,fontWeight:800,color:sel===q.ans?C.green:C.red,marginBottom:5}}>
-            {sel===q.ans
-              ?(lbl("✓ Excellente reponse !","✓ Excellent!","✓ Excelente!","✓ Excelente!"))
-              :(lbl("✗ Reponse incorrecte","✗ Incorrect","✗ Incorrecta","✗ Incorreta"))}
-          </div>
-          <div style={{fontSize:11,color:C.steel3,lineHeight:1.7}}>{q.expl}</div>
-        </div>
-      )}
-      {answered && (
-        <button onClick={handleNext}
-          style={{width:"100%",padding:"14px",borderRadius:15,
-            background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-            border:"none",color:C.bg0,fontSize:13,fontWeight:900,cursor:"pointer",letterSpacing:1}}>
-          {idx===total-1
-            ?(lbl("VOIR MON SCORE =>","SEE MY SCORE =>","VER PUNTUACION =>","VER PONTUACAO =>"))
-            :(lbl("SUIVANT =>","NEXT =>","SIGUIENTE =>","PROXIMO =>"))}
-        </button>
-      )}
-    </div>
-  );
-}
+// Local QuestionBank/QuizComp components removed 2026-09-03 — now using
+// LessonShared's shared components (same architecture as d1-d4/d7/L6/L7),
+// consuming the exported BANK/QUIZ above/below instead of a baked-in array.
 
 // ══════════════════════════════════════
 // QUIZ DATA — 5 QCM
 // ══════════════════════════════════════
-const QUIZ={
+export const QUIZ={
   fr:[
     {q:"Quelle est la longueur d'une ecaille de chaine et son equivalent en metres ?",
       opts:["1 ecaille = 15 m","1 ecaille = 27,5 m","1 ecaille = 30 m","1 ecaille = 50 m"],
-      ans:1,expl:"1 ecaille = 27,5 metres (standard IMO). La chaine est marquee tous les 27,5m par des maillons de couleur ou des marques peintes. Calcul ecailles : longueur (m) / 27,5. Toujours arrondir au superieur pour la securite."},
+      correct:1,expl:"1 ecaille = 27,5 metres (standard IMO). La chaine est marquee tous les 27,5m par des maillons de couleur ou des marques peintes. Calcul ecailles : longueur (m) / 27,5. Toujours arrondir au superieur pour la securite."},
     {q:"Quelle quantite de chaine filer par 8m de fond par vent moderé (force 4-5) avec scope 4:1 ?",
       opts:["16 m (0.6 ecaille)","32 m (1.2 ecaille)","40 m (1.5 ecailles)","56 m (2 ecailles)"],
-      ans:1,expl:"Calcul : 8m x 4 = 32m de chaine. 32 / 27,5 = 1,16 => 2 ecailles (55m) pour la securite. La regle pratique : scope minimum 3:1 par beau temps, 4-5:1 vent moderé, 6-7:1 frais-fort, 7:1+ en tempete."},
+      correct:1,expl:"Calcul : 8m x 4 = 32m de chaine. 32 / 27,5 = 1,16 => 2 ecailles (55m) pour la securite. La regle pratique : scope minimum 3:1 par beau temps, 4-5:1 vent moderé, 6-7:1 frais-fort, 7:1+ en tempete."},
     {q:"Pourquoi est-il interdit de mouiller sur la posidonie en Mediterranee ?",
       opts:["Elle endommage l'ancre","C'est une plante endemique protegee — amende 150 000 euros — production O2 et viveiro poissons","Elle cache les cailloux","Les cartes ne l'indiquent pas"],
-      ans:1,expl:"La posidonie (Posidonia oceanica) est une plante a fleurs protegee depuis 1988 (loi 88-1261). Elle produit 20L O2/m2/jour, sert de viveiro, capte le CO2. Amende jusqu'a 150 000 euros. La reconnaitre : eau verte-brune, vegetation visible, symbole Wd sur la carte."},
+      correct:1,expl:"La posidonie (Posidonia oceanica) est une plante a fleurs protegee depuis 1988 (loi 88-1261). Elle produit 20L O2/m2/jour, sert de viveiro, capte le CO2. Amende jusqu'a 150 000 euros. La reconnaitre : eau verte-brune, vegetation visible, symbole Wd sur la carte."},
     {q:"Quel est le signal du pont a la passerelle indiquant que l'ancre est directement en-dessous ?",
       opts:["'Ancre securisee'","'Chaine au pic' — la chaine est verticale, l'ancre est sous le navire","'Mouillage termine'","'Guindeau arrete'"],
-      ans:1,expl:"'Chaine au pic' (ou 'Up and down') signifie que la chaine est tendue verticalement. Le navire est directement au-dessus de l'ancre qui va se lever. La passerelle peut faire de la machine AVANT pour aider le levage. Ce signal est annonco a la passerelle pour coordination."},
+      correct:1,expl:"'Chaine au pic' (ou 'Up and down') signifie que la chaine est tendue verticalement. Le navire est directement au-dessus de l'ancre qui va se lever. La passerelle peut faire de la machine AVANT pour aider le levage. Ce signal est annonco a la passerelle pour coordination."},
     {q:"Dans le dialogue de mouillage, quel ordre definitif declenche le lacher de l'ancre ?",
       opts:["'Parez a mouiller'","'Machine stop'","'MOUILLEZ !' ou 'LET GO !'","'Guindeau en marche'"],
-      ans:2,expl:"La sequence : (1) 'Parez a mouiller' = preparer et positionner l'ancre. (2) 'Parez' du pont = ancre surplombant l'eau, prete. (3) 'MOUILLEZ !' = ordre definitif de lacher l'ancre. Le pont confirme 'Ancre a l'eau' et annonce chaque ecaille filee. La passerelle annonce prealablement profondeur et nombre d'ecailles."},
+      correct:2,expl:"La sequence : (1) 'Parez a mouiller' = preparer et positionner l'ancre. (2) 'Parez' du pont = ancre surplombant l'eau, prete. (3) 'MOUILLEZ !' = ordre definitif de lacher l'ancre. Le pont confirme 'Ancre a l'eau' et annonce chaque ecaille filee. La passerelle annonce prealablement profondeur et nombre d'ecailles."},
   ],
   en:[
     {q:"What is the length of one chain shackle and its equivalent in metres?",
       opts:["1 shackle = 15 m","1 shackle = 27.5 m","1 shackle = 30 m","1 shackle = 50 m"],
-      ans:1,expl:"1 shackle = 27.5 metres (IMO standard). The chain is marked every 27.5m by colored links or painted marks. Shackle calculation: length (m) / 27.5. Always round up for safety."},
+      correct:1,expl:"1 shackle = 27.5 metres (IMO standard). The chain is marked every 27.5m by colored links or painted marks. Shackle calculation: length (m) / 27.5. Always round up for safety."},
     {q:"How much chain to veer for 8m depth in moderate wind (force 4-5) with scope 4:1?",
       opts:["16 m (0.6 shackle)","32 m (1.2 shackle)","40 m (1.5 shackles)","56 m (2 shackles)"],
-      ans:1,expl:"Calculation: 8m x 4 = 32m of chain. 32 / 27.5 = 1.16 => 2 shackles (55m) for safety. Practical rule: minimum scope 3:1 fair weather, 4-5:1 moderate wind, 6-7:1 fresh-strong, 7:1+ in storm."},
+      correct:1,expl:"Calculation: 8m x 4 = 32m of chain. 32 / 27.5 = 1.16 => 2 shackles (55m) for safety. Practical rule: minimum scope 3:1 fair weather, 4-5:1 moderate wind, 6-7:1 fresh-strong, 7:1+ in storm."},
     {q:"Why is it prohibited to anchor on posidonia in the Mediterranean?",
       opts:["It damages the anchor","It is a protected endemic plant — 150,000 euro fine — O2 production and fish nursery","It hides rocks","Charts don't show it"],
-      ans:1,expl:"Posidonia oceanica is a flowering plant protected since 1988 (law 88-1261). It produces 20L O2/m2/day, serves as nursery, captures CO2. Fine up to 150,000 euros. Identify it: greenish-brown water, visible vegetation, Wd symbol on chart."},
+      correct:1,expl:"Posidonia oceanica is a flowering plant protected since 1988 (law 88-1261). It produces 20L O2/m2/day, serves as nursery, captures CO2. Fine up to 150,000 euros. Identify it: greenish-brown water, visible vegetation, Wd symbol on chart."},
     {q:"What is the deck signal to the bridge indicating the anchor is directly below?",
       opts:["'Anchor secure'","'Chain up and down' — chain is vertical, anchor is below the vessel","'Anchoring complete'","'Windlass stopped'"],
-      ans:1,expl:"'Chain up and down' means the chain is taut vertically. The vessel is directly above the anchor which is about to break out. The bridge can use AHEAD engine to assist lifting. This signal is reported to bridge for coordination."},
+      correct:1,expl:"'Chain up and down' means the chain is taut vertically. The vessel is directly above the anchor which is about to break out. The bridge can use AHEAD engine to assist lifting. This signal is reported to bridge for coordination."},
     {q:"In the anchoring dialogue, what definitive order triggers releasing the anchor?",
       opts:["'Standby to let go'","'Stop engine'","'LET GO!'","'Windlass running'"],
-      ans:2,expl:"Sequence: (1) 'Standby to let go' = prepare and position anchor. (2) 'Ready' from deck = anchor clear of water. (3) 'LET GO!' = definitive order to release anchor. Deck confirms 'Anchor away' and announces each shackle veered. Bridge announces depth and shackles beforehand."},
+      correct:2,expl:"Sequence: (1) 'Standby to let go' = prepare and position anchor. (2) 'Ready' from deck = anchor clear of water. (3) 'LET GO!' = definitive order to release anchor. Deck confirms 'Anchor away' and announces each shackle veered. Bridge announces depth and shackles beforehand."},
   ],
   es:[
     {q:"?Cual es la longitud de un grillete de cadena y su equivalente en metros?",
       opts:["1 grillete = 15 m","1 grillete = 27,5 m","1 grillete = 30 m","1 grillete = 50 m"],
-      ans:1,expl:"1 grillete = 27,5 metros (estandar OMI). La cadena esta marcada cada 27,5m. Calculo grilletes: longitud (m) / 27,5. Siempre redondear hacia arriba por seguridad."},
+      correct:1,expl:"1 grillete = 27,5 metros (estandar OMI). La cadena esta marcada cada 27,5m. Calculo grilletes: longitud (m) / 27,5. Siempre redondear hacia arriba por seguridad."},
     {q:"?Cuanta cadena largar para 8m de fondo con viento moderado (fuerza 4-5) con scope 4:1?",
       opts:["16 m (0,6 grillete)","32 m (1,2 grillete)","40 m (1,5 grilletes)","56 m (2 grilletes)"],
-      ans:1,expl:"Calculo: 8m x 4 = 32m de cadena. 32 / 27,5 = 1,16 => 2 grilletes (55m) por seguridad."},
+      correct:1,expl:"Calculo: 8m x 4 = 32m de cadena. 32 / 27,5 = 1,16 => 2 grilletes (55m) por seguridad."},
     {q:"?Por que esta prohibido fondear en posidonia en el Mediterraneo?",
       opts:["Dana el ancla","Es una planta protegida — multa 150.000 euros — produccion O2 y vivero de peces","Oculta las rocas","Las cartas no la muestran"],
-      ans:1,expl:"La posidonia es una planta con flores protegida desde 1988 (ley 88-1261). Produce 20L O2/m2/dia, sirve de vivero, capta CO2. Multa hasta 150.000 euros."},
+      correct:1,expl:"La posidonia es una planta con flores protegida desde 1988 (ley 88-1261). Produce 20L O2/m2/dia, sirve de vivero, capta CO2. Multa hasta 150.000 euros."},
     {q:"?Cual es la senal del puente a proa indicando que el ancla esta directamente abajo?",
       opts:["'Ancla asegurada'","'Cadena a pique' — cadena vertical, ancla bajo el buque","'Fondeo terminado'","'Molinete parado'"],
-      ans:1,expl:"'Cadena a pique' significa que la cadena esta verticalmente tensa. El buque esta directamente sobre el ancla que va a desprenderse. El puente puede usar maquina AVANTE para ayudar el izado."},
+      correct:1,expl:"'Cadena a pique' significa que la cadena esta verticalmente tensa. El buque esta directamente sobre el ancla que va a desprenderse. El puente puede usar maquina AVANTE para ayudar el izado."},
     {q:"En el dialogo de fondeo, ?que orden definitiva desencadena el largue del ancla?",
       opts:["'Listos para fondear'","'Para maquina'","'FONDEEN!' o 'LET GO !'","'Molinete en marcha'"],
-      ans:2,expl:"Secuencia: (1) 'Listos para fondear'. (2) 'Listos' desde cubierta. (3) 'FONDEEN!' = orden definitiva. Cubierta confirma 'Ancla al agua' y anuncia cada grillete largado."},
+      correct:2,expl:"Secuencia: (1) 'Listos para fondear'. (2) 'Listos' desde cubierta. (3) 'FONDEEN!' = orden definitiva. Cubierta confirma 'Ancla al agua' y anuncia cada grillete largado."},
   ],
   pt:[
     {q:"Qual e o comprimento de uma manilha de corrente e o seu equivalente em metros?",
       opts:["1 manilha = 15 m","1 manilha = 27,5 m","1 manilha = 30 m","1 manilha = 50 m"],
-      ans:1,expl:"1 manilha = 27,5 metros (padrao IMO). A corrente e marcada a cada 27,5m. Calculo manilhas: comprimento (m) / 27,5. Sempre arredondar para cima por seguranca."},
+      correct:1,expl:"1 manilha = 27,5 metros (padrao IMO). A corrente e marcada a cada 27,5m. Calculo manilhas: comprimento (m) / 27,5. Sempre arredondar para cima por seguranca."},
     {q:"Quanto de corrente filar para 8m de fundo com vento moderado (forca 4-5) com scope 4:1?",
       opts:["16 m (0,6 manilha)","32 m (1,2 manilha)","40 m (1,5 manilhas)","56 m (2 manilhas)"],
-      ans:1,expl:"Calculo: 8m x 4 = 32m de corrente. 32 / 27,5 = 1,16 => 2 manilhas (55m) por seguranca."},
+      correct:1,expl:"Calculo: 8m x 4 = 32m de corrente. 32 / 27,5 = 1,16 => 2 manilhas (55m) por seguranca."},
     {q:"Por que e proibido fundeiar em posidonia no Mediterraneo?",
       opts:["Danifica a ancora","E uma planta protegida — multa 150.000 euros — producao O2 e viveiro de peixes","Esconde as rochas","As cartas nao a mostram"],
-      ans:1,expl:"A posidonia e uma planta com flores protegida desde 1988 (lei 88-1261). Produz 20L O2/m2/dia, serve de viveiro, capta CO2. Multa ate 150.000 euros."},
+      correct:1,expl:"A posidonia e uma planta com flores protegida desde 1988 (lei 88-1261). Produz 20L O2/m2/dia, serve de viveiro, capta CO2. Multa ate 150.000 euros."},
     {q:"Qual e o sinal do convés a ponte indicando que a ancora esta diretamente abaixo?",
       opts:["'Ancora segura'","'Corrente apique' — corrente vertical, ancora sob o navio","'Fundeio terminado'","'Molinete parado'"],
-      ans:1,expl:"'Corrente apique' significa que a corrente esta tensa verticalmente. O navio esta diretamente sobre a ancora que vai desprender. A ponte pode usar maquina AVANTE para ajudar a izar."},
+      correct:1,expl:"'Corrente apique' significa que a corrente esta tensa verticalmente. O navio esta diretamente sobre a ancora que vai desprender. A ponte pode usar maquina AVANTE para ajudar a izar."},
     {q:"No dialogo de fundeio, que ordem definitiva desencadeia a largada da ancora?",
       opts:["'Preparados para fundeiar'","'Para maquina'","'FUNDEIEM!' ou 'LET GO!'","'Molinete em marcha'"],
-      ans:2,expl:"Sequencia: (1) 'Preparados para fundeiar'. (2) 'Prontos' do convés. (3) 'FUNDEIEM!' = ordem definitiva. Convés confirma 'Ancora na agua' e anuncia cada manilha filada."},
+      correct:2,expl:"Sequencia: (1) 'Preparados para fundeiar'. (2) 'Prontos' do convés. (3) 'FUNDEIEM!' = ordem definitiva. Convés confirma 'Ancora na agua' e anuncia cada manilha filada."},
   ],
 };
-
-function QuizComp({ questions, t, lang, onComplete }) {
-  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
-  const [idx,setIdx]=useState(0);
-  const [sel,setSel]=useState(null);
-  const [answered,setAnswered]=useState(false);
-  const [score,setScore]=useState(0);
-  const total=questions.length; const isLast=idx===total-1;
-  const q=shuffled[idx];
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
-  const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
-  return (
-    <div>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
-        <span style={{fontSize:10,color:C.muted}}>{t.question} {idx+1} {t.ofQ} {total}</span>
-        <span style={{fontSize:10,color:C.gold2,fontWeight:800}}>✓ {score}</span>
-      </div>
-      <div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:4,marginBottom:14,overflow:"hidden"}}>
-        <div style={{height:"100%",width:`${(idx/total)*100}%`,background:`linear-gradient(90deg,${C.gold},${C.amber})`,borderRadius:4,transition:"width 0.3s"}}/>
-      </div>
-      <div style={{background:"rgba(6,14,26,0.85)",borderRadius:16,padding:"16px",marginBottom:14,border:`1px solid ${C.border}`}}>
-        <div style={{fontSize:14,color:C.white,lineHeight:1.65,fontWeight:700}}>{q.q}</div>
-      </div>
-      {q.opts.map((opt,i)=>{
-        let bg="rgba(10,22,40,0.7)",brd=C.border,col=C.white;
-        if(answered){
-          if(i===q.ans){bg="rgba(0,230,118,0.12)";brd=C.green;col=C.green;}
-          else if(i===sel){bg="rgba(255,23,68,0.12)";brd=C.red;col=C.red;}
-        }
-        return (
-          <button key={i} onClick={()=>handleAnswer(i)}
-            style={{width:"100%",padding:"13px 15px",marginBottom:8,borderRadius:13,background:bg,
-              border:`1.5px solid ${brd}`,color:col,fontSize:13,textAlign:"left",
-              cursor:answered?"default":"pointer",transition:"all 0.2s"}}>
-            <span style={{fontWeight:800,marginRight:9,color:C.amber2}}>{["A","B","C","D"][i]}.</span>{opt}
-          </button>
-        );
-      })}
-      {answered && (
-        <div style={{padding:"13px",borderRadius:13,
-          background:`rgba(${sel===q.ans?"0,230,118":"255,23,68"},0.08)`,
-          border:`1.5px solid ${sel===q.ans?C.green:C.red}55`,marginBottom:12}}>
-          <div style={{fontSize:12,fontWeight:800,color:sel===q.ans?C.green:C.red,marginBottom:5}}>
-            {sel===q.ans?t.correct:t.wrong}
-          </div>
-          <div style={{fontSize:11,color:C.steel3,lineHeight:1.7}}>{t.expl} {q.expl}</div>
-        </div>
-      )}
-      {answered && (
-        <button onClick={handleNext}
-          style={{width:"100%",padding:"15px",borderRadius:15,
-            background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-            border:"none",color:C.bg0,fontSize:14,fontWeight:900,cursor:"pointer",letterSpacing:1,
-            boxShadow:`0 4px 22px ${C.amber}40`}}>
-          {isLast?t.finish:t.next}
-        </button>
-      )}
-    </div>
-  );
-}
 
 // ══════════════════════════════════════
 // CONTENT DATA
@@ -1202,6 +1068,7 @@ export default function LessonSEA_L3({ lang="fr", onBack=()=>{}, onComplete=()=>
   useEffect(()=>{if(typeof window!=="undefined")window.__MAP_LANG__=lang;},[lang]);
   const t=T[lang]||T.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
+  const bank=BANK[lang]||BANK.fr;
   const lc=getContent(lang);
   const [phase, setPhase] = useState("content");
   const [bankDone, setBankDone] = useState(false);
@@ -1317,7 +1184,7 @@ export default function LessonSEA_L3({ lang="fr", onBack=()=>{}, onComplete=()=>
             <SL icon="📝" text={lc.p7} color={C.gold}/>
             <div style={{background:"rgba(10,22,40,0.92)",border:`1px solid ${C.gold}44`,
               borderRadius:20,padding:"16px",marginBottom:18}}>
-              <QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/>
+              <QuestionBank lang={lang} t={t} questions={bank} onComplete={()=>setBankDone(true)}/>
             </div>
 
             {/* RESUME */}
@@ -1351,7 +1218,7 @@ export default function LessonSEA_L3({ lang="fr", onBack=()=>{}, onComplete=()=>
               </div>
               <div style={{fontSize:12,color:C.muted}}>5 questions · Seamanship L3</div>
             </div>
-            <QuizComp questions={quiz} t={t} lang={lang}
+            <QuizComp questions={quiz} t={t}
               onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),400);}}/>
           </>}
 

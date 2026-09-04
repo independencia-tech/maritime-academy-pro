@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { shuffleQuestionOptions } from "./LessonShared";
+import { shuffleQuestionOptions, QuizComp, QuestionBank } from "./LessonShared";
 
 const C = {
   bg0:"#03070f", bg1:"#060e1a", bg2:"#0a1628", bg3:"#0d1f3c",
@@ -20,30 +20,34 @@ const C = {
 };
 
 const T = {
-  fr:{ back:"◀ Retour", module:"Seamanship",
+  fr:{ back:"◀ Retour", module:"Seamanship", quiz:"QUIZ",
     question:"Question", ofQ:"sur", correct:"✓ Bonne reponse!", wrong:"✗ Mauvaise reponse",
     expl:"Explication:", next:"SUIVANT =>", finish:"VOIR MON SCORE =>",
-    startQuiz:"COMMENCER LE QUIZ", backDash:"<= RETOUR AU DASHBOARD",
+    startQuiz:"COMMENCER LE QUIZ", startBank:"✅ COMMENCER =>", backDash:"<= RETOUR AU DASHBOARD",
     youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz",
-    showCorr:"Voir la correction", hideCorr:"Masquer", xp:"XP gagnes" },
-  en:{ back:"◀ Back", module:"Seamanship",
+    showCorr:"Voir la correction", hideCorr:"Masquer", xp:"XP gagnes",
+    scorePerf:"Parfait ! 🌟", scoreGreat:"Excellent ! 💪", scoreGood:"Continue ! 📚" },
+  en:{ back:"◀ Back", module:"Seamanship", quiz:"QUIZ",
     question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer",
     expl:"Explanation:", next:"NEXT =>", finish:"SEE MY SCORE =>",
-    startQuiz:"START QUIZ", backDash:"<= BACK TO DASHBOARD",
+    startQuiz:"START QUIZ", startBank:"✅ START =>", backDash:"<= BACK TO DASHBOARD",
     youLearned:"You learned:", readFirst:"Read the content then start the quiz",
-    showCorr:"Show correction", hideCorr:"Hide", xp:"XP earned" },
-  es:{ back:"◀ Volver", module:"Seamanship",
+    showCorr:"Show correction", hideCorr:"Hide", xp:"XP earned",
+    scorePerf:"Perfect! 🌟", scoreGreat:"Excellent! 💪", scoreGood:"Keep going! 📚" },
+  es:{ back:"◀ Volver", module:"Seamanship", quiz:"QUIZ",
     question:"Pregunta", ofQ:"de", correct:"✓ Correcta!", wrong:"✗ Incorrecta",
     expl:"Explicacion:", next:"SIGUIENTE =>", finish:"VER PUNTUACION =>",
-    startQuiz:"EMPEZAR QUIZ", backDash:"<= VOLVER AL PANEL",
+    startQuiz:"EMPEZAR QUIZ", startBank:"✅ EMPEZAR =>", backDash:"<= VOLVER AL PANEL",
     youLearned:"Has aprendido:", readFirst:"Lee y luego comienza",
-    showCorr:"Ver correccion", hideCorr:"Ocultar", xp:"XP ganados" },
-  pt:{ back:"◀ Voltar", module:"Seamanship",
+    showCorr:"Ver correccion", hideCorr:"Ocultar", xp:"XP ganados",
+    scorePerf:"¡Perfecto! 🌟", scoreGreat:"¡Excelente! 💪", scoreGood:"¡Sigue! 📚" },
+  pt:{ back:"◀ Voltar", module:"Seamanship", quiz:"QUIZ",
     question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada",
     expl:"Explicacao:", next:"PROXIMO =>", finish:"VER PONTUACAO =>",
-    startQuiz:"COMECAR QUIZ", backDash:"<= VOLTAR AO PAINEL",
+    startQuiz:"COMECAR QUIZ", startBank:"✅ COMEÇAR =>", backDash:"<= VOLTAR AO PAINEL",
     youLearned:"Voce aprendeu:", readFirst:"Leia o conteudo e depois comece",
-    showCorr:"Ver correcao", hideCorr:"Ocultar", xp:"XP ganhos" },
+    showCorr:"Ver correcao", hideCorr:"Ocultar", xp:"XP ganhos",
+    scorePerf:"Perfeito! 🌟", scoreGreat:"Excelente! 💪", scoreGood:"Continue! 📚" },
 };
 
 function Stars() {
@@ -723,294 +727,157 @@ function Exercise1({ lang, t }) {
   );
 }
 
-function QuestionBank({ lang, onComplete }) {
-  const [idx,setIdx]=useState(0);
-  const [sel,setSel]=useState(null);
-  const [answered,setAnswered]=useState(false);
-  const [score,setScore]=useState(0);
-  const [done,setDone]=useState(false);
-  const [started,setStarted]=useState(false);
-  const lbl=(fr,en,es,pt)=>({fr,en,es,pt}[lang]||fr);
+// ══════════════════════════════════════
+// QUESTION BANK — 14 QCM PREMIUM
+// Restructured 2026-09-03 from the original single-array + lbl()/ans: shape
+// into the standard {fr:[...],en:[...],es:[...],pt:[...]} + correct: shape
+// used everywhere else in the codebase, so it can be consumed by
+// examQuestionPools.ts and rendered via LessonShared's shared QuestionBank
+// component. Content unchanged question-for-question, option-for-option,
+// answer-for-answer. Unlike d6-l3, all 14 questions already had complete
+// 4-language expl text in the source — no fallback anomaly here.
+// ══════════════════════════════════════
+export const BANK = {
+  fr: [
+    {q:"Quel est le role precis d'une traversiere (breast line) ?",opts:["Empecher l'avance","Retenir le navire perpendiculairement au quai — empeche l'ecartement lateral","Empecher la chute","Guidage de la proue"],correct:1,expl:"La traversiere est perpendiculaire au quai (environ 90 degres). Son unique role est d'empecher le navire de s'eloigner lateralement du quai. Elle ne controle pas le mouvement longitudinal (avance/recul). A l'appareillage, c'est la premiere largue car son role est le moins critique."},
+    {q:"Quelle est la difference entre un spring avant et un spring arriere ?",opts:["Synonymes","Spring AV (de proue vers l'arriere) empeche l'avance — Spring AR (de poupe vers l'avant) empeche la chute","Spring AV empeche la chute — Spring AR empeche l'avance","Les springs controlent le mouvement lateral"],correct:1,expl:"Spring avant : part de la proue vers l'arriere au quai — cree une resistance a l'avance. Spring arriere : part de la poupe vers l'avant au quai — cree une resistance a la chute (recul). Les springs sont obliques (30-45 degres) et controlent le mouvement longitudinal — complementaires des traversieres qui controlent le mouvement lateral."},
+    {q:"Pourquoi largue-t-on les traversieres en premier a l'appareillage ?",opts:["Parce qu'elles sont les plus courtes","Elles ne controlent que le mouvement lateral — les springs maintiennent la securite longitudinale","Elles sont les plus usees","Le capitaine decide de l'ordre"],correct:1,expl:"Les traversieres sont largues en premier car elles ne controlent que l'ecartement lateral. En gardant les springs et les amarres de tete/poupe, le navire reste longitudinalement secuqise. Les springs (et plus tard l'un d'eux comme pivot) controlent l'avance et la chute pendant toute la manoeuvre d'appareillage."},
+    {q:"Comment utilise-t-on le spring arriere comme pivot a l'appareillage ?",opts:["On le raccourcit","Machine avant tenue — spring AR tenu — proue pivote vers le large — largue quand proue degagee","On l'amarre sur une autre bitte","Le remorqueur le tient"],correct:1,expl:"Technique du pivot au spring arriere : (1) Toutes amarres largue sauf spring AR. (2) Machine avant lente. (3) Le navire ne peut pas avancer (spring AR en tension). (4) La poupe est retenue au quai comme pivot. (5) La proue pivote vers le large. (6) Quand la proue est degagee du quai : 'Larguer spring AR !' (7) Navire libre — manoeuvrer."},
+    {q:"Qu'est-ce que l'amarrage Mediterranean (Med-Moor) ?",opts:["Amarrage avec plusieurs remorqueurs","Ancre mouille par l'avant, navire recule poupe au quai — limite le besoin d'espace longitudinal","Amarrage avec ancres des deux cotes","Amarrage en pleine mer"],correct:1,expl:"Le Med-Moor est courant en Mediterranee ou l'espace en port est limite. Procedure : (1) Mouillez l'ancre par l'avant. (2) Filez la chaine : scope 4:1 minimum. (3) Reculez la poupe vers le quai. (4) Passez les amarres de poupe au quai. (5) La chaine d'ancre tient la proue ecartee du quai. Avantage : occuper moins d'espace longitudinal. Risque : garreo de l'ancre sous les efforts des amarres."},
+    {q:"Quel est l'ordre de passage des amarres a l'accostage ?",opts:["Traversieres d'abord","Tete en premier — puis poupe — puis springs — puis traversieres","Springs d'abord","L'ordre n'a pas d'importance"],correct:1,expl:"Ordre d'accostage : (1) Tete : retient la proue, stabilise le navire. (2) Poupe : symetrique de la tete. (3) Springs : bloquent l'avance et la chute. (4) Traversieres : complement lateral en fin. Logique : d'abord les amarres longitudinales pour immobiliser le navire, puis les laterales pour le rapprocher du quai."},
+    {q:"Qu'est-ce qu'une gaza (bight) sur une amarre ?",opts:["Un noeud special","Boucle terminale de l'amarre qui s'enroule sur la bitte — jamais de noeud sous tension","Un raccord de cordage","L'extremite libre de l'amarre"],correct:1,expl:"La gaza est la boucle terminale de l'amarre (souvent cousue ou epissee). Elle s'enroule directement sur la bitte d'amarrage sans noeud. Regre fondamentale : ne jamais faire de noeud sur une amarre sous tension — le noeud fragilise le cable et le rend impossible a larguer en urgence. Si deux gazas sur une meme bitte : passer la deuxieme sous la premiere."},
+    {q:"Qu'est-ce que le treuil a auto-tension (constant tension winch) ?",opts:["Un treuil manuel","Treuil motorise qui adapte automatiquement la tension de l'amarre selon la maree et les mouvements du navire","Un treuil de secours","Un treuil uniquement pour les remorqueurs"],correct:1,expl:"L'auto-tension (AT) maintient une tension constante predeterminee sur l'amarre independamment de la maree ou des mouvements du navire. Avantages : (1) evite les surcharges (amarre trop raidi). (2) evite les mous (amarre trop longue). (3) reduce le travail de l'equipage. Inconvenient : en cas de panne, les amarres peuvent soudainement se relacher ou se tendre."},
+    {q:"Quel equipement protege les amarres de l'usure au passage dans le bord ?",opts:["La bitte d'amarrage","Le chaumard (fairlead) — guide et protege les amarres contre l'abrasion au passage dans le pavois","Le treuil","La defense"],correct:1,expl:"Le chaumard (ou davier) est un guide-amarre fixe sur le pavois ou la lisse du navire. Il peut etre a rouleaux (pour les grandes amarres) ou lisse. Sans chaumard, l'amarre frotterait directement sur l'acier du pavois, s'userait rapidement et risquerait de casser. Inspection reguliere de l'etat des rouleaux obligatoire."},
+    {q:"Comment positionner les defenses (fenders) a l'accostage ?",opts:["Une seule defense au centre","Minimum 3 par bord — positionner aux plats de borde (zone la plus large) — verifier pression avant accostage","Uniquement a la proue","Les defenses sont l'affaire du quai"],correct:1,expl:"Positionnement des defenses : (1) Minimum 3 par bord pour les grands navires. (2) Positionner aux plats de borde (section la plus large du navire). (3) Verifier la pression des defenses gonflables avant l'accostage. (4) Les defenses doivent etre plus hautes que la ceinture du quai. (5) Pendant l'accostage, les matelots deployent les defenses supplementaires selon le contact avec le quai."},
+    {q:"Pourquoi ne faut-il jamais se tenir dans la boucle d'une amarre sous tension ?",opts:["Parce que l'amarre peut etre glissante","En cas de rupture, l'amarre fouette avec une force mortelle — zone de danger absolue","Cela deteriore l'amarre","C'est interdit par le reglement"],correct:1,expl:"Une amarre sous tension contient une energie phenomenale. En cas de rupture, elle fouette a plusieurs centaines de kilometres par heure dans la direction opposee a la tension. Accidents mortels nombreux en milieu portuaire. Regles : (1) Ne jamais se tenir dans l'axe d'une amarre. (2) Ne jamais enjamber une amarre sous tension. (3) Porter EPI (casque, gilet, gants). (4) Se tenir en dehors de la boucle de sertissage."},
+    {q:"Qu'est-ce que le 'choquage' d'une amarre ?",opts:["Tendre l'amarre","Laisser filer progressivement l'amarre sous controle pour l'allonger ou la larguer","Couper l'amarre","Renforcer l'amarre"],correct:1,expl:"Choquer = laisser filer progressivement l'amarre sous controle, en freinant avec le treuil ou le guindeau. Contraire de raidir (heave in). On choque pour : allonger une amarre en maree montante, faire plus de jeu, ou preparer le largue en urgence. Toujours choquer progressivement pour eviter un choquage brutal (fouettement)."},
+    {q:"Comment eviter que deux gazas se bloquent sur la meme bitte ?",opts:["Utiliser deux bittes differentes","Passer toujours la deuxieme gaza sous la premiere — permet de larguer n'importe quelle amarre sans bloquer l'autre","Croiser les deux gazas","Il n'y a pas de probleme a superposer"],correct:1,expl:"Technique fondamentale : quand une bitte est deja occupee, passer la deuxieme gaza sous la premiere (en passant par en dessous de la bitte). Resultat : les deux gazas peuvent etre largues independamment dans n'importe quel ordre sans se bloquer. Si on passe par-dessus, la premiere est bloquee par la deuxieme et ne peut pas etre largue."},
+    {q:"Quelles sont les conditions meteorologiques qui necessitent un renforcement des amarres ?",opts:["Uniquement le vent","Vent fort (> force 6), houle, courant de maree fort, passage de navires rapides creant du remous","Uniquement la maree","Les conditions n'affectent pas les amarres"],correct:1,expl:"Renforcer les amarres si : (1) Vent > force 6 — ajouter des spring doublants. (2) Houle ou clapot entrant — toutes les amarres peuvent se fatiguer rapidement. (3) Fort courant de maree — amarres longitudinales a doubler. (4) Passage de navires rapides (wash) — chocs soudains. (5) Maree extremes — amarres trop courtes ou trop longues selon le sens. Regle : en cas de doute, doubler les amarres."},
+  ],
+  en: [
+    {q:"What is the precise role of a breast line?",opts:["Prevent headway","Hold vessel perpendicular to quay — prevents lateral ranging off","Prevent sternway","Bow guidance"],correct:1,expl:"The breast line is perpendicular to the quay (about 90 degrees). Its sole role is to prevent the vessel from ranging off laterally. It does not control longitudinal movement (ahead/astern). At departure, it is let go first as its role is least critical."},
+    {q:"What is the difference between a forward and aft spring?",opts:["Synonyms","Fwd spring (bow to aft) prevents headway — Aft spring (stern to forward) prevents sternway","Fwd spring prevents sternway — Aft spring prevents headway","Springs control lateral movement"],correct:1,expl:"Forward spring: from bow aft to quay — resists headway. Aft spring: from stern forward to quay — resists sternway. Springs are diagonal (30-45 degrees) and control longitudinal movement — complementary to breast lines which control lateral movement."},
+    {q:"Why are breast lines let go first at departure?",opts:["Because they are shortest","They only control lateral movement — springs maintain longitudinal safety","They are most worn","Captain decides the order"],correct:1,expl:"Breast lines are let go first because they only control lateral ranging. By keeping springs and head/stern lines, the vessel remains longitudinally secure. Springs (and later one as pivot) control headway and sternway throughout the departure maneuver."},
+    {q:"How is the aft spring used as pivot at departure?",opts:["Shorten it","Ahead engine held — aft spring held — bow swings to seaward — let go when bow clear","Make fast to another bollard","Tug holds it"],correct:1,expl:"Aft spring pivot technique: (1) All lines let go except aft spring. (2) Slow ahead engine. (3) Vessel cannot go ahead (aft spring in tension). (4) Stern held to quay as pivot. (5) Bow swings to seaward. (6) When bow is clear of quay: 'Let go aft spring!' (7) Vessel free — maneuver."},
+    {q:"What is Mediterranean mooring (Med-Moor)?",opts:["Mooring with several tugs","Anchor dropped forward, vessel backs stern to quay — limits need for longitudinal space","Mooring with anchors on both sides","Mooring in open sea"],correct:1,expl:"Med-Moor is common in the Mediterranean where port space is limited. Procedure: (1) Drop anchor forward. (2) Veer chain: scope 4:1 minimum. (3) Back stern toward quay. (4) Pass stern lines to quay. (5) Anchor chain holds bow away from quay. Advantage: less longitudinal space needed. Risk: anchor dragging under mooring loads."},
+    {q:"What is the order of mooring lines when coming alongside?",opts:["Breast lines first","Head line first — then stern — then springs — then breast lines","Springs first","Order does not matter"],correct:1,expl:"Berthing order: (1) Head line: holds bow, stabilises vessel. (2) Stern line: symmetric to head. (3) Springs: block headway and sternway. (4) Breast lines: lateral complement at end. Logic: first longitudinal lines to immobilize, then lateral to bring vessel alongside."},
+    {q:"What is a bight on a mooring line?",opts:["A special knot","Terminal loop of mooring line that goes over the bollard — never knot under tension","A line connector","The free end of the line"],correct:1,expl:"The bight/eye is the terminal loop of the mooring line (often sewn or spliced). It goes directly over the bollard without a knot. Fundamental rule: never tie a knot in a mooring line under tension — the knot weakens the line and makes it impossible to let go in emergency. If two eyes on same bollard: pass second under first."},
+    {q:"What is a constant tension (auto-tension) winch?",opts:["A manual winch","Motorised winch that automatically adjusts line tension according to tide and vessel movements","An emergency winch","A winch only for tugs"],correct:1,expl:"Auto-tension (AT) maintains a preset constant tension on the mooring line regardless of tide or vessel movement. Advantages: (1) avoids overloads (line too tight). (2) avoids slack (line too loose). (3) reduces crew workload. Drawback: if it fails, lines may suddenly slacken or overtighten."},
+    {q:"What equipment protects mooring lines from chafe through the side?",opts:["The bollard","The fairlead — guides and protects mooring lines from abrasion through the bulwark","The winch","The fender"],correct:1,expl:"The fairlead (or bullseye) is a line guide fixed on the bulwark or rail. It can be roller type (for heavy lines) or smooth. Without fairlead, the mooring line would rub directly on the steel bulwark, wear quickly and risk breaking. Regular inspection of roller condition mandatory."},
+    {q:"How to position fenders when coming alongside?",opts:["One fender in center","Minimum 3 per side — position at parallel midbody — check pressure before berthing","Only at the bow","Fenders are the quay's concern"],correct:1,expl:"Fender positioning: (1) Minimum 3 per side on large vessels. (2) Position at parallel midbody (widest section). (3) Check inflatable fender pressure before berthing. (4) Fenders must be higher than quay coping. (5) During berthing, sailors deploy additional fenders as contact with quay develops."},
+    {q:"Why must you never stand in the bight of a mooring line under tension?",opts:["Because the line may be slippery","If it breaks, the line whips with deadly force — absolute danger zone","It damages the line","It is prohibited by regulation"],correct:1,expl:"A mooring line under tension contains phenomenal energy. If it breaks, it whips at hundreds of kilometers per hour in the opposite direction of tension. Numerous fatal accidents in port environments. Rules: (1) Never stand in the axis of a mooring line. (2) Never step over a taut mooring line. (3) Wear PPE (helmet, vest, gloves). (4) Stay outside the snap-back zone."},
+    {q:"What is 'surging' a mooring line?",opts:["Heaving the line taut","Progressively paying out the line under control to lengthen or let go","Cutting the line","Reinforcing the line"],correct:1,expl:"Surging = progressively paying out the line under control, braking with winch or windlass. Opposite of heaving in. Surge to: lengthen a line on rising tide, give more slack, or prepare for emergency let-go. Always surge progressively to avoid sudden release (whipping)."},
+    {q:"How to prevent two mooring eyes from locking on the same bollard?",opts:["Use different bollards","Always pass second eye under first — allows any line to be let go without blocking the other","Cross the two eyes","No problem stacking them"],correct:1,expl:"Fundamental technique: when a bollard is already in use, pass the second eye under the first (going up through the bollard from below). Result: both eyes can be let go independently in any order without locking. If passed over the top, the first eye is blocked by the second and cannot be let go."},
+    {q:"What weather conditions require reinforcing mooring lines?",opts:["Wind only","Strong wind (> force 6), swell, strong tidal current, fast vessel wash creating surge","Tide only","Conditions don't affect moorings"],correct:1,expl:"Reinforce mooring lines if: (1) Wind > force 6 — add doubling springs. (2) Swell or chop — all lines can fatigue quickly. (3) Strong tidal current — double longitudinal lines. (4) Fast vessel wash — sudden shocks. (5) Extreme tides — lines too short or too long. Rule: when in doubt, double up."},
+  ],
+  es: [
+    {q:"Cual es el papel preciso de un través?",opts:["Impedir el avance","Retener el buque perpendicularmente al muelle — impide la separacion lateral","Impedir la caida","Guia de la proa"],correct:1,expl:"El través es perpendicular al muelle (aprox. 90 grados). Su unico papel es impedir que el buque se separe lateralmente. No controla el movimiento longitudinal. Al zarpar, es el primero en largarse."},
+    {q:"Cual es la diferencia entre un spring de proa y un spring de popa?",opts:["Sinonimos","Spring proa (de proa hacia popa) impide el avance — Spring popa (de popa hacia proa) impide la caida","Spring proa impide la caida — Spring popa impide el avance","Los springs controlan el movimiento lateral"],correct:1,expl:"Spring proa: de la proa hacia atras al muelle — resiste el avance. Spring popa: de la popa hacia adelante — resiste la caida. Los springs son oblicuos y controlan el movimiento longitudinal."},
+    {q:"Por que se largan los traveses primero al zarpar?",opts:["Porque son los mas cortos","Solo controlan el movimiento lateral — los springs mantienen la seguridad longitudinal","Son las mas desgastadas","El capitan decide el orden"],correct:1,expl:"Los traveses se largan primero porque solo controlan la separacion lateral. Los springs mantienen la seguridad longitudinal durante toda la maniobra."},
+    {q:"Como se usa el spring de popa como pivote al zarpar?",opts:["Se acorta","Maquina avante contenida — spring popa tenido — proa gira hacia fuera — largar cuando proa despejada","Se afirma a otro bolardo","El remolcador lo sujeta"],correct:1,expl:"Tecnica del pivote con spring de popa: (1) Todos los cabos largados excepto spring popa. (2) Maquina avante lenta. (3) El buque no puede avanzar. (4) La popa queda como pivote. (5) La proa gira hacia fuera. (6) Cuando la proa este despejada: largar spring popa."},
+    {q:"Que es el amarre mediterraneo (Med-Moor)?",opts:["Amarre con varios remolcadores","Ancla fondeada por la proa, buque recua con popa al muelle — limita necesidad de espacio longitudinal","Amarre con anclas por ambos lados","Amarre en alta mar"],correct:1,expl:"El Med-Moor es comun en el Mediterraneo donde el espacio es limitado. Procedimiento: (1) Fondear por la proa. (2) Largar cadena: scope 4:1 minimo. (3) Recuar la popa al muelle. (4) Pasar cabos de popa. (5) La cadena mantiene la proa separada del muelle."},
+    {q:"Cual es el orden de paso de cabos al atracar?",opts:["Traveses primero","Proa primero — luego popa — luego springs — luego traveses","Springs primero","El orden no importa"],correct:1,expl:"Orden de atraque: (1) Proa: retiene la proa, estabiliza el buque. (2) Popa. (3) Springs. (4) Traveses. Logica: primero los cabos longitudinales para inmovilizar, luego los laterales."},
+    {q:"Que es una gaza en una amarra?",opts:["Un nudo especial","Gaza terminal de la amarra que se pasa al bolardo — nunca nudo bajo tension","Un conector de cabo","El extremo libre de la amarra"],correct:1,expl:"La gaza es el ojo terminal de la amarra. Va directamente al bolardo sin nudo. Regla fundamental: nunca hacer un nudo en una amarra bajo tension. Si dos gazas en el mismo bolardo: pasar la segunda por debajo de la primera."},
+    {q:"Que es el molinete de tension constante (auto-tension)?",opts:["Un molinete manual","Molinete motorizado que adapta automaticamente la tension del cabo segun la marea y los movimientos del buque","Un molinete de emergencia","Un molinete solo para remolcadores"],correct:1,expl:"La auto-tension mantiene una tension constante predeterminada en la amarra independientemente de la marea. Ventajas: evita sobrecargas y aflojamientos, reduce trabajo tripulacion."},
+    {q:"Que equipo protege las amarras del rozamiento al pasar por el costado?",opts:["El bolardo","El guiacabos (fairlead) — guia y protege las amarras del rozamiento al pasar por la borda","El molinete","La defensa"],correct:1,expl:"El guiacabos es una guia fijada en la borda del buque. Sin guiacabos, la amarra rozaria directamente con el acero de la borda y se desgastaria rapidamente."},
+    {q:"Como posicionar las defensas al atracar?",opts:["Una sola defensa en el centro","Minimo 3 por costado — posicionar en la zona de plata banda — verificar presion antes de atracar","Solo en la proa","Las defensas son del muelle"],correct:1,expl:"Posicionamiento de defensas: (1) Minimo 3 por costado. (2) Posicionar en los planos de borda. (3) Verificar presion antes del atraque. (4) Deben ser mas altas que el canto del muelle."},
+    {q:"Por que nunca hay que pararse en la gaza de una amarra bajo tension?",opts:["Porque la amarra puede ser resbaladiza","En caso de rotura, la amarra azota con fuerza mortal — zona de peligro absoluto","Deteriora la amarra","Esta prohibido por el reglamento"],correct:1,expl:"Una amarra bajo tension contiene una energia fenomenal. En caso de rotura, azota a cientos de km/h. Accidentes mortales frecuentes. Reglas: nunca pararse en el eje, nunca cruzar una amarra tensa."},
+    {q:"Que es el 'filar' una amarra?",opts:["Tensar la amarra","Dejar largar progresivamente la amarra bajo control para alargarla o soltarla","Cortar la amarra","Reforzar la amarre"],correct:1,expl:"Filar = largar progresivamente la amarra bajo control. Contrario de virar. Se fila para: alargar una amarra en pleamar, dar mas juego o preparar el largue. Siempre de forma progresiva."},
+    {q:"Como evitar que dos gazas se bloqueen en el mismo bolardo?",opts:["Usar bolardos diferentes","Siempre pasar la segunda gaza por debajo de la primera — permite largar cualquier amarra sin bloquear la otra","Cruzar las dos gazas","No hay problema en superponerlas"],correct:1,expl:"Tecnica fundamental: pasar la segunda gaza por debajo de la primera. Resultado: ambas gazas pueden largarse independientemente. Si se pasa por encima, la primera queda bloqueada."},
+    {q:"Que condiciones meteorologicas requieren el refuerzo de las amarras?",opts:["Solo el viento","Viento fuerte (> fuerza 6), marejada, corriente de marea fuerte, paso de buques rapidos con estela","Solo la marea","Las condiciones no afectan las amarras"],correct:1,expl:"Reforzar amarras si: (1) Viento > fuerza 6. (2) Marejada o rizado. (3) Fuerte corriente de marea. (4) Paso de buques rapidos. (5) Mareas extremas. Regla: ante la duda, doblar las amarras."},
+  ],
+  pt: [
+    {q:"Qual e o papel preciso de um través?",opts:["Impedir o avanco","Reter o navio perpendicularmente ao cais — impede o afastamento lateral","Impedir a caca","Guia da proa"],correct:1,expl:"O través e perpendicular ao cais (aprox. 90 graus). Seu unico papel e impedir que o navio se afaste lateralmente. Nao controla o movimento longitudinal. Ao zarpar, e o primeiro a largar."},
+    {q:"Qual e a diferenca entre um spring de proa e um spring de popa?",opts:["Sinonimos","Spring proa (da proa para tras) impede o avanco — Spring popa (da popa para vante) impede a caca","Spring proa impede a caca — Spring popa impede o avanco","Os springs controlam o movimento lateral"],correct:1,expl:"Spring proa: da proa para tras no cais — resiste o avanco. Spring popa: da popa para vante — resiste a caca. Os springs sao obliquos e controlam o movimento longitudinal."},
+    {q:"Por que se largam os traveses primeiro ao zarpar?",opts:["Porque sao os mais curtos","So controlam o movimento lateral — os springs mantem a seguranca longitudinal","Sao os mais desgastados","O capitao decide a ordem"],correct:1,expl:"Os traveses largam-se primeiro porque so controlam o afastamento lateral. Os springs mantem a seguranca longitudinal durante toda a manobra."},
+    {q:"Como se usa o spring de popa como pivo ao zarpar?",opts:["Encurta-se","Maquina avante contida — spring popa mantido — proa gira para fora — largar quando proa livre","Amarra-se a outro cabeco","O rebocador o segura"],correct:1,expl:"Tecnica do pivo com spring de popa: (1) Todos os cabos largados exceto spring popa. (2) Maquina avante lenta. (3) O navio nao pode avançar. (4) A popa fica como pivo. (5) A proa gira para fora. (6) Quando proa livre: largar spring popa."},
+    {q:"O que e a amarracao mediterranea (Med-Moor)?",opts:["Amarracao com varios rebocadores","Ancora fundeada pela proa, navio recua com popa ao cais — limita necessidade de espaco longitudinal","Amarracao com ancoras dos dois lados","Amarracao em alto mar"],correct:1,expl:"O Med-Moor e comum no Mediterraneo. Procedimento: (1) Fundeiar pela proa. (2) Filar corrente: scope 4:1 minimo. (3) Recuar a popa ao cais. (4) Passar cabos de popa. (5) A corrente mantém a proa afastada do cais."},
+    {q:"Qual e a ordem de passagem de cabos ao atracar?",opts:["Traveses primeiro","Proa primeiro — depois popa — depois springs — depois traveses","Springs primeiro","A ordem nao importa"],correct:1,expl:"Ordem de atraque: (1) Proa: retém a proa, estabiliza o navio. (2) Popa. (3) Springs. (4) Traveses. Logica: primeiro os cabos longitudinais para imobilizar, depois os laterais."},
+    {q:"O que e uma gaza numa amarra?",opts:["Um no especial","Gaza terminal da amarra que vai ao cabeco — nunca no sob tensao","Um conector de cabo","A extremidade livre da amarra"],correct:1,expl:"A gaza e o elo terminal da amarra. Vai diretamente ao cabeco sem no. Regra fundamental: nunca fazer no numa amarra sob tensao. Se duas gazas no mesmo cabeco: passar a segunda por baixo da primeira."},
+    {q:"O que e o guincho de tensao constante (auto-tension)?",opts:["Um guincho manual","Guincho motorizado que adapta automaticamente a tensao do cabo segundo a mare e os movimentos do navio","Um guincho de emergencia","Um guincho apenas para rebocadores"],correct:1,expl:"A auto-tension mantém uma tensao constante predeterminada na amarra independentemente da mare. Vantagens: evita sobrecargas e folgas, reduz trabalho da tripulacao."},
+    {q:"Que equipamento protege as amarras do desgaste ao passar pelo costado?",opts:["O cabeco","O guia-cabos (fairlead) — guia e protege as amarras da abrasao ao passar pela amurada","O guincho","A defensa"],correct:1,expl:"O guia-cabos e uma guia fixada na amurada do navio. Sem guia-cabos, a amarra esfregaria diretamente no aco da amurada e desgastaria rapidamente."},
+    {q:"Como posicionar as defensas ao atracar?",opts:["Uma so defensa ao centro","Minimo 3 por costado — posicionar nos planos de borda — verificar pressao antes de atracar","Apenas na proa","As defensas sao do cais"],correct:1,expl:"Posicionamento de defensas: (1) Minimo 3 por costado. (2) Posicionar nos planos de borda. (3) Verificar pressao antes do atraque. (4) Devem ser mais altas que o bordo do cais."},
+    {q:"Por que nunca se deve ficar no circulo de uma amarra sob tensao?",opts:["Porque a amarra pode ser escorregadia","Em caso de rotura, a amarra chicoteia com forca letal — zona de perigo absoluta","Deteriora a amarra","E proibido pelo regulamento"],correct:1,expl:"Uma amarra sob tensao contém uma energia fenomenal. Em caso de rotura, chicoteia a centenas de km/h. Acidentes mortais frequentes. Regras: nunca ficar no eixo, nunca atravessar uma amarra tensa."},
+    {q:"O que e 'largar' uma amarra?",opts:["Tesionar a amarra","Deixar largar progressivamente a amarra sob controlo para a comprimir ou largar","Cortar a amarra","Reforcar a amarra"],correct:1,expl:"Largar = largar progressivamente a amarra sob controlo. Contrario de virar. Larga-se para: comprimir uma amarra em mare cheia, dar mais folga ou preparar o largue. Sempre progressivamente."},
+    {q:"Como evitar que duas gazas se bloqueiem no mesmo cabeco?",opts:["Usar cabecos diferentes","Sempre passar a segunda gaza por baixo da primeira — permite largar qualquer amarra sem bloquear a outra","Cruzar as duas gazas","Nao ha problema em sobrepo-las"],correct:1,expl:"Tecnica fundamental: passar a segunda gaza por baixo da primeira. Resultado: ambas as gazas podem largar-se independentemente. Se passada por cima, a primeira fica bloqueada."},
+    {q:"Que condicoes meteorologicas requerem reforco das amarras?",opts:["Apenas o vento","Vento forte (> forca 6), ondulacao, corrente de mare forte, passagem de navios rapidos com esteira","Apenas a mare","As condicoes nao afetam as amarras"],correct:1,expl:"Reforcar amarras se: (1) Vento > forca 6. (2) Ondulacao ou marola. (3) Forte corrente de mare. (4) Passagem de navios rapidos. (5) Mares extremas. Regra: na duvida, dobrar as amarras."},
+  ],
+};
 
-  const qs=[
-    {q:lbl("Quel est le role precis d'une traversiere (breast line) ?","What is the precise role of a breast line?","?Cual es el papel preciso de un través?","Qual e o papel preciso de um través?"),
-      opts:[lbl("Empecher l'avance","Prevent headway","Impedir el avance","Impedir o avanco"),lbl("Retenir le navire perpendiculairement au quai — empeche l'ecartement lateral","Hold vessel perpendicular to quay — prevents lateral ranging off","Retener el buque perpendicularmente al muelle — impide la separacion lateral","Reter o navio perpendicularmente ao cais — impede o afastamento lateral"),lbl("Empecher la chute","Prevent sternway","Impedir la caida","Impedir a caca"),lbl("Guidage de la proue","Bow guidance","Guia de la proa","Guia da proa")],
-      ans:1,expl:lbl("La traversiere est perpendiculaire au quai (environ 90 degres). Son unique role est d'empecher le navire de s'eloigner lateralement du quai. Elle ne controle pas le mouvement longitudinal (avance/recul). A l'appareillage, c'est la premiere largue car son role est le moins critique.","The breast line is perpendicular to the quay (about 90 degrees). Its sole role is to prevent the vessel from ranging off laterally. It does not control longitudinal movement (ahead/astern). At departure, it is let go first as its role is least critical.","El través es perpendicular al muelle (aprox. 90 grados). Su unico papel es impedir que el buque se separe lateralmente. No controla el movimiento longitudinal. Al zarpar, es el primero en largarse.","O través e perpendicular ao cais (aprox. 90 graus). Seu unico papel e impedir que o navio se afaste lateralmente. Nao controla o movimento longitudinal. Ao zarpar, e o primeiro a largar.")},
-    {q:lbl("Quelle est la difference entre un spring avant et un spring arriere ?","What is the difference between a forward and aft spring?","?Cual es la diferencia entre un spring de proa y un spring de popa?","Qual e a diferenca entre um spring de proa e um spring de popa?"),
-      opts:[lbl("Synonymes","Synonyms","Sinonimos","Sinonimos"),lbl("Spring AV (de proue vers l'arriere) empeche l'avance — Spring AR (de poupe vers l'avant) empeche la chute","Fwd spring (bow to aft) prevents headway — Aft spring (stern to forward) prevents sternway","Spring proa (de proa hacia popa) impide el avance — Spring popa (de popa hacia proa) impide la caida","Spring proa (da proa para tras) impede o avanco — Spring popa (da popa para vante) impede a caca"),lbl("Spring AV empeche la chute — Spring AR empeche l'avance","Fwd spring prevents sternway — Aft spring prevents headway","Spring proa impide la caida — Spring popa impide el avance","Spring proa impede a caca — Spring popa impede o avanco"),lbl("Les springs controlent le mouvement lateral","Springs control lateral movement","Los springs controlan el movimiento lateral","Os springs controlam o movimento lateral")],
-      ans:1,expl:lbl("Spring avant : part de la proue vers l'arriere au quai — cree une resistance a l'avance. Spring arriere : part de la poupe vers l'avant au quai — cree une resistance a la chute (recul). Les springs sont obliques (30-45 degres) et controlent le mouvement longitudinal — complementaires des traversieres qui controlent le mouvement lateral.","Forward spring: from bow aft to quay — resists headway. Aft spring: from stern forward to quay — resists sternway. Springs are diagonal (30-45 degrees) and control longitudinal movement — complementary to breast lines which control lateral movement.","Spring proa: de la proa hacia atras al muelle — resiste el avance. Spring popa: de la popa hacia adelante — resiste la caida. Los springs son oblicuos y controlan el movimiento longitudinal.","Spring proa: da proa para tras no cais — resiste o avanco. Spring popa: da popa para vante — resiste a caca. Os springs sao obliquos e controlam o movimento longitudinal.")},
-    {q:lbl("Pourquoi largue-t-on les traversieres en premier a l'appareillage ?","Why are breast lines let go first at departure?","?Por que se largan los traveses primero al zarpar?","Por que se largam os traveses primeiro ao zarpar?"),
-      opts:[lbl("Parce qu'elles sont les plus courtes","Because they are shortest","Porque son los mas cortos","Porque sao os mais curtos"),lbl("Elles ne controlent que le mouvement lateral — les springs maintiennent la securite longitudinale","They only control lateral movement — springs maintain longitudinal safety","Solo controlan el movimiento lateral — los springs mantienen la seguridad longitudinal","So controlam o movimento lateral — os springs mantem a seguranca longitudinal"),lbl("Elles sont les plus usees","They are most worn","Son las mas desgastadas","Sao as mais desgastadas"),lbl("Le capitaine decide de l'ordre","Captain decides the order","El capitan decide el orden","O capitao decide a ordem")],
-      ans:1,expl:lbl("Les traversieres sont largues en premier car elles ne controlent que l'ecartement lateral. En gardant les springs et les amarres de tete/poupe, le navire reste longitudinalement secuqise. Les springs (et plus tard l'un d'eux comme pivot) controlent l'avance et la chute pendant toute la manoeuvre d'appareillage.","Breast lines are let go first because they only control lateral ranging. By keeping springs and head/stern lines, the vessel remains longitudinally secure. Springs (and later one as pivot) control headway and sternway throughout the departure maneuver.","Los traveses se largan primero porque solo controlan la separacion lateral. Los springs mantienen la seguridad longitudinal durante toda la maniobra.","Os traveses largam-se primeiro porque so controlam o afastamento lateral. Os springs mantem a seguranca longitudinal durante toda a manobra.")},
-    {q:lbl("Comment utilise-t-on le spring arriere comme pivot a l'appareillage ?","How is the aft spring used as pivot at departure?","?Como se usa el spring de popa como pivote al zarpar?","Como se usa o spring de popa como pivo ao zarpar?"),
-      opts:[lbl("On le raccourcit","Shorten it","Se acorta","Encurta-se"),lbl("Machine avant tenue — spring AR tenu — proue pivote vers le large — largue quand proue degagee","Ahead engine held — aft spring held — bow swings to seaward — let go when bow clear","Maquina avante contenida — spring popa tenido — proa gira hacia fuera — largar cuando proa despejada","Maquina avante contida — spring popa mantido — proa gira para fora — largar quando proa livre"),lbl("On l'amarre sur une autre bitte","Make fast to another bollard","Se afirma a otro bolardo","Amarra-se a outro cabeco"),lbl("Le remorqueur le tient","Tug holds it","El remolcador lo sujeta","O rebocador o segura")],
-      ans:1,expl:lbl("Technique du pivot au spring arriere : (1) Toutes amarres largue sauf spring AR. (2) Machine avant lente. (3) Le navire ne peut pas avancer (spring AR en tension). (4) La poupe est retenue au quai comme pivot. (5) La proue pivote vers le large. (6) Quand la proue est degagee du quai : 'Larguer spring AR !' (7) Navire libre — manoeuvrer.","Aft spring pivot technique: (1) All lines let go except aft spring. (2) Slow ahead engine. (3) Vessel cannot go ahead (aft spring in tension). (4) Stern held to quay as pivot. (5) Bow swings to seaward. (6) When bow is clear of quay: 'Let go aft spring!' (7) Vessel free — maneuver.","Tecnica del pivote con spring de popa: (1) Todos los cabos largados excepto spring popa. (2) Maquina avante lenta. (3) El buque no puede avanzar. (4) La popa queda como pivote. (5) La proa gira hacia fuera. (6) Cuando la proa este despejada: largar spring popa.","Tecnica do pivo com spring de popa: (1) Todos os cabos largados exceto spring popa. (2) Maquina avante lenta. (3) O navio nao pode avançar. (4) A popa fica como pivo. (5) A proa gira para fora. (6) Quando proa livre: largar spring popa.")},
-    {q:lbl("Qu'est-ce que l'amarrage Mediterranean (Med-Moor) ?","What is Mediterranean mooring (Med-Moor)?","?Que es el amarre mediterraneo (Med-Moor)?","O que e a amarracao mediterranea (Med-Moor)?"),
-      opts:[lbl("Amarrage avec plusieurs remorqueurs","Mooring with several tugs","Amarre con varios remolcadores","Amarracao com varios rebocadores"),lbl("Ancre mouille par l'avant, navire recule poupe au quai — limite le besoin d'espace longitudinal","Anchor dropped forward, vessel backs stern to quay — limits need for longitudinal space","Ancla fondeada por la proa, buque recua con popa al muelle — limita necesidad de espacio longitudinal","Ancora fundeada pela proa, navio recua com popa ao cais — limita necessidade de espaco longitudinal"),lbl("Amarrage avec ancres des deux cotes","Mooring with anchors on both sides","Amarre con anclas por ambos lados","Amarracao com ancoras dos dois lados"),lbl("Amarrage en pleine mer","Mooring in open sea","Amarre en alta mar","Amarracao em alto mar")],
-      ans:1,expl:lbl("Le Med-Moor est courant en Mediterranee ou l'espace en port est limite. Procedure : (1) Mouillez l'ancre par l'avant. (2) Filez la chaine : scope 4:1 minimum. (3) Reculez la poupe vers le quai. (4) Passez les amarres de poupe au quai. (5) La chaine d'ancre tient la proue ecartee du quai. Avantage : occuper moins d'espace longitudinal. Risque : garreo de l'ancre sous les efforts des amarres.","Med-Moor is common in the Mediterranean where port space is limited. Procedure: (1) Drop anchor forward. (2) Veer chain: scope 4:1 minimum. (3) Back stern toward quay. (4) Pass stern lines to quay. (5) Anchor chain holds bow away from quay. Advantage: less longitudinal space needed. Risk: anchor dragging under mooring loads.","El Med-Moor es comun en el Mediterraneo donde el espacio es limitado. Procedimiento: (1) Fondear por la proa. (2) Largar cadena: scope 4:1 minimo. (3) Recuar la popa al muelle. (4) Pasar cabos de popa. (5) La cadena mantiene la proa separada del muelle.","O Med-Moor e comum no Mediterraneo. Procedimento: (1) Fundeiar pela proa. (2) Filar corrente: scope 4:1 minimo. (3) Recuar a popa ao cais. (4) Passar cabos de popa. (5) A corrente mantém a proa afastada do cais.")},
-    {q:lbl("Quel est l'ordre de passage des amarres a l'accostage ?","What is the order of mooring lines when coming alongside?","?Cual es el orden de paso de cabos al atracar?","Qual e a ordem de passagem de cabos ao atracar?"),
-      opts:[lbl("Traversieres d'abord","Breast lines first","Traveses primero","Traveses primeiro"),lbl("Tete en premier — puis poupe — puis springs — puis traversieres","Head line first — then stern — then springs — then breast lines","Proa primero — luego popa — luego springs — luego traveses","Proa primeiro — depois popa — depois springs — depois traveses"),lbl("Springs d'abord","Springs first","Springs primero","Springs primeiro"),lbl("L'ordre n'a pas d'importance","Order does not matter","El orden no importa","A ordem nao importa")],
-      ans:1,expl:lbl("Ordre d'accostage : (1) Tete : retient la proue, stabilise le navire. (2) Poupe : symetrique de la tete. (3) Springs : bloquent l'avance et la chute. (4) Traversieres : complement lateral en fin. Logique : d'abord les amarres longitudinales pour immobiliser le navire, puis les laterales pour le rapprocher du quai.","Berthing order: (1) Head line: holds bow, stabilises vessel. (2) Stern line: symmetric to head. (3) Springs: block headway and sternway. (4) Breast lines: lateral complement at end. Logic: first longitudinal lines to immobilize, then lateral to bring vessel alongside.","Orden de atraque: (1) Proa: retiene la proa, estabiliza el buque. (2) Popa. (3) Springs. (4) Traveses. Logica: primero los cabos longitudinales para inmovilizar, luego los laterales.","Ordem de atraque: (1) Proa: retém a proa, estabiliza o navio. (2) Popa. (3) Springs. (4) Traveses. Logica: primeiro os cabos longitudinais para imobilizar, depois os laterais.")},
-    {q:lbl("Qu'est-ce qu'une gaza (bight) sur une amarre ?","What is a bight on a mooring line?","?Que es una gaza en una amarra?","O que e uma gaza numa amarra?"),
-      opts:[lbl("Un noeud special","A special knot","Un nudo especial","Um no especial"),lbl("Boucle terminale de l'amarre qui s'enroule sur la bitte — jamais de noeud sous tension","Terminal loop of mooring line that goes over the bollard — never knot under tension"," Gaza terminal de la amarra que se pasa al bolardo — nunca nudo bajo tension","Gaza terminal da amarra que vai ao cabeco — nunca no sob tensao"),lbl("Un raccord de cordage","A line connector","Un conector de cabo","Um conector de cabo"),lbl("L'extremite libre de l'amarre","The free end of the line","El extremo libre de la amarra","A extremidade livre da amarra")],
-      ans:1,expl:lbl("La gaza est la boucle terminale de l'amarre (souvent cousue ou epissee). Elle s'enroule directement sur la bitte d'amarrage sans noeud. Regre fondamentale : ne jamais faire de noeud sur une amarre sous tension — le noeud fragilise le cable et le rend impossible a larguer en urgence. Si deux gazas sur une meme bitte : passer la deuxieme sous la premiere.","The bight/eye is the terminal loop of the mooring line (often sewn or spliced). It goes directly over the bollard without a knot. Fundamental rule: never tie a knot in a mooring line under tension — the knot weakens the line and makes it impossible to let go in emergency. If two eyes on same bollard: pass second under first.","La gaza es el ojo terminal de la amarra. Va directamente al bolardo sin nudo. Regla fundamental: nunca hacer un nudo en una amarra bajo tension. Si dos gazas en el mismo bolardo: pasar la segunda por debajo de la primera.","A gaza e o elo terminal da amarra. Vai diretamente ao cabeco sem no. Regra fundamental: nunca fazer no numa amarra sob tensao. Se duas gazas no mesmo cabeco: passar a segunda por baixo da primeira.")},
-    {q:lbl("Qu'est-ce que le treuil a auto-tension (constant tension winch) ?","What is a constant tension (auto-tension) winch?","?Que es el molinete de tension constante (auto-tension)?","O que e o guincho de tensao constante (auto-tension)?"),
-      opts:[lbl("Un treuil manuel","A manual winch","Un molinete manual","Um guincho manual"),lbl("Treuil motorise qui adapte automatiquement la tension de l'amarre selon la maree et les mouvements du navire","Motorised winch that automatically adjusts line tension according to tide and vessel movements","Molinete motorizado que adapta automaticamente la tension del cabo segun la marea y los movimientos del buque","Guincho motorizado que adapta automaticamente a tensao do cabo segundo a mare e os movimentos do navio"),lbl("Un treuil de secours","An emergency winch","Un molinete de emergencia","Um guincho de emergencia"),lbl("Un treuil uniquement pour les remorqueurs","A winch only for tugs","Un molinete solo para remolcadores","Um guincho apenas para rebocadores")],
-      ans:1,expl:lbl("L'auto-tension (AT) maintient une tension constante predeterminee sur l'amarre independamment de la maree ou des mouvements du navire. Avantages : (1) evite les surcharges (amarre trop raidi). (2) evite les mous (amarre trop longue). (3) reduce le travail de l'equipage. Inconvenient : en cas de panne, les amarres peuvent soudainement se relacher ou se tendre.","Auto-tension (AT) maintains a preset constant tension on the mooring line regardless of tide or vessel movement. Advantages: (1) avoids overloads (line too tight). (2) avoids slack (line too loose). (3) reduces crew workload. Drawback: if it fails, lines may suddenly slacken or overtighten.","La auto-tension mantiene una tension constante predeterminada en la amarra independientemente de la marea. Ventajas: evita sobrecargas y aflojamientos, reduce trabajo tripulacion.","A auto-tension mantém uma tensao constante predeterminada na amarra independentemente da mare. Vantagens: evita sobrecargas e folgas, reduz trabalho da tripulacao.")},
-    {q:lbl("Quel equipement protege les amarres de l'usure au passage dans le bord ?","What equipment protects mooring lines from chafe through the side?","?Que equipo protege las amarras del rozamiento al pasar por el costado?","Que equipamento protege as amarras do desgaste ao passar pelo costado?"),
-      opts:[lbl("La bitte d'amarrage","The bollard","El bolardo","O cabeco"),lbl("Le chaumard (fairlead) — guide et protege les amarres contre l'abrasion au passage dans le pavois","The fairlead — guides and protects mooring lines from abrasion through the bulwark","El guiacabos (fairlead) — guia y protege las amarras del rozamiento al pasar por la borda","O guia-cabos (fairlead) — guia e protege as amarras da abrasao ao passar pela amurada"),lbl("Le treuil","The winch","El molinete","O guincho"),lbl("La defense","The fender","La defensa","A defensa")],
-      ans:1,expl:lbl("Le chaumard (ou davier) est un guide-amarre fixe sur le pavois ou la lisse du navire. Il peut etre a rouleaux (pour les grandes amarres) ou lisse. Sans chaumard, l'amarre frotterait directement sur l'acier du pavois, s'userait rapidement et risquerait de casser. Inspection reguliere de l'etat des rouleaux obligatoire.","The fairlead (or bullseye) is a line guide fixed on the bulwark or rail. It can be roller type (for heavy lines) or smooth. Without fairlead, the mooring line would rub directly on the steel bulwark, wear quickly and risk breaking. Regular inspection of roller condition mandatory.","El guiacabos es una guia fijada en la borda del buque. Sin guiacabos, la amarra rozaria directamente con el acero de la borda y se desgastaria rapidamente.","O guia-cabos e uma guia fixada na amurada do navio. Sem guia-cabos, a amarra esfregaria diretamente no aco da amurada e desgastaria rapidamente.")},
-    {q:lbl("Comment positionner les defenses (fenders) a l'accostage ?","How to position fenders when coming alongside?","?Como posicionar las defensas al atracar?","Como posicionar as defensas ao atracar?"),
-      opts:[lbl("Une seule defense au centre","One fender in center","Una sola defensa en el centro","Uma so defensa ao centro"),lbl("Minimum 3 par bord — positionner aux plats de borde (zone la plus large) — verifier pression avant accostage","Minimum 3 per side — position at parallel midbody — check pressure before berthing","Minimo 3 por costado — posicionar en la zona de plata banda — verificar presion antes de atracar","Minimo 3 por costado — posicionar nos planos de borda — verificar pressao antes de atracar"),lbl("Uniquement a la proue","Only at the bow","Solo en la proa","Apenas na proa"),lbl("Les defenses sont l'affaire du quai","Fenders are the quay's concern","Las defensas son del muelle","As defensas sao do cais")],
-      ans:1,expl:lbl("Positionnement des defenses : (1) Minimum 3 par bord pour les grands navires. (2) Positionner aux plats de borde (section la plus large du navire). (3) Verifier la pression des defenses gonflables avant l'accostage. (4) Les defenses doivent etre plus hautes que la ceinture du quai. (5) Pendant l'accostage, les matelots deployent les defenses supplementaires selon le contact avec le quai.","Fender positioning: (1) Minimum 3 per side on large vessels. (2) Position at parallel midbody (widest section). (3) Check inflatable fender pressure before berthing. (4) Fenders must be higher than quay coping. (5) During berthing, sailors deploy additional fenders as contact with quay develops.","Posicionamiento de defensas: (1) Minimo 3 por costado. (2) Posicionar en los planos de borda. (3) Verificar presion antes del atraque. (4) Deben ser mas altas que el canto del muelle.","Posicionamento de defensas: (1) Minimo 3 por costado. (2) Posicionar nos planos de borda. (3) Verificar pressao antes do atraque. (4) Devem ser mais altas que o bordo do cais.")},
-    {q:lbl("Pourquoi ne faut-il jamais se tenir dans la boucle d'une amarre sous tension ?","Why must you never stand in the bight of a mooring line under tension?","?Por que nunca hay que pararse en la gaza de una amarra bajo tension?","Por que nunca se deve ficar no circulo de uma amarra sob tensao?"),
-      opts:[lbl("Parce que l'amarre peut etre glissante","Because the line may be slippery","Porque la amarra puede ser resbaladiza","Porque a amarra pode ser escorregadia"),lbl("En cas de rupture, l'amarre fouette avec une force mortelle — zone de danger absolue","If it breaks, the line whips with deadly force — absolute danger zone","En caso de rotura, la amarra azota con fuerza mortal — zona de peligro absoluto","Em caso de rotura, a amarra chicoteia com forca letal — zona de perigo absoluta"),lbl("Cela deteriore l'amarre","It damages the line","Deteriora la amarra","Deteriora a amarra"),lbl("C'est interdit par le reglement","It is prohibited by regulation","Esta prohibido por el reglamento","E proibido pelo regulamento")],
-      ans:1,expl:lbl("Une amarre sous tension contient une energie phenomenale. En cas de rupture, elle fouette a plusieurs centaines de kilometres par heure dans la direction opposee a la tension. Accidents mortels nombreux en milieu portuaire. Regles : (1) Ne jamais se tenir dans l'axe d'une amarre. (2) Ne jamais enjamber une amarre sous tension. (3) Porter EPI (casque, gilet, gants). (4) Se tenir en dehors de la boucle de sertissage.","A mooring line under tension contains phenomenal energy. If it breaks, it whips at hundreds of kilometers per hour in the opposite direction of tension. Numerous fatal accidents in port environments. Rules: (1) Never stand in the axis of a mooring line. (2) Never step over a taut mooring line. (3) Wear PPE (helmet, vest, gloves). (4) Stay outside the snap-back zone.","Una amarra bajo tension contiene una energia fenomenal. En caso de rotura, azota a cientos de km/h. Accidentes mortales frecuentes. Reglas: nunca pararse en el eje, nunca cruzar una amarra tensa.","Uma amarra sob tensao contém uma energia fenomenal. Em caso de rotura, chicoteia a centenas de km/h. Acidentes mortais frequentes. Regras: nunca ficar no eixo, nunca atravessar uma amarra tensa.")},
-    {q:lbl("Qu'est-ce que le 'choquage' d'une amarre ?","What is 'surging' a mooring line?","?Que es el 'filar' una amarra?","O que e 'largar' uma amarra?"),
-      opts:[lbl("Tendre l'amarre","Heaving the line taut","Tensar la amarra","Tesionar a amarra"),lbl("Laisser filer progressivement l'amarre sous controle pour l'allonger ou la larguer","Progressively paying out the line under control to lengthen or let go","Dejar largar progresivamente la amarra bajo control para alargarla o soltarla","Deixar largar progressivamente a amarra sob controlo para a comprimir ou largar"),lbl("Couper l'amarre","Cutting the line","Cortar la amarra","Cortar a amarra"),lbl("Renforcer l'amarre","Reinforcing the line","Reforzar la amarre","Reforcar a amarra")],
-      ans:1,expl:lbl("Choquer = laisser filer progressivement l'amarre sous controle, en freinant avec le treuil ou le guindeau. Contraire de raidir (heave in). On choque pour : allonger une amarre en maree montante, faire plus de jeu, ou preparer le largue en urgence. Toujours choquer progressivement pour eviter un choquage brutal (fouettement).","Surging = progressively paying out the line under control, braking with winch or windlass. Opposite of heaving in. Surge to: lengthen a line on rising tide, give more slack, or prepare for emergency let-go. Always surge progressively to avoid sudden release (whipping).","Filar = largar progresivamente la amarra bajo control. Contrario de virar. Se fila para: alargar una amarra en pleamar, dar mas juego o preparar el largue. Siempre de forma progresiva.","Largar = largar progressivamente a amarra sob controlo. Contrario de virar. Larga-se para: comprimir uma amarra em mare cheia, dar mais folga ou preparar o largue. Sempre progressivamente.")},
-    {q:lbl("Comment eviter que deux gazas se bloquent sur la meme bitte ?","How to prevent two mooring eyes from locking on the same bollard?","?Como evitar que dos gazas se bloqueen en el mismo bolardo?","Como evitar que duas gazas se bloqueiem no mesmo cabeco?"),
-      opts:[lbl("Utiliser deux bittes differentes","Use different bollards","Usar bolardos diferentes","Usar cabecos diferentes"),lbl("Passer toujours la deuxieme gaza sous la premiere — permet de larguer n'importe quelle amarre sans bloquer l'autre","Always pass second eye under first — allows any line to be let go without blocking the other","Siempre pasar la segunda gaza por debajo de la primera — permite largar cualquier amarra sin bloquear la otra","Sempre passar a segunda gaza por baixo da primeira — permite largar qualquer amarra sem bloquear a outra"),lbl("Croiser les deux gazas","Cross the two eyes","Cruzar las dos gazas","Cruzar as duas gazas"),lbl("Il n'y a pas de probleme a superposer","No problem stacking them","No hay problema en superponerlas","Nao ha problema em sobrepo-las")],
-      ans:1,expl:lbl("Technique fondamentale : quand une bitte est deja occupee, passer la deuxieme gaza sous la premiere (en passant par en dessous de la bitte). Resultat : les deux gazas peuvent etre largues independamment dans n'importe quel ordre sans se bloquer. Si on passe par-dessus, la premiere est bloquee par la deuxieme et ne peut pas etre largue.","Fundamental technique: when a bollard is already in use, pass the second eye under the first (going up through the bollard from below). Result: both eyes can be let go independently in any order without locking. If passed over the top, the first eye is blocked by the second and cannot be let go.","Tecnica fundamental: pasar la segunda gaza por debajo de la primera. Resultado: ambas gazas pueden largarse independientemente. Si se pasa por encima, la primera queda bloqueada.","Tecnica fundamental: passar a segunda gaza por baixo da primeira. Resultado: ambas as gazas podem largar-se independentemente. Se passada por cima, a primeira fica bloqueada.")},
-    {q:lbl("Quelles sont les conditions meteorologiques qui necessitent un renforcement des amarres ?","What weather conditions require reinforcing mooring lines?","?Que condiciones meteorologicas requieren el refuerzo de las amarras?","Que condicoes meteorologicas requerem reforco das amarras?"),
-      opts:[lbl("Uniquement le vent","Wind only","Solo el viento","Apenas o vento"),lbl("Vent fort (> force 6), houle, courant de maree fort, passage de navires rapides creant du remous","Strong wind (> force 6), swell, strong tidal current, fast vessel wash creating surge","Viento fuerte (> fuerza 6), marejada, corriente de marea fuerte, paso de buques rapidos con estela","Vento forte (> forca 6), ondulacao, corrente de mare forte, passagem de navios rapidos com esteira"),lbl("Uniquement la maree","Tide only","Solo la marea","Apenas a mare"),lbl("Les conditions n'affectent pas les amarres","Conditions don't affect moorings","Las condiciones no afectan las amarras","As condicoes nao afetam as amarras")],
-      ans:1,expl:lbl("Renforcer les amarres si : (1) Vent > force 6 — ajouter des spring doublants. (2) Houle ou clapot entrant — toutes les amarres peuvent se fatiguer rapidement. (3) Fort courant de maree — amarres longitudinales a doubler. (4) Passage de navires rapides (wash) — chocs soudains. (5) Maree extremes — amarres trop courtes ou trop longues selon le sens. Regle : en cas de doute, doubler les amarres.","Reinforce mooring lines if: (1) Wind > force 6 — add doubling springs. (2) Swell or chop — all lines can fatigue quickly. (3) Strong tidal current — double longitudinal lines. (4) Fast vessel wash — sudden shocks. (5) Extreme tides — lines too short or too long. Rule: when in doubt, double up.","Reforzar amarras si: (1) Viento > fuerza 6. (2) Marejada o rizado. (3) Fuerte corriente de marea. (4) Paso de buques rapidos. (5) Mareas extremas. Regla: ante la duda, doblar las amarras.","Reforcar amarras se: (1) Vento > forca 6. (2) Ondulacao ou marola. (3) Forte corrente de mare. (4) Passagem de navios rapidos. (5) Mares extremas. Regra: na duvida, dobrar as amarras.")},
-  ];
+// Local QuestionBank/QuizComp components removed 2026-09-03 — now using
+// LessonShared's shared components (same architecture as d1-d4/d7/L6/L7),
+// consuming the exported BANK/QUIZ above/below instead of a baked-in array.
 
-  const [shuffled]=useState(()=>qs.map(q=>shuffleQuestionOptions(q,"ans")));
-  const total=qs.length;
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
-  const handleNext=()=>{if(idx===total-1){setDone(true);if(onComplete)onComplete();return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
-  const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
-
-  if(!started) return (
-    <div style={{textAlign:"center",padding:"24px 0"}}>
-      <div style={{fontSize:40,marginBottom:12}}>📝</div>
-      <div style={{fontFamily:"'Cinzel',serif",fontSize:15,color:C.white,marginBottom:6,letterSpacing:1}}>
-        {lbl("Banque Premium","Premium Bank","Banco Premium","Banco Premium")}
-      </div>
-      <div style={{fontSize:12,color:C.muted,marginBottom:20}}>
-        15 {lbl("questions niveau expert","expert-level questions","preguntas nivel experto","questoes nivel especialista")}
-      </div>
-      <button onClick={()=>setStarted(true)}
-        style={{padding:"14px 32px",borderRadius:16,background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-          border:"none",color:C.bg0,fontSize:14,fontWeight:900,cursor:"pointer",letterSpacing:1,
-          boxShadow:`0 0 28px ${C.amber}44`}}>
-        {lbl("COMMENCER =>","START =>","EMPEZAR =>","COMECAR =>")}
-      </button>
-    </div>
-  );
-
-  if(done){
-    const trophy=getTrophy(score,total);
-    const pct=Math.round(score/total*100);
-    return (
-      <div style={{textAlign:"center",padding:"20px 10px"}}>
-        <div style={{fontSize:68,marginBottom:8}}>{trophy.icon}</div>
-        <div style={{fontFamily:"'Cinzel',serif",fontSize:21,color:trophy.color,fontWeight:800,marginBottom:4}}>
-          {trophy.label[lang]||trophy.label.fr}
-        </div>
-        <div style={{fontSize:30,fontWeight:800,color:C.white,marginBottom:4}}>{score}/{total}</div>
-        <div style={{fontSize:20,color:trophy.color,fontWeight:800,marginBottom:20}}>{pct}%</div>
-        <div style={{height:8,background:"rgba(255,255,255,0.07)",borderRadius:6,marginBottom:20,overflow:"hidden"}}>
-          <div style={{height:"100%",width:`${pct}%`,background:`linear-gradient(90deg,${C.gold},${trophy.color})`,borderRadius:6}}/>
-        </div>
-        <button onClick={handleRestart}
-          style={{width:"100%",padding:"13px",borderRadius:14,background:"rgba(201,146,42,0.12)",
-            border:`1px solid ${C.gold}55`,color:C.gold2,fontSize:13,fontWeight:800,cursor:"pointer"}}>
-          {lbl("Recommencer","Restart","Reiniciar","Recomecar")}
-        </button>
-      </div>
-    );
-  }
-
-  const q=shuffled[idx];
-  return (
-    <div>
-      <div style={{marginBottom:14}}>
-        <div style={{display:"flex",justifyContent:"space-between",marginBottom:5}}>
-          <span style={{fontSize:10,color:C.gold2,fontWeight:800}}>
-            {lbl("Question","Question","Pregunta","Pergunta")} {idx+1}/{total}
-          </span>
-          <span style={{fontSize:10,color:C.amber2,fontWeight:800}}>✓ {score}/{idx}</span>
-        </div>
-        <div style={{height:5,background:"rgba(255,255,255,0.07)",borderRadius:4,overflow:"hidden"}}>
-          <div style={{height:"100%",width:`${(idx/total)*100}%`,
-            background:`linear-gradient(90deg,${C.gold},${C.amber})`,borderRadius:4,transition:"width 0.35s"}}/>
-        </div>
-      </div>
-      <div style={{background:"rgba(6,14,26,0.8)",borderRadius:16,padding:"16px",marginBottom:14,border:`1px solid ${C.border}`}}>
-        <div style={{fontSize:13,color:C.white,lineHeight:1.65,fontWeight:600}}>{q.q}</div>
-      </div>
-      {q.opts.map((opt,i)=>{
-        let bg="rgba(10,22,40,0.7)",brd=C.border,col=C.white;
-        if(answered){
-          if(i===q.ans){bg="rgba(0,230,118,0.12)";brd=C.green;col=C.green;}
-          else if(i===sel){bg="rgba(255,23,68,0.12)";brd=C.red;col=C.red;}
-        }
-        return (
-          <button key={i} onClick={()=>handleAnswer(i)}
-            style={{width:"100%",padding:"12px 15px",marginBottom:8,borderRadius:13,background:bg,
-              border:`1.5px solid ${brd}`,color:col,fontSize:12,textAlign:"left",
-              cursor:answered?"default":"pointer",transition:"all 0.2s"}}>
-            <span style={{fontWeight:800,marginRight:9,color:C.amber2,fontSize:11}}>{["A","B","C","D"][i]}.</span>{opt}
-          </button>
-        );
-      })}
-      {answered && (
-        <div style={{padding:"13px",borderRadius:13,
-          background:`rgba(${sel===q.ans?"0,230,118":"255,23,68"},0.08)`,
-          border:`1.5px solid ${sel===q.ans?C.green:C.red}55`,marginBottom:12}}>
-          <div style={{fontSize:12,fontWeight:800,color:sel===q.ans?C.green:C.red,marginBottom:5}}>
-            {sel===q.ans?(lbl("✓ Excellente reponse !","✓ Excellent!","✓ Excelente!","✓ Excelente!"))
-              :(lbl("✗ Reponse incorrecte","✗ Incorrect","✗ Incorrecta","✗ Incorreta"))}
-          </div>
-          <div style={{fontSize:11,color:C.steel3,lineHeight:1.7}}>{q.expl}</div>
-        </div>
-      )}
-      {answered && (
-        <button onClick={handleNext}
-          style={{width:"100%",padding:"14px",borderRadius:15,
-            background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-            border:"none",color:C.bg0,fontSize:13,fontWeight:900,cursor:"pointer",letterSpacing:1}}>
-          {idx===total-1?(lbl("VOIR MON SCORE =>","SEE MY SCORE =>","VER PUNTUACION =>","VER PONTUACAO =>"))
-            :(lbl("SUIVANT =>","NEXT =>","SIGUIENTE =>","PROXIMO =>"))}
-        </button>
-      )}
-    </div>
-  );
-}
-
-const QUIZ={
+export const QUIZ={
   fr:[
     {q:"Quel cabo empeche le navire de s'eloigner lateralement du quai ?",
       opts:["Spring avant","Traversiere (breast line)","Amarre de tete","Amarre de poupe"],
-      ans:1,expl:"La traversiere est perpendiculaire au quai (90 degres). Son role exclusif est d'empecher l'ecartement lateral. Elle ne controle pas l'avance ni la chute. A l'appareillage : premiere largue car la securite longitudinale est assuree par les springs et les amarres de tete/poupe."},
+      correct:1,expl:"La traversiere est perpendiculaire au quai (90 degres). Son role exclusif est d'empecher l'ecartement lateral. Elle ne controle pas l'avance ni la chute. A l'appareillage : premiere largue car la securite longitudinale est assuree par les springs et les amarres de tete/poupe."},
     {q:"Dans la technique du pivot au spring arriere, quelle machine donne-t-on ?",
       opts:["Machine arriere","Machine avant — spring AR tenu — proue pivote vers le large","Machine stop","Alternativement avant et arriere"],
-      ans:1,expl:"Technique pivot spring AR : (1) Larguer traversieres, tete, poupe. (2) Garder spring AR. (3) Machine AVANT lente. (4) Spring AR empeche l'avance — poupe reste au quai. (5) Proue pivote vers le large. (6) Larguer spring AR quand proue degagee. (7) Navire libre."},
+      correct:1,expl:"Technique pivot spring AR : (1) Larguer traversieres, tete, poupe. (2) Garder spring AR. (3) Machine AVANT lente. (4) Spring AR empeche l'avance — poupe reste au quai. (5) Proue pivote vers le large. (6) Larguer spring AR quand proue degagee. (7) Navire libre."},
     {q:"Quel est le premier cabo passe a l'accostage et pourquoi ?",
       opts:["Traversiere avant","Spring avant","Amarre de tete (head line) — retient la proue et stabilise","Amarre de poupe"],
-      ans:2,expl:"L'amarre de tete est passee en premier car : (1) Elle retient la proue du navire. (2) Elle cree un point d'ancrage stable pour passer les autres amarres. (3) Elle empeche le navire de cacher (deriver en arriere). Une fois la tete en place, l'equipage peut passer les autres amarres en securite."},
+      correct:2,expl:"L'amarre de tete est passee en premier car : (1) Elle retient la proue du navire. (2) Elle cree un point d'ancrage stable pour passer les autres amarres. (3) Elle empeche le navire de cacher (deriver en arriere). Une fois la tete en place, l'equipage peut passer les autres amarres en securite."},
     {q:"Qu'est-ce que le Med-Moor ?",
       opts:["Amarrage avec 2 remorqueurs","Ancre par l'avant + poupe au quai — economise l'espace longitudinal","Amarrage avec 2 ancres","Amarrage en rade"],
-      ans:1,expl:"Med-Moor : ancre mouille par l'avant (scope 4:1 min), navire recule poupe au quai, amarres de poupe passees. La chaine d'ancre tient la proue ecartee du quai. Courant en Mediterranee ou l'espace en port est limite. Risque : garreo de l'ancre sous les efforts des amarres."},
+      correct:1,expl:"Med-Moor : ancre mouille par l'avant (scope 4:1 min), navire recule poupe au quai, amarres de poupe passees. La chaine d'ancre tient la proue ecartee du quai. Courant en Mediterranee ou l'espace en port est limite. Risque : garreo de l'ancre sous les efforts des amarres."},
     {q:"Quelle est la regle de securite absolue pour les amarres sous tension ?",
       opts:["Porter des gants uniquement","Ne jamais se tenir dans l'axe ou la boucle d'une amarre sous tension — risque de fouettement mortel","Toujours doubler les amarres","Ne jamais utiliser de treuil"],
-      ans:1,expl:"En cas de rupture, une amarre sous tension fouette a plusieurs centaines de km/h avec une energie mortelle. Zone de snap-back (fouettement) = devant et derriere l'amarre dans son axe. EPI obligatoires : casque, gilet, gants. Ne jamais enjamber une amarre sous tension."},
+      correct:1,expl:"En cas de rupture, une amarre sous tension fouette a plusieurs centaines de km/h avec une energie mortelle. Zone de snap-back (fouettement) = devant et derriere l'amarre dans son axe. EPI obligatoires : casque, gilet, gants. Ne jamais enjamber une amarre sous tension."},
   ],
   en:[
     {q:"Which line prevents the vessel from ranging off the quay laterally?",
       opts:["Forward spring","Breast line","Head line","Stern line"],
-      ans:1,expl:"The breast line is perpendicular to the quay (90 degrees). Its exclusive role is to prevent lateral ranging off. It does not control headway or sternway. At departure: first let go because longitudinal safety is ensured by springs and head/stern lines."},
+      correct:1,expl:"The breast line is perpendicular to the quay (90 degrees). Its exclusive role is to prevent lateral ranging off. It does not control headway or sternway. At departure: first let go because longitudinal safety is ensured by springs and head/stern lines."},
     {q:"In the aft spring pivot technique, which engine order is given?",
       opts:["Astern engine","Ahead engine — aft spring held — bow swings to seaward","Stop engine","Alternately ahead and astern"],
-      ans:1,expl:"Aft spring pivot technique: (1) Let go breast lines, head, stern. (2) Hold aft spring. (3) SLOW AHEAD engine. (4) Aft spring prevents headway — stern stays at quay. (5) Bow swings to seaward. (6) Let go aft spring when bow clear. (7) Vessel free."},
+      correct:1,expl:"Aft spring pivot technique: (1) Let go breast lines, head, stern. (2) Hold aft spring. (3) SLOW AHEAD engine. (4) Aft spring prevents headway — stern stays at quay. (5) Bow swings to seaward. (6) Let go aft spring when bow clear. (7) Vessel free."},
     {q:"Which is the first line passed when coming alongside and why?",
       opts:["Forward breast line","Forward spring","Head line — holds bow and stabilises","Stern line"],
-      ans:2,expl:"Head line is passed first because: (1) It holds the vessel's bow. (2) It creates a stable anchor point to pass other lines. (3) It prevents the vessel from making sternway. Once head line is fast, crew can safely pass remaining lines."},
+      correct:2,expl:"Head line is passed first because: (1) It holds the vessel's bow. (2) It creates a stable anchor point to pass other lines. (3) It prevents the vessel from making sternway. Once head line is fast, crew can safely pass remaining lines."},
     {q:"What is Med-Moor?",
       opts:["Mooring with 2 tugs","Anchor forward + stern to quay — saves longitudinal space","Mooring with 2 anchors","Open roadstead mooring"],
-      ans:1,expl:"Med-Moor: anchor dropped forward (scope 4:1 min), vessel backs stern to quay, stern lines passed. Anchor chain holds bow away from quay. Common in Mediterranean where port space is limited. Risk: anchor dragging under mooring loads."},
+      correct:1,expl:"Med-Moor: anchor dropped forward (scope 4:1 min), vessel backs stern to quay, stern lines passed. Anchor chain holds bow away from quay. Common in Mediterranean where port space is limited. Risk: anchor dragging under mooring loads."},
     {q:"What is the absolute safety rule for mooring lines under tension?",
       opts:["Wear gloves only","Never stand in the axis or bight of a taut mooring line — risk of lethal whipping","Always double lines","Never use winches"],
-      ans:1,expl:"If a mooring line under tension parts, it whips at hundreds of km/h with lethal energy. Snap-back zone = in front of and behind the line in its axis. Mandatory PPE: helmet, vest, gloves. Never step over a taut mooring line."},
+      correct:1,expl:"If a mooring line under tension parts, it whips at hundreds of km/h with lethal energy. Snap-back zone = in front of and behind the line in its axis. Mandatory PPE: helmet, vest, gloves. Never step over a taut mooring line."},
   ],
   es:[
     {q:"?Que cabo impide que el buque se separe lateralmente del muelle?",
       opts:["Spring de proa","Través (breast line)","Cabo de proa","Cabo de popa"],
-      ans:1,expl:"El través es perpendicular al muelle (90 grados). Su papel exclusivo es impedir la separacion lateral. No controla el avance ni la caida. Al zarpar: primero en largarse porque la seguridad longitudinal la dan los springs y los cabos de proa/popa."},
+      correct:1,expl:"El través es perpendicular al muelle (90 grados). Su papel exclusivo es impedir la separacion lateral. No controla el avance ni la caida. Al zarpar: primero en largarse porque la seguridad longitudinal la dan los springs y los cabos de proa/popa."},
     {q:"En la tecnica del pivote con spring de popa, ?que maquina se da?",
       opts:["Maquina atras","Maquina avante — spring popa tenido — proa gira hacia fuera","Maquina parada","Alternativamente avante y atras"],
-      ans:1,expl:"Tecnica pivote spring popa: (1) Largar traveses, proa, popa. (2) Mantener spring popa. (3) Maquina AVANTE lenta. (4) Spring popa impide el avance — popa sigue al muelle. (5) Proa gira hacia fuera. (6) Largar spring popa cuando proa despejada. (7) Buque libre."},
+      correct:1,expl:"Tecnica pivote spring popa: (1) Largar traveses, proa, popa. (2) Mantener spring popa. (3) Maquina AVANTE lenta. (4) Spring popa impide el avance — popa sigue al muelle. (5) Proa gira hacia fuera. (6) Largar spring popa cuando proa despejada. (7) Buque libre."},
     {q:"?Cual es el primer cabo pasado al atracar y por que?",
       opts:["Través de proa","Spring de proa","Cabo de proa — retiene la proa y estabiliza","Cabo de popa"],
-      ans:2,expl:"El cabo de proa se pasa primero porque: (1) Retiene la proa del buque. (2) Crea un punto de anclaje estable para pasar los demas cabos. (3) Impide que el buque caiga (derive hacia atras). Una vez afirmado, la tripulacion puede pasar los demas cabos con seguridad."},
+      correct:2,expl:"El cabo de proa se pasa primero porque: (1) Retiene la proa del buque. (2) Crea un punto de anclaje estable para pasar los demas cabos. (3) Impide que el buque caiga (derive hacia atras). Una vez afirmado, la tripulacion puede pasar los demas cabos con seguridad."},
     {q:"?Que es el Med-Moor?",
       opts:["Amarre con 2 remolcadores","Ancla por la proa + popa al muelle — ahorra espacio longitudinal","Amarre con 2 anclas","Amarre en rada abierta"],
-      ans:1,expl:"Med-Moor: ancla fondeada por la proa (scope 4:1 min), buque recua popa al muelle, cabos de popa pasados. La cadena de ancla mantiene la proa separada del muelle. Comun en el Mediterraneo donde el espacio es limitado."},
+      correct:1,expl:"Med-Moor: ancla fondeada por la proa (scope 4:1 min), buque recua popa al muelle, cabos de popa pasados. La cadena de ancla mantiene la proa separada del muelle. Comun en el Mediterraneo donde el espacio es limitado."},
     {q:"?Cual es la regla de seguridad absoluta para las amarras bajo tension?",
       opts:["Solo usar guantes","Nunca pararse en el eje o la gaza de una amarra tensa — riesgo de azotazo mortal","Siempre doblar las amarras","Nunca usar molinetes"],
-      ans:1,expl:"Si una amarra bajo tension se rompe, azota a cientos de km/h con energia mortal. Zona de snap-back = delante y detras de la amarra en su eje. EPI obligatorios: casco, chaleco, guantes. Nunca cruzar una amarra tensa."},
+      correct:1,expl:"Si una amarra bajo tension se rompe, azota a cientos de km/h con energia mortal. Zona de snap-back = delante y detras de la amarra en su eje. EPI obligatorios: casco, chaleco, guantes. Nunca cruzar una amarra tensa."},
   ],
   pt:[
     {q:"Que cabo impede o navio de se afastar lateralmente do cais?",
       opts:["Spring de proa","Través (breast line)","Cabo de proa","Cabo de popa"],
-      ans:1,expl:"O través e perpendicular ao cais (90 graus). Seu papel exclusivo e impedir o afastamento lateral. Nao controla o avanco nem a caca. Ao zarpar: primeiro a largar porque a seguranca longitudinal e garantida pelos springs e cabos de proa/popa."},
+      correct:1,expl:"O través e perpendicular ao cais (90 graus). Seu papel exclusivo e impedir o afastamento lateral. Nao controla o avanco nem a caca. Ao zarpar: primeiro a largar porque a seguranca longitudinal e garantida pelos springs e cabos de proa/popa."},
     {q:"Na tecnica do pivo com spring de popa, que maquina se da?",
       opts:["Maquina atras","Maquina avante — spring popa mantido — proa gira para fora","Maquina parada","Alternadamente avante e atras"],
-      ans:1,expl:"Tecnica pivo spring popa: (1) Largar traveses, proa, popa. (2) Manter spring popa. (3) Maquina AVANTE lenta. (4) Spring popa impede o avanco — popa fica no cais. (5) Proa gira para fora. (6) Largar spring popa quando proa livre. (7) Navio livre."},
+      correct:1,expl:"Tecnica pivo spring popa: (1) Largar traveses, proa, popa. (2) Manter spring popa. (3) Maquina AVANTE lenta. (4) Spring popa impede o avanco — popa fica no cais. (5) Proa gira para fora. (6) Largar spring popa quando proa livre. (7) Navio livre."},
     {q:"Qual e o primeiro cabo passado ao atracar e porquê?",
       opts:["Través de proa","Spring de proa","Cabo de proa — retém a proa e estabiliza","Cabo de popa"],
-      ans:2,expl:"O cabo de proa passa-se primeiro porque: (1) Retém a proa do navio. (2) Cria um ponto de ancora estavel para passar os outros cabos. (3) Impede o navio de cacar. Uma vez amarrado, a tripulacao pode passar os restantes cabos com seguranca."},
+      correct:2,expl:"O cabo de proa passa-se primeiro porque: (1) Retém a proa do navio. (2) Cria um ponto de ancora estavel para passar os outros cabos. (3) Impede o navio de cacar. Uma vez amarrado, a tripulacao pode passar os restantes cabos com seguranca."},
     {q:"O que e o Med-Moor?",
       opts:["Amarracao com 2 rebocadores","Ancora pela proa + popa ao cais — poupa espaco longitudinal","Amarracao com 2 ancoras","Amarracao em rada aberta"],
-      ans:1,expl:"Med-Moor: ancora fundeada pela proa (scope 4:1 min), navio recua popa ao cais, cabos de popa passados. A corrente de ancora mantém a proa afastada do cais. Comum no Mediterraneo onde o espaco e limitado."},
+      correct:1,expl:"Med-Moor: ancora fundeada pela proa (scope 4:1 min), navio recua popa ao cais, cabos de popa passados. A corrente de ancora mantém a proa afastada do cais. Comum no Mediterraneo onde o espaco e limitado."},
     {q:"Qual e a regra de seguranca absoluta para as amarras sob tensao?",
       opts:["Usar so luvas","Nunca ficar no eixo ou no circulo de uma amarra tensa — risco de chicoteamento letal","Sempre dobrar as amarras","Nunca usar guinchos"],
-      ans:1,expl:"Se uma amarra sob tensao se rompe, chicoteia a centenas de km/h com energia letal. Zona de snap-back = a frente e atras da amarra no seu eixo. EPI obrigatorios: capacete, colete, luvas. Nunca atravessar uma amarra tensa."},
+      correct:1,expl:"Se uma amarra sob tensao se rompe, chicoteia a centenas de km/h com energia letal. Zona de snap-back = a frente e atras da amarra no seu eixo. EPI obrigatorios: capacete, colete, luvas. Nunca atravessar uma amarra tensa."},
   ],
 };
-
-function QuizComp({ questions, t, lang, onComplete }) {
-  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
-  const [idx,setIdx]=useState(0);
-  const [sel,setSel]=useState(null);
-  const [answered,setAnswered]=useState(false);
-  const [score,setScore]=useState(0);
-  const total=questions.length; const isLast=idx===total-1;
-  const q=shuffled[idx];
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
-  const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
-  return (
-    <div>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
-        <span style={{fontSize:10,color:C.muted}}>{t.question} {idx+1} {t.ofQ} {total}</span>
-        <span style={{fontSize:10,color:C.gold2,fontWeight:800}}>✓ {score}</span>
-      </div>
-      <div style={{height:4,background:"rgba(255,255,255,0.07)",borderRadius:4,marginBottom:14,overflow:"hidden"}}>
-        <div style={{height:"100%",width:`${(idx/total)*100}%`,background:`linear-gradient(90deg,${C.gold},${C.amber})`,borderRadius:4,transition:"width 0.3s"}}/>
-      </div>
-      <div style={{background:"rgba(6,14,26,0.85)",borderRadius:16,padding:"16px",marginBottom:14,border:`1px solid ${C.border}`}}>
-        <div style={{fontSize:14,color:C.white,lineHeight:1.65,fontWeight:700}}>{q.q}</div>
-      </div>
-      {q.opts.map((opt,i)=>{
-        let bg="rgba(10,22,40,0.7)",brd=C.border,col=C.white;
-        if(answered){
-          if(i===q.ans){bg="rgba(0,230,118,0.12)";brd=C.green;col=C.green;}
-          else if(i===sel){bg="rgba(255,23,68,0.12)";brd=C.red;col=C.red;}
-        }
-        return (
-          <button key={i} onClick={()=>handleAnswer(i)}
-            style={{width:"100%",padding:"13px 15px",marginBottom:8,borderRadius:13,background:bg,
-              border:`1.5px solid ${brd}`,color:col,fontSize:13,textAlign:"left",
-              cursor:answered?"default":"pointer",transition:"all 0.2s"}}>
-            <span style={{fontWeight:800,marginRight:9,color:C.amber2}}>{["A","B","C","D"][i]}.</span>{opt}
-          </button>
-        );
-      })}
-      {answered && (
-        <div style={{padding:"13px",borderRadius:13,
-          background:`rgba(${sel===q.ans?"0,230,118":"255,23,68"},0.08)`,
-          border:`1.5px solid ${sel===q.ans?C.green:C.red}55`,marginBottom:12}}>
-          <div style={{fontSize:12,fontWeight:800,color:sel===q.ans?C.green:C.red,marginBottom:5}}>
-            {sel===q.ans?t.correct:t.wrong}
-          </div>
-          <div style={{fontSize:11,color:C.steel3,lineHeight:1.7}}>{t.expl} {q.expl}</div>
-        </div>
-      )}
-      {answered && (
-        <button onClick={handleNext}
-          style={{width:"100%",padding:"15px",borderRadius:15,
-            background:`linear-gradient(135deg,${C.gold},${C.amber})`,
-            border:"none",color:C.bg0,fontSize:14,fontWeight:900,cursor:"pointer",letterSpacing:1,
-            boxShadow:`0 4px 22px ${C.amber}40`}}>
-          {isLast?t.finish:t.next}
-        </button>
-      )}
-    </div>
-  );
-}
 
 const getContent=(lang)=>{
   const d={
@@ -1026,7 +893,7 @@ const getContent=(lang)=>{
       s3:"SEQUENCE STANDARD D'APPAREILLAGE:\n1. Verifier machines, gouvernail, helices libres\n2. Larguer traversieres AV et AR\n3. Larguer amarre de tete\n4. Larguer amarre de poupe\n5. Machine avant — spring AR tenu = PIVOT\n6. Proue pivote vers le large\n7. Larguer spring AR quand proue degagee — navire libre\n\nMed-Moor (amarrage mediterraneen):\nAncre mouille par l'avant (scope 4:1 min)\nNavire recule — poupe au quai\nAmarres de poupe passees sur bittes\nChaine ancre = maintien proue a distance du quai\n\nBONNES PRATIQUES:\nVitesse approche < 0,3 noeud au contact\nMinimum 3 defenses par bord avant approche\nViser les eclats de lumiere entre navire et quai = jauger distance",
       p4:"PARTIE 4 — DIALOGUES RADIO",s4t:"Accostage ET Appareillage — Passerelle ↔ Pont",
       s4:"VOCABULAIRE CLE:\n'Raidir' : tendre l'amarre — 'Choquer' : laisser filer\n'Gaza' : boucle terminale de l'amarre\n'Larguer' : liberer l'amarre du quai\n'Affourcher' : assurer l'amarre sur le taquet\n'A bord' : confirmation que l'amarre est recuperee\n'Tenu' : l'amarre est sous tension et maintenue\n\nPRINCIPES DU DIALOGUE:\nPasserelle → Pont : ordres clairs et courts\nPont → Passerelle : confirmation immediate\nToujours repeter les ordres critiques\nConfirmer 'A bord' quand amarre recuperee\nSignaler toute anomalie immediatement",
-      p5:"EXERCICES PRATIQUES",p6:"CAS D'ACCIDENT REEL",p7:"BANQUE — 15 QUESTIONS",
+      p5:"EXERCICES PRATIQUES",p6:"CAS D'ACCIDENT REEL",p7:"BANQUE — 14 QUESTIONS",
       sumT:"RESUME — LECON 4 SEAMANSHIP",
       sumP:["Traversiere : perpendiculaire — empeche l'ecartement lateral — largue en 1er","Spring arriere : pivot a l'appareillage — largue en dernier","Amarre de tete : 1er cabo passe a l'accostage — stabilise la proue","Gaza : boucle terminale — passer sous si bitte occupee — jamais de noeud sous tension","Med-Moor : ancre AV + poupe quai — scope 4:1 min — courant en Mediterranee","Ordre appareillage : traversieres → tete → poupe → springs (AR en dernier = pivot)","Securite : jamais dans l'axe d'une amarre sous tension — snap-back zone mortelle","Auto-tension : treuil adapte la tension selon maree automatiquement","Affourcher en 8 : toujours en forme de 8 sur le taquet — jamais de noeud","Dialogue radio : ordres courts — confirmation immediate — 'A bord' quand amarre rentree"],
       learnedP:["6 types d'amarres et leurs roles","Equipements : bitte, chaumard, defense, treuil","Sequence d'appareillage et pivot spring AR","Med-Moor : ancre par l'avant","Dialogues radio complets accostage + appareillage"],
@@ -1043,7 +910,7 @@ const getContent=(lang)=>{
       s3:"STANDARD DEPARTURE SEQUENCE:\n1. Check engines, rudder, propellers clear\n2. Let go fwd and aft breast lines\n3. Let go head line\n4. Let go stern line\n5. Ahead engine — hold aft spring = PIVOT\n6. Bow swings to seaward\n7. Let go aft spring when bow clear — vessel free\n\nMed-Moor (Mediterranean mooring):\nAnchor dropped forward (scope 4:1 min)\nVessel backs in — stern to quay\nStern lines passed to bollards\nAnchor chain = holds bow away from quay\n\nBEST PRACTICES:\nApproach speed < 0.3 knots at contact\nMinimum 3 fenders per side before approach\nAim for light gaps between vessel and quay = judge distance",
       p4:"PART 4 — RADIO DIALOGUES",s4t:"Berthing AND Departure — Bridge ↔ Deck",
       s4:"KEY VOCABULARY:\n'Heave in' : tighten line — 'Surge' : pay out\n'Eye/bight' : terminal loop of mooring line\n'Let go' : release line from quay\n'Make fast' : secure line on cleat\n'Inboard' : line recovered on deck\n'Holding' : line under tension and maintained\n\nDIALOGUE PRINCIPLES:\nBridge → Deck: clear and short orders\nDeck → Bridge: immediate confirmation\nAlways repeat critical orders\nConfirm 'inboard' when line retrieved\nReport any anomaly immediately",
-      p5:"PRACTICAL EXERCISES",p6:"REAL ACCIDENT CASE",p7:"BANK — 15 QUESTIONS",
+      p5:"PRACTICAL EXERCISES",p6:"REAL ACCIDENT CASE",p7:"BANK — 14 QUESTIONS",
       sumT:"SUMMARY — SEAMANSHIP LESSON 4",
       sumP:["Breast line: perpendicular — prevents lateral ranging — let go first","Aft spring: departure pivot — let go last","Head line: first line passed when berthing — stabilises bow","Eye/bight: terminal loop — pass under if bollard occupied — never knot under tension","Med-Moor: anchor fwd + stern to quay — scope 4:1 min — common in Mediterranean","Departure order: breasts → head → stern → springs (aft spring last = pivot)","Safety: never in the axis of a taut line — snap-back zone is lethal","Auto-tension: winch adjusts tension with tide automatically","Make fast in figure-of-8: always 8-shape on cleat — never a knot","Radio dialogue: short orders — immediate confirmation — 'inboard' when line retrieved"],
       learnedP:["6 mooring line types and roles","Equipment: bollard, fairlead, fender, winch","Departure sequence and aft spring pivot","Med-Moor: anchor forward","Complete radio dialogues berthing + departure"],
@@ -1060,7 +927,7 @@ const getContent=(lang)=>{
       s3:"SECUENCIA ESTANDAR:\n1. Verificar maquinas, timon, helices\n2. Largar traveses proa y popa\n3. Largar cabo de proa\n4. Largar cabo de popa\n5. Maquina avante — spring popa = PIVOTE\n6. Proa gira hacia fuera\n7. Largar spring popa cuando proa despejada\n\nMed-Moor: ancla por la proa (scope 4:1 min) + popa al muelle",
       p4:"PARTE 4 — DIALOGOS DE RADIO",s4t:"Atraque Y Salida — Puente ↔ Cubierta",
       s4:"VOCABULARIO CLAVE:\n'Virar' : tensionar — 'Filar' : largar progresivamente\n'Gaza' : ojo terminal de la amarra — nunca nudo bajo tension\n'Largar' : soltar amarre del muelle — 'A bordo' : cabo recuperado\n\nPRINCIPIOS:\nOrdenes cortas y claras — Confirmacion inmediata\nRepetir ordenes criticas — Reportar anomalias",
-      p5:"EJERCICIOS PRACTICOS",p6:"CASO REAL",p7:"BANCO — 15 PREGUNTAS",
+      p5:"EJERCICIOS PRACTICOS",p6:"CASO REAL",p7:"BANCO — 14 PREGUNTAS",
       sumT:"RESUMEN — LECCION 4 SEAMANSHIP",
       sumP:["Través: perpendicular — anti-separacion lateral — primero en largarse","Spring de popa: pivote al zarpar — ultimo en largarse","Cabo de proa: primer cabo al atracar","Gaza: ojo terminal — pasar por debajo si bolardo ocupado — nunca nudo bajo tension","Med-Moor: ancla proa + popa muelle — scope 4:1 min","Orden zarpe: traveses → proa → popa → springs (popa=pivote)","Seguridad: nunca en eje amarra tensa — zona snap-back letal","Auto-tension: guinche adapta tension segun marea","Amarre en ocho: siempre en 8 en cornamusa — nunca nudo","Radio: ordenes cortas — confirmacion inmediata — 'a bordo' cuando cabo recogido"],
       learnedP:["6 tipos de cabos y sus roles","Equipo: bolardo, guiacabos, defensa, guinche","Secuencia de salida y pivote spring popa","Med-Moor: ancla por la proa","Dialogos radio completos atraque + salida"],
@@ -1077,7 +944,7 @@ const getContent=(lang)=>{
       s3:"SEQUENCIA PADRAO:\n1. Verificar maquinas, leme, helices\n2. Largar traveses proa e popa\n3. Largar cabo de proa\n4. Largar cabo de popa\n5. Maquina avante — spring popa = PIVO\n6. Proa gira para fora\n7. Largar spring popa quando proa livre\n\nMed-Moor: ancora pela proa (scope 4:1 min) + popa ao cais",
       p4:"PARTE 4 — DIALOGOS DE RADIO",s4t:"Atracacao E Partida — Ponte ↔ Convés",
       s4:"VOCABULARIO CHAVE:\n'Virar' : tensionar — 'Largar' : largar progressivamente\n'Gaza' : elo terminal da amarra — nunca no sob tensao\n'Largar' : soltar amarra do cais — 'A bordo' : cabo recuperado\n\nPRINCIPIOS:\nOrdens curtas e claras — Confirmacao imediata\nRepetir ordens criticas — Reportar anomalias",
-      p5:"EXERCICIOS PRATICOS",p6:"CASO REAL",p7:"BANCO — 15 QUESTOES",
+      p5:"EXERCICIOS PRATICOS",p6:"CASO REAL",p7:"BANCO — 14 QUESTOES",
       sumT:"RESUMO — LICAO 4 SEAMANSHIP",
       sumP:["Través: perpendicular — anti-afastamento lateral — primeiro a largar","Spring de popa: pivo ao zarpar — ultimo a largar","Cabo de proa: primeiro cabo ao atracar","Gaza: elo terminal — passar por baixo se cabeco ocupado — nunca no sob tensao","Med-Moor: ancora proa + popa cais — scope 4:1 min","Ordem partida: traveses → proa → popa → springs (popa=pivo)","Seguranca: nunca no eixo de amarra tensa — zona snap-back letal","Auto-tensao: guincho adapta tensao com a mare","Amarra em oito: sempre em 8 no cunho — nunca no","Radio: ordens curtas — confirmacao imediata — 'a bordo' quando cabo recolhido"],
       learnedP:["6 tipos de cabos e os seus papeis","Equipamento: cabeco, guia-cabos, defensa, guincho","Sequencia de partida e pivo spring popa","Med-Moor: ancora pela proa","Dialogos radio completos atracacao + partida"],
@@ -1149,6 +1016,7 @@ export default function LessonSEA_L4({ lang="fr", onBack=()=>{}, onComplete=()=>
   useEffect(()=>{if(typeof window!=="undefined")window.__MAP_LANG__=lang;},[lang]);
   const t=T[lang]||T.fr;
   const quiz=QUIZ[lang]||QUIZ.fr;
+  const bank=BANK[lang]||BANK.fr;
   const lc=getContent(lang);
   const [phase, setPhase] = useState("content");
   const [bankDone, setBankDone] = useState(false);
@@ -1262,7 +1130,7 @@ export default function LessonSEA_L4({ lang="fr", onBack=()=>{}, onComplete=()=>
             <SL icon="📝" text={lc.p7} color={C.gold}/>
             <div style={{background:"rgba(10,22,40,0.92)",border:`1px solid ${C.gold}44`,
               borderRadius:20,padding:"16px",marginBottom:18}}>
-              <QuestionBank lang={lang} onComplete={()=>setBankDone(true)}/>
+              <QuestionBank lang={lang} t={t} questions={bank} onComplete={()=>setBankDone(true)}/>
             </div>
 
             <div style={{background:"rgba(10,22,40,0.92)",border:`1px solid ${C.gold}33`,
@@ -1295,7 +1163,7 @@ export default function LessonSEA_L4({ lang="fr", onBack=()=>{}, onComplete=()=>
               </div>
               <div style={{fontSize:12,color:C.muted}}>5 questions · Seamanship L4</div>
             </div>
-            <QuizComp questions={quiz} t={t} lang={lang}
+            <QuizComp questions={quiz} t={t}
               onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),400);}}/>
           </>}
 

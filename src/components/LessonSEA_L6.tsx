@@ -443,7 +443,7 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUESTION BANK — 16 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   en: [
     { q: "Why is a piece of equipment inspected before greasing, rather than after?", opts: ["It saves grease", "So an existing problem can be detected before it is masked under a fresh layer of grease", "It is only a habit with no real purpose", "It shortens the maintenance round"], correct: 1, expl: "Inspecting before acting allows an existing problem to be detected before it is masked under a fresh layer of grease." },
     { q: "What does \"pitting corrosion\" mean?", opts: ["Surface rust treatable by brushing", "Localized pitting corrosion, a more serious warning sign than surface rust", "Abnormal play in a mechanism", "A hydraulic leak"], correct: 1, expl: "Pitting corrosion is localized corrosion in pits — a more serious warning sign than simple surface rust." },
@@ -523,6 +523,12 @@ const QUIZ_INDICES = [0, 3, 6, 12, 14];
 const buildQuiz = (lang) => {
   const bank = BANK[lang] || BANK.en;
   return QUIZ_INDICES.map(i => bank[i]);
+};
+export const QUIZ = {
+  en: QUIZ_INDICES.map(i => BANK.en[i]),
+  fr: QUIZ_INDICES.map(i => BANK.fr[i]),
+  es: QUIZ_INDICES.map(i => BANK.es[i]),
+  pt: QUIZ_INDICES.map(i => BANK.pt[i]),
 };
 
 const getContent = lang => {

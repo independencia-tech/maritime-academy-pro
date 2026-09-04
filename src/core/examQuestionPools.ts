@@ -52,6 +52,14 @@ import { QUIZ as D4_L6_QUIZ, BANK as D4_L6_BANK } from "../components/LessonSMCP
 import { QUIZ as D4_L7_QUIZ, BANK_SMCP7 as D4_L7_BANK } from "../components/LessonSMCP_L7";
 import { BANK_SMCP8 as D4_L8_BANK } from "../components/LessonSMCP_L8";
 
+import { QUIZ as D6_L1_QUIZ, BANK as D6_L1_BANK } from "../components/LessonSEA_L1";
+import { QUIZ as D6_L2_QUIZ, BANK as D6_L2_BANK } from "../components/LessonSEA_L2";
+import { QUIZ as D6_L3_QUIZ, BANK as D6_L3_BANK } from "../components/LessonSEA_L3";
+import { QUIZ as D6_L4_QUIZ, BANK as D6_L4_BANK } from "../components/LessonSEA_L4";
+import { QUIZ as D6_L5_QUIZ, BANK as D6_L5_BANK } from "../components/LessonSEA_L5";
+import { QUIZ as D6_L6_QUIZ, BANK as D6_L6_BANK } from "../components/LessonSEA_L6";
+import { QUIZ as D6_L7_QUIZ, BANK as D6_L7_BANK } from "../components/LessonSEA_L7";
+
 import { QUIZ as D7_L1_QUIZ, BANK as D7_L1_BANK } from "../components/LessonMETEO_L1";
 import { QUIZ as D7_L2_QUIZ, BANK as D7_L2_BANK } from "../components/LessonMETEO_L2";
 import { QUIZ as D7_L3_QUIZ, BANK as D7_L3_BANK } from "../components/LessonMETEO_L3";
@@ -119,6 +127,13 @@ const LESSON_POOLS = {
   "d4-l6": buildLessonPool("d4-l6", D4_L6_QUIZ, D4_L6_BANK),
   "d4-l7": buildLessonPool("d4-l7", D4_L7_QUIZ, D4_L7_BANK),
   "d4-l8": buildLessonPool("d4-l8", null, D4_L8_BANK),
+  "d6-l1": buildLessonPool("d6-l1", D6_L1_QUIZ, D6_L1_BANK),
+  "d6-l2": buildLessonPool("d6-l2", D6_L2_QUIZ, D6_L2_BANK),
+  "d6-l3": buildLessonPool("d6-l3", D6_L3_QUIZ, D6_L3_BANK),
+  "d6-l4": buildLessonPool("d6-l4", D6_L4_QUIZ, D6_L4_BANK),
+  "d6-l5": buildLessonPool("d6-l5", D6_L5_QUIZ, D6_L5_BANK),
+  "d6-l6": buildLessonPool("d6-l6", D6_L6_QUIZ, D6_L6_BANK),
+  "d6-l7": buildLessonPool("d6-l7", D6_L7_QUIZ, D6_L7_BANK),
   "d7-l1": buildLessonPool("d7-l1", D7_L1_QUIZ, D7_L1_BANK),
   "d7-l2": buildLessonPool("d7-l2", D7_L2_QUIZ, D7_L2_BANK),
   "d7-l3": buildLessonPool("d7-l3", D7_L3_QUIZ, D7_L3_BANK),

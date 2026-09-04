@@ -1697,6 +1697,18 @@ const COMPETENCIES_D4:any = {
   pt:["✔ Aplicar as frases normalizadas SMCP nas operações habituais de ponte","✔ Comunicar com clareza com o VTS e as autoridades portuárias","✔ Usar corretamente as frases SMCP de emergência sob pressão","✔ Dar e confirmar a receção de ordens de manobra sem ambiguidade","✔ Reportar uma emergência médica segundo a fraseologia normalizada"],
 };
 
+// d6 (Seamanship) competencies list — closes out the Deck department before
+// the 13th exam, validated 2026-09-04. Themes: rigging/rope selection,
+// knots/splicing, anchoring, mooring, stability, maintenance & corrosion
+// prevention (L3-L5 migrated to shared schema, L6-L7 exported as-is, this
+// session — see project_exams_system_architecture.md).
+const COMPETENCIES_D6:any = {
+  fr:["✔ Choisir le cordage ou le cable adapte a un usage critique et en reconnaitre les defauts disqualifiants","✔ Executer les noeuds et epissures essentiels selon leur usage (fixation permanente, boucle de securite, assemblage rapide)","✔ Mouiller en toute securite selon la nature du fond et ajuster la longueur de chaine filee aux conditions meteo","✔ Superviser une manoeuvre d'accostage ou d'appareillage et le role de chaque amarre","✔ Interpreter les facteurs de stabilite d'un navire et reagir correctement a une situation degradee","✔ Assurer une maintenance preventive rigoureuse et reconnaitre les signes de corrosion necessitant un signalement"],
+  en:["✔ Select the right rope or wire for a critical use and recognize disqualifying defects","✔ Execute essential knots and splices according to their use (permanent fixing, safety loop, quick joining)","✔ Anchor safely according to the seabed type and adjust the chain length veered to weather conditions","✔ Supervise a berthing or departure manoeuvre and the role of each mooring line","✔ Interpret a vessel's stability factors and react correctly to a degraded situation","✔ Ensure rigorous preventive maintenance and recognize corrosion signs requiring a report"],
+  es:["✔ Elegir el cabo o cable adecuado para un uso critico y reconocer los defectos descalificantes","✔ Ejecutar los nudos y gazas esenciales segun su uso (fijacion permanente, gaza de seguridad, union rapida)","✔ Fondear con seguridad segun el tipo de fondo y ajustar la longitud de cadena largada a las condiciones meteorologicas","✔ Supervisar una maniobra de atraque o zarpe y el papel de cada cabo","✔ Interpretar los factores de estabilidad de un buque y reaccionar correctamente ante una situacion degradada","✔ Garantizar un mantenimiento preventivo riguroso y reconocer los signos de corrosion que requieren informe"],
+  pt:["✔ Escolher o cabo adequado para um uso critico e reconhecer os defeitos desqualificantes","✔ Executar os nos e gazas essenciais conforme o seu uso (fixacao permanente, gaza de seguranca, uniao rapida)","✔ Fundear com seguranca conforme o tipo de fundo e ajustar o comprimento de corrente filada as condicoes meteorologicas","✔ Supervisionar uma manobra de atracacao ou zarpar e o papel de cada cabo","✔ Interpretar os fatores de estabilidade de um navio e reagir corretamente a uma situacao degradada","✔ Garantir uma manutencao preventiva rigorosa e reconhecer os sinais de corrosao que exigem relatorio"],
+};
+
 // Batch #2 competencies list for d7 (Marine Meteorology) — same register as
 // d1-d4, validated 2026-09-03.
 const COMPETENCIES_D7:any = {
@@ -2445,7 +2457,7 @@ function SMCPLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId
   );
 }
 
-function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2458,6 +2470,7 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "d6", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).deck.find((m:any)=>m.id==="d6");
@@ -2471,10 +2484,15 @@ function SeamanshipLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_D6}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
@@ -4120,6 +4138,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {

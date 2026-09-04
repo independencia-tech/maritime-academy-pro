@@ -438,7 +438,7 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUESTION BANK — 17 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   en: [
     { q: "Why does corrosion worsen if it is not treated early?", opts: ["It does not actually worsen over time", "The cycle self-sustains: rust expands, flakes off the existing protection, and accelerates the underlying corrosion", "It only worsens in cold climates", "It only worsens on painted surfaces"], correct: 1, expl: "The corrosion cycle self-sustains: rust volume expands, flakes off the existing protection, and accelerates the underlying corrosion." },
     { q: "What does \"chipping\" mean?", opts: ["Applying the finishing coat", "Mechanical removal of rust/flaking paint with a chipping hammer", "Measuring the dry film thickness", "Waiting for the curing time"], correct: 1, expl: "Chipping is the mechanical removal of rust and flaking paint using a chipping hammer." },
@@ -522,6 +522,12 @@ const QUIZ_INDICES = [0, 3, 6, 8, 15];
 const buildQuiz = (lang) => {
   const bank = BANK[lang] || BANK.en;
   return QUIZ_INDICES.map(i => bank[i]);
+};
+export const QUIZ = {
+  en: QUIZ_INDICES.map(i => BANK.en[i]),
+  fr: QUIZ_INDICES.map(i => BANK.fr[i]),
+  es: QUIZ_INDICES.map(i => BANK.es[i]),
+  pt: QUIZ_INDICES.map(i => BANK.pt[i]),
 };
 
 const getContent = lang => {
