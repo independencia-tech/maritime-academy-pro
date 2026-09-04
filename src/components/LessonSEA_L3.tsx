@@ -211,10 +211,10 @@ function ApparauxSVG({ lang }) {
         "Tubo de aco curvo que guia a corrente entre o molinete e a agua. Posicionado a vante do escovem. A ancora repousa no escovem quando levada. Tamanho: proporcional ao diametro da corrente."),
       label:lbl("Ecubier","Hawsepipe","Escobero","Escovem") },
     { id:"chaine", x:190, y:8, w:80, h:44, icon:"⛓️", color:C.chain,
-      desc:lbl("Chaine calibree en acier haute resistance. 1 ecaille = 27,5 m (standard IMO). Maillons : droit, tournant, emerillon, manille de jonction. Diametre : 50-100 mm sur grands navires. Marquage tous les 27,5 m : nombre de manilles de couleur.",
-        "Calibrated high-strength steel chain. 1 shackle = 27.5 m (IMO standard). Links: straight, swivel, shackle, joining shackle. Diameter: 50-100 mm on large vessels. Marking every 27.5 m: number of colored shackles.",
-        "Cadena calibrada de acero de alta resistencia. 1 grillete = 27,5 m (estandar OMI). Eslabones: recto, giratorio, emerillon, grillete de union. Diametro: 50-100 mm en grandes buques. Marcado cada 27,5 m: numero de grilletes de color.",
-        "Corrente calibrada de aco de alta resistencia. 1 manilha = 27,5 m (padrao IMO). Elos: reto, giratorio, emerilhao, manilha de uniao. Diametro: 50-100 mm em grandes navios. Marcacao a cada 27,5 m: numero de manilhas coloridas."),
+      desc:lbl("Chaine calibree en acier haute resistance. 1 ecaille = 27,5 m. Maillons : droit, tournant, emerillon, manille de jonction. Diametre : 50-100 mm sur grands navires. Marquage tous les 27,5 m : nombre de manilles de couleur.",
+        "Calibrated high-strength steel chain. 1 shackle = 27.5 m. Links: straight, swivel, shackle, joining shackle. Diameter: 50-100 mm on large vessels. Marking every 27.5 m: number of colored shackles.",
+        "Cadena calibrada de acero de alta resistencia. 1 grillete = 27,5 m. Eslabones: recto, giratorio, emerillon, grillete de union. Diametro: 50-100 mm en grandes buques. Marcado cada 27,5 m: numero de grilletes de color.",
+        "Corrente calibrada de aco de alta resistencia. 1 manilha = 27,5 m. Elos: reto, giratorio, emerilhao, manilha de uniao. Diametro: 50-100 mm em grandes navios. Marcacao a cada 27,5 m: numero de manilhas coloridas."),
       label:lbl("Chaine / Ecaille","Chain / Shackle","Cadena / Grillete","Corrente / Manilha") },
     { id:"puits", x:30, y:78, w:70, h:44, icon:"🕳️", color:C.steel2,
       desc:lbl("Compartiment etanche sous le pont avant qui stocke la chaine apres virage. Le puits evite que la chaine s'etale sur le pont. Drainage : bouchon de fond. Inspection reguliere : corrosion, mazout, etancheite couvercle.",
@@ -706,10 +706,10 @@ function Exercise1({ lang, t }) {
   };
 
   const expl={
-    fr:"OK Q1: 27,5 m — standard IMO. 1 ecaille = 1 shackle = 27,5 m. Chaine marquee tous les 27,5 m.\nOK Q2: 50 m — scope 5:1 pour vent force 5 : 10m x 5 = 50m = 1,82 ecaille => 2 ecailles (55m)\nOK Q3: Posidonie — plante mediterraneenne protegee (loi 88-1261). Amende 150 000 euros.\nOK Q4: Guindeau — machine electrique/hydraulique. Commandes pont et passerelle.\nOK Q5: Recuperer l'ancre coincee en fond rocheux en tirant par la couronne (par le bas).",
-    en:"OK Q1: 27.5 m — IMO standard. 1 shackle = 27.5 m. Chain marked every 27.5 m.\nOK Q2: 50 m — scope 5:1 for force 5 wind: 10m x 5 = 50m = 1.82 shackles => 2 shackles (55m)\nOK Q3: Posidonia — protected Mediterranean plant (law 88-1261). Fine 150,000 euros.\nOK Q4: Windlass — electric/hydraulic machine. Deck and bridge controls.\nOK Q5: Recover anchor stuck in rocky bottom by pulling from the crown (from below).",
-    es:"OK Q1: 27,5 m — estandar OMI. 1 grillete = 27,5 m. Cadena marcada cada 27,5 m.\nOK Q2: 50 m — scope 5:1 para viento fuerza 5: 10m x 5 = 50m = 1,82 grilletes => 2 grilletes (55m)\nOK Q3: Posidonia — planta mediterranea protegida (ley 88-1261). Multa 150.000 euros.\nOK Q4: Molinete — maquina electrica/hidraulica. Controles cubierta y puente.\nOK Q5: Recuperar el ancla encallada en fondo rocoso tirando desde la corona (desde abajo).",
-    pt:"OK Q1: 27,5 m — padrao IMO. 1 manilha = 27,5 m. Corrente marcada a cada 27,5 m.\nOK Q2: 50 m — scope 5:1 para vento forca 5: 10m x 5 = 50m = 1,82 manilhas => 2 manilhas (55m)\nOK Q3: Posidonia — planta mediterranea protegida (lei 88-1261). Multa 150.000 euros.\nOK Q4: Molinete — maquina eletrica/hidraulica. Controlos convés e ponte.\nOK Q5: Recuperar ancora encravada em fundo rochoso puxando pela coroa (por baixo).",
+    fr:"OK Q1: 27,5 m. 1 ecaille = 1 shackle = 27,5 m. Chaine marquee tous les 27,5 m.\nOK Q2: 50 m — scope 5:1 pour vent force 5 : 10m x 5 = 50m = 1,82 ecaille => 2 ecailles (55m)\nOK Q3: Posidonie — plante mediterraneenne protegee (loi 88-1261). Amende 150 000 euros.\nOK Q4: Guindeau — machine electrique/hydraulique. Commandes pont et passerelle.\nOK Q5: Recuperer l'ancre coincee en fond rocheux en tirant par la couronne (par le bas).",
+    en:"OK Q1: 27.5 m. 1 shackle = 27.5 m. Chain marked every 27.5 m.\nOK Q2: 50 m — scope 5:1 for force 5 wind: 10m x 5 = 50m = 1.82 shackles => 2 shackles (55m)\nOK Q3: Posidonia — protected Mediterranean plant (law 88-1261). Fine 150,000 euros.\nOK Q4: Windlass — electric/hydraulic machine. Deck and bridge controls.\nOK Q5: Recover anchor stuck in rocky bottom by pulling from the crown (from below).",
+    es:"OK Q1: 27,5 m. 1 grillete = 27,5 m. Cadena marcada cada 27,5 m.\nOK Q2: 50 m — scope 5:1 para viento fuerza 5: 10m x 5 = 50m = 1,82 grilletes => 2 grilletes (55m)\nOK Q3: Posidonia — planta mediterranea protegida (ley 88-1261). Multa 150.000 euros.\nOK Q4: Molinete — maquina electrica/hidraulica. Controles cubierta y puente.\nOK Q5: Recuperar el ancla encallada en fondo rocoso tirando desde la corona (desde abajo).",
+    pt:"OK Q1: 27,5 m. 1 manilha = 27,5 m. Corrente marcada a cada 27,5 m.\nOK Q2: 50 m — scope 5:1 para vento forca 5: 10m x 5 = 50m = 1,82 manilhas => 2 manilhas (55m)\nOK Q3: Posidonia — planta mediterranea protegida (lei 88-1261). Multa 150.000 euros.\nOK Q4: Molinete — maquina eletrica/hidraulica. Controlos convés e ponte.\nOK Q5: Recuperar ancora encravada em fundo rochoso puxando pela coroa (por baixo).",
   };
 
   const list = qs[lang]||qs.fr;
@@ -856,7 +856,7 @@ export const QUIZ={
   fr:[
     {q:"Quelle est la longueur d'une ecaille de chaine et son equivalent en metres ?",
       opts:["1 ecaille = 15 m","1 ecaille = 27,5 m","1 ecaille = 30 m","1 ecaille = 50 m"],
-      correct:1,expl:"1 ecaille = 27,5 metres (standard IMO). La chaine est marquee tous les 27,5m par des maillons de couleur ou des marques peintes. Calcul ecailles : longueur (m) / 27,5. Toujours arrondir au superieur pour la securite."},
+      correct:1,expl:"1 ecaille = 27,5 metres. La chaine est marquee tous les 27,5m par des maillons de couleur ou des marques peintes. Calcul ecailles : longueur (m) / 27,5. Toujours arrondir au superieur pour la securite."},
     {q:"Quelle quantite de chaine filer par 8m de fond par vent moderé (force 4-5) avec scope 4:1 ?",
       opts:["16 m (0.6 ecaille)","32 m (1.2 ecaille)","40 m (1.5 ecailles)","56 m (2 ecailles)"],
       correct:1,expl:"Calcul : 8m x 4 = 32m de chaine. 32 / 27,5 = 1,16 => 2 ecailles (55m) pour la securite. La regle pratique : scope minimum 3:1 par beau temps, 4-5:1 vent moderé, 6-7:1 frais-fort, 7:1+ en tempete."},
@@ -873,7 +873,7 @@ export const QUIZ={
   en:[
     {q:"What is the length of one chain shackle and its equivalent in metres?",
       opts:["1 shackle = 15 m","1 shackle = 27.5 m","1 shackle = 30 m","1 shackle = 50 m"],
-      correct:1,expl:"1 shackle = 27.5 metres (IMO standard). The chain is marked every 27.5m by colored links or painted marks. Shackle calculation: length (m) / 27.5. Always round up for safety."},
+      correct:1,expl:"1 shackle = 27.5 metres. The chain is marked every 27.5m by colored links or painted marks. Shackle calculation: length (m) / 27.5. Always round up for safety."},
     {q:"How much chain to veer for 8m depth in moderate wind (force 4-5) with scope 4:1?",
       opts:["16 m (0.6 shackle)","32 m (1.2 shackle)","40 m (1.5 shackles)","56 m (2 shackles)"],
       correct:1,expl:"Calculation: 8m x 4 = 32m of chain. 32 / 27.5 = 1.16 => 2 shackles (55m) for safety. Practical rule: minimum scope 3:1 fair weather, 4-5:1 moderate wind, 6-7:1 fresh-strong, 7:1+ in storm."},
@@ -890,7 +890,7 @@ export const QUIZ={
   es:[
     {q:"?Cual es la longitud de un grillete de cadena y su equivalente en metros?",
       opts:["1 grillete = 15 m","1 grillete = 27,5 m","1 grillete = 30 m","1 grillete = 50 m"],
-      correct:1,expl:"1 grillete = 27,5 metros (estandar OMI). La cadena esta marcada cada 27,5m. Calculo grilletes: longitud (m) / 27,5. Siempre redondear hacia arriba por seguridad."},
+      correct:1,expl:"1 grillete = 27,5 metros. La cadena esta marcada cada 27,5m. Calculo grilletes: longitud (m) / 27,5. Siempre redondear hacia arriba por seguridad."},
     {q:"?Cuanta cadena largar para 8m de fondo con viento moderado (fuerza 4-5) con scope 4:1?",
       opts:["16 m (0,6 grillete)","32 m (1,2 grillete)","40 m (1,5 grilletes)","56 m (2 grilletes)"],
       correct:1,expl:"Calculo: 8m x 4 = 32m de cadena. 32 / 27,5 = 1,16 => 2 grilletes (55m) por seguridad."},
@@ -907,7 +907,7 @@ export const QUIZ={
   pt:[
     {q:"Qual e o comprimento de uma manilha de corrente e o seu equivalente em metros?",
       opts:["1 manilha = 15 m","1 manilha = 27,5 m","1 manilha = 30 m","1 manilha = 50 m"],
-      correct:1,expl:"1 manilha = 27,5 metros (padrao IMO). A corrente e marcada a cada 27,5m. Calculo manilhas: comprimento (m) / 27,5. Sempre arredondar para cima por seguranca."},
+      correct:1,expl:"1 manilha = 27,5 metros. A corrente e marcada a cada 27,5m. Calculo manilhas: comprimento (m) / 27,5. Sempre arredondar para cima por seguranca."},
     {q:"Quanto de corrente filar para 8m de fundo com vento moderado (forca 4-5) com scope 4:1?",
       opts:["16 m (0,6 manilha)","32 m (1,2 manilha)","40 m (1,5 manilhas)","56 m (2 manilhas)"],
       correct:1,expl:"Calculo: 8m x 4 = 32m de corrente. 32 / 27,5 = 1,16 => 2 manilhas (55m) por seguranca."},
@@ -942,7 +942,7 @@ const getContent=(lang)=>{
       s4:"CALCUL SCOPE:\nScope = longueur chaine / profondeur\nBeau temps (force < 4) : x3\nVent modere (force 4-5) : x4 a 5\nVent frais-fort (force 6-7) : x5 a 7\nTempete (> force 7) : x7+ ou appareiller\n\nCATENAIRE:\nCourbe naturelle de la chaine = amortisseur\nChaine tendue sans catenaire = signe de garreo\n\nCERCLE D'EVOLUTION:\nRayon = longueur chaine + longueur navire\nVerifier avant mouillage : espace suffisant\n\nGARREO : detecter par releves, GPS, vibrations chaine",
       p5:"EXERCICES PRATIQUES",p6:"CAS D'ACCIDENT REEL",p7:"BANQUE — 15 QUESTIONS",
       sumT:"RESUME — LECON 3 SEAMANSHIP",
-      sumP:["1 ecaille de chaine = 27,5 m (standard IMO)","Scope = longueur chaine / profondeur — minimum 3:1 beau temps","Sable (S) et vase (M) : meilleurs fonds — Posidonie (Wd) INTERDIT","Guindeau : commande pont ET passerelle — frein de gueuse obligatoire apres mouillage","'Mouillez !' = ordre definitif passerelle — 'Ancre a l'eau' = confirmation pont","'Chaine au pic' = chaine verticale — ancre directement sous le navire","Catenaire = amortisseur — chaine tendue sans catenaire = signe de garreo","Orinque = boue flottante pour recuperer ancre coincee en fond rocheux","Garreo : confirmer par releves + GPS — filer chaine + demarrer machines","Posidonie : protegee loi 88-1261 — 20L O2/m2/j — amende 150 000 euros"],
+      sumP:["1 ecaille de chaine = 27,5 m","Scope = longueur chaine / profondeur — minimum 3:1 beau temps","Sable (S) et vase (M) : meilleurs fonds — Posidonie (Wd) INTERDIT","Guindeau : commande pont ET passerelle — frein de gueuse obligatoire apres mouillage","'Mouillez !' = ordre definitif passerelle — 'Ancre a l'eau' = confirmation pont","'Chaine au pic' = chaine verticale — ancre directement sous le navire","Catenaire = amortisseur — chaine tendue sans catenaire = signe de garreo","Orinque = boue flottante pour recuperer ancre coincee en fond rocheux","Garreo : confirmer par releves + GPS — filer chaine + demarrer machines","Posidonie : protegee loi 88-1261 — 20L O2/m2/j — amende 150 000 euros"],
       learnedP:["Types ancres et leurs terrains d'election","Apparaux : guindeau, ecubier, chaine, orinque","Fonds marins et tenue — posidonie interdite","Calcul scope selon profondeur et meteo","Procedure et dialogue passerelle-pont"],
     },
     en:{
@@ -959,7 +959,7 @@ const getContent=(lang)=>{
       s4:"SCOPE CALCULATION:\nScope = chain length / depth\nFair weather (force < 4): x3\nModerate wind (force 4-5): x4 to 5\nFresh-strong (force 6-7): x5 to 7\nStorm (> force 7): x7+ or get underway\n\nCATENARY:\nNatural chain curve = shock absorber\nTaut chain without catenary = dragging sign\n\nSWINGING CIRCLE:\nRadius = chain length + vessel length\nCheck before anchoring: sufficient space\n\nDRAGGING: detect by bearings, GPS, chain vibrations",
       p5:"PRACTICAL EXERCISES",p6:"REAL ACCIDENT CASE",p7:"BANK — 15 QUESTIONS",
       sumT:"SUMMARY — SEAMANSHIP LESSON 3",
-      sumP:["1 chain shackle = 27.5 m (IMO standard)","Scope = chain length / depth — minimum 3:1 fair weather","Sand (S) and mud (M): best bottoms — Posidonia (Wd) PROHIBITED","Windlass: deck AND bridge control — devil's claw mandatory after anchoring","'Let go!' = definitive bridge order — 'Anchor away' = deck confirmation","'Chain up and down' = vertical chain — anchor directly below vessel","Catenary = shock absorber — taut chain without catenary = dragging sign","Trip line = floating buoy to recover anchor stuck in rocky bottom","Dragging: confirm by bearings + GPS — veer chain + start engines","Posidonia: protected law 88-1261 — 20L O2/m2/d — 150,000 euro fine"],
+      sumP:["1 chain shackle = 27.5 m","Scope = chain length / depth — minimum 3:1 fair weather","Sand (S) and mud (M): best bottoms — Posidonia (Wd) PROHIBITED","Windlass: deck AND bridge control — devil's claw mandatory after anchoring","'Let go!' = definitive bridge order — 'Anchor away' = deck confirmation","'Chain up and down' = vertical chain — anchor directly below vessel","Catenary = shock absorber — taut chain without catenary = dragging sign","Trip line = floating buoy to recover anchor stuck in rocky bottom","Dragging: confirm by bearings + GPS — veer chain + start engines","Posidonia: protected law 88-1261 — 20L O2/m2/d — 150,000 euro fine"],
       learnedP:["Anchor types and their best bottoms","Equipment: windlass, hawsepipe, chain, trip line","Seabeds and holding — posidonia prohibited","Scope calculation by depth and weather","Procedure and bridge-deck dialogue"],
     },
     es:{
@@ -976,7 +976,7 @@ const getContent=(lang)=>{
       s4:"CALCULO SCOPE:\nScope = longitud cadena / profundidad\nBuen tiempo: x3 | Moderado: x4-5 | Fresco-fuerte: x5-7 | Temporal: x7+\n\nCATENARIA = amortiguador — cadena tesa = garreo\nCIRCULO EVOLUCION = longitud cadena + eslora",
       p5:"EJERCICIOS PRACTICOS",p6:"CASO REAL",p7:"BANCO — 15 PREGUNTAS",
       sumT:"RESUMEN — LECCION 3 SEAMANSHIP",
-      sumP:["1 grillete = 27,5 m (estandar OMI)","Scope = longitud cadena / profundidad — minimo 3:1 buen tiempo","Arena (S) y fango (M): mejores fondos — Posidonia (Wd) PROHIBIDO","Molinete: control cubierta Y puente — garra del diablo obligatoria","'Fondeen!' = orden definitiva puente — 'Ancla al agua' = confirmacion cubierta","'Cadena a pique' = cadena vertical — ancla directamente bajo el buque","Catenaria = amortiguador — cadena tesa sin catenaria = garreo","Orinque = boya flotante para recuperar ancla enganchada en roca","Garreo: confirmar por marcaciones + GPS — largar cadena + arrancar maquinas","Posidonia: protegida ley 88-1261 — multa 150.000 euros"],
+      sumP:["1 grillete = 27,5 m","Scope = longitud cadena / profundidad — minimo 3:1 buen tiempo","Arena (S) y fango (M): mejores fondos — Posidonia (Wd) PROHIBIDO","Molinete: control cubierta Y puente — garra del diablo obligatoria","'Fondeen!' = orden definitiva puente — 'Ancla al agua' = confirmacion cubierta","'Cadena a pique' = cadena vertical — ancla directamente bajo el buque","Catenaria = amortiguador — cadena tesa sin catenaria = garreo","Orinque = boya flotante para recuperar ancla enganchada en roca","Garreo: confirmar por marcaciones + GPS — largar cadena + arrancar maquinas","Posidonia: protegida ley 88-1261 — multa 150.000 euros"],
       learnedP:["Tipos de anclas y sus terrenos","Aparatos: molinete, escobero, cadena, orinque","Fondos y retencion — posidonia prohibida","Calculo scope segun profundidad y tiempo","Procedimiento y dialogo puente-cubierta"],
     },
     pt:{
@@ -993,7 +993,7 @@ const getContent=(lang)=>{
       s4:"CALCULO SCOPE:\nScope = comprimento corrente / profundidade\nBom tempo: x3 | Moderado: x4-5 | Fresco-forte: x5-7 | Temporal: x7+\n\nCATENARIA = amortecedor — corrente tensa = arrasto\nCIRCULO EVOLUCAO = comprimento corrente + comprimento navio",
       p5:"EXERCICIOS PRATICOS",p6:"CASO REAL",p7:"BANCO — 15 QUESTOES",
       sumT:"RESUMO — LICAO 3 SEAMANSHIP",
-      sumP:["1 manilha = 27,5 m (padrao IMO)","Scope = comprimento corrente / profundidade — minimo 3:1 bom tempo","Areia (S) e vasa (M): melhores fundos — Posidonia (Wd) PROIBIDO","Molinete: controlo convés E ponte — garra do diabo obrigatoria","'Fundeiem!' = ordem definitiva ponte — 'Ancora na agua' = confirmacao convés","'Corrente apique' = corrente vertical — ancora diretamente sob o navio","Catenaria = amortecedor — corrente tensa sem catenaria = arrasto","Orinque = boia flutuante para recuperar ancora encravada em rocha","Arrasto: confirmar por marcacoes + GPS — filar corrente + arrancar maquinas","Posidonia: protegida lei 88-1261 — multa 150.000 euros"],
+      sumP:["1 manilha = 27,5 m","Scope = comprimento corrente / profundidade — minimo 3:1 bom tempo","Areia (S) e vasa (M): melhores fundos — Posidonia (Wd) PROIBIDO","Molinete: controlo convés E ponte — garra do diabo obrigatoria","'Fundeiem!' = ordem definitiva ponte — 'Ancora na agua' = confirmacao convés","'Corrente apique' = corrente vertical — ancora diretamente sob o navio","Catenaria = amortecedor — corrente tensa sem catenaria = arrasto","Orinque = boia flutuante para recuperar ancora encravada em rocha","Arrasto: confirmar por marcacoes + GPS — filar corrente + arrancar maquinas","Posidonia: protegida lei 88-1261 — multa 150.000 euros"],
       learnedP:["Tipos de ancora e seus terrenos","Aparelhos: molinete, escovem, corrente, orinque","Fundos e retencao — posidonia proibida","Calculo scope segundo profundidade e tempo","Procedimento e dialogo ponte-convés"],
     },
   };
