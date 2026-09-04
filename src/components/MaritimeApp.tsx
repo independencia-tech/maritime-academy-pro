@@ -1726,6 +1726,34 @@ const COMPETENCIES_D7:any = {
   pt:["✔ Interpretar as leituras de pressão e as tendências barométricas para antecipar mudanças meteorológicas","✔ Observar e registar corretamente as nuvens, a visibilidade e o estado do mar","✔ Usar os instrumentos meteorológicos de bordo e detetar as suas anomalias","✔ Identificar sistemas de pressão, massas de ar e frentes numa carta sinótica","✔ Avaliar um risco de ciclone ou mau tempo e aplicar a manobra de evitação adequada"],
 };
 
+// s1 (COLREG Safety — Collision Prevention & Response) competencies list —
+// first Safety module wired onto Foundation Exams, batch 2 of the Safety
+// wiring effort, validated 2026-09-04. Themes: individual assertiveness &
+// danger recognition, bridge team dynamics (Shared Situational Awareness,
+// Authority Gradient, Challenge & Response), last-seconds collision action,
+// first-minutes post-collision response, decision-making under pressure,
+// synthesis into a lasting Safety Mindset (L1-L6).
+const COMPETENCIES_S1:any = {
+  fr:["✔ Reconnaître un danger de collision et le signaler avec l'assertivité individuelle requise","✔ Appliquer les réflexes d'équipe (Shared Situational Awareness, Challenge & Response) en situation de risque","✔ Agir efficacement dans les dernières secondes avant un impact quasi certain","✔ Exécuter les toutes premières actions essentielles dans les minutes suivant une collision confirmée","✔ Mobiliser un jugement de décision fiable sous pression dans un scénario de collision","✔ Synthétiser les réflexes de sécurité acquis en une posture professionnelle durable"],
+  en:["✔ Recognize a collision danger and report it with the required individual assertiveness","✔ Apply team reflexes (Shared Situational Awareness, Challenge & Response) under risk","✔ Act effectively in the last seconds before a near-certain impact","✔ Execute the essential first actions in the minutes following a confirmed collision","✔ Exercise reliable decision-making under pressure in a collision scenario","✔ Synthesize the safety reflexes learned into a lasting professional mindset"],
+  es:["✔ Reconocer un peligro de colisión y señalarlo con la asertividad individual requerida","✔ Aplicar los reflejos de equipo (Shared Situational Awareness, Challenge & Response) en riesgo","✔ Actuar eficazmente en los últimos segundos antes de un impacto casi seguro","✔ Ejecutar las primerísimas acciones esenciales en los minutos tras una colisión confirmada","✔ Ejercer un juicio de decisión fiable bajo presión en un escenario de colisión","✔ Sintetizar los reflejos de seguridad adquiridos en una mentalidad profesional duradera"],
+  pt:["✔ Reconhecer um perigo de colisão e sinalizá-lo com a assertividade individual exigida","✔ Aplicar os reflexos de equipa (Shared Situational Awareness, Challenge & Response) sob risco","✔ Agir eficazmente nos últimos segundos antes de um impacto quase certo","✔ Executar as primeiríssimas ações essenciais nos minutos após uma colisão confirmada","✔ Exercer um julgamento de decisão fiável sob pressão num cenário de colisão","✔ Sintetizar os reflexos de segurança adquiridos numa postura profissional duradoura"],
+};
+
+// s2 (EPIRB, SART & GMDSS) competencies list — second Safety module wired
+// onto Foundation Exams in the same batch, validated 2026-09-04. Themes:
+// recognizing a true distress emergency (vs. a degraded-but-manageable
+// situation), choosing the right distress system/activation mode,
+// preparing & maintaining equipment before the emergency, executing
+// activation under pressure, synthesis into the MAP Safety Mindset
+// (Recognize, Choose, Prepare, Activate, Learn) (L1-L5).
+const COMPETENCIES_S2:any = {
+  fr:["✔ Reconnaître le moment où une situation dégradée devient une véritable détresse","✔ Choisir le bon système de détresse et le bon mode d'activation selon la situation","✔ Préparer et entretenir l'équipement de détresse avant l'urgence","✔ Exécuter correctement les gestes d'activation sous pression","✔ Appliquer une mentalité de sécurité intégrée (Recognize, Choose, Prepare, Activate, Learn)"],
+  en:["✔ Recognize the moment a degraded situation becomes a true distress emergency","✔ Choose the right distress system and activation mode for the situation","✔ Prepare and maintain distress equipment before the emergency","✔ Correctly execute activation actions under pressure","✔ Apply an integrated safety mindset (Recognize, Choose, Prepare, Activate, Learn)"],
+  es:["✔ Reconocer el momento en que una situación degradada se convierte en una emergencia real","✔ Elegir el sistema de socorro y el modo de activación adecuados según la situación","✔ Preparar y mantener el equipo de socorro antes de la emergencia","✔ Ejecutar correctamente los gestos de activación bajo presión","✔ Aplicar una mentalidad de seguridad integrada (Recognize, Choose, Prepare, Activate, Learn)"],
+  pt:["✔ Reconhecer o momento em que uma situação degradada se torna uma emergência real","✔ Escolher o sistema de socorro e o modo de ativação certos conforme a situação","✔ Preparar e manter o equipamento de socorro antes da emergência","✔ Executar corretamente os gestos de ativação sob pressão","✔ Aplicar uma mentalidade de segurança integrada (Recognize, Choose, Prepare, Activate, Learn)"],
+};
+
 // ── Shared exam engine wiring (2026-09-02 refactor) ─────────────────────
 // Extracted from NavigationLessonsPage (d1's original, one-off implementation)
 // into a moduleId-parametrized hook + presentational components so a second
@@ -2878,7 +2906,7 @@ function E7LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
     </div>
   );
 }
-function S1LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function S1LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2891,6 +2919,7 @@ function S1LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "s1", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s1");
@@ -2904,10 +2933,15 @@ function S1LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_S1}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -2931,7 +2965,7 @@ function S1LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
     </div>
   );
 }
-function S2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function S2LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2944,6 +2978,7 @@ function S2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "s2", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s2");
@@ -2957,10 +2992,15 @@ function S2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_S2}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -4211,6 +4251,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
@@ -4282,6 +4324,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
