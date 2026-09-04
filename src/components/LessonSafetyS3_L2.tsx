@@ -216,7 +216,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Pourquoi dit-on que 'chaque minute compte' en cas d'arrêt cardiaque ?",opts:["Ça ne compte pas vraiment","Les chances de survie diminuent rapidement à chaque minute sans RCP ni défibrillation","C'est juste une expression sans fondement","Seule la première heure compte"],correct:1,expl:"Time is Muscle : les chances de survie chutent vite avec chaque minute sans compressions ni choc."},
     {q:"Une victime inconsciente émet des inspirations bruyantes, irrégulières et espacées. Que représentent-elles ?",opts:["Une respiration normale, tout va bien","Des gasps agoniques : ce ne sont pas des signes de respiration normale","Un ronflement sans gravité","Un signe que la victime va se réveiller"],correct:1,expl:"Les gasps agoniques imitent la respiration mais imposent de commencer la RCP immédiatement, sans attendre."},
@@ -288,7 +288,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Une victime inconsciente fait des gasps bruyants et espacés. Que faites-vous ?",opts:["Rien, elle respire","Considérer que ce n'est pas une respiration normale et commencer la RCP","Attendre 2 minutes pour voir","Lui parler pour la réveiller"],correct:1,expl:"Les gasps agoniques ne sont pas une respiration normale : la RCP doit commencer immédiatement."},
     {q:"L'AED est-il un remplacement de la RCP ?",opts:["Oui, une fois allumé la RCP n'est plus utile","Non, il la complète, les deux fonctionnent ensemble","Oui, mais seulement pour les officiers","Non, il ne sert jamais à rien"],correct:1,expl:"L'AED complète la RCP, il ne la remplace jamais."},

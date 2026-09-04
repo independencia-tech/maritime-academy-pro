@@ -199,7 +199,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Two Moments Decide Everything: Before You Release, and Before You Reopen' ?",opts:["Seul le moment du déclenchement compte vraiment","La même prudence s'applique avant de déclencher ET avant de rouvrir l'espace","Il ne faut jamais rouvrir un espace après un déclenchement","Ce principe ne concerne que les feux électriques"],correct:1,expl:"Les deux moments (déclenchement et réouverture) exigent la même rigueur, car chacun peut coûter des vies s'il est précipité."},
     {q:"Quand envisager un système fixe selon cette leçon ?",opts:["Dès la moindre fumée, systématiquement","Quand l'extincteur portatif est insuffisant, que le feu dépasse l'attaque directe, et que l'espace peut être scellé","Uniquement sur ordre du port","Jamais, un extincteur portatif suffit toujours"],correct:1,expl:"Ces trois conditions réunies justifient d'envisager un système fixe, jamais une seule isolément."},
@@ -271,7 +271,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que faut-il faire avant tout déclenchement d'un système fixe ?",opts:["Rien de particulier","Appel nominal complet, arrêt machines, fermeture ventilation, second appel avant","Uniquement fermer une porte","Attendre le port"],correct:1,expl:"Ces non-négociables garantissent qu'aucune personne ne reste dans l'espace."},
     {q:"Que faire face au moindre doute sur la présence de quelqu'un ?",opts:["Déclencher après un court délai","Attendre et revérifier jusqu'à confirmation totale","Déclencher immédiatement","Demander à un collègue de vérifier vite"],correct:1,expl:"Le moindre doute impose d'attendre, jamais de déclencher."},

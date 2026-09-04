@@ -205,7 +205,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'A Snapshot Lies. A Trend Tells the Truth' ?",opts:["Une seule mesure suffit toujours à juger de l'état d'une victime","Une mesure isolée peut rassurer à tort ; seule l'évolution dans le temps révèle une dégradation","Il ne faut jamais prendre de constantes","Les instruments de mesure sont toujours faux"],correct:1,expl:"Une mesure isolée peut sembler normale alors même qu'une dégradation est en cours."},
     {q:"Que signifie SAMPLE ?",opts:["Un protocole de premiers secours pour les brûlures","Signes/Symptômes, Allergies, Médicaments, Passé médical, Last meal, Événements","Une échelle de gravité des blessures","Un type d'attelle"],correct:1,expl:"SAMPLE est le mnémonique standard pour recueillir l'historique d'une victime."},
@@ -277,7 +277,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'A Snapshot Lies. A Trend Tells the Truth' ?",opts:["Une seule mesure suffit toujours","Une mesure isolée peut rassurer à tort ; la tendance dans le temps révèle la réalité","Il ne faut jamais mesurer les constantes","Les appareils de mesure sont peu fiables"],correct:1,expl:"Seule l'évolution dans le temps permet de détecter une dégradation."},
     {q:"Que signifie SAMPLE ?",opts:["Un type de pansement","Signes/Symptômes, Allergies, Médicaments, Passé médical, Last meal, Événements","Une échelle de douleur","Un protocole de RCP"],correct:1,expl:"SAMPLE structure le recueil de l'historique de la victime."},

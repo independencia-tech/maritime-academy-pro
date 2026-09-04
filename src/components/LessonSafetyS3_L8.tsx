@@ -208,7 +208,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Treatment does not end when the helicopter arrives' ?",opts:["Les soins s'arrêtent dès que l'hélicoptère est en vue","Un transfert bien préparé et une transmission sûre font partie intégrante du traitement, pas une simple formalité après coup","Seul le médecin à terre compte désormais","Ce principe ne concerne que la météo"],correct:1,expl:"A safe handover is the final treatment you give : la vigilance ne s'arrête jamais avant la prise en charge complète."},
     {q:"Quel facteur, vu en Leçon 5, oriente la décision de MEDEVAC ?",opts:["La couleur du pont","La tendance des constantes montrant une dégradation continue","La météo uniquement","Le nombre de membres d'équipage disponibles"],correct:1,expl:"Une dégradation confirmée par la tendance (L5), malgré le traitement, est un facteur clé de décision."},
@@ -280,7 +280,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la toute première étape de la préparation du pont pour un hélicoptère ?",opts:["Hisser uniquement la manche à air","Sécuriser la zone entière : objets, personnel, communications, vent, obstacles","Attendre les instructions sans rien faire","Éteindre les lumières"],correct:1,expl:"Secure the Landing Zone est le point de départ de toute la préparation."},
     {q:"Où doit se trouver le Medical Log pendant le transfert ?",opts:["Il reste à bord","Il accompagne physiquement la victime","Il est transmis à l'oral seulement","Il n'est plus utile"],correct:1,expl:"Le Medical Log voyage toujours avec la victime."},

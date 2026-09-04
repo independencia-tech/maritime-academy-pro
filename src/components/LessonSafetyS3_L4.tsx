@@ -201,7 +201,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Do No Further Harm' dans cette leçon ?",opts:["Il faut soigner rapidement quoi qu'il en coûte","Éviter d'aggraver la blessure par un geste inapproprié, même bien intentionné","Il ne concerne que les brûlures","Il faut toujours faire le maximum de gestes possibles"],correct:1,expl:"Do No Further Harm résume l'objectif : stabiliser sans jamais aggraver, même par excès de zèle."},
     {q:"Une brûlure présente des cloques et une peau très douloureuse. De quel degré s'agit-il ?",opts:["1er degré","2e degré","3e degré","Aucun degré ne correspond"],correct:1,expl:"Les cloques et la douleur intense sont caractéristiques du 2e degré."},
@@ -273,7 +273,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Pendant combien de temps faut-il refroidir une brûlure à l'eau courante ?",opts:["2 minutes","20 minutes","2 heures","Jamais"],correct:1,expl:"20 minutes d'eau courante fraîche est la recommandation actuelle."},
     {q:"Que faire face à un vêtement collé à une brûlure ?",opts:["Le retirer rapidement","Ne jamais l'arracher, couper autour","Le tremper puis tirer fort","Le laisser tel quel sans y toucher, même autour"],correct:1,expl:"On coupe autour du vêtement collé, sans jamais l'arracher."},

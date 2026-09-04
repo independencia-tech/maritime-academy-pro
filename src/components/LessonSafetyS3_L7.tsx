@@ -207,7 +207,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'The Ship Never Prescribes. It Assesses, Reports and Executes' ?",opts:["Le navire choisit lui-même le traitement approprié","Le navire évalue, transmet l'information, puis exécute les instructions reçues, sans jamais décider seul du traitement","Il ne faut jamais contacter de médecin","Le navire n'a aucun rôle dans la prise en charge médicale"],correct:1,expl:"L'autorité médicale reste toujours au médecin distant ; le navire assess, reports puis executes."},
     {q:"Ce module enseigne-t-il des noms de médicaments et des dosages précis ?",opts:["Oui, un guide clinique complet","Non, uniquement des catégories et des principes de décision, jamais de dosage précis","Oui, mais uniquement pour les analgésiques","Non, il ne mentionne aucune catégorie non plus"],correct:1,expl:"MAP reste au niveau des catégories et de la procédure, jamais de la pharmacologie clinique détaillée."},
@@ -279,7 +279,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'The Ship Never Prescribes. It Assesses, Reports and Executes' ?",opts:["Le navire choisit le traitement seul","Le navire évalue, transmet, puis exécute les instructions reçues","Il ne faut jamais appeler de médecin","Le navire n'a aucun rôle médical"],correct:1,expl:"L'autorité médicale reste au médecin distant ; le navire assess, reports, executes."},
     {q:"Que faut-il préparer avant d'appeler le TMAS ?",opts:["Rien, le médecin posera les questions","SAMPLE, constantes horodatées, traitement déjà donné, position du navire","Uniquement le nom du patient","Uniquement l'heure de l'appel"],correct:1,expl:"La check-list Before Calling TMAS évite de perdre un temps précieux."},

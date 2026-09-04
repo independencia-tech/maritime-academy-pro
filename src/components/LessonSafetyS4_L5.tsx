@@ -196,7 +196,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'The Fire Doesn't Need to Be Out. It Just Needs to Stop There' ?",opts:["Il faut toujours éteindre complètement le feu avant d'agir sur autre chose","Sauver le navire ne dépend pas toujours de l'extinction totale, mais d'empêcher la propagation","Ce principe ne concerne que les feux électriques","Il ne faut jamais tenter de contenir un feu"],correct:1,expl:"L'objectif de cette leçon est d'empêcher la propagation, pas nécessairement d'éteindre immédiatement le feu."},
     {q:"Qu'est-ce que le boundary cooling ?",opts:["Attaquer directement les flammes avec de l'eau","Refroidir les cloisons et ponts adjacents pour empêcher la propagation par conduction","Éteindre un feu électrique avec du CO2","Ventiler un compartiment après extinction"],correct:1,expl:"Le boundary cooling refroidit les limites du compartiment, sans nécessairement attaquer le feu lui-même."},
@@ -268,7 +268,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'The Fire Doesn't Need to Be Out. It Just Needs to Stop There' ?",opts:["Il faut toujours éteindre complètement avant d'agir","Sauver le navire dépend d'empêcher la propagation, pas forcément de l'extinction totale","Cela ne concerne que les feux électriques","Il ne faut jamais contenir un feu"],correct:1,expl:"L'objectif est d'empêcher la propagation, pas nécessairement d'éteindre immédiatement."},
     {q:"Qu'est-ce que le boundary cooling ?",opts:["Attaquer les flammes directement","Refroidir les cloisons adjacentes pour empêcher la propagation par conduction","Éteindre avec un système fixe","Ventiler après extinction"],correct:1,expl:"Le boundary cooling refroidit les limites du compartiment."},

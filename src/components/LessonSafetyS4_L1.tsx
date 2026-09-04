@@ -206,7 +206,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'If You Can Smell It, It Has Already Started' ?",opts:["Il faut attendre de voir les flammes avant d'agir","Une odeur de brûlé, même faible, signifie qu'un processus de combustion est déjà en cours","L'odorat n'est pas fiable pour détecter un feu","Ce principe ne s'applique qu'aux feux électriques"],correct:1,expl:"Percevoir une odeur signifie que la combustion a déjà commencé, même sans flamme visible."},
     {q:"Qu'est-ce que la conduction dans la propagation de la chaleur ?",opts:["La chaleur qui se propage sans contact, à distance","La chaleur qui voyage à travers un matériau solide","L'air chaud qui monte et se déplace","Le contact direct entre une flamme et un matériau"],correct:1,expl:"La conduction transporte la chaleur à travers un matériau solide, comme une cloison qui devient chaude."},
@@ -278,7 +278,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'If You Can Smell It, It Has Already Started' ?",opts:["Il faut voir les flammes avant d'agir","Une odeur de brûlé signifie que la combustion a déjà commencé","L'odorat n'est pas fiable","Ça ne concerne que l'électricité"],correct:1,expl:"Percevoir une odeur signifie que la combustion a déjà commencé."},
     {q:"Pourquoi la fumée est-elle le premier danger d'un feu ?",opts:["Elle est juste inconfortable","Elle provoque perte de visibilité et désorientation en secondes, tuant souvent avant la flamme","Elle ralentit toujours le feu","Elle n'a aucun impact"],correct:1,expl:"La majorité des décès liés au feu résultent de la fumée, pas des brûlures."},

@@ -1754,6 +1754,32 @@ const COMPETENCIES_S2:any = {
   pt:["✔ Reconhecer o momento em que uma situação degradada se torna uma emergência real","✔ Escolher o sistema de socorro e o modo de ativação certos conforme a situação","✔ Preparar e manter o equipamento de socorro antes da emergência","✔ Executar corretamente os gestos de ativação sob pressão","✔ Aplicar uma mentalidade de segurança integrada (Recognize, Choose, Prepare, Activate, Learn)"],
 };
 
+// s3 (STCW First Aid) competencies list — third Safety module wired onto
+// Foundation Exams, batch 2 of the Safety wiring effort, validated
+// 2026-09-04. Themes: scene safety & primary survey (DRABC), CPR/AED,
+// bleeding & shock control, fractures & burns, secondary assessment &
+// monitoring, medical emergencies at sea, ship's medicine chest & radio
+// medical advice, MEDEVAC preparation & handover (L1-L8).
+const COMPETENCIES_S3:any = {
+  fr:["✔ Sécuriser une scène d'urgence et réaliser un bilan primaire structuré (DRABC)","✔ Pratiquer la RCP et utiliser un défibrillateur (DEA) en cas d'arrêt cardiaque","✔ Contrôler une hémorragie et reconnaître les signes de choc","✔ Immobiliser une fracture et traiter une brûlure selon son degré","✔ Réaliser un bilan secondaire et surveiller l'état d'un patient dans la durée","✔ Reconnaître et gérer les urgences médicales courantes à bord","✔ Utiliser la pharmacie de bord et solliciter un avis médical radio de manière structurée","✔ Préparer un blessé pour une évacuation médicale (MEDEVAC) et assurer une transmission claire"],
+  en:["✔ Secure an emergency scene and conduct a structured primary survey (DRABC)","✔ Perform CPR and use an AED in a cardiac arrest situation","✔ Control bleeding and recognize the signs of shock","✔ Immobilize a fracture and treat a burn according to its degree","✔ Conduct a secondary survey and monitor a patient's condition over time","✔ Recognize and manage common medical emergencies at sea","✔ Use the ship's medicine chest and request radio medical advice in a structured way","✔ Prepare a casualty for medical evacuation (MEDEVAC) and ensure a clear handover"],
+  es:["✔ Asegurar una escena de emergencia y realizar una valoración primaria estructurada (DRABC)","✔ Practicar la RCP y usar un desfibrilador (DEA) en caso de paro cardíaco","✔ Controlar una hemorragia y reconocer los signos de shock","✔ Inmovilizar una fractura y tratar una quemadura según su grado","✔ Realizar una valoración secundaria y monitorizar al paciente en el tiempo","✔ Reconocer y gestionar las emergencias médicas frecuentes a bordo","✔ Usar el botiquín del buque y solicitar asesoramiento médico por radio de forma estructurada","✔ Preparar a un herido para una evacuación médica (MEDEVAC) y asegurar una entrega clara"],
+  pt:["✔ Garantir a segurança de uma cena de emergência e realizar uma avaliação primária estruturada (DRABC)","✔ Praticar RCP e usar um desfibrilhador (DEA) em caso de paragem cardíaca","✔ Controlar uma hemorragia e reconhecer os sinais de choque","✔ Imobilizar uma fratura e tratar uma queimadura conforme o seu grau","✔ Realizar uma avaliação secundária e monitorizar o estado do doente ao longo do tempo","✔ Reconhecer e gerir as emergências médicas comuns no mar","✔ Usar a farmácia de bordo e solicitar aconselhamento médico por rádio de forma estruturada","✔ Preparar um sinistrado para uma evacuação médica (MEDEVAC) e garantir uma transmissão clara"],
+};
+
+// s4 (Firefighting) competencies list — fourth Safety module wired onto
+// Foundation Exams in the same batch, validated 2026-09-04. Themes: fire
+// behaviour & early recognition, choosing the right firefighting strategy,
+// portable extinguishers, fixed firefighting systems, fire containment &
+// boundary cooling, PPE/SCBA firefighter survival, fire command/team
+// coordination & damage control (L1-L7).
+const COMPETENCIES_S4:any = {
+  fr:["✔ Reconnaître le comportement du feu et détecter un début d'incendie précocement","✔ Choisir la stratégie de lutte contre l'incendie adaptée à la situation","✔ Utiliser correctement les extincteurs portatifs selon la classe de feu","✔ Mettre en œuvre les systèmes fixes de lutte contre l'incendie","✔ Contenir un incendie et protéger les limites (boundary cooling)","✔ Utiliser correctement les EPI et l'ARI pour assurer sa propre survie","✔ Coordonner une équipe incendie et le contrôle des avaries en situation de commandement"],
+  en:["✔ Recognize fire behaviour and detect an incipient fire early","✔ Choose the firefighting strategy appropriate to the situation","✔ Correctly use portable extinguishers according to fire class","✔ Operate fixed firefighting systems","✔ Contain a fire and protect its boundaries (boundary cooling)","✔ Correctly use PPE and SCBA to ensure personal survival","✔ Coordinate a fire team and damage control in a command role"],
+  es:["✔ Reconocer el comportamiento del fuego y detectar un incendio incipiente a tiempo","✔ Elegir la estrategia de lucha contra incendios adecuada a la situación","✔ Usar correctamente los extintores portátiles según la clase de fuego","✔ Operar los sistemas fijos de lucha contra incendios","✔ Contener un incendio y proteger sus límites (boundary cooling)","✔ Usar correctamente el EPI y el ERA para garantizar la propia supervivencia","✔ Coordinar un equipo de incendios y el control de averías en un rol de mando"],
+  pt:["✔ Reconhecer o comportamento do fogo e detetar um incêndio incipiente cedo","✔ Escolher a estratégia de combate a incêndio adequada à situação","✔ Usar corretamente os extintores portáteis conforme a classe de fogo","✔ Operar os sistemas fixos de combate a incêndio","✔ Conter um incêndio e proteger os seus limites (boundary cooling)","✔ Usar corretamente o EPI e o ARA para garantir a própria sobrevivência","✔ Coordenar uma equipa de incêndio e o controlo de avarias num papel de comando"],
+};
+
 // ── Shared exam engine wiring (2026-09-02 refactor) ─────────────────────
 // Extracted from NavigationLessonsPage (d1's original, one-off implementation)
 // into a moduleId-parametrized hook + presentational components so a second
@@ -3024,7 +3050,7 @@ function S2LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, 
     </div>
   );
 }
-function S3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function S3LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -3037,6 +3063,7 @@ function S3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "s3", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s3");
@@ -3050,10 +3077,15 @@ function S3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_S3}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -3077,7 +3109,7 @@ function S3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
     </div>
   );
 }
-function S4LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function S4LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -3090,6 +3122,7 @@ function S4LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "s4", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s4");
@@ -3103,10 +3136,15 @@ function S4LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_S4}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -4387,6 +4425,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    currentRankId={profile.who}
+    targetRankId={profile.target}
     autoPick={pendingLessonPick}
     onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
@@ -4478,6 +4518,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    currentRankId={profile.who}
+    targetRankId={profile.target}
     autoPick={pendingLessonPick}
     onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {

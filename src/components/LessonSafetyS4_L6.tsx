@@ -205,7 +205,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'The objective is not to defeat the fire. The objective is to ensure every firefighter returns alive' ?",opts:["Éteindre le feu passe toujours avant la sécurité de l'équipe","Le feu peut être maîtrisé plus tard, mais un pompier perdu ne revient jamais","Ce principe ne concerne que les feux électriques","Il ne faut jamais entrer dans un feu"],correct:1,expl:"L'objectif central de cette leçon est la survie de l'intervenant, pas la victoire sur le feu à tout prix."},
     {q:"Pourquoi ne pas présenter les EPI comme un simple catalogue d'équipements ?",opts:["Parce que les EPI ne sont pas importants","Parce que chaque élément protège contre un risque précis et sert un seul objectif : la survie","Parce que MAP ne traite jamais l'équipement","Parce que les EPI changent trop souvent"],correct:1,expl:"Le matériel n'est enseigné que parce qu'il permet de survivre, jamais pour lui-même."},
@@ -277,7 +277,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'The objective is not to defeat the fire. The objective is to ensure every firefighter returns alive' ?",opts:["Éteindre le feu passe toujours en premier","Le feu peut être maîtrisé plus tard, un pompier perdu ne revient jamais","Cela ne concerne que l'électricité","Il ne faut jamais entrer dans un feu"],correct:1,expl:"L'objectif central est la survie de l'intervenant."},
     {q:"Qu'est-ce que le buddy check ?",opts:["Une vérification optionnelle","Chaque membre du binôme vérifie l'équipement de l'autre avant l'entrée","Réservé aux officiers","Fait après la sortie"],correct:1,expl:"Systématique et non négociable avant toute entrée."},

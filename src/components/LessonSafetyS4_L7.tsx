@@ -201,7 +201,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Equipment Controls Fire. Leadership Controls the Outcome' ?",opts:["Le matériel seul suffit toujours à garantir une bonne issue","Le matériel agit sur le feu, mais c'est le commandement qui détermine si l'issue globale est bonne ou mauvaise","Le commandement n'a aucune influence réelle sur l'issue","Ce principe ne concerne que les feux électriques"],correct:1,expl:"Même avec le meilleur équipement, une mauvaise coordination peut transformer un incident maîtrisé en catastrophe."},
     {q:"Cette leçon commence-t-elle au moment de la découverte du feu ?",opts:["Oui, elle couvre toute la chronologie depuis la découverte","Non, elle commence quand l'urgence est déjà déclarée et les équipes déjà mobilisées","Oui, mais uniquement pour les feux électriques","Non, elle ne couvre aucune étape de l'intervention"],correct:1,expl:"La découverte, l'alerte et le choix des EPI selon le risque seront couverts par le futur module S6."},
@@ -273,7 +273,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'Equipment Controls Fire. Leadership Controls the Outcome' ?",opts:["Le matériel seul garantit toujours l'issue","Le matériel agit sur le feu, mais le commandement détermine l'issue globale","Le commandement n'a aucune influence","Cela ne concerne que l'électricité"],correct:1,expl:"Une mauvaise coordination peut transformer un incident maîtrisé en catastrophe."},
     {q:"Pourquoi la réserve doit-elle être prête avant l'attaque ?",opts:["Ce n'est pas nécessaire","Sa présence permet des risques calculés, sachant qu'un secours immédiat existe","Elle remplace le soutien","Elle n'a aucune utilité"],correct:1,expl:"Une réserve assemblée après un problème arrive toujours trop tard."},

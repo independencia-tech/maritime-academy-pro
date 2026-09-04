@@ -200,7 +200,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'The Environment Is Still Attacking. Stop It First' ?",opts:["L'environnement n'a aucune influence sur la victime","Tant que la victime reste exposée à la chaleur, au froid ou à l'eau, la cause continue d'agir : la retirer est toujours le premier geste","Il faut toujours appeler les secours avant d'agir","Ce principe ne concerne que la noyade"],correct:1,expl:"Contrairement à un traumatisme ponctuel, ces urgences ont une cause qui continue d'agir tant que l'exposition persiste."},
     {q:"Quels signes évoquent un coup de chaleur plutôt qu'un simple épuisement par la chaleur ?",opts:["Transpiration abondante et soif uniquement","Confusion, agitation, désorientation, convulsions ou inconscience","Une légère fatigue en fin de quart","Aucun signe ne permet de les distinguer"],correct:1,expl:"Les troubles neurologiques signent le coup de chaleur, une urgence vitale."},
@@ -272,7 +272,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'The Environment Is Still Attacking. Stop It First' ?",opts:["Il faut appeler les secours d'abord","Retirer la victime de l'environnement en cause est toujours le premier geste","Ce principe ne concerne que la chaleur","L'environnement n'a pas d'influence"],correct:1,expl:"La cause continue d'agir tant que l'exposition persiste : la retirer prime sur tout autre geste."},
     {q:"Confusion et désorientation en pleine chaleur évoquent :",opts:["Une simple fatigue","Un coup de chaleur, urgence vitale","Une déshydratation légère sans gravité","Rien de particulier"],correct:1,expl:"Ces signes neurologiques signent un coup de chaleur, à traiter en urgence."},

@@ -230,7 +230,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'Fight the Fire. Not Your Instinct' ?",opts:["L'instinct est toujours le meilleur guide en urgence","La décision doit suivre une méthode structurée, pas un réflexe automatique comme prendre de l'eau par défaut","Il ne faut jamais agir vite face à un feu","Ce principe ne concerne que les feux électriques"],correct:1,expl:"L'instinct pousse souvent vers l'eau, alors qu'une méthode structurée évite les erreurs graves."},
     {q:"Que signifie la première lettre de STOP dans la méthode STOP-THINK-ACT ?",opts:["Éteindre le feu immédiatement","S'assurer d'être en sécurité avant tout autre geste","Signaler l'incendie","Choisir un agent extincteur"],correct:1,expl:"STOP consiste à vérifier sa propre sécurité avant toute action."},
@@ -302,7 +302,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'Fight the Fire. Not Your Instinct' ?",opts:["Suivre toujours son instinct","Suivre une méthode structurée plutôt qu'un réflexe automatique","Ne jamais agir vite","Ça ne concerne que l'électricité"],correct:1,expl:"L'instinct pousse souvent vers l'eau, une méthode structurée évite les erreurs graves."},
     {q:"Face à un feu près d'un tableau électrique, que faire en priorité ?",opts:["Utiliser de l'eau","Isoler le courant avant de choisir un agent","Attendre","Ouvrir les issues"],correct:1,expl:"Isoler le courant transforme le feu électrique en feu classique plus simple à traiter."},

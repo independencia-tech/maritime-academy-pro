@@ -199,7 +199,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie le principe 'A Portable Extinguisher Is Your First Response, Not Your Last Hope' ?",opts:["Il faut toujours vider l'extincteur avant d'envisager autre chose","L'extincteur portatif est le premier geste possible, jamais la seule solution disponible","Un extincteur suffit toujours à éteindre n'importe quel feu","Il ne faut jamais utiliser d'extincteur portatif"],correct:1,expl:"L'extincteur est un premier moyen d'action, pas une garantie de résoudre toute situation."},
     {q:"Que faut-il vérifier avant de saisir un extincteur en urgence ?",opts:["Rien, l'urgence prime sur tout","Manomètre, goupille/scellé, tuyau, date de contrôle","Uniquement son poids","Uniquement sa couleur"],correct:1,expl:"Ces vérifications rapides garantissent que l'appareil fonctionnera réellement au moment critique."},
@@ -271,7 +271,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie 'A Portable Extinguisher Is Your First Response, Not Your Last Hope' ?",opts:["Il faut toujours le vider avant d'agir autrement","C'est le premier geste possible, jamais la seule solution","Un extincteur éteint toujours n'importe quel feu","Il ne faut jamais l'utiliser"],correct:1,expl:"L'extincteur est un premier moyen d'action, pas une garantie universelle."},
     {q:"Dans STOP-ASSESS-ACT, quand utilise-t-on la technique PASS ?",opts:["Avant STOP","Seulement après STOP et ASSESS","PASS remplace STOP-ASSESS-ACT","Peu importe l'ordre"],correct:1,expl:"PASS est l'exécution, après avoir vérifié sa sécurité et évalué la situation."},

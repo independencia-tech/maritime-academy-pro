@@ -205,7 +205,7 @@ function AccidentCase({ lang }) {
 }
 
 // BANK - 15 QUESTIONS
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Pourquoi faut-il se protéger (gants) avant de traiter une hémorragie ?",opts:["Ce n'est pas nécessaire","Un sauveteur exposé au sang sans protection devient une seconde victime","Seulement pour rester propre","Uniquement si la victime le demande"],correct:1,expl:"Every casualty has two patients : l'exposition au sang non protégée transforme le sauveteur en victime."},
     {q:"Une hémorragie jaillit en pulsations rouge vif au rythme du cœur. De quel type s'agit-il ?",opts:["Capillaire","Veineuse","Artérielle","Aucune de ces réponses"],correct:2,expl:"Le jaillissement pulsé et la couleur rouge vif sont caractéristiques d'une hémorragie artérielle."},
@@ -277,7 +277,7 @@ const BANK = {
 };
 
 // QUIZ - FINAL (5 QUESTIONS)
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quel est le geste n#1 face à une hémorragie sévère ?",opts:["Élever le membre","Pression directe sur la plaie","Point de pression indirect","Attendre les secours"],correct:1,expl:"La pression directe reste le geste prioritaire recommandé."},
     {q:"Que faire si le pansement de pression est imbibé ?",opts:["Le retirer et en poser un nouveau","Ajouter une couche par-dessus sans le retirer","Arrêter la pression","Élever le membre à la place"],correct:1,expl:"On ajoute toujours par-dessus, jamais on ne retire un pansement déjà en place."},
