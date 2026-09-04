@@ -1615,6 +1615,8 @@ const EXAM_RESULT_T:any = {
     remedialNoQuestions:"Aucune question à revoir n'a pu être retrouvée.",
     remedialPassed:"Rattrapage réussi ✓",
     remedialFailed:"Rattrapage non réussi",
+    signature:"MAP — powered by Independencia",
+    disclaimer:"Ce document n'est pas un Certificat de Compétence (Certificate of Competency) ni un Certificat d'Aptitude (Certificate of Proficiency) au sens de la convention STCW.",
   },
   en:{
     competenciesHeader:"COMPETENCIES ACQUIRED",
@@ -1628,6 +1630,8 @@ const EXAM_RESULT_T:any = {
     remedialNoQuestions:"Couldn't retrieve the questions to review.",
     remedialPassed:"Remedial passed ✓",
     remedialFailed:"Remedial not passed",
+    signature:"MAP — powered by Independencia",
+    disclaimer:"This is not an STCW Certificate of Competency or Certificate of Proficiency.",
   },
   es:{
     competenciesHeader:"COMPETENCIAS ADQUIRIDAS",
@@ -1641,6 +1645,8 @@ const EXAM_RESULT_T:any = {
     remedialNoQuestions:"No se pudieron recuperar las preguntas a repasar.",
     remedialPassed:"Recuperación aprobada ✓",
     remedialFailed:"Recuperación no aprobada",
+    signature:"MAP — powered by Independencia",
+    disclaimer:"Este documento no es un Certificado de Competencia (Certificate of Competency) ni un Certificado de Aptitud (Certificate of Proficiency) en el sentido del convenio STCW.",
   },
   pt:{
     competenciesHeader:"COMPETÊNCIAS ADQUIRIDAS",
@@ -1654,6 +1660,8 @@ const EXAM_RESULT_T:any = {
     remedialNoQuestions:"Não foi possível recuperar as perguntas a rever.",
     remedialPassed:"Recuperação aprovada ✓",
     remedialFailed:"Recuperação não aprovada",
+    signature:"MAP — powered by Independencia",
+    disclaimer:"Este documento não é um Certificado de Competência (Certificate of Competency) nem um Certificado de Aptidão (Certificate of Proficiency) no âmbito da convenção STCW.",
   },
 };
 
@@ -2009,6 +2017,15 @@ function ExamResultScreen({ exam, lang, title, backLabel, onPick, competencies }
         <button onClick={exam.backToList} style={{width:"100%",padding:"14px 0",border:"none",borderRadius:14,background:"linear-gradient(135deg,#1a6fd4,#c9922a)",fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,color:"#fff",cursor:"pointer"}}>
           {ET.back}
         </button>
+
+        <div style={{marginTop:20,textAlign:"center"}}>
+          <div style={{fontSize:10,letterSpacing:2,color:"rgba(240,244,255,0.35)",fontFamily:"'Cinzel',serif"}}>
+            {RT.signature}
+          </div>
+          <div style={{fontSize:9,color:"rgba(240,244,255,0.25)",lineHeight:1.5,marginTop:6,maxWidth:340,marginLeft:"auto",marginRight:"auto"}}>
+            {RT.disclaimer}
+          </div>
+        </div>
       </div>
     </div>
   );
