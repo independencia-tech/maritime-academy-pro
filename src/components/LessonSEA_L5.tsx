@@ -498,7 +498,7 @@ function FactorsSVG({ lang }) {
 }
 
 function Exercise1({ lang, t }) {
-  const [ans,setAns]=useState({q1:"",q2:"",q3:"",q4:"",q5:""});
+  const [ans,setAns]=useState({q1:"",q2:"",q3:"",q4:"",q5:"",q6:""});
   const [showC,setShowC]=useState(false);
   const lbl=(fr,en,es,pt)=>({fr,en,es,pt}[lang]||fr);
 
@@ -509,6 +509,7 @@ function Exercise1({ lang, t }) {
       {id:"q3",q:"Quel est le GM minimum impose par le IS Code ?\n(Repondre en metres)"},
       {id:"q4",q:"Qu'est-ce que l'effet de surface libre et comment le reduire ?\n(Repondre en 1 phrase)"},
       {id:"q5",q:"L'angle de chavirement doit etre au minimum de combien de degres apres le max GZ selon le IS Code ?\n(Repondre en chiffre)"},
+      {id:"q6",q:"Un navire a un tirant d'eau avant de 6,5 m et un tirant d'eau arriere de 7,2 m.\nCalculez l'assiette. Est-elle positive ou negative ?"},
     ],
     en:[
       {id:"q1",q:"A vessel has KG = 7.2 m and KM = 8.5 m.\nCalculate GM. Is the vessel stable?"},
@@ -516,6 +517,7 @@ function Exercise1({ lang, t }) {
       {id:"q3",q:"What is the minimum GM imposed by the IS Code?\n(Answer in metres)"},
       {id:"q4",q:"What is the free surface effect and how to reduce it?\n(Answer in 1 sentence)"},
       {id:"q5",q:"The angle of vanishing stability must be at least how many degrees past GZ max per the IS Code?\n(Answer in number)"},
+      {id:"q6",q:"A vessel has a forward draught of 6.5 m and an aft draught of 7.2 m.\nCalculate the trim. Is it positive or negative?"},
     ],
     es:[
       {id:"q1",q:"Un buque tiene KG = 7,2 m y KM = 8,5 m.\nCalcule GM. ?El buque es estable?"},
@@ -523,6 +525,7 @@ function Exercise1({ lang, t }) {
       {id:"q3",q:"?Cual es el GM minimo impuesto por el IS Code?\n(Responder en metros)"},
       {id:"q4",q:"?Que es el efecto de superficie libre y como reducirlo?\n(Responder en 1 frase)"},
       {id:"q5",q:"?El angulo de zozobra debe ser al menos cuantos grados despues del max GZ segun el IS Code?\n(Responder en numero)"},
+      {id:"q6",q:"Un buque tiene un calado a proa de 6,5 m y un calado a popa de 7,2 m.\nCalcule el asiento. ?Es positivo o negativo?"},
     ],
     pt:[
       {id:"q1",q:"Um navio tem KG = 7,2 m e KM = 8,5 m.\nCalcule GM. O navio e estavel?"},
@@ -530,6 +533,7 @@ function Exercise1({ lang, t }) {
       {id:"q3",q:"Qual e o GM minimo imposto pelo IS Code?\n(Responder em metros)"},
       {id:"q4",q:"O que e o efeito de superficie livre e como reduzi-lo?\n(Responder em 1 frase)"},
       {id:"q5",q:"O angulo de tombamento deve ser de pelo menos quantos graus apos o max GZ segundo o IS Code?\n(Responder em numero)"},
+      {id:"q6",q:"Um navio tem um calado a vante de 6,5 m e um calado a re de 7,2 m.\nCalcule o assentamento. E positivo ou negativo?"},
     ],
   };
 
@@ -540,21 +544,22 @@ function Exercise1({ lang, t }) {
     if(id==="q3") return v.includes("015")||v.includes("0.15")||v.includes("015m");
     if(id==="q4") return v.includes("liquide")||v.includes("liquid")||v.includes("citerne")||v.includes("tank")||v.includes("tanque")||v.includes("remplir")||v.includes("fill");
     if(id==="q5") return v==="25"||v.includes("25");
+    if(id==="q6") return v.includes("07")&&v.includes("posit");
     return false;
   };
 
   const corrKey={
-    fr:{q1:"GM = 1,3 m — Stable (G sous M)",q2:"GM diminue (G monte)",q3:"0,15 m",q4:"Liquide dans citerne partielle -> G virtuel monte. Solution : remplir/vider completement",q5:"25 degres"},
-    en:{q1:"GM = 1.3 m — Stable (G below M)",q2:"GM falls (G rises)",q3:"0.15 m",q4:"Liquid in part-full tank -> virtual G rises. Solution: fill/empty completely",q5:"25 degrees"},
-    es:{q1:"GM = 1,3 m — Estable (G bajo M)",q2:"GM baja (G sube)",q3:"0,15 m",q4:"Liquido en tanque parcial -> G virtual sube. Solucion: llenar/vaciar completamente",q5:"25 grados"},
-    pt:{q1:"GM = 1,3 m — Estavel (G abaixo de M)",q2:"GM desce (G sobe)",q3:"0,15 m",q4:"Liquido em tanque parcial -> G virtual sobe. Solucao: encher/esvaziar completamente",q5:"25 graus"},
+    fr:{q1:"GM = 1,3 m — Stable (G sous M)",q2:"GM diminue (G monte)",q3:"0,15 m",q4:"Liquide dans citerne partielle -> G virtuel monte. Solution : remplir/vider completement",q5:"25 degres",q6:"0,7 m — Assiette positive (poupe enfoncee)"},
+    en:{q1:"GM = 1.3 m — Stable (G below M)",q2:"GM falls (G rises)",q3:"0.15 m",q4:"Liquid in part-full tank -> virtual G rises. Solution: fill/empty completely",q5:"25 degrees",q6:"0.7 m — Positive trim (stern deeper)"},
+    es:{q1:"GM = 1,3 m — Estable (G bajo M)",q2:"GM baja (G sube)",q3:"0,15 m",q4:"Liquido en tanque parcial -> G virtual sube. Solucion: llenar/vaciar completamente",q5:"25 grados",q6:"0,7 m — Asiento positivo (popa mas hundida)"},
+    pt:{q1:"GM = 1,3 m — Estavel (G abaixo de M)",q2:"GM desce (G sobe)",q3:"0,15 m",q4:"Liquido em tanque parcial -> G virtual sobe. Solucao: encher/esvaziar completamente",q5:"25 graus",q6:"0,7 m — Assentamento positivo (popa mais afundada)"},
   };
 
   const expl={
-    fr:"OK Q1: GM = KM - KG = 8,5 - 7,2 = 1,3 m. GM positif = G sous M = navire STABLE. Valeur correcte (ni trop raide > 2m, ni trop mou < 0,15m).\nOK Q2: Charger en hauteur eleve G -> GM = KM - KG diminue -> navire devient plus mou ou instable.\nOK Q3: IS Code : GM minimum = 0,15 m dans toutes les conditions de chargement.\nOK Q4: Liquide partiel dans citerne se deplace a la gite -> G virtuel monte de GG' = i x densL / D. Reduire : remplir ou vider completement les citernes.\nOK Q5: IS Code : angle de chavirement >= 25 degres apres le maximum GZ.",
-    en:"OK Q1: GM = KM - KG = 8.5 - 7.2 = 1.3 m. Positive GM = G below M = STABLE vessel. Acceptable value (not too stiff > 2m, not too tender < 0.15m).\nOK Q2: Loading high raises G -> GM = KM - KG falls -> vessel becomes more tender or unstable.\nOK Q3: IS Code: minimum GM = 0.15 m in all loading conditions.\nOK Q4: Liquid in part-full tank shifts when heeling -> virtual G rises by GG' = i x densL / D. Reduce: fill or empty tanks completely.\nOK Q5: IS Code: angle of vanishing stability >= 25 degrees past GZ maximum.",
-    es:"OK Q1: GM = KM - KG = 8,5 - 7,2 = 1,3 m. GM positivo = G bajo M = buque ESTABLE. Valor correcto (ni muy rigido > 2m, ni muy blando < 0,15m).\nOK Q2: Cargar en altura eleva G -> GM = KM - KG disminuye -> buque se vuelve blando o inestable.\nOK Q3: IS Code: GM minimo = 0,15 m en todas las condiciones de carga.\nOK Q4: Liquido parcial en tanque se desplaza al escorar -> G virtual sube GG' = i x densL / D. Reducir: llenar o vaciar completamente los tanques.\nOK Q5: IS Code: angulo de zozobra >= 25 grados tras el maximo GZ.",
-    pt:"OK Q1: GM = KM - KG = 8,5 - 7,2 = 1,3 m. GM positivo = G abaixo de M = navio ESTAVEL. Valor correto (nem muito rigido > 2m, nem muito mole < 0,15m).\nOK Q2: Carregar em altura eleva G -> GM = KM - KG desce -> navio fica mais mole ou instavel.\nOK Q3: IS Code: GM minimo = 0,15 m em todas as condicoes de carga.\nOK Q4: Liquido parcial em tanque desloca-se ao adornar -> G virtual sobe GG' = i x densL / D. Reduzir: encher ou esvaziar completamente os tanques.\nOK Q5: IS Code: angulo de tombamento >= 25 graus apos o maximo GZ.",
+    fr:"OK Q1: GM = KM - KG = 8,5 - 7,2 = 1,3 m. GM positif = G sous M = navire STABLE. Valeur correcte (ni trop raide > 2m, ni trop mou < 0,15m).\nOK Q2: Charger en hauteur eleve G -> GM = KM - KG diminue -> navire devient plus mou ou instable.\nOK Q3: IS Code : GM minimum = 0,15 m dans toutes les conditions de chargement.\nOK Q4: Liquide partiel dans citerne se deplace a la gite -> G virtuel monte de GG' = i x densL / D. Reduire : remplir ou vider completement les citernes.\nOK Q5: IS Code : angle de chavirement >= 25 degres apres le maximum GZ.\nOK Q6: Assiette = Tr arriere - Tr avant = 7,2 - 6,5 = 0,7 m. Assiette positive (poupe plus enfoncee que la proue) = normale, ameliore l'efficacite de l'helice et du gouvernail.",
+    en:"OK Q1: GM = KM - KG = 8.5 - 7.2 = 1.3 m. Positive GM = G below M = STABLE vessel. Acceptable value (not too stiff > 2m, not too tender < 0.15m).\nOK Q2: Loading high raises G -> GM = KM - KG falls -> vessel becomes more tender or unstable.\nOK Q3: IS Code: minimum GM = 0.15 m in all loading conditions.\nOK Q4: Liquid in part-full tank shifts when heeling -> virtual G rises by GG' = i x densL / D. Reduce: fill or empty tanks completely.\nOK Q5: IS Code: angle of vanishing stability >= 25 degrees past GZ maximum.\nOK Q6: Trim = Aft draught - Fwd draught = 7.2 - 6.5 = 0.7 m. Positive trim (stern deeper than bow) = normal, improves propeller and rudder efficiency.",
+    es:"OK Q1: GM = KM - KG = 8,5 - 7,2 = 1,3 m. GM positivo = G bajo M = buque ESTABLE. Valor correcto (ni muy rigido > 2m, ni muy blando < 0,15m).\nOK Q2: Cargar en altura eleva G -> GM = KM - KG disminuye -> buque se vuelve blando o inestable.\nOK Q3: IS Code: GM minimo = 0,15 m en todas las condiciones de carga.\nOK Q4: Liquido parcial en tanque se desplaza al escorar -> G virtual sube GG' = i x densL / D. Reducir: llenar o vaciar completamente los tanques.\nOK Q5: IS Code: angulo de zozobra >= 25 grados tras el maximo GZ.\nOK Q6: Asiento = Calado popa - Calado proa = 7,2 - 6,5 = 0,7 m. Asiento positivo (popa mas hundida que proa) = normal, mejora la eficiencia de la helice y el timon.",
+    pt:"OK Q1: GM = KM - KG = 8,5 - 7,2 = 1,3 m. GM positivo = G abaixo de M = navio ESTAVEL. Valor correto (nem muito rigido > 2m, nem muito mole < 0,15m).\nOK Q2: Carregar em altura eleva G -> GM = KM - KG desce -> navio fica mais mole ou instavel.\nOK Q3: IS Code: GM minimo = 0,15 m em todas as condicoes de carga.\nOK Q4: Liquido parcial em tanque desloca-se ao adornar -> G virtual sobe GG' = i x densL / D. Reduzir: encher ou esvaziar completamente os tanques.\nOK Q5: IS Code: angulo de tombamento >= 25 graus apos o maximo GZ.\nOK Q6: Assentamento = Calado re - Calado vante = 7,2 - 6,5 = 0,7 m. Assentamento positivo (popa mais afundada que a proa) = normal, melhora a eficiencia da helice e do leme.",
   };
 
   const list=qs[lang]||qs.fr;
@@ -565,10 +570,10 @@ function Exercise1({ lang, t }) {
       <div style={{padding:"10px 14px",borderRadius:13,marginBottom:14,
         background:`${C.meta}08`,border:`1px solid ${C.meta}33`,
         fontSize:11,color:C.meta,lineHeight:1.7,fontFamily:"Courier New"}}>
-        {lbl("Rappels: GM = KM-KG | GM min reglementaire = 0,15m | Chargement haut -> G monte | Surface libre -> G virtuel monte | Angle chavirement >= 25 apres max",
-          "Key: GM = KM-KG | Regulatory min GM = 0.15m | High loading -> G rises | Free surface -> virtual G rises | Vanishing angle >= 25 past max",
-          "Clave: GM = KM-KG | GM min reglamentario = 0,15m | Carga alta -> G sube | Superficie libre -> G virtual sube | Angulo zozobra >= 25 tras max",
-          "Chave: GM = KM-KG | GM min regulamentar = 0,15m | Carga alta -> G sobe | Superficie livre -> G virtual sobe | Angulo tombamento >= 25 apos max")}
+        {lbl("Rappels: GM = KM-KG | GM min reglementaire = 0,15m | Chargement haut -> G monte | Surface libre -> G virtuel monte | Angle chavirement >= 25 apres max | Assiette = Tr AR - Tr AV",
+          "Key: GM = KM-KG | Regulatory min GM = 0.15m | High loading -> G rises | Free surface -> virtual G rises | Vanishing angle >= 25 past max | Trim = Aft draught - Fwd draught",
+          "Clave: GM = KM-KG | GM min reglamentario = 0,15m | Carga alta -> G sube | Superficie libre -> G virtual sube | Angulo zozobra >= 25 tras max | Asiento = Calado popa - Calado proa",
+          "Chave: GM = KM-KG | GM min regulamentar = 0,15m | Carga alta -> G sobe | Superficie livre -> G virtual sobe | Angulo tombamento >= 25 apos max | Assentamento = Calado re - Calado vante")}
       </div>
       {list.map((q,i)=>(
         <div key={q.id} style={{marginBottom:14}}>

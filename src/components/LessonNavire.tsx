@@ -233,6 +233,7 @@ export const QUIZ = {
     {q:"Que signifie une hauteur métacentrique GM négative ?",opts:["Navire trop chargé","Navire trop léger","Risque de chavirement — M est en dessous de G","Franc-bord insuffisant"],correct:2,expl:"GM = KM - KG. Si GM < 0, M est en dessous de G. Pas de moment de rappel → risque de chavirement. GM minimum réglementaire = 0,15m."},
     {q:"Quel est le rôle principal du Second Capitaine (Chief Mate) ?",opts:["Commander le navire","Responsable cargo, stabilité et sécurité","Gérer le département machine","Gérer les communications radio"],correct:1,expl:"Le Second Capitaine est responsable du cargo, des calculs de stabilité, du chargement et est Safety Officer. Il commande en l'absence du capitaine."},
     {q:"Selon SOLAS, le compartimentage consiste à :",opts:["Décorer l'intérieur du navire","Diviser le navire en compartiments étanches pour limiter l'envahissement","Organiser les cabines de l'équipage","Classer les marchandises dangereuses"],correct:1,expl:"Compartimentage = division du navire en compartiments étanches par des cloisons étanches. SOLAS impose que le navire reste à flot avec 1, 2 ou 3 compartiments envahis selon le type. Titanic = conçu pour 4 → 5 ouverts → naufrage."},
+    {q:"Que représente le port en lourd (DWT) d'un navire ?",opts:["Le poids du navire vide","Déplacement moins Light ship : la capacité totale en cargaison, combustible, eau, approvisionnements et équipage","La vitesse maximale du navire","Le volume total des cales"],correct:1,expl:"DWT = Déplacement - Light ship. C'est la capacité totale de charge utile du navire (cargaison + combustible + eau douce + approvisionnements + équipage + ballast), distincte du Light ship qui est le poids fixe du navire vide."},
   ],
   en:[
     {q:"You see a RED light at night on your right (starboard). What does this mean?",opts:["The vessel comes from your right and has priority","The vessel is on your left — its port side faces you","The vessel is in distress","The vessel is going astern"],correct:1,expl:"Red light = PORT light. If you see a vessel's red light on your starboard, its port side faces you → the vessel is to your left."},
@@ -240,6 +241,7 @@ export const QUIZ = {
     {q:"What does a negative metacentric height GM mean?",opts:["Vessel is overloaded","Vessel is too light","Capsizing risk — M is below G","Insufficient freeboard"],correct:2,expl:"GM = KM - KG. If GM < 0, M is below G. No righting moment → capsizing risk. Minimum GM = 0.15m."},
     {q:"What is the main role of the Chief Mate?",opts:["Command the vessel","Responsible for cargo, stability and safety","Manage engine department","Manage radio communications"],correct:1,expl:"The Chief Mate is responsible for cargo, stability calculations, loading operations and is Safety Officer. Takes command in the Captain's absence."},
     {q:"According to SOLAS, compartmentalization means:",opts:["Decorating the vessel interior","Dividing the vessel into watertight compartments to limit flooding","Organizing crew cabins","Classifying dangerous goods"],correct:1,expl:"Compartmentalization = dividing the vessel into watertight compartments by watertight bulkheads. SOLAS requires the vessel to float with 1-3 compartments flooded. Titanic: designed for 4 → 5 opened → sank."},
+    {q:"What does a vessel's deadweight (DWT) represent?",opts:["The weight of the empty vessel","Displacement minus Light ship: total capacity for cargo, fuel, water, stores and crew","The vessel's maximum speed","The total hold volume"],correct:1,expl:"DWT = Displacement - Light ship. It is the vessel's total payload capacity (cargo + fuel + fresh water + stores + crew + ballast), distinct from Light ship, the fixed weight of the empty vessel."},
   ],
   es:[
     {q:"Ves una luz ROJA de noche a tu derecha (estribor). ¿Qué significa?",opts:["El buque viene de tu derecha y tiene prioridad","El buque está a tu izquierda — su babor te da la cara","El buque está en peligro","El buque va hacia atrás"],correct:1,expl:"Luz roja = luz de BABOR. Si ves la luz roja de un buque a tu estribor, su babor está frente a ti → el buque está a tu izquierda."},
@@ -247,6 +249,7 @@ export const QUIZ = {
     {q:"¿Qué significa una altura metacéntrica GM negativa?",opts:["Buque sobrecargado","Buque demasiado ligero","Riesgo de zozobra — M por debajo de G","Franco bordo insuficiente"],correct:2,expl:"GM = KM - KG. Si GM < 0, M está por debajo de G. Sin momento adrizante → riesgo de zozobra. GM mínimo = 0,15m."},
     {q:"¿Cuál es el papel principal del Primer Oficial (Chief Mate)?",opts:["Comandar el buque","Responsable de carga, estabilidad y seguridad","Gestionar el departamento de máquinas","Gestionar las comunicaciones"],correct:1,expl:"El Primer Oficial es responsable de la carga, cálculos de estabilidad y es el Safety Officer. Asume el mando en ausencia del capitán."},
     {q:"Según SOLAS, el compartimentado consiste en:",opts:["Decorar el interior del buque","Dividir el buque en compartimentos estancos para limitar la inundación","Organizar las cabinas de la tripulación","Clasificar las mercancías peligrosas"],correct:1,expl:"Compartimentado = división del buque en compartimentos estancos por mamparos estancos. SOLAS exige que el buque permanezca a flote con 1-3 compartimentos inundados. Titanic: diseñado para 4 → 5 abiertos → hundimiento."},
+    {q:"¿Qué representa el porte en lastre (DWT) de un buque?",opts:["El peso del buque vacío","Desplazamiento menos Light ship: la capacidad total de carga, combustible, agua, provisiones y tripulación","La velocidad máxima del buque","El volumen total de las bodegas"],correct:1,expl:"DWT = Desplazamiento - Light ship. Es la capacidad total de carga útil del buque (carga + combustible + agua dulce + provisiones + tripulación + lastre), distinta del Light ship, el peso fijo del buque vacío."},
   ],
   pt:[
     {q:"Você vê uma luz VERMELHA à noite à sua direita (estibordo). O que significa?",opts:["O navio vem da sua direita e tem prioridade","O navio está à sua esquerda — seu bombordo está voltado para você","O navio está em perigo","O navio está em marcha-ré"],correct:1,expl:"Luz vermelha = luz de BOMBORDO. Se você vê a luz vermelha de um navio à sua direita, seu bombordo está voltado para você → o navio está à sua esquerda."},
@@ -254,6 +257,7 @@ export const QUIZ = {
     {q:"O que significa uma altura metacêntrica GM negativa?",opts:["Navio sobrecarregado","Navio muito leve","Risco de adornamento — M está abaixo de G","Bordo livre insuficiente"],correct:2,expl:"GM = KM - KG. Se GM < 0, M está abaixo de G. Sem momento de endireitamento → risco de tombamento. GM mínimo = 0,15m."},
     {q:"Qual é o papel principal do Imediato (Chief Mate)?",opts:["Comandar o navio","Responsável pela carga, estabilidade e segurança","Gerir o departamento de máquinas","Gerir as comunicações de rádio"],correct:1,expl:"O Imediato é responsável pela carga, cálculos de estabilidade e é o Safety Officer. Assume o comando na ausência do capitão."},
     {q:"Segundo o SOLAS, a compartimentagem consiste em:",opts:["Decorar o interior do navio","Dividir o navio em compartimentos estanques para limitar a inundação","Organizar as cabines da tripulação","Classificar as mercadorias perigosas"],correct:1,expl:"Compartimentagem = divisão do navio em compartimentos estanques por anteparas estanques. O SOLAS exige que o navio flutue com 1-3 compartimentos inundados. Titanic: projetado para 4 → 5 abertos → naufrágio."},
+    {q:"O que representa o porte bruto (DWT) de um navio?",opts:["O peso do navio vazio","Deslocamento menos Light ship: a capacidade total de carga, combustível, água, provisões e tripulação","A velocidade máxima do navio","O volume total dos porões"],correct:1,expl:"DWT = Deslocamento - Light ship. É a capacidade total de carga útil do navio (carga + combustível + água doce + provisões + tripulação + lastro), distinta do Light ship, o peso fixo do navio vazio."},
   ],
 };
 
@@ -303,9 +307,12 @@ const getContent = lang => {
       p7:"PARTIE 7 — COMPARTIMENTAGE SOLAS",
       s7t:"Cloisons étanches et règle de compartimentage",
       s7:"DÉFINITION :\nDivision du navire en compartiments étanches par des CLOISONS ÉTANCHES.\n\nOBJECTIF :\nSi 1 compartiment est envahi → les autres restent secs → navire à flot → évacuation possible.\n\nRÈGLE SOLAS :\n• Standard 1 compartiment : navire reste à flot si 1 envahi\n• Standard 2 compartiments : reste à flot si 2 envahis\n• Standard 3 compartiments : paquebots modernes\n\nTITANIC (1912) :\nConçu pour 4 compartiments envahis.\nL'iceberg en a ouvert 5 → naufrage en 2h40.\n→ Exemple parfait du dépassement de la limite SOLAS.\n\nPORTES ÉTANCHES :\n• Fermeture OBLIGATOIRE en mer\n• Herald of Free Enterprise (1987) :\n  Parti port ouvert → 193 morts → Création du Code ISM",
+      p8:"PARTIE 8 — CALCUL DE CARGAISON",
+      s8t:"Port en lourd, facteur d'arrimage et plan de chargement",
+      s8:"PORT EN LOURD (DEADWEIGHT, DWT) :\nDWT = Deplacement - Light ship\nDeplacement = poids total du navire charge (varie selon le chargement)\nLight ship = poids du navire vide (coque, machines, equipements) - CONSTANT\nDWT = cargaison + combustible + eau douce + approvisionnements + equipage + ballast\n\nFACTEUR D'ARRIMAGE (STOWAGE FACTOR) :\nSF = volume occupe par 1 tonne de cargaison (m3/tonne)\nCargaison 'lourde' (SF faible, ex. minerai) : limite atteinte par le POIDS avant le volume\nCargaison 'legere' (SF eleve, ex. coton) : limite atteinte par le VOLUME avant le poids\n\nEXEMPLE DE CALCUL :\nDWT = 15 000 t · Combustible+eau+approvisionnements = 1 200 t\n-> Cargaison max (poids) = 15 000 - 1 200 = 13 800 t\nCapacite cales = 18 000 m3 · Facteur d'arrimage = 1,4 m3/t\n-> Cargaison max (volume) = 18 000 / 1,4 = 12 857 t\nLa limite la plus basse s'applique : 12 857 t (cargaison 'legere', limitee par le volume)",
       sumT:"RÉSUMÉ — LEÇON 2",
-      sumP:["Tribord=Droite(vert) · Bâbord=Gauche(rouge)","UKC minimum=10% · Marques Plimsoll (TF→WNA)","Barre droite → proue droite · Barre toute = 35°","GM=KM-KG · GM>0=stable · GM min=0,15m","Surfaces libres → aggravent la gîte","Rôles : Cadet→AB→Bosco→Lieutenant→Second→Capitaine","Machine : Oiler→Mécan.→OICM→2ème→Chef Mécanicien","Compartimentage SOLAS · Titanic · Portes étanches"],
-      learnedP:["Tribord=Droite(vert) · Bâbord=Gauche(rouge)","UKC 10% · Marques Plimsoll","GM>0=stable · Surfaces libres=danger","Cadet→AB→Bosco→Second→Capitaine","Oiler→Mécanicien→Chef Mécanicien","Compartimentage SOLAS · Titanic · Herald"],
+      sumP:["Tribord=Droite(vert) · Bâbord=Gauche(rouge)","UKC minimum=10% · Marques Plimsoll (TF→WNA)","Barre droite → proue droite · Barre toute = 35°","GM=KM-KG · GM>0=stable · GM min=0,15m","Surfaces libres → aggravent la gîte","Rôles : Cadet→AB→Bosco→Lieutenant→Second→Capitaine","Machine : Oiler→Mécan.→OICM→2ème→Chef Mécanicien","Compartimentage SOLAS · Titanic · Portes étanches","DWT = Déplacement - Light ship — facteur d'arrimage détermine la limite poids/volume"],
+      learnedP:["Tribord=Droite(vert) · Bâbord=Gauche(rouge)","UKC 10% · Marques Plimsoll","GM>0=stable · Surfaces libres=danger","Cadet→AB→Bosco→Second→Capitaine","Oiler→Mécanicien→Chef Mécanicien","Compartimentage SOLAS · Titanic · Herald","Calcul de cargaison : DWT, facteur d'arrimage, plan de chargement"],
     },
     en:{
       badge:"📚 Navigation & Cartography · Lesson 2/8 · 🆓 Free · 150 XP",
@@ -330,9 +337,12 @@ const getContent = lang => {
       p7:"PART 7 — SOLAS COMPARTMENTALIZATION",
       s7t:"Watertight bulkheads and compartmentalization rule",
       s7:"DEFINITION:\nDividing the vessel into watertight compartments by WATERTIGHT BULKHEADS.\n\nOBJECTIVE:\nIf 1 compartment floods → others stay dry → vessel afloat → evacuation possible.\n\nSOLAS RULE:\n• 1-compartment standard: floats with 1 flooded\n• 2-compartment standard: floats with 2 flooded\n• 3-compartment standard: modern passenger ships\n\nTITANIC (1912):\nDesigned for 4 compartments flooded.\nIceberg opened 5 → sank in 2h40.\n→ Perfect example of exceeding the SOLAS limit.\n\nWATERTIGHT DOORS:\n• MANDATORY closure at sea\n• Herald of Free Enterprise (1987):\n  Left port with doors open → 193 deaths → ISM Code created",
+      p8:"PART 8 — CARGO CALCULATION",
+      s8t:"Deadweight, stowage factor and loading plan",
+      s8:"DEADWEIGHT (DWT):\nDWT = Displacement - Light ship\nDisplacement = total weight of the loaded vessel (varies with loading condition)\nLight ship = weight of the empty vessel (hull, machinery, equipment) - CONSTANT\nDWT = cargo + fuel + fresh water + stores + crew + ballast\n\nSTOWAGE FACTOR:\nSF = volume occupied by 1 tonne of cargo (m3/tonne)\n'Heavy' cargo (low SF, e.g. ore): weight limit reached before volume\n'Light' cargo (high SF, e.g. cotton): volume limit reached before weight\n\nWORKED EXAMPLE:\nDWT = 15,000 t · Fuel+water+stores = 1,200 t\n-> Max cargo (weight) = 15,000 - 1,200 = 13,800 t\nHold capacity = 18,000 m3 · Stowage factor = 1.4 m3/t\n-> Max cargo (volume) = 18,000 / 1.4 = 12,857 t\nThe lower limit applies: 12,857 t ('light' cargo, volume-limited)",
       sumT:"SUMMARY — LESSON 2",
-      sumP:["Starboard=Right(green) · Port=Left(red)","Min UKC=10% · Plimsoll marks (TF→WNA)","Helm right→bow right · Hard over = 35°","GM=KM-KG · GM>0=stable · Min GM=0.15m","Free surfaces worsen list","Roles: Cadet→AB→Bosun→Officer→Chief Mate→Captain","Engine: Oiler→Engineer→EOOW→2nd→Chief Engineer","SOLAS compartmentalization · Titanic · Watertight doors"],
-      learnedP:["Starboard=Right(green) · Port=Left(red)","UKC 10% · Plimsoll marks","GM>0=stable · Free surfaces=danger","Cadet→AB→Bosun→Chief Mate→Captain","Oiler→Engineer→Chief Engineer","SOLAS compartmentalization · Titanic · Herald"],
+      sumP:["Starboard=Right(green) · Port=Left(red)","Min UKC=10% · Plimsoll marks (TF→WNA)","Helm right→bow right · Hard over = 35°","GM=KM-KG · GM>0=stable · Min GM=0.15m","Free surfaces worsen list","Roles: Cadet→AB→Bosun→Officer→Chief Mate→Captain","Engine: Oiler→Engineer→EOOW→2nd→Chief Engineer","SOLAS compartmentalization · Titanic · Watertight doors","DWT = Displacement - Light ship — stowage factor determines the weight/volume limit"],
+      learnedP:["Starboard=Right(green) · Port=Left(red)","UKC 10% · Plimsoll marks","GM>0=stable · Free surfaces=danger","Cadet→AB→Bosun→Chief Mate→Captain","Oiler→Engineer→Chief Engineer","SOLAS compartmentalization · Titanic · Herald","Cargo calculation: DWT, stowage factor, loading plan"],
     },
     es:{
       badge:"📚 Navegación & Cartografía · Lección 2/8 · 🆓 Gratis · 150 XP",
@@ -345,8 +355,10 @@ const getContent = lang => {
       p5:"PARTE 5 — TIPOS DE BUQUES",s5t:"Principales tipos de buques",s5:"Portacontenedores · Granelero · Petrolero VLCC · Gasero LNG · OSV offshore · Ferry RoRo",
       p6:"PARTE 6 — ROLES A BORDO",p7:"PARTE 7 — COMPARTIMENTADO SOLAS",s7t:"Mamparos estancos y regla de compartimentado",
       s7:"DEFINICIÓN: División del buque en compartimentos estancos por MAMPAROS ESTANCOS.\n\nOBJETIVO: Si 1 compartimento se inunda → los demás siguen secos → el buque permanece a flote.\n\nREGLA SOLAS:\n• Estándar 1 compartimento: flota con 1 inundado\n• Estándar 2 compartimentos: flota con 2 inundados\n• Estándar 3 compartimentos: cruceros modernos\n\nTITANIC (1912): Diseñado para 4 compartimentos. El iceberg abrió 5 → hundimiento.\n\nPUERTAS ESTANCAS: Cierre OBLIGATORIO en el mar. Herald of Free Enterprise (1987): zarpó con puertas abiertas → 193 muertos → Código ISM.",
-      sumT:"RESUMEN — LECCIÓN 2",sumP:["Estribor=Derecha(verde) · Babor=Izquierda(roja)","UKC mín=10% · Marcas Plimsoll","Timón derecha→proa derecha · Todo a banda=35°","GM=KM-KG · GM>0=estable · GM mín=0,15m","Superficies libres agravan la escora","Cadete→AB→Contramaestre→Oficial→1er Oficial→Capitán","Engrasador→Mecánico→OMCV→2º→Jefe Máquinas","Compartimentado SOLAS · Titanic · Puertas estancas"],
-      learnedP:["Estribor=Derecha(verde) · Babor=Izquierda(roja)","UKC 10% · Marcas Plimsoll","GM>0=estable · Superficies libres=peligro","Cadete→AB→Contramaestre→Capitán","Engrasador→Mecánico→Jefe de Máquinas","Compartimentado SOLAS · Titanic · Herald"],
+      p8:"PARTE 8 — CÁLCULO DE CARGA",s8t:"Porte en lastre, factor de estiba y plan de carga",
+      s8:"PORTE EN LASTRE (DEADWEIGHT, DWT):\nDWT = Desplazamiento - Light ship\nDesplazamiento = peso total del buque cargado (varía según la carga)\nLight ship = peso del buque vacío (casco, máquinas, equipos) - CONSTANTE\nDWT = carga + combustible + agua dulce + provisiones + tripulación + lastre\n\nFACTOR DE ESTIBA (STOWAGE FACTOR):\nSF = volumen ocupado por 1 tonelada de carga (m3/tonelada)\nCarga 'pesada' (SF bajo, ej. mineral): límite alcanzado por el PESO antes que el volumen\nCarga 'ligera' (SF alto, ej. algodón): límite alcanzado por el VOLUMEN antes que el peso\n\nEJEMPLO DE CÁLCULO:\nDWT = 15.000 t · Combustible+agua+provisiones = 1.200 t\n-> Carga máx (peso) = 15.000 - 1.200 = 13.800 t\nCapacidad bodegas = 18.000 m3 · Factor de estiba = 1,4 m3/t\n-> Carga máx (volumen) = 18.000 / 1,4 = 12.857 t\nSe aplica el límite más bajo: 12.857 t (carga 'ligera', limitada por volumen)",
+      sumT:"RESUMEN — LECCIÓN 2",sumP:["Estribor=Derecha(verde) · Babor=Izquierda(roja)","UKC mín=10% · Marcas Plimsoll","Timón derecha→proa derecha · Todo a banda=35°","GM=KM-KG · GM>0=estable · GM mín=0,15m","Superficies libres agravan la escora","Cadete→AB→Contramaestre→Oficial→1er Oficial→Capitán","Engrasador→Mecánico→OMCV→2º→Jefe Máquinas","Compartimentado SOLAS · Titanic · Puertas estancas","DWT = Desplazamiento - Light ship — el factor de estiba determina el límite peso/volumen"],
+      learnedP:["Estribor=Derecha(verde) · Babor=Izquierda(roja)","UKC 10% · Marcas Plimsoll","GM>0=estable · Superficies libres=peligro","Cadete→AB→Contramaestre→Capitán","Engrasador→Mecánico→Jefe de Máquinas","Compartimentado SOLAS · Titanic · Herald","Cálculo de carga: DWT, factor de estiba, plan de carga"],
     },
     pt:{
       badge:"📚 Navegação & Cartografia · Lição 2/8 · 🆓 Grátis · 150 XP",
@@ -359,8 +371,10 @@ const getContent = lang => {
       p5:"PARTE 5 — TIPOS DE NAVIOS",s5t:"Principais tipos de navios",s5:"Porta-contentores · Graneleiro · Petroleiro VLCC · Gaseiro LNG · OSV offshore · Ferry RoRo",
       p6:"PARTE 6 — FUNÇÕES A BORDO",p7:"PARTE 7 — COMPARTIMENTAGEM SOLAS",s7t:"Anteparas estanques e regra de compartimentagem",
       s7:"DEFINIÇÃO: Divisão do navio em compartimentos estanques por ANTEPARAS ESTANQUES.\n\nOBJETIVO: Se 1 compartimento inunda → os outros ficam secos → navio a flutuar.\n\nREGRA SOLAS:\n• Padrão 1 compartimento: flutua com 1 inundado\n• Padrão 2 compartimentos: flutua com 2 inundados\n• Padrão 3 compartimentos: navios de cruzeiro modernos\n\nTITANIC (1912): Projetado para 4 compartimentos. O iceberg abriu 5 → afundou.\n\nPORTAS ESTANQUES: Fecho OBRIGATÓRIO no mar. Herald of Free Enterprise (1987): saiu com portas abertas → 193 mortos → Código ISM.",
-      sumT:"RESUMO — LIÇÃO 2",sumP:["Estibordo=Direita(verde) · Bombordo=Esquerda(verm.)","UKC mín=10% · Marcas Plimsoll","Leme direita→proa direita · Todo o leme=35°","GM=KM-KG · GM>0=estável · GM mín=0,15m","Superfícies livres agravam a escora","Cadete→AB→Mestre→Oficial→Imediato→Capitão","Oiler→Mecânico→OMCV→2º→Chefe Máquinas","Compartimentagem SOLAS · Titanic · Portas estanques"],
-      learnedP:["Estibordo=Direita(verde) · Bombordo=Esquerda(verm.)","UKC 10% · Marcas Plimsoll","GM>0=estável · Superfícies livres=perigo","Cadete→AB→Mestre→Imediato→Capitão","Oiler→Mecânico→Chefe de Máquinas","Compartimentagem SOLAS · Titanic · Herald"],
+      p8:"PARTE 8 — CÁLCULO DE CARGA",s8t:"Porte bruto, fator de estiva e plano de carga",
+      s8:"PORTE BRUTO (DEADWEIGHT, DWT):\nDWT = Deslocamento - Light ship\nDeslocamento = peso total do navio carregado (varia conforme a carga)\nLight ship = peso do navio vazio (casco, máquinas, equipamentos) - CONSTANTE\nDWT = carga + combustível + água doce + provisões + tripulação + lastro\n\nFATOR DE ESTIVA (STOWAGE FACTOR):\nSF = volume ocupado por 1 tonelada de carga (m3/tonelada)\nCarga 'pesada' (SF baixo, ex. minério): limite atingido pelo PESO antes do volume\nCarga 'leve' (SF alto, ex. algodão): limite atingido pelo VOLUME antes do peso\n\nEXEMPLO DE CÁLCULO:\nDWT = 15.000 t · Combustível+água+provisões = 1.200 t\n-> Carga máx (peso) = 15.000 - 1.200 = 13.800 t\nCapacidade porões = 18.000 m3 · Fator de estiva = 1,4 m3/t\n-> Carga máx (volume) = 18.000 / 1,4 = 12.857 t\nAplica-se o limite mais baixo: 12.857 t (carga 'leve', limitada pelo volume)",
+      sumT:"RESUMO — LIÇÃO 2",sumP:["Estibordo=Direita(verde) · Bombordo=Esquerda(verm.)","UKC mín=10% · Marcas Plimsoll","Leme direita→proa direita · Todo o leme=35°","GM=KM-KG · GM>0=estável · GM mín=0,15m","Superfícies livres agravam a escora","Cadete→AB→Mestre→Oficial→Imediato→Capitão","Oiler→Mecânico→OMCV→2º→Chefe Máquinas","Compartimentagem SOLAS · Titanic · Portas estanques","DWT = Deslocamento - Light ship — o fator de estiva determina o limite peso/volume"],
+      learnedP:["Estibordo=Direita(verde) · Bombordo=Esquerda(verm.)","UKC 10% · Marcas Plimsoll","GM>0=estável · Superfícies livres=perigo","Cadete→AB→Mestre→Imediato→Capitão","Oiler→Mecânico→Chefe de Máquinas","Compartimentagem SOLAS · Titanic · Herald","Cálculo de carga: DWT, fator de estiva, plano de carga"],
     },
   };
   return d[lang]||d.fr;
@@ -1022,6 +1036,69 @@ function ExerciseScenarioNav2({ lang }) {
   );
 }
 
+function CargoCalcExercise({ lang }) {
+  const [ans, setAns] = useState({ q1: "", q2: "", q3: "" });
+  const [showC, setShowC] = useState(false);
+  const chk = (id, val) => {
+    const v = val.trim().toLowerCase().replace(/[\s,\.]/g, "");
+    if (id === "q1") return v.includes("11100");
+    if (id === "q2") return v.includes("7500");
+    if (id === "q3") return v.includes("7500") && v.includes("volum");
+    return false;
+  };
+  const d = {
+    fr: { title: "📦 Exercice — Plan de chargement", scenario: "Vous devez calculer la cargaison maximale que le navire peut embarquer, en tenant compte à la fois du poids disponible (DWT) et du volume des cales.",
+      qs: [
+        { id: "q1", q: "1. Un navire a un port en lourd (DWT) de 12 000 t. Le combustible, l'eau douce et les approvisionnements pèsent au total 900 t.\nQuelle cargaison maximale peut-il embarquer en poids ? (en tonnes)" },
+        { id: "q2", q: "2. La capacité des cales est de 9 000 m³. Le facteur d'arrimage de la cargaison est de 1,2 m³/t.\nQuelle est la limite de cargaison imposée par le volume ? (en tonnes, arrondi)" },
+        { id: "q3", q: "3. Quelle est la cargaison maximale réelle du navire, et quelle limite s'applique (poids ou volume) ?" },
+      ],
+      expl: "OK Q1: Cargaison max (poids) = DWT - (combustible+eau+approvisionnements) = 12 000 - 900 = 11 100 t.\nOK Q2: Cargaison max (volume) = Capacité cales / Facteur d'arrimage = 9 000 / 1,2 = 7 500 t.\nOK Q3: La limite la plus basse s'applique toujours -> 7 500 t, limite par le volume (cargaison 'légère' pour ce facteur d'arrimage)." },
+    en: { title: "📦 Exercise — Loading Plan", scenario: "You must calculate the maximum cargo the vessel can load, taking into account both the available weight (DWT) and the hold volume.",
+      qs: [
+        { id: "q1", q: "1. A vessel has a deadweight (DWT) of 12,000 t. Fuel, fresh water and stores weigh 900 t in total.\nWhat is the maximum cargo by weight? (in tonnes)" },
+        { id: "q2", q: "2. Hold capacity is 9,000 m³. The cargo's stowage factor is 1.2 m³/t.\nWhat is the cargo limit imposed by volume? (in tonnes, rounded)" },
+        { id: "q3", q: "3. What is the vessel's actual maximum cargo, and which limit applies (weight or volume)?" },
+      ],
+      expl: "OK Q1: Max cargo (weight) = DWT - (fuel+water+stores) = 12,000 - 900 = 11,100 t.\nOK Q2: Max cargo (volume) = Hold capacity / Stowage factor = 9,000 / 1.2 = 7,500 t.\nOK Q3: The lower limit always applies -> 7,500 t, volume-limited ('light' cargo for this stowage factor)." },
+    es: { title: "📦 Ejercicio — Plan de carga", scenario: "Debes calcular la carga máxima que el buque puede embarcar, teniendo en cuenta tanto el peso disponible (DWT) como el volumen de las bodegas.",
+      qs: [
+        { id: "q1", q: "1. Un buque tiene un porte en lastre (DWT) de 12.000 t. El combustible, el agua dulce y las provisiones pesan 900 t en total.\n¿Cuál es la carga máxima en peso? (en toneladas)" },
+        { id: "q2", q: "2. La capacidad de las bodegas es de 9.000 m³. El factor de estiba de la carga es 1,2 m³/t.\n¿Cuál es el límite de carga impuesto por el volumen? (en toneladas, redondeado)" },
+        { id: "q3", q: "3. ¿Cuál es la carga máxima real del buque, y qué límite se aplica (peso o volumen)?" },
+      ],
+      expl: "OK Q1: Carga máx (peso) = DWT - (combustible+agua+provisiones) = 12.000 - 900 = 11.100 t.\nOK Q2: Carga máx (volumen) = Capacidad bodegas / Factor de estiba = 9.000 / 1,2 = 7.500 t.\nOK Q3: Siempre se aplica el límite más bajo -> 7.500 t, limitada por el volumen (carga 'ligera' para este factor de estiba)." },
+    pt: { title: "📦 Exercício — Plano de carga", scenario: "Deves calcular a carga máxima que o navio pode embarcar, tendo em conta tanto o peso disponível (DWT) como o volume dos porões.",
+      qs: [
+        { id: "q1", q: "1. Um navio tem um porte bruto (DWT) de 12.000 t. O combustível, a água doce e as provisões pesam 900 t no total.\nQual é a carga máxima em peso? (em toneladas)" },
+        { id: "q2", q: "2. A capacidade dos porões é de 9.000 m³. O fator de estiva da carga é 1,2 m³/t.\nQual é o limite de carga imposto pelo volume? (em toneladas, arredondado)" },
+        { id: "q3", q: "3. Qual é a carga máxima real do navio, e que limite se aplica (peso ou volume)?" },
+      ],
+      expl: "OK Q1: Carga máx (peso) = DWT - (combustível+água+provisões) = 12.000 - 900 = 11.100 t.\nOK Q2: Carga máx (volume) = Capacidade porões / Fator de estiva = 9.000 / 1,2 = 7.500 t.\nOK Q3: Aplica-se sempre o limite mais baixo -> 7.500 t, limitada pelo volume (carga 'leve' para este fator de estiva)." },
+  };
+  const c = d[lang] || d.fr;
+  return (
+    <Card style={{ marginBottom: 14, border: `1px solid ${C.blue2}44`, background: "linear-gradient(135deg,rgba(26,111,212,0.08),rgba(13,31,60,0.8))" }}>
+      <div style={{ fontSize: 13, fontWeight: 700, color: C.white, marginBottom: 8 }}>{c.title}</div>
+      <div style={{ background: "rgba(0,0,0,0.35)", borderRadius: 12, padding: "12px", marginBottom: 14, fontSize: 12, color: C.white, lineHeight: 1.6, fontStyle: "italic" }}>{c.scenario}</div>
+      {c.qs.map((q) => (
+        <div key={q.id} style={{ marginBottom: 12 }}>
+          <div style={{ fontSize: 13, color: C.white, marginBottom: 6, lineHeight: 1.5, fontWeight: 600, whiteSpace: "pre-line" }}>{q.q}</div>
+          <input type="text" value={ans[q.id]} onChange={(e) => setAns((a) => ({ ...a, [q.id]: e.target.value }))}
+            style={{ width: "100%", padding: "10px 12px", borderRadius: 10, background: "rgba(255,255,255,0.07)",
+              border: `1px solid ${showC ? (chk(q.id, ans[q.id]) ? C.green : C.red) : C.border}`,
+              color: C.white, fontSize: 13, fontFamily: "'Nunito',sans-serif", boxSizing: "border-box" }} />
+          {showC && <div style={{ fontSize: 11, marginTop: 4, fontWeight: 600, color: chk(q.id, ans[q.id]) ? C.green : C.red }}>{chk(q.id, ans[q.id]) ? "✓" : "✗"}</div>}
+        </div>
+      ))}
+      {showC && <div style={{ padding: "12px", borderRadius: 12, background: "rgba(30,138,74,0.1)", border: `1px solid ${C.green}44`, fontSize: 11, color: C.white, lineHeight: 1.7, marginBottom: 10, whiteSpace: "pre-line" }}>{c.expl}</div>}
+      <button onClick={() => setShowC((v) => !v)} style={{ width: "100%", padding: "11px 0", borderRadius: 12, background: showC ? "rgba(30,138,74,0.2)" : "rgba(201,146,42,0.15)", border: `1px solid ${showC ? C.green : C.gold}44`, color: showC ? C.green : C.gold2, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Cinzel',serif", letterSpacing: 1 }}>
+        {showC ? (lang==="fr"?"Masquer":lang==="en"?"Hide":lang==="es"?"Ocultar":"Ocultar") : (lang==="fr"?"Voir la correction":lang==="en"?"Show correction":lang==="es"?"Ver corrección":"Ver correção")}
+      </button>
+    </Card>
+  );
+}
+
 // ── PRACTICE QUESTION BANK — 15Q (L2) ──────────────
 export const BANK_NAV2 = {
   fr:[
@@ -1040,6 +1117,8 @@ export const BANK_NAV2 = {
     {q:"Un navire avec un GM trop faible risque-t-il davantage de chavirer ?",opts:["Non, jamais","Oui, un GM trop faible augmente le risque de chavirement","Non, seul le tirant d'eau compte","Oui, mais uniquement à quai"],correct:1,expl:"Un GM trop faible réduit la capacité du navire à revenir à la verticale, augmentant le risque de chavirement lors d'une gîte."},
     {q:"Le franc-bord varie-t-il selon la zone de navigation (eau douce/eau de mer, tropicale/hiver) ?",opts:["Non, il est toujours identique","Oui, les marques Plimsoll en tiennent compte","Non, seul le tonnage compte","Oui, mais uniquement pour les pétroliers"],correct:1,expl:"Les marques Plimsoll varient précisément pour tenir compte de la densité de l'eau et des conditions saisonnières de navigation."},
     {q:"Pourquoi le compartimentage étanche est-il crucial en cas de collision ?",opts:["Il n'a aucun effet en cas de collision","Il limite l'envahissement d'eau à un ou quelques compartiments, évitant le naufrage","Il améliore uniquement l'esthétique","Il n'est utilisé qu'au mouillage"],correct:1,expl:"Le compartimentage étanche limite la propagation de l'eau à l'intérieur du navire, préservant sa flottabilité et sa stabilité en cas d'avarie."},
+    {q:"Qu'est-ce que le facteur d'arrimage (stowage factor) d'une cargaison ?",opts:["Le poids total de la cargaison","Le volume occupé par une tonne de cargaison (m³/tonne)","La vitesse de chargement","Le nombre de cales utilisées"],correct:1,expl:"Le facteur d'arrimage (SF) exprime le volume occupé par une tonne de cargaison. Une cargaison à SF faible (dense, comme le minerai) sature le poids disponible avant le volume ; une cargaison à SF élevé (légère, comme le coton) sature le volume avant le poids."},
+    {q:"Le Light ship (poids lège) d'un navire varie-t-il selon le chargement ?",opts:["Oui, il augmente avec la cargaison","Non, c'est un poids fixe (coque, machines, équipements) qui ne varie pas","Oui, il diminue avec la cargaison","Il varie uniquement avec le carburant"],correct:1,expl:"Le Light ship est le poids du navire vide (structure, machines, équipements fixes) — il est constant et ne varie pas. C'est le Déplacement total qui varie selon le chargement, puisque Déplacement = Light ship + DWT chargé."},
   ],
   en:[
     {q:"What is the front of a ship called?",opts:["Stern","Bow","Starboard","Port"],correct:1,expl:"The bow is the front of the ship, the stern is the rear."},
@@ -1057,6 +1136,8 @@ export const BANK_NAV2 = {
     {q:"Does a ship with a too-low GM risk capsizing more?",opts:["No, never","Yes, a too-low GM increases capsizing risk","No, only draft matters","Yes, but only at berth"],correct:1,expl:"A too-low GM reduces the ship's ability to return upright, increasing capsizing risk during heel."},
     {q:"Does freeboard vary by navigation zone (fresh/sea water, tropical/winter)?",opts:["No, it's always the same","Yes, Plimsoll marks account for this","No, only tonnage matters","Yes, but only for tankers"],correct:1,expl:"Plimsoll marks vary precisely to account for water density and seasonal navigation conditions."},
     {q:"Why is watertight compartmentalization crucial in a collision?",opts:["It has no effect in a collision","It limits water ingress to one or few compartments, avoiding sinking","It only improves aesthetics","It's only used at anchor"],correct:1,expl:"Watertight compartmentalization limits water spread inside the ship, preserving buoyancy and stability in case of damage."},
+    {q:"What is a cargo's stowage factor?",opts:["The total weight of the cargo","The volume occupied by one tonne of cargo (m³/tonne)","The loading speed","The number of holds used"],correct:1,expl:"Stowage factor (SF) expresses the volume occupied by one tonne of cargo. Low-SF cargo (dense, like ore) fills available weight before volume; high-SF cargo (light, like cotton) fills volume before weight."},
+    {q:"Does a vessel's Light ship weight vary with loading?",opts:["Yes, it increases with cargo","No, it is a fixed weight (hull, machinery, equipment) that never varies","Yes, it decreases with cargo","It only varies with fuel"],correct:1,expl:"Light ship is the weight of the empty vessel (structure, machinery, fixed equipment) — it is constant and never varies. It is the total Displacement that varies with loading, since Displacement = Light ship + loaded DWT."},
   ],
   es:[
     {q:"¿Cómo se llama la parte delantera de un buque?",opts:["Popa","Proa","Estribor","Babor"],correct:1,expl:"La proa es la parte delantera del buque, la popa es la parte trasera."},
@@ -1074,6 +1155,8 @@ export const BANK_NAV2 = {
     {q:"¿Un buque con un GM demasiado bajo corre más riesgo de zozobrar?",opts:["No, nunca","Sí, un GM demasiado bajo aumenta el riesgo de zozobra","No, solo importa el calado","Sí, pero solo en puerto"],correct:1,expl:"Un GM demasiado bajo reduce la capacidad del buque de volver a la vertical, aumentando el riesgo de zozobra al escorar."},
     {q:"¿El francobordo varía según la zona de navegación (agua dulce/mar, tropical/invierno)?",opts:["No, siempre es igual","Sí, las marcas Plimsoll lo tienen en cuenta","No, solo importa el tonelaje","Sí, pero solo para petroleros"],correct:1,expl:"Las marcas Plimsoll varían precisamente para tener en cuenta la densidad del agua y las condiciones estacionales de navegación."},
     {q:"¿Por qué el compartimentado estanco es crucial en una colisión?",opts:["No tiene ningún efecto en una colisión","Limita la entrada de agua a uno o pocos compartimentos, evitando el hundimiento","Solo mejora la estética","Solo se usa fondeado"],correct:1,expl:"El compartimentado estanco limita la propagación del agua dentro del buque, preservando la flotabilidad y estabilidad ante una avería."},
+    {q:"¿Qué es el factor de estiba (stowage factor) de una carga?",opts:["El peso total de la carga","El volumen ocupado por una tonelada de carga (m³/tonelada)","La velocidad de carga","El número de bodegas usadas"],correct:1,expl:"El factor de estiba (SF) expresa el volumen ocupado por una tonelada de carga. Una carga de SF bajo (densa, como el mineral) satura el peso disponible antes que el volumen; una carga de SF alto (ligera, como el algodón) satura el volumen antes que el peso."},
+    {q:"¿El Light ship (peso en rosca) de un buque varía según la carga?",opts:["Sí, aumenta con la carga","No, es un peso fijo (casco, máquinas, equipos) que no varía","Sí, disminuye con la carga","Solo varía con el combustible"],correct:1,expl:"El Light ship es el peso del buque vacío (estructura, máquinas, equipos fijos) — es constante y no varía. Es el Desplazamiento total el que varía según la carga, ya que Desplazamiento = Light ship + DWT cargado."},
   ],
   pt:[
     {q:"Como se chama a parte frontal de um navio?",opts:["Popa","Proa","Estibordo","Bombordo"],correct:1,expl:"A proa é a parte frontal do navio, a popa é a parte traseira."},
@@ -1091,6 +1174,8 @@ export const BANK_NAV2 = {
     {q:"Um navio com um GM muito baixo corre mais risco de capotar?",opts:["Não, nunca","Sim, um GM muito baixo aumenta o risco de capotamento","Não, só o calado importa","Sim, mas só no porto"],correct:1,expl:"Um GM muito baixo reduz a capacidade do navio de voltar à vertical, aumentando o risco de capotamento ao escorar."},
     {q:"O bordo livre varia conforme a zona de navegação (água doce/mar, tropical/inverno)?",opts:["Não, é sempre igual","Sim, as marcas Plimsoll consideram isso","Não, só a tonelagem importa","Sim, mas só para petroleiros"],correct:1,expl:"As marcas Plimsoll variam precisamente para considerar a densidade da água e as condições sazonais de navegação."},
     {q:"Por que a compartimentagem estanque é crucial numa colisão?",opts:["Não tem nenhum efeito numa colisão","Limita a entrada de água a um ou poucos compartimentos, evitando o naufrágio","Só melhora a estética","Só é usada fundeado"],correct:1,expl:"A compartimentagem estanque limita a propagação da água dentro do navio, preservando a flutuabilidade e estabilidade em caso de avaria."},
+    {q:"O que é o fator de estiva (stowage factor) de uma carga?",opts:["O peso total da carga","O volume ocupado por uma tonelada de carga (m³/tonelada)","A velocidade de carga","O número de porões usados"],correct:1,expl:"O fator de estiva (SF) exprime o volume ocupado por uma tonelada de carga. Uma carga de SF baixo (densa, como o minério) satura o peso disponível antes do volume; uma carga de SF alto (leve, como o algodão) satura o volume antes do peso."},
+    {q:"O Light ship (peso leve) de um navio varia conforme a carga?",opts:["Sim, aumenta com a carga","Não, é um peso fixo (casco, máquinas, equipamentos) que não varia","Sim, diminui com a carga","Só varia com o combustível"],correct:1,expl:"O Light ship é o peso do navio vazio (estrutura, máquinas, equipamentos fixos) — é constante e não varia. É o Deslocamento total que varia conforme a carga, já que Deslocamento = Light ship + DWT carregado."},
   ],
 };
 
@@ -1100,7 +1185,7 @@ function QuestionBankNav2({ lang, onComplete }) {
   const [shuffled]=useState(()=>questions.map(shuffleQuestionOptions));
   if(!started) return(
     <Card style={{marginBottom:12,border:`1px solid ${C.gold}44`,background:"linear-gradient(135deg,rgba(201,146,42,0.08),rgba(13,31,60,0.8))"}}>
-      <div style={{fontSize:12,color:C.white,lineHeight:1.6,marginBottom:12}}>{lang==="fr"?"Entraîne-toi avec 15 questions de révision avant le quiz final.":lang==="en"?"Practice with 15 review questions before the final quiz.":lang==="es"?"Practica con 15 preguntas de repaso antes del quiz final.":"Pratique com 15 perguntas de revisão antes do quiz final."}</div>
+      <div style={{fontSize:12,color:C.white,lineHeight:1.6,marginBottom:12}}>{lang==="fr"?"Entraîne-toi avec 17 questions de révision avant le quiz final.":lang==="en"?"Practice with 17 review questions before the final quiz.":lang==="es"?"Practica con 17 preguntas de repaso antes del quiz final.":"Pratique com 17 perguntas de revisão antes do quiz final."}</div>
       <button onClick={()=>setStarted(true)} style={{width:"100%",padding:"11px 0",borderRadius:12,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}44`,color:C.gold2,fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'Cinzel',serif",letterSpacing:1}}>
         {lang==="fr"?"✅ COMMENCER":lang==="en"?"✅ START":lang==="es"?"✅ EMPEZAR":"✅ COMEÇAR"}
       </button>
@@ -1203,9 +1288,13 @@ export default function LessonNavire({ lang="fr", onBack=()=>{}, onComplete=()=>
             <Card style={{marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>🔒</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s7t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s7}</div></Card>
             <Card style={{marginBottom:14,border:`1px solid ${C.red}33`,background:"linear-gradient(135deg,rgba(192,57,43,0.06),rgba(13,31,60,0.8))"}}><div style={{fontSize:11,color:C.red,letterSpacing:2,fontFamily:"'Cinzel',serif",marginBottom:12}}>🔒 {lang==="fr"?"COMPARTIMENTAGE INTERACTIF — GÎTE EN TEMPS RÉEL":lang==="en"?"INTERACTIVE COMPARTMENTS — REAL-TIME LIST":lang==="es"?"COMPARTIMENTADO — ESCORA EN TIEMPO REAL":"COMPARTIMENTAGEM — ESCORA EM TEMPO REAL"}</div><CompartmentSVG lang={lang}/></Card>
 
+            <SL icon="📦" text={lc.p8} color={C.blue2}/>
+            <Card style={{marginBottom:14}}><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:22}}>📦</span><span style={{fontSize:14,fontWeight:700,color:C.white}}>{lc.s8t}</span></div><div style={{fontSize:13,color:"rgba(240,244,255,0.82)",lineHeight:1.85,whiteSpace:"pre-line"}}>{lc.s8}</div></Card>
+            <CargoCalcExercise lang={lang}/>
+
             <SL icon="🎯" text={lang==="fr"?"EXERCICE AVANCÉ":lang==="en"?"ADVANCED EXERCISE":lang==="es"?"EJERCICIO AVANZADO":"EXERCÍCIO AVANÇADO"}/>
             <ExerciseScenarioNav2 lang={lang}/>
-            <SL icon="📝" text={lang==="fr"?"BANQUE DE 15 QUESTIONS":lang==="en"?"15-QUESTION BANK":lang==="es"?"BANCO DE 15 PREGUNTAS":"BANCO DE 15 QUESTÕES"} color={C.gold}/>
+            <SL icon="📝" text={lang==="fr"?"BANQUE DE 17 QUESTIONS":lang==="en"?"17-QUESTION BANK":lang==="es"?"BANCO DE 17 PREGUNTAS":"BANCO DE 17 QUESTÕES"} color={C.gold}/>
             <QuestionBankNav2 lang={lang} onComplete={()=>setBankDone(true)}/>
 
             <Card style={{marginBottom:14,background:"linear-gradient(135deg,rgba(26,111,212,0.1),rgba(13,31,60,0.8))",border:`1px solid ${C.blue2}33`}}>
@@ -1220,7 +1309,7 @@ export default function LessonNavire({ lang="fr", onBack=()=>{}, onComplete=()=>
           {phase==="quiz"&&<>
             <div style={{textAlign:"center",marginBottom:20}}>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>{lang==="fr"?"Quiz — Le Navire":lang==="en"?"Quiz — The Ship":lang==="es"?"Quiz — El Buque":"Quiz — O Navio"}</div>
-              <div style={{fontSize:12,color:C.muted}}>5 {lang==="fr"?"questions · Leçon 2":lang==="en"?"questions · Lesson 2":lang==="es"?"preguntas · Lección 2":"perguntas · Lição 2"}</div>
+              <div style={{fontSize:12,color:C.muted}}>6 {lang==="fr"?"questions · Leçon 2":lang==="en"?"questions · Lesson 2":lang==="es"?"preguntas · Lección 2":"perguntas · Lição 2"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
