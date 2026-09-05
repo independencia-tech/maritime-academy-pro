@@ -1062,6 +1062,10 @@ userStreak=1,
   onNavToLesson=()=>{},
   onNavExams=()=>{},
   onNavProfile=()=>{},
+  foundationSummaryAttemptedCount=0,
+  foundationSummaryTotalRequired=12,
+  foundationSummaryUnlocked=false,
+  onOpenFoundationSummary=()=>{},
   activeNav="home",
   onAdmin=()=>{},
   onChangeLanguage=()=>{},
@@ -1416,6 +1420,31 @@ userStreak=1,
               </div>
             </div>
           )}
+
+          {/* FOUNDATION SUMMARY (13th exam) BANNER — cross-domain exam with
+              no single module of its own, so its entry point lives here on
+              the Dashboard rather than inside one module's lesson list like
+              the 12 per-module Foundation exams. Visible regardless of which
+              dashboardView tab is selected. */}
+          <button onClick={onOpenFoundationSummary} style={{
+            display:"flex",alignItems:"center",gap:12,width:"100%",textAlign:"left",
+            padding:"14px",marginBottom:16,borderRadius:16,cursor:"pointer",
+            background:foundationSummaryUnlocked?`linear-gradient(135deg,${C.gold}22,${C.blue}22)`:"rgba(255,255,255,0.04)",
+            border:`1.5px solid ${foundationSummaryUnlocked?C.gold:"rgba(255,255,255,0.1)"}`,
+            color:C.white,
+          }}>
+            <div style={{width:38,height:38,borderRadius:10,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,background:foundationSummaryUnlocked?`${C.gold}22`:"rgba(255,255,255,0.06)",border:`1px solid ${foundationSummaryUnlocked?C.gold:"rgba(255,255,255,0.1)"}44`}}>🏆</div>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>
+                {lang==="fr"?"13e Examen — Foundation Summary":lang==="es"?"13.º Examen — Foundation Summary":lang==="pt"?"13.º Exame — Foundation Summary":"13th Exam — Foundation Summary"}
+              </div>
+              <div style={{fontSize:11,color:foundationSummaryUnlocked?C.gold2:C.muted}}>
+                {foundationSummaryUnlocked
+                  ? (lang==="fr"?"Débloqué — commencer maintenant":lang==="es"?"Desbloqueado — empezar ahora":lang==="pt"?"Desbloqueado — começar agora":"Unlocked — start now")
+                  : (lang==="fr"?`${foundationSummaryAttemptedCount}/${foundationSummaryTotalRequired} modules Foundation tentés`:lang==="es"?`${foundationSummaryAttemptedCount}/${foundationSummaryTotalRequired} módulos Foundation intentados`:lang==="pt"?`${foundationSummaryAttemptedCount}/${foundationSummaryTotalRequired} módulos Foundation tentados`:`${foundationSummaryAttemptedCount}/${foundationSummaryTotalRequired} Foundation modules attempted`)}
+              </div>
+            </div>
+          </button>
 
           {/* DIVIDER */}
           <div style={{height:1,margin:"0 0 16px",background:`linear-gradient(90deg,transparent,${C.gold}44,${C.blue2}44,transparent)`}}/>

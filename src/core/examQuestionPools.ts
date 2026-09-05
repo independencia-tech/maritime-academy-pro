@@ -110,6 +110,8 @@ import { QUIZ as S6_L4_QUIZ, BANK as S6_L4_BANK } from "../components/LessonSafe
 import { QUIZ as S6_L5_QUIZ, BANK as S6_L5_BANK } from "../components/LessonSafetyS6_L5";
 import { QUIZ as S6_L6_QUIZ, BANK as S6_L6_BANK } from "../components/LessonSafetyS6_L6";
 
+import { SUMMARY_QUESTIONS } from "./examSummaryQuestions";
+
 const LANGS = ["fr", "en", "es", "pt"];
 
 // Tags each question with a stable questionId (lessonId + its index in the
@@ -230,6 +232,28 @@ export function getQuestionPoolForLessons(lessonIds, lang) {
   for (const lessonId of lessonIds) {
     const pool = LESSON_POOLS[lessonId];
     if (pool && pool[safeLang]) out.push(...pool[safeLang]);
+  }
+  return out;
+}
+
+// 13th exam ("Foundation Summary") — flattens the 6 cross-domain themes from
+// examSummaryQuestions.ts into one tagged pool per language, same tagging
+// scheme as buildLessonPool (questionId + lessonId) except lessonId here is
+// the theme id (e.g. "theme1_collision_weather"), not a real lessonId — no
+// single lesson maps to a cross-domain scenario question. useFoundationSummaryExam
+// draws the full 20-question set (no random subset — the content was written
+// to exactly match EXAM_QUESTION_COUNT), so this returns everything rather
+// than taking a lessonIds filter like getQuestionPoolForLessons above.
+const SUMMARY_POOL = {};
+for (const themeId of Object.keys(SUMMARY_QUESTIONS)) {
+  SUMMARY_POOL[themeId] = buildLessonPool(themeId, null, SUMMARY_QUESTIONS[themeId]);
+}
+
+export function getSummaryExamQuestions(lang) {
+  const safeLang = LANGS.includes(lang) ? lang : "fr";
+  const out = [];
+  for (const themeId of Object.keys(SUMMARY_POOL)) {
+    out.push(...SUMMARY_POOL[themeId][safeLang]);
   }
   return out;
 }

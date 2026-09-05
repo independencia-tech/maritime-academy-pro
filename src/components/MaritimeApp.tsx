@@ -29,7 +29,10 @@ import {
   getWrongAnswersForAttempt,
   drawRemedialQuestions,
   recordExamAttempt,
+  shuffle,
+  FOUNDATION_MODULE_IDS,
 } from "@/core/examEngine";
+import { getSummaryExamQuestions } from "@/core/examQuestionPools";
 const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
 const SpecializedLessonShared = lazy(() => import("./SpecializedLessonShared"));
 
@@ -1806,6 +1809,19 @@ const COMPETENCIES_S6:any = {
   pt:["✔ Realizar uma ronda de segurança e reconhecer os perigos a bordo","✔ Responder imediatamente às emergências comuns do navio","✔ Aplicar o EPI e os comportamentos seguros ligados ao fator humano","✔ Reportar uma emergência e iniciar a resposta inicial adequada","✔ Aplicar uma autorização de trabalho e realizar uma avaliação de riscos","✔ Manter uma cultura de segurança e uma responsabilidade profissional constante"],
 };
 
+// 13th exam ("Foundation Summary") competencies list — validated separately
+// 2026-09-05, per standing doctrine (content approval kept distinct from the
+// engine/UI wiring approval). Unlike the 12 per-module lists, stays at the
+// synthesis/prioritization level (one bullet per theme + a closing synthesis
+// line) rather than restating domain facts already claimed by those 12
+// modules' own competencies lists.
+const COMPETENCIES_FOUNDATION_SUMMARY:any = {
+  fr:["✔ Prioriser correctement face à des risques combinés de navigation, météo et stabilité","✔ Séquencer les actions immédiates face à une avarie structurelle et sa réponse procédurale","✔ Concilier action opérationnelle d'urgence et obligations de signalement réglementaire","✔ Coordonner les premiers secours avec une assistance médicale externe","✔ Exercer un jugement et un leadership fiables lors d'un abandon de navire sous conditions dégradées","✔ Combiner connaissance des règles et rigueur de communication en visibilité réduite","✔ Synthétiser les compétences des 12 modules Foundation Deck et Safety en une prise de décision transversale unique"],
+  en:["✔ Prioritize correctly when navigation, weather, and stability risks compound","✔ Sequence immediate actions across a structural emergency and its procedural response","✔ Balance urgent operational action against regulatory reporting obligations","✔ Coordinate first aid with external medical assistance","✔ Exercise reliable judgment and leadership during an abandon-ship situation under degraded conditions","✔ Combine rule knowledge with communication discipline under reduced visibility","✔ Synthesize the 12 Foundation Deck and Safety modules into a single cross-domain decision-making competency"],
+  es:["✔ Priorizar correctamente ante riesgos combinados de navegación, meteorología y estabilidad","✔ Secuenciar las acciones inmediatas ante una avería estructural y su respuesta procedimental","✔ Conciliar la acción operativa urgente con las obligaciones de notificación reglamentaria","✔ Coordinar los primeros auxilios con una asistencia médica externa","✔ Ejercer un juicio y un liderazgo fiables durante un abandono del buque en condiciones degradadas","✔ Combinar el conocimiento de las reglas con la disciplina de comunicación en visibilidad reducida","✔ Sintetizar los 12 módulos Foundation de Deck y Safety en una única competencia de toma de decisiones transversal"],
+  pt:["✔ Priorizar corretamente perante riscos combinados de navegação, meteorologia e estabilidade","✔ Sequenciar as ações imediatas perante uma avaria estrutural e a sua resposta processual","✔ Conciliar a ação operacional urgente com as obrigações de notificação regulamentar","✔ Coordenar os primeiros socorros com uma assistência médica externa","✔ Exercer um julgamento e uma liderança fiáveis durante um abandono do navio em condições degradadas","✔ Combinar o conhecimento das regras com a disciplina de comunicação em visibilidade reduzida","✔ Sintetizar os 12 módulos Foundation de Deck e Safety numa única competência de tomada de decisão transversal"],
+};
+
 // ── Shared exam engine wiring (2026-09-02 refactor) ─────────────────────
 // Extracted from NavigationLessonsPage (d1's original, one-off implementation)
 // into a moduleId-parametrized hook + presentational components so a second
@@ -1921,6 +1937,85 @@ function useModuleExam({ moduleId, lang, currentRankId, targetRankId }:{moduleId
     examView, examMode, examQuestions, examResult,
     examStarting, examBlockedUntil, examError, startExam,
     remedialStarting, remedialBlockedUntil, remedialError, startRemedial, remedialCooldownNow,
+    finishExam, backToList,
+  };
+}
+
+// 13th exam ("Foundation Summary") — unlocks once the user has at least one
+// "foundation" attempt (not necessarily passed) recorded for each of the 12
+// FOUNDATION_MODULE_IDS, confirmed doctrine (attempted, not passed). Reuses
+// getLatestExamAttempt/canAttemptExam/recordExamAttempt exactly as-is with a
+// new moduleId ("foundation_summary") — no new query shape, no new RLS
+// surface (policies are user_id-only). No remedial mode for this exam
+// (explicit scope decision, 2026-09-05) — remedialCooldownNow is hardcoded
+// to ineligible so ExamResultScreen's existing remedial-offer block simply
+// never renders, without needing to touch that shared component's logic.
+function useFoundationSummaryExam({ lang }:{lang:string}) {
+  const [checked, setChecked] = useState(false);
+  const [attemptedCount, setAttemptedCount] = useState(0);
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (!user) { setChecked(true); return; }
+      const results = await Promise.all(
+        FOUNDATION_MODULE_IDS.map((mid) => getLatestExamAttempt(user.id, mid, "foundation"))
+      );
+      setAttemptedCount(results.filter((r) => !!r).length);
+      setChecked(true);
+    });
+  }, []);
+
+  const [examView, setExamView] = useState<"list"|"running"|"result">("list");
+  const [examQuestions, setExamQuestions] = useState<any[]>([]);
+  const [examResult, setExamResult] = useState<{score:number;maxScore:number;passed:boolean;answers:{questionId:string;lessonId:string;wasCorrect:boolean;selectedIndex:number}[]}|null>(null);
+  const [examStarting, setExamStarting] = useState(false);
+  const [examBlockedUntil, setExamBlockedUntil] = useState<Date|null>(null);
+  const [examError, setExamError] = useState<string|null>(null);
+
+  const startExam = async () => {
+    setExamStarting(true);
+    setExamError(null);
+    setExamBlockedUntil(null);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setExamStarting(false); return; }
+    const latestAttempt = await getLatestExamAttempt(user.id, "foundation_summary", "foundation");
+    const cooldown = canAttemptExam(latestAttempt);
+    if (!cooldown.allowed) {
+      setExamBlockedUntil(cooldown.nextAvailableAt);
+      setExamStarting(false);
+      return;
+    }
+    const questions = shuffle(getSummaryExamQuestions(lang));
+    if (questions.length === 0) {
+      setExamError("no_questions");
+      setExamStarting(false);
+      return;
+    }
+    setExamQuestions(questions);
+    setExamView("running");
+    setExamStarting(false);
+  };
+
+  const finishExam = async (score:number, maxScore:number, answers:{questionId:string;lessonId:string;wasCorrect:boolean;selectedIndex:number}[]) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    const { passed } = await recordExamAttempt(user.id, "foundation_summary", "foundation", score, maxScore, answers);
+    setExamResult({ score, maxScore, passed, answers });
+    setExamView("result");
+  };
+
+  const backToList = () => {
+    setExamView("list");
+    setExamQuestions([]);
+    setExamResult(null);
+  };
+
+  return {
+    moduleId: "foundation_summary", examMode: "exam" as const,
+    checked, attemptedCount, totalRequired: FOUNDATION_MODULE_IDS.length,
+    unlocked: checked && attemptedCount === FOUNDATION_MODULE_IDS.length,
+    examView, examQuestions, examResult,
+    examStarting, examBlockedUntil, examError, startExam,
+    remedialCooldownNow: { eligible: false, allowed: false, nextAvailableAt: null as Date|null },
     finishExam, backToList,
   };
 }
@@ -2083,7 +2178,7 @@ function ExamResultScreen({ exam, lang, title, backLabel, onPick, competencies }
                     })}
                   </div>
                   <div style={{fontSize:11,color:"rgba(240,244,255,0.5)",lineHeight:1.5,marginBottom:a.wasCorrect?0:8}}>{q.expl}</div>
-                  {!a.wasCorrect && (
+                  {!a.wasCorrect && exam.moduleId !== "foundation_summary" && (
                     <button onClick={()=>onPick(a.lessonId.slice(a.lessonId.indexOf("-")+1))} style={{fontSize:11,color:"#4da6ff",background:"none",border:"none",cursor:"pointer",padding:0}}>
                       {RT.reviewLessonLink}
                     </button>
@@ -3313,6 +3408,97 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, 
   );
   }
 
+// 13th exam ("Foundation Summary") — entry screen. Unlike the 12 per-module
+// pages above, this has no lesson list to embed the exam button into (the
+// exam is cross-domain, not tied to one module's lessons) — hence a
+// standalone page, entered from a new Dashboard banner rather than from
+// inside a module's own lesson list. Reuses ExamRunningScreen/
+// ExamResultScreen exactly as every other module does — same signature,
+// same inherited "MAP — powered by Independencia" footer.
+function FoundationSummaryPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
+  const exam = useFoundationSummaryExam({ lang });
+  const t = NAV_T[lang] || NAV_T.fr;
+  const titleT:any = {
+    fr:"13e Examen — Foundation Summary", en:"13th Exam — Foundation Summary",
+    es:"13.º Examen — Foundation Summary", pt:"13.º Exame — Foundation Summary",
+  };
+  const title = titleT[lang] || titleT.fr;
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={()=>{}} competencies={COMPETENCIES_FOUNDATION_SUMMARY}/>;
+
+  const L:any = {
+    fr:{
+      intro:"Un examen transversal combinant navigation, sécurité, et prise de décision sous pression — 20 questions, 6 scénarios, à travers les 12 modules Foundation.",
+      progress:(n:number)=>`Progression : ${n}/${FOUNDATION_MODULE_IDS.length} modules Foundation tentés`,
+      lockedHint:"Débloqué dès que tu as tenté l'examen Foundation de chacun des 12 modules Deck et Safety — la réussite n'est pas requise, seulement la tentative.",
+      startBtn:"📝 COMMENCER L'EXAMEN", starting:"Préparation de l'examen…",
+      cooldown:(d:Date)=>`Tu as déjà tenté cet examen récemment. Prochain essai disponible le ${d.toLocaleDateString(lang)}.`,
+      noQuestions:"Aucune question disponible pour le moment.",
+    },
+    en:{
+      intro:"A cross-domain exam combining navigation, safety, and decision-making under pressure — 20 questions, 6 scenarios, spanning all 12 Foundation modules.",
+      progress:(n:number)=>`Progress: ${n}/${FOUNDATION_MODULE_IDS.length} Foundation modules attempted`,
+      lockedHint:"Unlocks once you've attempted the Foundation exam for each of the 12 Deck and Safety modules — passing is not required, only the attempt.",
+      startBtn:"📝 START THE EXAM", starting:"Preparing the exam…",
+      cooldown:(d:Date)=>`You already attempted this exam recently. Next attempt available on ${d.toLocaleDateString(lang)}.`,
+      noQuestions:"No questions available at the moment.",
+    },
+    es:{
+      intro:"Un examen transversal que combina navegación, seguridad y toma de decisiones bajo presión — 20 preguntas, 6 escenarios, a través de los 12 módulos Foundation.",
+      progress:(n:number)=>`Progreso: ${n}/${FOUNDATION_MODULE_IDS.length} módulos Foundation intentados`,
+      lockedHint:"Se desbloquea en cuanto hayas intentado el examen Foundation de cada uno de los 12 módulos Deck y Safety — no es necesario aprobar, solo intentarlo.",
+      startBtn:"📝 EMPEZAR EL EXAMEN", starting:"Preparando el examen…",
+      cooldown:(d:Date)=>`Ya intentaste este examen recientemente. Próximo intento disponible el ${d.toLocaleDateString(lang)}.`,
+      noQuestions:"No hay preguntas disponibles por el momento.",
+    },
+    pt:{
+      intro:"Um exame transversal que combina navegação, segurança e tomada de decisão sob pressão — 20 perguntas, 6 cenários, ao longo dos 12 módulos Foundation.",
+      progress:(n:number)=>`Progresso: ${n}/${FOUNDATION_MODULE_IDS.length} módulos Foundation tentados`,
+      lockedHint:"Desbloqueia assim que tiveres tentado o exame Foundation de cada um dos 12 módulos Deck e Safety — não é preciso passar, apenas tentar.",
+      startBtn:"📝 COMEÇAR O EXAME", starting:"A preparar o exame…",
+      cooldown:(d:Date)=>`Já tentaste este exame recentemente. Próxima tentativa disponível em ${d.toLocaleDateString(lang)}.`,
+      noQuestions:"Não há perguntas disponíveis no momento.",
+    },
+  };
+  const Lt = L[lang] || L.fr;
+
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <div style={{fontSize:13,color:"rgba(240,244,255,0.75)",lineHeight:1.7,marginBottom:16}}>{Lt.intro}</div>
+        <div style={{fontSize:12,fontWeight:700,color:"#c9922a",background:"rgba(201,146,42,0.1)",border:"1px solid rgba(201,146,42,0.35)",borderRadius:10,padding:"10px 12px",marginBottom:14}}>
+          📊 {Lt.progress(exam.attemptedCount)}
+        </div>
+        {!exam.unlocked && exam.checked && (
+          <div style={{fontSize:12,color:"rgba(240,244,255,0.6)",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:10,padding:"10px 12px"}}>
+            {Lt.lockedHint}
+          </div>
+        )}
+        {exam.unlocked && (
+          <div style={{marginTop:6}}>
+            <button onClick={exam.startExam} disabled={exam.examStarting} style={{
+              width:"100%",padding:"14px 0",border:"none",borderRadius:14,
+              background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
+              fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:700,letterSpacing:2,
+              color:"#fff",cursor:exam.examStarting?"default":"pointer",opacity:exam.examStarting?0.6:1,
+            }}>
+              {exam.examStarting ? Lt.starting : Lt.startBtn}
+            </button>
+            {exam.examBlockedUntil && (
+              <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{Lt.cooldown(exam.examBlockedUntil)}</div>
+            )}
+            {exam.examError === "no_questions" && (
+              <div style={{fontSize:11,color:"#c0392b",marginTop:8,textAlign:"center"}}>{Lt.noQuestions}</div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ── ROOT ───────────────────────────────────────────────────────
 export default function App() {
   return (
@@ -3527,6 +3713,10 @@ try { localStorage.removeItem("map_lesson_scores"); } catch {}
   return () => listener.subscription.unsubscribe();
 }, []);
   const [lang, setLang] = useState("fr");
+  // Dashboard-banner status only (attemptedCount/unlocked) — the actual exam
+  // flow (startExam/finishExam/etc.) runs through its own separate instance
+  // of this hook inside FoundationSummaryPage when that page is visited.
+  const foundationSummaryStatus = useFoundationSummaryExam({ lang });
 const [profile, setProfile] = useState({});
 const [completedLessons, setCompletedLessons] = useState<string[]>([]);
 // Per-lesson quiz score, keyed by composite lesson id (same id space as
@@ -4083,6 +4273,10 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
             completedLessons={completedLessons}
             activeTab={dashboardTab}
             onActiveTabChange={setDashboardTab}
+            foundationSummaryAttemptedCount={foundationSummaryStatus.attemptedCount}
+            foundationSummaryTotalRequired={foundationSummaryStatus.totalRequired}
+            foundationSummaryUnlocked={foundationSummaryStatus.unlocked}
+            onOpenFoundationSummary={() => setPage("foundation_summary")}
             onViewStatus={() => setPage("status")}
             onEditProfile={() => setPage("questionnaire")}
             onStartModule={(m:any) => {
@@ -4654,6 +4848,9 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onNext={() => { markLessonCompleted("s5-l4"); setPage("dashboard"); }}
     onQuizScored={(score:number, maxScore:number) => saveLessonScore("s5-l4", score, maxScore)}/>
 )}
+    {page === "foundation_summary" && (
+      <FoundationSummaryPage lang={lang} onBack={() => setPage("dashboard")}/>
+    )}
     {page === "s6_lessons" && (
   <S6LessonsPage
     lang={lang}

@@ -64,7 +64,15 @@ export function getExamEligibleLessonIds(moduleId, currentRankId, targetRankId) 
   return moduleLessonIds.filter((id) => trajectoryLessonIds.has(id));
 }
 
-function shuffle(arr) {
+// The 12 Foundation modules a Deck+Safety learner must have attempted before
+// the 13th ("Foundation Summary") exam unlocks — d5 permanently out of scope
+// (see project memory). Single source of truth, reused by
+// useFoundationSummaryExam's unlock check in MaritimeApp.tsx so the list
+// never drifts out of sync between the count confirmed to the user (12) and
+// the actual modules checked.
+export const FOUNDATION_MODULE_IDS = ["d1", "d2", "d3", "d4", "d6", "d7", "s1", "s2", "s3", "s4", "s5", "s6"];
+
+export function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
