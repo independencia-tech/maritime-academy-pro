@@ -9,10 +9,10 @@ const C = {
 };
 
 const T = {
-  fr:{ back:"◀ Retour", module:"Navigation & Cartographie", xp:"XP gagnés", quiz:"QUIZ", question:"Question", ofQ:"sur", correct:"✓ Bonne réponse!", wrong:"✗ Mauvaise réponse", expl:"Explication:", next:"SUIVANT →", finish:"VOIR MON SCORE →", startQuiz:"✅ COMMENCER LE QUIZ", result:"RÉSULTAT", complete:"🏅 MODULE TERMINÉ!", backDash:"← RETOUR AU DASHBOARD", youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz", scorePerf:"Parfait ! 🌟", scoreGreat:"Excellent ! 💪", scoreGood:"Continue ! 📚", showCorr:"Voir la correction", hideCorr:"Masquer" },
-  en:{ back:"◀ Back", module:"Navigation & Cartography", xp:"XP earned", quiz:"QUIZ", question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer", expl:"Explanation:", next:"NEXT →", finish:"SEE MY SCORE →", startQuiz:"✅ START QUIZ", result:"RESULT", complete:"🏅 MODULE COMPLETE!", backDash:"← BACK TO DASHBOARD", youLearned:"You learned:", readFirst:"Read the content then start the quiz", scorePerf:"Perfect! 🌟", scoreGreat:"Excellent! 💪", scoreGood:"Keep going! 📚", showCorr:"Show correction", hideCorr:"Hide" },
-  es:{ back:"◀ Volver", module:"Navegación & Cartografía", xp:"XP ganados", quiz:"QUIZ", question:"Pregunta", ofQ:"de", correct:"✓ ¡Correcta!", wrong:"✗ Incorrecta", expl:"Explicación:", next:"SIGUIENTE →", finish:"VER PUNTUACIÓN →", startQuiz:"✅ EMPEZAR QUIZ", result:"RESULTADO", complete:"🏅 ¡MÓDULO COMPLETO!", backDash:"← VOLVER AL PANEL", youLearned:"Has aprendido:", readFirst:"Lee y luego comienza", scorePerf:"¡Perfecto! 🌟", scoreGreat:"¡Excelente! 💪", scoreGood:"¡Sigue! 📚", showCorr:"Ver corrección", hideCorr:"Ocultar" },
-  pt:{ back:"◀ Voltar", module:"Navegação & Cartografia", xp:"XP ganhos", quiz:"QUIZ", question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada", expl:"Explicação:", next:"PRÓXIMO →", finish:"VER PONTUAÇÃO →", startQuiz:"✅ COMEÇAR QUIZ", result:"RESULTADO", complete:"🏅 MÓDULO CONCLUÍDO!", backDash:"← VOLTAR AO PAINEL", youLearned:"Você aprendeu:", readFirst:"Leia o conteúdo e depois comece", scorePerf:"Perfeito! 🌟", scoreGreat:"Excelente! 💪", scoreGood:"Continue! 📚", showCorr:"Ver correção", hideCorr:"Ocultar" },
+  fr:{ back:"◀ Retour", module:"Navigation & Cartographie", xp:"XP gagnés", quiz:"QUIZ", question:"Question", ofQ:"sur", correct:"✓ Bonne réponse!", wrong:"✗ Mauvaise réponse", expl:"Explication:", next:"SUIVANT →", finish:"VOIR MON SCORE →", startQuiz:"✅ COMMENCER LE QUIZ", result:"RÉSULTAT", complete:"🏅 LEÇON TERMINÉE!", backDash:"← RETOUR AU DASHBOARD", youLearned:"Tu as appris:", readFirst:"Lis le contenu puis commence le quiz", scorePerf:"Parfait ! 🌟", scoreGreat:"Excellent ! 💪", scoreGood:"Continue ! 📚", showCorr:"Voir la correction", hideCorr:"Masquer" },
+  en:{ back:"◀ Back", module:"Navigation & Cartography", xp:"XP earned", quiz:"QUIZ", question:"Question", ofQ:"of", correct:"✓ Correct!", wrong:"✗ Wrong answer", expl:"Explanation:", next:"NEXT →", finish:"SEE MY SCORE →", startQuiz:"✅ START QUIZ", result:"RESULT", complete:"🏅 LESSON COMPLETE!", backDash:"← BACK TO DASHBOARD", youLearned:"You learned:", readFirst:"Read the content then start the quiz", scorePerf:"Perfect! 🌟", scoreGreat:"Excellent! 💪", scoreGood:"Keep going! 📚", showCorr:"Show correction", hideCorr:"Hide" },
+  es:{ back:"◀ Volver", module:"Navegación & Cartografía", xp:"XP ganados", quiz:"QUIZ", question:"Pregunta", ofQ:"de", correct:"✓ ¡Correcta!", wrong:"✗ Incorrecta", expl:"Explicación:", next:"SIGUIENTE →", finish:"VER PUNTUACIÓN →", startQuiz:"✅ EMPEZAR QUIZ", result:"RESULTADO", complete:"🏅 ¡COMPLETADA!", backDash:"← VOLVER AL PANEL", youLearned:"Has aprendido:", readFirst:"Lee y luego comienza", scorePerf:"¡Perfecto! 🌟", scoreGreat:"¡Excelente! 💪", scoreGood:"¡Sigue! 📚", showCorr:"Ver corrección", hideCorr:"Ocultar" },
+  pt:{ back:"◀ Voltar", module:"Navegação & Cartografia", xp:"XP ganhos", quiz:"QUIZ", question:"Pergunta", ofQ:"de", correct:"✓ Correto!", wrong:"✗ Errada", expl:"Explicação:", next:"PRÓXIMO →", finish:"VER PONTUAÇÃO →", startQuiz:"✅ COMEÇAR QUIZ", result:"RESULTADO", complete:"🏅 CONCLUÍDA!", backDash:"← VOLTAR AO PAINEL", youLearned:"Você aprendeu:", readFirst:"Leia o conteúdo e depois comece", scorePerf:"Perfeito! 🌟", scoreGreat:"Excelente! 💪", scoreGood:"Continue! 📚", showCorr:"Ver correção", hideCorr:"Ocultar" },
 };
 
 // ══════════════════════════════════════
@@ -627,7 +627,7 @@ function QuizComp({questions,t,onComplete}){
 const getContent = lang => {
   const d = {
     fr:{
-      badge:"📚 Navigation & Cartographie · Leçon 8/8 · ⭐ Premium · 200 XP · 🏁 FIN DU MODULE",
+      badge:"📚 Navigation & Cartographie · Leçon 8/10 · ⭐ Premium · 200 XP",
       title:"COLREG Avancé — Règles de Route en Mer",
       intro:"Le COLREG (Convention on the International Regulations for Preventing Collisions at Sea) est la LOI internationale de la navigation. 38 règles et 4 annexes. Obligatoire sur TOUS les navires dans TOUTES les eaux.\n\nUne collision en mer = responsabilité pénale et civile. Ces règles ne sont pas des recommandations — ce sont des obligations légales.",
       p1:"PARTIE 1 — STRUCTURE COLREG",s1t:"Les 38 règles organisées en 5 sections",
@@ -639,12 +639,12 @@ const getContent = lang => {
       s4:"FEUX OBLIGATOIRES (Rules 23-31) :\n\nNavire à moteur en route :\n• Feu blanc de tête de mât (avant)\n• Feux de côté : rouge (bâbord) + vert (tribord)\n• Feu blanc de poupe\n\nRule 20 : allumés du coucher au lever\nET par visibilité réduite de jour\n\nNavire à l'ancre :\n• 1 feu blanc tout-horizon (< 50m)\n• 2 feux blancs (> 50m)\n• Boule noire de jour à la proue\n\nNUC (Rule 27) :\n• 2 feux rouges verticaux\nRAM (Rule 27) : rouge-blanc-rouge\nPêche (Rule 26) : vert-blanc verticaux\nRemorqueur (Rule 24) : 2 blancs + 1 jaune",
       p5:"PARTIE 5 — SIGNAUX SONORES (Rules 32-37)",
       p6:"🎯 EXERCICES AVANCÉS PREMIUM",p7:"⚠️ CAS RÉEL",p8:"📝 BANQUE 15 QUESTIONS PREMIUM",
-      sumT:"RÉSUMÉ — LEÇON 8 · FIN DU MODULE",
+      sumT:"RÉSUMÉ — LEÇON 8",
       sumP:["Rule 18 : NUC>RAM>Tirant>Pêche>Voilier>Moteur","Rule 13 : qui rattrape = TOUJOURS manœuvrant","Rule 14 : face à face → les DEUX virent à tribord","Rule 15 : croisement → tribord = privilégié","Rule 16 : action franche, positive et tôt","Feux : blanc(mât)+rouge+vert+blanc(poupe)","NUC : 2 rouges · RAM : rouge-blanc-rouge","5 sons courts = ALARME · 1 long = moteur brume"],
       learnedP:["Rule 18 : NUC>RAM>Tirant>Pêche>Voilier>Moteur","Rule 13 rattrapage · Rule 14 face à face · Rule 15 croisement","Rule 16 action franche · Rule 17 privilégié","Feux navigation : moteur · ancre · NUC · remorqueur","5 sons courts = ALARME · signaux brume Rule 35","COLREG = obligations légales, pas recommandations"],
     },
     en:{
-      badge:"📚 Navigation & Cartography · Lesson 8/8 · ⭐ Premium · 200 XP · 🏁 MODULE COMPLETE",
+      badge:"📚 Navigation & Cartography · Lesson 8/10 · ⭐ Premium · 200 XP",
       title:"Advanced COLREG — Rules of the Road at Sea",
       intro:"COLREG (Convention on the International Regulations for Preventing Collisions at Sea) is the international LAW of navigation. 38 rules and 4 annexes. Mandatory on ALL vessels in ALL waters.\n\nA collision at sea = criminal and civil liability. These rules are not recommendations — they are legal obligations.",
       p1:"PART 1 — COLREG STRUCTURE",s1t:"38 rules organized in 5 sections",
@@ -656,12 +656,12 @@ const getContent = lang => {
       s4:"MANDATORY LIGHTS (Rules 23-31):\n\nPower vessel underway:\n• White masthead light\n• Side lights: red (port) + green (starboard)\n• White stern light\n\nRule 20: on from sunset to sunrise\nAND in restricted visibility by day\n\nVessel at anchor:\n• 1 all-round white (< 50m)\n• 2 white lights (> 50m)\n• Black ball at bow by day\n\nNUC (Rule 27): 2 vertical red lights\nRAM (Rule 27): red-white-red\nFishing (Rule 26): green-white vertical\nTowing (Rule 24): 2 white + 1 yellow",
       p5:"PART 5 — SOUND SIGNALS (Rules 32-37)",
       p6:"🎯 ADVANCED PREMIUM EXERCISES",p7:"⚠️ REAL ACCIDENT CASE",p8:"📝 QUESTION BANK — 15 PREMIUM",
-      sumT:"SUMMARY — LESSON 8 · MODULE COMPLETE",
+      sumT:"SUMMARY — LESSON 8",
       sumP:["Rule 18: NUC>RAM>Draft>Fishing>Sailing>Power","Rule 13: overtaking = ALWAYS give-way","Rule 14: head-on → BOTH alter to starboard","Rule 15: crossing → starboard = stand-on","Rule 16: early, positive, substantial action","Lights: white(mast)+red+green+white(stern)","NUC: 2 red · RAM: red-white-red","5 short = ALARM · 1 long = power vessel fog"],
       learnedP:["Rule 18: NUC>RAM>Draft>Fishing>Sailing>Power","Rule 13 overtaking · Rule 14 head-on · Rule 15 crossing","Rule 16 give-way action · Rule 17 stand-on","Navigation lights: power · anchor · NUC · towing","5 short = ALARM · fog signals Rule 35","COLREG = legal obligations, not recommendations"],
     },
     es:{
-      badge:"📚 Navegación & Cartografía · Lección 8/8 · ⭐ Premium · 200 XP · 🏁 FIN DEL MÓDULO",
+      badge:"📚 Navegación & Cartografía · Lección 8/10 · ⭐ Premium · 200 XP",
       title:"COLREG Avanzado — Reglas de la Vía Marítima",
       intro:"El COLREG es la LEY internacional de navegación. 38 reglas y 4 anexos. Obligatorio en TODOS los buques en TODAS las aguas.\n\nUna colisión en el mar = responsabilidad penal y civil. Estas reglas son obligaciones legales.",
       p1:"PARTE 1 — ESTRUCTURA COLREG",s1t:"38 reglas organizadas en 5 secciones",
@@ -673,12 +673,12 @@ const getContent = lang => {
       s4:"LUCES OBLIGATORIAS:\nBuque de motor: blanco palo + rojo/verde costados + blanco popa\nFondeado: 1 blanco todo horizonte (<50m) · 2 blancos (>50m)\nNBC (Regla 27): 2 rojos verticales\nMCM: rojo-blanco-rojo\nPesca (Regla 26): verde-blanco\nRemolcador (Regla 24): 2 blancos + 1 amarillo",
       p5:"PARTE 5 — SEÑALES SONORAS (Reglas 32-37)",
       p6:"🎯 EJERCICIOS AVANZADOS PREMIUM",p7:"⚠️ CASO REAL",p8:"📝 BANCO 15 PREGUNTAS PREMIUM",
-      sumT:"RESUMEN — LECCIÓN 8 · FIN DEL MÓDULO",
+      sumT:"RESUMEN — LECCIÓN 8",
       sumP:["Regla 18: NBC>MCM>Calado>Pesca>Velero>Motor","Regla 13: el que alcanza = SIEMPRE de maniobra","Regla 14: cara a cara → AMBOS viran a estribor","Regla 15: cruce → estribor = privilegiado","Luces: blanco(palo)+rojo+verde+blanco(popa)","NBC: 2 rojos · MCM: rojo-blanco-rojo","5 cortos = ALARMA · 1 largo = motor niebla"],
       learnedP:["Regla 18 jerarquía · Regla 13 alcance · Regla 14 cara a cara","Regla 15 cruce · Regla 16 maniobra · Regla 17 privilegiado","Luces navegación · 5 cortos = ALARMA","COLREG = obligaciones legales"],
     },
     pt:{
-      badge:"📚 Navegação & Cartografia · Lição 8/8 · ⭐ Premium · 200 XP · 🏁 FIM DO MÓDULO",
+      badge:"📚 Navegação & Cartografia · Lição 8/10 · ⭐ Premium · 200 XP",
       title:"COLREG Avançado — Regras da Via Marítima",
       intro:"O COLREG é a LEI internacional da navegação. 38 regras e 4 anexos. Obrigatório em TODOS os navios em TODAS as águas.\n\nUma colisão no mar = responsabilidade penal e civil. Estas regras são obrigações legais.",
       p1:"PARTE 1 — ESTRUTURA COLREG",s1t:"38 regras organizadas em 5 secções",
@@ -690,7 +690,7 @@ const getContent = lang => {
       s4:"LUZES OBRIGATÓRIAS:\nNavio a motor: branco mastro + vermelho/verde bordos + branco popa\nFundeado: 1 branco todo-horizonte (<50m) · 2 brancos (>50m)\nNMC (Regra 27): 2 vermelhos verticais\nCAM: vermelho-branco-vermelho\nPesca (Regra 26): verde-branco\nRebocador (Regra 24): 2 brancos + 1 amarelo",
       p5:"PARTE 5 — SINAIS SONOROS (Regras 32-37)",
       p6:"🎯 EXERCÍCIOS AVANÇADOS PREMIUM",p7:"⚠️ CASO REAL",p8:"📝 BANCO 15 QUESTÕES PREMIUM",
-      sumT:"RESUMO — LIÇÃO 8 · FIM DO MÓDULO",
+      sumT:"RESUMO — LIÇÃO 8",
       sumP:["Regra 18: NMC>CAM>Calado>Pesca>Veleiro>Motor","Regra 13: o que ultrapassa = SEMPRE de manobra","Regra 14: frente a frente → AMBOS viram a estibordo","Regra 15: cruzamento → estibordo = privilegiado","Luzes: branco(mastro)+verm+verde+branco(popa)","NMC: 2 vermelhos · CAM: verm-branco-verm","5 curtos = ALARME · 1 longo = motor nevoeiro"],
       learnedP:["Regra 18 hierarquia · Regra 13 · Regra 14 · Regra 15","Regra 16 manobra · Regra 17 privilegiado","Luzes navegação · 5 curtos = ALARME","COLREG = obrigações legais"],
     },
@@ -720,7 +720,7 @@ export default function LessonCOLREG({ lang="fr", onBack=()=>{}, onComplete=()=>
           <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
           <div style={{flex:1}}>
             <div style={{fontSize:10,color:C.gold,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>{t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>Leçon 8/8 🏁</div>
+            <div style={{fontSize:11,color:C.muted}}>Leçon 8/10</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>
@@ -792,39 +792,23 @@ export default function LessonCOLREG({ lang="fr", onBack=()=>{}, onComplete=()=>
               <div style={{fontFamily:"'Cinzel',serif",fontSize:18,fontWeight:700,color:C.white,marginBottom:4}}>
                 {lang==="fr"?"Quiz Final — COLREG Avancé":lang==="en"?"Final Quiz — Advanced COLREG":lang==="es"?"Quiz Final — COLREG Avanzado":"Quiz Final — COLREG Avançado"}
               </div>
-              <div style={{fontSize:12,color:C.muted}}>5 questions · Leçon 8/8 · 🏁</div>
+              <div style={{fontSize:12,color:C.muted}}>5 questions · Leçon 8/10</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s=>{setQuizScore(s);onQuizScored(s,quiz.length);setTimeout(()=>setPhase("done"),1200);}}/>
           </>}
 
           {phase==="done"&&<div style={{paddingTop:10}}>
-            {/* Module completion celebration */}
-            <div style={{textAlign:"center",marginBottom:20,padding:"20px 16px",borderRadius:20,background:"linear-gradient(135deg,rgba(201,146,42,0.15),rgba(26,111,212,0.1))",border:`1px solid ${C.gold}44`}}>
-              <div style={{fontSize:72,marginBottom:8}}>🏆</div>
-              <div style={{fontFamily:"'Cinzel',serif",fontSize:22,fontWeight:700,color:C.gold2,marginBottom:4}}>
-                {lang==="fr"?"MODULE TERMINÉ !":lang==="en"?"MODULE COMPLETE!":lang==="es"?"¡MÓDULO COMPLETADO!":"MÓDULO CONCLUÍDO!"}
-              </div>
-              <div style={{fontSize:14,color:C.white,marginBottom:12}}>
-                {lang==="fr"?"Navigation & Cartographie — 8 leçons maîtrisées 🧭":
-                 lang==="en"?"Navigation & Cartography — 8 lessons mastered 🧭":
-                 lang==="es"?"Navegación & Cartografía — 8 lecciones dominadas 🧭":
-                 "Navegação & Cartografia — 8 lições concluídas 🧭"}
-              </div>
-              <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
-                {["L1","L2","L3","L4","L5","L6","L7","L8"].map((l,i)=>(
-                  <div key={i} style={{width:36,height:36,borderRadius:10,background:C.green,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:C.white}}>{l}</div>
-                ))}
-              </div>
-            </div>
-            <div style={{display:"inline-flex",width:"100%",justifyContent:"center",alignItems:"center",gap:8,padding:"8px 20px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}55`,fontSize:14,color:C.gold2,fontWeight:700,marginBottom:16,boxSizing:"border-box"}}>
-              +{quizScore>=4?200:quizScore===3?120:60} {t.xp} ⭐ · {lang==="fr"?"Quiz":"Quiz"}: {quizScore}/5
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontSize:64,marginBottom:10}}>🏅</div>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:22,fontWeight:700,color:C.white,marginBottom:8}}>{t.complete}</div>
+              <div style={{display:"inline-flex",alignItems:"center",gap:8,padding:"8px 20px",borderRadius:20,background:"rgba(201,146,42,0.15)",border:`1px solid ${C.gold}55`,fontSize:14,color:C.gold2,fontWeight:700}}>+{quizScore>=4?200:quizScore===3?120:60} {t.xp} ⭐</div>
             </div>
             <Card style={{marginBottom:16}}>
               <div style={{fontSize:11,color:C.muted,marginBottom:10,fontFamily:"'Cinzel',serif",letterSpacing:1}}>{t.youLearned}</div>
               {lc.learnedP.map((pt,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 0",borderBottom:i<lc.learnedP.length-1?"1px solid rgba(255,255,255,0.05)":"none",fontSize:12,color:C.white}}><span style={{color:C.green,fontWeight:700}}>✓</span>{pt}</div>)}
             </Card>
             <button onClick={onNext} style={{width:"100%",padding:"16px 0",border:"none",borderRadius:16,background:`linear-gradient(135deg,${C.gold},${C.blue})`,fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:700,letterSpacing:2,color:C.white,cursor:"pointer",boxShadow:"0 8px 28px rgba(201,146,42,0.4)",marginBottom:10}}>
-              {lang==="fr"?"🎯 EXPLORER LES AUTRES MODULES →":lang==="en"?"🎯 EXPLORE OTHER MODULES →":lang==="es"?"🎯 EXPLORAR OTROS MÓDULOS →":"🎯 EXPLORAR OUTROS MÓDULOS →"}
+              {lang==="fr"?"LEÇON 9 — ORDRES DE BARRE →":lang==="en"?"LESSON 9 — STEERING & HELM ORDERS →":lang==="es"?"LECCIÓN 9 — ÓRDENES DE TIMÓN →":"LIÇÃO 9 — ORDENS DE LEME →"}
             </button>
             <button onClick={onBack} style={{width:"100%",padding:"12px 0",border:`1px solid rgba(255,255,255,0.15)`,borderRadius:14,background:"transparent",fontFamily:"'Nunito',sans-serif",fontSize:13,fontWeight:600,color:C.muted,cursor:"pointer"}}>{t.backDash}</button>
           </div>}

@@ -705,7 +705,7 @@ function QuizComp({questions,t,onComplete}){
 const getContent = lang => {
   const d = {
     fr:{
-      badge:"📚 Navigation & Cartographie · Leçon 6/8 · ⭐ Premium · 200 XP",
+      badge:"📚 Navigation & Cartographie · Leçon 6/10 · ⭐ Premium · 200 XP",
       title:"Navigation Pratique & Astronomique",
       intro:"Naviguer c'est savoir à tout moment répondre à une question simple : Où suis-je ?\n\nCette leçon enseigne les méthodes classiques et modernes pour déterminer et maintenir une position précise — de la formule D=V×T au sextant, en passant par les relèvements et l'ECDIS.",
       p1:"PARTIE 1 — NAVIGATION À L'ESTIME",
@@ -728,7 +728,7 @@ const getContent = lang => {
       learnedP:["D=V×T · estime = cap + vitesse + temps","Point = 2 relèvements · triangle d'erreur = 3 relèvements","Rv/Rc/Rr : Rv=Rc+δ+d ou Rv=Cap Vrai+Rr","Sextant · Ho · Hc · Intercept · Marcq-St-Hilaire","Crépuscule nautique = idéal pour nav. astronomique","COLREG Rule 5 = veille permanente tous les moyens","RADAR · AIS · ECDIS · VHF · GPS","Costa Concordia = ne jamais dévier route approuvée"],
     },
     en:{
-      badge:"📚 Navigation & Cartography · Lesson 6/8 · ⭐ Premium · 200 XP",
+      badge:"📚 Navigation & Cartography · Lesson 6/10 · ⭐ Premium · 200 XP",
       title:"Practical & Astronomical Navigation",
       intro:"Navigation means knowing at all times the answer to a simple question: Where am I?\n\nThis lesson covers classic and modern methods to determine and maintain precise position — from D=V×T to the sextant, bearings and ECDIS.",
       p1:"PART 1 — DEAD RECKONING",s1t:"Formula D = V × T and error accumulation",
@@ -745,7 +745,7 @@ const getContent = lang => {
       learnedP:["D=V×T · DR = course + speed + time","Fix = 2 bearings · triangle of error = 3 bearings","TB/CB/RB: TB=CB+δ+d or TB=True Course+RB","Sextant · Ho · Hc · Intercept · Marcq-St-Hilaire","Nautical twilight = ideal for astronomical nav.","COLREG Rule 5 = permanent watch all means","Costa Concordia = never deviate from approved route"],
     },
     es:{
-      badge:"📚 Navegación & Cartografía · Lección 6/8 · ⭐ Premium · 200 XP",
+      badge:"📚 Navegación & Cartografía · Lección 6/10 · ⭐ Premium · 200 XP",
       title:"Navegación Práctica & Astronómica",
       intro:"Navegar significa saber en todo momento la respuesta a una pregunta simple: ¿Dónde estoy?\n\nEsta lección enseña los métodos clásicos y modernos para determinar y mantener una posición precisa.",
       p1:"PARTE 1 — NAVEGACIÓN DE ESTIMA",s1t:"Fórmula D = V × T y acumulación de errores",
@@ -762,7 +762,7 @@ const getContent = lang => {
       learnedP:["D=V×T · Estima","Punto 2 marcaciones · triángulo error","Mv/Mc/Mr: Mv=Mc+δ+d o Mv=Rumbo Verdadero+Mr","Sextante · Marcq-St-Hilaire · crepúsculo","COLREG Regla 5 · RADAR · AIS · ECDIS","Costa Concordia = no desviarse"],
     },
     pt:{
-      badge:"📚 Navegação & Cartografia · Lição 6/8 · ⭐ Premium · 200 XP",
+      badge:"📚 Navegação & Cartografia · Lição 6/10 · ⭐ Premium · 200 XP",
       title:"Navegação Prática & Astronómica",
       intro:"Navegar significa saber a todo momento a resposta a uma simples pergunta: Onde estou?\n\nEsta lição ensina os métodos clássicos e modernos para determinar e manter uma posição precisa.",
       p1:"PARTE 1 — NAVEGAÇÃO POR ESTIMA",s1t:"Fórmula D = V × T e acumulação de erros",
@@ -805,7 +805,7 @@ export default function LessonNavPratique({ lang="fr", onBack=()=>{}, onComplete
           <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
           <div style={{flex:1}}>
             <div style={{fontSize:10,color:C.gold,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>{t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>Leçon 6/8</div>
+            <div style={{fontSize:11,color:C.muted}}>Leçon 6/10</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>

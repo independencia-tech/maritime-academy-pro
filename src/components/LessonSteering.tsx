@@ -558,7 +558,7 @@ const buildQuiz = (lang) => {
 const getContent = lang => {
   const d = {
     en: {
-      badge: "📚 Navigation & Cartography · Lesson 9/9 · ⭐ Premium · 200 XP · 🏁 MODULE COMPLETE",
+      badge: "📚 Navigation & Cartography · Lesson 9/10 · ⭐ Premium · 200 XP",
       title: "Steering & Helm Orders",
       intro: "The helmsman is the vessel's hands on the wheel — but every helm order follows a strict, standardised communication pattern. A misheard or misunderstood order at the wheel can send a vessel off course at the worst possible moment.\n\nThis lesson covers the steering orders simulator, how the rudder actually turns the vessel, the full order/response/meaning table, and the key formats that prevent dangerous confusion.",
       p1: "PART 1 — STEERING ORDERS SIMULATOR",
@@ -589,7 +589,7 @@ const getContent = lang => {
       ],
     },
     fr: {
-      badge: "📚 Navigation & Cartographie · Leçon 9/9 · ⭐ Premium · 200 XP · 🏁 FIN DU MODULE",
+      badge: "📚 Navigation & Cartographie · Leçon 9/10 · ⭐ Premium · 200 XP",
       title: "Ordres de Barre & Réponse du Navire",
       intro: "Le timonier est les mains du navire sur la barre — mais chaque ordre de barre suit un schéma de communication strict et standardisé. Un ordre mal entendu ou mal compris à la barre peut faire dévier le navire de sa route au pire moment.\n\nCette leçon couvre le simulateur d'ordres de barre, la façon dont le gouvernail fait réellement tourner le navire, le tableau complet ordre/réponse/signification, et les formats clés qui évitent les confusions dangereuses.",
       p1: "PARTIE 1 — SIMULATEUR D'ORDRES DE BARRE",
@@ -620,7 +620,7 @@ const getContent = lang => {
       ],
     },
     es: {
-      badge: "📚 Navegación & Cartografía · Lección 9/9 · ⭐ Premium · 200 XP · 🏁 FIN DEL MÓDULO",
+      badge: "📚 Navegación & Cartografía · Lección 9/10 · ⭐ Premium · 200 XP",
       title: "Órdenes de Timón y Respuesta del Buque",
       intro: "El timonel es las manos del buque en el timón — pero cada orden de timón sigue un patrón de comunicación estricto y estandarizado. Una orden mal oída o mal entendida en el timón puede desviar el buque de su rumbo en el peor momento.\n\nEsta lección cubre el simulador de órdenes de timón, cómo el timón realmente gira el buque, la tabla completa orden/respuesta/significado, y los formatos clave que evitan confusiones peligrosas.",
       p1: "PARTE 1 — SIMULADOR DE ÓRDENES DE TIMÓN",
@@ -651,7 +651,7 @@ const getContent = lang => {
       ],
     },
     pt: {
-      badge: "📚 Navegação & Cartografia · Lição 9/9 · ⭐ Premium · 200 XP · 🏁 FIM DO MÓDULO",
+      badge: "📚 Navegação & Cartografia · Lição 9/10 · ⭐ Premium · 200 XP",
       title: "Ordens de Leme e Resposta do Navio",
       intro: "O timoneiro é as mãos do navio no leme — mas cada ordem de leme segue um padrão de comunicação estrito e padronizado. Uma ordem mal ouvida ou mal compreendida no leme pode desviar o navio do seu rumo no pior momento.\n\nEsta lição cobre o simulador de ordens de leme, a forma como o leme realmente vira o navio, a tabela completa ordem/resposta/significado, e os formatos chave que evitam confusões perigosas.",
       p1: "PARTE 1 — SIMULADOR DE ORDENS DE LEME",
@@ -705,7 +705,7 @@ export default function LessonSteering({ lang = "en", onBack = () => {}, onCompl
           <button onClick={onBack} style={{ background: "rgba(255,255,255,0.09)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 10, padding: "8px 14px", color: C.white, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Nunito',sans-serif" }}>{t.back}</button>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 10, color: C.blue2, letterSpacing: 1, fontFamily: "'Cinzel',serif" }}>🧭 {lang === "fr" ? "Navigation & Cartographie" : lang === "en" ? "Navigation & Cartography" : lang === "es" ? "Navegación & Cartografía" : "Navegação & Cartografia"}</div>
-            <div style={{ fontSize: 11, color: C.muted }}>{lang === "fr" ? "Leçon 9/9" : lang === "en" ? "Lesson 9/9" : lang === "es" ? "Lección 9/9" : "Lição 9/9"}</div>
+            <div style={{ fontSize: 11, color: C.muted }}>{lang === "fr" ? "Leçon 9/10" : lang === "en" ? "Lesson 9/10" : lang === "es" ? "Lección 9/10" : "Lição 9/10"}</div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <div style={{ fontSize: 9, padding: "2px 7px", borderRadius: 8, background: "rgba(201,146,42,0.2)", border: `1px solid ${C.gold}44`, color: C.gold, fontWeight: 700 }}>⭐ PREMIUM</div>
@@ -778,7 +778,7 @@ export default function LessonSteering({ lang = "en", onBack = () => {}, onCompl
               <div style={{ fontFamily: "'Cinzel',serif", fontSize: 18, fontWeight: 700, color: C.white, marginBottom: 4 }}>
                 {lang === "fr" ? "Quiz Final — Ordres de Barre" : lang === "en" ? "Final Quiz — Steering Orders" : lang === "es" ? "Quiz Final — Órdenes de Timón" : "Quiz Final — Ordens de Leme"}
               </div>
-              <div style={{ fontSize: 12, color: C.muted }}>5 {lang === "fr" ? "questions · Leçon 9/9" : lang === "en" ? "questions · Lesson 9/9" : lang === "es" ? "preguntas · Lección 9/9" : "perguntas · Lição 9/9"}</div>
+              <div style={{ fontSize: 12, color: C.muted }}>5 {lang === "fr" ? "questions · Leçon 9/10" : lang === "en" ? "questions · Lesson 9/10" : lang === "es" ? "preguntas · Lección 9/10" : "perguntas · Lição 9/10"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s => { setQuizScore(s); onQuizScored(s, quiz.length); setTimeout(() => setPhase("done"), 1200); }} />
           </>}
@@ -790,25 +790,13 @@ export default function LessonSteering({ lang = "en", onBack = () => {}, onCompl
               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", borderRadius: 20, background: `${C.blue2}15`, border: `1px solid ${C.blue2}55`, fontSize: 14, color: C.blue2, fontWeight: 700 }}>+{quizScore >= 4 ? 200 : quizScore === 3 ? 120 : 60} {t.xp} ⭐</div>
             </div>
 
-            <Card style={{ marginBottom: 16, border: `1px solid ${C.gold}44`, background: "linear-gradient(135deg,rgba(201,146,42,0.1),rgba(13,31,60,0.9))" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                <span style={{ fontSize: 20 }}>🏁</span>
-                <div style={{ fontSize: 11, color: C.gold2, letterSpacing: 2, fontFamily: "'Cinzel',serif", fontWeight: 700 }}>
-                  {lang === "fr" ? "MODULE TERMINÉ !" : lang === "en" ? "MODULE COMPLETE!" : lang === "es" ? "¡MÓDULO COMPLETADO!" : "MÓDULO CONCLUÍDO!"}
-                </div>
-              </div>
-              <div style={{ fontSize: 13, color: C.white, lineHeight: 1.8 }}>
-                {lang === "fr" ? "Navigation & Cartographie — 9 leçons maîtrisées 🧭" : lang === "en" ? "Navigation & Cartography — 9 lessons mastered 🧭" : lang === "es" ? "Navegación & Cartografía — 9 lecciones dominadas 🧭" : "Navegação & Cartografia — 9 lições dominadas 🧭"}
-              </div>
-            </Card>
-
             <Card style={{ marginBottom: 16 }}>
               <div style={{ fontSize: 11, color: C.muted, marginBottom: 10, fontFamily: "'Cinzel',serif", letterSpacing: 1 }}>{t.youLearned}</div>
               {lc.learnedP.map((pt, i) => <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: i < lc.learnedP.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none", fontSize: 12, color: C.white }}><span style={{ color: C.blue2, fontWeight: 700 }}>✓</span>{pt}</div>)}
             </Card>
 
             <button onClick={onNext} style={{ width: "100%", padding: "16px 0", border: "none", borderRadius: 16, background: `linear-gradient(135deg,${C.gold},${C.blue})`, fontFamily: "'Cinzel',serif", fontSize: 14, fontWeight: 700, letterSpacing: 2, color: C.white, cursor: "pointer", boxShadow: "0 8px 28px rgba(201,146,42,0.4)", marginBottom: 10 }}>
-              {lang === "fr" ? "🎯 EXPLORER LES AUTRES MODULES →" : lang === "en" ? "🎯 EXPLORE OTHER MODULES →" : lang === "es" ? "🎯 EXPLORAR OTROS MÓDULOS →" : "🎯 EXPLORAR OUTROS MÓDULOS →"}
+              {lang === "fr" ? "LEÇON 10 — ORGANISATION DU QUART →" : lang === "en" ? "LESSON 10 — WATCHKEEPING ORGANIZATION →" : lang === "es" ? "LECCIÓN 10 — ORGANIZACIÓN DE LA GUARDIA →" : "LIÇÃO 10 — ORGANIZAÇÃO DO QUARTO →"}
             </button>
             <button onClick={onBack} style={{ width: "100%", padding: "12px 0", border: `1px solid rgba(255,255,255,0.15)`, borderRadius: 14, background: "transparent", fontFamily: "'Nunito',sans-serif", fontSize: 13, fontWeight: 600, color: C.muted, cursor: "pointer" }}>{t.backDash}</button>
           </div>}

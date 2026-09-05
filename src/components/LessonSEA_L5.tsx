@@ -826,7 +826,7 @@ function AccidentCase({ lang }) {
 const getContent=(lang)=>{
   const d={
     fr:{
-      badge:"Seamanship · Lecon 5/5 · Premium · 200 XP",
+      badge:"Seamanship · Lecon 5/7 · Premium · 200 XP",
       title:"Stabilite & Flottabilite",
       intro:"En 1987, le Herald of Free Enterprise a chavire en 90 secondes. Un GM de 1,4m — conforme — n'a pas suffi face a l'envahissement massif du pont vehicules.\n\nCette lecon couvre G, B, M, la courbe GZ, les etats de stabilite, les facteurs critiques, les criteres IS Code 2008 et le franc-bord Plimsoll.",
       p1:"PARTIE 1 — POINTS G, B, M, K",s1t:"Centres de gravite, carence, metacentre et quille",
@@ -843,7 +843,7 @@ const getContent=(lang)=>{
       learnedP:["G, B, M, K — formule GM = KM - KG","Courbe GZ et criteres IS Code 2008","5 etats de stabilite (stable, neutre, instable, raide, mou)","Facteurs : surface libre, chargement, givrage, envahissement","Franc-bord Plimsoll et experience de stabilite"],
     },
     en:{
-      badge:"Seamanship · Lesson 5/5 · Premium · 200 XP",
+      badge:"Seamanship · Lesson 5/7 · Premium · 200 XP",
       title:"Stability & Buoyancy",
       intro:"In 1987, the Herald of Free Enterprise capsized in 90 seconds. A GM of 1.4m — compliant — was not enough against the massive flooding of the car deck.\n\nThis lesson covers G, B, M, the GZ curve, stability states, critical factors, IS Code 2008 criteria and the Plimsoll freeboard.",
       p1:"PART 1 — POINTS G, B, M, K",s1t:"Centres of gravity, buoyancy, metacentre and keel",
@@ -860,7 +860,7 @@ const getContent=(lang)=>{
       learnedP:["G, B, M, K — formula GM = KM - KG","GZ curve and IS Code 2008 criteria","5 stability states (stable, neutral, unstable, stiff, tender)","Factors: free surface, high loading, icing, flooding","Plimsoll freeboard and inclining experiment"],
     },
     es:{
-      badge:"Seamanship · Leccion 5/5 · Premium · 200 XP",
+      badge:"Seamanship · Leccion 5/7 · Premium · 200 XP",
       title:"Estabilidad & Flotabilidad",
       intro:"En 1987, el Herald of Free Enterprise zozobro en 90 segundos. Un GM de 1,4m — conforme — no fue suficiente ante la inundacion masiva de la cubierta de vehiculos.\n\nEsta leccion cubre G, B, M, la curva GZ, los estados de estabilidad, los factores criticos, los criterios del IS Code 2008 y el francobordo Plimsoll.",
       p1:"PARTE 1 — PUNTOS G, B, M, K",s1t:"Centros de gravedad, carena, metacentro y quilla",
@@ -877,7 +877,7 @@ const getContent=(lang)=>{
       learnedP:["G, B, M, K — formula GM = KM - KG","Curva GZ y criterios IS Code 2008","5 estados de estabilidad","Factores: superficie libre, carga alta, hielo, inundacion","Francobordo Plimsoll y experiencia de estabilidad"],
     },
     pt:{
-      badge:"Seamanship · Licao 5/5 · Premium · 200 XP",
+      badge:"Seamanship · Licao 5/7 · Premium · 200 XP",
       title:"Estabilidade & Flutuabilidade",
       intro:"Em 1987, o Herald of Free Enterprise tombou em 90 segundos. Um GM de 1,4m — conforme — nao foi suficiente perante a inundacao massiva do convés de veiculos.\n\nEsta licao cobre G, B, M, a curva GZ, os estados de estabilidade, os fatores criticos, os criterios do IS Code 2008 e o bordo livre Plimsoll.",
       p1:"PARTE 1 — PONTOS G, B, M, K",s1t:"Centros de gravidade, carena, metacentro e quilha",
@@ -930,7 +930,7 @@ export default function LessonSEA_L5({ lang="fr", onBack=()=>{}, onComplete=()=>
               ⚓ {t.module}
             </div>
             <div style={{fontSize:10,color:C.muted}}>
-              {lang==="fr"?"Lecon 5/5":lang==="en"?"Lesson 5/5":lang==="es"?"Leccion 5/5":"Licao 5/5"}
+              {lang==="fr"?"Lecon 5/7":lang==="en"?"Lesson 5/7":lang==="es"?"Leccion 5/7":"Licao 5/7"}
             </div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
@@ -1069,17 +1069,6 @@ export default function LessonSEA_L5({ lang="fr", onBack=()=>{}, onComplete=()=>
                   background:`linear-gradient(90deg,${C.gold},${trophy.color})`,
                   borderRadius:6,transition:"width 0.9s ease"}}/>
               </div>
-              {/* MODULE COMPLET BADGE */}
-              <div style={{marginBottom:16,padding:"14px",
-                background:"rgba(201,146,42,0.07)",border:`1.5px solid ${C.gold}55`,borderRadius:18,textAlign:"center"}}>
-                <div style={{fontSize:36,marginBottom:6}}>🚢⚓🎓</div>
-                <div style={{fontFamily:"'Cinzel',serif",fontSize:15,fontWeight:800,color:C.gold2,marginBottom:3,letterSpacing:1}}>
-                  {lang==="fr"?"MODULE SEAMANSHIP COMPLET !":lang==="en"?"SEAMANSHIP MODULE COMPLETE!":lang==="es"?"MODULO SEAMANSHIP COMPLETADO!":"MODULO SEAMANSHIP CONCLUIDO!"}
-                </div>
-                <div style={{fontSize:11,color:C.muted}}>
-                  L1 Cordages · L2 Noeuds · L3 Mouillage · L4 Amarrage · L5 Stabilite
-                </div>
-              </div>
               <div style={{display:"inline-flex",alignItems:"center",gap:8,padding:"9px 22px",
                 borderRadius:20,background:"rgba(201,146,42,0.1)",border:`1px solid ${C.gold}44`,
                 fontSize:14,color:C.gold2,fontWeight:800}}>
@@ -1103,7 +1092,7 @@ export default function LessonSEA_L5({ lang="fr", onBack=()=>{}, onComplete=()=>
                 background:`linear-gradient(135deg,${C.gold},${C.amber})`,
                 fontFamily:"'Cinzel',serif",fontSize:14,fontWeight:900,letterSpacing:2,
                 color:C.bg0,cursor:"pointer",boxShadow:`0 8px 30px rgba(201,146,42,0.3)`,marginBottom:12}}>
-              {lang==="fr"?"RETOUR AU MODULE =>":lang==="en"?"BACK TO MODULE =>":lang==="es"?"VOLVER AL MODULO =>":"VOLTAR AO MODULO =>"}
+              {lang==="fr"?"LEÇON 6 — MAINTENANCE DE BASE & GRAISSAGE =>":lang==="en"?"LESSON 6 — BASIC MAINTENANCE & GREASING =>":lang==="es"?"LECCIÓN 6 — MANTENIMIENTO BÁSICO Y ENGRASE =>":"LIÇÃO 6 — MANUTENÇÃO BÁSICA E LUBRIFICAÇÃO =>"}
             </button>
             <button onClick={onBack}
               style={{width:"100%",padding:"12px 0",border:`1px solid rgba(201,146,42,0.2)`,

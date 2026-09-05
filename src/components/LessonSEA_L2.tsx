@@ -626,7 +626,7 @@ function QuizComp({questions,t,onComplete}){
 const getContent = lang => {
   const d={
     en:{
-      badge:"🪢 Seamanship · Lesson 2/5 · ⭐ Premium · 200 XP",
+      badge:"🪢 Seamanship · Lesson 2/7 · ⭐ Premium · 200 XP",
       title:"Knots & Splices",
       intro:"Knots and splices are the fundamental skills of a seaman. Knowing which knot to use in which situation — and being able to tie it quickly and correctly — can save a life at sea. This lesson covers the 8 essential maritime knots with SVG diagrams, strength comparison, splicing techniques, and practical scenarios.",
       p1:"PART 1 — 8 ESSENTIAL KNOTS",
@@ -643,7 +643,7 @@ const getContent = lang => {
       learnedP:["8 essential knots with SVG diagrams and usage scenarios","Knot strength comparison: 45% to 95%","Three splice types: eye · short · back","Splice vs knot: when to use each","Practical knot selection for real maritime situations"],
     },
     fr:{
-      badge:"🪢 Seamanship · Leçon 2/5 · ⭐ Premium · 200 XP",
+      badge:"🪢 Seamanship · Leçon 2/7 · ⭐ Premium · 200 XP",
       title:"Nœuds & Épissures",
       intro:"Les nœuds et épissures sont les compétences fondamentales du matelot. Savoir quel nœud utiliser dans quelle situation — et pouvoir le faire rapidement et correctement — peut sauver une vie en mer. Cette leçon couvre les 8 nœuds maritimes essentiels avec schémas SVG, comparaison des résistances, techniques d'épissure et scénarios pratiques.",
       p1:"PARTIE 1 — 8 NŒUDS ESSENTIELS",
@@ -660,7 +660,7 @@ const getContent = lang => {
       learnedP:["8 nœuds essentiels avec schémas SVG et scénarios d'usage","Comparaison résistance des nœuds : 45% à 95%","Trois types d'épissure : en œil · courte · arrière","Épissure vs nœud : quand utiliser chaque","Choix pratique de nœud pour situations maritimes réelles"],
     },
     es:{
-      badge:"🪢 Seamanship · Lección 2/5 · ⭐ Premium · 200 XP",
+      badge:"🪢 Seamanship · Lección 2/7 · ⭐ Premium · 200 XP",
       title:"Nudos y Costuras",
       intro:"Los nudos y costuras son las habilidades fundamentales del marinero. Saber qué nudo usar en cada situación — y poder hacerlo rápida y correctamente — puede salvar una vida en el mar. Esta lección cubre los 8 nudos marítimos esenciales con diagramas SVG, comparación de resistencias, técnicas de costura y escenarios prácticos.",
       p1:"PARTE 1 — 8 NUDOS ESENCIALES",
@@ -677,7 +677,7 @@ const getContent = lang => {
       learnedP:["8 nudos esenciales con diagramas SVG y escenarios de uso","Comparación de resistencia de nudos: 45% a 95%","Tres tipos de costura: de ojo · corta · de coronamiento","Costura vs nudo: cuándo usar cada uno","Selección práctica de nudo para situaciones marítimas reales"],
     },
     pt:{
-      badge:"🪢 Seamanship · Lição 2/5 · ⭐ Premium · 200 XP",
+      badge:"🪢 Seamanship · Lição 2/7 · ⭐ Premium · 200 XP",
       title:"Nós e Costuras",
       intro:"Os nós e costuras são as competências fundamentais do marinheiro. Saber que nó usar em cada situação — e conseguir fazê-lo rápida e corretamente — pode salvar uma vida no mar. Esta lição cobre os 8 nós marítimos essenciais com diagramas SVG, comparação de resistências, técnicas de costura e cenários práticos.",
       p1:"PARTE 1 — 8 NÓS ESSENCIAIS",
@@ -711,7 +711,7 @@ export default function LessonSEA_L2({ lang="en", onBack=()=>{}, onComplete=()=>
           <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer"}}>{t.back}</button>
           <div style={{flex:1}}>
             <div style={{fontSize:10,color:C.knot,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>🪢 {t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>{lang==="fr"?"Leçon 2/5":lang==="en"?"Lesson 2/5":lang==="es"?"Lección 2/5":"Lição 2/5"}</div>
+            <div style={{fontSize:11,color:C.muted}}>{lang==="fr"?"Leçon 2/7":lang==="en"?"Lesson 2/7":lang==="es"?"Lección 2/7":"Lição 2/7"}</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>

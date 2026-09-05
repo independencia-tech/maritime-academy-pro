@@ -5434,7 +5434,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
-    onNext={() => { markLessonCompleted("d6-l5"); setPage("seamanship_lessons"); }}
+    onNext={() => { markLessonCompleted("d6-l5"); setPage("lesson_sea_l6"); }}
     onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l5", score, maxScore)}
   />
 )}
@@ -5443,7 +5443,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={smartBack("seamanship_lessons")}
     onComplete={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
-    onNext={() => { markLessonCompleted("d6-l6"); setPage("seamanship_lessons"); }}
+    onNext={() => { markLessonCompleted("d6-l6"); setPage("lesson_sea_l7"); }}
     onQuizScored={(score:number, maxScore:number) => saveLessonScore("d6-l6", score, maxScore)}
   />
 )}
@@ -5694,7 +5694,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
-          onNext={() => { markLessonCompleted("d1-l8"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l8"); setPage("lesson_steering"); }}
           onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l8", score, maxScore)}
         />
       )}
@@ -5703,7 +5703,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={smartBack("nav_lessons")}
           onComplete={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
-          onNext={() => { markLessonCompleted("d1-l9"); setPage("dashboard"); }}
+          onNext={() => { markLessonCompleted("d1-l9"); setPage("lesson_watch_org"); }}
           onQuizScored={(score:number, maxScore:number) => saveLessonScore("d1-l9", score, maxScore)}
         />
       )}

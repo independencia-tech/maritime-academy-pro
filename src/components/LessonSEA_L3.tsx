@@ -929,7 +929,7 @@ export const QUIZ={
 const getContent=(lang)=>{
   const d={
     fr:{
-      badge:"Seamanship · Lecon 3/5 · Premium · 180 XP",
+      badge:"Seamanship · Lecon 3/7 · Premium · 180 XP",
       title:"Mouillage & Apparaux de Mouillage",
       intro:"Une ancre de 10 tonnes peut tenir un VLCC de 300 metres. Pas par magie — par geometrie, physique et connaissance du fond.\n\nCette lecon couvre les types d'ancres, les apparaux de mouillage, les fonds marins, le calcul du scope, la procedure complete et le dialogue passerelle-pont.",
       p1:"PARTIE 1 — TYPES D'ANCRES",s1t:"Hall · Danforth · CQR · Bruce · Grappin",
@@ -946,7 +946,7 @@ const getContent=(lang)=>{
       learnedP:["Types ancres et leurs terrains d'election","Apparaux : guindeau, ecubier, chaine, orinque","Fonds marins et tenue — posidonie interdite","Calcul scope selon profondeur et meteo","Procedure et dialogue passerelle-pont"],
     },
     en:{
-      badge:"Seamanship · Lesson 3/5 · Premium · 180 XP",
+      badge:"Seamanship · Lesson 3/7 · Premium · 180 XP",
       title:"Anchoring & Anchoring Equipment",
       intro:"A 10-tonne anchor can hold a 300-metre VLCC. Not by magic — by geometry, physics and knowledge of the seabed.\n\nThis lesson covers anchor types, anchoring equipment, seabed types, scope calculation, complete procedure and bridge-deck dialogue.",
       p1:"PART 1 — ANCHOR TYPES",s1t:"Hall · Danforth · CQR · Bruce · Grapnel",
@@ -963,7 +963,7 @@ const getContent=(lang)=>{
       learnedP:["Anchor types and their best bottoms","Equipment: windlass, hawsepipe, chain, trip line","Seabeds and holding — posidonia prohibited","Scope calculation by depth and weather","Procedure and bridge-deck dialogue"],
     },
     es:{
-      badge:"Seamanship · Leccion 3/5 · Premium · 180 XP",
+      badge:"Seamanship · Leccion 3/7 · Premium · 180 XP",
       title:"Fondeo & Aparatos de Fondeo",
       intro:"Un ancla de 10 toneladas puede mantener un VLCC de 300 metros. No por magia — por geometria, fisica y conocimiento del fondo.\n\nEsta leccion cubre los tipos de anclas, los aparatos de fondeo, los fondos marinos, el calculo del scope, el procedimiento completo y el dialogo puente-cubierta.",
       p1:"PARTE 1 — TIPOS DE ANCLAS",s1t:"Hall · Danforth · CQR · Bruce · Garfio",
@@ -980,7 +980,7 @@ const getContent=(lang)=>{
       learnedP:["Tipos de anclas y sus terrenos","Aparatos: molinete, escobero, cadena, orinque","Fondos y retencion — posidonia prohibida","Calculo scope segun profundidad y tiempo","Procedimiento y dialogo puente-cubierta"],
     },
     pt:{
-      badge:"Seamanship · Licao 3/5 · Premium · 180 XP",
+      badge:"Seamanship · Licao 3/7 · Premium · 180 XP",
       title:"Fundeio & Aparelhos de Fundeio",
       intro:"Uma ancora de 10 toneladas pode segurar um VLCC de 300 metros. Nao por magia — por geometria, fisica e conhecimento do fundo.\n\nEsta licao cobre os tipos de ancora, os aparelhos de fundeio, os fundos marinhos, o calculo do scope, o procedimento completo e o dialogo ponte-convés.",
       p1:"PARTE 1 — TIPOS DE ANCORA",s1t:"Hall · Danforth · CQR · Bruce · Grapnel",
@@ -1097,7 +1097,7 @@ export default function LessonSEA_L3({ lang="fr", onBack=()=>{}, onComplete=()=>
               ⚓ {t.module}
             </div>
             <div style={{fontSize:10,color:C.muted}}>
-              {lang==="fr"?"Lecon 3/5":lang==="en"?"Lesson 3/5":lang==="es"?"Leccion 3/5":"Licao 3/5"}
+              {lang==="fr"?"Lecon 3/7":lang==="en"?"Lesson 3/7":lang==="es"?"Leccion 3/7":"Licao 3/7"}
             </div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>

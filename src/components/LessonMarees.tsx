@@ -719,7 +719,7 @@ function QuizComp({questions,t,onComplete}){
 const getContent = lang => {
   const d = {
     fr:{
-      badge:"📚 Navigation & Cartographie · Leçon 7/8 · ⭐ Premium · 200 XP",
+      badge:"📚 Navigation & Cartographie · Leçon 7/10 · ⭐ Premium · 200 XP",
       title:"Les Marées — Comprendre et Prédire",
       intro:"Les marées sont causées par l'attraction gravitationnelle de la Lune et du Soleil. Pour un marin, les maîtriser c'est savoir si son navire peut entrer dans un port, quand les courants sont les plus forts, et comment calculer la hauteur d'eau disponible à n'importe quel moment.",
       p1:"PARTIE 1 — CAUSES DES MARÉES",s1t:"Lune, Soleil et forces de gravitation",
@@ -737,7 +737,7 @@ const getContent = lang => {
       learnedP:["Vive-eau=syzygie · Morte-eau=quadrature","Marnage=PM-BM · Datum=PBVVE","Règle douzièmes : 1·2·3·3·2·1 /12","Mi-marée=6/12=1/2 marnage","Hd=profondeur+marée · Fenêtre passage","Golfe Guinée≈1m · Manche 14m · Fundy 16m"],
     },
     en:{
-      badge:"📚 Navigation & Cartography · Lesson 7/8 · ⭐ Premium · 200 XP",
+      badge:"📚 Navigation & Cartography · Lesson 7/10 · ⭐ Premium · 200 XP",
       title:"Tides — Understanding and Predicting",
       intro:"Tides are caused by the gravitational attraction of the Moon and Sun. For a mariner, mastering them means knowing whether a vessel can enter a port, when currents are strongest, and how to calculate available water depth at any given time.",
       p1:"PART 1 — CAUSES OF TIDES",s1t:"Moon, Sun and gravitational forces",
@@ -755,7 +755,7 @@ const getContent = lang => {
       learnedP:["Spring=syzygy · Neap=quadrature","Range=HW-LW · Datum=LAT","Rule of twelfths: 1·2·3·3·2·1 /12","Mid-tide=6/12=1/2 range","Available depth=charted+tidal · Tidal window","Gulf of Guinea≈1m · Channel 14m · Fundy 16m"],
     },
     es:{
-      badge:"📚 Navegación & Cartografía · Lección 7/8 · ⭐ Premium · 200 XP",
+      badge:"📚 Navegación & Cartografía · Lección 7/10 · ⭐ Premium · 200 XP",
       title:"Las Mareas — Comprender y Predecir",
       intro:"Las mareas son causadas por la atracción gravitatoria de la Luna y el Sol. Dominarlas significa saber si el buque puede entrar en un puerto, cuándo las corrientes son más fuertes y cómo calcular el calado de agua disponible.",
       p1:"PARTE 1 — CAUSAS DE LAS MAREAS",s1t:"Luna, Sol y fuerzas gravitatorias",
@@ -773,7 +773,7 @@ const getContent = lang => {
       learnedP:["Viva=sizigia · Muerta=cuadratura","Amplitud=PM-BM · Datum=BAI","Dozavos: 1·2·3·3·2·1 /12","Media marea=6/12 amplitud","Cd=profundidad+marea · Ventana paso"],
     },
     pt:{
-      badge:"📚 Navegação & Cartografia · Lição 7/8 · ⭐ Premium · 200 XP",
+      badge:"📚 Navegação & Cartografia · Lição 7/10 · ⭐ Premium · 200 XP",
       title:"As Marés — Compreender e Prever",
       intro:"As marés são causadas pela atração gravitacional da Lua e do Sol. Dominá-las significa saber se o navio pode entrar num porto, quando as correntes são mais fortes e como calcular a altura de água disponível.",
       p1:"PARTE 1 — CAUSAS DAS MARÉS",s1t:"Lua, Sol e forças gravitacionais",
@@ -816,7 +816,7 @@ export default function LessonMarees({ lang="fr", onBack=()=>{}, onComplete=()=>
           <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
           <div style={{flex:1}}>
             <div style={{fontSize:10,color:C.gold,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>{t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>Leçon 7/8</div>
+            <div style={{fontSize:11,color:C.muted}}>Leçon 7/10</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>

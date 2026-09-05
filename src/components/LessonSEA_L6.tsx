@@ -534,7 +534,7 @@ export const QUIZ = {
 const getContent = lang => {
   const d = {
     en: {
-      badge: "📚 Seamanship · Lesson 6/6 · ⭐ Premium · 200 XP · 🏁 MODULE COMPLETE",
+      badge: "📚 Seamanship · Lesson 6/7 · ⭐ Premium · 200 XP",
       title: "Basic Maintenance & Greasing",
       intro: "Deck maintenance is not a mechanical specialty — it is inspection, routine upkeep, preservation and reporting, kept within the first level of intervention. Recognising early wear or damage, and reporting it precisely, is what keeps deck equipment reliable and safe.\n\nThis lesson covers a deck maintenance round from assignment to report, typical lubrication points and schedules, and the key terms used to describe wear and corrosion.",
       p1: "PART 1 — DECK MAINTENANCE ROUNDS SIMULATOR",
@@ -563,7 +563,7 @@ const getContent = lang => {
       ],
     },
     fr: {
-      badge: "📚 Seamanship · Leçon 6/6 · ⭐ Premium · 200 XP · 🏁 FIN DU MODULE",
+      badge: "📚 Seamanship · Leçon 6/7 · ⭐ Premium · 200 XP",
       title: "Maintenance de Base & Graissage",
       intro: "La maintenance de pont n'est pas une spécialité mécanique — c'est de l'inspection, de l'entretien courant, de la préservation et du signalement, dans les limites du premier niveau d'intervention. Reconnaître tôt une usure ou un dommage, et le signaler précisément, est ce qui maintient le matériel de pont fiable et sûr.\n\nCette leçon couvre une ronde de maintenance de pont de l'ordre de mission au rapport, les points et fréquences de graissage typiques, et les termes clés utilisés pour décrire l'usure et la corrosion.",
       p1: "PARTIE 1 — SIMULATEUR RONDE DE MAINTENANCE",
@@ -592,7 +592,7 @@ const getContent = lang => {
       ],
     },
     es: {
-      badge: "📚 Seamanship · Lección 6/6 · ⭐ Premium · 200 XP · 🏁 FIN DEL MÓDULO",
+      badge: "📚 Seamanship · Lección 6/7 · ⭐ Premium · 200 XP",
       title: "Mantenimiento Básico y Engrase",
       intro: "El mantenimiento de cubierta no es una especialidad mecánica — es inspección, mantenimiento rutinario, preservación e información, dentro del primer nivel de intervención. Reconocer temprano un desgaste o daño, e informarlo con precisión, es lo que mantiene el equipo de cubierta fiable y seguro.\n\nEsta lección cubre una ronda de mantenimiento de cubierta desde la orden de trabajo hasta el informe, los puntos y frecuencias de engrase típicos, y los términos clave usados para describir el desgaste y la corrosión.",
       p1: "PARTE 1 — SIMULADOR RONDA DE MANTENIMIENTO",
@@ -621,7 +621,7 @@ const getContent = lang => {
       ],
     },
     pt: {
-      badge: "📚 Seamanship · Lição 6/6 · ⭐ Premium · 200 XP · 🏁 FIM DO MÓDULO",
+      badge: "📚 Seamanship · Lição 6/7 · ⭐ Premium · 200 XP",
       title: "Manutenção Básica e Lubrificação",
       intro: "A manutenção de convés não é uma especialidade mecânica — é inspeção, manutenção corrente, preservação e reporte, dentro do primeiro nível de intervenção. Reconhecer cedo um desgaste ou dano, e reportá-lo com precisão, é o que mantém o equipamento de convés fiável e seguro.\n\nEsta lição cobre uma ronda de manutenção de convés desde a atribuição da tarefa até ao relatório, os pontos e frequências de lubrificação típicos, e os termos chave usados para descrever o desgaste e a corrosão.",
       p1: "PARTE 1 — SIMULADOR RONDA DE MANUTENÇÃO",
@@ -673,7 +673,7 @@ export default function LessonSEA_L6({ lang = "en", onBack = () => {}, onComplet
           <button onClick={onBack} style={{ background: "rgba(255,255,255,0.09)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 10, padding: "8px 14px", color: C.white, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Nunito',sans-serif" }}>{t.back}</button>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 10, color: C.orange, letterSpacing: 1, fontFamily: "'Cinzel',serif" }}>⚓ {lang === "fr" ? "Seamanship" : "Seamanship"}</div>
-            <div style={{ fontSize: 11, color: C.muted }}>{lang === "fr" ? "Leçon 6/6" : lang === "en" ? "Lesson 6/6" : lang === "es" ? "Lección 6/6" : "Lição 6/6"}</div>
+            <div style={{ fontSize: 11, color: C.muted }}>{lang === "fr" ? "Leçon 6/7" : lang === "en" ? "Lesson 6/7" : lang === "es" ? "Lección 6/7" : "Lição 6/7"}</div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <div style={{ fontSize: 9, padding: "2px 7px", borderRadius: 8, background: "rgba(201,146,42,0.2)", border: `1px solid ${C.gold}44`, color: C.gold, fontWeight: 700 }}>⭐ PREMIUM</div>
@@ -744,7 +744,7 @@ export default function LessonSEA_L6({ lang = "en", onBack = () => {}, onComplet
               <div style={{ fontFamily: "'Cinzel',serif", fontSize: 18, fontWeight: 700, color: C.white, marginBottom: 4 }}>
                 {lang === "fr" ? "Quiz Final — Maintenance de Base" : lang === "en" ? "Final Quiz — Basic Maintenance" : lang === "es" ? "Quiz Final — Mantenimiento Básico" : "Quiz Final — Manutenção Básica"}
               </div>
-              <div style={{ fontSize: 12, color: C.muted }}>5 {lang === "fr" ? "questions · Leçon 6/6" : lang === "en" ? "questions · Lesson 6/6" : lang === "es" ? "preguntas · Lección 6/6" : "perguntas · Lição 6/6"}</div>
+              <div style={{ fontSize: 12, color: C.muted }}>5 {lang === "fr" ? "questions · Leçon 6/7" : lang === "en" ? "questions · Lesson 6/7" : lang === "es" ? "preguntas · Lección 6/7" : "perguntas · Lição 6/7"}</div>
             </div>
             <QuizComp questions={quiz} t={t} onComplete={s => { setQuizScore(s); onQuizScored(s, quiz.length); setTimeout(() => setPhase("done"), 1200); }} />
           </>}
@@ -756,25 +756,13 @@ export default function LessonSEA_L6({ lang = "en", onBack = () => {}, onComplet
               <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 20px", borderRadius: 20, background: `${C.orange}15`, border: `1px solid ${C.orange}55`, fontSize: 14, color: C.orange, fontWeight: 700 }}>+{quizScore >= 4 ? 200 : quizScore === 3 ? 120 : 60} {t.xp} ⭐</div>
             </div>
 
-            <Card style={{ marginBottom: 16, border: `1px solid ${C.gold}44`, background: "linear-gradient(135deg,rgba(201,146,42,0.1),rgba(13,31,60,0.9))" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                <span style={{ fontSize: 20 }}>🏁</span>
-                <div style={{ fontSize: 11, color: C.gold2, letterSpacing: 2, fontFamily: "'Cinzel',serif", fontWeight: 700 }}>
-                  {lang === "fr" ? "MODULE TERMINÉ !" : lang === "en" ? "MODULE COMPLETE!" : lang === "es" ? "¡MÓDULO COMPLETADO!" : "MÓDULO CONCLUÍDO!"}
-                </div>
-              </div>
-              <div style={{ fontSize: 13, color: C.white, lineHeight: 1.8 }}>
-                {lang === "fr" ? "Seamanship — 6 leçons maîtrisées ⚓" : lang === "en" ? "Seamanship — 6 lessons mastered ⚓" : lang === "es" ? "Seamanship — 6 lecciones dominadas ⚓" : "Seamanship — 6 lições dominadas ⚓"}
-              </div>
-            </Card>
-
             <Card style={{ marginBottom: 16 }}>
               <div style={{ fontSize: 11, color: C.muted, marginBottom: 10, fontFamily: "'Cinzel',serif", letterSpacing: 1 }}>{t.youLearned}</div>
               {lc.learnedP.map((pt, i) => <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: i < lc.learnedP.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none", fontSize: 12, color: C.white }}><span style={{ color: C.orange, fontWeight: 700 }}>✓</span>{pt}</div>)}
             </Card>
 
             <button onClick={onNext} style={{ width: "100%", padding: "16px 0", border: "none", borderRadius: 16, background: `linear-gradient(135deg,${C.gold},${C.blue})`, fontFamily: "'Cinzel',serif", fontSize: 14, fontWeight: 700, letterSpacing: 2, color: C.white, cursor: "pointer", boxShadow: "0 8px 28px rgba(201,146,42,0.4)", marginBottom: 10 }}>
-              {lang === "fr" ? "🎯 EXPLORER LES AUTRES MODULES →" : lang === "en" ? "🎯 EXPLORE OTHER MODULES →" : lang === "es" ? "🎯 EXPLORAR OTROS MÓDULOS →" : "🎯 EXPLORAR OUTROS MÓDULOS →"}
+              {lang === "fr" ? "LEÇON 7 — PEINTURE & PRÉVENTION DE LA CORROSION →" : lang === "en" ? "LESSON 7 — PAINTING & CORROSION PREVENTION →" : lang === "es" ? "LECCIÓN 7 — PINTURA Y PREVENCIÓN DE LA CORROSIÓN →" : "LIÇÃO 7 — PINTURA E PREVENÇÃO DA CORROSÃO →"}
             </button>
             <button onClick={onBack} style={{ width: "100%", padding: "12px 0", border: `1px solid rgba(255,255,255,0.15)`, borderRadius: 14, background: "transparent", fontFamily: "'Nunito',sans-serif", fontSize: 13, fontWeight: 600, color: C.muted, cursor: "pointer" }}>{t.backDash}</button>
           </div>}

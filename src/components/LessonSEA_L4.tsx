@@ -882,7 +882,7 @@ export const QUIZ={
 const getContent=(lang)=>{
   const d={
     fr:{
-      badge:"Seamanship · Lecon 4/5 · Premium · 180 XP",
+      badge:"Seamanship · Lecon 4/7 · Premium · 180 XP",
       title:"Operations d'Amarrage",
       intro:"Amarrer un navire de 200 metres dans un courant de 2 noeuds avec 20 noeuds de vent — pas d'erreur possible.\n\nCette lecon couvre les types d'amarres, les equipements, la sequence d'appareillage, et les dialogues complets passerelle-pont a l'accostage et a l'appareillage.",
       p1:"PARTIE 1 — SCHEMA AMARRAGE",s1t:"6 amarres : roles et interactions",
@@ -899,7 +899,7 @@ const getContent=(lang)=>{
       learnedP:["6 types d'amarres et leurs roles","Equipements : bitte, chaumard, defense, treuil","Sequence d'appareillage et pivot spring AR","Med-Moor : ancre par l'avant","Dialogues radio complets accostage + appareillage"],
     },
     en:{
-      badge:"Seamanship · Lesson 4/5 · Premium · 180 XP",
+      badge:"Seamanship · Lesson 4/7 · Premium · 180 XP",
       title:"Mooring Operations",
       intro:"Mooring a 200-metre vessel in a 2-knot current with 20 knots of wind — no room for error.\n\nThis lesson covers mooring line types, equipment, departure sequence, and complete bridge-deck dialogues for berthing and departure.",
       p1:"PART 1 — MOORING DIAGRAM",s1t:"6 lines: roles and interactions",
@@ -916,7 +916,7 @@ const getContent=(lang)=>{
       learnedP:["6 mooring line types and roles","Equipment: bollard, fairlead, fender, winch","Departure sequence and aft spring pivot","Med-Moor: anchor forward","Complete radio dialogues berthing + departure"],
     },
     es:{
-      badge:"Seamanship · Leccion 4/5 · Premium · 180 XP",
+      badge:"Seamanship · Leccion 4/7 · Premium · 180 XP",
       title:"Operaciones de Amarre",
       intro:"Amarrar un buque de 200 metros en una corriente de 2 nudos con 20 nudos de viento — sin margen de error.\n\nEsta leccion cubre los tipos de cabos, el equipo, la secuencia de salida y los dialogos completos puente-cubierta al atracar y al zarpar.",
       p1:"PARTE 1 — ESQUEMA DE AMARRE",s1t:"6 cabos: roles e interacciones",
@@ -933,7 +933,7 @@ const getContent=(lang)=>{
       learnedP:["6 tipos de cabos y sus roles","Equipo: bolardo, guiacabos, defensa, guinche","Secuencia de salida y pivote spring popa","Med-Moor: ancla por la proa","Dialogos radio completos atraque + salida"],
     },
     pt:{
-      badge:"Seamanship · Licao 4/5 · Premium · 180 XP",
+      badge:"Seamanship · Licao 4/7 · Premium · 180 XP",
       title:"Operacoes de Amarracao",
       intro:"Amarrar um navio de 200 metros numa corrente de 2 nos com 20 nos de vento — sem margem de erro.\n\nEsta licao cobre os tipos de cabos, o equipamento, a sequencia de partida e os dialogos completos ponte-convés ao atracar e ao zarpar.",
       p1:"PARTE 1 — ESQUEMA DE AMARRACAO",s1t:"6 cabos: papeis e interacoes",
@@ -1044,7 +1044,7 @@ export default function LessonSEA_L4({ lang="fr", onBack=()=>{}, onComplete=()=>
               ⚓ {t.module}
             </div>
             <div style={{fontSize:10,color:C.muted}}>
-              {lang==="fr"?"Lecon 4/5":lang==="en"?"Lesson 4/5":lang==="es"?"Leccion 4/5":"Licao 4/5"}
+              {lang==="fr"?"Lecon 4/7":lang==="en"?"Lesson 4/7":lang==="es"?"Leccion 4/7":"Licao 4/7"}
             </div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>

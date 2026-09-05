@@ -285,7 +285,7 @@ function QuizComp({questions,t,onComplete}){
 const getContent = lang => {
   const d = {
     fr:{
-      badge:"📚 Navigation & Cartographie · Leçon 2/8 · 🆓 Gratuit · 150 XP",
+      badge:"📚 Navigation & Cartographie · Leçon 2/10 · 🆓 Gratuit · 150 XP",
       title:"Anatomie & Connaissance du Navire",
       intro:"Un marin qui ne connaît pas son navire est comme un conducteur qui ne connaît pas sa voiture — sauf qu'en mer, l'ignorance peut coûter des vies.\n\nCette leçon couvre tout : orientation, tirant d'eau, stabilité, types de navires, rôles à bord et compartimentage SOLAS.",
       p1:"PARTIE 1 — ORIENTATION & STRUCTURE",
@@ -315,7 +315,7 @@ const getContent = lang => {
       learnedP:["Tribord=Droite(vert) · Bâbord=Gauche(rouge)","UKC 10% · Marques Plimsoll","GM>0=stable · Surfaces libres=danger","Cadet→AB→Bosco→Second→Capitaine","Oiler→Mécanicien→Chef Mécanicien","Compartimentage SOLAS · Titanic · Herald","Calcul de cargaison : DWT, facteur d'arrimage, plan de chargement"],
     },
     en:{
-      badge:"📚 Navigation & Cartography · Lesson 2/8 · 🆓 Free · 150 XP",
+      badge:"📚 Navigation & Cartography · Lesson 2/10 · 🆓 Free · 150 XP",
       title:"Ship Anatomy & Knowledge",
       intro:"A mariner who doesn't know their ship is like a driver who doesn't know their car — at sea, ignorance can cost lives.\n\nThis lesson covers everything: orientation, draft, stability, vessel types, crew roles and SOLAS compartmentalization.",
       p1:"PART 1 — ORIENTATION & STRUCTURE",
@@ -345,7 +345,7 @@ const getContent = lang => {
       learnedP:["Starboard=Right(green) · Port=Left(red)","UKC 10% · Plimsoll marks","GM>0=stable · Free surfaces=danger","Cadet→AB→Bosun→Chief Mate→Captain","Oiler→Engineer→Chief Engineer","SOLAS compartmentalization · Titanic · Herald","Cargo calculation: DWT, stowage factor, loading plan"],
     },
     es:{
-      badge:"📚 Navegación & Cartografía · Lección 2/8 · 🆓 Gratis · 150 XP",
+      badge:"📚 Navegación & Cartografía · Lección 2/10 · 🆓 Gratis · 150 XP",
       title:"Anatomía & Conocimiento del Buque",
       intro:"Un marino que no conoce su buque es como un conductor que no conoce su coche — en el mar, la ignorancia puede costar vidas.",
       p1:"PARTE 1 — ORIENTACIÓN & ESTRUCTURA",s1t:"Estribor, Babor, Proa, Popa",s1:"ESTRIBOR = Derecha → Luz VERDE\nBABOR = Izquierda → Luz ROJA\nPROA = Proa · POPA = Popa\n\nRegla nocturna: luz roja del buque = su babor te da la cara",
@@ -361,7 +361,7 @@ const getContent = lang => {
       learnedP:["Estribor=Derecha(verde) · Babor=Izquierda(roja)","UKC 10% · Marcas Plimsoll","GM>0=estable · Superficies libres=peligro","Cadete→AB→Contramaestre→Capitán","Engrasador→Mecánico→Jefe de Máquinas","Compartimentado SOLAS · Titanic · Herald","Cálculo de carga: DWT, factor de estiba, plan de carga"],
     },
     pt:{
-      badge:"📚 Navegação & Cartografia · Lição 2/8 · 🆓 Grátis · 150 XP",
+      badge:"📚 Navegação & Cartografia · Lição 2/10 · 🆓 Grátis · 150 XP",
       title:"Anatomia & Conhecimento do Navio",
       intro:"Um marinheiro que não conhece o seu navio é como um condutor que não conhece o seu carro — no mar, a ignorância pode custar vidas.",
       p1:"PARTE 1 — ORIENTAÇÃO & ESTRUTURA",s1t:"Estibordo, Bombordo, Proa, Popa",s1:"ESTIBORDO = Direita → Luz VERDE\nBOMBORDO = Esquerda → Luz VERMELHA\nPROA = Proa · POPA = Popa\n\nRegra noturna: luz vermelha do navio = seu bombordo está voltado para você",
@@ -1238,7 +1238,7 @@ export default function LessonNavire({ lang="fr", onBack=()=>{}, onComplete=()=>
           <button onClick={onBack} style={{background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
           <div style={{flex:1}}>
             <div style={{fontSize:10,color:C.gold,letterSpacing:1,fontFamily:"'Cinzel',serif"}}>{t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>Leçon 2/8</div>
+            <div style={{fontSize:11,color:C.muted}}>Leçon 2/10</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(30,138,74,0.2)",border:`1px solid ${C.green}44`,color:C.green,fontWeight:700}}>🆓 FREE</div>

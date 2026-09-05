@@ -468,7 +468,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
   const progress = phase==="content"?15:phase==="quiz"?70:100;
 
   const sections_fr = [
-    {type:"badge",text:"📚 Navigation & Cartographie · Leçon 4/8 · ⭐ Premium · 200 XP"},
+    {type:"badge",text:"📚 Navigation & Cartographie · Leçon 4/10 · ⭐ Premium · 200 XP"},
     {type:"title",text:"La Carte Marine — Lire, Comprendre, Naviguer"},
     {type:"intro",text:"La carte marine est l'outil fondamental du navigateur. C'est à la fois une image précise du monde maritime et un langage universel que tous les marins peuvent lire.\n\nMaîtriser sa lecture, c'est maîtriser la navigation côtière."},
     {type:"slabel",icon:"🗺️",text:"PARTIE 1 — CARTE MARINE & COULEURS"},
@@ -493,7 +493,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
   ];
 
   const sections_en = [
-    {type:"badge",text:"📚 Navigation & Cartography · Lesson 4/8 · ⭐ Premium · 200 XP"},
+    {type:"badge",text:"📚 Navigation & Cartography · Lesson 4/10 · ⭐ Premium · 200 XP"},
     {type:"title",text:"The Nautical Chart — Read, Understand, Navigate"},
     {type:"intro",text:"The nautical chart is the navigator's fundamental tool. It is both a precise image of the maritime world and a universal language all mariners can read.\n\nMastering chart reading means mastering coastal navigation."},
     {type:"slabel",icon:"🗺️",text:"PART 1 — CHART & COLORS"},
@@ -518,7 +518,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
   ];
 
   const sections_es = [
-    {type:"badge",text:"📚 Navegación & Cartografía · Lección 4/8 · ⭐ Premium · 200 XP"},
+    {type:"badge",text:"📚 Navegación & Cartografía · Lección 4/10 · ⭐ Premium · 200 XP"},
     {type:"title",text:"La Carta Náutica — Leer, Comprender, Navegar"},
     {type:"intro",text:"La carta náutica es la herramienta fundamental del navegante. Es un lenguaje universal que todos los marinos del mundo pueden leer.\n\nDominar su lectura es dominar la navegación costera."},
     {type:"slabel",icon:"🗺️",text:"PARTE 1 — CARTA & COLORES"},
@@ -543,7 +543,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
   ];
 
   const sections_pt = [
-    {type:"badge",text:"📚 Navegação & Cartografia · Lição 4/8 · ⭐ Premium · 200 XP"},
+    {type:"badge",text:"📚 Navegação & Cartografia · Lição 4/10 · ⭐ Premium · 200 XP"},
     {type:"title",text:"A Carta Náutica — Ler, Compreender, Navegar"},
     {type:"intro",text:"A carta náutica é a ferramenta fundamental do navegante. É uma linguagem universal que todos os marinheiros do mundo podem ler.\n\nDominar a sua leitura é dominar a navegação costeira."},
     {type:"slabel",icon:"🗺️",text:"PARTE 1 — CARTA & CORES"},
@@ -605,7 +605,7 @@ export default function LessonCarteMarine({ lang="fr", onBack=()=>{}, onComplete
           <button onClick={onBack} style={{display:"flex",alignItems:"center",gap:7,background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",flexShrink:0,fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
           <div style={{flex:1,minWidth:0}}>
             <div style={{fontSize:10,color:C.gold,letterSpacing:1,fontFamily:"'Cinzel',serif",marginBottom:1}}>{t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>{t.lesson} 4/8</div>
+            <div style={{fontSize:11,color:C.muted}}>{t.lesson} 4/10</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>

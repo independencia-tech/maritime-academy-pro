@@ -796,7 +796,7 @@ function CoordConverter({ lang, t }) {
 // ══════════════════════════════════════════════
 const SECTIONS = {
   fr:[
-    { type:"badge", text:"📚 Navigation & Cartographie · Leçon 3/8 · ⭐ Premium · 150 XP" },
+    { type:"badge", text:"📚 Navigation & Cartographie · Leçon 3/10 · ⭐ Premium · 150 XP" },
     { type:"title", text:"La Terre & Les Coordonnées Géographiques" },
     { type:"intro", text:"Deux nombres suffisent pour localiser n'importe quel point sur Terre avec une précision au mètre près.\n\n04°03'22\"N · 009°41'42\"E\n\nCes deux coordonnées désignent Douala — une ville parmi les 8 milliards de points possibles sur Terre. Comment ce système fonctionne-t-il ? Pourquoi est-il universel ? Et comment l'utiliser en navigation ?" },
     { type:"section_title", icon:"🌍", text:"PARTIE 1 — LA TERRE" },
@@ -836,7 +836,7 @@ const SECTIONS = {
     },
   ],
   en:[
-    { type:"badge", text:"📚 Navigation & Cartography · Lesson 3/8 · ⭐ Premium · 150 XP" },
+    { type:"badge", text:"📚 Navigation & Cartography · Lesson 3/10 · ⭐ Premium · 150 XP" },
     { type:"title", text:"The Earth & Geographic Coordinates" },
     { type:"intro", text:"Two numbers are enough to locate any point on Earth with meter precision.\n\n04°03'22\"N · 009°41'42\"E\n\nThese two coordinates designate Douala — one city among 8 billion possible points on Earth. How does this system work? Why is it universal? And how to use it in navigation?" },
     { type:"section_title", icon:"🌍", text:"PART 1 — THE EARTH" },
@@ -876,7 +876,7 @@ const SECTIONS = {
     },
   ],
   es:[
-    { type:"badge", text:"📚 Navegación & Cartografía · Lección 3/8 · ⭐ Premium · 150 XP" },
+    { type:"badge", text:"📚 Navegación & Cartografía · Lección 3/10 · ⭐ Premium · 150 XP" },
     { type:"title", text:"La Tierra & Las Coordenadas Geográficas" },
     { type:"intro", text:"Dos números son suficientes para localizar cualquier punto en la Tierra con precisión de metros.\n\n04°03'22\"N · 009°41'42\"E\n\nEstas dos coordenadas designan Douala. ¿Cómo funciona este sistema? ¿Por qué es universal? ¿Cómo usarlo en navegación?" },
     { type:"section_title", icon:"🌍", text:"PARTE 1 — LA TIERRA" },
@@ -916,7 +916,7 @@ const SECTIONS = {
     },
   ],
   pt:[
-    { type:"badge", text:"📚 Navegação & Cartografia · Lição 3/8 · ⭐ Premium · 150 XP" },
+    { type:"badge", text:"📚 Navegação & Cartografia · Lição 3/10 · ⭐ Premium · 150 XP" },
     { type:"title", text:"A Terra & As Coordenadas Geográficas" },
     { type:"intro", text:"Dois números são suficientes para localizar qualquer ponto na Terra com precisão de metros.\n\n04°03'22\"N · 009°41'42\"E\n\nEstas coordenadas designam Douala. Como funciona este sistema? Por que é universal? Como usá-lo na navegação?" },
     { type:"section_title", icon:"🌍", text:"PARTE 1 — A TERRA" },
@@ -1014,7 +1014,7 @@ export default function LessonCoord({ lang="fr", onBack=()=>{}, onComplete=()=>{
           <button onClick={onBack} style={{display:"flex",alignItems:"center",gap:7,background:"rgba(255,255,255,0.09)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:10,padding:"8px 14px",color:C.white,fontSize:13,fontWeight:700,cursor:"pointer",flexShrink:0,fontFamily:"'Nunito',sans-serif"}}>{t.back}</button>
           <div style={{flex:1,minWidth:0}}>
             <div style={{fontSize:10,color:C.gold,letterSpacing:1,fontFamily:"'Cinzel',serif",marginBottom:1}}>{t.module}</div>
-            <div style={{fontSize:11,color:C.muted}}>{t.lesson} 3/8</div>
+            <div style={{fontSize:11,color:C.muted}}>{t.lesson} 3/10</div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:6}}>
             <div style={{fontSize:9,padding:"2px 7px",borderRadius:8,background:"rgba(201,146,42,0.2)",border:`1px solid ${C.gold}44`,color:C.gold,fontWeight:700}}>⭐ PREMIUM</div>

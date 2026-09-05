@@ -454,7 +454,7 @@ const T = {
 
 const CONTENT = {
   fr: [
-    { type: "badge", text: "📚 Navigation & Cartographie · Leçon 1 · ~15 min · ⭐ 150 XP" },
+    { type: "badge", text: "📚 Navigation & Cartographie · Leçon 1/10 · ~15 min · ⭐ 150 XP" },
     { type: "title", text: "Histoire & Instruments de Navigation" },
     { type: "intro",
       text: "Depuis que l'homme a posé les pieds sur les rives de la mer, il a voulu la traverser. D'abord par nécessité — pêcher, commercer, migrer. Puis par curiosité — découvrir ce qui se trouve de l'autre côté. Aujourd'hui par profession.\n\nLe commerce maritime mondial représente 90% des échanges commerciaux mondiaux, avec 50 000 navires en circulation permanente et 1,9 million de marins en activité. Toi, en tant que marin, tu fais partie de cette chaîne vitale." },
@@ -524,7 +524,7 @@ const CONTENT = {
     },
   ],
   en: [
-    { type: "badge", text: "📚 Navigation & Cartography · Lesson 1 · ~15 min · ⭐ 150 XP" },
+    { type: "badge", text: "📚 Navigation & Cartography · Lesson 1/10 · ~15 min · ⭐ 150 XP" },
     { type: "title", text: "History & Navigation Instruments" },
     { type: "intro",
       text: "Ever since humans first stood on the shores of the sea, they have wanted to cross it. At first out of necessity — fishing, trading, migrating. Then out of curiosity — to discover what lies on the other side. Today, as a profession.\n\nGlobal maritime trade accounts for 90% of world trade, with 50,000 vessels permanently at sea and 1.9 million active seafarers. As a seafarer, you are part of this vital chain." },
@@ -594,7 +594,7 @@ const CONTENT = {
     },
   ],
   es: [
-    { type: "badge", text: "📚 Navegación y Cartografía · Lección 1 · ~15 min · ⭐ 150 XP" },
+    { type: "badge", text: "📚 Navegación y Cartografía · Lección 1/10 · ~15 min · ⭐ 150 XP" },
     { type: "title", text: "Historia e Instrumentos de Navegación" },
     { type: "intro",
       text: "Desde que el hombre pisó las orillas del mar, ha querido cruzarlo. Primero por necesidad — pescar, comerciar, migrar. Luego por curiosidad — descubrir lo que hay al otro lado. Hoy, como profesión.\n\nEl comercio marítimo mundial representa el 90% de los intercambios comerciales mundiales, con 50 000 buques en circulación permanente y 1,9 millones de marinos en activo. Tú, como marino, formas parte de esta cadena vital." },
@@ -664,7 +664,7 @@ const CONTENT = {
     },
   ],
   pt: [
-    { type: "badge", text: "📚 Navegação e Cartografia · Lição 1 · ~15 min · ⭐ 150 XP" },
+    { type: "badge", text: "📚 Navegação e Cartografia · Lição 1/10 · ~15 min · ⭐ 150 XP" },
     { type: "title", text: "História e Instrumentos de Navegação" },
     { type: "intro",
       text: "Desde que o homem pisou as margens do mar, quis atravessá-lo. Primeiro por necessidade — pescar, comerciar, migrar. Depois por curiosidade — descobrir o que existe do outro lado. Hoje, por profissão.\n\nO comércio marítimo mundial representa 90% das trocas comerciais mundiais, com 50 000 navios em circulação permanente e 1,9 milhões de marítimos em atividade. Tu, como marítimo, fazes parte desta cadeia vital." },
@@ -1858,10 +1858,10 @@ export default function LessonNavigation({
                    "Test your knowledge"}
                 </div>
                 <div style={{ fontSize: 12, color: C.muted }}>
-                  {lang === "fr" ? "5 questions · Leçon 1" :
-                   lang === "es" ? "5 preguntas · Lección 1" :
-                   lang === "pt" ? "5 perguntas · Lição 1" :
-                   "5 questions · Lesson 1"}
+                  {lang === "fr" ? "5 questions · Leçon 1/10" :
+                   lang === "es" ? "5 preguntas · Lección 1/10" :
+                   lang === "pt" ? "5 perguntas · Lição 1/10" :
+                   "5 questions · Lesson 1/10"}
                 </div>
               </div>
               <Quiz
