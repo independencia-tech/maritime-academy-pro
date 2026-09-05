@@ -74,6 +74,12 @@ import { QUIZ as S1_L3_QUIZ, BANK as S1_L3_BANK } from "../components/LessonSafe
 import { QUIZ as S1_L4_QUIZ, BANK as S1_L4_BANK } from "../components/LessonSafetyS1_L4";
 import { QUIZ as S1_L5_QUIZ, BANK as S1_L5_BANK } from "../components/LessonSafetyS1_L5";
 import { QUIZ as S1_L6_QUIZ, BANK as S1_L6_BANK } from "../components/LessonSafetyS1_L6";
+import { QUIZ as S1E_L1_QUIZ, BANK as S1E_L1_BANK } from "../components/LessonSafetyS1E_L1";
+import { QUIZ as S1E_L2_QUIZ, BANK as S1E_L2_BANK } from "../components/LessonSafetyS1E_L2";
+import { QUIZ as S1E_L3_QUIZ, BANK as S1E_L3_BANK } from "../components/LessonSafetyS1E_L3";
+import { QUIZ as S1E_L4_QUIZ, BANK as S1E_L4_BANK } from "../components/LessonSafetyS1E_L4";
+import { QUIZ as S1E_L5_QUIZ, BANK as S1E_L5_BANK } from "../components/LessonSafetyS1E_L5";
+import { QUIZ as S1E_L6_QUIZ, BANK as S1E_L6_BANK } from "../components/LessonSafetyS1E_L6";
 
 import { QUIZ as S2_L1_QUIZ, BANK as S2_L1_BANK } from "../components/LessonSafetyS2_L1";
 import { QUIZ as S2_L2_QUIZ, BANK as S2_L2_BANK } from "../components/LessonSafetyS2_L2";
@@ -191,6 +197,12 @@ const LESSON_POOLS = {
   "s1-l4": buildLessonPool("s1-l4", S1_L4_QUIZ, S1_L4_BANK),
   "s1-l5": buildLessonPool("s1-l5", S1_L5_QUIZ, S1_L5_BANK),
   "s1-l6": buildLessonPool("s1-l6", S1_L6_QUIZ, S1_L6_BANK),
+  "s1e-l1": buildLessonPool("s1e-l1", S1E_L1_QUIZ, S1E_L1_BANK),
+  "s1e-l2": buildLessonPool("s1e-l2", S1E_L2_QUIZ, S1E_L2_BANK),
+  "s1e-l3": buildLessonPool("s1e-l3", S1E_L3_QUIZ, S1E_L3_BANK),
+  "s1e-l4": buildLessonPool("s1e-l4", S1E_L4_QUIZ, S1E_L4_BANK),
+  "s1e-l5": buildLessonPool("s1e-l5", S1E_L5_QUIZ, S1E_L5_BANK),
+  "s1e-l6": buildLessonPool("s1e-l6", S1E_L6_QUIZ, S1E_L6_BANK),
   "s2-l1": buildLessonPool("s2-l1", S2_L1_QUIZ, S2_L1_BANK),
   "s2-l2": buildLessonPool("s2-l2", S2_L2_QUIZ, S2_L2_BANK),
   "s2-l3": buildLessonPool("s2-l3", S2_L3_QUIZ, S2_L3_BANK),

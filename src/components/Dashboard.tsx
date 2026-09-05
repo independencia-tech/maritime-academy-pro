@@ -472,7 +472,22 @@ export const MODULES = {
         {id:"l6",title:{fr:"Leçons Tirées des Collisions Maritimes",en:"Lessons Learned from Maritime Collisions",es:"Lecciones Aprendidas de Colisiones Marítimas",pt:"Lições Aprendidas de Colisões Marítimas"},access:"premium",status:"locked"},
       ]
     },
-     
+
+      { id:"s1e", icon:"⚙️", color:C.red, access:"free",
+      freeLessons:1, totalLessons:6,
+      title:{fr:"Engine Room Resource Management — Réponse aux Avaries Critiques",en:"Engine Room Resource Management — Critical Casualty Response",es:"Engine Room Resource Management — Respuesta a Averías Críticas",pt:"Engine Room Resource Management — Resposta a Avarias Críticas"},
+      desc:{fr:"Facteurs humains, coordination, décision sous pression",en:"Human factors, coordination, decision-making",es:"Factores humanos, coordinación, toma de decisiones",pt:"Fatores humanos, coordenação, tomada de decisão"},
+      xp:300, status:"available", progress:0,
+      lessons:[
+        {id:"l1",title:{fr:"Facteurs Humains dans les Avaries Machine : Pourquoi les Pannes Arrivent Vraiment",en:"Human Factors in Machinery Casualties: Why Failures Really Happen",es:"Factores Humanos en las Averías de Maquinaria: Por Qué Ocurren Realmente los Fallos",pt:"Fatores Humanos nas Avarias de Maquinaria: Por Que as Falhas Realmente Acontecem"},access:"free",status:"available"},
+        {id:"l2",title:{fr:"Coordination d'Équipe en Salle des Machines",en:"Engine Room Team Coordination",es:"Coordinación de Equipo en la Sala de Máquinas",pt:"Coordenação da Equipa na Casa das Máquinas"},access:"premium",status:"locked"},
+        {id:"l3",title:{fr:"Actions d'Urgence Pendant une Avarie Machine Critique",en:"Emergency Actions During a Critical Machinery Failure",es:"Acciones de Emergencia Durante una Avería Crítica de Maquinaria",pt:"Ações de Emergência Durante uma Avaria Crítica de Maquinaria"},access:"premium",status:"locked"},
+        {id:"l4",title:{fr:"Les Minutes Critiques Après une Avarie Majeure",en:"The Critical First Minutes After a Major Breakdown",es:"Los Minutos Críticos Después de una Avería Mayor",pt:"Os Minutos Críticos Após uma Avaria Maior"},access:"premium",status:"locked"},
+        {id:"l5",title:{fr:"Prise de Décision Sous Pression en Salle des Machines",en:"Decision-Making Under Pressure in the Engine Room",es:"Toma de Decisiones Bajo Presión en la Sala de Máquinas",pt:"Tomada de Decisão Sob Pressão na Casa das Máquinas"},access:"premium",status:"locked"},
+        {id:"l6",title:{fr:"Retours d'Expérience des Avaries Machine Majeures",en:"Lessons Learned from Major Machinery Casualties",es:"Lecciones Aprendidas de Averías Mayores de Maquinaria",pt:"Lições Aprendidas de Avarias Maiores de Maquinaria"},access:"premium",status:"locked"},
+      ]
+    },
+
      { id:"s2", icon:"📡", color:C.blue2, access:"premium",
       freeLessons:1, totalLessons:5,
       title:{fr:"EPIRB, SART & GMDSS",en:"EPIRB, SART & GMDSS",es:"EPIRB, SART & GMDSS",pt:"EPIRB, SART & GMDSS"},
@@ -1244,7 +1259,18 @@ userStreak=1,
     {key:"safety",label:t.tabSafety},
   ];
 
-  const currentModules=MODULES[activeTab]||[];
+  // s1e (Engine Room Resource Management) replaces s1 (COLREG Safety) for
+  // Engine-department users in the Safety tab — s1's content is
+  // structurally Deck/bridge-specific (audit 2026-09-02) with no Engine
+  // transposition possible, so s1e is a department-conditional swap, not an
+  // addition: an Engine user sees exactly 6 Safety modules (5 shared + s1e),
+  // a Deck user sees no change at all. Both cards live permanently in
+  // MODULES.safety (single source of truth for module data, e.g. used by
+  // findLessonDisplayInfo below) — this filter only affects which one is
+  // rendered in this browsing view.
+  const currentModules = activeTab==="safety"
+    ? MODULES.safety.filter(m=>profile?.dept==="engine" ? m.id!=="s1" : m.id!=="s1e")
+    : (MODULES[activeTab]||[]);
 
   // Global progress — same per-module lesson completion logic as ModuleCard, aggregated
   const allModules=Object.values(MODULES).flat();

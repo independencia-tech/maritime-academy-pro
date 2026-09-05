@@ -141,6 +141,12 @@ const LessonSafetyS1_L3 = lazy(() => import("./LessonSafetyS1_L3"));
 const LessonSafetyS1_L4 = lazy(() => import("./LessonSafetyS1_L4"));
 const LessonSafetyS1_L5 = lazy(() => import("./LessonSafetyS1_L5"));
 const LessonSafetyS1_L6 = lazy(() => import("./LessonSafetyS1_L6"));
+const LessonSafetyS1E_L1 = lazy(() => import("./LessonSafetyS1E_L1"));
+const LessonSafetyS1E_L2 = lazy(() => import("./LessonSafetyS1E_L2"));
+const LessonSafetyS1E_L3 = lazy(() => import("./LessonSafetyS1E_L3"));
+const LessonSafetyS1E_L4 = lazy(() => import("./LessonSafetyS1E_L4"));
+const LessonSafetyS1E_L5 = lazy(() => import("./LessonSafetyS1E_L5"));
+const LessonSafetyS1E_L6 = lazy(() => import("./LessonSafetyS1E_L6"));
 const LessonSafetyS2_L1 = lazy(() => import("./LessonSafetyS2_L1"));
 const LessonSafetyS2_L2 = lazy(() => import("./LessonSafetyS2_L2"));
 const LessonSafetyS2_L3 = lazy(() => import("./LessonSafetyS2_L3"));
@@ -1743,6 +1749,23 @@ const COMPETENCIES_S1:any = {
   pt:["✔ Reconhecer um perigo de colisão e sinalizá-lo com a assertividade individual exigida","✔ Aplicar os reflexos de equipa (Shared Situational Awareness, Challenge & Response) sob risco","✔ Agir eficazmente nos últimos segundos antes de um impacto quase certo","✔ Executar as primeiríssimas ações essenciais nos minutos após uma colisão confirmada","✔ Exercer um julgamento de decisão fiável sob pressão num cenário de colisão","✔ Sintetizar os reflexos de segurança adquiridos numa postura profissional duradoura"],
 };
 
+// s1e (Engine Room Resource Management) competencies list — Engine-specific
+// variant replacing s1 in an Engine learner's Safety curriculum (audit
+// 2026-09-02 found s1/COLREG Safety structurally Deck/bridge-specific with
+// no Engine equivalent; s1e authored as its replacement, not an addition —
+// see project memory for the full doctrine). Themes: human factors in
+// machinery casualties (alarm bias, fatigue), engine room team coordination
+// (roles, Challenge & Response, shared situational awareness), structured
+// emergency actions during a critical machinery failure, stabilization and
+// prolonged casualty management, decision-making under pressure (avoiding
+// tunnel vision, escalation thresholds), synthesis (L1-L6).
+const COMPETENCIES_S1E:any = {
+  fr:["✔ Reconnaître les facteurs humains propres à la salle des machines (fatigue, alarm bias) et agir avant l'avarie","✔ Appliquer les réflexes de coordination d'équipe machine (rôles clairs, Challenge & Response, conscience de situation partagée)","✔ Exécuter une checklist d'urgence structurée face à une avarie machine critique","✔ Stabiliser une situation après le danger immédiat et gérer une avarie prolongée sur plusieurs jours si nécessaire","✔ Décider juste sous pression, éviter le tunnel vision, et savoir quand escalader avant d'agir","✔ Synthétiser les réflexes ERM acquis en une posture professionnelle durable"],
+  en:["✔ Recognize the human factors specific to the engine room (fatigue, alarm bias) and act before the casualty","✔ Apply engine room team coordination reflexes (clear roles, Challenge & Response, shared situational awareness)","✔ Execute a structured emergency checklist facing a critical machinery failure","✔ Stabilize a situation after the immediate danger and manage a prolonged casualty over several days if needed","✔ Decide well under pressure, avoid tunnel vision, and know when to escalate before acting","✔ Synthesize the ERM reflexes learned into a lasting professional mindset"],
+  es:["✔ Reconocer los factores humanos propios de la sala de máquinas (fatiga, sesgo de alarma) y actuar antes de la avería","✔ Aplicar los reflejos de coordinación de equipo de máquinas (roles claros, Challenge & Response, conciencia de situación compartida)","✔ Ejecutar una checklist de emergencia estructurada ante una avería crítica de maquinaria","✔ Estabilizar una situación tras el peligro inmediato y gestionar una avería prolongada durante varios días si es necesario","✔ Decidir bien bajo presión, evitar la visión de túnel, y saber cuándo escalar antes de actuar","✔ Sintetizar los reflejos ERM adquiridos en una mentalidad profesional duradera"],
+  pt:["✔ Reconhecer os fatores humanos próprios da casa das máquinas (fadiga, viés de alarme) e agir antes da avaria","✔ Aplicar os reflexos de coordenação de equipa de máquinas (funções claras, Challenge & Response, consciência de situação partilhada)","✔ Executar uma checklist de emergência estruturada perante uma avaria crítica de maquinaria","✔ Estabilizar uma situação após o perigo imediato e gerir uma avaria prolongada ao longo de vários dias se necessário","✔ Decidir bem sob pressão, evitar a visão em túnel, e saber quando escalar antes de agir","✔ Sintetizar os reflexos ERM adquiridos numa postura profissional duradoura"],
+};
+
 // s2 (EPIRB, SART & GMDSS) competencies list — second Safety module wired
 // onto Foundation Exams in the same batch, validated 2026-09-04. Themes:
 // recognizing a true distress emergency (vs. a degraded-but-manageable
@@ -3112,6 +3135,61 @@ function S1LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, 
     </div>
   );
 }
+function S1ELessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+  // Engine-specific variant replacing s1 in an Engine learner's Safety
+  // curriculum — see COMPETENCIES_S1E above for the doctrine reference.
+  useEffect(() => {
+    if (autoPick) {
+      onPick(autoPick);
+      onAutoPickConsumed?.();
+    }
+  }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "s1e", lang, currentRankId, targetRankId });
+  if (autoPick) return <AutoPickTransition/>;
+  const t = NAV_T[lang] || NAV_T.fr;
+  const mod:any = (ALL_MODULES as any).safety.find((m:any)=>m.id==="s1e");
+  const title = mod?.title?.[lang] || mod?.title?.fr || "Engine Room Resource Management";
+  const labels:any = {
+    fr:{header:"Leçons",available:"Disponible",soon:"Bientôt",done:"Terminé ✓"},
+    en:{header:"Lessons",available:"Available",soon:"Coming soon",done:"Completed ✓"},
+    es:{header:"Lecciones",available:"Disponible",soon:"Próximamente",done:"Completado ✓"},
+    pt:{header:"Lições",available:"Disponível",soon:"Em breve",done:"Concluído ✓"},
+  };
+  const L = labels[lang] || labels.fr;
+  const lessons = mod?.lessons || [];
+  const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_S1E}/>;
+
+  return (
+    <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
+      <TopBar onBack={onBack} title={title} backLabel={t.back}/>
+      <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {lessons.map((l:any,idx:number)=>{
+            const isPlayable=playable.has(l.id);
+            const isDone=completedLessons.includes(`s1e-${l.id}`);
+            const tag=l.access==="free"?"FREE":l.access==="premium_plus"?"P+":"PRO";
+            const tagColor=l.access==="free"?"#1e8a4a":l.access==="premium_plus"?"#9b59b6":"#c9922a";
+            return(
+              <button key={l.id} disabled={!isPlayable} onClick={()=>onPick(l.id)} style={{display:"flex",alignItems:"center",gap:12,padding:"14px",background:isPlayable?"rgba(13,31,60,0.85)":"rgba(13,31,60,0.4)",border:`1px solid ${isPlayable?"#c0392b44":"rgba(255,255,255,0.08)"}`,borderRadius:14,cursor:isPlayable?"pointer":"not-allowed",color:"#f0f4ff",textAlign:"left",opacity:isPlayable?1:0.6}}>
+                <div style={{width:38,height:38,borderRadius:10,background:"rgba(192,57,43,0.18)",border:"1px solid #c0392b44",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,flexShrink:0,color:"#c0392b"}}>{idx+1}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>{l.title?.[lang]||l.title?.fr}</div>
+                  <div style={{fontSize:10,color:"rgba(240,244,255,0.5)"}}>{isDone?L.done:(isPlayable?L.available:L.soon)}</div>
+                </div>
+                <div style={{fontSize:9,padding:"3px 7px",borderRadius:8,background:`${tagColor}22`,color:tagColor,fontWeight:700,letterSpacing:0.5,flexShrink:0}}>{tag}</div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 function S2LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
@@ -4292,6 +4370,7 @@ const MARPOL_LESSONS = ["lesson_marpol","lesson_marpol_l2","lesson_marpol_l3","l
               else if (m?.id === "d7") setPage("meteorology_lessons");
             else if (m?.id === "d5") setPage("shipcareer_lessons");
               else if (m?.id === "s1") setPage("s1_lessons");
+              else if (m?.id === "s1e") setPage("s1e_lessons");
          else if (m?.id === "s2") setPage("s2_lessons");
               else if (m?.id === "s3") setPage("s3_lessons");
               else if (m?.id === "s4") setPage("s4_lessons");
@@ -4343,6 +4422,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
             else if (m?.id === "d7") setPage("meteorology_lessons");
           else if (m?.id === "d5") setPage("shipcareer_lessons");
           else if (m?.id === "s1") setPage("s1_lessons");
+          else if (m?.id === "s1e") setPage("s1e_lessons");
         else if (m?.id === "s2") setPage("s2_lessons");
           else if (m?.id === "s3") setPage("s3_lessons");
           else if (m?.id === "s4") setPage("s4_lessons");
@@ -4588,7 +4668,80 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onNext={() => { markLessonCompleted("s1-l6"); setPage("s1_lessons"); }}
           onQuizScored={(score:number, maxScore:number) => saveLessonScore("s1-l6", score, maxScore)}
         />
-      )} 
+      )}
+      {page === "s1e_lessons" && (
+        <S1ELessonsPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
+          autoPick={pendingLessonPick}
+          onAutoPickConsumed={() => setPendingLessonPick(null)}
+          onPick={(lid:string) => {
+            if (lid === "l1") setPage("lesson_s1e_l1");
+            else if (lid === "l2") setPage("lesson_s1e_l2");
+            else if (lid === "l3") setPage("lesson_s1e_l3");
+            else if (lid === "l4") setPage("lesson_s1e_l4");
+            else if (lid === "l5") setPage("lesson_s1e_l5");
+            else if (lid === "l6") setPage("lesson_s1e_l6");
+          }}
+        />
+      )}
+      {page === "lesson_s1e_l1" && (
+        <LessonSafetyS1E_L1
+          lang={lang}
+          onBack={smartBack("s1e_lessons")}
+          onComplete={() => { markLessonCompleted("s1e-l1"); setPage("s1e_lessons"); }}
+          onNext={() => { markLessonCompleted("s1e-l1"); setPage("lesson_s1e_l2"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("s1e-l1", score, maxScore)}
+        />
+      )}
+      {page === "lesson_s1e_l2" && (
+        <LessonSafetyS1E_L2
+          lang={lang}
+          onBack={smartBack("s1e_lessons")}
+          onComplete={() => { markLessonCompleted("s1e-l2"); setPage("s1e_lessons"); }}
+          onNext={() => { markLessonCompleted("s1e-l2"); setPage("lesson_s1e_l3"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("s1e-l2", score, maxScore)}
+        />
+      )}
+      {page === "lesson_s1e_l3" && (
+        <LessonSafetyS1E_L3
+          lang={lang}
+          onBack={smartBack("s1e_lessons")}
+          onComplete={() => { markLessonCompleted("s1e-l3"); setPage("s1e_lessons"); }}
+          onNext={() => { markLessonCompleted("s1e-l3"); setPage("lesson_s1e_l4"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("s1e-l3", score, maxScore)}
+        />
+      )}
+      {page === "lesson_s1e_l4" && (
+        <LessonSafetyS1E_L4
+          lang={lang}
+          onBack={smartBack("s1e_lessons")}
+          onComplete={() => { markLessonCompleted("s1e-l4"); setPage("s1e_lessons"); }}
+          onNext={() => { markLessonCompleted("s1e-l4"); setPage("lesson_s1e_l5"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("s1e-l4", score, maxScore)}
+        />
+      )}
+      {page === "lesson_s1e_l5" && (
+        <LessonSafetyS1E_L5
+          lang={lang}
+          onBack={smartBack("s1e_lessons")}
+          onComplete={() => { markLessonCompleted("s1e-l5"); setPage("s1e_lessons"); }}
+          onNext={() => { markLessonCompleted("s1e-l5"); setPage("lesson_s1e_l6"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("s1e-l5", score, maxScore)}
+        />
+      )}
+      {page === "lesson_s1e_l6" && (
+        <LessonSafetyS1E_L6
+          lang={lang}
+          onBack={smartBack("s1e_lessons")}
+          onComplete={() => { markLessonCompleted("s1e-l6"); setPage("s1e_lessons"); }}
+          onNext={() => { markLessonCompleted("s1e-l6"); setPage("s1e_lessons"); }}
+          onQuizScored={(score:number, maxScore:number) => saveLessonScore("s1e-l6", score, maxScore)}
+        />
+      )}
    {page === "s2_lessons" && (
         <S2LessonsPage
           lang={lang}
