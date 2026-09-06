@@ -167,6 +167,7 @@ import { QUIZ as E7_L4_QUIZ, BANK as E7_L4_BANK } from "../components/LessonE7_L
 import { QUIZ as E7_L5_QUIZ, BANK as E7_L5_BANK } from "../components/LessonE7_L5";
 
 import { SUMMARY_QUESTIONS } from "./examSummaryQuestions";
+import { SUMMARY_QUESTIONS_ENGINE } from "./examSummaryQuestionsEngine";
 
 const LANGS = ["fr", "en", "es", "pt"];
 
@@ -366,6 +367,25 @@ export function getSummaryExamQuestions(lang) {
   const out = [];
   for (const themeId of Object.keys(SUMMARY_POOL)) {
     out.push(...SUMMARY_POOL[themeId][safeLang]);
+  }
+  return out;
+}
+
+// Engine variant (2026-09-06) — same flattening logic as SUMMARY_POOL/
+// getSummaryExamQuestions above, kept as a fully separate pool/function
+// rather than parameterizing the Deck one, so the Deck path stays
+// byte-for-byte unchanged (see getFoundationModuleIds's comment in
+// examEngine.ts for why this additive-only guarantee matters here).
+const SUMMARY_POOL_ENGINE = {};
+for (const themeId of Object.keys(SUMMARY_QUESTIONS_ENGINE)) {
+  SUMMARY_POOL_ENGINE[themeId] = buildLessonPool(themeId, null, SUMMARY_QUESTIONS_ENGINE[themeId]);
+}
+
+export function getSummaryExamQuestionsEngine(lang) {
+  const safeLang = LANGS.includes(lang) ? lang : "fr";
+  const out = [];
+  for (const themeId of Object.keys(SUMMARY_POOL_ENGINE)) {
+    out.push(...SUMMARY_POOL_ENGINE[themeId][safeLang]);
   }
   return out;
 }

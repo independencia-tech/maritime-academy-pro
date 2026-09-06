@@ -1450,17 +1450,18 @@ userStreak=1,
           {/* FOUNDATION SUMMARY (13th exam) BANNER — cross-domain exam with
               no single module of its own, so its entry point lives here on
               the Dashboard rather than inside one module's lesson list like
-              the 12 per-module Foundation exams. Visible regardless of which
-              dashboardView tab is selected.
-              Deck-only for now (2026-09-06): the exam's own question content
-              (examSummaryQuestions.ts) is written from a bridge-watchkeeping
-              vantage point (COLREG maneuvers, bridge comms) and hasn't been
-              evaluated for whether it means anything to an Engine officer —
-              see getFoundationModuleIds's comment in examEngine.ts. The
-              unlock threshold is already correct for Engine (13 modules,
-              via getFoundationModuleIds), but the banner itself stays hidden
-              for dept==="engine" until that content question is resolved. */}
-          {userDept === "deck" && (
+              the 12/13 per-module Foundation exams. Visible regardless of
+              which dashboardView tab is selected.
+              Department-conditional (2026-09-06): now shown for both Deck
+              and Engine — the Engine content question (examSummaryQuestions
+              Engine.ts, 6 themes reframed from an engine-room vantage
+              point with s1e/ERM as the connective thread) was resolved and
+              validated, so this banner is no longer Deck-only. onPick /
+              onOpenFoundationSummary and the three foundationSummary*
+              props are already department-routed by the parent (picking
+              between useFoundationSummaryExam and
+              useFoundationSummaryEngineExam), so this component only needs
+              to render the right label. */}
           <button onClick={onOpenFoundationSummary} style={{
             display:"flex",alignItems:"center",gap:12,width:"100%",textAlign:"left",
             padding:"14px",marginBottom:16,borderRadius:16,cursor:"pointer",
@@ -1471,7 +1472,9 @@ userStreak=1,
             <div style={{width:38,height:38,borderRadius:10,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,background:foundationSummaryUnlocked?`${C.gold}22`:"rgba(255,255,255,0.06)",border:`1px solid ${foundationSummaryUnlocked?C.gold:"rgba(255,255,255,0.1)"}44`}}>🏆</div>
             <div style={{flex:1,minWidth:0}}>
               <div style={{fontSize:13,fontWeight:700,marginBottom:2}}>
-                {lang==="fr"?"13e Examen — Foundation Summary":lang==="es"?"13.º Examen — Foundation Summary":lang==="pt"?"13.º Exame — Foundation Summary":"13th Exam — Foundation Summary"}
+                {userDept==="engine"
+                  ? (lang==="fr"?"13e Examen — Foundation Summary (Engine)":lang==="es"?"13.º Examen — Foundation Summary (Engine)":lang==="pt"?"13.º Exame — Foundation Summary (Engine)":"13th Exam — Foundation Summary (Engine)")
+                  : (lang==="fr"?"13e Examen — Foundation Summary":lang==="es"?"13.º Examen — Foundation Summary":lang==="pt"?"13.º Exame — Foundation Summary":"13th Exam — Foundation Summary")}
               </div>
               <div style={{fontSize:11,color:foundationSummaryUnlocked?C.gold2:C.muted}}>
                 {foundationSummaryUnlocked
@@ -1480,7 +1483,6 @@ userStreak=1,
               </div>
             </div>
           </button>
-          )}
 
           {/* DIVIDER */}
           <div style={{height:1,margin:"0 0 16px",background:`linear-gradient(90deg,transparent,${C.gold}44,${C.blue2}44,transparent)`}}/>
