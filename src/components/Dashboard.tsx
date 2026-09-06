@@ -1451,7 +1451,16 @@ userStreak=1,
               no single module of its own, so its entry point lives here on
               the Dashboard rather than inside one module's lesson list like
               the 12 per-module Foundation exams. Visible regardless of which
-              dashboardView tab is selected. */}
+              dashboardView tab is selected.
+              Deck-only for now (2026-09-06): the exam's own question content
+              (examSummaryQuestions.ts) is written from a bridge-watchkeeping
+              vantage point (COLREG maneuvers, bridge comms) and hasn't been
+              evaluated for whether it means anything to an Engine officer —
+              see getFoundationModuleIds's comment in examEngine.ts. The
+              unlock threshold is already correct for Engine (13 modules,
+              via getFoundationModuleIds), but the banner itself stays hidden
+              for dept==="engine" until that content question is resolved. */}
+          {userDept === "deck" && (
           <button onClick={onOpenFoundationSummary} style={{
             display:"flex",alignItems:"center",gap:12,width:"100%",textAlign:"left",
             padding:"14px",marginBottom:16,borderRadius:16,cursor:"pointer",
@@ -1471,6 +1480,7 @@ userStreak=1,
               </div>
             </div>
           </button>
+          )}
 
           {/* DIVIDER */}
           <div style={{height:1,margin:"0 0 16px",background:`linear-gradient(90deg,transparent,${C.gold}44,${C.blue2}44,transparent)`}}/>

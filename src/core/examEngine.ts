@@ -64,13 +64,31 @@ export function getExamEligibleLessonIds(moduleId, currentRankId, targetRankId) 
   return moduleLessonIds.filter((id) => trajectoryLessonIds.has(id));
 }
 
-// The 12 Foundation modules a Deck+Safety learner must have attempted before
-// the 13th ("Foundation Summary") exam unlocks — d5 permanently out of scope
-// (see project memory). Single source of truth, reused by
+// The Foundation modules a learner must have attempted before the 13th
+// ("Foundation Summary") exam unlocks — d5 permanently out of scope (see
+// project memory). Department-conditional (2026-09-06): a Deck learner's 12
+// modules are d1-d4/d6-d7 + s1-s6; an Engine learner's 13 modules swap the
+// 6 Deck modules for the 7 Engine modules (e1-e7) and s1 for its Engine
+// variant s1e (ERM) — same doctrine as the s1/s1e swap already applied on
+// the Dashboard's module list. Single source of truth, reused by
 // useFoundationSummaryExam's unlock check in MaritimeApp.tsx so the list
-// never drifts out of sync between the count confirmed to the user (12) and
-// the actual modules checked.
-export const FOUNDATION_MODULE_IDS = ["d1", "d2", "d3", "d4", "d6", "d7", "s1", "s2", "s3", "s4", "s5", "s6"];
+// never drifts out of sync between the count shown to the user and the
+// actual modules checked.
+//
+// NOTE (2026-09-06): the Foundation Summary exam's own question content
+// (examSummaryQuestions.ts) is still Deck+Safety-only — its 6 themes are
+// written from a bridge-watchkeeping vantage point (COLREG maneuvers,
+// bridge communications) and haven't been evaluated for whether they mean
+// anything to an Engine officer. This function makes the unlock threshold
+// correct for Engine, but the Foundation Summary page itself stays gated to
+// dept==="deck" in MaritimeApp.tsx until that content question is resolved
+// — do not remove that gate solely because this function now supports
+// "engine" without re-checking with the user first.
+export function getFoundationModuleIds(dept) {
+  return dept === "engine"
+    ? ["e1", "e2", "e3", "e4", "e5", "e6", "e7", "s1e", "s2", "s3", "s4", "s5", "s6"]
+    : ["d1", "d2", "d3", "d4", "d6", "d7", "s1", "s2", "s3", "s4", "s5", "s6"];
+}
 
 export function shuffle(arr) {
   const a = [...arr];

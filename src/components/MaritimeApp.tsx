@@ -30,7 +30,7 @@ import {
   drawRemedialQuestions,
   recordExamAttempt,
   shuffle,
-  FOUNDATION_MODULE_IDS,
+  getFoundationModuleIds,
 } from "@/core/examEngine";
 import { getSummaryExamQuestions } from "@/core/examQuestionPools";
 const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
@@ -2024,27 +2024,31 @@ function useModuleExam({ moduleId, lang, currentRankId, targetRankId }:{moduleId
 }
 
 // 13th exam ("Foundation Summary") — unlocks once the user has at least one
-// "foundation" attempt (not necessarily passed) recorded for each of the 12
-// FOUNDATION_MODULE_IDS, confirmed doctrine (attempted, not passed). Reuses
+// "foundation" attempt (not necessarily passed) recorded for each module
+// returned by getFoundationModuleIds(dept) — 12 for Deck, 13 for Engine
+// (2026-09-06) — confirmed doctrine (attempted, not passed). Reuses
 // getLatestExamAttempt/canAttemptExam/recordExamAttempt exactly as-is with a
 // new moduleId ("foundation_summary") — no new query shape, no new RLS
 // surface (policies are user_id-only). No remedial mode for this exam
 // (explicit scope decision, 2026-09-05) — remedialCooldownNow is hardcoded
 // to ineligible so ExamResultScreen's existing remedial-offer block simply
 // never renders, without needing to touch that shared component's logic.
-function useFoundationSummaryExam({ lang }:{lang:string}) {
+// The page built on top of this hook (FoundationSummaryPage) stays gated to
+// dept==="deck" for now — see getFoundationModuleIds's own comment for why.
+function useFoundationSummaryExam({ lang, dept }:{lang:string;dept?:string}) {
   const [checked, setChecked] = useState(false);
   const [attemptedCount, setAttemptedCount] = useState(0);
+  const moduleIds = getFoundationModuleIds(dept);
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) { setChecked(true); return; }
       const results = await Promise.all(
-        FOUNDATION_MODULE_IDS.map((mid) => getLatestExamAttempt(user.id, mid, "foundation"))
+        moduleIds.map((mid) => getLatestExamAttempt(user.id, mid, "foundation"))
       );
       setAttemptedCount(results.filter((r) => !!r).length);
       setChecked(true);
     });
-  }, []);
+  }, [dept]);
 
   const [examView, setExamView] = useState<"list"|"running"|"result">("list");
   const [examQuestions, setExamQuestions] = useState<any[]>([]);
@@ -2093,8 +2097,8 @@ function useFoundationSummaryExam({ lang }:{lang:string}) {
 
   return {
     moduleId: "foundation_summary", examMode: "exam" as const,
-    checked, attemptedCount, totalRequired: FOUNDATION_MODULE_IDS.length,
-    unlocked: checked && attemptedCount === FOUNDATION_MODULE_IDS.length,
+    checked, attemptedCount, totalRequired: moduleIds.length,
+    unlocked: checked && attemptedCount === moduleIds.length,
     examView, examQuestions, examResult,
     examStarting, examBlockedUntil, examError, startExam,
     remedialCooldownNow: { eligible: false, allowed: false, nextAvailableAt: null as Date|null },
@@ -3594,8 +3598,8 @@ function S5LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, 
 // inside a module's own lesson list. Reuses ExamRunningScreen/
 // ExamResultScreen exactly as every other module does — same signature,
 // same inherited "MAP — powered by Independencia" footer.
-function FoundationSummaryPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
-  const exam = useFoundationSummaryExam({ lang });
+function FoundationSummaryPage({ lang, onBack, dept }:{lang:string;onBack:()=>void;dept?:string}) {
+  const exam = useFoundationSummaryExam({ lang, dept });
   const t = NAV_T[lang] || NAV_T.fr;
   const titleT:any = {
     fr:"13e Examen — Foundation Summary", en:"13th Exam — Foundation Summary",
@@ -3609,7 +3613,7 @@ function FoundationSummaryPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
   const L:any = {
     fr:{
       intro:"Un examen transversal combinant navigation, sécurité, et prise de décision sous pression — 20 questions, 6 scénarios, à travers les 12 modules Foundation.",
-      progress:(n:number)=>`Progression : ${n}/${FOUNDATION_MODULE_IDS.length} modules Foundation tentés`,
+      progress:(n:number)=>`Progression : ${n}/${exam.totalRequired} modules Foundation tentés`,
       lockedHint:"Débloqué dès que tu as tenté l'examen Foundation de chacun des 12 modules Deck et Safety — la réussite n'est pas requise, seulement la tentative.",
       startBtn:"📝 COMMENCER L'EXAMEN", starting:"Préparation de l'examen…",
       cooldown:(d:Date)=>`Tu as déjà tenté cet examen récemment. Prochain essai disponible le ${d.toLocaleDateString(lang)}.`,
@@ -3617,7 +3621,7 @@ function FoundationSummaryPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
     },
     en:{
       intro:"A cross-domain exam combining navigation, safety, and decision-making under pressure — 20 questions, 6 scenarios, spanning all 12 Foundation modules.",
-      progress:(n:number)=>`Progress: ${n}/${FOUNDATION_MODULE_IDS.length} Foundation modules attempted`,
+      progress:(n:number)=>`Progress: ${n}/${exam.totalRequired} Foundation modules attempted`,
       lockedHint:"Unlocks once you've attempted the Foundation exam for each of the 12 Deck and Safety modules — passing is not required, only the attempt.",
       startBtn:"📝 START THE EXAM", starting:"Preparing the exam…",
       cooldown:(d:Date)=>`You already attempted this exam recently. Next attempt available on ${d.toLocaleDateString(lang)}.`,
@@ -3625,7 +3629,7 @@ function FoundationSummaryPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
     },
     es:{
       intro:"Un examen transversal que combina navegación, seguridad y toma de decisiones bajo presión — 20 preguntas, 6 escenarios, a través de los 12 módulos Foundation.",
-      progress:(n:number)=>`Progreso: ${n}/${FOUNDATION_MODULE_IDS.length} módulos Foundation intentados`,
+      progress:(n:number)=>`Progreso: ${n}/${exam.totalRequired} módulos Foundation intentados`,
       lockedHint:"Se desbloquea en cuanto hayas intentado el examen Foundation de cada uno de los 12 módulos Deck y Safety — no es necesario aprobar, solo intentarlo.",
       startBtn:"📝 EMPEZAR EL EXAMEN", starting:"Preparando el examen…",
       cooldown:(d:Date)=>`Ya intentaste este examen recientemente. Próximo intento disponible el ${d.toLocaleDateString(lang)}.`,
@@ -3633,7 +3637,7 @@ function FoundationSummaryPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
     },
     pt:{
       intro:"Um exame transversal que combina navegação, segurança e tomada de decisão sob pressão — 20 perguntas, 6 cenários, ao longo dos 12 módulos Foundation.",
-      progress:(n:number)=>`Progresso: ${n}/${FOUNDATION_MODULE_IDS.length} módulos Foundation tentados`,
+      progress:(n:number)=>`Progresso: ${n}/${exam.totalRequired} módulos Foundation tentados`,
       lockedHint:"Desbloqueia assim que tiveres tentado o exame Foundation de cada um dos 12 módulos Deck e Safety — não é preciso passar, apenas tentar.",
       startBtn:"📝 COMEÇAR O EXAME", starting:"A preparar o exame…",
       cooldown:(d:Date)=>`Já tentaste este exame recentemente. Próxima tentativa disponível em ${d.toLocaleDateString(lang)}.`,
@@ -3892,11 +3896,14 @@ try { localStorage.removeItem("map_lesson_scores"); } catch {}
   return () => listener.subscription.unsubscribe();
 }, []);
   const [lang, setLang] = useState("fr");
+const [profile, setProfile] = useState({});
   // Dashboard-banner status only (attemptedCount/unlocked) — the actual exam
   // flow (startExam/finishExam/etc.) runs through its own separate instance
   // of this hook inside FoundationSummaryPage when that page is visited.
-  const foundationSummaryStatus = useFoundationSummaryExam({ lang });
-const [profile, setProfile] = useState({});
+  // Deck-only for now (see getFoundationModuleIds's comment in examEngine.ts):
+  // the Dashboard doesn't render this banner for dept==="engine", so dept is
+  // still passed through for correctness but has no visible effect yet.
+  const foundationSummaryStatus = useFoundationSummaryExam({ lang, dept: profile.dept });
 const [completedLessons, setCompletedLessons] = useState<string[]>([]);
 // Per-lesson quiz score, keyed by composite lesson id (same id space as
 // completedLessons, e.g. "d1-l1"). Separate from completedLessons on purpose:
@@ -5109,7 +5116,7 @@ else if (m?.id === "e7") setPage("e7_lessons");
     onQuizScored={(score:number, maxScore:number) => saveLessonScore("s5-l4", score, maxScore)}/>
 )}
     {page === "foundation_summary" && (
-      <FoundationSummaryPage lang={lang} onBack={() => setPage("dashboard")}/>
+      <FoundationSummaryPage lang={lang} onBack={() => setPage("dashboard")} dept={profile.dept}/>
     )}
     {page === "s6_lessons" && (
   <S6LessonsPage
