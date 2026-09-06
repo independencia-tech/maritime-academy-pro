@@ -527,7 +527,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la limite SOx en zone ECA (Emission Control Area) depuis 2020 ?",opts:["1,5%","0,5%","0,1%","0,05%"],correct:2,expl:"Depuis le 1er janvier 2020 (MARPOL Annex VI) : 0,1% SOx maximum en zone ECA (Baltique, Mer du Nord, Amérique du Nord, Caraïbes US). 0,5% SOx maximum dans le reste des océans (règle mondiale entrée en vigueur en 2020, avant c'était 3,5%). Solution : LSFO (Low Sulfur Fuel Oil) ou scrubbers (épurateurs de gaz)."},
     {q:"Le 'magic pipe' est un terme désignant :",opts:["Un tuyau de ventilation","Un tuyau de dérivation illégal contournant le séparateur 15 ppm pour rejeter les eaux de cale directement en mer","Un type de tuyau de refoulement","Un tuyau d'aspiration spécial"],correct:1,expl:"Magic pipe = tuyau de dérivation secret qui contourne le séparateur 15 ppm. Permet de rejeter les eaux de cale non traitées directement en mer. Crime maritime grave : prison pour les officiers impliqués, amendes pouvant dépasser $1 million, et arrêt du navire. Le programme USCG récompense les dénonciateurs jusqu'à $150 000."},
@@ -558,7 +558,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le PSC (Port State Control) ?",opts:["Un type de contrat d'assurance","Inspection des navires étrangers dans les ports pour vérifier le respect des conventions internationales (SOLAS, MARPOL, STCW)","Un certificat de navigabilité","Un type de douane maritime"],correct:1,expl:"PSC = Port State Control. Inspection du navire par les autorités du pays d'escale. Vérifie : SOLAS (sécurité), MARPOL (environnement), STCW (compétences équipage), MLC (conditions travail). Peut bloquer (détenir) le navire si déficiences graves. Paris MOU, Tokyo MOU = organisations PSC régionales."},
     {q:"Qu'est-ce que le NOx Tier III ?",opts:["Un type de carburant","La norme la plus stricte de l'OMI pour les émissions d'oxydes d'azote — réduction de 80% vs Tier I","Un type de moteur","Une zone d'émissions"],correct:1,expl:"NOx Tier III = norme OMI la plus stricte (MARPOL Annex VI). Réduction de 80% des émissions NOx par rapport au Tier I. Exigé dans les zones ECA depuis 2016 (Amérique du Nord) et 2021 (Baltique, Mer du Nord). Technologies : SCR (Selective Catalytic Reduction) ou EGR (Exhaust Gas Recirculation)."},

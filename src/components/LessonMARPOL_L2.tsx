@@ -334,7 +334,7 @@ function AccidentCase({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la limite legale de teneur en huile pour le rejet des eaux de cale en mer ?",opts:["1,5 ppm","15 ppm","50 ppm","150 ppm"],correct:1,expl:"MARPOL Annexe I : 15 ppm maximum pour le rejet d'eaux de cale traitees en mer, verifie par l'Oil Content Meter du separateur (OWS)."},
     {q:"Que doit faire automatiquement le systeme si la limite de 15 ppm est depassee ?",opts:["Rien, une alarme sonore suffit","Arreter automatiquement le rejet en mer","Augmenter la vitesse de pompage","Alerter uniquement le capitaine par email"],correct:1,expl:"Le dispositif d'arret automatique doit stopper immediatement le rejet en mer des que la limite est franchie. Contourner ce dispositif est exactement ce que fait un magic pipe."},
@@ -365,7 +365,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Le seuil de 15 ppm concerne precisement quoi ?",opts:["La teneur en soufre du carburant","La teneur en huile des eaux de cale rejetees en mer","La temperature de l'eau de refroidissement","La pression du separateur"],correct:1,expl:"15 ppm = teneur maximale en huile autorisee pour le rejet en mer des eaux de cale traitees par l'OWS."},
     {q:"Qu'est-ce qu'un 'magic pipe' ?",opts:["Un tuyau de ventilation standard","Un tuyau de derivation illegal contournant l'OWS","Un tuyau de refroidissement auxiliaire","Un tuyau d'aspiration de secours"],correct:1,expl:"Magic pipe = tuyau clandestin permettant de rejeter des eaux de cale non traitees directement en mer, en contournant le separateur 15 ppm."},

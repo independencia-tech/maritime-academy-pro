@@ -288,7 +288,7 @@ function MaritimeMilestone({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Qu'est-ce qui a fait passer l'efficacité énergétique d'un choix économique à une obligation légale ?",opts:["Une décision unilatérale d'un armateur","Les amendements MARPOL Annexe VI (2021), entrés en vigueur en 2023","Une norme ISO volontaire","Aucun changement réglementaire n'a eu lieu"],correct:1,expl:"Les amendements de 2021 à l'Annexe VI, entrés en vigueur en 2023, ont rendu l'EEXI et le CII obligatoires pour la première fois."},
     {q:"Que mesure l'EEXI ?",opts:["La performance opérationnelle réelle année après année","La conception technique du navire, calculée une fois","Le prix du carburant","Le nombre de membres d'équipage"],correct:1,expl:"L'EEXI évalue la conception technique et la capacité théorique d'efficacité du navire - un calcul réalisé une seule fois."},
@@ -319,7 +319,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Avant les amendements MARPOL de 2021, comment était perçue la réduction de consommation de carburant ?",opts:["Comme une obligation légale stricte","Comme un choix économique volontaire de la compagnie","Comme une exigence syndicale","Comme une norme de sécurité"],correct:1,expl:"Pendant des décennies, réduire la consommation de carburant relevait uniquement d'un choix économique, jamais d'une obligation légale."},
     {q:"En quelle année les amendements rendant l'EEXI et le CII obligatoires ont-ils été adoptés par l'OMI ?",opts:["2015","2021","2025","2010"],correct:1,expl:"L'OMI a adopté ces amendements à l'Annexe VI en 2021, avant leur entrée en vigueur en 2023."},

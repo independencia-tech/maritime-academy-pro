@@ -315,7 +315,7 @@ function OperationalExample({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle partie du SEEMP organise la collecte des données de consommation pour le DCS de l'OMI ?",opts:["Part I","Part II","Part III","Aucune partie"],correct:1,expl:"La Part II organise la collecte des données de consommation de carburant, obligatoire pour le Data Collection System de l'OMI."},
     {q:"Le SEEMP est-il obligatoire ?",opts:["Non, il est purement volontaire","Oui, pour la plupart des navires en voyage international sous MARPOL Annexe VI","Oui, mais uniquement pour les tankers","Non, seulement recommandé par l'OMI"],correct:1,expl:"Le SEEMP est obligatoire pour la plupart des navires effectuant des voyages internationaux, conformément à MARPOL Annexe VI."},
@@ -346,7 +346,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que couvre la Part I du SEEMP ?",opts:["Les données de consommation","Les mesures d'amélioration de l'efficacité énergétique adoptées par le navire","Le plan CII uniquement","Les certificats environnementaux"],correct:1,expl:"La Part I décrit les mesures d'amélioration de l'efficacité énergétique adoptées par le navire."},
     {q:"Que couvre la Part III du SEEMP ?",opts:["Le plan de mise en œuvre CII et le Corrective Action Plan","La liste de l'équipage","Les procédures d'urgence incendie","Le certificat IAPP"],correct:0,expl:"La Part III contient le plan de mise en œuvre lié au CII et le Corrective Action Plan en cas de notation insuffisante."},

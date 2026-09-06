@@ -470,7 +470,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Sur quelle fréquence l'EPIRB émet-il son signal de détresse ?",opts:["121,5 MHz (ancien standard)","406 MHz — standard mondial COSPAS-SARSAT","156,8 MHz (Canal 16 VHF)","2182 kHz (HF)"],correct:1,expl:"L'EPIRB moderne émet sur 406 MHz vers les satellites COSPAS-SARSAT. Cette fréquence permet une localisation précise par GPS (< 100m) et une réception en moins de 90 minutes n'importe où dans le monde. L'ancien 121,5 MHz n'est plus surveillé par satellite depuis 2009."},
     {q:"L'alarme générale d'abandon du navire selon SOLAS est :",opts:["3 sons courts + 1 long","5 sons courts","7 sons courts + 1 son long","1 son long continu"],correct:2,expl:"Alarme générale SOLAS = 7 sons courts + 1 son long. Signifie : 'Tout le monde au poste de rassemblement avec gilet de sauvetage'. À distinguer de l'alarme incendie (signal continu) et du signal de brume. Connu obligatoirement de tout l'équipage."},
@@ -501,7 +501,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le GMDSS (Global Maritime Distress and Safety System) ?",opts:["Un type de radar","Système mondial de détresse et de sécurité en mer — ensemble d'équipements radio obligatoires sur tous les navires","Un type de GPS","Un système de navigation automatique"],correct:1,expl:"GMDSS = ensemble de systèmes radio obligatoires (SOLAS) : VHF DSC Canal 70 · EPIRB 406 MHz · SART · Navtex · Radio MF/HF. Remplace le traditionnel SOS en morse. Permet l'alerte automatique de détresse, la coordination SAR, la diffusion des informations météo et de sécurité."},
     {q:"Qu'est-ce que le MAYDAY et comment l'émettre ?",opts:["Un code météo","Signal vocal de détresse : 'MAYDAY MAYDAY MAYDAY + nom navire + position + nature détresse + personnes à bord + type aide demandée' sur Canal 16 VHF","Un signal lumineux","Un signal radar"],correct:1,expl:"MAYDAY = signal vocal de détresse (du français 'm'aidez'). Émis sur Canal 16 VHF (156,8 MHz). Format : MAYDAY × 3 + nom navire × 3 + position + nature + nombre personnes + demande. Priorité absolue sur toutes les communications. Réponse obligatoire de tous navires."},

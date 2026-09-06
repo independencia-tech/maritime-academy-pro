@@ -504,7 +504,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"À quelle fréquence minimum doit-on noter les paramètres dans le journal machine ?",opts:["Toutes les heures","Toutes les 4 heures","Toutes les 8 heures","Une fois par jour"],correct:1,expl:"Le journal machine (engine log) doit avoir une entrée minimum toutes les 4 heures, correspondant à chaque prise de quart. Chaque entrée doit être signée par l'officier de quart responsable. Contenu : RPM, températures, pressions, événements notables, alarmes. Conservation : 3 ans minimum."},
     {q:"Qu'est-ce que l'UMS (Unattended Machinery Space) ?",opts:["Une panne totale de la salle des machines","Mode de fonctionnement où la salle des machines est surveillée par des systèmes d'alarme centralisés sans officier présent en permanence","Un type de moteur auxiliaire","Un mode d'urgence"],correct:1,expl:"UMS = Unattended Machinery Space (Salle des Machines Sans Surveillance). Autorisé par SOLAS si : système d'alarme centralisé fonctionnel, officier de permanence (duty engineer) disponible 24h/24, alarmes transmises à la passerelle et aux cabines, réponse dans les 3 minutes. Avantage : réduit la fatigue de l'équipage la nuit."},
@@ -535,7 +535,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le 'handover' (passation de quart) ?",opts:["La fin du contrat de l'officier","Procédure de transmission de responsabilité entre officiers de quart : briefing complet, signature du journal machine","Le transfert de cargaison","Un type de manœuvre"],correct:1,expl:"Handover = passation de quart. L'officier sortant transmet à l'officier entrant : état des machines, anomalies en cours, travaux en cours, paramètres actuels, ordres spéciaux. L'officier entrant ne doit pas signer le journal si des conditions dangereuses non résolues existent."},
     {q:"Qu'est-ce que STCW (Standards of Training, Certification and Watchkeeping) ?",opts:["Un type de certificat de navigabilité","Convention internationale de l'OMI définissant les normes de formation, certification et quart pour tous les marins","Un code de sécurité incendie","Un type de contrat maritime"],correct:1,expl:"STCW 1978, révisé en 1995 et 2010 (Amendements de Manille). Définit les qualifications minimales pour les marins selon leurs fonctions. Chapitre III = officiers machine. Exige : certificats de compétence, formation de base sécurité (PSCRB, EFA, FPFF, BS), entraînement aux simulateurs."},

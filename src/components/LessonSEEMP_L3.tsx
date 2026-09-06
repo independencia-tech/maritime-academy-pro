@@ -313,7 +313,7 @@ function OperationalExample({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Qu'évalue l'EEXI ?",opts:["La performance opérationnelle annuelle","La conception technique du navire, calculée une seule fois","Le prix du carburant","Le nombre de membres d'équipage"],correct:1,expl:"L'EEXI évalue la conception technique du navire - un calcul réalisé une seule fois, contrairement au CII."},
     {q:"L'EEXI est-il recalculé chaque année comme le CII ?",opts:["Oui, chaque année","Non, il est vérifié une seule fois pour établir la conformité","Oui, tous les mois","Non, il n'est jamais vérifié"],correct:1,expl:"Contrairement au CII évalué chaque année, l'EEXI est vérifié une seule fois pour établir la conformité du navire."},
@@ -344,7 +344,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"L'EEXI concerne-t-il les navires neufs ou existants ?",opts:["Uniquement les navires neufs","Principalement les navires existants","Uniquement les tankers","Uniquement les navires de croisière"],correct:1,expl:"L'EEXI s'applique principalement aux navires existants, pour vérifier leur conformité aux standards actuels."},
     {q:"Que se passe-t-il si l'indice EEXI calculé dépasse le seuil de référence ?",opts:["Rien, c'est automatiquement accepté","Le navire doit adopter des mesures techniques pour se conformer","Le navire est immédiatement détruit","Le certificat est délivré sans condition"],correct:1,expl:"Si l'indice dépasse le seuil, le navire doit adopter des mesures techniques (EPL, optimisation hélice, ESD) pour se conformer."},

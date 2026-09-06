@@ -772,6 +772,137 @@ function getTrophy(score, total) {
 // ══════════════════════════════════════
 // QUESTION BANK — 15 QCM PREMIUM+
 // ══════════════════════════════════════
+  export const BANK = {
+    fr:[
+      {q:"Que signifie l'acronyme UMS en contexte maritime ?",
+        opts:["Universal Maritime Standard","Unattended Machinery Space","Unified Monitoring System","Underwater Mechanical Survey"],
+        correct:1,expl:"UMS = Unattended Machinery Space (Espace Machines Sans Personnel Permanent). Certification accordee par les societes de classification (DNV, LR, BV, ClassNK, ABS) permettant l'exploitation sans officier permanent sous conditions SOLAS II-1."},
+      {q:"Selon SOLAS II-1 Reg. 46, quelle est la frequence max des rondes UMS ?",
+        opts:["15 min","30 min","60 min","2 heures"],
+        correct:1,expl:"SOLAS II-1 Reg. 46 : rondes toutes les 30 minutes maximum. Enregistrees dans le registre UMS avec heure et observations, verifiees par le Chef Mecanicien."},
+      {q:"Quel systeme centralise toutes les alarmes salle des machines en UMS ?",
+        opts:["SMS (Safety Management System)","AMS (Alarm Monitoring System)","VDR (Voyage Data Recorder)","BMS (Bridge Monitoring System)"],
+        correct:1,expl:"L'AMS (Alarm Monitoring System) collecte > 1 000 points d'alarme sur VLCC, les classe par priorite (L/LL/H/HH), les horodate et les transmet a la passerelle. Requis SOLAS II-1 Reg. 51."},
+      {q:"Que detecte l'alarme Homme Mort (Dead Man Alarm) ?",
+        opts:["Un incendie","L'incapacite de l'officier de quart SM","Une inondation","Une perte de puissance"],
+        correct:1,expl:"Le DMA detecte l'incapacite de l'officier de quart en salle des machines. Sans signal de presence dans les 30 min, alarme SM puis transfert passerelle."},
+      {q:"Si une alarme UMS n'est pas acquittee en 30s, elle est transferee vers :",
+        opts:["Le Chef Mecanicien","La passerelle (OOW)","La salle radio","Le capitaine"],
+        correct:1,expl:"SOLAS II-1 Reg. 51 : transfert automatique a la passerelle (OOW) si non acquittee en 30 secondes."},
+      {q:"Dans un AMS, que signifie l'alarme 'HH' ?",
+        opts:["High Humidity","Very High (seuil critique haut — action immediate)","Heavy Heat","High Hydraulic"],
+        correct:1,expl:"HH = High High = seuil tres haut critique selon ANSI/ISA-18.2. Ex : temp. palier HH = risque grippage imminent. Necessite action immediate. Sequence: H -> HH -> shutdown."},
+      {q:"Qu'est-ce que le 'Slow Down' automatique sur un ME UMS ?",
+        opts:["Arret complet du moteur","Reduction automatique de charge avant seuil critique","Ralentissement manuel","Procedure de demarrage"],
+        correct:1,expl:"Le Slow Down reduit la charge du ME (et la vitesse navire) quand un parametre atteint un seuil pre-critique. Mesure graduee entre alerte et shutdown pour eviter perte de propulsion."},
+      {q:"Quelle qualification STCW est requise pour l'officier d'astreinte UMS ?",
+        opts:["STCW II/1 — Officier pont","STCW III/1 — Officier mecanicien de quart","STCW VI/1 — Securite de base","STCW V/1 — Tanker training"],
+        correct:1,expl:"STCW III/1 (et III/2 pour ME) : officier mecanicien de quart avec certification UMS specifique. Doit etre present en SM dans les 5 minutes, disponible 24h/24."},
+      {q:"Quelle regulation SOLAS exige le controle remote du ME depuis la passerelle en UMS ?",
+        opts:["SOLAS II-1 Reg. 49","SOLAS II-1 Reg. 46","SOLAS V Reg. 19","SOLAS III Reg. 6"],
+        correct:0,expl:"SOLAS II-1 Reg. 49 : controle remote du moteur principal depuis la passerelle obligatoire pour navires UMS. Permet a l'OOW de manoeuvrer sans intervention en SM."},
+      {q:"Le MV Sewol (2014) a demontre que des alarmes AMS non configurees peuvent :",
+        opts:["Reduire la consommation","Creer une fausse securite — danger masque","Accelerer le quart","Ameliorer les communications"],
+        correct:1,expl:"Le Sewol avait un AMS sans seuils de gite configures. La gite croissante n'a declenche aucune alarme pendant 30+ min. 304 morts. Un AMS mal configure est plus dangereux qu'un AMS absent."},
+      {q:"Qu'est-ce qu'un blackout en contexte UMS ?",
+        opts:["Panne d'eclairage cabine","Perte totale alimentation electrique principale — generateur secours < 45s","Panne informatique AMS","Coupure radio"],
+        correct:1,expl:"Blackout = perte totale alimentation electrique principale. Generateur de secours doit demarrer en < 45 secondes (SOLAS II-1 Reg. 42). AMS signale a la passerelle. Officier appele immediatement."},
+      {q:"Quelle est la difference entre Shutdown et Slowdown sur ME ?",
+        opts:["Ce sont des synonymes","Shutdown = arret complet, Slowdown = reduction charge","Shutdown = test, Slowdown = urgence","Shutdown = electrique, Slowdown = mecanique"],
+        correct:1,expl:"Shutdown = arret complet et immediat (ex: huile LL). Slowdown = reduction charge sans arreter (ex: eau H). Sequence: alerte -> slowdown -> shutdown. Protection graduee pour maintenir propulsion le plus longtemps possible."},
+      {q:"Combien de points d'alarme un AMS VLCC moderne peut-il integrer ?",
+        opts:["50 a 100","200 a 500","500 a 1 000","Plus de 1 000 (parfois 5 000)"],
+        correct:3,expl:"Un VLCC moderne peut avoir 1 000 a 5 000 points d'alarme : T° paliers, pressions huile/eau/carburant, niveaux, vibrations, detection feu/gaz, puissance electrique. Fabricants : Kongsberg, Wartsila NACOS, ABB."},
+      {q:"Qu'est-ce que le UMS Certificate delivre par une societe de classification ?",
+        opts:["Formation equipage","Attestation que le navire satisfait les exigences techniques et ISM pour UMS","Certification carburant","Permis de navigation"],
+        correct:1,expl:"Le UMS Certificate (Class Notation UMS) atteste que le navire satisfait SOLAS II-1 et les regles de la societe de classification : AMS certifie, DMA, detection feu/inondation, remote ME, procedures SMS/ISM."},
+      {q:"Quel est le delai max pour qu'un officier mecanicien soit present en SM apres appel ?",
+        opts:["30 secondes","5 minutes","15 minutes","30 minutes"],
+        correct:1,expl:"SOLAS II-1 Reg. 46 : l'officier d'astreinte doit etre present en salle des machines dans les 5 minutes suivant l'appel. Exige cabine proche, disponibilite 24/7, pas d'alcool."},
+    ],
+    en:[
+      {q:"What does UMS mean in maritime context?",
+        opts:["Universal Maritime Standard","Unattended Machinery Space","Unified Monitoring System","Underwater Mechanical Survey"],
+        correct:1,expl:"UMS = Unattended Machinery Space. Classification granted by societies (DNV, LR, BV, ClassNK, ABS) allowing engine room operation without permanent officer under SOLAS II-1 conditions."},
+      {q:"Per SOLAS II-1 Reg. 46, what is the max UMS round frequency?",
+        opts:["15 min","30 min","60 min","2 hours"],
+        correct:1,expl:"SOLAS II-1 Reg. 46: rounds every 30 minutes maximum. Logged in UMS register with time and observations, verified by Chief Engineer."},
+      {q:"Which system centralizes all engine room alarms in UMS?",
+        opts:["SMS (Safety Management System)","AMS (Alarm Monitoring System)","VDR (Voyage Data Recorder)","BMS (Bridge Monitoring System)"],
+        correct:1,expl:"AMS (Alarm Monitoring System) collects > 1,000 alarm points on VLCC, classifies by priority (L/LL/H/HH), timestamps and transmits to bridge. Required SOLAS II-1 Reg. 51."},
+      {q:"What does the Dead Man Alarm detect?",
+        opts:["Fire","ER watch officer incapacity","Flooding","Power loss"],
+        correct:1,expl:"DMA detects engine room watch officer incapacity. Without a presence signal within 30 min, ER alarm triggers then transfers to bridge."},
+      {q:"If a UMS alarm is not acknowledged in 30s, it transfers to:",
+        opts:["Chief Engineer","Bridge (OOW)","Radio room","Captain"],
+        correct:1,expl:"SOLAS II-1 Reg. 51: automatic transfer to bridge (OOW) if not acknowledged within 30 seconds."},
+      {q:"In an AMS, what does 'HH' alarm mean?",
+        opts:["High Humidity","Very High (critical high threshold — immediate action)","Heavy Heat","High Hydraulic"],
+        correct:1,expl:"HH = High High = very high critical threshold per ANSI/ISA-18.2. Example: bearing temp HH = imminent seizure risk. Requires immediate action. Sequence: H -> HH -> shutdown."},
+      {q:"What is automatic 'Slow Down' on a UMS ME?",
+        opts:["Complete engine stop","Automatic load reduction before critical threshold","Manual slowing","Starting procedure"],
+        correct:1,expl:"Slow Down reduces ME load (and vessel speed) when a parameter reaches a pre-critical threshold. Graduated measure between alert and shutdown to avoid propulsion loss."},
+      {q:"What STCW qualification is required for UMS standby officer?",
+        opts:["STCW II/1 — Deck officer","STCW III/1 — Engineer watch officer","STCW VI/1 — Basic safety","STCW V/1 — Tanker training"],
+        correct:1,expl:"STCW III/1 (and III/2 for ME): engineer watch officer with UMS-specific certification. Must be in ER within 5 minutes, available 24/7."},
+      {q:"Which SOLAS regulation requires remote ME control from bridge in UMS?",
+        opts:["SOLAS II-1 Reg. 49","SOLAS II-1 Reg. 46","SOLAS V Reg. 19","SOLAS III Reg. 6"],
+        correct:0,expl:"SOLAS II-1 Reg. 49: remote main engine control from bridge mandatory for UMS vessels. Allows OOW to maneuver without ER intervention."},
+      {q:"MV Sewol (2014) demonstrated that unconfigured AMS alarms can:",
+        opts:["Reduce consumption","Create false security — hidden danger","Speed up watch","Improve communications"],
+        correct:1,expl:"Sewol had an AMS with no list thresholds configured. Progressive list triggered no alarm for 30+ min. 304 deaths. A misconfigured AMS is more dangerous than no AMS."},
+      {q:"What is a blackout in UMS context?",
+        opts:["Cabin lighting failure","Total loss of main electrical supply — emergency generator < 45s","AMS computer failure","Radio cutoff"],
+        correct:1,expl:"Blackout = total loss of main electrical supply. Emergency generator must start in < 45 seconds (SOLAS II-1 Reg. 42). AMS signals bridge. Officer called immediately."},
+      {q:"What is the difference between Shutdown and Slowdown on ME?",
+        opts:["They are synonyms","Shutdown = complete stop, Slowdown = load reduction","Shutdown = test, Slowdown = emergency","Shutdown = electrical, Slowdown = mechanical"],
+        correct:1,expl:"Shutdown = complete immediate stop (ex: oil LL). Slowdown = load reduction without stopping (ex: water H). Sequence: alert -> slowdown -> shutdown. Graduated protection."},
+      {q:"How many alarm points can a modern VLCC AMS integrate?",
+        opts:["50 to 100","200 to 500","500 to 1,000","Over 1,000 (sometimes 5,000)"],
+        correct:3,expl:"A modern VLCC can have 1,000 to 5,000 alarm points: bearing temps, oil/water/fuel pressures, levels, vibrations, fire/gas detection, electrical power. Manufacturers: Kongsberg, Wartsila NACOS, ABB."},
+      {q:"What is the UMS Certificate issued by a classification society?",
+        opts:["Crew training","Certification that vessel satisfies technical and ISM requirements for UMS","Fuel certification","Navigation permit"],
+        correct:1,expl:"UMS Certificate (Class Notation UMS) certifies that vessel satisfies SOLAS II-1 and class society rules: certified AMS, DMA, fire/flood detection, remote ME, SMS/ISM procedures."},
+      {q:"What is the max time for engineer officer to be present in ER after call?",
+        opts:["30 seconds","5 minutes","15 minutes","30 minutes"],
+        correct:1,expl:"SOLAS II-1 Reg. 46: standby officer must be in engine room within 5 minutes of call. Requires nearby cabin, 24/7 availability, no alcohol."},
+    ],
+    es:[
+      {q:"?Que significa UMS en contexto maritimo?",opts:["Universal Maritime Standard","Unattended Machinery Space","Unified Monitoring System","Underwater Mechanical Survey"],correct:1,expl:"UMS = Unattended Machinery Space. Certificacion por sociedades de clasificacion (DNV, LR, BV, ClassNK, ABS) para operar sin oficial permanente bajo condiciones SOLAS II-1."},
+      {q:"Segun SOLAS II-1 Reg. 46, ?cual es la frecuencia max de rondas UMS?",opts:["15 min","30 min","60 min","2 horas"],correct:1,expl:"SOLAS II-1 Reg. 46: rondas cada 30 minutos maximo. Registradas con hora y observaciones, verificadas por el Jefe de Maquinas."},
+      {q:"?Que sistema centraliza todas las alarmas de la sala de maquinas en UMS?",opts:["SMS","AMS (Alarm Monitoring System)","VDR","BMS"],correct:1,expl:"El AMS recopila > 1.000 puntos de alarma en VLCC, los clasifica por prioridad (L/LL/H/HH), los marca con hora y los transmite al puente. Requerido SOLAS II-1 Reg. 51."},
+      {q:"?Que detecta la alarma Hombre Muerto (Dead Man Alarm)?",opts:["Un incendio","La incapacidad del oficial de guardia SM","Una inundacion","Una perdida de potencia"],correct:1,expl:"El DMA detecta la incapacidad del oficial de guardia en sala de maquinas. Sin senal de presencia en 30 min, alarma SM y luego transferencia al puente."},
+      {q:"Si una alarma UMS no se reconoce en 30s, se transfiere a:",opts:["El Jefe de Maquinas","El puente (OOW)","La sala de radio","El capitan"],correct:1,expl:"SOLAS II-1 Reg. 51: transferencia automatica al puente (OOW) si no se reconoce en 30 segundos."},
+      {q:"En un AMS, ?que significa la alarma 'HH'?",opts:["High Humidity","Muy Alto (umbral critico alto — accion inmediata)","Heavy Heat","High Hydraulic"],correct:1,expl:"HH = High High = umbral muy alto critico segun ANSI/ISA-18.2. Ej: temp. cojinete HH = riesgo agarrotamiento inminente. Requiere accion inmediata."},
+      {q:"?Que es el 'Slow Down' automatico en un ME UMS?",opts:["Parada completa del motor","Reduccion automatica de carga antes del umbral critico","Ralentizacion manual","Procedimiento de arranque"],correct:1,expl:"El Slow Down reduce la carga del ME cuando un parametro alcanza un umbral precritico. Medida graduada entre alerta y shutdown para evitar perdida de propulsion."},
+      {q:"?Que cualificacion STCW requiere el oficial de guardia UMS?",opts:["STCW II/1 — Oficial cubierta","STCW III/1 — Oficial mecanico de guardia","STCW VI/1 — Seguridad basica","STCW V/1 — Tanker training"],correct:1,expl:"STCW III/1 (y III/2 para ME): oficial mecanico de guardia con certificacion UMS especifica. Debe estar en SM en 5 minutos, disponible 24/7."},
+      {q:"?Que regulacion SOLAS exige el control remoto del ME desde el puente en UMS?",opts:["SOLAS II-1 Reg. 49","SOLAS II-1 Reg. 46","SOLAS V Reg. 19","SOLAS III Reg. 6"],correct:0,expl:"SOLAS II-1 Reg. 49: control remoto del ME desde el puente obligatorio para buques UMS."},
+      {q:"El MV Sewol (2014) demostro que las alarmas AMS no configuradas pueden:",opts:["Reducir consumo","Crear falsa seguridad — peligro oculto","Acelerar el quart","Mejorar comunicaciones"],correct:1,expl:"El Sewol tenia un AMS sin umbrales de escora configurados. Escora progresiva sin alarma 30+ min. 304 muertos."},
+      {q:"?Que es un blackout en contexto UMS?",opts:["Fallo iluminacion cabina","Perdida total suministro electrico principal — generador emergencia < 45s","Fallo AMS","Corte radio"],correct:1,expl:"Blackout = perdida total suministro electrico principal. Generador emergencia < 45s (SOLAS II-1 Reg. 42). AMS avisa al puente."},
+      {q:"?Cual es la diferencia entre Shutdown y Slowdown en ME?",opts:["Son sinonimos","Shutdown = parada completa, Slowdown = reduccion carga","Shutdown = prueba, Slowdown = emergencia","Shutdown = electrico, Slowdown = mecanico"],correct:1,expl:"Shutdown = parada completa inmediata. Slowdown = reduccion carga sin parar. Secuencia: alerta -> slowdown -> shutdown."},
+      {q:"?Cuantos puntos de alarma puede integrar un AMS VLCC moderno?",opts:["50 a 100","200 a 500","500 a 1.000","Mas de 1.000 (a veces 5.000)"],correct:3,expl:"Un VLCC moderno puede tener 1.000 a 5.000 puntos de alarma. Fabricantes: Kongsberg, Wartsila NACOS, ABB."},
+      {q:"?Que es el UMS Certificate emitido por una sociedad de clasificacion?",opts:["Formacion tripulacion","Certificacion que el buque cumple requisitos tecnicos e ISM para UMS","Certificacion combustible","Permiso navegacion"],correct:1,expl:"UMS Certificate (Class Notation UMS) certifica que el buque cumple SOLAS II-1 y reglas de la sociedad: AMS certificado, DMA, deteccion incendio/inundacion, ME remoto, procedimientos SMS/ISM."},
+      {q:"?Cual es el tiempo max para que un oficial mecanico este en SM tras la llamada?",opts:["30 segundos","5 minutos","15 minutos","30 minutos"],correct:1,expl:"SOLAS II-1 Reg. 46: oficial de guardia debe estar en SM en 5 minutos. Requiere cabina cercana, disponibilidad 24/7, sin alcohol."},
+    ],
+    pt:[
+      {q:"O que significa UMS no contexto maritimo?",opts:["Universal Maritime Standard","Unattended Machinery Space","Unified Monitoring System","Underwater Mechanical Survey"],correct:1,expl:"UMS = Unattended Machinery Space. Certificacao pelas sociedades de classificacao (DNV, LR, BV, ClassNK, ABS) para operar sem oficial permanente sob condicoes SOLAS II-1."},
+      {q:"Segundo SOLAS II-1 Reg. 46, qual e a frequencia max das rondas UMS?",opts:["15 min","30 min","60 min","2 horas"],correct:1,expl:"SOLAS II-1 Reg. 46: rondas de 30 em 30 minutos maximo. Registadas com hora e observacoes, verificadas pelo Chefe de Maquinas."},
+      {q:"Que sistema centraliza todos os alarmes da casa das maquinas em UMS?",opts:["SMS","AMS (Alarm Monitoring System)","VDR","BMS"],correct:1,expl:"O AMS recolhe > 1.000 pontos de alarme num VLCC, classifica por prioridade (L/LL/H/HH), marca com data/hora e transmite para a ponte. Requerido SOLAS II-1 Reg. 51."},
+      {q:"O que deteta o alarme Homem Morto (Dead Man Alarm)?",opts:["Um incendio","A incapacidade do oficial de quarto SM","Uma inundacao","Uma perda de potencia"],correct:1,expl:"O DMA deteta a incapacidade do oficial de quarto na casa das maquinas. Sem sinal de presenca em 30 min, alarme SM e depois transferencia para a ponte."},
+      {q:"Se um alarme UMS nao for reconhecido em 30s, e transferido para:",opts:["O Chefe de Maquinas","A ponte (OOW)","A sala de radio","O capitao"],correct:1,expl:"SOLAS II-1 Reg. 51: transferencia automatica para a ponte (OOW) se nao reconhecido em 30 segundos."},
+      {q:"Num AMS, o que significa o alarme 'HH'?",opts:["High Humidity","Muito Alto (limiar critico alto — acao imediata)","Heavy Heat","High Hydraulic"],correct:1,expl:"HH = High High = limiar muito alto critico segundo ANSI/ISA-18.2. Ex: temp. mancal HH = risco gripagem iminente. Requer acao imediata."},
+      {q:"O que e o 'Slow Down' automatico num ME UMS?",opts:["Paragem completa do motor","Reducao automatica de carga antes do limiar critico","Abrandamento manual","Procedimento de arranque"],correct:1,expl:"O Slow Down reduz a carga do ME quando um parametro atinge um limiar pre-critico. Medida graduada entre alerta e shutdown para evitar perda de propulsao."},
+      {q:"Que qualificacao STCW e necessaria para o oficial de quarto UMS?",opts:["STCW II/1 — Oficial convez","STCW III/1 — Oficial mecanico de quarto","STCW VI/1 — Seguranca basica","STCW V/1 — Tanker training"],correct:1,expl:"STCW III/1 (e III/2 para ME): oficial mecanico de quarto com certificacao UMS especifica. Deve estar na SM em 5 minutos, disponivel 24/7."},
+      {q:"Que regulacao SOLAS exige o controlo remoto do ME da ponte em UMS?",opts:["SOLAS II-1 Reg. 49","SOLAS II-1 Reg. 46","SOLAS V Reg. 19","SOLAS III Reg. 6"],correct:0,expl:"SOLAS II-1 Reg. 49: controlo remoto do ME da ponte obrigatorio para navios UMS."},
+      {q:"O MV Sewol (2014) demonstrou que alarmes AMS nao configurados podem:",opts:["Reduzir consumo","Criar falsa seguranca — perigo oculto","Acelerar o quarto","Melhorar comunicacoes"],correct:1,expl:"O Sewol tinha um AMS sem limiares de inclinacao configurados. Inclinacao progressiva sem alarme 30+ min. 304 mortos."},
+      {q:"O que e um blackout em contexto UMS?",opts:["Falha iluminacao cabine","Perda total fornecimento eletrico principal — gerador emergencia < 45s","Falha AMS","Corte radio"],correct:1,expl:"Blackout = perda total fornecimento eletrico principal. Gerador emergencia < 45s (SOLAS II-1 Reg. 42). AMS avisa a ponte."},
+      {q:"Qual e a diferenca entre Shutdown e Slowdown no ME?",opts:["Sao sinonimos","Shutdown = paragem completa, Slowdown = reducao carga","Shutdown = teste, Slowdown = emergencia","Shutdown = eletrico, Slowdown = mecanico"],correct:1,expl:"Shutdown = paragem completa imediata. Slowdown = reducao carga sem parar. Sequencia: alerta -> slowdown -> shutdown."},
+      {q:"Quantos pontos de alarme pode integrar um AMS VLCC moderno?",opts:["50 a 100","200 a 500","500 a 1.000","Mais de 1.000 (as vezes 5.000)"],correct:3,expl:"Um VLCC moderno pode ter 1.000 a 5.000 pontos de alarme. Fabricantes: Kongsberg, Wartsila NACOS, ABB."},
+      {q:"O que e o UMS Certificate emitido por uma sociedade de classificacao?",opts:["Formacao tripulacao","Certificacao que o navio satisfaz requisitos tecnicos e ISM para UMS","Certificacao combustivel","Licenca navegacao"],correct:1,expl:"UMS Certificate (Class Notation UMS) certifica que o navio satisfaz SOLAS II-1 e regras da sociedade: AMS certificado, DMA, detecao incendio/inundacao, ME remoto, procedimentos SMS/ISM."},
+      {q:"Qual e o tempo max para um oficial mecanico estar na SM apos chamada?",opts:["30 segundos","5 minutos","15 minutos","30 minutos"],correct:1,expl:"SOLAS II-1 Reg. 46: oficial de prevenco deve estar na SM em 5 minutos. Requer cabine proxima, disponibilidade 24/7, sem alcool."},
+    ],
+  };
+
 function QuestionBank({ lang, onComplete }) {
   const [idx, setIdx] = useState(0);
   const [sel, setSel] = useState(null);
@@ -781,142 +912,13 @@ function QuestionBank({ lang, onComplete }) {
   const [started, setStarted] = useState(false);
   const lbl = (fr,en,es,pt) => lang==="fr"?fr:lang==="en"?en:lang==="es"?es:pt;
 
-  const qs = {
-    fr:[
-      {q:"Que signifie l'acronyme UMS en contexte maritime ?",
-        opts:["Universal Maritime Standard","Unattended Machinery Space","Unified Monitoring System","Underwater Mechanical Survey"],
-        ans:1,expl:"UMS = Unattended Machinery Space (Espace Machines Sans Personnel Permanent). Certification accordee par les societes de classification (DNV, LR, BV, ClassNK, ABS) permettant l'exploitation sans officier permanent sous conditions SOLAS II-1."},
-      {q:"Selon SOLAS II-1 Reg. 46, quelle est la frequence max des rondes UMS ?",
-        opts:["15 min","30 min","60 min","2 heures"],
-        ans:1,expl:"SOLAS II-1 Reg. 46 : rondes toutes les 30 minutes maximum. Enregistrees dans le registre UMS avec heure et observations, verifiees par le Chef Mecanicien."},
-      {q:"Quel systeme centralise toutes les alarmes salle des machines en UMS ?",
-        opts:["SMS (Safety Management System)","AMS (Alarm Monitoring System)","VDR (Voyage Data Recorder)","BMS (Bridge Monitoring System)"],
-        ans:1,expl:"L'AMS (Alarm Monitoring System) collecte > 1 000 points d'alarme sur VLCC, les classe par priorite (L/LL/H/HH), les horodate et les transmet a la passerelle. Requis SOLAS II-1 Reg. 51."},
-      {q:"Que detecte l'alarme Homme Mort (Dead Man Alarm) ?",
-        opts:["Un incendie","L'incapacite de l'officier de quart SM","Une inondation","Une perte de puissance"],
-        ans:1,expl:"Le DMA detecte l'incapacite de l'officier de quart en salle des machines. Sans signal de presence dans les 30 min, alarme SM puis transfert passerelle."},
-      {q:"Si une alarme UMS n'est pas acquittee en 30s, elle est transferee vers :",
-        opts:["Le Chef Mecanicien","La passerelle (OOW)","La salle radio","Le capitaine"],
-        ans:1,expl:"SOLAS II-1 Reg. 51 : transfert automatique a la passerelle (OOW) si non acquittee en 30 secondes."},
-      {q:"Dans un AMS, que signifie l'alarme 'HH' ?",
-        opts:["High Humidity","Very High (seuil critique haut — action immediate)","Heavy Heat","High Hydraulic"],
-        ans:1,expl:"HH = High High = seuil tres haut critique selon ANSI/ISA-18.2. Ex : temp. palier HH = risque grippage imminent. Necessite action immediate. Sequence: H -> HH -> shutdown."},
-      {q:"Qu'est-ce que le 'Slow Down' automatique sur un ME UMS ?",
-        opts:["Arret complet du moteur","Reduction automatique de charge avant seuil critique","Ralentissement manuel","Procedure de demarrage"],
-        ans:1,expl:"Le Slow Down reduit la charge du ME (et la vitesse navire) quand un parametre atteint un seuil pre-critique. Mesure graduee entre alerte et shutdown pour eviter perte de propulsion."},
-      {q:"Quelle qualification STCW est requise pour l'officier d'astreinte UMS ?",
-        opts:["STCW II/1 — Officier pont","STCW III/1 — Officier mecanicien de quart","STCW VI/1 — Securite de base","STCW V/1 — Tanker training"],
-        ans:1,expl:"STCW III/1 (et III/2 pour ME) : officier mecanicien de quart avec certification UMS specifique. Doit etre present en SM dans les 5 minutes, disponible 24h/24."},
-      {q:"Quelle regulation SOLAS exige le controle remote du ME depuis la passerelle en UMS ?",
-        opts:["SOLAS II-1 Reg. 49","SOLAS II-1 Reg. 46","SOLAS V Reg. 19","SOLAS III Reg. 6"],
-        ans:0,expl:"SOLAS II-1 Reg. 49 : controle remote du moteur principal depuis la passerelle obligatoire pour navires UMS. Permet a l'OOW de manoeuvrer sans intervention en SM."},
-      {q:"Le MV Sewol (2014) a demontre que des alarmes AMS non configurees peuvent :",
-        opts:["Reduire la consommation","Creer une fausse securite — danger masque","Accelerer le quart","Ameliorer les communications"],
-        ans:1,expl:"Le Sewol avait un AMS sans seuils de gite configures. La gite croissante n'a declenche aucune alarme pendant 30+ min. 304 morts. Un AMS mal configure est plus dangereux qu'un AMS absent."},
-      {q:"Qu'est-ce qu'un blackout en contexte UMS ?",
-        opts:["Panne d'eclairage cabine","Perte totale alimentation electrique principale — generateur secours < 45s","Panne informatique AMS","Coupure radio"],
-        ans:1,expl:"Blackout = perte totale alimentation electrique principale. Generateur de secours doit demarrer en < 45 secondes (SOLAS II-1 Reg. 42). AMS signale a la passerelle. Officier appele immediatement."},
-      {q:"Quelle est la difference entre Shutdown et Slowdown sur ME ?",
-        opts:["Ce sont des synonymes","Shutdown = arret complet, Slowdown = reduction charge","Shutdown = test, Slowdown = urgence","Shutdown = electrique, Slowdown = mecanique"],
-        ans:1,expl:"Shutdown = arret complet et immediat (ex: huile LL). Slowdown = reduction charge sans arreter (ex: eau H). Sequence: alerte -> slowdown -> shutdown. Protection graduee pour maintenir propulsion le plus longtemps possible."},
-      {q:"Combien de points d'alarme un AMS VLCC moderne peut-il integrer ?",
-        opts:["50 a 100","200 a 500","500 a 1 000","Plus de 1 000 (parfois 5 000)"],
-        ans:3,expl:"Un VLCC moderne peut avoir 1 000 a 5 000 points d'alarme : T° paliers, pressions huile/eau/carburant, niveaux, vibrations, detection feu/gaz, puissance electrique. Fabricants : Kongsberg, Wartsila NACOS, ABB."},
-      {q:"Qu'est-ce que le UMS Certificate delivre par une societe de classification ?",
-        opts:["Formation equipage","Attestation que le navire satisfait les exigences techniques et ISM pour UMS","Certification carburant","Permis de navigation"],
-        ans:1,expl:"Le UMS Certificate (Class Notation UMS) atteste que le navire satisfait SOLAS II-1 et les regles de la societe de classification : AMS certifie, DMA, detection feu/inondation, remote ME, procedures SMS/ISM."},
-      {q:"Quel est le delai max pour qu'un officier mecanicien soit present en SM apres appel ?",
-        opts:["30 secondes","5 minutes","15 minutes","30 minutes"],
-        ans:1,expl:"SOLAS II-1 Reg. 46 : l'officier d'astreinte doit etre present en salle des machines dans les 5 minutes suivant l'appel. Exige cabine proche, disponibilite 24/7, pas d'alcool."},
-    ],
-    en:[
-      {q:"What does UMS mean in maritime context?",
-        opts:["Universal Maritime Standard","Unattended Machinery Space","Unified Monitoring System","Underwater Mechanical Survey"],
-        ans:1,expl:"UMS = Unattended Machinery Space. Classification granted by societies (DNV, LR, BV, ClassNK, ABS) allowing engine room operation without permanent officer under SOLAS II-1 conditions."},
-      {q:"Per SOLAS II-1 Reg. 46, what is the max UMS round frequency?",
-        opts:["15 min","30 min","60 min","2 hours"],
-        ans:1,expl:"SOLAS II-1 Reg. 46: rounds every 30 minutes maximum. Logged in UMS register with time and observations, verified by Chief Engineer."},
-      {q:"Which system centralizes all engine room alarms in UMS?",
-        opts:["SMS (Safety Management System)","AMS (Alarm Monitoring System)","VDR (Voyage Data Recorder)","BMS (Bridge Monitoring System)"],
-        ans:1,expl:"AMS (Alarm Monitoring System) collects > 1,000 alarm points on VLCC, classifies by priority (L/LL/H/HH), timestamps and transmits to bridge. Required SOLAS II-1 Reg. 51."},
-      {q:"What does the Dead Man Alarm detect?",
-        opts:["Fire","ER watch officer incapacity","Flooding","Power loss"],
-        ans:1,expl:"DMA detects engine room watch officer incapacity. Without a presence signal within 30 min, ER alarm triggers then transfers to bridge."},
-      {q:"If a UMS alarm is not acknowledged in 30s, it transfers to:",
-        opts:["Chief Engineer","Bridge (OOW)","Radio room","Captain"],
-        ans:1,expl:"SOLAS II-1 Reg. 51: automatic transfer to bridge (OOW) if not acknowledged within 30 seconds."},
-      {q:"In an AMS, what does 'HH' alarm mean?",
-        opts:["High Humidity","Very High (critical high threshold — immediate action)","Heavy Heat","High Hydraulic"],
-        ans:1,expl:"HH = High High = very high critical threshold per ANSI/ISA-18.2. Example: bearing temp HH = imminent seizure risk. Requires immediate action. Sequence: H -> HH -> shutdown."},
-      {q:"What is automatic 'Slow Down' on a UMS ME?",
-        opts:["Complete engine stop","Automatic load reduction before critical threshold","Manual slowing","Starting procedure"],
-        ans:1,expl:"Slow Down reduces ME load (and vessel speed) when a parameter reaches a pre-critical threshold. Graduated measure between alert and shutdown to avoid propulsion loss."},
-      {q:"What STCW qualification is required for UMS standby officer?",
-        opts:["STCW II/1 — Deck officer","STCW III/1 — Engineer watch officer","STCW VI/1 — Basic safety","STCW V/1 — Tanker training"],
-        ans:1,expl:"STCW III/1 (and III/2 for ME): engineer watch officer with UMS-specific certification. Must be in ER within 5 minutes, available 24/7."},
-      {q:"Which SOLAS regulation requires remote ME control from bridge in UMS?",
-        opts:["SOLAS II-1 Reg. 49","SOLAS II-1 Reg. 46","SOLAS V Reg. 19","SOLAS III Reg. 6"],
-        ans:0,expl:"SOLAS II-1 Reg. 49: remote main engine control from bridge mandatory for UMS vessels. Allows OOW to maneuver without ER intervention."},
-      {q:"MV Sewol (2014) demonstrated that unconfigured AMS alarms can:",
-        opts:["Reduce consumption","Create false security — hidden danger","Speed up watch","Improve communications"],
-        ans:1,expl:"Sewol had an AMS with no list thresholds configured. Progressive list triggered no alarm for 30+ min. 304 deaths. A misconfigured AMS is more dangerous than no AMS."},
-      {q:"What is a blackout in UMS context?",
-        opts:["Cabin lighting failure","Total loss of main electrical supply — emergency generator < 45s","AMS computer failure","Radio cutoff"],
-        ans:1,expl:"Blackout = total loss of main electrical supply. Emergency generator must start in < 45 seconds (SOLAS II-1 Reg. 42). AMS signals bridge. Officer called immediately."},
-      {q:"What is the difference between Shutdown and Slowdown on ME?",
-        opts:["They are synonyms","Shutdown = complete stop, Slowdown = load reduction","Shutdown = test, Slowdown = emergency","Shutdown = electrical, Slowdown = mechanical"],
-        ans:1,expl:"Shutdown = complete immediate stop (ex: oil LL). Slowdown = load reduction without stopping (ex: water H). Sequence: alert -> slowdown -> shutdown. Graduated protection."},
-      {q:"How many alarm points can a modern VLCC AMS integrate?",
-        opts:["50 to 100","200 to 500","500 to 1,000","Over 1,000 (sometimes 5,000)"],
-        ans:3,expl:"A modern VLCC can have 1,000 to 5,000 alarm points: bearing temps, oil/water/fuel pressures, levels, vibrations, fire/gas detection, electrical power. Manufacturers: Kongsberg, Wartsila NACOS, ABB."},
-      {q:"What is the UMS Certificate issued by a classification society?",
-        opts:["Crew training","Certification that vessel satisfies technical and ISM requirements for UMS","Fuel certification","Navigation permit"],
-        ans:1,expl:"UMS Certificate (Class Notation UMS) certifies that vessel satisfies SOLAS II-1 and class society rules: certified AMS, DMA, fire/flood detection, remote ME, SMS/ISM procedures."},
-      {q:"What is the max time for engineer officer to be present in ER after call?",
-        opts:["30 seconds","5 minutes","15 minutes","30 minutes"],
-        ans:1,expl:"SOLAS II-1 Reg. 46: standby officer must be in engine room within 5 minutes of call. Requires nearby cabin, 24/7 availability, no alcohol."},
-    ],
-    es:[
-      {q:"?Que significa UMS en contexto maritimo?",opts:["Universal Maritime Standard","Unattended Machinery Space","Unified Monitoring System","Underwater Mechanical Survey"],ans:1,expl:"UMS = Unattended Machinery Space. Certificacion por sociedades de clasificacion (DNV, LR, BV, ClassNK, ABS) para operar sin oficial permanente bajo condiciones SOLAS II-1."},
-      {q:"Segun SOLAS II-1 Reg. 46, ?cual es la frecuencia max de rondas UMS?",opts:["15 min","30 min","60 min","2 horas"],ans:1,expl:"SOLAS II-1 Reg. 46: rondas cada 30 minutos maximo. Registradas con hora y observaciones, verificadas por el Jefe de Maquinas."},
-      {q:"?Que sistema centraliza todas las alarmas de la sala de maquinas en UMS?",opts:["SMS","AMS (Alarm Monitoring System)","VDR","BMS"],ans:1,expl:"El AMS recopila > 1.000 puntos de alarma en VLCC, los clasifica por prioridad (L/LL/H/HH), los marca con hora y los transmite al puente. Requerido SOLAS II-1 Reg. 51."},
-      {q:"?Que detecta la alarma Hombre Muerto (Dead Man Alarm)?",opts:["Un incendio","La incapacidad del oficial de guardia SM","Una inundacion","Una perdida de potencia"],ans:1,expl:"El DMA detecta la incapacidad del oficial de guardia en sala de maquinas. Sin senal de presencia en 30 min, alarma SM y luego transferencia al puente."},
-      {q:"Si una alarma UMS no se reconoce en 30s, se transfiere a:",opts:["El Jefe de Maquinas","El puente (OOW)","La sala de radio","El capitan"],ans:1,expl:"SOLAS II-1 Reg. 51: transferencia automatica al puente (OOW) si no se reconoce en 30 segundos."},
-      {q:"En un AMS, ?que significa la alarma 'HH'?",opts:["High Humidity","Muy Alto (umbral critico alto — accion inmediata)","Heavy Heat","High Hydraulic"],ans:1,expl:"HH = High High = umbral muy alto critico segun ANSI/ISA-18.2. Ej: temp. cojinete HH = riesgo agarrotamiento inminente. Requiere accion inmediata."},
-      {q:"?Que es el 'Slow Down' automatico en un ME UMS?",opts:["Parada completa del motor","Reduccion automatica de carga antes del umbral critico","Ralentizacion manual","Procedimiento de arranque"],ans:1,expl:"El Slow Down reduce la carga del ME cuando un parametro alcanza un umbral precritico. Medida graduada entre alerta y shutdown para evitar perdida de propulsion."},
-      {q:"?Que cualificacion STCW requiere el oficial de guardia UMS?",opts:["STCW II/1 — Oficial cubierta","STCW III/1 — Oficial mecanico de guardia","STCW VI/1 — Seguridad basica","STCW V/1 — Tanker training"],ans:1,expl:"STCW III/1 (y III/2 para ME): oficial mecanico de guardia con certificacion UMS especifica. Debe estar en SM en 5 minutos, disponible 24/7."},
-      {q:"?Que regulacion SOLAS exige el control remoto del ME desde el puente en UMS?",opts:["SOLAS II-1 Reg. 49","SOLAS II-1 Reg. 46","SOLAS V Reg. 19","SOLAS III Reg. 6"],ans:0,expl:"SOLAS II-1 Reg. 49: control remoto del ME desde el puente obligatorio para buques UMS."},
-      {q:"El MV Sewol (2014) demostro que las alarmas AMS no configuradas pueden:",opts:["Reducir consumo","Crear falsa seguridad — peligro oculto","Acelerar el quart","Mejorar comunicaciones"],ans:1,expl:"El Sewol tenia un AMS sin umbrales de escora configurados. Escora progresiva sin alarma 30+ min. 304 muertos."},
-      {q:"?Que es un blackout en contexto UMS?",opts:["Fallo iluminacion cabina","Perdida total suministro electrico principal — generador emergencia < 45s","Fallo AMS","Corte radio"],ans:1,expl:"Blackout = perdida total suministro electrico principal. Generador emergencia < 45s (SOLAS II-1 Reg. 42). AMS avisa al puente."},
-      {q:"?Cual es la diferencia entre Shutdown y Slowdown en ME?",opts:["Son sinonimos","Shutdown = parada completa, Slowdown = reduccion carga","Shutdown = prueba, Slowdown = emergencia","Shutdown = electrico, Slowdown = mecanico"],ans:1,expl:"Shutdown = parada completa inmediata. Slowdown = reduccion carga sin parar. Secuencia: alerta -> slowdown -> shutdown."},
-      {q:"?Cuantos puntos de alarma puede integrar un AMS VLCC moderno?",opts:["50 a 100","200 a 500","500 a 1.000","Mas de 1.000 (a veces 5.000)"],ans:3,expl:"Un VLCC moderno puede tener 1.000 a 5.000 puntos de alarma. Fabricantes: Kongsberg, Wartsila NACOS, ABB."},
-      {q:"?Que es el UMS Certificate emitido por una sociedad de clasificacion?",opts:["Formacion tripulacion","Certificacion que el buque cumple requisitos tecnicos e ISM para UMS","Certificacion combustible","Permiso navegacion"],ans:1,expl:"UMS Certificate (Class Notation UMS) certifica que el buque cumple SOLAS II-1 y reglas de la sociedad: AMS certificado, DMA, deteccion incendio/inundacion, ME remoto, procedimientos SMS/ISM."},
-      {q:"?Cual es el tiempo max para que un oficial mecanico este en SM tras la llamada?",opts:["30 segundos","5 minutos","15 minutos","30 minutos"],ans:1,expl:"SOLAS II-1 Reg. 46: oficial de guardia debe estar en SM en 5 minutos. Requiere cabina cercana, disponibilidad 24/7, sin alcohol."},
-    ],
-    pt:[
-      {q:"O que significa UMS no contexto maritimo?",opts:["Universal Maritime Standard","Unattended Machinery Space","Unified Monitoring System","Underwater Mechanical Survey"],ans:1,expl:"UMS = Unattended Machinery Space. Certificacao pelas sociedades de classificacao (DNV, LR, BV, ClassNK, ABS) para operar sem oficial permanente sob condicoes SOLAS II-1."},
-      {q:"Segundo SOLAS II-1 Reg. 46, qual e a frequencia max das rondas UMS?",opts:["15 min","30 min","60 min","2 horas"],ans:1,expl:"SOLAS II-1 Reg. 46: rondas de 30 em 30 minutos maximo. Registadas com hora e observacoes, verificadas pelo Chefe de Maquinas."},
-      {q:"Que sistema centraliza todos os alarmes da casa das maquinas em UMS?",opts:["SMS","AMS (Alarm Monitoring System)","VDR","BMS"],ans:1,expl:"O AMS recolhe > 1.000 pontos de alarme num VLCC, classifica por prioridade (L/LL/H/HH), marca com data/hora e transmite para a ponte. Requerido SOLAS II-1 Reg. 51."},
-      {q:"O que deteta o alarme Homem Morto (Dead Man Alarm)?",opts:["Um incendio","A incapacidade do oficial de quarto SM","Uma inundacao","Uma perda de potencia"],ans:1,expl:"O DMA deteta a incapacidade do oficial de quarto na casa das maquinas. Sem sinal de presenca em 30 min, alarme SM e depois transferencia para a ponte."},
-      {q:"Se um alarme UMS nao for reconhecido em 30s, e transferido para:",opts:["O Chefe de Maquinas","A ponte (OOW)","A sala de radio","O capitao"],ans:1,expl:"SOLAS II-1 Reg. 51: transferencia automatica para a ponte (OOW) se nao reconhecido em 30 segundos."},
-      {q:"Num AMS, o que significa o alarme 'HH'?",opts:["High Humidity","Muito Alto (limiar critico alto — acao imediata)","Heavy Heat","High Hydraulic"],ans:1,expl:"HH = High High = limiar muito alto critico segundo ANSI/ISA-18.2. Ex: temp. mancal HH = risco gripagem iminente. Requer acao imediata."},
-      {q:"O que e o 'Slow Down' automatico num ME UMS?",opts:["Paragem completa do motor","Reducao automatica de carga antes do limiar critico","Abrandamento manual","Procedimento de arranque"],ans:1,expl:"O Slow Down reduz a carga do ME quando um parametro atinge um limiar pre-critico. Medida graduada entre alerta e shutdown para evitar perda de propulsao."},
-      {q:"Que qualificacao STCW e necessaria para o oficial de quarto UMS?",opts:["STCW II/1 — Oficial convez","STCW III/1 — Oficial mecanico de quarto","STCW VI/1 — Seguranca basica","STCW V/1 — Tanker training"],ans:1,expl:"STCW III/1 (e III/2 para ME): oficial mecanico de quarto com certificacao UMS especifica. Deve estar na SM em 5 minutos, disponivel 24/7."},
-      {q:"Que regulacao SOLAS exige o controlo remoto do ME da ponte em UMS?",opts:["SOLAS II-1 Reg. 49","SOLAS II-1 Reg. 46","SOLAS V Reg. 19","SOLAS III Reg. 6"],ans:0,expl:"SOLAS II-1 Reg. 49: controlo remoto do ME da ponte obrigatorio para navios UMS."},
-      {q:"O MV Sewol (2014) demonstrou que alarmes AMS nao configurados podem:",opts:["Reduzir consumo","Criar falsa seguranca — perigo oculto","Acelerar o quarto","Melhorar comunicacoes"],ans:1,expl:"O Sewol tinha um AMS sem limiares de inclinacao configurados. Inclinacao progressiva sem alarme 30+ min. 304 mortos."},
-      {q:"O que e um blackout em contexto UMS?",opts:["Falha iluminacao cabine","Perda total fornecimento eletrico principal — gerador emergencia < 45s","Falha AMS","Corte radio"],ans:1,expl:"Blackout = perda total fornecimento eletrico principal. Gerador emergencia < 45s (SOLAS II-1 Reg. 42). AMS avisa a ponte."},
-      {q:"Qual e a diferenca entre Shutdown e Slowdown no ME?",opts:["Sao sinonimos","Shutdown = paragem completa, Slowdown = reducao carga","Shutdown = teste, Slowdown = emergencia","Shutdown = eletrico, Slowdown = mecanico"],ans:1,expl:"Shutdown = paragem completa imediata. Slowdown = reducao carga sem parar. Sequencia: alerta -> slowdown -> shutdown."},
-      {q:"Quantos pontos de alarme pode integrar um AMS VLCC moderno?",opts:["50 a 100","200 a 500","500 a 1.000","Mais de 1.000 (as vezes 5.000)"],ans:3,expl:"Um VLCC moderno pode ter 1.000 a 5.000 pontos de alarme. Fabricantes: Kongsberg, Wartsila NACOS, ABB."},
-      {q:"O que e o UMS Certificate emitido por uma sociedade de classificacao?",opts:["Formacao tripulacao","Certificacao que o navio satisfaz requisitos tecnicos e ISM para UMS","Certificacao combustivel","Licenca navegacao"],ans:1,expl:"UMS Certificate (Class Notation UMS) certifica que o navio satisfaz SOLAS II-1 e regras da sociedade: AMS certificado, DMA, detecao incendio/inundacao, ME remoto, procedimentos SMS/ISM."},
-      {q:"Qual e o tempo max para um oficial mecanico estar na SM apos chamada?",opts:["30 segundos","5 minutos","15 minutos","30 minutos"],ans:1,expl:"SOLAS II-1 Reg. 46: oficial de prevenco deve estar na SM em 5 minutos. Requer cabine proxima, disponibilidade 24/7, sem alcool."},
-    ],
-  };
+  const qs = BANK;
 
   const list=qs[lang]||qs.fr;
-  const [shuffled]=useState(()=>list.map(q=>shuffleQuestionOptions(q,"ans")));
+  const [shuffled]=useState(()=>list.map(q=>shuffleQuestionOptions(q,"correct")));
   const total=list.length;
 
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].ans)setScore(s=>s+1);};
+  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===shuffled[idx].correct)setScore(s=>s+1);};
   const handleNext=()=>{if(idx===total-1){setDone(true);if(onComplete)onComplete();return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   const handleRestart=()=>{setIdx(0);setSel(null);setAnswered(false);setScore(0);setDone(false);setStarted(false);};
 
@@ -983,7 +985,7 @@ function QuestionBank({ lang, onComplete }) {
       {q.opts.map((opt,i)=>{
         let bg="rgba(10,22,40,0.7)",border=C.border,col=C.white;
         if(answered){
-          if(i===q.ans){bg="rgba(0,230,118,0.12)";border=C.green;col=C.green;}
+          if(i===q.correct){bg="rgba(0,230,118,0.12)";border=C.green;col=C.green;}
           else if(i===sel){bg="rgba(255,23,68,0.12)";border=C.red;col=C.red;}
         }
         return (
@@ -999,10 +1001,10 @@ function QuestionBank({ lang, onComplete }) {
       })}
       {answered && (
         <div style={{padding:"13px",borderRadius:13,
-          background:`rgba(${sel===q.ans?"0,230,118":"255,23,68"},0.08)`,
-          border:`1.5px solid ${sel===q.ans?C.green:C.red}55`,marginBottom:12}}>
-          <div style={{fontSize:12,fontWeight:800,color:sel===q.ans?C.green:C.red,marginBottom:5}}>
-            {sel===q.ans
+          background:`rgba(${sel===q.correct?"0,230,118":"255,23,68"},0.08)`,
+          border:`1.5px solid ${sel===q.correct?C.green:C.red}55`,marginBottom:12}}>
+          <div style={{fontSize:12,fontWeight:800,color:sel===q.correct?C.green:C.red,marginBottom:5}}>
+            {sel===q.correct
               ?(lang==="fr"?"✓ Excellente reponse !":lang==="en"?"✓ Excellent!":lang==="es"?"✓ Excelente!":"✓ Excelente!")
               :(lang==="fr"?"✗ Reponse incorrecte":lang==="en"?"✗ Incorrect":lang==="es"?"✗ Incorrecta":"✗ Incorreta")}
           </div>
@@ -1027,59 +1029,59 @@ function QuestionBank({ lang, onComplete }) {
 // ══════════════════════════════════════
 // QUIZ — 5 QCM
 // ══════════════════════════════════════
-const QUIZ={
+export const QUIZ={
   fr:[
     {q:"UMS signifie et est regi par :",opts:["Universal Maritime System — SOLAS V","Unattended Machinery Space — SOLAS II-1","Unmanned Marine Survey — SOLAS III","Unified Monitor Space — SOLAS VI"],
-      ans:1,expl:"UMS = Unattended Machinery Space — SOLAS II-1 Reg. 46-53. Ce chapitre definit toutes les conditions techniques et organisationnelles pour l'exploitation sans officier permanent."},
+      correct:1,expl:"UMS = Unattended Machinery Space — SOLAS II-1 Reg. 46-53. Ce chapitre definit toutes les conditions techniques et organisationnelles pour l'exploitation sans officier permanent."},
     {q:"Frequence max rondes UMS et delai max presence officier en SM :",opts:["15 min / 2 min","30 min / 5 min","60 min / 10 min","30 min / 30 min"],
-      ans:1,expl:"SOLAS II-1 Reg. 46 : rondes toutes les 30 min max. Officier d'astreinte present en SM dans les 5 minutes suivant appel. Verifies lors des inspections PSC."},
+      correct:1,expl:"SOLAS II-1 Reg. 46 : rondes toutes les 30 min max. Officier d'astreinte present en SM dans les 5 minutes suivant appel. Verifies lors des inspections PSC."},
     {q:"Alarme UMS non acquittee en 30s — consequence SOLAS :",opts:["Arret moteur automatique","Transfert automatique passerelle (OOW)","Alerte Chef Mecanicien uniquement","Alarme ignoree"],
-      ans:1,expl:"SOLAS II-1 Reg. 51 : toute alarme non acquittee en 30s est automatiquement transferee a la passerelle (OOW) qui doit verifier et appeler l'officier mecanicien."},
+      correct:1,expl:"SOLAS II-1 Reg. 51 : toute alarme non acquittee en 30s est automatiquement transferee a la passerelle (OOW) qui doit verifier et appeler l'officier mecanicien."},
     {q:"Le MV Sewol (2014) a coule car l'AMS n'avait pas configure :",opts:["Les alarmes moteur","Les alarmes de gite et stabilite","Les alarmes carburant","Les alarmes incendie"],
-      ans:1,expl:"L'AMS du Sewol n'avait aucun seuil de gite configure. La gite croissante a babord n'a declenche aucune alarme pendant 30+ minutes permettant le chavirage. 304 morts."},
+      correct:1,expl:"L'AMS du Sewol n'avait aucun seuil de gite configure. La gite croissante a babord n'a declenche aucune alarme pendant 30+ minutes permettant le chavirage. 304 morts."},
     {q:"Dead Man Alarm — periode max et consequence si pas de signal :",opts:["10 min => arret ME","30 min => alarme SM puis passerelle","60 min => alerte compagnie","4h => rapport PSC"],
-      ans:1,expl:"DMA : signal de presence max toutes les 30 min. Sans signal : alarme audivisuelle SM. Non acquittee en 30s : transfert passerelle OOW. Previent incapacite non signalee de l'officier d'astreinte."},
+      correct:1,expl:"DMA : signal de presence max toutes les 30 min. Sans signal : alarme audivisuelle SM. Non acquittee en 30s : transfert passerelle OOW. Previent incapacite non signalee de l'officier d'astreinte."},
   ],
   en:[
     {q:"UMS stands for and is governed by:",opts:["Universal Maritime System — SOLAS V","Unattended Machinery Space — SOLAS II-1","Unmanned Marine Survey — SOLAS III","Unified Monitor Space — SOLAS VI"],
-      ans:1,expl:"UMS = Unattended Machinery Space — SOLAS II-1 Reg. 46-53. Defines all technical and organizational conditions for operation without permanent officer."},
+      correct:1,expl:"UMS = Unattended Machinery Space — SOLAS II-1 Reg. 46-53. Defines all technical and organizational conditions for operation without permanent officer."},
     {q:"Max UMS round frequency and max officer response time in ER:",opts:["15 min / 2 min","30 min / 5 min","60 min / 10 min","30 min / 30 min"],
-      ans:1,expl:"SOLAS II-1 Reg. 46: rounds every 30 min max. Standby officer in ER within 5 minutes of call. Verified during PSC inspections."},
+      correct:1,expl:"SOLAS II-1 Reg. 46: rounds every 30 min max. Standby officer in ER within 5 minutes of call. Verified during PSC inspections."},
     {q:"UMS alarm not acknowledged in 30s — SOLAS consequence:",opts:["Automatic engine stop","Automatic bridge transfer (OOW)","Chief Engineer alert only","Alarm ignored"],
-      ans:1,expl:"SOLAS II-1 Reg. 51: any alarm not acknowledged in 30s is automatically transferred to the bridge (OOW) who must verify and call the engineer officer."},
+      correct:1,expl:"SOLAS II-1 Reg. 51: any alarm not acknowledged in 30s is automatically transferred to the bridge (OOW) who must verify and call the engineer officer."},
     {q:"MV Sewol (2014) capsized because AMS had not configured:",opts:["Engine alarms","List and stability alarms","Fuel alarms","Fire alarms"],
-      ans:1,expl:"Sewol's AMS had no list threshold configured. Progressive port list triggered no alarm for 30+ minutes allowing capsizing. 304 deaths."},
+      correct:1,expl:"Sewol's AMS had no list threshold configured. Progressive port list triggered no alarm for 30+ minutes allowing capsizing. 304 deaths."},
     {q:"Dead Man Alarm — max period and consequence if no signal:",opts:["10 min => ME stop","30 min => ER alarm then bridge","60 min => company alert","4h => PSC report"],
-      ans:1,expl:"DMA: presence signal max every 30 min. No signal: ER audivisual alarm. Not acked in 30s: bridge OOW transfer. Prevents unreported incapacitation of standby officer."},
+      correct:1,expl:"DMA: presence signal max every 30 min. No signal: ER audivisual alarm. Not acked in 30s: bridge OOW transfer. Prevents unreported incapacitation of standby officer."},
   ],
   es:[
     {q:"UMS significa y es regido por:",opts:["Universal Maritime System — SOLAS V","Unattended Machinery Space — SOLAS II-1","Unmanned Marine Survey — SOLAS III","Unified Monitor Space — SOLAS VI"],
-      ans:1,expl:"UMS = Unattended Machinery Space — SOLAS II-1 Reg. 46-53. Define todas las condiciones tecnicas y organizativas para la operacion sin oficial permanente."},
+      correct:1,expl:"UMS = Unattended Machinery Space — SOLAS II-1 Reg. 46-53. Define todas las condiciones tecnicas y organizativas para la operacion sin oficial permanente."},
     {q:"Frecuencia max rondas UMS y tiempo max respuesta oficial en SM:",opts:["15 min / 2 min","30 min / 5 min","60 min / 10 min","30 min / 30 min"],
-      ans:1,expl:"SOLAS II-1 Reg. 46: rondas cada 30 min max. Oficial de guardia en SM en 5 minutos tras llamada. Verificados en inspecciones PSC."},
+      correct:1,expl:"SOLAS II-1 Reg. 46: rondas cada 30 min max. Oficial de guardia en SM en 5 minutos tras llamada. Verificados en inspecciones PSC."},
     {q:"Alarma UMS no reconocida en 30s — consecuencia SOLAS:",opts:["Parada automatica motor","Transferencia automatica puente (OOW)","Alerta Jefe Maquinas solo","Alarma ignorada"],
-      ans:1,expl:"SOLAS II-1 Reg. 51: toda alarma no reconocida en 30s se transfiere automaticamente al puente (OOW)."},
+      correct:1,expl:"SOLAS II-1 Reg. 51: toda alarma no reconocida en 30s se transfiere automaticamente al puente (OOW)."},
     {q:"El MV Sewol (2014) se hundio porque el AMS no tenia configuradas:",opts:["Alarmas motor","Alarmas de escora y estabilidad","Alarmas combustible","Alarmas incendio"],
-      ans:1,expl:"El AMS del Sewol no tenia umbrales de escora. Escora progresiva sin alarma 30+ min. 304 muertos."},
+      correct:1,expl:"El AMS del Sewol no tenia umbrales de escora. Escora progresiva sin alarma 30+ min. 304 muertos."},
     {q:"Dead Man Alarm — periodo max y consecuencia si no hay senal:",opts:["10 min => parada ME","30 min => alarma SM luego puente","60 min => alerta naviera","4h => informe PSC"],
-      ans:1,expl:"DMA: senal de presencia max cada 30 min. Sin senal: alarma SM. No reconocida 30s: transferencia puente OOW."},
+      correct:1,expl:"DMA: senal de presencia max cada 30 min. Sin senal: alarma SM. No reconocida 30s: transferencia puente OOW."},
   ],
   pt:[
     {q:"UMS significa e e regido por:",opts:["Universal Maritime System — SOLAS V","Unattended Machinery Space — SOLAS II-1","Unmanned Marine Survey — SOLAS III","Unified Monitor Space — SOLAS VI"],
-      ans:1,expl:"UMS = Unattended Machinery Space — SOLAS II-1 Reg. 46-53. Define todas as condicoes tecnicas e organizacionais para a operacao sem oficial permanente."},
+      correct:1,expl:"UMS = Unattended Machinery Space — SOLAS II-1 Reg. 46-53. Define todas as condicoes tecnicas e organizacionais para a operacao sem oficial permanente."},
     {q:"Frequencia max rondas UMS e tempo max resposta oficial na SM:",opts:["15 min / 2 min","30 min / 5 min","60 min / 10 min","30 min / 30 min"],
-      ans:1,expl:"SOLAS II-1 Reg. 46: rondas de 30 em 30 min max. Oficial de prevenco na SM em 5 minutos apos chamada. Verificados nas inspecoes PSC."},
+      correct:1,expl:"SOLAS II-1 Reg. 46: rondas de 30 em 30 min max. Oficial de prevenco na SM em 5 minutos apos chamada. Verificados nas inspecoes PSC."},
     {q:"Alarme UMS nao reconhecido em 30s — consequencia SOLAS:",opts:["Paragem automatica motor","Transferencia automatica ponte (OOW)","Alerta Chefe Maquinas apenas","Alarme ignorado"],
-      ans:1,expl:"SOLAS II-1 Reg. 51: qualquer alarme nao reconhecido em 30s e transferido automaticamente para a ponte (OOW)."},
+      correct:1,expl:"SOLAS II-1 Reg. 51: qualquer alarme nao reconhecido em 30s e transferido automaticamente para a ponte (OOW)."},
     {q:"O MV Sewol (2014) capsizou porque o AMS nao tinha configurados:",opts:["Alarmes motor","Alarmes de inclinacao e estabilidade","Alarmes combustivel","Alarmes incendio"],
-      ans:1,expl:"O AMS do Sewol nao tinha limiares de inclinacao. Inclinacao progressiva sem alarme 30+ min. 304 mortos."},
+      correct:1,expl:"O AMS do Sewol nao tinha limiares de inclinacao. Inclinacao progressiva sem alarme 30+ min. 304 mortos."},
     {q:"Dead Man Alarm — periodo max e consequencia se nao ha sinal:",opts:["10 min => paragem ME","30 min => alarme SM depois ponte","60 min => alerta armador","4h => relatorio PSC"],
-      ans:1,expl:"DMA: sinal de presenca max de 30 em 30 min. Sem sinal: alarme SM. Nao reconhecido 30s: transferencia ponte OOW."},
+      correct:1,expl:"DMA: sinal de presenca max de 30 em 30 min. Sem sinal: alarme SM. Nao reconhecido 30s: transferencia ponte OOW."},
   ],
 };
 
 function QuizComp({ questions, t, lang, onComplete }) {
-  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"ans")));
+  const [shuffled]=useState(()=>questions.map(q=>shuffleQuestionOptions(q,"correct")));
   const [idx,setIdx]=useState(0);
   const [sel,setSel]=useState(null);
   const [answered,setAnswered]=useState(false);
@@ -1087,8 +1089,8 @@ function QuizComp({ questions, t, lang, onComplete }) {
   const total=questions.length;
   const isLast=idx===total-1;
   const q=shuffled[idx];
-  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.ans)setScore(s=>s+1);};
-  const handleNext=()=>{const fs=score+(sel===q.ans?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
+  const handleAnswer=(i)=>{if(answered)return;setSel(i);setAnswered(true);if(i===q.correct)setScore(s=>s+1);};
+  const handleNext=()=>{const fs=score+(sel===q.correct?1:0);if(isLast){onComplete(fs);return;}setSel(null);setAnswered(false);setIdx(i=>i+1);};
   return (
     <div>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
@@ -1104,7 +1106,7 @@ function QuizComp({ questions, t, lang, onComplete }) {
       {q.opts.map((opt,i)=>{
         let bg="rgba(10,22,40,0.7)",border=C.border,col=C.white;
         if(answered){
-          if(i===q.ans){bg="rgba(0,230,118,0.12)";border=C.green;col=C.green;}
+          if(i===q.correct){bg="rgba(0,230,118,0.12)";border=C.green;col=C.green;}
           else if(i===sel){bg="rgba(255,23,68,0.12)";border=C.red;col=C.red;}
         }
         return (
@@ -1117,10 +1119,10 @@ function QuizComp({ questions, t, lang, onComplete }) {
         );
       })}
       {answered && (
-        <div style={{padding:"13px",borderRadius:13,background:`rgba(${sel===q.ans?"0,230,118":"255,23,68"},0.08)`,
-          border:`1.5px solid ${sel===q.ans?C.green:C.red}55`,marginBottom:12}}>
-          <div style={{fontSize:12,fontWeight:800,color:sel===q.ans?C.green:C.red,marginBottom:5}}>
-            {sel===q.ans?t.correct:t.wrong}
+        <div style={{padding:"13px",borderRadius:13,background:`rgba(${sel===q.correct?"0,230,118":"255,23,68"},0.08)`,
+          border:`1.5px solid ${sel===q.correct?C.green:C.red}55`,marginBottom:12}}>
+          <div style={{fontSize:12,fontWeight:800,color:sel===q.correct?C.green:C.red,marginBottom:5}}>
+            {sel===q.correct?t.correct:t.wrong}
           </div>
           <div style={{fontSize:11,color:C.steel3,lineHeight:1.7}}>{t.expl} {q.expl}</div>
         </div>

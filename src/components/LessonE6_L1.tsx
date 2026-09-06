@@ -507,55 +507,204 @@ function AccidentCase({ lang }: { lang: string }) {
 // ══════════════════════════════════════
 // QUESTION BANK
 // ══════════════════════════════════════
+function getTrophy(score: number, total: number) {
+  const pct = score / total;
+  if (pct === 1)  return { icon:"🏆", color:"#f1c40f", label:{fr:"Parfait !",     en:"Perfect!",     es:"¡Perfecto!",  pt:"Perfeito!"} };
+  if (pct >= 0.8) return { icon:"🥇", color:C.gold2,    label:{fr:"Excellent !",  en:"Excellent!",   es:"¡Excelente!", pt:"Excelente!"} };
+  if (pct >= 0.6) return { icon:"🥈", color:"#b0bec5",  label:{fr:"Bien !",       en:"Well done!",   es:"¡Bien!",      pt:"Bem feito!"} };
+  if (pct >= 0.4) return { icon:"🥉", color:"#cd7f32",  label:{fr:"Continue !",   en:"Keep going!",  es:"¡Sigue!",     pt:"Continue!"} };
+  return                  { icon:"📚", color:C.muted,    label:{fr:"À retravailler",en:"Keep studying",es:"A repasar",  pt:"Continue estudando"} };
+}
+
+// ══════════════════════════════════════
+// QUESTION BANK — 15 QUESTIONS
+// ══════════════════════════════════════
+export const BANK: any = {
+  fr:[
+    { q:"Quelle est la différence principale entre une pompe deep well et un éjecteur ?", opts:["Le deep well n'a pas de pièces mobiles, l'éjecteur oui","Deep well = centrifuge immergée à haut débit (500–5000 m³/h) nécessitant un niveau minimum ; éjecteur = sans pièce mobile, effet Venturi, bas débit (5–30 m³/h), aspire jusqu'à quelques cm","Les deux pompes ont exactement le même débit","L'éjecteur sert uniquement au déchargement principal"], correct:1, expl:"Deep well : pompe centrifuge immergée, débit élevé (500–5000 m³/h), nécessite un niveau minimum, moteur en pont. Éjecteur : sans pièces mobiles, utilise un fluide moteur sous pression pour aspirer par effet Venturi, débit faible (5–30 m³/h), aspire les fonds jusqu'à quelques cm, très fiable." },
+    { q:"Qu'est-ce que le NPSH et pourquoi est-il critique en fin de déchargement ?", opts:["Une mesure de la température du cargo, sans lien avec la cavitation","NPSH = pression absolue à l'aspiration moins la pression de vapeur du cargo ; si NPSHd < NPSHr → cavitation, risque accru en fin de citerne quand le niveau bas réduit la hauteur géométrique","Un indicateur de la vitesse de rotation de la pompe","Une norme de sécurité incendie"], correct:1, expl:"NPSH (Net Positive Suction Head) = pression absolue à l'aspiration moins la pression de vapeur du cargo. Si NPSHd < NPSHr → cavitation. En fin de citerne, le niveau bas réduit la hauteur géométrique → NPSHd chute → bulles de vapeur → érosion de la roue en heures." },
+    { q:"Quelles sont les étapes de vérification avant démarrage d'une pompe cargo ?", opts:["Uniquement vérifier que le terminal est prêt","Sécurité/communication terminal confirmées, IGS opérationnel, vanne aspiration ouverte, tuyauterie purgée d'air, pression huile hydraulique vérifiée, alarmes/débitmètre opérationnels, terminal autorisé, démarrage progressif","Seulement ouvrir la vanne de refoulement","Attendre l'autorisation du chef mécanicien uniquement"], correct:1, expl:"1. Sécurité et communication terminal confirmée. 2. IGS opérationnel. 3. Vanne aspiration citerne ouverte. 4. Tuyauterie purgée d'air. 5. Pression huile hydraulique vérifiée. 6. Alarmes et débitmètre opérationnels. 7. Terminal autorisé. 8. Démarrage progressif (10–15 min)." },
+    { q:"Pourquoi l'entraînement hydraulique est-il préféré à l'électrique sur les VLCC ?", opts:["Il est moins cher à l'achat","Il élimine les câbles électriques haute tension sur le pont (zone ATEX), offre une vitesse variable et une bonne robustesse en milieu marin","Il nécessite moins de maintenance que l'électrique","Il permet toujours un débit plus élevé"], correct:1, expl:"L'entraînement hydraulique (circuit huile HP depuis salle des machines) élimine les câbles électriques haute tension sur le pont (zone ATEX). Avantages : sécurité ATEX, vitesse variable (débit modulable par pression d'huile), robustesse en milieu marin." },
+    { q:"Que faire si une cavitation est détectée sur la pompe principale en cours de déchargement ?", opts:["Continuer le déchargement sans rien changer","Réduire immédiatement le débit ; si la cavitation persiste, arrêter la pompe principale, ouvrir la vanne aspiration stripping et démarrer la pompe stripping à pistons, en surveillant l'OBQ","Augmenter le débit pour forcer le passage","Arrêter uniquement l'IGS"], correct:1, expl:"1. Réduire immédiatement le débit (fermer partiellement la vanne refoulement). 2. Si cavitation persiste : arrêter la pompe principale. 3. Ouvrir la vanne aspiration stripping. 4. Démarrer la pompe stripping à pistons. 5. Surveiller OBQ et débit. Ne jamais continuer en cavitation sévère — roue détruite en heures." },
+    { q:"Quelles sont les caractéristiques de la pompe de stripping à pistons ?", opts:["Pompe volumétrique qui aspire les fonds de citerne quand la centrifuge cavite, débit 10–50 m³/h","Pompe centrifuge à très haut débit, jusqu'à 5000 m³/h","Pompe sans pièces mobiles utilisant l'effet Venturi","Pompe utilisée uniquement pour le ballastage"], correct:0, expl:"La pompe stripping est une pompe volumétrique à pistons. Elle aspire les fonds de citerne quand la pompe centrifuge (deep well) cavite, avec un débit de 10–50 m³/h — elle peut aspirer des mélanges liquide-gaz que la centrifuge ne supporte pas." },
+    { q:"Sur quel type de navire la pompe submersible électrique est-elle le standard ?", opts:["VLCC/ULCC","Chimiquiers","Vraquiers","Porte-conteneurs"], correct:1, expl:"La pompe submersible (moteur + pompe totalement immergés, câbles électriques étanches, 100–500 m³/h) est le standard sur les chimiquiers. Le deep well hydraulique est plutôt le standard VLCC/ULCC." },
+    { q:"À quoi sert principalement l'éjecteur en fin de déchargement ?", opts:["Au déchargement principal à haut débit","Au stripping final et à la purge des lignes, grâce à un débit faible (5–30 m³/h) sans pièce mobile","Au ballastage rapide","Au refroidissement de la pompe deep well"], correct:1, expl:"L'éjecteur, sans pièces mobiles, crée une dépression grâce à un fluide moteur pour aspirer. Débit faible (5–30 m³/h), il est utilisé pour le stripping final et la purge des lignes — très fiable car il n'a aucune pièce mécanique en mouvement." },
+    { q:"Que caractérise la Phase 1 (déchargement principal) de la séquence de stripping ?", opts:["Pompe deep well en service, débit 1500–5000 m³/h, niveau citerne > 30%","Pompe stripping à pistons en service","Éjecteur activé pour les derniers fonds","Purge des lignes avec IGS ou N₂"], correct:0, expl:"La Phase 1 correspond au déchargement principal : la pompe deep well (centrifuge) est en service, avec un débit de 1500–5000 m³/h, tant que le niveau de citerne reste supérieur à 30%." },
+    { q:"Qu'est-ce qui déclenche le passage de la Phase 1 à la Phase 2 dans la séquence de stripping ?", opts:["Le niveau atteint exactement 50%","Le niveau descend sous 20–30% avec cavitation détectée (bruit, vibrations)","Le terminal en fait la demande","Après exactement 2 heures de déchargement"], correct:1, expl:"Le passage à la Phase 2 (pompe stripping) intervient quand le niveau descend sous 20–30% et qu'une cavitation est détectée (bruit, vibrations) sur la pompe deep well — signe qu'il faut basculer sur la pompe à pistons." },
+    { q:"Que se passe-t-il pendant la Phase 4 (purge des lignes) de la séquence de stripping ?", opts:["On purge les tuyauteries cargo vers le terminal avec de l'IGS ou du N₂ pour chasser le cargo résiduel, avant de déconnecter les bras","On redémarre la pompe deep well à plein débit","On remplit la citerne d'eau de ballast","On active l'éjecteur pour la première fois du déchargement"], correct:0, expl:"La Phase 4 consiste à purger les tuyauteries cargo vers le terminal, en utilisant de l'IGS ou du N₂ pour chasser le cargo résiduel restant dans les lignes, avant de déconnecter les bras de chargement." },
+    { q:"Quelles sont les causes principales d'une cavitation selon le diagnostic de pannes de la leçon ?", opts:["Niveau trop bas (NPSHd insuffisant), filtre aspiration colmaté, débit trop élevé, air dans la ligne","Une panne électrique du moteur uniquement","Un cargo trop froid","Un excès de pression de refoulement uniquement"], correct:0, expl:"Selon le tableau de diagnostic de la leçon, la cavitation est causée par : un niveau trop bas (NPSHd insuffisant), un filtre d'aspiration colmaté, un débit trop élevé, ou de l'air dans la ligne d'aspiration." },
+    { q:"La pompe tourne mais aucun débit n'est observé — quelles causes possibles selon la leçon ?", opts:["Le cargo est trop chaud","Air dans la pompe non amorcée, vanne d'aspiration fermée, citerne vide, ou arbre brisé","Le terminal est fermé","L'IGS est en surpression"], correct:1, expl:"Selon la leçon, l'absence de débit avec la pompe qui tourne peut venir de : air dans la pompe non amorcée, vanne d'aspiration fermée, citerne vide, ou arbre brisé." },
+    { q:"Face à une surchauffe moteur/pompe causée par un débit trop faible, quelle action corrective la leçon recommande-t-elle en premier ?", opts:["Arrêter immédiatement la pompe sans vérification","Ouvrir la vanne de refoulement, puis vérifier la température du cargo et l'état des roulements","Augmenter la vitesse du moteur","Basculer directement sur l'éjecteur"], correct:1, expl:"Le remède recommandé pour une surchauffe moteur/pompe causée par un débit trop faible est d'ouvrir la vanne de refoulement, puis de vérifier la température du cargo, l'état des roulements et la ventilation." },
+    { q:"Que faire en cas de fuite au niveau du joint mécanique / presse-étoupe d'une pompe cargo ?", opts:["Continuer le déchargement, une fuite légère est normale","Arrêter la pompe avant toute intervention, remplacer la garniture mécanique et consigner la fuite","Augmenter la pression pour compenser la fuite","Ignorer la fuite tant que le débit reste correct"], correct:1, expl:"En cas de fuite au joint/presse-étoupe, il faut arrêter la pompe avant toute intervention, remplacer la garniture mécanique défaillante, et consigner la fuite dans le registre de maintenance." },
+  ],
+  en:[
+    { q:"What is the main difference between a deep well pump and an ejector?", opts:["The deep well has no moving parts, the ejector does","Deep well = submerged centrifugal pump with high flow (500–5000 m³/h) requiring a minimum level; ejector = no moving parts, Venturi effect, low flow (5–30 m³/h), draws bottoms to a few cm","Both pumps have exactly the same flow rate","The ejector is only used for main discharge"], correct:1, expl:"Deep well: submerged centrifugal pump, high flow (500–5000 m³/h), requires minimum level, deck motor. Ejector: no moving parts, uses pressurised motive fluid to draw by Venturi effect, low flow (5–30 m³/h), draws bottoms to a few cm, very reliable." },
+    { q:"What is NPSH and why is it critical at the end of discharge?", opts:["A measure of cargo temperature, unrelated to cavitation","NPSH = absolute suction pressure minus cargo vapour pressure; if NPSHa < NPSHr → cavitation, increased risk at end of tank when low level reduces geometric height","An indicator of pump rotation speed","A fire safety standard"], correct:1, expl:"NPSH (Net Positive Suction Head) = absolute suction pressure minus cargo vapour pressure. If NPSHa < NPSHr → cavitation. At end of tank, low level reduces geometric height → NPSHa drops → vapour bubbles → impeller erosion in hours." },
+    { q:"What are the pre-start checks for a cargo pump?", opts:["Only checking that the terminal is ready","Safety/terminal communication confirmed, IGS operational, tank suction valve open, piping purged of air, hydraulic oil pressure checked, alarms/flow meter operational, terminal authorised, progressive start","Only opening the discharge valve","Waiting only for the chief engineer's authorisation"], correct:1, expl:"1. Safety and terminal communication confirmed. 2. IGS operational. 3. Tank suction valve open. 4. Piping purged of air. 5. Hydraulic oil pressure checked. 6. Alarms and flow meter operational. 7. Terminal authorised. 8. Progressive start (10–15 min)." },
+    { q:"Why is hydraulic drive preferred over electric on VLCCs?", opts:["It is cheaper to purchase","It eliminates high voltage electrical cables on deck (ATEX zone), offers variable speed and good robustness in the marine environment","It requires less maintenance than electric","It always allows a higher flow rate"], correct:1, expl:"Hydraulic drive (HP oil circuit from engine room) eliminates high voltage electrical cables on deck (ATEX zone). Advantages: ATEX safety, variable speed (flow adjustable by oil pressure), robustness in marine environment." },
+    { q:"What should be done if cavitation is detected on the main pump during discharge?", opts:["Continue discharge without changing anything","Immediately reduce flow; if cavitation persists, stop the main pump, open the stripping suction valve and start the piston stripping pump, monitoring OBQ","Increase flow to force it through","Only stop the IGS"], correct:1, expl:"1. Immediately reduce flow (partially close discharge valve). 2. If cavitation persists: stop main pump. 3. Open stripping suction valve. 4. Start piston stripping pump. 5. Monitor OBQ and flow. Never continue in severe cavitation — impeller destroyed in hours." },
+    { q:"What are the characteristics of the piston stripping pump?", opts:["Positive displacement pump that draws tank bottoms when the centrifugal cavitates, flow 10–50 m³/h","Centrifugal pump with very high flow, up to 5000 m³/h","Pump with no moving parts using the Venturi effect","Pump used only for ballasting"], correct:0, expl:"The stripping pump is a positive displacement piston pump. It draws tank bottoms when the centrifugal (deep well) pump cavitates, with a flow of 10–50 m³/h — it can draw liquid-gas mixtures the centrifugal cannot handle." },
+    { q:"On what type of vessel is the electric submersible pump the standard?", opts:["VLCC/ULCC","Chemical tankers","Bulk carriers","Container ships"], correct:1, expl:"The submersible pump (motor + pump fully submerged, sealed electric cables, 100–500 m³/h) is the standard on chemical tankers. The hydraulic deep well is rather the VLCC/ULCC standard." },
+    { q:"What is the ejector mainly used for at the end of discharge?", opts:["Main discharge at high flow","Final stripping and line purging, thanks to a low flow (5–30 m³/h) with no moving parts","Fast ballasting","Cooling the deep well pump"], correct:1, expl:"The ejector, with no moving parts, creates a vacuum using a motive fluid to draw. Low flow (5–30 m³/h), it is used for final stripping and line purging — very reliable since it has no moving mechanical parts." },
+    { q:"What characterises Phase 1 (main discharge) of the stripping sequence?", opts:["Deep well pump running, flow 1500–5000 m³/h, tank level > 30%","Piston stripping pump running","Ejector activated for the last bottoms","Line purging with IGS or N₂"], correct:0, expl:"Phase 1 corresponds to main discharge: the deep well (centrifugal) pump is running, with a flow of 1500–5000 m³/h, as long as the tank level remains above 30%." },
+    { q:"What triggers the switch from Phase 1 to Phase 2 in the stripping sequence?", opts:["The level reaches exactly 50%","The level drops below 20–30% with cavitation detected (noise, vibration)","The terminal requests it","After exactly 2 hours of discharge"], correct:1, expl:"The switch to Phase 2 (stripping pump) occurs when the level drops below 20–30% and cavitation is detected (noise, vibration) on the deep well pump — a sign to switch to the piston pump." },
+    { q:"What happens during Phase 4 (line purging) of the stripping sequence?", opts:["Cargo piping is purged to the terminal using IGS or N₂ to expel residual cargo, before disconnecting the arms","The deep well pump is restarted at full flow","The tank is filled with ballast water","The ejector is activated for the first time in the discharge"], correct:0, expl:"Phase 4 consists of purging cargo piping to the terminal, using IGS or N₂ to expel residual cargo remaining in the lines, before disconnecting the loading arms." },
+    { q:"What are the main causes of cavitation according to the lesson's fault diagnosis?", opts:["Level too low (insufficient NPSHa), clogged suction filter, flow too high, air in the line","An electrical fault in the motor only","Cargo too cold","Excessive discharge pressure only"], correct:0, expl:"According to the lesson's diagnosis table, cavitation is caused by: level too low (insufficient NPSHa), clogged suction filter, flow too high, or air in the suction line." },
+    { q:"The pump is running but no flow is observed — what possible causes according to the lesson?", opts:["The cargo is too hot","Air in the unprimed pump, closed suction valve, empty tank, or broken shaft","The terminal is closed","The IGS is in overpressure"], correct:1, expl:"According to the lesson, no flow with the pump running can be caused by: air in the unprimed pump, closed suction valve, empty tank, or a broken shaft." },
+    { q:"Facing motor/pump overheating caused by too low a flow, what corrective action does the lesson recommend first?", opts:["Immediately stop the pump without checking anything","Open the discharge valve, then check cargo temperature and bearing condition","Increase motor speed","Switch directly to the ejector"], correct:1, expl:"The recommended remedy for motor/pump overheating caused by too low a flow is to open the discharge valve, then check the cargo temperature, bearing condition, and ventilation." },
+    { q:"What should be done in case of a leak at the mechanical seal / gland of a cargo pump?", opts:["Continue discharge, a slight leak is normal","Stop the pump before any intervention, replace the mechanical seal, and log the leak","Increase pressure to compensate for the leak","Ignore the leak as long as flow remains correct"], correct:1, expl:"In case of a leak at the seal/gland, the pump must be stopped before any intervention, the defective mechanical seal replaced, and the leak logged in the maintenance record." },
+  ],
+  es:[
+    { q:"¿Cuál es la diferencia principal entre una bomba deep well y un eyector?", opts:["El deep well no tiene piezas móviles, el eyector sí","Deep well = bomba centrífuga sumergida de alto caudal (500–5000 m³/h) que necesita un nivel mínimo; eyector = sin piezas móviles, efecto Venturi, bajo caudal (5–30 m³/h), aspira los fondos hasta pocos cm","Ambas bombas tienen exactamente el mismo caudal","El eyector se usa solo para la descarga principal"], correct:1, expl:"Deep well: bomba centrífuga sumergida, gran caudal (500–5000 m³/h), necesita nivel mínimo, motor en cubierta. Eyector: sin piezas móviles, usa fluido motor a presión para aspirar por efecto Venturi, bajo caudal (5–30 m³/h), aspira los fondos hasta pocos cm, muy fiable." },
+    { q:"¿Qué es el NPSH y por qué es crítico al final de la descarga?", opts:["Una medida de la temperatura de la carga, sin relación con la cavitación","NPSH = presión absoluta en aspiración menos presión de vapor de la carga; si NPSHd < NPSHr → cavitación, riesgo mayor al final del tanque cuando el nivel bajo reduce la altura geométrica","Un indicador de la velocidad de rotación de la bomba","Una norma de seguridad contra incendios"], correct:1, expl:"NPSH = presión absoluta en aspiración menos presión de vapor de la carga. Si NPSHd < NPSHr → cavitación. Al final del tanque, el nivel bajo reduce la altura geométrica → NPSHd cae → burbujas de vapor → erosión del rodete en horas." },
+    { q:"¿Qué verificaciones previas al arranque de una bomba de carga?", opts:["Solo comprobar que el terminal está listo","Seguridad y comunicación terminal confirmada, IGS operativo, válvula aspiración abierta, tubería purgada de aire, presión aceite hidráulico verificada, alarmas y caudalímetro operativos, terminal autorizado, arranque progresivo","Solo abrir la válvula de descarga","Esperar únicamente la autorización del jefe de máquinas"], correct:1, expl:"1. Seguridad y comunicación terminal confirmada. 2. IGS operativo. 3. Válvula aspiración abierta. 4. Tubería purgada de aire. 5. Presión aceite hidráulico verificada. 6. Alarmas y caudalímetro operativos. 7. Terminal autorizado. 8. Arranque progresivo (10–15 min)." },
+    { q:"¿Por qué el accionamiento hidráulico es preferible al eléctrico en los VLCC?", opts:["Es más barato de comprar","Elimina los cables eléctricos de alta tensión en cubierta (zona ATEX), ofrece velocidad variable y buena robustez en entorno marino","Requiere menos mantenimiento que el eléctrico","Siempre permite un caudal más alto"], correct:1, expl:"El accionamiento hidráulico elimina los cables eléctricos de alta tensión en cubierta (zona ATEX). Ventajas: seguridad ATEX, velocidad variable (caudal modulable por presión de aceite), robustez en entorno marino." },
+    { q:"¿Qué hacer si se detecta cavitación en la bomba principal durante la descarga?", opts:["Continuar la descarga sin cambiar nada","Reducir inmediatamente el caudal; si persiste, parar la bomba principal, abrir la válvula aspiración stripping y arrancar la bomba stripping de pistones, vigilando el OBQ","Aumentar el caudal para forzar el paso","Parar únicamente el IGS"], correct:1, expl:"1. Reducir inmediatamente el caudal. 2. Si persiste: parar la bomba principal. 3. Abrir válvula aspiración stripping. 4. Arrancar bomba stripping de pistones. 5. Vigilar OBQ y caudal. Nunca continuar con cavitación grave — rodete destruido en horas." },
+    { q:"¿Cuáles son las características de la bomba de stripping de pistones?", opts:["Bomba volumétrica que aspira los fondos del tanque cuando la centrífuga cavita, caudal 10–50 m³/h","Bomba centrífuga de muy alto caudal, hasta 5000 m³/h","Bomba sin piezas móviles que usa el efecto Venturi","Bomba usada solo para el lastrado"], correct:0, expl:"La bomba de stripping es una bomba volumétrica de pistones. Aspira los fondos del tanque cuando la bomba centrífuga (deep well) cavita, con un caudal de 10–50 m³/h — puede aspirar mezclas líquido-gas que la centrífuga no soporta." },
+    { q:"¿En qué tipo de buque la bomba sumergible eléctrica es el estándar?", opts:["VLCC/ULCC","Quimiqueros","Graneleros","Portacontenedores"], correct:1, expl:"La bomba sumergible (motor + bomba totalmente sumergidos, cables eléctricos estancos, 100–500 m³/h) es el estándar en los quimiqueros. El deep well hidráulico es más bien el estándar VLCC/ULCC." },
+    { q:"¿Para qué sirve principalmente el eyector al final de la descarga?", opts:["Para la descarga principal a alto caudal","Para el stripping final y la purga de líneas, gracias a un caudal bajo (5–30 m³/h) sin piezas móviles","Para el lastrado rápido","Para enfriar la bomba deep well"], correct:1, expl:"El eyector, sin piezas móviles, crea una depresión mediante un fluido motor para aspirar. Caudal bajo (5–30 m³/h), se usa para el stripping final y la purga de líneas — muy fiable porque no tiene ninguna pieza mecánica en movimiento." },
+    { q:"¿Qué caracteriza la Fase 1 (descarga principal) de la secuencia de stripping?", opts:["Bomba deep well en servicio, caudal 1500–5000 m³/h, nivel tanque > 30%","Bomba stripping de pistones en servicio","Eyector activado para los últimos fondos","Purga de líneas con IGS o N₂"], correct:0, expl:"La Fase 1 corresponde a la descarga principal: la bomba deep well (centrífuga) está en servicio, con un caudal de 1500–5000 m³/h, mientras el nivel del tanque se mantenga por encima del 30%." },
+    { q:"¿Qué desencadena el paso de la Fase 1 a la Fase 2 en la secuencia de stripping?", opts:["El nivel llega exactamente al 50%","El nivel baja por debajo del 20–30% con cavitación detectada (ruido, vibraciones)","El terminal lo solicita","Después de exactamente 2 horas de descarga"], correct:1, expl:"El paso a la Fase 2 (bomba stripping) ocurre cuando el nivel baja por debajo del 20–30% y se detecta cavitación (ruido, vibraciones) en la bomba deep well — señal de que hay que cambiar a la bomba de pistones." },
+    { q:"¿Qué ocurre durante la Fase 4 (purga de líneas) de la secuencia de stripping?", opts:["Se purgan las tuberías de carga hacia el terminal con IGS o N₂ para expulsar la carga residual, antes de desconectar los brazos","Se reinicia la bomba deep well a caudal máximo","Se llena el tanque con agua de lastre","Se activa el eyector por primera vez en la descarga"], correct:0, expl:"La Fase 4 consiste en purgar las tuberías de carga hacia el terminal, usando IGS o N₂ para expulsar la carga residual que queda en las líneas, antes de desconectar los brazos de carga." },
+    { q:"¿Cuáles son las causas principales de una cavitación según el diagnóstico de averías de la lección?", opts:["Nivel demasiado bajo (NPSHd insuficiente), filtro de aspiración obstruido, caudal demasiado alto, aire en la línea","Un fallo eléctrico del motor únicamente","Una carga demasiado fría","Un exceso de presión de descarga únicamente"], correct:0, expl:"Según la tabla de diagnóstico de la lección, la cavitación está causada por: nivel demasiado bajo (NPSHd insuficiente), filtro de aspiración obstruido, caudal demasiado alto, o aire en la línea de aspiración." },
+    { q:"La bomba gira pero no se observa caudal — ¿qué causas posibles según la lección?", opts:["La carga está demasiado caliente","Aire en la bomba no cebada, válvula de aspiración cerrada, tanque vacío, o eje roto","El terminal está cerrado","El IGS está en sobrepresión"], correct:1, expl:"Según la lección, la ausencia de caudal con la bomba girando puede deberse a: aire en la bomba no cebada, válvula de aspiración cerrada, tanque vacío, o eje roto." },
+    { q:"Ante un sobrecalentamiento de motor/bomba causado por un caudal demasiado bajo, ¿qué acción correctiva recomienda primero la lección?", opts:["Parar inmediatamente la bomba sin verificar nada","Abrir la válvula de descarga, luego verificar la temperatura de la carga y el estado de los rodamientos","Aumentar la velocidad del motor","Cambiar directamente al eyector"], correct:1, expl:"El remedio recomendado para un sobrecalentamiento de motor/bomba causado por un caudal demasiado bajo es abrir la válvula de descarga, luego verificar la temperatura de la carga, el estado de los rodamientos y la ventilación." },
+    { q:"¿Qué hacer en caso de fuga en el cierre mecánico / prensaestopas de una bomba de carga?", opts:["Continuar la descarga, una fuga leve es normal","Parar la bomba antes de cualquier intervención, sustituir el cierre mecánico y registrar la fuga","Aumentar la presión para compensar la fuga","Ignorar la fuga mientras el caudal se mantenga correcto"], correct:1, expl:"En caso de fuga en el cierre/prensaestopas, hay que parar la bomba antes de cualquier intervención, sustituir el cierre mecánico defectuoso, y registrar la fuga en el registro de mantenimiento." },
+  ],
+  pt:[
+    { q:"Qual é a diferença principal entre uma bomba deep well e um ejetor?", opts:["O deep well não tem peças móveis, o ejetor tem","Deep well = bomba centrífuga submersa de alto caudal (500–5000 m³/h) que necessita de um nível mínimo; ejetor = sem peças móveis, efeito Venturi, baixo caudal (5–30 m³/h), aspira os fundos até poucos cm","As duas bombas têm exatamente o mesmo caudal","O ejetor é usado apenas para a descarga principal"], correct:1, expl:"Deep well: bomba centrífuga submersa, grande caudal (500–5000 m³/h), necessita nível mínimo, motor em convés. Ejetor: sem peças móveis, usa fluido motor pressurizado para aspirar por efeito Venturi, baixo caudal (5–30 m³/h), aspira os fundos até poucos cm, muito fiável." },
+    { q:"O que é o NPSH e por que é crítico no final da descarga?", opts:["Uma medida da temperatura da carga, sem relação com a cavitação","NPSH = pressão absoluta na aspiração menos pressão de vapor da carga; se NPSHd < NPSHr → cavitação, risco acrescido no final do tanque quando o nível baixo reduz a altura geométrica","Um indicador da velocidade de rotação da bomba","Uma norma de segurança contra incêndios"], correct:1, expl:"NPSH = pressão absoluta na aspiração menos pressão de vapor da carga. Se NPSHd < NPSHr → cavitação. No final do tanque, o nível baixo reduz a altura geométrica → NPSHd cai → bolhas de vapor → erosão da roda em horas." },
+    { q:"Que verificações antes do arranque de uma bomba de carga?", opts:["Apenas verificar que o terminal está pronto","Segurança e comunicação terminal confirmada, IGS operacional, válvula aspiração aberta, tubagem purgada de ar, pressão óleo hidráulico verificada, alarmes e caudalímetro operacionais, terminal autorizado, arranque progressivo","Apenas abrir a válvula de descarga","Esperar apenas pela autorização do chefe de máquinas"], correct:1, expl:"1. Segurança e comunicação terminal confirmada. 2. IGS operacional. 3. Válvula aspiração aberta. 4. Tubagem purgada de ar. 5. Pressão óleo hidráulico verificada. 6. Alarmes e caudalímetro operacionais. 7. Terminal autorizado. 8. Arranque progressivo (10–15 min)." },
+    { q:"Por que o acionamento hidráulico é preferível ao elétrico nos VLCC?", opts:["É mais barato de comprar","Elimina os cabos elétricos de alta tensão em convés (zona ATEX), oferece velocidade variável e boa robustez em ambiente marinho","Requer menos manutenção do que o elétrico","Permite sempre um caudal mais elevado"], correct:1, expl:"O acionamento hidráulico elimina os cabos elétricos de alta tensão em convés (zona ATEX). Vantagens: segurança ATEX, velocidade variável (caudal modulável por pressão de óleo), robustez em ambiente marinho." },
+    { q:"O que fazer se se detetar cavitação na bomba principal durante a descarga?", opts:["Continuar a descarga sem mudar nada","Reduzir imediatamente o caudal; se persiste, parar a bomba principal, abrir a válvula aspiração stripping e arrancar a bomba stripping de pistões, vigiando o OBQ","Aumentar o caudal para forçar a passagem","Parar apenas o IGS"], correct:1, expl:"1. Reduzir imediatamente o caudal. 2. Se persiste: parar bomba principal. 3. Abrir válvula aspiração stripping. 4. Arrancar bomba stripping de pistões. 5. Vigiar OBQ e caudal. Nunca continuar com cavitação grave — roda destruída em horas." },
+    { q:"Quais são as características da bomba de stripping de pistões?", opts:["Bomba volumétrica que aspira os fundos do tanque quando a centrífuga cavita, caudal 10–50 m³/h","Bomba centrífuga de caudal muito alto, até 5000 m³/h","Bomba sem peças móveis que usa o efeito Venturi","Bomba usada apenas para o lastro"], correct:0, expl:"A bomba de stripping é uma bomba volumétrica de pistões. Aspira os fundos do tanque quando a bomba centrífuga (deep well) cavita, com um caudal de 10–50 m³/h — pode aspirar misturas líquido-gás que a centrífuga não suporta." },
+    { q:"Em que tipo de navio a bomba submersível elétrica é o padrão?", opts:["VLCC/ULCC","Quimiqueiros","Graneleiros","Porta-contentores"], correct:1, expl:"A bomba submersível (motor + bomba totalmente submersos, cabos elétricos estanques, 100–500 m³/h) é o padrão nos quimiqueiros. O deep well hidráulico é antes o padrão VLCC/ULCC." },
+    { q:"Para que serve principalmente o ejetor no final da descarga?", opts:["Para a descarga principal a alto caudal","Para o stripping final e a purga das linhas, graças a um caudal baixo (5–30 m³/h) sem peças móveis","Para o lastro rápido","Para arrefecer a bomba deep well"], correct:1, expl:"O ejetor, sem peças móveis, cria uma depressão através de um fluido motor para aspirar. Caudal baixo (5–30 m³/h), é usado para o stripping final e a purga das linhas — muito fiável por não ter nenhuma peça mecânica em movimento." },
+    { q:"O que caracteriza a Fase 1 (descarga principal) da sequência de stripping?", opts:["Bomba deep well em serviço, caudal 1500–5000 m³/h, nível tanque > 30%","Bomba stripping de pistões em serviço","Ejetor ativado para os últimos fundos","Purga das linhas com IGS ou N₂"], correct:0, expl:"A Fase 1 corresponde à descarga principal: a bomba deep well (centrífuga) está em serviço, com um caudal de 1500–5000 m³/h, enquanto o nível do tanque se mantiver acima dos 30%." },
+    { q:"O que desencadeia a passagem da Fase 1 para a Fase 2 na sequência de stripping?", opts:["O nível atinge exatamente 50%","O nível desce abaixo de 20–30% com cavitação detetada (ruído, vibrações)","O terminal solicita","Após exatamente 2 horas de descarga"], correct:1, expl:"A passagem à Fase 2 (bomba stripping) ocorre quando o nível desce abaixo de 20–30% e é detetada cavitação (ruído, vibrações) na bomba deep well — sinal de que é preciso mudar para a bomba de pistões." },
+    { q:"O que acontece durante a Fase 4 (purga das linhas) da sequência de stripping?", opts:["Purgam-se as tubagens de carga para o terminal com IGS ou N₂ para expelir a carga residual, antes de desligar os braços","Reinicia-se a bomba deep well a caudal máximo","Enche-se o tanque com água de lastro","Ativa-se o ejetor pela primeira vez na descarga"], correct:0, expl:"A Fase 4 consiste em purgar as tubagens de carga para o terminal, usando IGS ou N₂ para expelir a carga residual que fica nas linhas, antes de desligar os braços de carga." },
+    { q:"Quais são as causas principais de uma cavitação segundo o diagnóstico de avarias da lição?", opts:["Nível demasiado baixo (NPSHd insuficiente), filtro de aspiração entupido, caudal demasiado elevado, ar na linha","Uma falha elétrica do motor apenas","Uma carga demasiado fria","Um excesso de pressão de descarga apenas"], correct:0, expl:"Segundo a tabela de diagnóstico da lição, a cavitação é causada por: nível demasiado baixo (NPSHd insuficiente), filtro de aspiração entupido, caudal demasiado elevado, ou ar na linha de aspiração." },
+    { q:"A bomba gira mas não se observa caudal — que causas possíveis segundo a lição?", opts:["A carga está demasiado quente","Ar na bomba não escorvada, válvula de aspiração fechada, tanque vazio, ou eixo partido","O terminal está fechado","O IGS está em sobrepressão"], correct:1, expl:"Segundo a lição, a ausência de caudal com a bomba a girar pode ser causada por: ar na bomba não escorvada, válvula de aspiração fechada, tanque vazio, ou eixo partido." },
+    { q:"Perante um sobreaquecimento de motor/bomba causado por um caudal demasiado baixo, que ação corretiva a lição recomenda primeiro?", opts:["Parar imediatamente a bomba sem verificar nada","Abrir a válvula de descarga, depois verificar a temperatura da carga e o estado dos rolamentos","Aumentar a velocidade do motor","Mudar diretamente para o ejetor"], correct:1, expl:"O remédio recomendado para um sobreaquecimento de motor/bomba causado por um caudal demasiado baixo é abrir a válvula de descarga, depois verificar a temperatura da carga, o estado dos rolamentos e a ventilação." },
+    { q:"O que fazer em caso de fuga no vedante mecânico / gaxeta de uma bomba de carga?", opts:["Continuar a descarga, uma fuga ligeira é normal","Parar a bomba antes de qualquer intervenção, substituir o vedante mecânico e registar a fuga","Aumentar a pressão para compensar a fuga","Ignorar a fuga enquanto o caudal se mantiver correto"], correct:1, expl:"Em caso de fuga no vedante/gaxeta, é preciso parar a bomba antes de qualquer intervenção, substituir o vedante mecânico defeituoso, e registar a fuga no registo de manutenção." },
+  ],
+};
+
 function QuestionBank({ lang, onComplete }: { lang: string; onComplete?: () => void }) {
-  const [open, setOpen] = useState<number|null>(null);
-  const [opened, setOpened] = useState<Set<number>>(new Set());
-  const qs: any = {
-    fr:[
-      { q:"Quelle est la différence entre une pompe deep well et un éjecteur ?", a:"Deep well : pompe centrifuge immergée, débit élevé (500–5000 m³/h), nécessite un niveau minimum, moteur en pont. Éjecteur : sans pièces mobiles, utilise un fluide moteur sous pression pour aspirer par effet Venturi, débit faible (5–30 m³/h), aspire les fonds jusqu'à quelques cm, très fiable." },
-      { q:"Qu'est-ce que le NPSH et pourquoi est-il critique en fin de déchargement ?", a:"NPSH (Net Positive Suction Head) = pression absolue à l'aspiration moins la pression de vapeur du cargo. Si NPSHd < NPSHr → cavitation. En fin de citerne, le niveau bas réduit la hauteur géométrique → NPSHd chute → bulles de vapeur → érosion de la roue en heures." },
-      { q:"Quelles sont les étapes de vérification avant démarrage d'une pompe cargo ?", a:"1. Sécurité et communication terminal confirmée. 2. IGS opérationnel. 3. Vanne aspiration citerne ouverte. 4. Tuyauterie purgée d'air. 5. Pression huile hydraulique vérifiée. 6. Alarmes et débitmètre opérationnels. 7. Terminal autorisé. 8. Démarrage progressif (10–15 min)." },
-      { q:"Pourquoi l'entraînement hydraulique est-il préféré à l'électrique sur les VLCC ?", a:"L'entraînement hydraulique (circuit huile HP depuis salle des machines) élimine les câbles électriques haute tension sur le pont (zone ATEX). Avantages : sécurité ATEX, vitesse variable (débit modulable par pression d'huile), robustesse en milieu marin." },
-      { q:"Que faire si une cavitation est détectée sur la pompe principale en cours de déchargement ?", a:"1. Réduire immédiatement le débit (fermer partiellement la vanne refoulement). 2. Si cavitation persiste : arrêter la pompe principale. 3. Ouvrir la vanne aspiration stripping. 4. Démarrer la pompe stripping à pistons. 5. Surveiller OBQ et débit. Ne jamais continuer en cavitation sévère — roue détruite en heures." },
-    ],
-    en:[
-      { q:"What is the difference between a deep well pump and an ejector?", a:"Deep well: submerged centrifugal pump, high flow (500–5000 m³/h), requires minimum level, deck motor. Ejector: no moving parts, uses pressurised motive fluid to draw by Venturi effect, low flow (5–30 m³/h), draws bottoms to a few cm, very reliable." },
-      { q:"What is NPSH and why is it critical at end of discharge?", a:"NPSH (Net Positive Suction Head) = absolute suction pressure minus cargo vapour pressure. If NPSHa < NPSHr → cavitation. At end of tank, low level reduces geometric height → NPSHa drops → vapour bubbles → impeller erosion in hours." },
-      { q:"What pre-start checks for a cargo pump?", a:"1. Safety and terminal communication confirmed. 2. IGS operational. 3. Tank suction valve open. 4. Piping purged of air. 5. Hydraulic oil pressure checked. 6. Alarms and flow meter operational. 7. Terminal authorised. 8. Progressive start (10–15 min)." },
-      { q:"Why is hydraulic drive preferred over electric on VLCCs?", a:"Hydraulic drive (HP oil circuit from engine room) eliminates high voltage electrical cables on deck (ATEX zone). Advantages: ATEX safety, variable speed (flow adjustable by oil pressure), robustness in marine environment." },
-      { q:"What to do if cavitation is detected on the main pump during discharge?", a:"1. Immediately reduce flow (partially close discharge valve). 2. If cavitation persists: stop main pump. 3. Open stripping suction valve. 4. Start piston stripping pump. 5. Monitor OBQ and flow. Never continue in severe cavitation — impeller destroyed in hours." },
-    ],
-    es:[
-      { q:"¿Cuál es la diferencia entre una bomba deep well y un eyector?", a:"Deep well: bomba centrífuga sumergida, gran caudal (500–5000 m³/h), necesita nivel mínimo, motor en cubierta. Eyector: sin piezas móviles, usa fluido motor a presión para aspirar por efecto Venturi, bajo caudal (5–30 m³/h), aspira los fondos hasta pocos cm, muy fiable." },
-      { q:"¿Qué es el NPSH y por qué es crítico al final de la descarga?", a:"NPSH = presión absoluta en aspiración menos presión de vapor de la carga. Si NPSHd < NPSHr → cavitación. Al final del tanque, el nivel bajo reduce la altura geométrica → NPSHd cae → burbujas de vapor → erosión del rodete en horas." },
-      { q:"¿Qué verificaciones previas al arranque de una bomba de carga?", a:"1. Seguridad y comunicación terminal confirmada. 2. IGS operativo. 3. Válvula aspiración abierta. 4. Tubería purgada de aire. 5. Presión aceite hidráulico verificada. 6. Alarmas y caudalímetro operativos. 7. Terminal autorizado. 8. Arranque progresivo (10–15 min)." },
-      { q:"¿Por qué el accionamiento hidráulico es preferible al eléctrico en los VLCC?", a:"El accionamiento hidráulico elimina los cables eléctricos de alta tensión en cubierta (zona ATEX). Ventajas: seguridad ATEX, velocidad variable (caudal modulable por presión de aceite), robustez en entorno marino." },
-      { q:"¿Qué hacer si se detecta cavitación en la bomba principal durante la descarga?", a:"1. Reducir inmediatamente el caudal. 2. Si persiste: parar la bomba principal. 3. Abrir válvula aspiración stripping. 4. Arrancar bomba stripping de pistones. 5. Vigilar OBQ y caudal. Nunca continuar con cavitación grave — rodete destruido en horas." },
-    ],
-    pt:[
-      { q:"Qual é a diferença entre uma bomba deep well e um ejetor?", a:"Deep well: bomba centrífuga submersa, grande caudal (500–5000 m³/h), necessita nível mínimo, motor em convés. Ejetor: sem peças móveis, usa fluido motor pressurizado para aspirar por efeito Venturi, baixo caudal (5–30 m³/h), aspira os fundos até poucos cm, muito fiável." },
-      { q:"O que é o NPSH e por que é crítico no final da descarga?", a:"NPSH = pressão absoluta na aspiração menos pressão de vapor da carga. Se NPSHd < NPSHr → cavitação. No final do tanque, o nível baixo reduz a altura geométrica → NPSHd cai → bolhas de vapor → erosão da roda em horas." },
-      { q:"Que verificações antes do arranque de uma bomba de carga?", a:"1. Segurança e comunicação terminal confirmada. 2. IGS operacional. 3. Válvula aspiração aberta. 4. Tubagem purgada de ar. 5. Pressão óleo hidráulico verificada. 6. Alarmes e caudalímetro operacionais. 7. Terminal autorizado. 8. Arranque progressivo (10–15 min)." },
-      { q:"Por que o acionamento hidráulico é preferível ao elétrico nos VLCC?", a:"O acionamento hidráulico elimina os cabos elétricos de alta tensão em convés (zona ATEX). Vantagens: segurança ATEX, velocidade variável (caudal modulável por pressão de óleo), robustez em ambiente marinho." },
-      { q:"O que fazer se se detetar cavitação na bomba principal durante a descarga?", a:"1. Reduzir imediatamente o caudal. 2. Se persiste: parar bomba principal. 3. Abrir válvula aspiração stripping. 4. Arrancar bomba stripping de pistões. 5. Vigiar OBQ e caudal. Nunca continuar com cavitação grave — roda destruída em horas." },
-    ],
+  const [idx, setIdx] = useState(0);
+  const [sel, setSel] = useState<number|null>(null);
+  const [answered, setAnswered] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const [started, setStarted] = useState(false);
+
+  const lbl = (fr: string, en: string, es: string, pt: string) => lang==="fr"?fr:lang==="en"?en:lang==="es"?es:pt;
+
+  const list = BANK[lang] || BANK.fr;
+  const [shuffled] = useState(() => list.map((q: any) => shuffleQuestionOptions(q, "correct")));
+  const total = list.length;
+
+  const handleAnswer = (i: number) => {
+    if (answered) return;
+    setSel(i);
+    setAnswered(true);
+    if (i === shuffled[idx].correct) setScore(s=>s+1);
   };
-  const list = qs[lang] || qs.fr;
+
+  const handleNext = () => {
+    if (idx === total-1) { setDone(true); if (onComplete) onComplete(); return; }
+    setSel(null); setAnswered(false); setIdx(i=>i+1);
+  };
+
+  const handleRestart = () => {
+    setIdx(0); setSel(null); setAnswered(false); setScore(0); setDone(false); setStarted(false);
+  };
+
+  if (!started) {
+    return (
+      <div style={{textAlign:"center",padding:"20px 0"}}>
+        <div style={{fontSize:36,marginBottom:10}}>📝</div>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:15,color:C.white,marginBottom:6}}>
+          {lbl("Banque de questions","Question Bank","Banco de preguntas","Banco de questões")}
+        </div>
+        <div style={{fontSize:12,color:C.muted,marginBottom:16}}>
+          15 {lbl("questions","questions","preguntas","questões")}
+        </div>
+        <button onClick={()=>setStarted(true)}
+          style={{padding:"12px 28px",borderRadius:14,background:`linear-gradient(135deg,${C.cargo},${C.pump})`,border:"none",color:C.navy,fontSize:13,fontWeight:700,cursor:"pointer",letterSpacing:1}}>
+          {lbl("COMMENCER →","START →","EMPEZAR →","COMEÇAR →")}
+        </button>
+      </div>
+    );
+  }
+
+  if (done) {
+    const trophy = getTrophy(score, total);
+    const pct = Math.round(score/total*100);
+    return (
+      <div style={{textAlign:"center",padding:"20px 10px"}}>
+        <div style={{fontSize:64,marginBottom:8}}>{trophy.icon}</div>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:20,color:trophy.color,fontWeight:700,marginBottom:4}}>
+          {(trophy.label as any)[lang] || trophy.label.fr}
+        </div>
+        <div style={{fontSize:28,fontWeight:700,color:C.white,marginBottom:4}}>{score}/{total}</div>
+        <div style={{fontSize:18,color:trophy.color,fontWeight:700,marginBottom:20}}>{pct}%</div>
+        <div style={{height:8,background:"rgba(255,255,255,0.07)",borderRadius:8,marginBottom:20,overflow:"hidden"}}>
+          <div style={{height:"100%",width:`${pct}%`,background:`linear-gradient(90deg,${C.cargo},${trophy.color})`,borderRadius:8,transition:"width 0.8s ease"}}/>
+        </div>
+        <button onClick={handleRestart}
+          style={{width:"100%",padding:"12px",borderRadius:14,background:"rgba(232,185,79,0.15)",border:`1px solid ${C.cargo}55`,color:C.cargo,fontSize:13,fontWeight:700,cursor:"pointer"}}>
+          🔄 {lbl("Recommencer","Restart","Reiniciar","Recomeçar")}
+        </button>
+      </div>
+    );
+  }
+
+  const q = shuffled[idx];
+  const progress = (idx / total) * 100;
+
   return (
     <div>
-      {list.map((item: any, i: number) => (
-        <div key={i} style={{marginBottom:8,borderRadius:12,background:"rgba(10,22,40,0.8)",border:"1px solid rgba(232,185,79,0.15)",overflow:"hidden"}}>
-          <button onClick={()=>{setOpen(open===i?null:i);setOpened(prev=>{if(prev.has(i))return prev;const next=new Set(prev);next.add(i);if(next.size>=list.length&&onComplete)onComplete();return next;});}} style={{width:"100%",padding:"12px 14px",background:"none",border:"none",display:"flex",justifyContent:"space-between",alignItems:"flex-start",cursor:"pointer",textAlign:"left",gap:10}}>
-            <span style={{fontSize:12,color:C.white,fontFamily:"monospace",lineHeight:1.5}}>
-              <span style={{color:C.cargo,fontWeight:700,marginRight:6}}>Q{i+1}.</span>{item.q}
-            </span>
-            <span style={{color:C.cargo,fontSize:14,flexShrink:0}}>{open===i?"▲":"▼"}</span>
-          </button>
-          {open===i && (
-            <div style={{padding:"0 14px 12px",fontSize:12,color:C.white,lineHeight:1.7,fontFamily:"monospace",borderTop:"1px solid rgba(232,185,79,0.1)"}}>{item.a}</div>
-          )}
+      <div style={{marginBottom:12}}>
+        <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
+          <span style={{fontSize:10,color:C.cargo,fontWeight:700}}>
+            {lbl("Question","Question","Pregunta","Pergunta")} {idx+1}/{total}
+          </span>
+          <span style={{fontSize:10,color:C.gold2,fontWeight:700}}>⭐ {score}/{idx}</span>
         </div>
-      ))}
+        <div style={{height:5,background:"rgba(255,255,255,0.07)",borderRadius:4,overflow:"hidden"}}>
+          <div style={{height:"100%",width:`${progress}%`,background:`linear-gradient(90deg,${C.cargo},${C.pump})`,borderRadius:4,transition:"width 0.3s"}}/>
+        </div>
+      </div>
+      <div style={{background:"rgba(0,0,0,0.3)",borderRadius:14,padding:"14px",marginBottom:12,border:`1px solid ${C.border}`}}>
+        <div style={{fontSize:13,color:C.white,lineHeight:1.6,fontWeight:600}}>{q.q}</div>
+      </div>
+      {q.opts.map((opt: string, i: number)=>{
+        let bg="rgba(13,31,60,0.6)", border=C.border, col=C.white;
+        if (answered) {
+          if (i===q.correct) { bg="rgba(30,138,74,0.2)"; border=C.green; col=C.green; }
+          else if (i===sel) { bg="rgba(192,57,43,0.2)"; border=C.red; col=C.red; }
+        }
+        return (
+          <button key={i} onClick={()=>handleAnswer(i)}
+            style={{width:"100%",padding:"11px 14px",marginBottom:7,borderRadius:12,background:bg,border:`1px solid ${border}`,color:col,fontSize:12,textAlign:"left",cursor:answered?"default":"pointer",transition:"all 0.2s"}}>
+            <span style={{fontWeight:700,marginRight:8,color:C.gold2}}>{["A","B","C","D"][i]}.</span>{opt}
+          </button>
+        );
+      })}
+      {answered && (
+        <div style={{padding:"11px 13px",borderRadius:12,background:`rgba(${sel===q.correct?"30,138,74":"192,57,43"},0.1)`,border:`1px solid ${sel===q.correct?C.green:C.red}44`,marginBottom:10}}>
+          <div style={{fontSize:12,fontWeight:700,color:sel===q.correct?C.green:C.red,marginBottom:4}}>
+            {sel===q.correct?(lang==="fr"?"✓ Bonne réponse !":lang==="en"?"✓ Correct!":lang==="es"?"✓ ¡Correcta!":"✓ Correto!")
+            :(lang==="fr"?"✗ Mauvaise réponse":lang==="en"?"✗ Wrong answer":lang==="es"?"✗ Incorrecta":"✗ Errada")}
+          </div>
+          <div style={{fontSize:11,color:C.muted,lineHeight:1.6}}>{q.expl}</div>
+        </div>
+      )}
+      <button onClick={handleNext} disabled={!answered}
+        style={{width:"100%",padding:"12px",borderRadius:14,background:answered?`linear-gradient(135deg,${C.cargo},${C.pump})`:"rgba(255,255,255,0.05)",border:"none",color:answered?C.navy:C.muted,fontSize:13,fontWeight:700,cursor:answered?"pointer":"default",opacity:answered?1:0.5}}>
+        {idx===total-1?lbl("TERMINER","FINISH","TERMINAR","TERMINAR"):lbl("SUIVANT →","NEXT →","SIGUIENTE →","PRÓXIMO →")}
+      </button>
     </div>
   );
 }
@@ -563,7 +712,7 @@ function QuestionBank({ lang, onComplete }: { lang: string; onComplete?: () => v
 // ══════════════════════════════════════
 // QUIZ
 // ══════════════════════════════════════
-const QUIZ: any = {
+export const QUIZ: any = {
   fr:[
     { q:"Quel type de pompe est standard pour le déchargement principal sur un pétrolier VLCC ?", opts:["Pompe à pistons","Éjecteur","Pompe centrifuge verticale (deep well)","Pompe submersible électrique"], correct:2, expl:"La pompe centrifuge verticale (deep well) est standard sur les VLCC. Moteur en pont, turbine immergée, entraînement hydraulique. Débit 1500–5000 m³/h. L'éjecteur et la pompe à pistons sont réservés au stripping final." },
     { q:"Que se passe-t-il si le NPSHd est insuffisant ?", opts:["La pression augmente","La pompe chauffe légèrement","Cavitation — bulles de vapeur imploses sur la roue, érosion rapide","Le débit double"], correct:2, expl:"NPSHd insuffisant → pression à l'aspiration tombe sous la pression de vapeur du cargo → formation de bulles de vapeur → implosion violente sur les pales → érosion (cavitation). La roue peut être détruite en quelques heures. Remède : réduire le débit ou basculer vers stripping." },

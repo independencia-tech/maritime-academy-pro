@@ -501,7 +501,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle couleur de fumée indique que de l'huile brûle dans les cylindres ?",opts:["Fumée noire","Fumée blanche","Fumée bleue","Fumée grise"],correct:2,expl:"Fumée bleue = huile brûlée dans les cylindres. Causes : segments de piston usés, guides de soupapes usés, niveau d'huile trop élevé. Analyse des gaz de carter (crankcase gas analysis) confirme le diagnostic. Solution : inspection des segments et soupapes, ajustement du niveau d'huile."},
     {q:"À quelle fréquence doit-on effectuer l'analyse d'huile moteur ?",opts:["Tous les jours","Toutes les semaines","Toutes les 500 heures d'utilisation environ","Une fois par an"],correct:2,expl:"Analyse d'huile tous les ~500h d'utilisation (ou selon recommandations constructeur). L'analyse révèle : présence de métaux d'usure (fer = cylindres, cuivre = paliers, aluminium = pistons), contamination par eau ou carburant, dégradation de la viscosité. Permet de détecter une avarie AVANT qu'elle devienne catastrophique."},
@@ -532,7 +532,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce qu'une 'analyse d'huile par spectrométrie' ?",opts:["Une analyse visuelle de l'huile","Analyse en laboratoire détectant les traces de métaux d'usure dans l'huile — prédit les défaillances avant qu'elles deviennent catastrophiques","Une analyse de la couleur de l'huile","Un test de viscosité simple"],correct:1,expl:"Spectrométrie = technique d'analyse de l'huile en laboratoire. Détecte : fer (usure cylindres/pistons), cuivre (usure paliers de bielle), aluminium (usure pistons), chrome (segments). Permet de prévoir une défaillance 200-500h avant l'avarie. Analyse toutes les 500h + lors d'anomalies détectées."},
     {q:"Qu'est-ce qu'un 'palier de tête de bielle' (connecting rod bearing) ?",opts:["Une pièce décorative","Palier situé en tête de bielle reliant piston et vilebrequin — lubrifié en permanence, usure critique","Une type de joint","Le support du piston"],correct:1,expl:"Palier de tête de bielle = pièce semi-circulaire en alliage (babbit metal) entre la tête de bielle et le tourillon du vilebrequin. Lubrifié en permanence par huile sous pression. Jeu nominal : 0,05-0,15mm. Usure excessive → bruit de cognement (knock) → casse catastrophique. Remplacement planifié aux 5000-8000h."},

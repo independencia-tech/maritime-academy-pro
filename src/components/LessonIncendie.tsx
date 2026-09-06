@@ -518,7 +518,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Un feu de HFO (fuel lourd) dans la salle des machines est de classe :",opts:["Classe A — solides","Classe B — liquides inflammables","Classe C — électrique","Classe F — cuisine"],correct:1,expl:"HFO (Heavy Fuel Oil) et MDO sont des liquides inflammables = Classe B. Pour les éteindre : mousse AFFF ✅ · CO2 ✅ · Poudre ABC ✅. L'eau est FORMELLEMENT INTERDITE sur les feux de classe B car elle propage le liquide enflammé et peut provoquer une explosion de vapeur."},
     {q:"Le CO2 fixe de la salle des machines est MORTEL si quelqu'un est à l'intérieur car :",opts:["Il brûle la peau","Il réduit le taux d'O₂ en dessous du niveau vital (< 15%) → asphyxie en quelques minutes","Il est toxique chimiquement","Il crée une explosion"],correct:1,expl:"Le CO2 fixe inonde la salle des machines et réduit la concentration d'O₂ de 21% à moins de 15% (seuil vital). En dessous de 10% : perte de conscience rapide. En dessous de 6% : mort en quelques minutes. ÉTAPE CRITIQUE : compter tout l'équipage avant de déclencher."},
@@ -549,7 +549,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quels sont les 3 éléments du triangle du feu ?",opts:["Air · eau · feu","Combustible · comburant (O₂) · chaleur","Chaleur · fumée · flamme","Carburant · oxygène · explosion"],correct:1,expl:"Triangle du feu : Combustible + Comburant (O₂) + Chaleur. Retirer UN des trois éléments suffit pour éteindre le feu. CO2 = retire l'oxygène. Eau = retire la chaleur. Isolation = retire le combustible."},
     {q:"Pourquoi ne faut-il JAMAIS utiliser l'eau sur un feu de classe B (liquides) ?",opts:["L'eau est trop froide","L'eau se vaporise et projette le liquide enflammé, propageant l'incendie","L'eau est électrique","L'eau est trop lourde"],correct:1,expl:"L'eau sur un feu de liquide inflammable : 1) Peut créer une émulsion qui projette des gouttelettes enflammées. 2) L'eau se vaporise instantanément (explosion de vapeur) projetant le liquide. 3) L'eau est plus lourde que l'huile → coule sous l'huile enflammée et la projette."},

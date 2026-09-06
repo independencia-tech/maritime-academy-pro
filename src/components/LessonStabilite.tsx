@@ -538,7 +538,7 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUIZ — 4 LANGUAGES
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que signifie un GM positif pour la stabilité d'un navire ?",opts:["Le navire est instable et va chavirer","Le navire est stable — il revient vertical après une gîte","Le navire est trop rigide et risque de se briser","GM positif = chargement excessif"],correct:1,expl:"GM (Hauteur Métacentrique) positif = M au-dessus de G = le navire est stable. Quand il gîte, la poussée d'Archimède crée un moment de redressement qui le ramène vertical. GM négatif = M en dessous de G = INSTABLE → risque de chavirement."},
     {q:"La marque Plimsoll 'S' représente quoi ?",opts:["Sécurité maximale — chargement interdit au-delà","Summer (Été) — ligne de référence principale pour le chargement en eau de mer tempérée","Sous-marin — applicable uniquement aux sous-marins","Soute — niveau des soutes à carburant"],correct:1,expl:"S = Summer (Été) = ligne de référence principale du franc-bord. C'est la ligne de flottaison maximale autorisée en été dans les eaux tempérées. Toutes les autres marques (T, W, TF, F, WNA) sont calculées par rapport à S."},
@@ -572,7 +572,7 @@ const QUIZ = {
 // ══════════════════════════════════════
 // BANK — 15 QUESTIONS × 4 LANGUAGES
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Que signifie GM (Hauteur Métacentrique) ?",opts:["La distance entre le centre de gravité G et le métacentre M","La profondeur maximale du navire","La hauteur de la coque hors eau","La distance entre la quille et le pont"],correct:0,expl:"GM = distance entre G (centre de gravité) et M (métacentre). GM > 0 = stable. GM < 0 = instable. GM trop grand = navire trop raide (roulis violent). GM trop petit = navire mou (gîte facilement). Valeur optimale : 0,15m à 2,5m selon le type de navire."},
     {q:"Qu'est-ce que le franc-bord d'un navire ?",opts:["La partie du navire sous l'eau","La distance verticale entre la ligne de charge et le pont principal étanche","La hauteur du mât","La profondeur des cales"],correct:1,expl:"Franc-bord = distance entre la ligne de chargement (waterline) et le pont principal étanche. Plus le franc-bord est grand, plus le navire est haut sur l'eau → meilleure réserve de flottabilité et de stabilité. Réglementé par la Convention de Ligne de Charge (1966)."},

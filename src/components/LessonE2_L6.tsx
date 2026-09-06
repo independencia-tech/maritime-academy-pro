@@ -380,7 +380,7 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUIZ (5 questions x 4 langues)
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     { q:"Quel composant du cycle frigorifique absorbe la chaleur de l'espace refroidi ?", opts:["Condenseur","Compresseur","Evaporateur","Detendeur"], correct:2, expl:"L'evaporateur absorbe la chaleur de l'espace refroidi : le refrigerant liquide s'y vaporise a basse pression, captant la chaleur ambiante avant que la vapeur froide reparte vers le compresseur." },
     { q:"Quel refrigerant naturel presente un risque de toxicite majeur ?", opts:["CO2 (R-744)","Ammoniac (R-717)","R-134a","R-407C"], correct:1, expl:"L'ammoniac (R-717) est toxique et inflammable a forte concentration, malgre son excellent rendement thermodynamique et son impact environnemental quasi nul." },
@@ -414,7 +414,7 @@ const QUIZ = {
 // ══════════════════════════════════════
 // BANQUE DE 15 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Dans le cycle frigorifique, ou la pression du refrigerant est-elle la plus elevee ?",opts:["Evaporateur","Compresseur (sortie)","Detendeur","Aspiration compresseur"],correct:1,expl:"A la sortie du compresseur, le refrigerant est une vapeur haute pression : c'est le point de pression maximale du cycle, avant qu'il ne redescende progressivement jusqu'au detendeur."},
     {q:"Quel composant provoque la chute de temperature du refrigerant liquide ?",opts:["Condenseur","Compresseur","Detendeur","Filtre deshydrateur"],correct:2,expl:"Le detendeur provoque une chute brutale de pression, entrainant une chute de temperature du refrigerant liquide juste avant son entree dans l'evaporateur."},

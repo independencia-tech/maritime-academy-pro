@@ -331,7 +331,7 @@ function AccidentCase({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la différence essentielle entre PSC et Flag State ?",opts:["Aucune différence","Le PSC contrôle ponctuellement, le Flag State est responsable en continu","Le PSC est plus strict que le Flag State","Le Flag State n'existe que pour les tankers"],correct:1,expl:"Le PSC exerce un contrôle ponctuel à chaque escale, tandis que le Flag State porte une responsabilité continue tout au long de la vie du navire."},
     {q:"Que signifie l'affirmation \"la protection de l'environnement fait partie du SMS\" ?",opts:["Ce sont deux systèmes séparés","Les procédures environnementales sont intégrées au même système documentaire que la sécurité","Seul le DPA gère l'environnement","Le SMS ne couvre pas MARPOL"],correct:1,expl:"L'ISM Code intègre la protection de l'environnement dans le Safety Management System - ce n'est pas un système distinct."},
@@ -362,7 +362,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qui délivre les certificats environnementaux d'un navire (IAPP, etc.) ?",opts:["Le Port State Control","Le Flag State (administration du pavillon)","L'OCIMF","Le DPA"],correct:1,expl:"Les certificats environnementaux sont délivrés par l'administration du pavillon (Flag State), pas par le PSC."},
     {q:"Un navire peut-il échouer une inspection PSC même avec un pavillon reconnu comme rigoureux ?",opts:["Non, jamais","Oui, le PSC vérifie ponctuellement l'état réel du navire, indépendamment de la réputation du pavillon","Non, sauf en cas de fraude","Oui, mais uniquement pour les tankers"],correct:1,expl:"Le PSC et le Flag State sont deux niveaux complémentaires ; un pavillon rigoureux ne garantit pas l'absence de déficiences ponctuelles."},

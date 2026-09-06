@@ -275,7 +275,7 @@ function LauraMaersk({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quel levier consiste à adapter la vitesse au juste besoin plutôt qu'à naviguer systématiquement au maximum ?",opts:["Le routage météo","L'optimisation de vitesse (slow steaming)","Le cold ironing","Le polissage de l'hélice"],correct:1,expl:"L'optimisation de vitesse (slow steaming) consiste à adapter la vitesse au besoin opérationnel réel plutôt qu'à naviguer systématiquement au maximum."},
     {q:"Que se passe-t-il en cas d'encrassement de coque non traité ?",opts:["Aucun impact","La résistance à l'avancement augmente, entraînant une surconsommation","Le navire devient plus rapide","La coque s'auto-nettoie avec le temps"],correct:1,expl:"L'encrassement de coque augmente directement la résistance à l'avancement, l'un des facteurs les plus significatifs de surconsommation."},
@@ -306,7 +306,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que la planification de voyage inclut au-delà du simple cap ?",opts:["Uniquement la destination finale","La vitesse prévue à chaque segment, les points de passage et les marges de sécurité","Uniquement le nom du navire","Le menu du restaurant à bord"],correct:1,expl:"La planification de voyage inclut la vitesse prévue à chaque segment, les points de passage et les marges de sécurité, pas seulement le cap."},
     {q:"Le routage météo peut-il réduire la consommation sans rallonger significativement la distance ?",opts:["Non, jamais","Oui, en évitant les zones de mauvais temps ou de courants défavorables","Non, il rallonge toujours fortement la route","Oui, mais uniquement en hiver"],correct:1,expl:"Le routage météo réduit la résistance à l'avancement en évitant le mauvais temps, sans nécessairement rallonger significativement la distance."},

@@ -116,6 +116,56 @@ import { QUIZ as S6_L4_QUIZ, BANK as S6_L4_BANK } from "../components/LessonSafe
 import { QUIZ as S6_L5_QUIZ, BANK as S6_L5_BANK } from "../components/LessonSafetyS6_L5";
 import { QUIZ as S6_L6_QUIZ, BANK as S6_L6_BANK } from "../components/LessonSafetyS6_L6";
 
+import { QUIZ as E2_L1_QUIZ, BANK as E2_L1_BANK } from "../components/LessonE2_L1";
+import { QUIZ as E2_L2_QUIZ, BANK as E2_L2_BANK } from "../components/LessonE2_L2";
+import { QUIZ as E2_L3_QUIZ, BANK as E2_L3_BANK } from "../components/LessonE2_L3";
+import { QUIZ as E2_L4_QUIZ, BANK as E2_L4_BANK } from "../components/LessonE2_L4";
+import { QUIZ as E2_L5_QUIZ, BANK as E2_L5_BANK } from "../components/LessonE2_L5";
+import { QUIZ as E2_L6_QUIZ, BANK as E2_L6_BANK } from "../components/LessonE2_L6";
+import { QUIZ as E2_L7_QUIZ, BANK as E2_L7_BANK } from "../components/LessonE2_L7";
+
+import { QUIZ as E3_L1_QUIZ, BANK as E3_L1_BANK } from "../components/LessonE3_L1";
+import { QUIZ as E3_L2_QUIZ, BANK as E3_L2_BANK } from "../components/LessonE3_L2";
+import { QUIZ as E3_L3_QUIZ, BANK as E3_L3_BANK } from "../components/LessonE3_L3";
+import { QUIZ as E3_L4_QUIZ, BANK as E3_L4_BANK } from "../components/LessonE3_L4";
+import { QUIZ as E3_L5_QUIZ, BANK as E3_L5_BANK } from "../components/LessonE3_L5";
+import { QUIZ as E3_L6_QUIZ, BANK as E3_L6_BANK } from "../components/LessonE3_L6";
+
+import { QUIZ as E1_L1_QUIZ, BANK as E1_L1_BANK } from "../components/LessonMoteur";
+import { QUIZ as E1_L2_QUIZ, BANK as E1_L2_BANK } from "../components/LessonAuxiliaires";
+import { QUIZ as E1_L3_QUIZ, BANK as E1_L3_BANK } from "../components/LessonStabilite";
+import { QUIZ as E1_L4_QUIZ, BANK as E1_L4_BANK } from "../components/LessonIncendie";
+import { QUIZ as E1_L5_QUIZ, BANK as E1_L5_BANK } from "../components/LessonSauvetage";
+import { QUIZ as E1_L6_QUIZ, BANK as E1_L6_BANK } from "../components/LessonMaintenance";
+import { QUIZ as E1_L7_QUIZ, BANK as E1_L7_BANK } from "../components/LessonWatchkeeping";
+import { QUIZ as E1_L8_QUIZ, BANK as E1_L8_BANK } from "../components/LessonEmergency";
+
+import { QUIZ as E4_L1_QUIZ, BANK as E4_L1_BANK } from "../components/LessonMARPOL";
+import { QUIZ as E4_L2_QUIZ, BANK as E4_L2_BANK } from "../components/LessonMARPOL_L2";
+import { QUIZ as E4_L3_QUIZ, BANK as E4_L3_BANK } from "../components/LessonMARPOL_L3";
+import { QUIZ as E4_L4_QUIZ, BANK as E4_L4_BANK } from "../components/LessonMARPOL_L4";
+import { QUIZ as E4_L5_QUIZ, BANK as E4_L5_BANK } from "../components/LessonMARPOL_L5";
+import { QUIZ as E4_L6_QUIZ, BANK as E4_L6_BANK } from "../components/LessonMARPOL_L6";
+
+import { QUIZ as E5_L1_QUIZ, BANK as E5_L1_BANK } from "../components/LessonSEEMP_L1";
+import { QUIZ as E5_L2_QUIZ, BANK as E5_L2_BANK } from "../components/LessonSEEMP_L2";
+import { QUIZ as E5_L3_QUIZ, BANK as E5_L3_BANK } from "../components/LessonSEEMP_L3";
+import { QUIZ as E5_L4_QUIZ, BANK as E5_L4_BANK } from "../components/LessonSEEMP_L4";
+import { QUIZ as E5_L5_QUIZ, BANK as E5_L5_BANK } from "../components/LessonSEEMP_L5";
+
+import { QUIZ as E6_L1_QUIZ, BANK as E6_L1_BANK } from "../components/LessonE6_L1";
+import { QUIZ as E6_L2_QUIZ, BANK as E6_L2_BANK } from "../components/LessonE6_L2";
+import { QUIZ as E6_L3_QUIZ, BANK as E6_L3_BANK } from "../components/LessonE6_L3";
+import { QUIZ as E6_L4_QUIZ, BANK as E6_L4_BANK } from "../components/LessonE6_L4";
+import { QUIZ as E6_L5_QUIZ, BANK as E6_L5_BANK } from "../components/LessonE6_L5";
+import { QUIZ as E6_L6_QUIZ, BANK as E6_L6_BANK } from "../components/LessonE6_L6";
+
+import { QUIZ as E7_L1_QUIZ, BANK as E7_L1_BANK } from "../components/LessonE7_L1";
+import { QUIZ as E7_L2_QUIZ, BANK as E7_L2_BANK } from "../components/LessonE7_L2";
+import { QUIZ as E7_L3_QUIZ, BANK as E7_L3_BANK } from "../components/LessonE7_L3";
+import { QUIZ as E7_L4_QUIZ, BANK as E7_L4_BANK } from "../components/LessonE7_L4";
+import { QUIZ as E7_L5_QUIZ, BANK as E7_L5_BANK } from "../components/LessonE7_L5";
+
 import { SUMMARY_QUESTIONS } from "./examSummaryQuestions";
 
 const LANGS = ["fr", "en", "es", "pt"];
@@ -233,6 +283,56 @@ const LESSON_POOLS = {
   "s6-l4": buildLessonPool("s6-l4", S6_L4_QUIZ, S6_L4_BANK),
   "s6-l5": buildLessonPool("s6-l5", S6_L5_QUIZ, S6_L5_BANK),
   "s6-l6": buildLessonPool("s6-l6", S6_L6_QUIZ, S6_L6_BANK),
+
+  "e2-l1": buildLessonPool("e2-l1", E2_L1_QUIZ, E2_L1_BANK),
+  "e2-l2": buildLessonPool("e2-l2", E2_L2_QUIZ, E2_L2_BANK),
+  "e2-l3": buildLessonPool("e2-l3", E2_L3_QUIZ, E2_L3_BANK),
+  "e2-l4": buildLessonPool("e2-l4", E2_L4_QUIZ, E2_L4_BANK),
+  "e2-l5": buildLessonPool("e2-l5", E2_L5_QUIZ, E2_L5_BANK),
+  "e2-l6": buildLessonPool("e2-l6", E2_L6_QUIZ, E2_L6_BANK),
+  "e2-l7": buildLessonPool("e2-l7", E2_L7_QUIZ, E2_L7_BANK),
+
+  "e3-l1": buildLessonPool("e3-l1", E3_L1_QUIZ, E3_L1_BANK),
+  "e3-l2": buildLessonPool("e3-l2", E3_L2_QUIZ, E3_L2_BANK),
+  "e3-l3": buildLessonPool("e3-l3", E3_L3_QUIZ, E3_L3_BANK),
+  "e3-l4": buildLessonPool("e3-l4", E3_L4_QUIZ, E3_L4_BANK),
+  "e3-l5": buildLessonPool("e3-l5", E3_L5_QUIZ, E3_L5_BANK),
+  "e3-l6": buildLessonPool("e3-l6", E3_L6_QUIZ, E3_L6_BANK),
+
+  "e1-l1": buildLessonPool("e1-l1", E1_L1_QUIZ, E1_L1_BANK),
+  "e1-l2": buildLessonPool("e1-l2", E1_L2_QUIZ, E1_L2_BANK),
+  "e1-l3": buildLessonPool("e1-l3", E1_L3_QUIZ, E1_L3_BANK),
+  "e1-l4": buildLessonPool("e1-l4", E1_L4_QUIZ, E1_L4_BANK),
+  "e1-l5": buildLessonPool("e1-l5", E1_L5_QUIZ, E1_L5_BANK),
+  "e1-l6": buildLessonPool("e1-l6", E1_L6_QUIZ, E1_L6_BANK),
+  "e1-l7": buildLessonPool("e1-l7", E1_L7_QUIZ, E1_L7_BANK),
+  "e1-l8": buildLessonPool("e1-l8", E1_L8_QUIZ, E1_L8_BANK),
+
+  "e4-l1": buildLessonPool("e4-l1", E4_L1_QUIZ, E4_L1_BANK),
+  "e4-l2": buildLessonPool("e4-l2", E4_L2_QUIZ, E4_L2_BANK),
+  "e4-l3": buildLessonPool("e4-l3", E4_L3_QUIZ, E4_L3_BANK),
+  "e4-l4": buildLessonPool("e4-l4", E4_L4_QUIZ, E4_L4_BANK),
+  "e4-l5": buildLessonPool("e4-l5", E4_L5_QUIZ, E4_L5_BANK),
+  "e4-l6": buildLessonPool("e4-l6", E4_L6_QUIZ, E4_L6_BANK),
+
+  "e5-l1": buildLessonPool("e5-l1", E5_L1_QUIZ, E5_L1_BANK),
+  "e5-l2": buildLessonPool("e5-l2", E5_L2_QUIZ, E5_L2_BANK),
+  "e5-l3": buildLessonPool("e5-l3", E5_L3_QUIZ, E5_L3_BANK),
+  "e5-l4": buildLessonPool("e5-l4", E5_L4_QUIZ, E5_L4_BANK),
+  "e5-l5": buildLessonPool("e5-l5", E5_L5_QUIZ, E5_L5_BANK),
+
+  "e6-l1": buildLessonPool("e6-l1", E6_L1_QUIZ, E6_L1_BANK),
+  "e6-l2": buildLessonPool("e6-l2", E6_L2_QUIZ, E6_L2_BANK),
+  "e6-l3": buildLessonPool("e6-l3", E6_L3_QUIZ, E6_L3_BANK),
+  "e6-l4": buildLessonPool("e6-l4", E6_L4_QUIZ, E6_L4_BANK),
+  "e6-l5": buildLessonPool("e6-l5", E6_L5_QUIZ, E6_L5_BANK),
+  "e6-l6": buildLessonPool("e6-l6", E6_L6_QUIZ, E6_L6_BANK),
+
+  "e7-l1": buildLessonPool("e7-l1", E7_L1_QUIZ, E7_L1_BANK),
+  "e7-l2": buildLessonPool("e7-l2", E7_L2_QUIZ, E7_L2_BANK),
+  "e7-l3": buildLessonPool("e7-l3", E7_L3_QUIZ, E7_L3_BANK),
+  "e7-l4": buildLessonPool("e7-l4", E7_L4_QUIZ, E7_L4_BANK),
+  "e7-l5": buildLessonPool("e7-l5", E7_L5_QUIZ, E7_L5_BANK),
 };
 
 // Returns the pooled, tagged questions for a set of lessonIds, in one

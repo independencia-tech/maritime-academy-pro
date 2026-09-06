@@ -316,7 +316,7 @@ function EthicalScenario({ lang, t }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la différence essentielle entre responsabilité civile et pénale ?",opts:["Aucune différence","La responsabilité pénale sanctionne une infraction réglementaire, la civile répare un dommage économique ou contractuel","La civile est toujours plus grave","La pénale ne concerne que les compagnies"],correct:1,expl:"La responsabilité pénale sanctionne une infraction (comme dans le cas Ocean Princess), tandis que la responsabilité civile répare un préjudice économique ou contractuel (comme dans l'affaire Rowan)."},
     {q:"Suivre un ordre illégal protège-t-il un officier de toute poursuite ?",opts:["Oui, toujours","Non, comme l'a montré le cas Ocean Princess où plusieurs officiers ont été poursuivis individuellement","Oui, si l'ordre vient du Capitaine","Non, sauf si l'officier est junior"],correct:1,expl:"Le cas Ocean Précédent a montré que suivre un ordre illégal n'exonère jamais l'officier qui l'exécute de sa responsabilité individuelle."},
@@ -347,7 +347,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quel document légal fait le lien entre l'Annexe I et la responsabilité pénale individuelle ?",opts:["Le Garbage Record Book","L'Oil Record Book","Le BDN","Le certificat IAPP"],correct:1,expl:"L'Oil Record Book, falsifié dans le cas Ocean Princess (Leçon 4), a directement conduit à des poursuites pénales individuelles."},
     {q:"Le vetting SIRE peut-il entraîner une conséquence purement commerciale, sans amende ?",opts:["Non, il y a toujours une amende","Oui, comme dans l'affaire Rowan où la sanction fut purement commerciale","Non, le vetting n'a aucune conséquence","Oui, mais uniquement pour les tankers gaziers"],correct:1,expl:"L'affaire Rowan (Leçon 5) a montré qu'une mauvaise conformité peut fermer l'accès au marché commercial sans aucune amende ni poursuite pénale."},

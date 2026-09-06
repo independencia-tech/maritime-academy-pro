@@ -1832,6 +1832,65 @@ const COMPETENCIES_S6:any = {
   pt:["✔ Realizar uma ronda de segurança e reconhecer os perigos a bordo","✔ Responder imediatamente às emergências comuns do navio","✔ Aplicar o EPI e os comportamentos seguros ligados ao fator humano","✔ Reportar uma emergência e iniciar a resposta inicial adequada","✔ Aplicar uma autorização de trabalho e realizar uma avaliação de riscos","✔ Manter uma cultura de segurança e uma responsabilidade profissional constante"],
 };
 
+// e1 (Main Engine & Propulsion) competencies list — first Engine module
+// wired onto Foundation Exams (Category A batch: content already existed,
+// QUIZ/BANK were simply not exported yet — no new authoring), 2026-09-06.
+const COMPETENCIES_E1:any = {
+  fr:["✔ Expliquer le fonctionnement du moteur principal et le cycle diesel 2T/4T","✔ Identifier les systèmes auxiliaires et électriques essentiels de la salle des machines","✔ Appliquer les principes de stabilité et de chargement pertinents pour l'équipe machine","✔ Réagir à un départ de feu en salle des machines et utiliser le système CO2","✔ Utiliser le matériel de survie et l'EPIRB en situation d'urgence","✔ Effectuer la maintenance de base et diagnostiquer une panne courante","✔ Tenir un quart machine conforme aux procédures standards","✔ Exécuter les procédures d'urgence machine de base"],
+  en:["✔ Explain how the main engine works and the 2-stroke/4-stroke diesel cycle","✔ Identify the essential auxiliary and electrical systems of the engine room","✔ Apply the stability and loading principles relevant to the engine team","✔ Respond to an engine room fire and operate the CO2 system","✔ Use survival equipment and the EPIRB in an emergency","✔ Perform basic maintenance and diagnose a common fault","✔ Stand an engine watch in line with standard procedures","✔ Execute basic engine emergency procedures"],
+  es:["✔ Explicar el funcionamiento del motor principal y el ciclo diésel 2T/4T","✔ Identificar los sistemas auxiliares y eléctricos esenciales de la sala de máquinas","✔ Aplicar los principios de estabilidad y carga relevantes para el equipo de máquinas","✔ Responder a un incendio en la sala de máquinas y utilizar el sistema de CO2","✔ Usar el equipo de supervivencia y el EPIRB en una emergencia","✔ Realizar el mantenimiento básico y diagnosticar una avería común","✔ Cumplir una guardia de máquinas conforme a los procedimientos estándar","✔ Ejecutar los procedimientos básicos de emergencia de máquinas"],
+  pt:["✔ Explicar o funcionamento do motor principal e o ciclo diesel 2T/4T","✔ Identificar os sistemas auxiliares e elétricos essenciais da casa das máquinas","✔ Aplicar os princípios de estabilidade e carga relevantes para a equipa de máquinas","✔ Reagir a um incêndio na casa das máquinas e usar o sistema de CO2","✔ Usar o equipamento de sobrevivência e o EPIRB numa emergência","✔ Realizar a manutenção básica e diagnosticar uma avaria comum","✔ Cumprir um quarto de máquinas conforme os procedimentos padrão","✔ Executar os procedimentos básicos de emergência de máquinas"],
+};
+
+// e2 (Auxiliary Systems & Electricity) competencies list.
+const COMPETENCIES_E2:any = {
+  fr:["✔ Comprendre le fonctionnement des générateurs et de la production électrique à bord","✔ Interpréter les tableaux électriques et les schémas de distribution","✔ Diagnostiquer les pompes et systèmes hydrauliques courants","✔ Exploiter les compresseurs et le réseau d'air comprimé","✔ Entretenir les purificateurs et séparateurs de combustible/huile","✔ Comprendre le rôle des échangeurs de chaleur dans les circuits auxiliaires","✔ Diagnostiquer une panne électrique courante en salle des machines"],
+  en:["✔ Understand how generators and onboard power generation work","✔ Interpret switchboards and distribution diagrams","✔ Diagnose common pumps and hydraulic systems","✔ Operate compressors and the compressed air network","✔ Maintain fuel/oil purifiers and separators","✔ Understand the role of heat exchangers in auxiliary circuits","✔ Diagnose a common electrical fault in the engine room"],
+  es:["✔ Comprender el funcionamiento de los generadores y la producción eléctrica a bordo","✔ Interpretar los cuadros eléctricos y los esquemas de distribución","✔ Diagnosticar las bombas y sistemas hidráulicos comunes","✔ Operar los compresores y la red de aire comprimido","✔ Mantener los purificadores y separadores de combustible/aceite","✔ Comprender el papel de los intercambiadores de calor en los circuitos auxiliares","✔ Diagnosticar una avería eléctrica común en la sala de máquinas"],
+  pt:["✔ Compreender o funcionamento dos geradores e da produção elétrica a bordo","✔ Interpretar os quadros elétricos e os esquemas de distribuição","✔ Diagnosticar as bombas e sistemas hidráulicos comuns","✔ Operar os compressores e a rede de ar comprimido","✔ Manter os purificadores e separadores de combustível/óleo","✔ Compreender o papel dos trocadores de calor nos circuitos auxiliares","✔ Diagnosticar uma avaria elétrica comum na casa das máquinas"],
+};
+
+// e3 (Boilers & Steam Systems) competencies list.
+const COMPETENCIES_E3:any = {
+  fr:["✔ Identifier les types de chaudières marines et leurs usages","✔ Comprendre la combustion et le réglage des brûleurs","✔ Appliquer le traitement de l'eau de chaudière","✔ Comprendre les systèmes vapeur et leur distribution à bord","✔ Connaître les sécurités et alarmes chaudière essentielles","✔ Effectuer la maintenance et l'inspection de base d'une chaudière"],
+  en:["✔ Identify marine boiler types and their uses","✔ Understand combustion and burner adjustment","✔ Apply boiler water treatment","✔ Understand steam systems and their onboard distribution","✔ Know the essential boiler safety devices and alarms","✔ Perform basic boiler maintenance and inspection"],
+  es:["✔ Identificar los tipos de calderas marinas y sus usos","✔ Comprender la combustión y el ajuste de quemadores","✔ Aplicar el tratamiento del agua de caldera","✔ Comprender los sistemas de vapor y su distribución a bordo","✔ Conocer las seguridades y alarmas esenciales de caldera","✔ Realizar el mantenimiento e inspección básicos de una caldera"],
+  pt:["✔ Identificar os tipos de caldeiras marinhas e os seus usos","✔ Compreender a combustão e o ajuste de queimadores","✔ Aplicar o tratamento da água de caldeira","✔ Compreender os sistemas de vapor e a sua distribuição a bordo","✔ Conhecer as seguranças e alarmes essenciais de caldeira","✔ Realizar a manutenção e inspeção básicas de uma caldeira"],
+};
+
+// e4 (MARPOL Engine Room) competencies list — Category A batch, 2026-09-06.
+const COMPETENCIES_E4:any = {
+  fr:["✔ Comprendre les obligations MARPOL applicables à la salle des machines","✔ Appliquer l'Annexe I (registre hydrocarbures, limite 15ppm)","✔ Gérer les déchets à bord conformément à l'Annexe V","✔ Appliquer l'Annexe VI (émissions atmosphériques, soufre)","✔ Maintenir la conformité environnementale au quotidien","✔ Exercer un leadership environnemental au sein de l'équipe machine"],
+  en:["✔ Understand the MARPOL obligations applicable to the engine room","✔ Apply Annex I (oil record book, 15ppm limit)","✔ Manage onboard waste in line with Annex V","✔ Apply Annex VI (air emissions, sulphur)","✔ Maintain day-to-day environmental compliance","✔ Exercise environmental leadership within the engine team"],
+  es:["✔ Comprender las obligaciones MARPOL aplicables a la sala de máquinas","✔ Aplicar el Anexo I (libro de hidrocarburos, límite 15ppm)","✔ Gestionar los residuos a bordo conforme al Anexo V","✔ Aplicar el Anexo VI (emisiones atmosféricas, azufre)","✔ Mantener el cumplimiento ambiental en el día a día","✔ Ejercer un liderazgo ambiental dentro del equipo de máquinas"],
+  pt:["✔ Compreender as obrigações MARPOL aplicáveis à casa das máquinas","✔ Aplicar o Anexo I (livro de hidrocarbonetos, limite 15ppm)","✔ Gerir os resíduos a bordo conforme o Anexo V","✔ Aplicar o Anexo VI (emissões atmosféricas, enxofre)","✔ Manter a conformidade ambiental no dia a dia","✔ Exercer uma liderança ambiental dentro da equipa de máquinas"],
+};
+
+// e5 (SEEMP & Energy Efficiency) competencies list — Category A batch,
+// 2026-09-06.
+const COMPETENCIES_E5:any = {
+  fr:["✔ Comprendre les enjeux de l'efficacité énergétique en exploitation","✔ Appliquer le plan de gestion SEEMP","✔ Comprendre l'indice EEXI et son application","✔ Interpréter le CII et les notations A-E","✔ Mettre en œuvre des pratiques d'efficacité énergétique concrètes"],
+  en:["✔ Understand why energy efficiency matters in operations","✔ Apply the SEEMP management plan","✔ Understand the EEXI index and its application","✔ Interpret the CII and A-E ratings","✔ Implement practical energy efficiency measures"],
+  es:["✔ Comprender por qué importa la eficiencia energética en la explotación","✔ Aplicar el plan de gestión SEEMP","✔ Comprender el índice EEXI y su aplicación","✔ Interpretar el CII y las calificaciones A-E","✔ Implementar medidas prácticas de eficiencia energética"],
+  pt:["✔ Compreender por que a eficiência energética importa na operação","✔ Aplicar o plano de gestão SEEMP","✔ Compreender o índice EEXI e a sua aplicação","✔ Interpretar o CII e as classificações A-E","✔ Implementar medidas práticas de eficiência energética"],
+};
+
+// e6 (Cargo Systems — Engine Side) competencies list.
+const COMPETENCIES_E6:any = {
+  fr:["✔ Utiliser les pompes de cargaison (deep well, stripping, éjecteur) et diagnostiquer une cavitation","✔ Gérer le système de ballast et ses implications sur la stabilité","✔ Comprendre le fonctionnement du système de gaz inerte (IGS) et son rôle de sécurité","✔ Appliquer les procédures COW et de nettoyage des citernes","✔ Maîtriser le chauffage de cargaison pour les produits visqueux","✔ Effectuer le jaugeage et les mesures de cargaison avec précision"],
+  en:["✔ Operate cargo pumps (deep well, stripping, ejector) and diagnose cavitation","✔ Manage the ballast system and its stability implications","✔ Understand how the Inert Gas System (IGS) works and its safety role","✔ Apply COW and tank cleaning procedures","✔ Master cargo heating for viscous products","✔ Perform cargo gauging and measurements accurately"],
+  es:["✔ Operar las bombas de carga (deep well, stripping, eyector) y diagnosticar la cavitación","✔ Gestionar el sistema de lastre y sus implicaciones de estabilidad","✔ Comprender el funcionamiento del sistema de gas inerte (IGS) y su función de seguridad","✔ Aplicar los procedimientos de COW y limpieza de tanques","✔ Dominar la calefacción de carga para productos viscosos","✔ Realizar el sondeo y las mediciones de carga con precisión"],
+  pt:["✔ Operar as bombas de carga (deep well, stripping, ejetor) e diagnosticar a cavitação","✔ Gerir o sistema de lastro e as suas implicações de estabilidade","✔ Compreender o funcionamento do sistema de gás inerte (IGS) e a sua função de segurança","✔ Aplicar os procedimentos de COW e limpeza de tanques","✔ Dominar o aquecimento de carga para produtos viscosos","✔ Realizar a sondagem e as medições de carga com precisão"],
+};
+
+// e7 (Automation & UMS Control) competencies list.
+const COMPETENCIES_E7:any = {
+  fr:["✔ Comprendre le fonctionnement d'une salle des machines sans surveillance (UMS)","✔ Interpréter les systèmes d'alarme et de monitoring machine","✔ Comprendre les principes des automates programmables (PLC)","✔ Utiliser les interfaces SCADA/IHM pour le contrôle machine","✔ Identifier les enjeux de cybersécurité des systèmes embarqués"],
+  en:["✔ Understand how an Unattended Machinery Space (UMS) operates","✔ Interpret engine alarm and monitoring systems","✔ Understand the principles of Programmable Logic Controllers (PLC)","✔ Use SCADA/HMI interfaces for machinery control","✔ Identify cybersecurity issues affecting embedded shipboard systems"],
+  es:["✔ Comprender el funcionamiento de una sala de máquinas sin vigilancia (UMS)","✔ Interpretar los sistemas de alarma y monitorización de máquinas","✔ Comprender los principios de los controladores programables (PLC)","✔ Usar las interfaces SCADA/IHM para el control de máquinas","✔ Identificar los problemas de ciberseguridad de los sistemas embarcados"],
+  pt:["✔ Compreender o funcionamento de uma casa de máquinas sem vigilância (UMS)","✔ Interpretar os sistemas de alarme e monitorização de máquinas","✔ Compreender os princípios dos controladores programáveis (PLC)","✔ Usar as interfaces SCADA/IHM para o controlo de máquinas","✔ Identificar os problemas de cibersegurança dos sistemas embarcados"],
+};
+
 // 13th exam ("Foundation Summary") competencies list — validated separately
 // 2026-09-05, per standing doctrine (content approval kept distinct from the
 // engine/UI wiring approval). Unlike the 12 per-module lists, stays at the
@@ -2295,7 +2354,7 @@ function NavigationLessonsPage({ lang, onBack, onPick, completedLessons, current
   );
 }
 
-function EngineLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function EngineLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2308,6 +2367,7 @@ function EngineLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, o
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "e1", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e1");
@@ -2321,10 +2381,15 @@ function EngineLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, o
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7","l8"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_E1}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
@@ -2355,7 +2420,7 @@ function EngineLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, o
   );
 }
 
-function MarpolLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function MarpolLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2368,6 +2433,7 @@ function MarpolLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, o
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "e4", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e4");
@@ -2381,10 +2447,15 @@ function MarpolLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, o
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_E4}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
@@ -2415,7 +2486,7 @@ function MarpolLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, o
   );
 }
 
-function SeempLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function SeempLessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2428,6 +2499,7 @@ function SeempLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, on
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "e5", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e5");
@@ -2441,10 +2513,15 @@ function SeempLessonsPage({ lang, onBack, onPick, completedLessons, autoPick, on
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_E5}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any, idx:number)=>{
@@ -2861,7 +2938,7 @@ function ShipCareerLessonsPage({ lang, onBack, onPick, completedLessons, autoPic
     </div>
   );
 }
-function E2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function E2LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2874,6 +2951,7 @@ function E2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "e2", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e2");
@@ -2887,10 +2965,15 @@ function E2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6","l7"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_E2}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -2915,7 +2998,7 @@ function E2LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   );
 }
 
-function E3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function E3LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2928,6 +3011,7 @@ function E3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "e3", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e3");
@@ -2941,10 +3025,15 @@ function E3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_E3}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -2969,7 +3058,7 @@ function E3LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   );
 }
 
-function E6LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function E6LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -2982,6 +3071,7 @@ function E6LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "e6", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e6");
@@ -2995,10 +3085,15 @@ function E6LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5","l6"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_E6}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -3023,7 +3118,7 @@ function E6LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   );
 }
 
-function E7LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
+function E7LessonsPage({ lang, onBack, onPick, completedLessons, currentRankId, targetRankId, autoPick, onAutoPickConsumed }:{lang:string;onBack:()=>void;onPick:(lid:string)=>void;completedLessons:string[];currentRankId?:string;targetRankId?:string;autoPick?:string|null;onAutoPickConsumed?:()=>void}) {
   // Point 2 correctif (2026-09-01) — "Recommended for You" deep-link to a
   // specific lesson, bypassing this module's own list. Reuses onPick
   // exactly as-is (no duplication of its id->page mapping) via an
@@ -3036,6 +3131,7 @@ function E7LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
       onAutoPickConsumed?.();
     }
   }, [autoPick]);
+  const exam = useModuleExam({ moduleId: "e7", lang, currentRankId, targetRankId });
   if (autoPick) return <AutoPickTransition/>;
   const t = NAV_T[lang] || NAV_T.fr;
   const mod:any = (ALL_MODULES as any).engine.find((m:any)=>m.id==="e7");
@@ -3049,10 +3145,15 @@ function E7LessonsPage({ lang, onBack, onPick, completedLessons, autoPick, onAut
   const L = labels[lang] || labels.fr;
   const lessons = mod?.lessons || [];
   const playable = new Set(["l1","l2","l3","l4","l5"]);
+
+  if (exam.examView === "running") return <ExamRunningScreen exam={exam} lang={lang} title={title} backLabel={t.back}/>;
+  if (exam.examView === "result") return <ExamResultScreen exam={exam} lang={lang} title={title} backLabel={t.back} onPick={onPick} competencies={COMPETENCIES_E7}/>;
+
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={title} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto"}}>
+        <ExamListExtras exam={exam} lang={lang}/>
         <div style={{fontFamily:"'Cinzel',serif",fontSize:12,letterSpacing:2,color:"#c9922a",marginBottom:12}}>{L.header}</div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lessons.map((l:any,idx:number)=>{
@@ -4492,6 +4593,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
@@ -4512,6 +4615,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
@@ -4529,6 +4634,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
           lang={lang}
           onBack={() => setPage("dashboard")}
           completedLessons={completedLessons}
+          currentRankId={profile.who}
+          targetRankId={profile.target}
           autoPick={pendingLessonPick}
           onAutoPickConsumed={() => setPendingLessonPick(null)}
           onPick={(lid:string) => {
@@ -5065,6 +5172,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    currentRankId={profile.who}
+    targetRankId={profile.target}
     autoPick={pendingLessonPick}
     onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
@@ -5141,6 +5250,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    currentRankId={profile.who}
+    targetRankId={profile.target}
     autoPick={pendingLessonPick}
     onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
@@ -5260,6 +5371,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    currentRankId={profile.who}
+    targetRankId={profile.target}
     autoPick={pendingLessonPick}
     onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {
@@ -5310,6 +5423,8 @@ else if (m?.id === "e7") setPage("e7_lessons");
     lang={lang}
     onBack={() => setPage("dashboard")}
     completedLessons={completedLessons}
+    currentRankId={profile.who}
+    targetRankId={profile.target}
     autoPick={pendingLessonPick}
     onAutoPickConsumed={() => setPendingLessonPick(null)}
     onPick={(lid:string) => {

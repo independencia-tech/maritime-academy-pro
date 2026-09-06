@@ -437,7 +437,7 @@ function Exercise1({ lang, t }) {
 }
 
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la première chose à faire en cas de blackout total en salle des machines ?",opts:["Appeler le capitaine","Le groupe de secours doit démarrer automatiquement en moins de 30 secondes (SOLAS)","Attendre que l'électricité revienne","Évacuer la salle des machines"],correct:1,expl:"Blackout total : le groupe électrogène de secours doit démarrer AUTOMATIQUEMENT en moins de 30 secondes (SOLAS). S'il ne démarre pas automatiquement, démarrage MANUEL immédiat. Priorité rétablissement : alarmes/sécurité → navigation → communication → pompes incendie → propulsion. L'UPS maintient les alarmes pendant 30 minutes."},
     {q:"Procédure dead ship — dans quel ordre démarrer les équipements ?",opts:["Moteur principal → génératrice auxiliaire → groupe secours","Groupe de secours → MSB → génératrice auxiliaire → moteur principal","Génératrice auxiliaire → groupe secours → moteur principal","MSB → groupe secours → moteur principal"],correct:1,expl:"Ordre OBLIGATOIRE dead ship recovery : 1) Groupe de secours (donne courant de base), 2) Rétablir MSB (tableau principal), 3) Démarrer génératrice auxiliaire (plus puissante), 4) Préparer et démarrer moteur principal. Ne JAMAIS sauter une étape. L'air de démarrage doit être disponible (25-30 bars)."},
@@ -468,7 +468,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Qu'est-ce que le 'load shedding' lors d'un blackout ?",opts:["Une panne totale","Délestage progressif des charges électriques non essentielles pour ne pas surcharger le groupe de secours","Un type de relais électrique","Une procédure de maintenance"],correct:1,expl:"Load shedding = délestage = déconnexion automatique ou manuelle des circuits non essentiels lors d'un blackout. Priorité conservée : alarmes, navigation, radio, pompes incendie. Déconnectés : climatisation, éclairage non essentiel, cuisine, laverie. Permet au groupe de secours (capacité limitée) de fonctionner sans surcharge."},
     {q:"Qu'est-ce que l'UPS (Uninterruptible Power Supply) à bord ?",opts:["Un groupe de secours diesel","Alimentation sans interruption sur batteries — maintient les systèmes critiques (alarmes, GMDSS) pendant 30 minutes lors d'un blackout","Un type de disjoncteur","Un système de démarrage automatique"],correct:1,expl:"UPS = alimentation sans interruption. Batteries qui maintiennent automatiquement les systèmes critiques lors d'un blackout : alarmes machine, GMDSS, navigation, lumières de secours. Autonomie : 30 minutes minimum (SOLAS). Pendant ce temps → démarrage groupe de secours. Test mensuel obligatoire."},

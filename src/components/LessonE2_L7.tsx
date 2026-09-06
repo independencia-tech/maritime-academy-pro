@@ -381,7 +381,7 @@ function Exercise1({ lang, t }) {
 // ══════════════════════════════════════
 // QUIZ (5 questions x 4 langues)
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     { q:"En combien de temps maximum le generateur de secours doit-il demarrer automatiquement ?", opts:["10 secondes","45 secondes","5 minutes","1 heure"], correct:1, expl:"Le SOLAS impose un demarrage automatique du generateur de secours en moins de 45 secondes apres la perte du tableau principal, delai couvert par les batteries d'eclairage transitoire." },
     { q:"Ou doit obligatoirement se trouver la pompe d'incendie de secours ?", opts:["Dans le local des machines principales","En dehors du local des machines principales","Sur la passerelle","Dans la salle des generateurs"], correct:1, expl:"La pompe d'incendie de secours doit etre situee en dehors du local des machines principales pour rester operationnelle meme si ce local est sinistre." },
@@ -415,7 +415,7 @@ const QUIZ = {
 // ══════════════════════════════════════
 // BANQUE DE 15 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Le generateur de secours doit etre situe :",opts:["Dans le local des machines principales","Dans un local dedie, hors salle des machines principale","Sur la coque exterieure","Dans la cale a marchandises"],correct:1,expl:"Le generateur de secours occupe un local dedie, distinct de la salle des machines principale, avec acces direct depuis le pont decouvert, pour rester operationnel meme si la salle des machines est sinistree."},
     {q:"Combien de moyens de demarrage independants sont exiges pour le generateur de secours ?",opts:["Un seul suffit","Deux moyens independants","Trois moyens minimum","Aucune exigence particuliere"],correct:1,expl:"Deux moyens de demarrage independants (air comprime et/ou batteries dediees) sont exiges afin de garantir le demarrage meme si l'un des deux systemes est defaillant."},

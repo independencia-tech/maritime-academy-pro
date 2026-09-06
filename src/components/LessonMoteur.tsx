@@ -529,7 +529,7 @@ function AccidentCase({ lang }) {
 // ══════════════════════════════════════
 // QUIZ
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Dans le cycle diesel à 4 temps, quel temps PRODUIT la puissance mécanique ?",opts:["1. Admission","2. Compression","3. Combustion (explosion)","4. Échappement"],correct:2,expl:"Le 3ème temps (Combustion/Explosion) est le seul qui produit de la puissance. L'injection du carburant dans l'air chaud comprimé provoque une explosion qui pousse le piston vers le bas, faisant tourner le vilebrequin."},
     {q:"Pourquoi les grands navires utilisent des moteurs 2 temps et non 4 temps ?",opts:["Les moteurs 2 temps consomment moins de carburant","Les moteurs 2 temps produisent une puissance par révolution — plus efficaces à basse vitesse et très haute puissance","Les moteurs 2 temps sont plus petits","Les moteurs 2 temps sont moins chers"],correct:1,expl:"Les moteurs marins 2 temps (MAN B&W, Wärtsilä) produisent de la puissance à chaque rotation du vilebrequin (vs tous les 2 tours pour un 4 temps). Ils peuvent atteindre 100 000 kW et tourner lentement (80-120 RPM) pour entraîner directement l'hélice sans réducteur."},
@@ -563,7 +563,7 @@ const QUIZ = {
 // ══════════════════════════════════════
 // BANK 15 QUESTIONS
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quelle est la différence fondamentale entre un moteur diesel et un moteur à essence ?",opts:["Le diesel utilise de l'électricité pour l'allumage","Le diesel allume le carburant par la chaleur de compression (pas de bougie)","Le diesel n'a pas de pistons","Le diesel est plus petit que l'essence"],correct:1,expl:"Diesel = allumage par compression. L'air est comprimé jusqu'à 500-700°C, puis le carburant est injecté et s'enflamme spontanément. Pas de bougie. Ratio de compression 14:1 à 25:1."},
     {q:"Les moteurs 2 temps marins (MAN B&W, Wärtsilä) tournent à quelle vitesse ?",opts:["500-3000 RPM comme les voitures","200-400 RPM","80-130 RPM — très lentement pour entraîner l'hélice directement","20-50 RPM"],correct:2,expl:"Moteurs 2 temps slow speed : 80-130 RPM. Vitesse très basse permet d'entraîner directement l'hélice sans réducteur. Moteurs 4 temps medium speed : 400-1200 RPM avec réducteur."},

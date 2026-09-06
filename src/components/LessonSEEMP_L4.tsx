@@ -334,7 +334,7 @@ function OperationalExample({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Que reflète le CII ?",opts:["Uniquement la conception du navire","La façon dont le navire a été exploité durant une année précise, pas seulement sa conception","Le prix du carburant utilisé","Le nombre de membres d'équipage"],correct:1,expl:"Le CII reflète la manière dont un navire a été exploité pendant une année précise, pas seulement la façon dont il a été conçu."},
     {q:"Quelle notation déclenche un Corrective Action Plan dès la première année ?",opts:["A","C","D","E"],correct:3,expl:"Un Corrective Action Plan est obligatoire dès la première notation E, alors qu'une notation D ne le déclenche qu'après deux années consécutives."},
@@ -365,7 +365,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Le CII est-il un chiffre isolé ou un ratio ?",opts:["Un chiffre isolé","Un ratio entre les émissions réelles et le travail de transport effectué","Le poids du navire","La vitesse maximale du navire"],correct:1,expl:"Le CII est un ratio entre les émissions réelles du navire et le travail de transport qu'il a effectivement réalisé sur l'année."},
     {q:"Le seuil annuel de référence du CII reste-t-il identique chaque année ?",opts:["Oui, il ne change jamais","Non, il se resserre progressivement d'année en année","Non, il s'assouplit chaque année","Oui, sauf pour les tankers"],correct:1,expl:"Le seuil se resserre progressivement, dans la logique de la trajectoire Net Zero vue en Leçon 1."},

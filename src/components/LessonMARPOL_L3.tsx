@@ -337,7 +337,7 @@ function AccidentCase({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle catégorie de déchets est interdite de rejet partout en mer, sans aucune exception ?",opts:["Déchets alimentaires","Plastiques","Résidus de cargaison","Papier"],correct:1,expl:"Les plastiques sont la seule catégorie interdite de rejet en mer sans aucune exception de distance ni de zone."},
     {q:"Distance minimale des côtes pour rejeter des déchets alimentaires broyés (hors zone spéciale) ?",opts:["1 mille","3 milles","12 milles","50 milles"],correct:1,expl:"Les déchets alimentaires broyés (moins de 25mm) peuvent être rejetés au-delà de 3 milles nautiques des côtes."},
@@ -368,7 +368,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quelle catégorie de déchets nécessite un broyage à moins de 25mm avant tout rejet autorisé ?",opts:["Plastiques","Déchets alimentaires","Cendres d'incinérateur","Métaux"],correct:1,expl:"Les déchets alimentaires doivent être broyés à moins de 25mm pour pouvoir être rejetés au-delà de 3 milles des côtes."},
     {q:"Qu'est-ce qu'un déchet classé HME (Harmful to the Marine Environment) ?",opts:["Un déchet alimentaire périmé","Un résidu de cargaison toxique ou contenant du plastique en vrac, dont le rejet est totalement interdit","Un déchet domestique classique","Un type de carburant"],correct:1,expl:"HME désigne des résidus de cargaison toxiques ou contenant du plastique en vrac - leur rejet est totalement interdit, sans exception de distance."},

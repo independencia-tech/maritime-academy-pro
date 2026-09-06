@@ -334,7 +334,7 @@ function AccidentCase({ lang }) {
   );
 }
 
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Quelle est la limite SOx en zone ECA depuis 2020 ?",opts:["0,5%","0,1%","1,5%","3,5%"],correct:1,expl:"Depuis 2020, la limite SOx en zone ECA est de 0,1%, contre 0,5% dans le reste des océans."},
     {q:"Pourquoi le fuel changeover doit-il être progressif plutôt qu'instantané ?",opts:["Cela n'a aucune importance","Un changement trop rapide risque une perte de viscosité et de lubrification des pompes d'injection","Cela accélère la combustion","Il n'existe aucune règle à ce sujet"],correct:1,expl:"Un changement précipité peut provoquer une perte brutale de viscosité et un risque de perte de lubrification des pompes d'injection, voire un arrêt machine."},
@@ -365,7 +365,7 @@ const QUIZ = {
   ],
 };
 
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Quelle est la limite SOx mondiale (hors ECA) depuis le 1er janvier 2020 ?",opts:["3,5%","1,0%","0,5%","0,1%"],correct:2,expl:"Depuis IMO 2020, la limite SOx mondiale hors ECA est de 0,5%, contre 3,5% auparavant."},
     {q:"À quel moment doit débuter le fuel changeover avant l'entrée en zone ECA ?",opts:["Exactement au franchissement de la limite","Suffisamment tôt pour que le circuit soit entièrement chargé en carburant conforme avant le franchissement","Une fois entré dans la zone","Peu importe le moment"],correct:1,expl:"Le changeover doit commencer suffisamment en amont pour que tout le circuit combustible soit conforme avant le franchissement de la limite ECA."},

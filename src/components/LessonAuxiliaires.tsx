@@ -359,7 +359,7 @@ console.log("Part 1 loaded");
 // ══════════════════════════════════════
 // QUIZ — 4 LANGUAGES
 // ══════════════════════════════════════
-const QUIZ = {
+export const QUIZ = {
   fr:[
     {q:"Le groupe de secours doit démarrer en combien de temps selon SOLAS ?",opts:["5 secondes","30 secondes maximum","2 minutes","5 minutes"],correct:1,expl:"SOLAS impose un démarrage du groupe de secours en moins de 30 secondes après un blackout. Il alimente : navigation, communications, pompes incendie, éclairage de secours, GMDSS. Situé obligatoirement AU-DESSUS de la ligne de flottaison dans un local séparé de la salle des machines."},
     {q:"Quelle tension alimente les gros équipements (moteurs, compresseurs) à bord ?",opts:["12V DC","220V","440V (ou 690V sur les grands navires)","24V DC"],correct:2,expl:"440V (60Hz) est la tension standard pour les gros équipements marins. Les grands navires utilisent 690V voire 6,6 kV. Les équipements domestiques utilisent 220V via transformateur. Le 24V DC alimente les systèmes de contrôle et alarmes. L'UPS maintient le 24V DC en cas de blackout."},
@@ -393,7 +393,7 @@ const QUIZ = {
 // ══════════════════════════════════════
 // BANK — 15 QUESTIONS × 4 LANGUAGES
 // ══════════════════════════════════════
-const BANK = {
+export const BANK = {
   fr:[
     {q:"Différence entre alternateur et moteur électrique ?",opts:["Même appareil","Alternateur = produit l'électricité · Moteur = consomme l'électricité pour produire du mouvement","Alternateur = DC · Moteur = AC","Alternateur = haute tension"],correct:1,expl:"Alternateur = énergie mécanique → électrique. Moteur électrique = électrique → mécanique. À bord : moteurs diesel → alternateurs → 440V AC → consommateurs."},
     {q:"Qu'est-ce que le couplage en parallèle de deux génératrices ?",opts:["En série","Deux génératrices sur le même jeu de barres pour partager la charge","Secours mutuel","Doublement de tension"],correct:1,expl:"Couplage parallèle = deux génératrices sur le même MSB 440V. Partage la charge. Si l'une tombe → l'autre prend tout. Avant couplage : synchroniser fréquence, tension et phase."},
