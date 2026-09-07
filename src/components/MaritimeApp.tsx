@@ -1553,7 +1553,7 @@ function ModuleExamComp({ lang, questions, onFinish }:{lang:string;questions:any
     if (cur < questions.length-1) {
       setCur(c=>c+1); setSel(null); setAnswered(false);
     } else {
-      onFinish(score+(isOk?1:0), questions.length, answers);
+      onFinish(score, questions.length, answers);
     }
   };
   return (
