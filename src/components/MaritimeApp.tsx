@@ -1,4 +1,6 @@
 // @ts-nocheck
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { supabase } from "@/integrations/supabase/client";
 import ResetPassword from "./ResetPassword";
 import SignIn from "./SignIn";
@@ -1674,6 +1676,249 @@ const EXAM_RESULT_T:any = {
   },
 };
 
+// Certificate flow (2026-09-07) — vision validated 2026-08-30, scope/model
+// validated 2026-09-07 (Option C: one certificate per passed Foundation
+// module, plus one for the 13th exam, shared template/differing subtitle).
+// The name shown here is NEVER auto-filled silently — CertificateFlow only
+// uses user_profiles.name as an editable suggestion, and only writes
+// certificates.confirmed_name after an explicit confirm click. This is the
+// deliberate fix for the StatusCardS8.tsx anti-pattern (silent read from
+// localStorage["map_last_reg"], never revalidated) flagged 2026-09-06 —
+// do not reuse that component's name-sourcing if this flow is ever
+// refactored.
+const CERT_T:any = {
+  fr:{
+    back:"◀ Retour",
+    ctaButton:"🎓 Obtenir mon certificat",
+    confirmTitle:"Confirme le nom sur ton certificat",
+    confirmIntro:"Ce nom apparaîtra sur le document final. Tu peux le modifier — par exemple pour utiliser ton nom légal complet plutôt que ton pseudo.",
+    nameLabel:"Nom complet",
+    namePlaceholder:"Ton nom",
+    confirmBtn:"Confirmer et générer",
+    generating:"Génération…",
+    certTitle:"Certificat de Réussite",
+    certTitleSummary:"Certificat Foundation",
+    presentedTo:"Délivré à",
+    achievementModule:(title:string)=>`A complété avec succès l'examen du module ${title}, démontrant une maîtrise des compétences fondamentales enseignées dans ce parcours.`,
+    achievementSummary:(title:string,total:number)=>`A complété avec succès l'examen transversal ${title}, synthèse des ${total} modules Foundation.`,
+    scoreLine:(score:number,max:number,pct:number)=>`Score obtenu : ${score}/${max} (${pct}%)`,
+    dateLabel:"Date",
+    signatureLabel:"Signature",
+    qrLabel:"QR différé",
+    downloadBtn:"📥 Télécharger le PDF",
+    downloading:"Génération du PDF…",
+    errorMsg:"Une erreur est survenue, réessaie.",
+  },
+  en:{
+    back:"◀ Back",
+    ctaButton:"🎓 Get my certificate",
+    confirmTitle:"Confirm the name on your certificate",
+    confirmIntro:"This name will appear on the final document. You can edit it — for example to use your full legal name instead of your display name.",
+    nameLabel:"Full name",
+    namePlaceholder:"Your name",
+    confirmBtn:"Confirm and generate",
+    generating:"Generating…",
+    certTitle:"Certificate of Achievement",
+    certTitleSummary:"Foundation Certificate",
+    presentedTo:"Presented to",
+    achievementModule:(title:string)=>`Has successfully completed the ${title} module exam, demonstrating mastery of the foundational skills taught in this course.`,
+    achievementSummary:(title:string,total:number)=>`Has successfully completed the ${title} cross-domain exam, a synthesis of the ${total} Foundation modules.`,
+    scoreLine:(score:number,max:number,pct:number)=>`Score achieved: ${score}/${max} (${pct}%)`,
+    dateLabel:"Date",
+    signatureLabel:"Signature",
+    qrLabel:"QR deferred",
+    downloadBtn:"📥 Download PDF",
+    downloading:"Generating PDF…",
+    errorMsg:"Something went wrong, try again.",
+  },
+  es:{
+    back:"◀ Volver",
+    ctaButton:"🎓 Obtener mi certificado",
+    confirmTitle:"Confirma el nombre de tu certificado",
+    confirmIntro:"Este nombre aparecerá en el documento final. Puedes modificarlo — por ejemplo para usar tu nombre legal completo en lugar de tu apodo.",
+    nameLabel:"Nombre completo",
+    namePlaceholder:"Tu nombre",
+    confirmBtn:"Confirmar y generar",
+    generating:"Generando…",
+    certTitle:"Certificado de Logro",
+    certTitleSummary:"Certificado Foundation",
+    presentedTo:"Otorgado a",
+    achievementModule:(title:string)=>`Ha completado con éxito el examen del módulo ${title}, demostrando dominio de las competencias fundamentales enseñadas en este curso.`,
+    achievementSummary:(title:string,total:number)=>`Ha completado con éxito el examen transversal ${title}, síntesis de los ${total} módulos Foundation.`,
+    scoreLine:(score:number,max:number,pct:number)=>`Puntuación obtenida: ${score}/${max} (${pct}%)`,
+    dateLabel:"Fecha",
+    signatureLabel:"Firma",
+    qrLabel:"QR diferido",
+    downloadBtn:"📥 Descargar PDF",
+    downloading:"Generando PDF…",
+    errorMsg:"Ocurrió un error, inténtalo de nuevo.",
+  },
+  pt:{
+    back:"◀ Voltar",
+    ctaButton:"🎓 Obter o meu certificado",
+    confirmTitle:"Confirma o nome no teu certificado",
+    confirmIntro:"Este nome aparecerá no documento final. Podes editá-lo — por exemplo para usar o teu nome legal completo em vez do teu nome de exibição.",
+    nameLabel:"Nome completo",
+    namePlaceholder:"O teu nome",
+    confirmBtn:"Confirmar e gerar",
+    generating:"A gerar…",
+    certTitle:"Certificado de Conquista",
+    certTitleSummary:"Certificado Foundation",
+    presentedTo:"Atribuído a",
+    achievementModule:(title:string)=>`Concluiu com sucesso o exame do módulo ${title}, demonstrando domínio das competências fundamentais ensinadas neste percurso.`,
+    achievementSummary:(title:string,total:number)=>`Concluiu com sucesso o exame transversal ${title}, síntese dos ${total} módulos Foundation.`,
+    scoreLine:(score:number,max:number,pct:number)=>`Pontuação obtida: ${score}/${max} (${pct}%)`,
+    dateLabel:"Data",
+    signatureLabel:"Assinatura",
+    qrLabel:"QR adiado",
+    downloadBtn:"📥 Descarregar PDF",
+    downloading:"A gerar PDF…",
+    errorMsg:"Ocorreu um erro, tenta novamente.",
+  },
+};
+
+function CertificateFlow({ lang, moduleId, category, title, score, maxScore, onClose }:{lang:string;moduleId:string;category:string;title:string;score:number;maxScore:number;onClose:()=>void}) {
+  const CT = CERT_T[lang] || CERT_T.fr;
+  const RT = EXAM_RESULT_T[lang] || EXAM_RESULT_T.fr;
+  const [step, setStep] = useState<"confirm"|"cert">("confirm");
+  const [name, setName] = useState("");
+  const [suggestedLoaded, setSuggestedLoaded] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const [error, setError] = useState<string|null>(null);
+  const certRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (!user) { setSuggestedLoaded(true); return; }
+      const { data } = await supabase.from("user_profiles").select("name").eq("user_id", user.id).maybeSingle();
+      if (data?.name) setName(data.name);
+      setSuggestedLoaded(true);
+    });
+  }, []);
+
+  const isSummary = moduleId === "foundation_summary" || moduleId === "foundation_summary_engine";
+  const totalModules = moduleId === "foundation_summary_engine" ? 13 : 12;
+  const certTitle = isSummary ? CT.certTitleSummary : CT.certTitle;
+  const achievement = isSummary ? CT.achievementSummary(title, totalModules) : CT.achievementModule(title);
+  const pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
+  const dateStr = new Date().toLocaleDateString(lang);
+
+  const handleConfirm = async () => {
+    if (!name.trim()) return;
+    setSaving(true);
+    setError(null);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { setSaving(false); setError("no_user"); return; }
+    const { error: upsertError } = await supabase.from("certificates").upsert({
+      user_id: user.id, module_id: moduleId, category, confirmed_name: name.trim(), issued_at: new Date().toISOString(),
+    }, { onConflict: "user_id,module_id,category" });
+    setSaving(false);
+    if (upsertError) { setError("save_failed"); return; }
+    setStep("cert");
+  };
+
+  const handleDownload = async () => {
+    if (!certRef.current || downloading) return;
+    setDownloading(true);
+    setError(null);
+    try {
+      const canvas = await html2canvas(certRef.current, { backgroundColor: "#060e1a", scale: 2, useCORS: true, logging: false });
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+      pdf.save(`MAP-Certificate-${moduleId}.pdf`);
+    } catch (e) {
+      setError("download_failed");
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  return (
+    <div style={{position:"fixed",inset:0,background:"rgba(6,14,26,0.92)",zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center",padding:16,overflowY:"auto"}}>
+      <div style={{width:"100%",maxWidth:480,maxHeight:"92vh",overflowY:"auto",background:"#0a1628",border:"1px solid rgba(201,146,42,0.3)",borderRadius:18,padding:20,boxSizing:"border-box"}}>
+        <button onClick={onClose} style={{background:"none",border:"none",color:"rgba(240,244,255,0.5)",fontSize:12,cursor:"pointer",marginBottom:12,padding:0}}>{CT.back}</button>
+
+        {step === "confirm" && (
+          <div>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:16,fontWeight:700,color:"#e8b94f",marginBottom:8}}>{CT.confirmTitle}</div>
+            <div style={{fontSize:12,color:"rgba(240,244,255,0.65)",lineHeight:1.6,marginBottom:16}}>{CT.confirmIntro}</div>
+            <label style={{fontSize:10,letterSpacing:1,textTransform:"uppercase",color:"rgba(240,244,255,0.45)",marginBottom:6,display:"block"}}>{CT.nameLabel}</label>
+            <input
+              type="text" value={name} onChange={(e:any)=>setName(e.target.value)} placeholder={CT.namePlaceholder}
+              disabled={!suggestedLoaded}
+              style={{width:"100%",padding:"12px 14px",borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(201,146,42,0.3)",color:"#f0f4ff",fontSize:14,marginBottom:18,boxSizing:"border-box"}}
+            />
+            {error && <div style={{fontSize:11,color:"#c0392b",marginBottom:12}}>{CT.errorMsg}</div>}
+            <button onClick={handleConfirm} disabled={saving || !name.trim()} style={{
+              width:"100%",padding:"13px 0",border:"none",borderRadius:12,
+              background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
+              fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
+              color:"#fff",cursor:(saving||!name.trim())?"default":"pointer",opacity:(saving||!name.trim())?0.6:1,
+            }}>
+              {saving ? CT.generating : CT.confirmBtn}
+            </button>
+          </div>
+        )}
+
+        {step === "cert" && (
+          <div>
+            <div ref={certRef} style={{
+              width:"100%", aspectRatio:"210/297", position:"relative",
+              background:"radial-gradient(circle at 50% 0%, rgba(201,146,42,0.08), transparent 60%), linear-gradient(160deg,#0d1f3c,#060e1a)",
+              borderRadius:6, overflow:"hidden", marginBottom:16,
+            }}>
+              <div style={{position:"absolute",inset:16,border:"1.5px solid #c9922a",borderRadius:3}}/>
+              <div style={{position:"absolute",inset:22,border:"1px solid rgba(201,146,42,0.45)",borderRadius:2}}/>
+              <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",textAlign:"center",padding:"13% 10% 6%"}}>
+                <div style={{width:36,height:36,borderRadius:"50%",border:"1.5px solid #c9922a",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:12,flexShrink:0}}>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#e8b94f" strokeWidth="1.4">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>
+                    <path d="M12 8l2.2 3.8L12 16l-2.2-4.2L12 8z" fill="#e8b94f" stroke="none"/>
+                  </svg>
+                </div>
+                <div style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:10,letterSpacing:3,color:"#e8b94f",textTransform:"uppercase",marginBottom:2}}>Maritime Academy Pro</div>
+                <div style={{fontSize:7,letterSpacing:1.5,color:"rgba(240,244,255,0.28)",textTransform:"uppercase",marginBottom:18}}>Foundation Program</div>
+                <div style={{fontFamily:"'Cinzel',serif",fontWeight:900,fontSize:17,letterSpacing:1,color:"#f0f4ff",marginBottom:4}}>{certTitle}</div>
+                <div style={{fontSize:9.5,color:"rgba(240,244,255,0.55)",marginBottom:20}}>{title}</div>
+                <div style={{fontFamily:"'Cinzel',serif",fontSize:8,letterSpacing:2.5,color:"rgba(240,244,255,0.5)",textTransform:"uppercase",marginBottom:8}}>{CT.presentedTo}</div>
+                <div style={{fontFamily:"'Cinzel',serif",fontStyle:"italic",fontWeight:700,fontSize:22,color:"#e8b94f",lineHeight:1.15,paddingBottom:8,borderBottom:"1px solid rgba(201,146,42,0.35)",width:"82%",marginBottom:18,wordBreak:"break-word"}}>{name}</div>
+                <div style={{fontSize:10,lineHeight:1.6,color:"#f0f4ff",maxWidth:300,marginBottom:4}}>{achievement}</div>
+                <div style={{fontSize:8.5,color:"rgba(240,244,255,0.5)",marginBottom:"auto",paddingBottom:16}}>{CT.scoreLine(score,maxScore,pct)}</div>
+                <div style={{width:"100%",display:"grid",gridTemplateColumns:"1fr auto 1fr",alignItems:"end",gap:12,marginTop:12}}>
+                  <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
+                    <span style={{fontSize:6.5,letterSpacing:1,textTransform:"uppercase",color:"rgba(240,244,255,0.28)"}}>{CT.dateLabel}</span>
+                    <span style={{fontFamily:"'Cinzel',serif",fontSize:9,color:"#f0f4ff",borderTop:"1px solid rgba(201,146,42,0.35)",paddingTop:4,width:80}}>{dateStr}</span>
+                  </div>
+                  <div style={{width:40,height:40,border:"1px dashed rgba(240,244,255,0.25)",borderRadius:4,display:"flex",alignItems:"center",justifyContent:"center",fontSize:6,color:"rgba(240,244,255,0.28)",textAlign:"center",lineHeight:1.2}}>{CT.qrLabel}</div>
+                  <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
+                    <span style={{fontSize:6.5,letterSpacing:1,textTransform:"uppercase",color:"rgba(240,244,255,0.28)"}}>{CT.signatureLabel}</span>
+                    <span style={{fontFamily:"'Cinzel',serif",fontSize:8.5,color:"#e8b94f",borderTop:"1px solid rgba(201,146,42,0.35)",paddingTop:4,width:120}}>{RT.signature}</span>
+                  </div>
+                </div>
+                <div style={{marginTop:14,fontSize:6,lineHeight:1.5,color:"rgba(240,244,255,0.28)",maxWidth:260}}>{RT.disclaimer}</div>
+              </div>
+            </div>
+
+            {error && <div style={{fontSize:11,color:"#c0392b",marginBottom:12,textAlign:"center"}}>{CT.errorMsg}</div>}
+
+            <button onClick={handleDownload} disabled={downloading} style={{
+              width:"100%",padding:"13px 0",border:"none",borderRadius:12,
+              background:"linear-gradient(135deg,#1a6fd4,#c9922a)",
+              fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
+              color:"#fff",cursor:downloading?"default":"pointer",opacity:downloading?0.6:1,
+            }}>
+              {downloading ? CT.downloading : CT.downloadBtn}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // Pilot competencies list for d1 (Navigation & Cartographie) — shown on a
 // PASSED result, per doctrine ("on passing an exam, the learner should see
 // a list of skills gained, not just a numeric score"). Authored fresh for
@@ -2299,6 +2544,9 @@ function ExamResultScreen({ exam, lang, title, backLabel, onPick, competencies }
   if (!examResult) return null;
   const ET = EXAM_UI_T[lang] || EXAM_UI_T.fr;
   const RT = EXAM_RESULT_T[lang] || EXAM_RESULT_T.fr;
+  const CT = CERT_T[lang] || CERT_T.fr;
+  const [showCert, setShowCert] = useState(false);
+  const certCategory = examMode === "remedial" ? "foundation_remedial" : "foundation";
   const wrongAnswers = examResult.answers.filter((a:any)=>!a.wasCorrect);
   const showRemedialOffer = examMode === "exam" && !examResult.passed && exam.remedialCooldownNow.eligible;
   const resultLabel = examMode === "remedial"
@@ -2321,6 +2569,17 @@ function ExamResultScreen({ exam, lang, title, backLabel, onPick, competencies }
               <div key={i} style={{fontSize:12,marginBottom:6,lineHeight:1.5}}>{c}</div>
             ))}
           </div>
+        )}
+
+        {examResult.passed && (
+          <button onClick={()=>setShowCert(true)} style={{
+            width:"100%",padding:"13px 0",border:"1.5px solid #c9922a",borderRadius:12,
+            background:"rgba(201,146,42,0.1)",
+            fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,letterSpacing:1.5,
+            color:"#e8b94f",cursor:"pointer",marginBottom:16,
+          }}>
+            {CT.ctaButton}
+          </button>
         )}
 
         {showRemedialOffer && (
@@ -2381,6 +2640,17 @@ function ExamResultScreen({ exam, lang, title, backLabel, onPick, competencies }
           </div>
         </div>
       </div>
+      {showCert && (
+        <CertificateFlow
+          lang={lang}
+          moduleId={exam.moduleId}
+          category={certCategory}
+          title={title}
+          score={examResult.score}
+          maxScore={examResult.maxScore}
+          onClose={()=>setShowCert(false)}
+        />
+      )}
     </div>
   );
 }

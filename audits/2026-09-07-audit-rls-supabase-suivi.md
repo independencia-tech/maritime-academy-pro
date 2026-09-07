@@ -85,3 +85,11 @@ Rien de nouveau côté exposition externe (les deux anciens projets sont bel et 
 - ✅ Isolation croisée écriture : l'utilisateur A tente de modifier la ligne de l'utilisateur B — 0 ligne affectée, donnée de B inchangée. **Confirme au passage que `AdminPanel.tsx`'s `grantPremium`/`revokePremium` n'ont jamais réellement fonctionné pour un autre utilisateur que soi-même** (même comportement avant/après cette migration — pas une régression introduite ici, mais bon à savoir : documenté dans `TODO.md`).
 
 **Aucune action corrective destructive** : uniquement des `REVOKE`/`GRANT`, aucune donnée applicative modifiée hors des lignes de test créées et supprimées dans le cadre de la vérification.
+
+## Suivi (2026-09-07, même jour) — cause racine trouvée en créant la table `certificates`
+
+En vérifiant les GRANT de `certificates` (nouvelle table, chantier certificats), trouvé qu'elle héritait déjà de `TRUNCATE`/`REFERENCES`/`TRIGGER`/`MAINTAIN` pour `anon` **avant même** l'exécution de sa propre migration. Cause identifiée via `pg_default_acl` : une règle `ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public` accordait automatiquement ces privilèges à `anon`/`authenticated` sur **toute nouvelle table** créée par le rôle `postgres` — le rôle sous lequel `supabase db push` exécute les migrations. Sans correctif, chaque future table créée par migration aurait recommencé avec le même écart que celui fermé plus haut dans ce document, table par table, indéfiniment.
+
+**Corrigé** via `20260907020000_fix_certificates_and_default_acl.sql` : nettoyage de `certificates` (même méthode REVOKE puis GRANT explicite) + `ALTER DEFAULT PRIVILEGES ... REVOKE TRUNCATE, REFERENCES, TRIGGER, MAINTAIN ON TABLES FROM anon, authenticated` pour que ça ne se reproduise plus. **Vérifié par la preuve directe** : création d'une table de test jetable (`_acl_probe_test`) après le correctif → 0 ligne de GRANT pour `anon`/`authenticated` (`information_schema.table_privileges` vide), table supprimée immédiatement après. `supabase db advisors` reste propre (seul l'item Auth hors-périmètre persiste).
+
+Non touché : la règle par défaut appartenant à `supabase_admin` (bootstrapping interne Supabase, pas déclenchée par les migrations `db push` qui s'exécutent en `postgres` — confirmé, `certificates` n'a hérité que du sous-ensemble `postgres`, pas du set complet `supabase_admin`).
