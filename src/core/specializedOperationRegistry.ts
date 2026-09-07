@@ -267,6 +267,18 @@ export interface ScenarioOption {
   consequence: LocalizedText;
   feedback: LocalizedText;
   isRecommended?: boolean;
+  /**
+   * 3-tier quality classification for Specialty Exam scoring (added
+   * 2026-09-07, AHTS pilot). Only set on non-recommended options —
+   * isRecommended:true already means "optimal" and is left untouched
+   * (still drives the existing browse-mode green/orange styling in
+   * SpecializedLessonShared.tsx; not renamed to avoid touching that
+   * already-working UI). "acceptable" = not wrong, just suboptimal/costly
+   * (e.g. overly conservative, honest but incomplete). "poor" = an actual
+   * process/safety violation, not just a suboptimal call. Unset on a
+   * non-recommended option means not yet classified.
+   */
+  quality?: "acceptable" | "poor";
   next?: ScenarioDecisionNode;
 }
 
@@ -683,6 +695,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_continue",
+              quality: "poor",
               label: { en: "Continue tensioning to target — the fluctuation is probably minor and stopping costs time on a leg that's nearly done." },
               consequence: { en: "Pressure continues to degrade under sustained load. Winch response becomes visibly inconsistent while the line is still under load." },
               feedback: { en: "This is the failure mode the Deck/Engine communication protocol exists to prevent. Engine's report was the early-warning signal specifically because it comes before winch response visibly degrades." },
@@ -690,8 +703,8 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "Pressure has dropped enough that the winch is losing consistent tension control on a leg still under significant load." },
                 options: [
-                  { id: "a1", label: { en: "Force the winch to hold position regardless." }, consequence: { en: "Risk of an uncontrolled load event increases further." }, feedback: { en: "Forcing a degraded system against a loaded line is the worst available option here." } },
-                  { id: "a2", label: { en: "Execute an emergency controlled release of tension." }, consequence: { en: "The immediate load is relieved, but this is a reactive, higher-risk maneuver that a hold-and-diagnose response at Level 1 would have avoided entirely." }, feedback: { en: "Better than forcing the winch, but this branch exists to show that A's initial 'probably fine' removed the calmer options that were available earlier." } },
+                  { id: "a1", quality: "poor", label: { en: "Force the winch to hold position regardless." }, consequence: { en: "Risk of an uncontrolled load event increases further." }, feedback: { en: "Forcing a degraded system against a loaded line is the worst available option here." } },
+                  { id: "a2", quality: "acceptable", label: { en: "Execute an emergency controlled release of tension." }, consequence: { en: "The immediate load is relieved, but this is a reactive, higher-risk maneuver that a hold-and-diagnose response at Level 1 would have avoided entirely." }, feedback: { en: "Better than forcing the winch, but this branch exists to show that A's initial 'probably fine' removed the calmer options that were available earlier." } },
                   { id: "a3", label: { en: "Stop all winch action and call the Bridge/Master immediately." }, consequence: { en: "The situation is escalated and stabilized under the Master's authority." }, feedback: { en: "Correct once the situation has moved beyond routine Deck/Engine coordination — this is now approaching the emergency-escalation boundary." }, isRecommended: true },
                 ],
               },
@@ -706,14 +719,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The Second Engineer reports the pressure issue was a transient valve fault, now resolved, and confirms the system is nominal." },
                 options: [
-                  { id: "b1", label: { en: "Resume tensioning immediately at the previous rate to make up time." }, consequence: { en: "Tensioning proceeds at normal rate without extra vigilance." }, feedback: { en: "Treats the resolution as 'back to normal' rather than warranting continued attentiveness." } },
+                  { id: "b1", quality: "acceptable", label: { en: "Resume tensioning immediately at the previous rate to make up time." }, consequence: { en: "Tensioning proceeds at normal rate without extra vigilance." }, feedback: { en: "Treats the resolution as 'back to normal' rather than warranting continued attentiveness." } },
                   { id: "b2", label: { en: "Resume tensioning incrementally with closer monitoring than before." }, consequence: { en: "Tensioning completes normally, with the anomaly fully accounted for." }, feedback: { en: "Correct — proportionate response that respects both the incremental-tensioning practice and the fact that a resolved anomaly still warrants heightened monitoring." }, isRecommended: true },
-                  { id: "b3", label: { en: "Request Engine run a full system check before resuming at all." }, consequence: { en: "The operation is delayed for a check the Engineer's report did not indicate was necessary." }, feedback: { en: "Over-corrects — treats a confirmed-resolved transient fault as if it were still open." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Request Engine run a full system check before resuming at all." }, consequence: { en: "The operation is delayed for a check the Engineer's report did not indicate was necessary." }, feedback: { en: "Over-corrects — treats a confirmed-resolved transient fault as if it were still open." } },
                 ],
               },
             },
             {
               id: "c_abort",
+              quality: "acceptable",
               label: { en: "Abort the leg immediately and release tension." },
               consequence: { en: "The leg is safely stood down with no equipment stressed further, but tensioning on this leg has to restart from scratch, and the installation's mooring supervisor will need an explanation." },
               feedback: { en: "Not unsafe, but more conservative than the situation calls for — a report of 'inconsistent pressure' is a hold-and-diagnose signal, not yet an abort signal. This carries a real cost that a hold-and-diagnose response would have avoided." },
@@ -721,8 +735,8 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The installation's mooring supervisor asks, over the bridge-to-installation channel, why the leg was stood down." },
                 options: [
-                  { id: "c1", label: { en: "Give a vague answer to avoid the conversation." }, consequence: { en: "The installation is left without a clear picture of the AHTS's operational status." }, feedback: { en: "Undermines the trust the communication channel depends on." } },
-                  { id: "c2", label: { en: "Explain the pressure report and the decision to abort rather than risk it." }, consequence: { en: "The installation understands the decision but not that a less costly option existed." }, feedback: { en: "Honest, but incomplete." } },
+                  { id: "c1", quality: "poor", label: { en: "Give a vague answer to avoid the conversation." }, consequence: { en: "The installation is left without a clear picture of the AHTS's operational status." }, feedback: { en: "Undermines the trust the communication channel depends on." } },
+                  { id: "c2", quality: "acceptable", label: { en: "Explain the pressure report and the decision to abort rather than risk it." }, consequence: { en: "The installation understands the decision but not that a less costly option existed." }, feedback: { en: "Honest, but incomplete." } },
                   { id: "c3", label: { en: "Explain the report, and acknowledge that hold-and-diagnose would likely have avoided the delay." }, consequence: { en: "The installation gets a full, honest account of the judgment call, including its tradeoff." }, feedback: { en: "The honest, judgment-showing answer — owns the more conservative call without pretending it was the only safe option." }, isRecommended: true },
                 ],
               },
@@ -1102,6 +1116,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_isolate_broadly",
+              quality: "poor",
               label: { en: "Personally begin isolating broadly — cut hydraulic/electrical supply across the wider system, accepting some unaffected circuits going down too, to be safe and fast." },
               consequence: { en: "You're now occupied hands-on with isolation instead of directing and coordinating. The Second Engineer is left without direction. Unaffected circuits go dark, complicating the ship's overall situational awareness during the emergency." },
               feedback: { en: "Speed was right, but the execution wasn't — isolation is the Second Engineer's task under your direction, not something you do personally instead of directing and coordinating with the bridge." },
@@ -1109,14 +1124,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "With your hands full and unaffected systems down, the bridge urgently needs a system status update you haven't sent." },
                 options: [
-                  { id: "a1", label: { en: "Keep working hands-on and report later." }, consequence: { en: "The bridge continues operating without current system status during an active emergency." }, feedback: { en: "Delays the one thing the bridge most needs from you right now." } },
+                  { id: "a1", quality: "poor", label: { en: "Keep working hands-on and report later." }, consequence: { en: "The bridge continues operating without current system status during an active emergency." }, feedback: { en: "Delays the one thing the bridge most needs from you right now." } },
                   { id: "a2", label: { en: "Stop, hand the hands-on work to the Second Engineer, and report to the bridge immediately." }, consequence: { en: "Delegation and bridge coordination are both re-established, later than ideal but correctly." }, feedback: { en: "Correct — re-establishes the delegation that should have happened at Level 1 and prioritizes the bridge coordination that got skipped." }, isRecommended: true },
-                  { id: "a3", label: { en: "Send a brief, incomplete update through a third party without stopping your own work." }, consequence: { en: "The bridge gets a fragmented picture and you're still not directing the Second Engineer." }, feedback: { en: "Half-measure — doesn't fix either problem." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Send a brief, incomplete update through a third party without stopping your own work." }, consequence: { en: "The bridge gets a fragmented picture and you're still not directing the Second Engineer." }, feedback: { en: "Half-measure — doesn't fix either problem." } },
                 ],
               },
             },
             {
               id: "b_confirm_first",
+              quality: "acceptable",
               label: { en: "Pause briefly to confirm the exact affected circuit before isolating, then isolate precisely." },
               consequence: { en: "Isolation is delayed while the fault is confirmed. The fire has slightly more fuel-feed time than necessary during that window." },
               feedback: { en: "Precision isn't wrong, but the timing is — isolating the fuel source is exactly as urgent as the firefighting response itself, not a step that waits for full confirmation first." },
@@ -1124,9 +1140,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The fault is now precisely confirmed and isolation proceeds cleanly — but time was lost getting here." },
                 options: [
-                  { id: "b1", label: { en: "Proceed calmly, treating the delay as an acceptable cost of precision." }, consequence: { en: "The delay goes unacknowledged." }, feedback: { en: "Understates a real tradeoff that was made." } },
+                  { id: "b1", quality: "acceptable", label: { en: "Proceed calmly, treating the delay as an acceptable cost of precision." }, consequence: { en: "The delay goes unacknowledged." }, feedback: { en: "Understates a real tradeoff that was made." } },
                   { id: "b2", label: { en: "Proceed immediately, and explicitly flag to the bridge that the response was slower than it should have been." }, consequence: { en: "The bridge gets an honest account alongside the completed isolation." }, feedback: { en: "Correct — the same value Mooring/Unmooring's own interactive scenario rewarded: owning a suboptimal call rather than letting it pass silently." }, isRecommended: true },
-                  { id: "b3", label: { en: "Proceed and don't mention the delay since the outcome turned out fine." }, consequence: { en: "The bridge never learns the response could have started sooner." }, feedback: { en: "The outcome being fine doesn't make the omission honest." } },
+                  { id: "b3", quality: "poor", label: { en: "Proceed and don't mention the delay since the outcome turned out fine." }, consequence: { en: "The bridge never learns the response could have started sooner." }, feedback: { en: "The outcome being fine doesn't make the omission honest." } },
                 ],
               },
             },
@@ -1140,9 +1156,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The Second Engineer reports the primary isolation complete — but a secondary hydraulic line near the fire area still shows residual pressure, not yet confirmed safe." },
                 options: [
-                  { id: "c1", label: { en: "Report 'system isolated' to the bridge as complete and safe." }, consequence: { en: "The bridge believes the area is fully safe when it isn't yet confirmed." }, feedback: { en: "Overstates safety — exactly what the explicit-confirmation rule exists to prevent." } },
+                  { id: "c1", quality: "poor", label: { en: "Report 'system isolated' to the bridge as complete and safe." }, consequence: { en: "The bridge believes the area is fully safe when it isn't yet confirmed." }, feedback: { en: "Overstates safety — exactly what the explicit-confirmation rule exists to prevent." } },
                   { id: "c2", label: { en: "Report the primary isolation complete, but explicitly flag the secondary line as unconfirmed and requiring further check." }, consequence: { en: "The bridge has a precise, honest picture of what's actually confirmed." }, feedback: { en: "Correct — precise, honest status reporting that doesn't overstate safety." }, isRecommended: true },
-                  { id: "c3", label: { en: "Direct the Second Engineer to handle the secondary line too, without updating the bridge on the interim status." }, consequence: { en: "The bridge is left without visibility into an open safety item." }, feedback: { en: "Leaves the bridge blind to something it needs to know." } },
+                  { id: "c3", quality: "poor", label: { en: "Direct the Second Engineer to handle the secondary line too, without updating the bridge on the interim status." }, consequence: { en: "The bridge is left without visibility into an open safety item." }, feedback: { en: "Leaves the bridge blind to something it needs to know." } },
                 ],
               },
             },
