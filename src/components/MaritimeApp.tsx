@@ -1158,25 +1158,45 @@ const EXAM_CATEGORY_T:any = {
     foundation:"Épreuves fondamentales", specialty:"Épreuves de spécialités",
     practical:"Épreuves techniques et pratiques", remedial:"Épreuves de rattrapage",
     comingSoon:"Bientôt disponible",
-    hint:"Choisis un rang pour voir ses 4 catégories d'épreuves",
+    available:"Disponible",
+    foundationDesc:"Les examens Foundation sont disponibles dès maintenant : un mini-examen par module, plus le 13e examen de synthèse.",
+    btnModules:"📚 Voir mes modules Foundation",
+    btnSummary:"🏆 13e Examen — Foundation Summary",
+    comingSoonTitle:"À venir",
+    comingSoonDesc:"Ces catégories sont en préparation et seront ajoutées progressivement.",
   },
   en:{
     foundation:"Foundation Exams", specialty:"Specialty Exams",
     practical:"Technical & Practical Exams", remedial:"Remedial Exams",
     comingSoon:"Coming soon",
-    hint:"Pick a rank to see its 4 exam categories",
+    available:"Available",
+    foundationDesc:"Foundation Exams are available now: one mini-exam per module, plus the 13th summary exam.",
+    btnModules:"📚 See my Foundation modules",
+    btnSummary:"🏆 13th Exam — Foundation Summary",
+    comingSoonTitle:"Coming soon",
+    comingSoonDesc:"These categories are in preparation and will be added progressively.",
   },
   es:{
     foundation:"Exámenes Fundamentales", specialty:"Exámenes de Especialidad",
     practical:"Exámenes Técnicos y Prácticos", remedial:"Exámenes de Recuperación",
     comingSoon:"Próximamente",
-    hint:"Elige un rango para ver sus 4 categorías de exámenes",
+    available:"Disponible",
+    foundationDesc:"Los exámenes Foundation ya están disponibles: un mini-examen por módulo, más el 13.º examen de síntesis.",
+    btnModules:"📚 Ver mis módulos Foundation",
+    btnSummary:"🏆 13.º Examen — Foundation Summary",
+    comingSoonTitle:"Próximamente",
+    comingSoonDesc:"Estas categorías están en preparación y se añadirán progresivamente.",
   },
   pt:{
     foundation:"Exames Fundamentais", specialty:"Exames de Especialidade",
     practical:"Exames Técnicos e Práticos", remedial:"Exames de Recuperação",
     comingSoon:"Em breve",
-    hint:"Escolhe um posto para ver as suas 4 categorias de exames",
+    available:"Disponível",
+    foundationDesc:"Os Exames Foundation já estão disponíveis: um mini-exame por módulo, mais o 13.º exame de síntese.",
+    btnModules:"📚 Ver os meus módulos Foundation",
+    btnSummary:"🏆 13.º Exame — Foundation Summary",
+    comingSoonTitle:"Em breve",
+    comingSoonDesc:"Estas categorias estão em preparação e serão adicionadas progressivamente.",
   },
 };
 
@@ -1442,75 +1462,58 @@ function RoleOnBoardPage({
   );
 }
 
-// Exam Center — visual shell only. Structure and navigation, no functional
-// logic, no real data: lists ranks (rankRegistry.ts), and per rank shows the
-// 4 exam categories as placeholders. Not connected to lessonRegistry.ts,
-// specializedOperationRegistry.ts, or any scenario engine — that wiring
-// depends on the Core Algorithm chantier (see memory: project_exams_system_architecture.md).
-function ExamCenterPage({ lang, onBack }:{lang:string;onBack:()=>void}) {
+// Exam Center — two-section hub, not its own exam-taking surface. Foundation
+// (active) redirects to the two real existing surfaces (Modules tab, 13th
+// Foundation Summary exam) rather than re-implementing a browsing view here —
+// Foundation is organized per module/department (trajectory-filtered
+// internally), never per rank, so there is no "per-rank Foundation view" to
+// build. Specialty/Practical/Remedial (not yet built anywhere) stay simple
+// "coming soon" cards, no rank-selection step since there's nothing behind
+// them yet. See memory: project_exams_system_architecture.md.
+function ExamCenterPage({ lang, onBack, onNavModules, onOpenFoundationSummary }:{lang:string;onBack:()=>void;onNavModules:()=>void;onOpenFoundationSummary:()=>void}) {
   const t = NAV_T[lang] || NAV_T.fr;
   const ct = EXAM_CATEGORY_T[lang] || EXAM_CATEGORY_T.fr;
-  const [selected, setSelected] = useState<string | null>(null);
-  const deckRanks = getRanksByDepartment("deck");
-  const engineRanks = getRanksByDepartment("engine");
 
-  useEffect(() => { window.scrollTo(0, 0); }, [selected]);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const categories = ["foundation", "specialty", "practical", "remedial"] as const;
-
-  if (selected) {
-    const rankMeta = getRankMeta(selected as any);
-    const rankLabel = rankMeta?.label?.[lang] || rankMeta?.label?.fr || selected;
-    return (
-      <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
-        <TopBar onBack={() => setSelected(null)} title={rankLabel} backLabel={t.back}/>
-        <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:10}}>
-          {categories.map((cat) => (
-            <div key={cat} style={{
-              position:"relative",display:"flex",alignItems:"center",gap:12,padding:"16px",
-              background:"rgba(13,31,60,0.6)",border:"1px dashed rgba(77,166,255,0.27)",
-              borderRadius:16,
-            }}>
-              <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.1)",border:"1px solid rgba(77,166,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0,opacity:0.6}}>📝</div>
-              <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700,color:"rgba(240,244,255,0.7)"}}>{ct[cat]}</div>
-              <div style={{
-                fontSize:9,padding:"2px 7px",borderRadius:10,flexShrink:0,
-                background:"rgba(201,146,42,0.15)",border:"1px solid rgba(201,146,42,0.33)",
-                color:"#c9922a",letterSpacing:1,fontFamily:"'Cinzel',serif",
-              }}>{ct.comingSoon}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  const renderRankButton = (r:any) => (
-    <button key={r.id} onClick={()=>setSelected(r.id)} style={{
-      display:"flex",alignItems:"center",gap:12,padding:"14px",
-      background:"rgba(13,31,60,0.8)",border:"1px solid rgba(77,166,255,0.27)",
-      borderRadius:16,cursor:"pointer",color:"#f0f4ff",textAlign:"left",
-    }}>
-      <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.15)",border:"1px solid rgba(77,166,255,0.27)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>📝</div>
-      <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700}}>{r.label?.[lang] || r.label?.fr}</div>
-    </button>
-  );
+  const comingSoonCategories = ["specialty", "practical", "remedial"] as const;
 
   return (
     <div style={{minHeight:"100vh",background:"linear-gradient(160deg,#0d1f3c,#060e1a)",color:"#f0f4ff",fontFamily:"'Nunito',sans-serif",paddingBottom:24}}>
       <TopBar onBack={onBack} title={t.examCenter} backLabel={t.back}/>
       <div style={{padding:"16px",maxWidth:480,margin:"0 auto",display:"flex",flexDirection:"column",gap:18}}>
-        <div style={{fontSize:12,color:"rgba(240,244,255,0.5)",lineHeight:1.5}}>{ct.hint}</div>
-        <div>
-          <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:8,textTransform:"uppercase"}}>{t.deckDept}</div>
-          <div style={{display:"flex",flexDirection:"column",gap:10}}>
-            {deckRanks.map(renderRankButton)}
+
+        <div style={{padding:"16px",borderRadius:16,background:"linear-gradient(135deg,rgba(201,146,42,0.12),rgba(26,111,212,0.1))",border:"1px solid rgba(201,146,42,0.33)"}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
+            <div style={{fontSize:13,fontWeight:700,color:"#f0f4ff",flex:1}}>{ct.foundation}</div>
+            <div style={{fontSize:9,padding:"2px 7px",borderRadius:10,background:"rgba(30,138,74,0.18)",border:"1px solid rgba(30,138,74,0.4)",color:"#3fbf6f",letterSpacing:1,fontFamily:"'Cinzel',serif"}}>{ct.available}</div>
+          </div>
+          <div style={{fontSize:12,color:"rgba(240,244,255,0.65)",lineHeight:1.5,marginBottom:14}}>{ct.foundationDesc}</div>
+          <div style={{display:"flex",flexDirection:"column",gap:8}}>
+            <button onClick={onNavModules} style={{padding:"12px 14px",borderRadius:12,background:"rgba(26,111,212,0.25)",border:"1px solid rgba(77,166,255,0.4)",color:"#f0f4ff",fontSize:12,fontWeight:700,cursor:"pointer",textAlign:"left"}}>{ct.btnModules}</button>
+            <button onClick={onOpenFoundationSummary} style={{padding:"12px 14px",borderRadius:12,background:"rgba(201,146,42,0.22)",border:"1px solid rgba(201,146,42,0.4)",color:"#f0f4ff",fontSize:12,fontWeight:700,cursor:"pointer",textAlign:"left"}}>{ct.btnSummary}</button>
           </div>
         </div>
+
         <div>
-          <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:8,textTransform:"uppercase"}}>{t.engineDept}</div>
+          <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:"rgba(240,244,255,0.5)",marginBottom:4,textTransform:"uppercase"}}>{ct.comingSoonTitle}</div>
+          <div style={{fontSize:11,color:"rgba(240,244,255,0.4)",lineHeight:1.5,marginBottom:10}}>{ct.comingSoonDesc}</div>
           <div style={{display:"flex",flexDirection:"column",gap:10}}>
-            {engineRanks.map(renderRankButton)}
+            {comingSoonCategories.map((cat) => (
+              <div key={cat} style={{
+                position:"relative",display:"flex",alignItems:"center",gap:12,padding:"16px",
+                background:"rgba(13,31,60,0.6)",border:"1px dashed rgba(77,166,255,0.27)",
+                borderRadius:16,
+              }}>
+                <div style={{width:36,height:36,borderRadius:10,background:"rgba(26,111,212,0.1)",border:"1px solid rgba(77,166,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0,opacity:0.6}}>📝</div>
+                <div style={{flex:1,minWidth:0,fontSize:13,fontWeight:700,color:"rgba(240,244,255,0.7)"}}>{ct[cat]}</div>
+                <div style={{
+                  fontSize:9,padding:"2px 7px",borderRadius:10,flexShrink:0,
+                  background:"rgba(201,146,42,0.15)",border:"1px solid rgba(201,146,42,0.33)",
+                  color:"#c9922a",letterSpacing:1,fontFamily:"'Cinzel',serif",
+                }}>{ct.comingSoon}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -5018,7 +5021,12 @@ else if (m?.id === "e7") setPage("e7_lessons");
         />
       )}
       {page === "exams" && (
-        <ExamCenterPage lang={lang} onBack={() => setPage("dashboard")}/>
+        <ExamCenterPage
+          lang={lang}
+          onBack={() => setPage("dashboard")}
+          onNavModules={() => setPage("modules")}
+          onOpenFoundationSummary={() => setPage(profile.dept==="engine" ? "foundation_summary_engine" : "foundation_summary")}
+        />
       )}
       {page === "role_on_board" && (
         <RoleOnBoardPage
