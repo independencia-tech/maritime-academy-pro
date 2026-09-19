@@ -3837,6 +3837,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_assume_minor",
+              quality: "poor",
               label: { en: "Assume it's minor and let loading continue at pace, to avoid slowing the terminal down." },
               consequence: { en: "Loading continues without the discrepancy having actually been assessed." },
               feedback: { en: "An unassessed discrepancy that 'looks minor' is exactly the kind that gets waved through incorrectly — appearance under time pressure isn't assessment." },
@@ -3844,9 +3845,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "Further into the operation, the discrepancy turns out to be more significant than it looked — it has real stability relevance. Stopping now, later than it should have been caught, will cost more schedule time than it would have earlier, and the terminal is not expecting a halt at this stage." },
                 options: [
-                  { id: "a1", label: { en: "Let loading continue anyway, since stopping now is even more disruptive than it would have been earlier." }, consequence: { en: "The vessel proceeds with an unresolved, genuine stability-relevant discrepancy." }, feedback: { en: "The cost of stopping late doesn't change whether stopping is necessary." } },
+                  { id: "a1", quality: "poor", label: { en: "Let loading continue anyway, since stopping now is even more disruptive than it would have been earlier." }, consequence: { en: "The vessel proceeds with an unresolved, genuine stability-relevant discrepancy." }, feedback: { en: "The cost of stopping late doesn't change whether stopping is necessary." } },
                   { id: "a2", label: { en: "Halt now and address it, even though it's later and costlier than it should have been." }, consequence: { en: "The discrepancy is resolved, later than it needed to be." }, feedback: { en: "Correct, though the earlier assumption already cost time that a prompt assessment would have saved." }, isRecommended: true },
-                  { id: "a3", label: { en: "Defer to the terminal's schedule and quietly flag it for review only after loading finishes." }, consequence: { en: "The discrepancy remains unresolved throughout the rest of loading." }, feedback: { en: "A stability-relevant discrepancy doesn't wait for a convenient moment to be addressed." } },
+                  { id: "a3", quality: "poor", label: { en: "Defer to the terminal's schedule and quietly flag it for review only after loading finishes." }, consequence: { en: "The discrepancy remains unresolved throughout the rest of loading." }, feedback: { en: "A stability-relevant discrepancy doesn't wait for a convenient moment to be addressed." } },
                 ],
               },
             },
@@ -3860,14 +3861,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The assessment confirms the discrepancy is genuinely stability-relevant and loading needs to pause. The terminal's crew pushes back, wanting to continue rather than stop their crane." },
                 options: [
-                  { id: "b1", label: { en: "Defer to the terminal's pushback, since the vessel doesn't operate their crane." }, consequence: { en: "Loading continues despite a confirmed stability-relevant discrepancy." }, feedback: { en: "Authority over what affects the vessel's own stability doesn't depend on who operates the equipment causing it." } },
+                  { id: "b1", quality: "poor", label: { en: "Defer to the terminal's pushback, since the vessel doesn't operate their crane." }, consequence: { en: "Loading continues despite a confirmed stability-relevant discrepancy." }, feedback: { en: "Authority over what affects the vessel's own stability doesn't depend on who operates the equipment causing it." } },
                   { id: "b2", label: { en: "Hold the halt and clearly communicate to the terminal why it's necessary." }, consequence: { en: "Loading pauses while the discrepancy is corrected." }, feedback: { en: "Correct — the vessel's stability authority stands even over equipment it doesn't control, and explaining why keeps the terminal's cooperation." }, isRecommended: true },
-                  { id: "b3", label: { en: "Halt the operation without explaining the reason, to avoid a discussion." }, consequence: { en: "Loading stops, but the terminal is left without a reason for the delay." }, feedback: { en: "The halt itself is correct, but withholding the reason undermines the terminal's ability to cooperate and erodes trust for next time." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Halt the operation without explaining the reason, to avoid a discussion." }, consequence: { en: "Loading stops, but the terminal is left without a reason for the delay." }, feedback: { en: "The halt itself is correct, but withholding the reason undermines the terminal's ability to cooperate and erodes trust for next time." } },
                 ],
               },
             },
             {
               id: "c_delegate_to_ab",
+              quality: "acceptable",
               label: { en: "Ask the AB, who is closest to the discrepancy, to assess it and report back." },
               consequence: { en: "The AB reports back with an observation, but not a stability judgment." },
               feedback: { en: "The AB's role is to report discrepancies accurately, not to judge their stability relevance — that judgment belongs to you." },
@@ -3875,9 +3877,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The AB's report is useful but inconclusive — it doesn't tell you whether the discrepancy is actually stability-relevant. The terminal is waiting to know whether to continue." },
                 options: [
-                  { id: "c1", label: { en: "Treat the AB's report as sufficient and let loading continue on that basis." }, consequence: { en: "A decision with real stability consequences is made without an actual stability assessment." }, feedback: { en: "The AB's observation was never a substitute for your own assessment." } },
+                  { id: "c1", quality: "poor", label: { en: "Treat the AB's report as sufficient and let loading continue on that basis." }, consequence: { en: "A decision with real stability consequences is made without an actual stability assessment." }, feedback: { en: "The AB's observation was never a substitute for your own assessment." } },
                   { id: "c2", label: { en: "Thank the AB for the report and personally assess the discrepancy's stability relevance before deciding." }, consequence: { en: "The discrepancy is now genuinely assessed at the right level." }, feedback: { en: "Correct — the AB's report is useful input, but the stability judgment itself is yours to make." }, isRecommended: true },
-                  { id: "c3", label: { en: "Disregard the AB's report since it wasn't the assessment you needed." }, consequence: { en: "Useful firsthand information about the discrepancy goes unused." }, feedback: { en: "The report was incomplete for the decision, not worthless — it should inform your own assessment, not be thrown out." } },
+                  { id: "c3", quality: "acceptable", label: { en: "Disregard the AB's report since it wasn't the assessment you needed." }, consequence: { en: "Useful firsthand information about the discrepancy goes unused." }, feedback: { en: "The report was incomplete for the decision, not worthless — it should inform your own assessment, not be thrown out." } },
                 ],
               },
             },
@@ -4240,6 +4242,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_ease_off",
+              quality: "poor",
               label: { en: "Quietly ease off full readiness, since it sounds like it's probably fine." },
               consequence: { en: "Machinery readiness is reduced on the basis of unofficial word, without anyone above being aware of it." },
               feedback: { en: "Unofficial word isn't a confirmation — readiness stays at the level instructed until it's actually relayed through the proper channel." },
@@ -4247,9 +4250,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "A complication develops — a re-ignition concern is still being assessed above — and machinery readiness is now not what it should be, because it was quietly eased off without authorization." },
                 options: [
-                  { id: "a1", label: { en: "Continue as is, hoping it still resolves fine." }, consequence: { en: "Readiness stays compromised through a moment that may need it most." }, feedback: { en: "Compounds the original problem at the worst possible moment." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue as is, hoping it still resolves fine." }, consequence: { en: "Readiness stays compromised through a moment that may need it most." }, feedback: { en: "Compounds the original problem at the worst possible moment." } },
                   { id: "a2", label: { en: "Immediately restore full readiness and disclose that it had been eased off." }, consequence: { en: "Readiness is corrected, and whoever's coordinating the response now has an accurate picture." }, feedback: { en: "Correct — restoring readiness matters, but so does disclosing that it had lapsed, so the response isn't relying on a false assumption." }, isRecommended: true },
-                  { id: "a3", label: { en: "Quietly restore full readiness without mentioning it had been eased off." }, consequence: { en: "Readiness is corrected, but no one else knows it had ever lapsed." }, feedback: { en: "Leaves whoever's coordinating the response working from an incomplete picture of what actually happened." } },
+                  { id: "a3", quality: "poor", label: { en: "Quietly restore full readiness without mentioning it had been eased off." }, consequence: { en: "Readiness is corrected, but no one else knows it had ever lapsed." }, feedback: { en: "Leaves whoever's coordinating the response working from an incomplete picture of what actually happened." } },
                 ],
               },
             },
@@ -4264,13 +4267,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Official confirmation that the fire is out is relayed through the Second Engineer: readiness can now be stepped down per instruction." },
                 options: [
                   { id: "b1", label: { en: "Comply immediately and step down readiness per the instruction." }, consequence: { en: "Readiness is adjusted correctly, on the correct basis." }, feedback: { en: "Correct — this is exactly what the proper channel is for." }, isRecommended: true },
-                  { id: "b2", label: { en: "Refuse to step down without independently double-checking through your own unofficial channel first." }, consequence: { en: "The instruction is delayed while an unnecessary independent check is carried out." }, feedback: { en: "The proper channel is what makes an instruction trustworthy — independently second-guessing it adds friction without adding safety." } },
-                  { id: "b3", label: { en: "Step down readiness but don't confirm receipt of the instruction back up the chain." }, consequence: { en: "Readiness is adjusted, but whoever gave the instruction doesn't know it was received and acted on." }, feedback: { en: "Closing the loop is part of the instruction being properly carried out, not an optional extra." } },
+                  { id: "b2", quality: "acceptable", label: { en: "Refuse to step down without independently double-checking through your own unofficial channel first." }, consequence: { en: "The instruction is delayed while an unnecessary independent check is carried out." }, feedback: { en: "The proper channel is what makes an instruction trustworthy — independently second-guessing it adds friction without adding safety." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Step down readiness but don't confirm receipt of the instruction back up the chain." }, consequence: { en: "Readiness is adjusted, but whoever gave the instruction doesn't know it was received and acted on." }, feedback: { en: "Closing the loop is part of the instruction being properly carried out, not an optional extra." } },
                 ],
               },
             },
             {
               id: "c_leave_post",
+              quality: "poor",
               label: { en: "Leave your post briefly to see for yourself what's happening on deck." },
               consequence: { en: "The watch station is unattended for a period." },
               feedback: { en: "Watch continuity is the one thing this role owns outright during the incident — leaving it unattended isn't yours to decide, however understandable the concern." },
@@ -4278,9 +4282,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "While away from the station, a routine machinery parameter needing attention was missed." },
                 options: [
-                  { id: "c1", label: { en: "Return and say nothing, since nothing serious actually happened." }, consequence: { en: "The lapse in watch coverage goes unreported." }, feedback: { en: "Misses the point — leaving the post was the actual problem, regardless of how it turned out this time." } },
+                  { id: "c1", quality: "poor", label: { en: "Return and say nothing, since nothing serious actually happened." }, consequence: { en: "The lapse in watch coverage goes unreported." }, feedback: { en: "Misses the point — leaving the post was the actual problem, regardless of how it turned out this time." } },
                   { id: "c2", label: { en: "Return immediately and report having left the post and what may have been missed while away." }, consequence: { en: "Whoever's responsible for the engine room has an accurate picture and can check what was missed." }, feedback: { en: "Correct — disclosing the lapse is what lets it actually be checked, rather than just hoped it didn't matter." }, isRecommended: true },
-                  { id: "c3", label: { en: "Explain the lapse by pointing to needing to check on the situation above." }, consequence: { en: "The explanation shifts focus to justification rather than the missed parameter itself." }, feedback: { en: "Deflects rather than owns the lapse — the reason for leaving doesn't change what needs to be reported and checked." } },
+                  { id: "c3", quality: "acceptable", label: { en: "Explain the lapse by pointing to needing to check on the situation above." }, consequence: { en: "The explanation shifts focus to justification rather than the missed parameter itself." }, feedback: { en: "Deflects rather than owns the lapse — the reason for leaving doesn't change what needs to be reported and checked." } },
                 ],
               },
             },
@@ -8296,6 +8300,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_let_it_go",
+              quality: "poor",
               label: { en: "Let it go, since it looks minor and probably won't matter." },
               consequence: { en: "The deviation continues unflagged." },
               feedback: { en: "Hold sequence directly affects weight distribution and hull stress — deciding on your own that a deviation is inconsequential isn't the same as it actually being inconsequential." },
@@ -8303,9 +8308,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The deviation compounds as loading continues, now showing up as an actual hull stress reading anomaly." },
                 options: [
-                  { id: "a1", label: { en: "Continue, since it might still resolve on its own." }, consequence: { en: "The anomaly continues to develop unaddressed." }, feedback: { en: "Hoping it resolves on its own doesn't change the underlying weight distribution." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue, since it might still resolve on its own." }, consequence: { en: "The anomaly continues to develop unaddressed." }, feedback: { en: "Hoping it resolves on its own doesn't change the underlying weight distribution." } },
                   { id: "a2", label: { en: "Immediately flag it now, including that it was first noticed earlier and not flagged." }, consequence: { en: "The Chief Officer has an accurate picture, including how long the deviation has actually been developing." }, feedback: { en: "Correct — flagging it now matters, but so does disclosing that it started earlier and went unflagged." }, isRecommended: true },
-                  { id: "a3", label: { en: "Flag only the current reading, without mentioning the earlier deviation." }, consequence: { en: "The Chief Officer gets an incomplete picture of how the situation actually developed." }, feedback: { en: "Leaves out context that's directly relevant to understanding the current reading." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Flag only the current reading, without mentioning the earlier deviation." }, consequence: { en: "The Chief Officer gets an incomplete picture of how the situation actually developed." }, feedback: { en: "Leaves out context that's directly relevant to understanding the current reading." } },
                 ],
               },
             },
@@ -8320,13 +8325,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Informed, the Chief Officer asks you to keep monitoring that specific hold closely and report any further change." },
                 options: [
                   { id: "b1", label: { en: "Comply, continuing to monitor and report changes." }, consequence: { en: "The Chief Officer continues to get an accurate, up-to-date picture." }, feedback: { en: "Correct — this is exactly what the flag was meant to support." }, isRecommended: true },
-                  { id: "b2", label: { en: "Consider the matter closed now that it's been flagged once, without further monitoring." }, consequence: { en: "A change in the hold's condition might go unnoticed." }, feedback: { en: "Doesn't actually fulfill the monitoring request the Chief Officer just made." } },
-                  { id: "b3", label: { en: "Escalate further findings even without any genuine new development, to seem thorough." }, consequence: { en: "The Chief Officer receives reports that don't reflect a real change." }, feedback: { en: "Adds noise rather than the accurate monitoring that was actually asked for." } },
+                  { id: "b2", quality: "acceptable", label: { en: "Consider the matter closed now that it's been flagged once, without further monitoring." }, consequence: { en: "A change in the hold's condition might go unnoticed." }, feedback: { en: "Doesn't actually fulfill the monitoring request the Chief Officer just made." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Escalate further findings even without any genuine new development, to seem thorough." }, consequence: { en: "The Chief Officer receives reports that don't reflect a real change." }, feedback: { en: "Adds noise rather than the accurate monitoring that was actually asked for." } },
                 ],
               },
             },
             {
               id: "c_watch_without_flagging",
+              quality: "poor",
               label: { en: "Keep a closer eye on it yourself for now, without flagging yet, to see if it develops into something more significant." },
               consequence: { en: "The deviation is being watched, but the Chief Officer doesn't know about it yet." },
               feedback: { en: "Watching for a development doesn't substitute for letting the Chief Officer know it's happening — the judgment about significance is theirs to make." },
@@ -8334,9 +8340,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The deviation develops further while unflagged, and by the time it's noticed as more serious, addressing it is more complicated." },
                 options: [
-                  { id: "c1", label: { en: "Continue watching, still without flagging." }, consequence: { en: "The situation continues to develop unaddressed." }, feedback: { en: "Compounds the original delay at the point it matters most." } },
+                  { id: "c1", quality: "poor", label: { en: "Continue watching, still without flagging." }, consequence: { en: "The situation continues to develop unaddressed." }, feedback: { en: "Compounds the original delay at the point it matters most." } },
                   { id: "c2", label: { en: "Flag it now, including that it had been developing for a while." }, consequence: { en: "The Chief Officer gets an accurate account, later than it should have come." }, feedback: { en: "Correct, though flagging it at the start would have avoided the situation becoming more complicated." }, isRecommended: true },
-                  { id: "c3", label: { en: "Flag only the current state, without mentioning it had been developing for a while." }, consequence: { en: "The Chief Officer doesn't get the full context of how the situation actually developed." }, feedback: { en: "Withholds relevant history that's directly useful for judging what to do now." } },
+                  { id: "c3", quality: "acceptable", label: { en: "Flag only the current state, without mentioning it had been developing for a while." }, consequence: { en: "The Chief Officer doesn't get the full context of how the situation actually developed." }, feedback: { en: "Withholds relevant history that's directly useful for judging what to do now." } },
                 ],
               },
             },
@@ -8682,6 +8688,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_report_to_master_only",
+              quality: "acceptable",
               label: { en: "Report it directly to the Master, since it relates to vessel motion." },
               consequence: { en: "The Master has the observation; the Chief Officer doesn't." },
               feedback: { en: "This observation is relevant to both the navigation response and the cargo assessment — reporting to only one channel misses the half that's relevant to the other." },
@@ -8689,14 +8696,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The Chief Officer, unaware of this observation, is missing a piece of information relevant to the cargo assessment." },
                 options: [
-                  { id: "a1", label: { en: "Don't bring it up now, since it was already reported to the Master." }, consequence: { en: "The Chief Officer's assessment continues without this observation." }, feedback: { en: "Reporting it once, to the wrong channel for half its relevance, doesn't cover the part that actually matters to the Chief Officer." } },
+                  { id: "a1", quality: "poor", label: { en: "Don't bring it up now, since it was already reported to the Master." }, consequence: { en: "The Chief Officer's assessment continues without this observation." }, feedback: { en: "Reporting it once, to the wrong channel for half its relevance, doesn't cover the part that actually matters to the Chief Officer." } },
                   { id: "a2", label: { en: "Immediately also inform the Chief Officer, even though it means reporting the same thing to two people." }, consequence: { en: "Both the Master and Chief Officer now have the observation." }, feedback: { en: "Correct — dual-relevance information genuinely needs both channels, not a choice between them." }, isRecommended: true },
-                  { id: "a3", label: { en: "Assume the Master will pass it along to the Chief Officer." }, consequence: { en: "It's unconfirmed whether the Chief Officer ever actually receives it." }, feedback: { en: "Assuming a handoff happens isn't the same as confirming it does." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Assume the Master will pass it along to the Chief Officer." }, consequence: { en: "It's unconfirmed whether the Chief Officer ever actually receives it." }, feedback: { en: "Assuming a handoff happens isn't the same as confirming it does." } },
                 ],
               },
             },
             {
               id: "b_report_to_chief_officer_only",
+              quality: "acceptable",
               label: { en: "Route it to the Chief Officer, since the underlying content is about cargo condition." },
               consequence: { en: "The Chief Officer has the observation; the Master doesn't." },
               feedback: { en: "This observation is also directly relevant to the Master's motion-reduction response — reporting to only the Chief Officer misses that half." },
@@ -8704,9 +8712,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The Master, unaware of this observation, is missing a piece of information relevant to the navigation response." },
                 options: [
-                  { id: "b1", label: { en: "Don't bring it up now, since it was already reported to the Chief Officer." }, consequence: { en: "The Master's navigation response continues without this observation." }, feedback: { en: "Reporting it once, to the wrong channel for half its relevance, doesn't cover the part that actually matters to the Master." } },
+                  { id: "b1", quality: "poor", label: { en: "Don't bring it up now, since it was already reported to the Chief Officer." }, consequence: { en: "The Master's navigation response continues without this observation." }, feedback: { en: "Reporting it once, to the wrong channel for half its relevance, doesn't cover the part that actually matters to the Master." } },
                   { id: "b2", label: { en: "Immediately also inform the Master." }, consequence: { en: "Both the Chief Officer and Master now have the observation." }, feedback: { en: "Correct — dual-relevance information genuinely needs both channels." }, isRecommended: true },
-                  { id: "b3", label: { en: "Assume the Chief Officer will pass it along to the Master." }, consequence: { en: "It's unconfirmed whether the Master ever actually receives it." }, feedback: { en: "Assuming a handoff happens isn't the same as confirming it does." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Assume the Chief Officer will pass it along to the Master." }, consequence: { en: "It's unconfirmed whether the Master ever actually receives it." }, feedback: { en: "Assuming a handoff happens isn't the same as confirming it does." } },
                 ],
               },
             },
@@ -8721,8 +8729,8 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Both the Master and Chief Officer now have the observation and incorporate it into their respective assessments." },
                 options: [
                   { id: "c1", label: { en: "Continue reporting any future relevant observations to both channels as appropriate." }, consequence: { en: "The dual-relevance discipline continues consistently." }, feedback: { en: "Correct — this is a standing discipline, not a one-time judgment call." }, isRecommended: true },
-                  { id: "c2", label: { en: "Now only report to whichever channel seems more urgent going forward, to save time." }, consequence: { en: "Future dual-relevance information starts going to only one channel again." }, feedback: { en: "Reverts to the exact mistake this discipline exists to avoid." } },
-                  { id: "c3", label: { en: "Stop actively looking for dual-relevance information now that this one instance is handled." }, consequence: { en: "A future genuinely dual-relevant observation risks being missed or misrouted." }, feedback: { en: "Treats a standing discipline as a one-off, rather than an ongoing part of the role." } },
+                  { id: "c2", quality: "poor", label: { en: "Now only report to whichever channel seems more urgent going forward, to save time." }, consequence: { en: "Future dual-relevance information starts going to only one channel again." }, feedback: { en: "Reverts to the exact mistake this discipline exists to avoid." } },
+                  { id: "c3", quality: "acceptable", label: { en: "Stop actively looking for dual-relevance information now that this one instance is handled." }, consequence: { en: "A future genuinely dual-relevant observation risks being missed or misrouted." }, feedback: { en: "Treats a standing discipline as a one-off, rather than an ongoing part of the role." } },
                 ],
               },
             },
@@ -12603,6 +12611,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "continue_expecting_settle",
+              quality: "poor",
               label: { en: "Continue the lift smoothly, expecting the swing to settle as it's lowered." },
               consequence: { en: "The swing doesn't settle — it builds as the load continues moving, and the crate strikes the rail on its way down." },
               feedback: { en: "Assuming a developing problem will resolve itself on its own is the same mistake this catalog keeps returning to under different names — a trend needs a response, not an optimistic assumption." },
@@ -12626,12 +12635,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                   },
                   {
                     id: "resume_mostly_stopped",
+                    quality: "acceptable",
                     label: { en: "Resume the lift since the swing is much better than before, even if not completely still." },
                     consequence: { en: "The residual swing picks back up as soon as the load starts moving again, right back to where the pause began." },
                     feedback: { en: "\"Much better than before\" isn't the same as safe to proceed — this is the same trend-over-threshold lesson from elsewhere in this catalog, just easy to miss when the improvement itself feels reassuring." },
                   },
                   {
                     id: "hand_steady",
+                    quality: "poor",
                     label: { en: "Have a crew member physically steady the load by hand while resuming the lift." },
                     consequence: { en: "You refuse the suggestion outright — a hand anywhere near a suspended, moving load is never how this is done, whatever the time pressure." },
                     feedback: { en: "There is no version of steadying a suspended load by hand that's safe — the load stays clear of anyone until it's fully controlled, full stop." },
@@ -12641,6 +12652,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
             },
             {
               id: "abandon_setdown",
+              quality: "acceptable",
               label: { en: "Set the load back down quickly onto where it just came from, abandoning the lift." },
               consequence: { en: "The load is set down safely, but the lift now has to be restarted entirely, costing far more time than a brief pause would have." },
               feedback: { en: "Not unsafe, but an overcorrection — a pause-and-reassess was available and would have addressed the same concern without abandoning progress already made." },
@@ -13169,6 +13181,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "reuse_original",
+              quality: "poor",
               label: { en: "Proceed with a lower-and-secure using the remaining original sling alongside new rigging, since it looks mostly intact." },
               consequence: { en: "Partway through the lower-and-secure attempt, the frayed section gives further under the new load path, and the situation you just resolved starts developing again." },
               feedback: { en: "\"Mostly intact\" on a sling that just witnessed a rigging failure isn't a standard to proceed on — the fact that today's failure originated in rigging is exactly why any visible wear on the survivor gets treated as disqualifying, not reassuring." },
@@ -13192,12 +13205,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                   },
                   {
                     id: "use_standard_zone",
+                    quality: "poor",
                     label: { en: "Use the standard clearance zone from earlier in the operation, since it worked fine for area clearance already." },
                     consequence: { en: "The load's actual path extends slightly beyond the standard zone's boundary, requiring a last-second adjustment as the lower-and-secure begins." },
                     feedback: { en: "The standard zone was right for the earlier, different situation — reusing it here without checking it against this specific, unusual load position is the same kind of unchecked carryover the rigging decision just avoided." },
                   },
                   {
                     id: "add_spotters",
+                    quality: "acceptable",
                     label: { en: "Use the standard clearance zone but add extra spotters/lookouts as a safety margin." },
                     consequence: { en: "The spotters catch the load encroaching past the zone boundary just in time — a reactive save rather than a planned safe margin." },
                     feedback: { en: "A plausible-sounding compromise, but it compensates for an uncorrected zone rather than fixing the actual miscalculation — extra eyes are not a substitute for reassessing the zone itself." },
@@ -13207,6 +13222,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
             },
             {
               id: "skip_to_release",
+              quality: "acceptable",
               label: { en: "Recommend to the Master going straight to a controlled release instead, skipping any lower-and-secure attempt." },
               consequence: { en: "The Master asks why, given fresh rigging is a genuinely available option — the frayed sling only disqualifies itself, not a lower-and-secure attempt done properly." },
               feedback: { en: "An overcorrection — the frayed sling is a reason to use fresh rigging, not a reason to abandon a safer resolution option that fresh rigging would still allow." },
