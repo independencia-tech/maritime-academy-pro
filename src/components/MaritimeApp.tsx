@@ -15,7 +15,7 @@ import WelcomeS4 from "./WelcomeS4";
 import { SplashS1, MusicS3, BridgeS5 } from "./SplashMusicBridge";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { MusicProvider, useMusic } from "./MusicProvider";
-import { VESSEL_TYPE_REGISTRY, type VesselTypeId } from "@/core/vesselTypeRegistry";
+import { VESSEL_TYPE_REGISTRY, getVesselTypeMeta, type VesselTypeId } from "@/core/vesselTypeRegistry";
 import { SHIPS_LIBRARY_INDEX } from "@/core/shipsLibraryIndex";
 import { getRanksByDepartment, getRankMeta } from "@/core/rankRegistry";
 import { getSpecializedOperationsByVesselType } from "@/core/specializedOperationRegistry";
@@ -35,8 +35,10 @@ import {
   getFoundationModuleIds,
 } from "@/core/examEngine";
 import { getSummaryExamQuestions, getSummaryExamQuestionsEngine } from "@/core/examQuestionPools";
+import { SPECIALTY_ENABLED_SHIP_TYPES } from "@/core/specialtyExamEngine";
 const RoleOnBoardShared = lazy(() => import("./RoleOnBoardShared"));
 const SpecializedLessonShared = lazy(() => import("./SpecializedLessonShared"));
+const SpecialtyExamPage = lazy(() => import("./SpecializedLessonShared").then(m => ({ default: m.SpecialtyExamPage })));
 
 
 // ── LAZY-LOADED LESSON COMPONENTS (code-split, only downloaded when opened) ──
@@ -1143,10 +1145,10 @@ function AdminPage({ setPage }) {
 
 // ── MODULES LIST & SHIPS PAGES ─────────────────────────────────
 const NAV_T:any = {
-  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine", specializedOps:"Opérations Spécialisées", examCenter:"Centre d'Examens", recommendedForYou:"Recommandé pour vous" },
-  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine", specializedOps:"Specialized Operations", examCenter:"Exam Center", recommendedForYou:"Recommended for you" },
-  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas", specializedOps:"Operaciones Especializadas", examCenter:"Centro de Exámenes", recommendedForYou:"Recomendado para ti" },
-  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas", specializedOps:"Operações Especializadas", examCenter:"Centro de Exames", recommendedForYou:"Recomendado para você" },
+  fr:{ modules:"Tous les modules", ships:"Navires", shipsSoon:"Bibliothèque de navires bientôt disponible", back:"◀ Retour", roleOnBoard:"Rôle à Bord", deckDept:"Pont", engineDept:"Machine", specializedOps:"Opérations Spécialisées", examCenter:"Centre d'Examens", recommendedForYou:"Recommandé pour vous", specialtyExamCta:"📝 Passer l'examen Specialty" },
+  en:{ modules:"All modules", ships:"Ships", shipsSoon:"Ship library coming soon", back:"◀ Back", roleOnBoard:"Role On Board", deckDept:"Deck", engineDept:"Engine", specializedOps:"Specialized Operations", examCenter:"Exam Center", recommendedForYou:"Recommended for you", specialtyExamCta:"📝 Take the Specialty exam" },
+  es:{ modules:"Todos los módulos", ships:"Barcos", shipsSoon:"Biblioteca de barcos próximamente", back:"◀ Volver", roleOnBoard:"Rol a Bordo", deckDept:"Puente", engineDept:"Máquinas", specializedOps:"Operaciones Especializadas", examCenter:"Centro de Exámenes", recommendedForYou:"Recomendado para ti", specialtyExamCta:"📝 Hacer el examen de Especialidad" },
+  pt:{ modules:"Todos os módulos", ships:"Navios", shipsSoon:"Biblioteca de navios em breve", back:"◀ Voltar", roleOnBoard:"Função a Bordo", deckDept:"Convés", engineDept:"Máquinas", specializedOps:"Operações Especializadas", examCenter:"Centro de Exames", recommendedForYou:"Recomendado para você", specialtyExamCta:"📝 Fazer o exame de Especialidade" },
 };
 
 // Exam Center — visual shell only (no functional logic, no data). See
@@ -1248,12 +1250,14 @@ function ShipsPage({
   selectedOperationId, onSelectedOperationIdChange,
   highlightedOperationId, onHighlightedOperationIdChange,
   returnToRecommended, onReturnToRecommendedConsumed,
+  onStartSpecialtyExam,
 }:{
   lang:string; onBack:()=>void;
   selected: string | null; onSelectedChange: (v: string | null) => void;
   selectedOperationId: string | null; onSelectedOperationIdChange: (v: string | null) => void;
   highlightedOperationId?: string | null; onHighlightedOperationIdChange?: (v: string | null) => void;
   returnToRecommended?: boolean; onReturnToRecommendedConsumed?: () => void;
+  onStartSpecialtyExam?: (shipTypeId: VesselTypeId) => void;
 }) {
   const t = NAV_T[lang] || NAV_T.fr;
   const setSelected = onSelectedChange;
@@ -1336,6 +1340,15 @@ function ShipsPage({
                 );
               })}
             </div>
+            {onStartSpecialtyExam && SPECIALTY_ENABLED_SHIP_TYPES.includes(selected as VesselTypeId) && (
+              <button onClick={() => onStartSpecialtyExam(selected as VesselTypeId)} style={{
+                width:"100%",marginTop:14,padding:"13px 0",border:"1.5px solid #c9922a",borderRadius:12,
+                background:"rgba(201,146,42,0.1)",fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700,
+                letterSpacing:1.5,color:"#e8b94f",cursor:"pointer",
+              }}>
+                {t.specialtyExamCta}
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -4541,6 +4554,7 @@ const [userStreak, setUserStreak] = useState(1);
   };
 
   const [shipsSelected, setShipsSelected] = useState<string | null>(null);
+  const [specialtyExamShipTypeId, setSpecialtyExamShipTypeId] = useState<VesselTypeId | null>(null);
   const [shipsSelectedOperationId, setShipsSelectedOperationId] = useState<string | null>(null);
   // Point 1 correctif (2026-09-01) — separate from shipsSelectedOperationId
   // above (which means "skip straight to this operation's page"). This one
@@ -5018,7 +5032,20 @@ else if (m?.id === "e7") setPage("e7_lessons");
           onHighlightedOperationIdChange={setShipsHighlightedOperationId}
           returnToRecommended={returnToRecommended}
           onReturnToRecommendedConsumed={() => setReturnToRecommended(false)}
+          onStartSpecialtyExam={(shipTypeId) => { setSpecialtyExamShipTypeId(shipTypeId); setPage("specialty_exam"); }}
         />
+      )}
+      {page === "specialty_exam" && specialtyExamShipTypeId && (
+        <Suspense fallback={null}>
+          <SpecialtyExamPage
+            shipTypeId={specialtyExamShipTypeId}
+            shipLabel={getVesselTypeMeta(specialtyExamShipTypeId)?.label?.[lang] || getVesselTypeMeta(specialtyExamShipTypeId)?.label?.fr || specialtyExamShipTypeId}
+            lang={lang as SupportedLanguage}
+            currentRankId={profile.who}
+            targetRankId={profile.target}
+            onBack={() => setPage("ships")}
+          />
+        </Suspense>
       )}
       {page === "exams" && (
         <ExamCenterPage

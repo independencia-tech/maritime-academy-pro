@@ -4,9 +4,14 @@
 // decision-tree scenarios) is structurally incompatible with Foundation's
 // flat {q,opts,correct,expl} MCQ pool, so the scoring logic here is
 // genuinely new rather than a parametrized reuse. Foundation's tracking/
-// cooldown layer (exam_attempts, useModuleExam) IS reused as-is, keyed by
-// shipTypeId in place of moduleId — see project memory,
-// project_exams_system_architecture.md, for the full architecture cadrage.
+// cooldown layer (exam_attempts, getLatestExamAttempt/canAttemptExam) IS
+// reused as-is, keyed by operationId in place of moduleId — NOT shipTypeId
+// and NOT rankId (see the 2026-09-19 key-discrepancy resolution in project
+// memory, project_exams_system_architecture.md): the attempt's real
+// atomic unit is one operation, since Specialty carries no per-rank
+// content dosage and a ship groups several independently-gated
+// operations — shipTypeId is derivable from operationId at query time,
+// never stored redundantly.
 //
 // Engine-only, no UI, no persistence — mirrors the exact staging Foundation
 // used for its own d1 pilot ("Engine-only validation (no UI)" first).
@@ -33,6 +38,17 @@
 //   exactly the outcome this rule exists to prevent.
 
 import { EXAM_PASS_THRESHOLD } from "./examEngine";
+import type { VesselTypeId } from "./vesselTypeRegistry";
+
+// Explicit whitelist gate — prevents any Specialty exam UI from appearing
+// for the other 24 ship types until content/classification (see
+// specializedOperationRegistry.ts's ScenarioOption.quality) has actually
+// been authored for them. Deliberately not an implicit "has enough
+// content" detection — a simple, auditable list. Lives here (not in
+// SpecializedLessonShared.tsx, a lazy-loaded component) so it can be
+// statically imported by routing code without pulling that heavy module
+// into the main bundle.
+export const SPECIALTY_ENABLED_SHIP_TYPES: VesselTypeId[] = ["ahts"];
 
 export type SpecialtyExerciseType = "sequence_reordering" | "error_identification" | "readiness_checklist";
 
