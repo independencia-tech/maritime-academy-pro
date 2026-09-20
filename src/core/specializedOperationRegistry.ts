@@ -1542,6 +1542,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_wait",
+              quality: "acceptable",
               label: { en: "Wait and watch — it's still within tolerance, no need to alarm anyone yet." },
               consequence: { en: "The drift continues. By the time it's reported, less time margin remains to respond." },
               feedback: { en: "Technically within the letter of 'report on deviation beyond tolerance', but given the collision risk that exists the entire time lines are connected to the platform, the trend itself — not just the breach — is what should trigger a report." },
@@ -1549,9 +1550,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The drift has continued and is now right at the edge of the tolerance limit." },
                 options: [
-                  { id: "a1", label: { en: "Continue waiting since it hasn't technically breached yet." }, consequence: { en: "The margin to respond keeps shrinking." }, feedback: { en: "Compounds the original delay." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue waiting since it hasn't technically breached yet." }, consequence: { en: "The margin to respond keeps shrinking." }, feedback: { en: "Compounds the original delay." } },
                   { id: "a2", label: { en: "Report now, immediately." }, consequence: { en: "The Master is informed, later than ideal but before an actual breach." }, feedback: { en: "Correct — the right action, just later than it should have been." }, isRecommended: true },
-                  { id: "a3", label: { en: "Report but downplay it as 'probably nothing'." }, consequence: { en: "The Master receives an unclear picture of the actual urgency." }, feedback: { en: "Reporting without an honest sense of urgency undermines the report's purpose." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Report but downplay it as 'probably nothing'." }, consequence: { en: "The Master receives an unclear picture of the actual urgency." }, feedback: { en: "Reporting without an honest sense of urgency undermines the report's purpose." } },
                 ],
               },
             },
@@ -1565,14 +1566,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The Master, informed early, asks you directly for a recommendation on whether to pause the transfer or continue monitoring." },
                 options: [
-                  { id: "b1", label: { en: "Recommend continuing since tolerance is still technically fine." }, consequence: { en: "The transfer continues without addressing the developing trend." }, feedback: { en: "Underweights the trend that prompted the report in the first place." } },
+                  { id: "b1", quality: "acceptable", label: { en: "Recommend continuing since tolerance is still technically fine." }, consequence: { en: "The transfer continues without addressing the developing trend." }, feedback: { en: "Underweights the trend that prompted the report in the first place." } },
                   { id: "b2", label: { en: "Recommend pausing proactively given the trend." }, consequence: { en: "The Master pauses the transfer with the position issue addressed before it becomes critical." }, feedback: { en: "Correct — an informed recommendation, with the Master still holding the actual decision, is exactly the right shape of this authority relationship." }, isRecommended: true },
-                  { id: "b3", label: { en: "Decline to give a recommendation, deferring entirely to the Master." }, consequence: { en: "The Master has to decide without the input they explicitly asked for." }, feedback: { en: "Not unsafe, but unhelpful — when directly asked for input the Master needs, declining isn't a neutral choice." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Decline to give a recommendation, deferring entirely to the Master." }, consequence: { en: "The Master has to decide without the input they explicitly asked for." }, feedback: { en: "Not unsafe, but unhelpful — when directly asked for input the Master needs, declining isn't a neutral choice." } },
                 ],
               },
             },
             {
               id: "c_self_correct",
+              quality: "poor",
               label: { en: "Attempt to address the drift yourself first, without telling anyone, then report once resolved." },
               consequence: { en: "The correction attempt doesn't behave predictably, and no one else is aware anything is developing." },
               feedback: { en: "The most concerning option — modifying the vessel's position-keeping behavior without informing command, while connected to a platform, is exactly what the reporting structure exists to prevent." },
@@ -1580,9 +1582,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The correction attempt hasn't stabilized things, and the Chief Officer — unaware anything is wrong — is about to open another fluid line per the transfer plan." },
                 options: [
-                  { id: "c1", label: { en: "Let the new line open as planned since you're still working on it and don't want to cause alarm." }, consequence: { en: "Another line opens while position is uncertain, compounding the risk." }, feedback: { en: "Allows a preventable risk to compound." } },
+                  { id: "c1", quality: "poor", label: { en: "Let the new line open as planned since you're still working on it and don't want to cause alarm." }, consequence: { en: "Another line opens while position is uncertain, compounding the risk." }, feedback: { en: "Allows a preventable risk to compound." } },
                   { id: "c2", label: { en: "Immediately halt and report everything to the Master before the new line opens." }, consequence: { en: "The situation is disclosed and addressed before it compounds further." }, feedback: { en: "Correct — stop concealing the issue and report immediately, especially urgent before an action that would compound the risk." }, isRecommended: true },
-                  { id: "c3", label: { en: "Quietly stop the correction attempt and hope position stabilizes without saying anything." }, consequence: { en: "The Chief Officer proceeds with no knowledge of the unresolved issue." }, feedback: { en: "Leaves the real risk completely undisclosed." } },
+                  { id: "c3", quality: "poor", label: { en: "Quietly stop the correction attempt and hope position stabilizes without saying anything." }, consequence: { en: "The Chief Officer proceeds with no knowledge of the unresolved issue." }, feedback: { en: "Leaves the real risk completely undisclosed." } },
                 ],
               },
             },
@@ -1994,6 +1996,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_resume",
+              quality: "poor",
               label: { en: "Resume the transfer immediately — recovery is confirmed within tolerance, get back to schedule." },
               consequence: { en: "The transfer resumes. Shortly after, the marginal recovery shows signs of degrading again." },
               feedback: { en: "Treats 'within tolerance' as equivalent to 'solved.' A thin margin is a different situation than a solid one, even when both technically clear the same threshold." },
@@ -2001,14 +2004,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The marginal recovery has degraded again — the position problem is redeveloping while the transfer is now actively running once more." },
                 options: [
-                  { id: "a1", label: { en: "Continue the transfer since stopping again seems disruptive." }, consequence: { en: "The position problem worsens while the transfer continues." }, feedback: { en: "Compounds the original miscalculation." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue the transfer since stopping again seems disruptive." }, consequence: { en: "The position problem worsens while the transfer continues." }, feedback: { en: "Compounds the original miscalculation." } },
                   { id: "a2", label: { en: "Immediately order disconnect given the redeveloping problem." }, consequence: { en: "The vessel disconnects and clears, later than it should have but before the situation worsened further." }, feedback: { en: "Correct — exactly what the thin margin at Level 1 should have anticipated; further hesitation would have compounded the original mistake." }, isRecommended: true },
-                  { id: "a3", label: { en: "Order another pause without disconnecting, to reassess." }, consequence: { en: "Valuable time passes without addressing an already-demonstrated problem." }, feedback: { en: "The problem has already shown itself twice now — further reassessment delays an already-clear answer." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Order another pause without disconnecting, to reassess." }, consequence: { en: "Valuable time passes without addressing an already-demonstrated problem." }, feedback: { en: "The problem has already shown itself twice now — further reassessment delays an already-clear answer." } },
                 ],
               },
             },
             {
               id: "b_disconnect",
+              quality: "acceptable",
               label: { en: "Order the disconnect anyway, despite the technical recovery, given how thin the margin is." },
               consequence: { en: "The vessel disconnects and clears safely. Once stood down, questions arise about whether disconnecting was necessary given DP was technically within tolerance." },
               feedback: { en: "Not unsafe — a defensible precaution — but discards a recovery that might have held, at real cost, without first checking whether the thin margin was stable or actively failing." },
@@ -2016,9 +2020,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The installation and company want to understand why disconnect was ordered when DP was technically within tolerance." },
                 options: [
-                  { id: "b1", label: { en: "Defend the decision as fully justified without qualification." }, consequence: { en: "The explanation reads as rigid rather than honest about the judgment call made." }, feedback: { en: "Overstates certainty that wasn't actually there at the time." } },
+                  { id: "b1", quality: "acceptable", label: { en: "Defend the decision as fully justified without qualification." }, consequence: { en: "The explanation reads as rigid rather than honest about the judgment call made." }, feedback: { en: "Overstates certainty that wasn't actually there at the time." } },
                   { id: "b2", label: { en: "Explain the reasoning honestly — the margin was too thin to trust, a defensible precaution even if it turns out to have been avoidable." }, consequence: { en: "The installation and company receive a clear, honest account of the judgment call and its cost." }, feedback: { en: "Correct — the same value rewarded in both AHTS operations' interactive scenarios: own a conservative call, cost and all." }, isRecommended: true },
-                  { id: "b3", label: { en: "Deflect, downplaying that a judgment call was made at all." }, consequence: { en: "The installation and company are left without a real understanding of what happened." }, feedback: { en: "Undermines the trust the reporting relationship depends on." } },
+                  { id: "b3", quality: "poor", label: { en: "Deflect, downplaying that a judgment call was made at all." }, consequence: { en: "The installation and company are left without a real understanding of what happened." }, feedback: { en: "Undermines the trust the reporting relationship depends on." } },
                 ],
               },
             },
@@ -2033,8 +2037,8 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "After a brief observation window, the OOW reports the marginal recovery is holding steady, not degrading." },
                 options: [
                   { id: "c1", label: { en: "Resume the transfer now that stability is confirmed." }, consequence: { en: "The transfer resumes on the basis of a verified, stable recovery rather than an untested one." }, feedback: { en: "Correct — the observation window did exactly its job: confirming genuine stability rather than a fragile recovery about to fail." }, isRecommended: true },
-                  { id: "c2", label: { en: "Disconnect anyway out of continued caution despite the stable reading." }, consequence: { en: "A stable, verified recovery is discarded anyway." }, feedback: { en: "Ignores the evidence the observation window was specifically taken to gather." } },
-                  { id: "c3", label: { en: "Continue holding indefinitely without deciding either way." }, consequence: { en: "The operation stalls with no resolution despite having the evidence needed to decide." }, feedback: { en: "The observation window has already answered the question — further indecision serves no purpose now." } },
+                  { id: "c2", quality: "acceptable", label: { en: "Disconnect anyway out of continued caution despite the stable reading." }, consequence: { en: "A stable, verified recovery is discarded anyway." }, feedback: { en: "Ignores the evidence the observation window was specifically taken to gather." } },
+                  { id: "c3", quality: "acceptable", label: { en: "Continue holding indefinitely without deciding either way." }, consequence: { en: "The operation stalls with no resolution despite having the evidence needed to decide." }, feedback: { en: "The observation window has already answered the question — further indecision serves no purpose now." } },
                 ],
               },
             },
@@ -7548,6 +7552,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_speed_through_lashing",
+              quality: "poor",
               label: { en: "Speed through lashing for the remaining vehicles — a faster, lighter version — to make up time." },
               consequence: { en: "The remaining vehicles are secured to a lower standard than the operation calls for." },
               feedback: { en: "The lashing standard doesn't have a faster, lighter version — cutting it to save time removes exactly the discipline this operation exists to protect." },
@@ -7555,14 +7560,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The lighter lashing turns out insufficient — trim shifts unexpectedly as the remaining loading continues." },
                 options: [
-                  { id: "a1", label: { en: "Continue, since most of the vehicles are still fine." }, consequence: { en: "The operation proceeds with a known, unresolved lashing gap." }, feedback: { en: "A known gap doesn't become acceptable because most of the load is fine." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue, since most of the vehicles are still fine." }, consequence: { en: "The operation proceeds with a known, unresolved lashing gap." }, feedback: { en: "A known gap doesn't become acceptable because most of the load is fine." } },
                   { id: "a2", label: { en: "Immediately stop, redo the affected lashing to full standard, and report what happened." }, consequence: { en: "The lashing is corrected, and the Chief Officer has an accurate picture of what occurred." }, feedback: { en: "Correct — stopping to fix it properly and disclosing what happened is what actually resolves this." }, isRecommended: true },
-                  { id: "a3", label: { en: "Quietly redo the lashing without telling anyone what almost happened." }, consequence: { en: "The lashing is corrected, but the Chief Officer never learns a shortcut was taken." }, feedback: { en: "Leaves the Chief Officer without the context to understand what actually happened." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Quietly redo the lashing without telling anyone what almost happened." }, consequence: { en: "The lashing is corrected, but the Chief Officer never learns a shortcut was taken." }, feedback: { en: "Leaves the Chief Officer without the context to understand what actually happened." } },
                 ],
               },
             },
             {
               id: "b_maintain_silently",
+              quality: "acceptable",
               label: { en: "Maintain the full lashing standard for every remaining vehicle, without proactively mentioning that this means running late." },
               consequence: { en: "The standard is maintained, but no one else knows why the schedule is slipping." },
               feedback: { en: "Correct not to cut the standard — but the Chief Officer is left to wonder why things are running behind, rather than knowing the actual, good reason." },
@@ -7570,9 +7576,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "Time keeps passing, and the Chief Officer, unaware of the reason, starts asking directly why loading is running behind." },
                 options: [
-                  { id: "b1", label: { en: "Give a vague answer to avoid the conversation." }, consequence: { en: "The Chief Officer still doesn't have an actual explanation." }, feedback: { en: "A vague answer leaves the question exactly where it started." } },
+                  { id: "b1", quality: "poor", label: { en: "Give a vague answer to avoid the conversation." }, consequence: { en: "The Chief Officer still doesn't have an actual explanation." }, feedback: { en: "A vague answer leaves the question exactly where it started." } },
                   { id: "b2", label: { en: "Explain clearly that the full lashing standard is being maintained, which is why it's taking longer." }, consequence: { en: "The Chief Officer now understands the reason, later than it should have come." }, feedback: { en: "Correct, though this explanation would have been more useful offered before being asked for." }, isRecommended: true },
-                  { id: "b3", label: { en: "Rush now that the Chief Officer is asking, to seem more responsive." }, consequence: { en: "The standard is compromised at the exact moment it was being correctly held." }, feedback: { en: "Caving to the question at this point undoes the discipline that was correctly maintained up to now." } },
+                  { id: "b3", quality: "poor", label: { en: "Rush now that the Chief Officer is asking, to seem more responsive." }, consequence: { en: "The standard is compromised at the exact moment it was being correctly held." }, feedback: { en: "Caving to the question at this point undoes the discipline that was correctly maintained up to now." } },
                 ],
               },
             },
@@ -7587,8 +7593,8 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Informed, the Chief Officer decides departure will simply be pushed back slightly rather than compromising the lashing standard." },
                 options: [
                   { id: "c1", label: { en: "Continue at full standard as before, now with clear timing agreed." }, consequence: { en: "Loading finishes properly, on the newly agreed timeline." }, feedback: { en: "Correct — this is exactly what the proactive report was for." }, isRecommended: true },
-                  { id: "c2", label: { en: "Try to speed up anyway now that departure has some flexibility, cutting corners unnecessarily." }, consequence: { en: "The standard is compromised despite the schedule pressure having just been relieved." }, feedback: { en: "The flexibility just granted was meant to protect the standard, not license cutting it anyway." } },
-                  { id: "c3", label: { en: "Push back for an even later departure than needed, out of extra caution." }, consequence: { en: "The operation runs later than the situation actually required." }, feedback: { en: "Adds delay beyond what the actual situation calls for." } },
+                  { id: "c2", quality: "poor", label: { en: "Try to speed up anyway now that departure has some flexibility, cutting corners unnecessarily." }, consequence: { en: "The standard is compromised despite the schedule pressure having just been relieved." }, feedback: { en: "The flexibility just granted was meant to protect the standard, not license cutting it anyway." } },
+                  { id: "c3", quality: "acceptable", label: { en: "Push back for an even later departure than needed, out of extra caution." }, consequence: { en: "The operation runs later than the situation actually required." }, feedback: { en: "Adds delay beyond what the actual situation calls for." } },
                 ],
               },
             },
@@ -7935,6 +7941,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_moderate_calibrated",
+              quality: "poor",
               label: { en: "Make a moderate adjustment — enough to seem responsible, but calibrated to limit the schedule impact." },
               consequence: { en: "The adjustment is less than what the hazard alone would call for." },
               feedback: { en: "The vessel's own motion is now a direct factor in the hazard itself — calibrating the response to the schedule rather than the hazard gets the priority backwards." },
@@ -7942,9 +7949,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The situation continues to develop, and the moderate adjustment isn't enough — the ingress continues at a concerning rate." },
                 options: [
-                  { id: "a1", label: { en: "Continue at the same moderate adjustment, hoping it's enough." }, consequence: { en: "The ingress continues at a concerning rate with an inadequate response in place." }, feedback: { en: "Hoping an already-insufficient response becomes sufficient doesn't change the underlying physics." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue at the same moderate adjustment, hoping it's enough." }, consequence: { en: "The ingress continues at a concerning rate with an inadequate response in place." }, feedback: { en: "Hoping an already-insufficient response becomes sufficient doesn't change the underlying physics." } },
                   { id: "a2", label: { en: "Immediately make the full adjustment now warranted, regardless of the now-even-greater schedule impact." }, consequence: { en: "The response finally matches the hazard, later than it should have." }, feedback: { en: "Correct, though the earlier moderate choice already cost time the full response would have used better." }, isRecommended: true },
-                  { id: "a3", label: { en: "Consult with company/dispatch before adjusting further." }, consequence: { en: "The adjustment is delayed while awaiting a conversation that isn't actually needed to make it." }, feedback: { en: "This adjustment is the Master's own call to make — adding an unnecessary consultation delays a response the hazard already calls for." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Consult with company/dispatch before adjusting further." }, consequence: { en: "The adjustment is delayed while awaiting a conversation that isn't actually needed to make it." }, feedback: { en: "This adjustment is the Master's own call to make — adding an unnecessary consultation delays a response the hazard already calls for." } },
                 ],
               },
             },
@@ -7959,13 +7966,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "The adjustment is effective and the ingress rate visibly slows. The company inquires about the schedule impact." },
                 options: [
                   { id: "b1", label: { en: "Report honestly that the disruption was necessary and genuinely warranted by the hazard." }, consequence: { en: "The company has an accurate account of why the schedule was affected." }, feedback: { en: "Correct — an honest, accurate account is what the situation actually calls for." }, isRecommended: true },
-                  { id: "b2", label: { en: "Downplay the extent of the adjustment made, to soften the reported schedule impact." }, consequence: { en: "The company's understanding of what happened is inaccurate." }, feedback: { en: "Softening the account doesn't change what was necessary — it just makes the record less accurate." } },
-                  { id: "b3", label: { en: "Avoid engaging with the schedule question at all." }, consequence: { en: "A reasonable question goes unanswered." }, feedback: { en: "The company's question is a reasonable one, given the real impact — it deserves an honest answer, not avoidance." } },
+                  { id: "b2", quality: "poor", label: { en: "Downplay the extent of the adjustment made, to soften the reported schedule impact." }, consequence: { en: "The company's understanding of what happened is inaccurate." }, feedback: { en: "Softening the account doesn't change what was necessary — it just makes the record less accurate." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Avoid engaging with the schedule question at all." }, consequence: { en: "A reasonable question goes unanswered." }, feedback: { en: "The company's question is a reasonable one, given the real impact — it deserves an honest answer, not avoidance." } },
                 ],
               },
             },
             {
               id: "c_delay_deciding",
+              quality: "poor",
               label: { en: "Delay deciding on the adjustment until you have more information about the severity, to avoid committing to a disruptive choice prematurely." },
               consequence: { en: "No navigation response is made while more information is awaited." },
               feedback: { en: "The adjustment itself helps reduce further ingress regardless of exact severity — waiting for full clarity before acting delays a response that's already warranted." },
@@ -7973,9 +7981,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "Time passes while waiting for more information, and the ingress continues unaddressed by any navigation response during that window." },
                 options: [
-                  { id: "c1", label: { en: "Continue waiting, since more clarity would still help." }, consequence: { en: "The ingress continues without a mitigating response." }, feedback: { en: "Compounds the original delay at the point it matters most." } },
+                  { id: "c1", quality: "poor", label: { en: "Continue waiting, since more clarity would still help." }, consequence: { en: "The ingress continues without a mitigating response." }, feedback: { en: "Compounds the original delay at the point it matters most." } },
                   { id: "c2", label: { en: "Make the adjustment now, acknowledging that waiting cost valuable time." }, consequence: { en: "The response is finally made, later than it should have been." }, feedback: { en: "Correct, though the earlier wait already cost time the response would have used better." }, isRecommended: true },
-                  { id: "c3", label: { en: "Skip the navigation adjustment altogether now, since so much time has already passed." }, consequence: { en: "The response never happens at all." }, feedback: { en: "How much time has passed doesn't change whether the adjustment is still warranted — it still is." } },
+                  { id: "c3", quality: "poor", label: { en: "Skip the navigation adjustment altogether now, since so much time has already passed." }, consequence: { en: "The response never happens at all." }, feedback: { en: "How much time has passed doesn't change whether the adjustment is still warranted — it still is." } },
                 ],
               },
             },
@@ -9325,6 +9333,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "wait",
+              quality: "poor",
               label: { en: "Continue monitoring — it's still within the safe range, no need to act yet." },
               consequence: { en: "The drift continues over the following twenty minutes. By the time the distance actually approaches the limit, you're reacting to a breach instead of a trend — exactly the pattern this operation's own monitoring discipline was built to avoid." },
               feedback: { en: "A reading inside its safe range doesn't mean the trend is meaningless — this is the same lesson as the hawser tension case, applied to your own domain: the FPSO's positional behavior." },
@@ -9348,12 +9357,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                   },
                   {
                     id: "full_abort",
+                    quality: "acceptable",
                     label: { en: "Order immediate full disconnection and abort the transfer." },
                     consequence: { en: "The operation is aborted safely, but a full disconnection and re-approach later costs far more time than the pause would have — and the shuttle tanker's Master notes, diplomatically, that neither vessel was actually outside safe limits yet." },
                     feedback: { en: "Not wrong on safety grounds, but an overcorrection — the same graduated-response option was available and would have addressed the same concern with far less cost." },
                   },
                   {
                     id: "defer_to_shuttle",
+                    quality: "acceptable",
                     label: { en: "Since the shuttle tanker raised it, let their Master decide how to proceed." },
                     consequence: { en: "The shuttle tanker's Master, reasonably, pushes the question back — the FPSO's own drift is your vessel's behavior to manage, not theirs to decide for you." },
                     feedback: { en: "Coordinating with a peer vessel isn't the same as handing them your own authority. The decision for the FPSO's side of this situation stays yours to make." },
@@ -9363,6 +9374,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
             },
             {
               id: "immediate_abort",
+              quality: "poor",
               label: { en: "Order an immediate abort of the transfer without first contacting the shuttle tanker." },
               consequence: { en: "The abrupt stop catches the shuttle tanker's bridge off guard mid-transfer, and their own emergency disconnection procedure — triggered by an unexplained stop rather than a coordinated one — turns out to be a rougher, higher-risk process than a planned pause would have been." },
               feedback: { en: "Unilateral action skips exactly the coordination this operation depends on. Two independently-commanded vessels means even a safety-motivated decision needs to be communicated before it's executed, not after." },
@@ -9927,6 +9939,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "report_partial",
+              quality: "poor",
               label: { en: "Report the damage as limited to the connection fitting and recommend hose-only disconnection — the second indication isn't confirmed, so leave it out for now." },
               consequence: { en: "The Master makes the escalation call based on your report. Partway through the hose-only disconnection, the second point turns out to be an active drip after all — not severe, but something the Master would have wanted to know about before deciding." },
               feedback: { en: "Unconfirmed isn't the same as irrelevant. The Master's decision depends on a complete picture, including genuine uncertainty — leaving it out because it wasn't confirmed yet is the same omission error this operation's architecture is built to catch." },
@@ -9950,12 +9963,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                   },
                   {
                     id: "overcautious_escalate",
+                    quality: "poor",
                     label: { en: "Recommend full separation anyway, just to be safe, despite the assessment pointing toward hose-only." },
                     consequence: { en: "Full separation proceeds — safe, but it costs far more time and disruption than the situation, as you yourself assessed it, actually called for." },
                     feedback: { en: "The whole point of taking the closer look was to inform the decision — recommending against your own assessment out of caution defeats the purpose of having done the work." },
                   },
                   {
                     id: "omit_again",
+                    quality: "poor",
                     label: { en: "Recommend hose-only disconnection, but don't mention the residual drip at all now that it looks benign." },
                     consequence: { en: "Hose-only disconnection proceeds without anyone watching for the drip specifically — it turns out to be benign, this time, but nobody was actually monitoring for the possibility that it wasn't." },
                     feedback: { en: "The same omission mistake as before, just with a reassuring-sounding reason attached. \"Probably nothing\" is exactly the kind of detail that should be reported and monitored, not quietly dropped." },
@@ -9965,6 +9980,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
             },
             {
               id: "report_worst_case",
+              quality: "poor",
               label: { en: "Recommend full separation immediately, without checking the second indication first, since erring cautious feels safer." },
               consequence: { en: "Full separation proceeds. Afterward, inspection confirms the second point genuinely was just a residual drip — the more disruptive response wasn't actually necessary, and a two-minute closer look would have shown that." },
               feedback: { en: "Caution isn't the same as a grounded assessment. Recommending the most drastic option without taking the short time available to actually check skips the assessment work this decision depends on." },
@@ -10510,6 +10526,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "stay_quiet",
+              quality: "poor",
               label: { en: "Keep guiding without saying anything — the Bosun is busy, and it doesn't look urgent yet." },
               consequence: { en: "The wire continues running off-center. By the time it becomes visibly worse, some chafing has already occurred on the wire's outer strands." },
               feedback: { en: "Not urgent yet doesn't mean not worth mentioning — this is the same trend-over-threshold lesson the rest of this operation's monitoring is built on, just applied to something you noticed instead of an instrument reading." },
@@ -10533,12 +10550,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                   },
                   {
                     id: "wait_until_aboard",
+                    quality: "poor",
                     label: { en: "Wait until the instrument is safely aboard before mentioning it again, since interrupting the Bosun during the final approach seems like bad timing." },
                     consequence: { en: "The wire chafes further during the final, highest-tension meters of the approach — exactly the stage where an unaddressed problem does the most damage." },
                     feedback: { en: "This is the same mistake as waiting for a reading to cross an alarming threshold before reporting it — a worsening trend during the highest-risk moment is precisely when it needs to be flagged, not precisely when to hold back." },
                   },
                   {
                     id: "self_fix_again",
+                    quality: "poor",
                     label: { en: "Try to correct the wire's position on the drum yourself again, more confident this time since it corrected once already." },
                     consequence: { en: "The correction doesn't hold this time, and the wire drifts further while your attention is split between fixing it and guiding the instrument's final approach." },
                     feedback: { en: "One earlier correction succeeding doesn't establish it as something to keep handling alone — this is the same overstep as adjusting equipment without direction, now compounded by false confidence and split attention at the worst possible moment." },
@@ -10548,6 +10567,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
             },
             {
               id: "self_fix",
+              quality: "poor",
               label: { en: "Try to correct the wire's position on the drum yourself without telling the Bosun, since it seems like a small fix." },
               consequence: { en: "The correction doesn't fully hold, and now nobody besides you is aware the wire ever ran off-center at all." },
               feedback: { en: "Adjusting equipment without direction and without reporting it means the one person responsible for the whole recovery's safety has no idea it happened — even a successful fix shouldn't stay unreported." },
@@ -11098,12 +11118,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                   },
                   {
                     id: "repeat_same",
+                    quality: "poor",
                     label: { en: "Try the same maneuver once more, hoping persistence pays off." },
                     consequence: { en: "The same maneuver produces the same result — no progress, and now less time remains before the reassessment point." },
                     feedback: { en: "Repeating an approach that already failed twice isn't genuine progress, even if it feels like continued effort — the readiness gate this operation is built around exists precisely to catch this distinction." },
                   },
                   {
                     id: "suggest_cut_early",
+                    quality: "acceptable",
                     label: { en: "Suggest to the Chief Officer that it may be time to cut the wire now, since two attempts have already failed." },
                     consequence: { en: "The Chief Officer notes the point but reminds you the continue-or-cut call is the Master's, based on genuine reassessment — and there's still a real, untried approach available before that decision point arrives." },
                     feedback: { en: "Not wrong to have a view, but this isn't your call to push, and it comes before actually trying the one approach that hasn't been attempted yet — the same as giving up a step too early." },
@@ -11113,12 +11135,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
             },
             {
               id: "report_optimistic",
+              quality: "poor",
               label: { en: "Report that things are \"still progressing\" even though this specific attempt didn't succeed, to avoid seeming like you're giving up too early." },
               consequence: { en: "The Chief Officer relays the optimistic framing. The Master, working from an inflated picture of progress, allows more time than the actual situation justified — time that turns out to matter once weather closes in faster than expected." },
               feedback: { en: "This is exactly the mistake the reassessment gate is built to catch: continued effort isn't the same thing as genuine progress, and reporting it that way feeds the Master a decision built on the wrong picture." },
             },
             {
               id: "delay_report",
+              quality: "poor",
               label: { en: "Wait to try one more approach before saying anything, since reporting now would just look like a failure." },
               consequence: { en: "The delay eats into the time available before the reassessment point, and the Chief Officer ends up asking again anyway before you're ready to answer." },
               feedback: { en: "The reassessment decision needs your honest input on its own schedule, not once you have something more flattering to report." },
