@@ -3077,6 +3077,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_continue",
+              quality: "poor",
               label: { en: "Continue the lift smoothly — the signal wasn't a clear hold call, and stopping now might be more disruptive than continuing." },
               consequence: { en: "The lift completes without incident, but the ambiguity was never actually resolved." },
               feedback: { en: "Treats 'not a clear stop signal' as equivalent to 'safe to continue' — exactly the reasoning the transferee's hold authority exists to override." },
@@ -3084,9 +3085,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "After the lift completes, the transferee reports they felt unsafe and weren't given a real chance to signal clearly." },
                 options: [
-                  { id: "a1", label: { en: "Note it as a minor issue since the transfer completed safely." }, consequence: { en: "The gap in the response goes unaddressed." }, feedback: { en: "A safe outcome doesn't validate a decision that ignored a real signal." } },
+                  { id: "a1", quality: "poor", label: { en: "Note it as a minor issue since the transfer completed safely." }, consequence: { en: "The gap in the response goes unaddressed." }, feedback: { en: "A safe outcome doesn't validate a decision that ignored a real signal." } },
                   { id: "a2", label: { en: "Treat it seriously — acknowledge the gap and reinforce the procedure for recognizing ambiguous signals." }, consequence: { en: "The gap is addressed before it recurs with someone less fortunate." }, feedback: { en: "Correct — the transfer completing safely doesn't retroactively validate ignoring the signal." }, isRecommended: true },
-                  { id: "a3", label: { en: "Attribute it to the transferee being overly cautious rather than a real gap in the response." }, consequence: { en: "The actual gap in the crew's response is never addressed." }, feedback: { en: "Shifts responsibility away from the decision that actually needs review." } },
+                  { id: "a3", quality: "poor", label: { en: "Attribute it to the transferee being overly cautious rather than a real gap in the response." }, consequence: { en: "The actual gap in the crew's response is never addressed." }, feedback: { en: "Shifts responsibility away from the decision that actually needs review." } },
                 ],
               },
             },
@@ -3100,14 +3101,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The transferee confirms clearly, once asked directly, that they're fine — it was just an awkward movement, not distress." },
                 options: [
-                  { id: "b1", label: { en: "Resume immediately without having actually obtained a clear confirmation." }, consequence: { en: "The lift resumes on an assumption rather than a real answer." }, feedback: { en: "Skips the actual confirmation the hold was meant to obtain." } },
+                  { id: "b1", quality: "poor", label: { en: "Resume immediately without having actually obtained a clear confirmation." }, consequence: { en: "The lift resumes on an assumption rather than a real answer." }, feedback: { en: "Skips the actual confirmation the hold was meant to obtain." } },
                   { id: "b2", label: { en: "Resume once the transferee has explicitly and clearly confirmed readiness." }, consequence: { en: "The lift resumes on a genuine, confirmed basis." }, feedback: { en: "Correct — acting on the transferee's genuine, explicit confirmation respects both safety and their own agency." }, isRecommended: true },
-                  { id: "b3", label: { en: "Abort the transfer entirely out of excess caution even though they've now clearly confirmed." }, consequence: { en: "The transferee's own clear confirmation is disregarded." }, feedback: { en: "Disrespects the confirmation once it's actually been given." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Abort the transfer entirely out of excess caution even though they've now clearly confirmed." }, consequence: { en: "The transferee's own clear confirmation is disregarded." }, feedback: { en: "Disrespects the confirmation once it's actually been given." } },
                 ],
               },
             },
             {
               id: "c_ask_without_stopping",
+              quality: "acceptable",
               label: { en: "Ask the transferee to confirm whether they want to continue, without pausing the physical lift itself yet." },
               consequence: { en: "The check-in happens, but the transferee is still in motion while it does." },
               feedback: { en: "Well-intentioned, but insufficient — if the hesitation reflects genuine distress, continuing the physical motion during the check-in doesn't actually address it." },
@@ -3115,9 +3117,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The lift continues while awaiting a reply; the transferee, still mid-motion, becomes visibly more distressed and unable to respond clearly." },
                 options: [
-                  { id: "c1", label: { en: "Continue since stopping now mid-lift seems more disruptive." }, consequence: { en: "The transferee's distress continues unaddressed." }, feedback: { en: "Compounds the original gap." } },
+                  { id: "c1", quality: "poor", label: { en: "Continue since stopping now mid-lift seems more disruptive." }, consequence: { en: "The transferee's distress continues unaddressed." }, feedback: { en: "Compounds the original gap." } },
                   { id: "c2", label: { en: "Immediately stop the lift despite being mid-motion." }, consequence: { en: "The lift stops, later and less smoothly than it would have at Level 1." }, feedback: { en: "Correct, though harder than it would have been — the direct cost of not pausing when the ambiguity first appeared." }, isRecommended: true },
-                  { id: "c3", label: { en: "Speed up the lift to get it over with quickly." }, consequence: { en: "The transferee's distress is compounded by the increased speed." }, feedback: { en: "Makes the situation worse, not better." } },
+                  { id: "c3", quality: "poor", label: { en: "Speed up the lift to get it over with quickly." }, consequence: { en: "The transferee's distress is compounded by the increased speed." }, feedback: { en: "Makes the situation worse, not better." } },
                 ],
               },
             },
@@ -3469,6 +3471,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_wait",
+              quality: "poor",
               label: { en: "Keep working the problem yourself a bit longer to be sure before saying anything." },
               consequence: { en: "The finding stays with you, unreported, while the situation continues developing." },
               feedback: { en: "Uncertainty is exactly the reason to report, not the reason to wait — the Chief Engineer's overall assessment is incomplete without what you've found." },
@@ -3476,9 +3479,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The Bosun's emergency lowering preparation is ready, and the Master needs the Chief Engineer's full, current assessment to decide — the finding you're still sitting on could change that assessment significantly." },
                 options: [
-                  { id: "a1", label: { en: "Continue holding off since you still want to be sure." }, consequence: { en: "The decision proceeds without information that could have changed it." }, feedback: { en: "Compounds the original delay at the worst possible moment." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue holding off since you still want to be sure." }, consequence: { en: "The decision proceeds without information that could have changed it." }, feedback: { en: "Compounds the original delay at the worst possible moment." } },
                   { id: "a2", label: { en: "Report now, immediately, even though the decision point is imminent." }, consequence: { en: "The Chief Engineer's assessment is updated just in time." }, feedback: { en: "Correct — the approaching decision point doesn't reduce the need to report, it increases it." }, isRecommended: true },
-                  { id: "a3", label: { en: "Let it go since the decision seems to be happening without needing it." }, consequence: { en: "The decision is made without information that could have changed it." }, feedback: { en: "The finding's relevance doesn't disappear just because a decision is imminent." } },
+                  { id: "a3", quality: "poor", label: { en: "Let it go since the decision seems to be happening without needing it." }, consequence: { en: "The decision is made without information that could have changed it." }, feedback: { en: "The finding's relevance doesn't disappear just because a decision is imminent." } },
                 ],
               },
             },
@@ -3492,14 +3495,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The Chief Engineer asks you to help assess how serious the finding is before reporting further to the bridge." },
                 options: [
-                  { id: "b1", label: { en: "Give a confident-sounding answer despite genuine uncertainty, to seem helpful." }, consequence: { en: "The Chief Engineer reports to the bridge based on overstated confidence." }, feedback: { en: "Overstates certainty that isn't actually there." } },
+                  { id: "b1", quality: "poor", label: { en: "Give a confident-sounding answer despite genuine uncertainty, to seem helpful." }, consequence: { en: "The Chief Engineer reports to the bridge based on overstated confidence." }, feedback: { en: "Overstates certainty that isn't actually there." } },
                   { id: "b2", label: { en: "Give an honest assessment of what you know and don't know." }, consequence: { en: "The Chief Engineer reports an accurate, appropriately qualified picture to the bridge." }, feedback: { en: "Correct — honest assessment with uncertainty acknowledged is what the situation actually needs." }, isRecommended: true },
-                  { id: "b3", label: { en: "Defer entirely, saying you don't know enough to say anything." }, consequence: { en: "The Chief Engineer gets no useful input despite your direct observation." }, feedback: { en: "Avoids contributing something genuinely useful, even if imperfect." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Defer entirely, saying you don't know enough to say anything." }, consequence: { en: "The Chief Engineer gets no useful input despite your direct observation." }, feedback: { en: "Avoids contributing something genuinely useful, even if imperfect." } },
                 ],
               },
             },
             {
               id: "c_fix_independently",
+              quality: "poor",
               label: { en: "Try to fix or address what you've found yourself, without necessarily interrupting the Chief Engineer's own work." },
               consequence: { en: "You act independently on something outside your own authority to decide." },
               feedback: { en: "Oversteps the established boundary — assisting hands-on under the Chief Engineer's direction doesn't include independently deciding how to respond to a new finding." },
@@ -3507,9 +3511,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "Your attempt doesn't fully resolve the issue and may have changed something about the situation — the Chief Engineer is about to report a diagnosis to the bridge that no longer reflects current reality." },
                 options: [
-                  { id: "c1", label: { en: "Stay quiet since the attempt didn't work anyway." }, consequence: { en: "The Chief Engineer reports outdated information to the bridge." }, feedback: { en: "Compounds the original overstep with a second one." } },
+                  { id: "c1", quality: "poor", label: { en: "Stay quiet since the attempt didn't work anyway." }, consequence: { en: "The Chief Engineer reports outdated information to the bridge." }, feedback: { en: "Compounds the original overstep with a second one." } },
                   { id: "c2", label: { en: "Immediately tell the Chief Engineer what you did and how it may have changed things." }, consequence: { en: "The Chief Engineer's report to the bridge reflects current, accurate reality." }, feedback: { en: "Correct — the Chief Engineer needs accurate, current information before reporting outdated status." }, isRecommended: true },
-                  { id: "c3", label: { en: "Quietly undo the attempt without mentioning it." }, consequence: { en: "The Chief Engineer remains unaware of what actually happened." }, feedback: { en: "Leaves the Chief Engineer working from an incomplete picture." } },
+                  { id: "c3", quality: "poor", label: { en: "Quietly undo the attempt without mentioning it." }, consequence: { en: "The Chief Engineer remains unaware of what actually happened." }, feedback: { en: "Leaves the Chief Engineer working from an incomplete picture." } },
                 ],
               },
             },
@@ -4621,6 +4625,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_adjust_unilaterally",
+              quality: "poor",
               label: { en: "Adjust the settings yourself immediately, since this is now genuinely your domain to manage." },
               consequence: { en: "The adjustment is made without the Chief Officer or Chief Engineer being aware it happened." },
               feedback: { en: "Owning the technical domain doesn't extend to deciding a cargo-operation-relevant adjustment alone — that boundary doesn't move just because your expertise has grown." },
@@ -4628,9 +4633,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The adjustment has a side effect that touches the loading rate itself — something the Chief Officer wasn't told was happening and now needs to account for." },
                 options: [
-                  { id: "a1", label: { en: "Don't mention it, since it was a technical engine-side matter." }, consequence: { en: "The Chief Officer manages the loading rate without knowing why it's behaving as it is." }, feedback: { en: "An effect that reaches the cargo operation isn't a purely engine-side matter anymore." } },
+                  { id: "a1", quality: "poor", label: { en: "Don't mention it, since it was a technical engine-side matter." }, consequence: { en: "The Chief Officer manages the loading rate without knowing why it's behaving as it is." }, feedback: { en: "An effect that reaches the cargo operation isn't a purely engine-side matter anymore." } },
                   { id: "a2", label: { en: "Immediately report what was done and its effect on the loading rate." }, consequence: { en: "The Chief Officer now has an accurate picture to manage the operation with." }, feedback: { en: "Correct — disclosing the action and its effect is what lets the Chief Officer actually account for it." }, isRecommended: true },
-                  { id: "a3", label: { en: "Quietly revert the adjustment without mentioning any of it." }, consequence: { en: "The trend returns, and no one else knows what happened in between." }, feedback: { en: "Leaves the Chief Officer working from an incomplete picture of what actually occurred." } },
+                  { id: "a3", quality: "poor", label: { en: "Quietly revert the adjustment without mentioning any of it." }, consequence: { en: "The trend returns, and no one else knows what happened in between." }, feedback: { en: "Leaves the Chief Officer working from an incomplete picture of what actually occurred." } },
                 ],
               },
             },
@@ -4645,13 +4650,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Informed, the Chief Officer asks you to proceed with the adjustment under your own technical judgment, given your expertise." },
                 options: [
                   { id: "b1", label: { en: "Proceed with the adjustment, now explicitly authorized." }, consequence: { en: "The adjustment is made with the cargo-operation authority's knowledge and consent." }, feedback: { en: "Correct — this is exactly what reporting before acting was for." }, isRecommended: true },
-                  { id: "b2", label: { en: "Refuse to act at all, insisting on further approval even though it was just given." }, consequence: { en: "The correction is delayed by an unnecessary extra round of approval-seeking." }, feedback: { en: "The authorization just given is real — insisting on more adds friction without adding safety." } },
-                  { id: "b3", label: { en: "Proceed with the adjustment but don't report the outcome once it's done." }, consequence: { en: "The Chief Officer doesn't know whether the adjustment resolved the trend." }, feedback: { en: "Closing the loop on an authorized action is part of carrying it out properly, not optional." } },
+                  { id: "b2", quality: "acceptable", label: { en: "Refuse to act at all, insisting on further approval even though it was just given." }, consequence: { en: "The correction is delayed by an unnecessary extra round of approval-seeking." }, feedback: { en: "The authorization just given is real — insisting on more adds friction without adding safety." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Proceed with the adjustment but don't report the outcome once it's done." }, consequence: { en: "The Chief Officer doesn't know whether the adjustment resolved the trend." }, feedback: { en: "Closing the loop on an authorized action is part of carrying it out properly, not optional." } },
                 ],
               },
             },
             {
               id: "c_wait_and_monitor",
+              quality: "poor",
               label: { en: "Wait and monitor a bit longer before deciding anything, since it's only a slight trend so far." },
               consequence: { en: "The trend continues developing while no one outside the engine room is aware of it." },
               feedback: { en: "A developing trend during an active cargo operation is exactly the kind of thing that should be shared promptly, not watched quietly." },
@@ -4659,9 +4665,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The trend has continued past the point where monitoring alone is enough, and the cargo operation has continued the whole time without anyone else aware of it." },
                 options: [
-                  { id: "c1", label: { en: "Continue waiting, since it's still framed as just a trend." }, consequence: { en: "The delay compounds at the point where it matters most." }, feedback: { en: "Compounds the original delay at the worst possible moment." } },
+                  { id: "c1", quality: "poor", label: { en: "Continue waiting, since it's still framed as just a trend." }, consequence: { en: "The delay compounds at the point where it matters most." }, feedback: { en: "Compounds the original delay at the worst possible moment." } },
                   { id: "c2", label: { en: "Report it now, even though you were hoping to have a fuller picture first." }, consequence: { en: "The Chief Officer is finally informed, later than ideal but before further delay." }, feedback: { en: "Correct, though the earlier wait already cost time that a prompt report would have saved." }, isRecommended: true },
-                  { id: "c3", label: { en: "Attempt to adjust it yourself now, since it's gone on long enough to justify acting." }, consequence: { en: "The same unilateral-authority boundary is crossed, just later." }, feedback: { en: "How long the trend has gone on doesn't change where the authority boundary sits." } },
+                  { id: "c3", quality: "poor", label: { en: "Attempt to adjust it yourself now, since it's gone on long enough to justify acting." }, consequence: { en: "The same unilateral-authority boundary is crossed, just later." }, feedback: { en: "How long the trend has gone on doesn't change where the authority boundary sits." } },
                 ],
               },
             },
@@ -5002,6 +5008,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_take_over",
+              quality: "poor",
               label: { en: "Step in and take over the isolation work directly, since you're the senior authority with deep experience." },
               consequence: { en: "Two people are now effectively working the same system without clear coordination." },
               feedback: { en: "Seniority doesn't override domain ownership that's already been deliberately established — that ownership doesn't move just because you technically could act." },
@@ -5009,9 +5016,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The overlap creates real confusion — the Chief Officer had specifically authorized the Second Engineer, and now it's unclear who's actually directing the isolation." },
                 options: [
-                  { id: "a1", label: { en: "Continue directing the work yourself, since you are more experienced." }, consequence: { en: "The confusion persists through the isolation itself." }, feedback: { en: "Experience doesn't resolve a coordination problem that experience itself created." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue directing the work yourself, since you are more experienced." }, consequence: { en: "The confusion persists through the isolation itself." }, feedback: { en: "Experience doesn't resolve a coordination problem that experience itself created." } },
                   { id: "a2", label: { en: "Step back, and clearly explain to the Chief Officer and Second Engineer why." }, consequence: { en: "Clear ownership is restored, and both understand what happened." }, feedback: { en: "Correct — stepping back matters, but so does explaining it, so the moment doesn't just quietly resolve without anyone understanding what went wrong." }, isRecommended: true },
-                  { id: "a3", label: { en: "Quietly disengage without saying anything about it." }, consequence: { en: "The confusion is no longer visible, but neither is what actually caused it." }, feedback: { en: "Leaves the Chief Officer and Second Engineer without the context to avoid the same overlap next time." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Quietly disengage without saying anything about it." }, consequence: { en: "The confusion is no longer visible, but neither is what actually caused it." }, feedback: { en: "Leaves the Chief Officer and Second Engineer without the context to avoid the same overlap next time." } },
                 ],
               },
             },
@@ -5025,14 +5032,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The Second Engineer flags something they're not fully sure about during the isolation — a moment where your experience could genuinely help." },
                 options: [
-                  { id: "b1", label: { en: "Take over the isolation yourself, given the flagged uncertainty." }, consequence: { en: "The Second Engineer's ownership of the task is set aside." }, feedback: { en: "A flagged uncertainty is a request for input, not an invitation to take over." } },
+                  { id: "b1", quality: "poor", label: { en: "Take over the isolation yourself, given the flagged uncertainty." }, consequence: { en: "The Second Engineer's ownership of the task is set aside." }, feedback: { en: "A flagged uncertainty is a request for input, not an invitation to take over." } },
                   { id: "b2", label: { en: "Offer your input and expertise directly, without taking over the actual execution." }, consequence: { en: "The Second Engineer gets the benefit of your experience while retaining ownership of the task." }, feedback: { en: "Correct — this is exactly what supporting the domain, rather than overriding it, looks like." }, isRecommended: true },
-                  { id: "b3", label: { en: "Stay silent, since it's still technically the Second Engineer's domain." }, consequence: { en: "Useful expertise goes unshared at the moment it was actually asked for." }, feedback: { en: "Offering input when it's genuinely sought isn't the same as taking over — withholding it isn't the correct read of the boundary either." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Stay silent, since it's still technically the Second Engineer's domain." }, consequence: { en: "Useful expertise goes unshared at the moment it was actually asked for." }, feedback: { en: "Offering input when it's genuinely sought isn't the same as taking over — withholding it isn't the correct read of the boundary either." } },
                 ],
               },
             },
             {
               id: "c_watch_silently",
+              quality: "poor",
               label: { en: "Watch closely and only intervene if something seems to go wrong, without saying anything either way in the meantime." },
               consequence: { en: "You continue observing without engaging." },
               feedback: { en: "Silent monitoring isn't really support — if something is worth watching for, it's worth being available to discuss, not just privately tracked." },
@@ -5040,9 +5048,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "Something does start to look concerning, but having stayed silent the whole time, the moment to flag it early has largely passed." },
                 options: [
-                  { id: "c1", label: { en: "Continue watching, still without saying anything." }, consequence: { en: "The concerning sign goes unaddressed." }, feedback: { en: "Compounds the original silence at the point it matters most." } },
+                  { id: "c1", quality: "poor", label: { en: "Continue watching, still without saying anything." }, consequence: { en: "The concerning sign goes unaddressed." }, feedback: { en: "Compounds the original silence at the point it matters most." } },
                   { id: "c2", label: { en: "Speak up now, even though it's later than it should have been." }, consequence: { en: "The concern is finally shared, later than ideal." }, feedback: { en: "Correct, though the earlier silence already cost time that speaking up sooner would have saved." }, isRecommended: true },
-                  { id: "c3", label: { en: "Take over directly now, since silent watching hasn't resolved anything." }, consequence: { en: "The same ownership boundary is crossed, just by a different route." }, feedback: { en: "How long you've been silently watching doesn't change where the ownership boundary sits." } },
+                  { id: "c3", quality: "poor", label: { en: "Take over directly now, since silent watching hasn't resolved anything." }, consequence: { en: "The same ownership boundary is crossed, just by a different route." }, feedback: { en: "How long you've been silently watching doesn't change where the ownership boundary sits." } },
                 ],
               },
             },
@@ -5352,6 +5360,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_increase_unilaterally",
+              quality: "poor",
               label: { en: "Increase the pump rate yourself, since your technical read is confident and this is your area of skill." },
               consequence: { en: "The rate changes without the Chief Officer's knowledge." },
               feedback: { en: "Skilled execution and rate/sequencing authority are two different things — your confidence in the read doesn't extend to deciding the rate independently." },
@@ -5359,9 +5368,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The inert gas system readings shift as a result — faster loading affects vapor displacement — in a way the Chief Officer wasn't tracking for a rate they didn't know had changed." },
                 options: [
-                  { id: "a1", label: { en: "Continue at the faster rate, since it still seems fine." }, consequence: { en: "The Chief Officer keeps monitoring against a rate that no longer matches what's actually happening." }, feedback: { en: "Compounds the original problem — the Chief Officer's whole monitoring picture is now built on wrong information." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue at the faster rate, since it still seems fine." }, consequence: { en: "The Chief Officer keeps monitoring against a rate that no longer matches what's actually happening." }, feedback: { en: "Compounds the original problem — the Chief Officer's whole monitoring picture is now built on wrong information." } },
                   { id: "a2", label: { en: "Immediately report the change and revert to the instructed rate." }, consequence: { en: "The Chief Officer's monitoring picture is corrected." }, feedback: { en: "Correct — disclosing and reverting is what lets the Chief Officer's oversight actually mean something again." }, isRecommended: true },
-                  { id: "a3", label: { en: "Quietly revert to the instructed rate without mentioning any of it." }, consequence: { en: "The rate is correct again, but the IGS deviation the Chief Officer noticed is never explained." }, feedback: { en: "Leaves the Chief Officer without the context to understand what actually happened to the readings." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Quietly revert to the instructed rate without mentioning any of it." }, consequence: { en: "The rate is correct again, but the IGS deviation the Chief Officer noticed is never explained." }, feedback: { en: "Leaves the Chief Officer without the context to understand what actually happened to the readings." } },
                 ],
               },
             },
@@ -5376,13 +5385,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Informed, the Chief Officer decides to increase the rate based on your input, and explicitly directs the new rate." },
                 options: [
                   { id: "b1", label: { en: "Proceed at the newly directed rate." }, consequence: { en: "The rate changes with the Chief Officer's explicit direction and knowledge." }, feedback: { en: "Correct — this is exactly what reporting first was for." }, isRecommended: true },
-                  { id: "b2", label: { en: "Still hesitate to increase, second-guessing the explicit direction just given." }, consequence: { en: "The correction is delayed by unnecessary hesitation." }, feedback: { en: "The direction just given is real — hesitating past that point adds friction without adding safety." } },
-                  { id: "b3", label: { en: "Increase the rate, but push it further than what was actually directed, given your continued confidence." }, consequence: { en: "The rate now exceeds what the Chief Officer actually authorized." }, feedback: { en: "Oversteps the explicit direction given — confidence doesn't extend the authorization beyond what was actually granted." } },
+                  { id: "b2", quality: "acceptable", label: { en: "Still hesitate to increase, second-guessing the explicit direction just given." }, consequence: { en: "The correction is delayed by unnecessary hesitation." }, feedback: { en: "The direction just given is real — hesitating past that point adds friction without adding safety." } },
+                  { id: "b3", quality: "poor", label: { en: "Increase the rate, but push it further than what was actually directed, given your continued confidence." }, consequence: { en: "The rate now exceeds what the Chief Officer actually authorized." }, feedback: { en: "Oversteps the explicit direction given — confidence doesn't extend the authorization beyond what was actually granted." } },
                 ],
               },
             },
             {
               id: "c_increase_and_mention_later",
+              quality: "poor",
               label: { en: "Increase the rate slightly, planning to mention it to the Chief Officer afterward if asked." },
               consequence: { en: "The rate changes quietly, with disclosure deferred to a later, uncertain moment." },
               feedback: { en: "Planning to explain only if asked isn't the same as reporting — it leaves the decision about whether this matters entirely up to chance." },
@@ -5390,9 +5400,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "Before you've mentioned anything, the Chief Officer notices the rate is different than instructed during a routine check and asks about it." },
                 options: [
-                  { id: "c1", label: { en: "Downplay it, framing it as basically the same as what was instructed." }, consequence: { en: "The Chief Officer is given an inaccurate picture of what actually happened." }, feedback: { en: "Minimizing what happened compounds the original lack of disclosure with an inaccurate account." } },
+                  { id: "c1", quality: "poor", label: { en: "Downplay it, framing it as basically the same as what was instructed." }, consequence: { en: "The Chief Officer is given an inaccurate picture of what actually happened." }, feedback: { en: "Minimizing what happened compounds the original lack of disclosure with an inaccurate account." } },
                   { id: "c2", label: { en: "Explain fully and honestly what was done and why, now that it's been noticed." }, consequence: { en: "The Chief Officer gets an accurate account, later than it should have come." }, feedback: { en: "Correct, though disclosing only once asked is still later than the moment actually called for." }, isRecommended: true },
-                  { id: "c3", label: { en: "Describe it as a small necessary correction rather than acknowledging it was an independent judgment call." }, consequence: { en: "The Chief Officer doesn't get an accurate picture of what actually happened or why." }, feedback: { en: "Reframing an independent decision as a minor correction misrepresents what actually occurred." } },
+                  { id: "c3", quality: "poor", label: { en: "Describe it as a small necessary correction rather than acknowledging it was an independent judgment call." }, consequence: { en: "The Chief Officer doesn't get an accurate picture of what actually happened or why." }, feedback: { en: "Reframing an independent decision as a minor correction misrepresents what actually occurred." } },
                 ],
               },
             },
@@ -5730,6 +5740,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_relay_as_heard",
+              quality: "poor",
               label: { en: "Relay it exactly as heard, even though you're not fully sure you caught it correctly, to avoid causing a delay." },
               consequence: { en: "The uncertain detail is passed along as if it were confirmed." },
               feedback: { en: "Relaying something you're not sure you heard correctly, without flagging that uncertainty, passes the risk downstream instead of resolving it." },
@@ -5737,9 +5748,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The imprecise detail leads to real confusion downstream — someone prepares for the wrong timing based on what you relayed." },
                 options: [
-                  { id: "a1", label: { en: "Let it play out, hoping it resolves itself." }, consequence: { en: "The confusion continues affecting the response." }, feedback: { en: "Compounds the original uncertainty by leaving it unaddressed." } },
+                  { id: "a1", quality: "poor", label: { en: "Let it play out, hoping it resolves itself." }, consequence: { en: "The confusion continues affecting the response." }, feedback: { en: "Compounds the original uncertainty by leaving it unaddressed." } },
                   { id: "a2", label: { en: "Immediately flag that the original relay might have been inaccurate." }, consequence: { en: "The confusion is traced back to its source and can be corrected." }, feedback: { en: "Correct — flagging it now, even late, is what lets the actual mismatch get fixed." }, isRecommended: true },
-                  { id: "a3", label: { en: "Point out that the original message itself was unclear, without addressing your own uncertain relay of it." }, consequence: { en: "The confusion's real cause — an unflagged uncertain relay — stays hidden." }, feedback: { en: "Deflects from the part of the problem that was actually yours to flag." } },
+                  { id: "a3", quality: "poor", label: { en: "Point out that the original message itself was unclear, without addressing your own uncertain relay of it." }, consequence: { en: "The confusion's real cause — an unflagged uncertain relay — stays hidden." }, feedback: { en: "Deflects from the part of the problem that was actually yours to flag." } },
                 ],
               },
             },
@@ -5753,14 +5764,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "While you're still confirming, the Chief Officer — unaware clarification is pending — is about to act on an assumption about what the message meant." },
                 options: [
-                  { id: "b1", label: { en: "Let the Chief Officer continue on the assumption, planning to correct it only if it turns out wrong." }, consequence: { en: "A decision proceeds on an unconfirmed assumption you already knew was in question." }, feedback: { en: "You already knew the assumption was unconfirmed — staying quiet about that isn't the same as it being fine." } },
+                  { id: "b1", quality: "poor", label: { en: "Let the Chief Officer continue on the assumption, planning to correct it only if it turns out wrong." }, consequence: { en: "A decision proceeds on an unconfirmed assumption you already knew was in question." }, feedback: { en: "You already knew the assumption was unconfirmed — staying quiet about that isn't the same as it being fine." } },
                   { id: "b2", label: { en: "Immediately tell the Chief Officer that clarification is still pending, before they act on the assumption." }, consequence: { en: "The Chief Officer waits for confirmed information before deciding." }, feedback: { en: "Correct — flagging that confirmation is still in progress is exactly what prevents a decision on shaky ground." }, isRecommended: true },
-                  { id: "b3", label: { en: "Rush the confirmation and relay something not fully verified, just to give an answer." }, consequence: { en: "The Chief Officer gets an answer that isn't actually confirmed." }, feedback: { en: "Undermines the entire reason for confirming in the first place." } },
+                  { id: "b3", quality: "poor", label: { en: "Rush the confirmation and relay something not fully verified, just to give an answer." }, consequence: { en: "The Chief Officer gets an answer that isn't actually confirmed." }, feedback: { en: "Undermines the entire reason for confirming in the first place." } },
                 ],
               },
             },
             {
               id: "c_relay_polished_guess",
+              quality: "poor",
               label: { en: "Relay your best guess at what was probably meant, adjusting it slightly to sound more complete and confident." },
               consequence: { en: "A guess is passed along, presented as if it were the actual message." },
               feedback: { en: "Polishing a guess to sound confident doesn't make it accurate — it just hides that it was ever a guess." },
@@ -5768,9 +5780,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The guess turns out to be wrong in a way that affects the response." },
                 options: [
-                  { id: "c1", label: { en: "Don't mention that it was a guess, since correcting it now would look bad." }, consequence: { en: "The response continues to be shaped by information that's known to be wrong." }, feedback: { en: "Leaves the response built on information you now know is inaccurate." } },
+                  { id: "c1", quality: "poor", label: { en: "Don't mention that it was a guess, since correcting it now would look bad." }, consequence: { en: "The response continues to be shaped by information that's known to be wrong." }, feedback: { en: "Leaves the response built on information you now know is inaccurate." } },
                   { id: "c2", label: { en: "Immediately correct the record, disclosing it was an adjusted guess, not confirmed fact." }, consequence: { en: "The response is corrected based on accurate information." }, feedback: { en: "Correct — disclosing it was a guess is what lets it actually be fixed, not just quietly worked around." }, isRecommended: true },
-                  { id: "c3", label: { en: "Adjust the guess again to try to align with what's actually happening now, without disclosing the original guess." }, consequence: { en: "The inaccuracy compounds rather than resolves." }, feedback: { en: "Layering a second guess on the first compounds the original problem instead of fixing it." } },
+                  { id: "c3", quality: "poor", label: { en: "Adjust the guess again to try to align with what's actually happening now, without disclosing the original guess." }, consequence: { en: "The inaccuracy compounds rather than resolves." }, feedback: { en: "Layering a second guess on the first compounds the original problem instead of fixing it." } },
                 ],
               },
             },
@@ -6089,6 +6101,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_proceed_on_pattern",
+              quality: "poor",
               label: { en: "Proceed based on the established pattern from prior loads, since it's essentially the same combination as always." },
               consequence: { en: "Loading proceeds without this specific cargo having actually been verified." },
               feedback: { en: "A pattern from prior loads isn't the same as verification of this specific cargo — the rule exists precisely because a detail can differ without being obvious." },
@@ -6096,9 +6109,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "Partway through loading, a temperature anomaly develops — a detail about this specific cargo turned out to differ from what was assumed based on the pattern." },
                 options: [
-                  { id: "a1", label: { en: "Continue, since it's probably fine." }, consequence: { en: "Loading proceeds with an unresolved, genuine compatibility concern." }, feedback: { en: "The anomaly is exactly the kind of signal the skipped verification exists to catch." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue, since it's probably fine." }, consequence: { en: "Loading proceeds with an unresolved, genuine compatibility concern." }, feedback: { en: "The anomaly is exactly the kind of signal the skipped verification exists to catch." } },
                   { id: "a2", label: { en: "Immediately halt and properly verify now, however late." }, consequence: { en: "The compatibility question is finally resolved, later than it should have been." }, feedback: { en: "Correct, though the earlier assumption already cost time and risk that verification up front would have avoided." }, isRecommended: true },
-                  { id: "a3", label: { en: "Keep going but watch more closely without pausing loading." }, consequence: { en: "Loading continues while the actual compatibility question remains unresolved." }, feedback: { en: "Closer watching doesn't answer the compatibility question — only the verification itself does." } },
+                  { id: "a3", quality: "poor", label: { en: "Keep going but watch more closely without pausing loading." }, consequence: { en: "Loading continues while the actual compatibility question remains unresolved." }, feedback: { en: "Closer watching doesn't answer the compatibility question — only the verification itself does." } },
                 ],
               },
             },
@@ -6112,14 +6125,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_b",
                 situation: { en: "The verification reveals a genuine ambiguity in the reference material — this specific combination isn't clearly resolved either way." },
                 options: [
-                  { id: "b1", label: { en: "Make a confident-sounding call anyway, to keep things moving." }, consequence: { en: "A decision is made on a compatibility question that was never actually resolved." }, feedback: { en: "Sounding confident doesn't resolve a genuinely ambiguous question." } },
+                  { id: "b1", quality: "poor", label: { en: "Make a confident-sounding call anyway, to keep things moving." }, consequence: { en: "A decision is made on a compatibility question that was never actually resolved." }, feedback: { en: "Sounding confident doesn't resolve a genuinely ambiguous question." } },
                   { id: "b2", label: { en: "Report the genuine uncertainty and seek clarification or escalate before proceeding." }, consequence: { en: "The ambiguity is addressed through the proper channel before loading proceeds." }, feedback: { en: "Correct — genuine ambiguity in the reference material needs escalation, not a confident guess." }, isRecommended: true },
-                  { id: "b3", label: { en: "Default to proceeding since nothing definitively said the cargo was incompatible." }, consequence: { en: "Loading proceeds on the absence of a clear \"no,\" not the presence of a clear \"yes.\"" }, feedback: { en: "The absence of a definitive \"incompatible\" finding isn't the same as a confirmed compatible one." } },
+                  { id: "b3", quality: "poor", label: { en: "Default to proceeding since nothing definitively said the cargo was incompatible." }, consequence: { en: "Loading proceeds on the absence of a clear \"no,\" not the presence of a clear \"yes.\"" }, feedback: { en: "The absence of a definitive \"incompatible\" finding isn't the same as a confirmed compatible one." } },
                 ],
               },
             },
             {
               id: "c_abbreviated_check",
+              quality: "poor",
               label: { en: "Do a partial, abbreviated check, splitting the difference between speed and thoroughness." },
               consequence: { en: "A check is performed, but not the full verification the operation calls for." },
               feedback: { en: "An abbreviated check isn't a smaller version of verification — it's a gap dressed up as one." },
@@ -6127,9 +6141,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The abbreviated check missed something the full check would have caught." },
                 options: [
-                  { id: "c1", label: { en: "Continue, since the abbreviated check technically didn't turn anything up." }, consequence: { en: "Loading proceeds on a check that was never actually complete." }, feedback: { en: "An incomplete check turning up nothing isn't the same as a complete check confirming compatibility." } },
+                  { id: "c1", quality: "poor", label: { en: "Continue, since the abbreviated check technically didn't turn anything up." }, consequence: { en: "Loading proceeds on a check that was never actually complete." }, feedback: { en: "An incomplete check turning up nothing isn't the same as a complete check confirming compatibility." } },
                   { id: "c2", label: { en: "Recognize the check was incomplete and go back to complete it properly." }, consequence: { en: "The verification is actually completed, later than it should have been." }, feedback: { en: "Correct — recognizing the gap and closing it is what the discipline actually requires." }, isRecommended: true },
-                  { id: "c3", label: { en: "Treat the abbreviated check as sufficient going forward for similar cases too." }, consequence: { en: "The shortcut becomes a habit rather than a one-time lapse." }, feedback: { en: "Compounds a single shortcut into a standing bad practice." } },
+                  { id: "c3", quality: "poor", label: { en: "Treat the abbreviated check as sufficient going forward for similar cases too." }, consequence: { en: "The shortcut becomes a habit rather than a one-time lapse." }, feedback: { en: "Compounds a single shortcut into a standing bad practice." } },
                 ],
               },
             },
@@ -6468,6 +6482,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_step_in_directly",
+              quality: "poor",
               label: { en: "Step in directly and suggest a different approach, given your genuine technical confidence." },
               consequence: { en: "The Chief Officer now has to reconcile a competing input in the middle of an active emergency." },
               feedback: { en: "This domain was never Engine's — genuine technical confidence in a different field doesn't transfer authority into the Chief Officer's own." },
@@ -6475,9 +6490,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The Chief Officer, focused on directing the response, now has two potentially conflicting inputs to reconcile mid-emergency." },
                 options: [
-                  { id: "a1", label: { en: "Continue pressing the point, since you believe you're right." }, consequence: { en: "The Chief Officer's attention is split between managing the reaction and managing the disagreement." }, feedback: { en: "Compounds the original overstep at the worst possible moment." } },
+                  { id: "a1", quality: "poor", label: { en: "Continue pressing the point, since you believe you're right." }, consequence: { en: "The Chief Officer's attention is split between managing the reaction and managing the disagreement." }, feedback: { en: "Compounds the original overstep at the worst possible moment." } },
                   { id: "a2", label: { en: "Step back and let the Chief Officer's authority stand, clearly acknowledging you overstepped." }, consequence: { en: "The Chief Officer's full attention returns to directing the response." }, feedback: { en: "Correct — stepping back matters, but acknowledging it clearly is what actually resolves the confusion, not just quietly dropping it." }, isRecommended: true },
-                  { id: "a3", label: { en: "Quietly stop pushing but don't acknowledge anything." }, consequence: { en: "It's unclear to the Chief Officer whether the disagreement is actually resolved." }, feedback: { en: "Leaves ambiguity about who's actually directing the response, right when clarity matters most." } },
+                  { id: "a3", quality: "acceptable", label: { en: "Quietly stop pushing but don't acknowledge anything." }, consequence: { en: "It's unclear to the Chief Officer whether the disagreement is actually resolved." }, feedback: { en: "Leaves ambiguity about who's actually directing the response, right when clarity matters most." } },
                 ],
               },
             },
@@ -6492,13 +6507,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "The Chief Officer, hearing the observation, asks a clarifying technical question back." },
                 options: [
                   { id: "b1", label: { en: "Give a full, honest technical answer to help inform their decision." }, consequence: { en: "The Chief Officer's decision is now better informed, while the decision itself stays theirs." }, feedback: { en: "Correct — this is exactly what offering input well looks like." }, isRecommended: true },
-                  { id: "b2", label: { en: "Downplay your own observation now that it's being taken seriously, to avoid the responsibility of having suggested it." }, consequence: { en: "The Chief Officer gets a less useful answer than you're actually able to give." }, feedback: { en: "Having the observation taken seriously isn't a reason to now retreat from it." } },
-                  { id: "b3", label: { en: "Use the question as an opening to push harder for your original suggestion." }, consequence: { en: "The exchange shifts from informing the Chief Officer's decision to contesting it again." }, feedback: { en: "A clarifying question is a request for information, not an invitation to redirect the decision." } },
+                  { id: "b2", quality: "poor", label: { en: "Downplay your own observation now that it's being taken seriously, to avoid the responsibility of having suggested it." }, consequence: { en: "The Chief Officer gets a less useful answer than you're actually able to give." }, feedback: { en: "Having the observation taken seriously isn't a reason to now retreat from it." } },
+                  { id: "b3", quality: "poor", label: { en: "Use the question as an opening to push harder for your original suggestion." }, consequence: { en: "The exchange shifts from informing the Chief Officer's decision to contesting it again." }, feedback: { en: "A clarifying question is a request for information, not an invitation to redirect the decision." } },
                 ],
               },
             },
             {
               id: "c_say_nothing",
+              quality: "acceptable",
               label: { en: "Say nothing at all, since it's not your domain and raising it might seem like overstepping." },
               consequence: { en: "The Chief Officer proceeds without an observation that might have been useful." },
               feedback: { en: "Staying out of someone else's decision doesn't mean withholding a genuinely useful observation — those are different things." },
@@ -6506,9 +6522,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The response proceeds without your observation, and afterward it turns out your instinct might have mattered." },
                 options: [
-                  { id: "c1", label: { en: "Still say nothing, since the moment has passed." }, consequence: { en: "The Chief Officer never learns the observation existed at all." }, feedback: { en: "The moment for it to matter in real time has passed, but the moment to share it honestly hasn't." } },
+                  { id: "c1", quality: "acceptable", label: { en: "Still say nothing, since the moment has passed." }, consequence: { en: "The Chief Officer never learns the observation existed at all." }, feedback: { en: "The moment for it to matter in real time has passed, but the moment to share it honestly hasn't." } },
                   { id: "c2", label: { en: "Mention it afterward, honestly, as something worth considering for next time." }, consequence: { en: "The Chief Officer gets the benefit of the observation for future situations, even though this one is already resolved." }, feedback: { en: "Correct — sharing it honestly after the fact still has real value, even though it's later than ideal." }, isRecommended: true },
-                  { id: "c3", label: { en: "Claim you would have said something if asked." }, consequence: { en: "The actual choice that was made — staying silent without being asked — goes unacknowledged." }, feedback: { en: "Deflects from the actual choice made in the moment." } },
+                  { id: "c3", quality: "poor", label: { en: "Claim you would have said something if asked." }, consequence: { en: "The actual choice that was made — staying silent without being asked — goes unacknowledged." }, feedback: { en: "Deflects from the actual choice made in the moment." } },
                 ],
               },
             },
@@ -6817,6 +6833,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_overstate_as_confirmed",
+              quality: "poor",
               label: { en: "Report it as a confirmed problem, to make sure it's taken seriously." },
               consequence: { en: "The Chief Officer treats it as a confirmed issue rather than an ambiguous reading." },
               feedback: { en: "Overstating an ambiguous reading as confirmed doesn't make the report more useful — it makes the response based on it inaccurate from the start." },
@@ -6824,9 +6841,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The Chief Officer responds at full emergency level — halting loading, alerting the Master — based on the overstated report, more than the actual situation may have warranted." },
                 options: [
-                  { id: "a1", label: { en: "Let the response continue at that level, since it's already in motion." }, consequence: { en: "The response proceeds on a picture that was never accurate." }, feedback: { en: "Leaving an inaccurate picture uncorrected doesn't get more accurate just because a response is already underway." } },
+                  { id: "a1", quality: "poor", label: { en: "Let the response continue at that level, since it's already in motion." }, consequence: { en: "The response proceeds on a picture that was never accurate." }, feedback: { en: "Leaving an inaccurate picture uncorrected doesn't get more accurate just because a response is already underway." } },
                   { id: "a2", label: { en: "Immediately clarify that the reading was ambiguous, not confirmed, to right-size the response." }, consequence: { en: "The Chief Officer can now calibrate the response to what's actually known." }, feedback: { en: "Correct — correcting the record lets the response match the actual situation, whatever that turns out to be." }, isRecommended: true },
-                  { id: "a3", label: { en: "Double down on the confirmed-problem framing, to avoid looking like you overreacted." }, consequence: { en: "The Chief Officer continues responding to a picture that isn't accurate." }, feedback: { en: "Protects appearances at the cost of the Chief Officer having an accurate picture to work from." } },
+                  { id: "a3", quality: "poor", label: { en: "Double down on the confirmed-problem framing, to avoid looking like you overreacted." }, consequence: { en: "The Chief Officer continues responding to a picture that isn't accurate." }, feedback: { en: "Protects appearances at the cost of the Chief Officer having an accurate picture to work from." } },
                 ],
               },
             },
@@ -6841,13 +6858,14 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Given the accurate picture, the Chief Officer asks you to keep monitoring closely and report any change." },
                 options: [
                   { id: "b1", label: { en: "Comply, continuing to monitor and report changes accurately." }, consequence: { en: "The Chief Officer continues to get an accurate, up-to-date picture." }, feedback: { en: "Correct — this is exactly what the calibrated report was meant to support." }, isRecommended: true },
-                  { id: "b2", label: { en: "Pay less attention now that the initial report has been filed." }, consequence: { en: "A real change in the reading might go unnoticed." }, feedback: { en: "Undermines the ongoing monitoring the Chief Officer specifically asked for." } },
-                  { id: "b3", label: { en: "Escalate the framing further now that it's being taken seriously, to seem more diligent." }, consequence: { en: "The report drifts away from accuracy again, just in a different direction." }, feedback: { en: "Being taken seriously isn't a reason to overstate the reading — accuracy is what earned that seriousness in the first place." } },
+                  { id: "b2", quality: "acceptable", label: { en: "Pay less attention now that the initial report has been filed." }, consequence: { en: "A real change in the reading might go unnoticed." }, feedback: { en: "Undermines the ongoing monitoring the Chief Officer specifically asked for." } },
+                  { id: "b3", quality: "poor", label: { en: "Escalate the framing further now that it's being taken seriously, to seem more diligent." }, consequence: { en: "The report drifts away from accuracy again, just in a different direction." }, feedback: { en: "Being taken seriously isn't a reason to overstate the reading — accuracy is what earned that seriousness in the first place." } },
                 ],
               },
             },
             {
               id: "c_decide_probably_nothing",
+              quality: "poor",
               label: { en: "Decide it's probably nothing and keep an eye on it without reporting yet." },
               consequence: { en: "The reading isn't reported, based on your own unconfirmed judgment that it's likely nothing." },
               feedback: { en: "An ambiguous reading is exactly the kind of thing the Chief Officer should be the one to judge, not something to be quietly decided at the observation level." },
@@ -6855,9 +6873,9 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_c",
                 situation: { en: "The reading develops further and is now more clearly concerning." },
                 options: [
-                  { id: "c1", label: { en: "Continue treating it as probably nothing, since the earlier read seemed reasonable." }, consequence: { en: "The developing reading continues unreported." }, feedback: { en: "Compounds the original unreported observation as the situation actually develops." } },
+                  { id: "c1", quality: "poor", label: { en: "Continue treating it as probably nothing, since the earlier read seemed reasonable." }, consequence: { en: "The developing reading continues unreported." }, feedback: { en: "Compounds the original unreported observation as the situation actually develops." } },
                   { id: "c2", label: { en: "Report it now, including that it had been developing for a while." }, consequence: { en: "The Chief Officer gets the full picture, including the earlier unreported trend." }, feedback: { en: "Correct — the full history, including the earlier delay, is part of an accurate report now." }, isRecommended: true },
-                  { id: "c3", label: { en: "Report only the current state, without mentioning it had been developing unreported for a while." }, consequence: { en: "The Chief Officer gets an incomplete picture of how the situation actually developed." }, feedback: { en: "Withholding the earlier trend leaves out context that's actually relevant to judging the situation now." } },
+                  { id: "c3", quality: "acceptable", label: { en: "Report only the current state, without mentioning it had been developing unreported for a while." }, consequence: { en: "The Chief Officer gets an incomplete picture of how the situation actually developed." }, feedback: { en: "Withholding the earlier trend leaves out context that's actually relevant to judging the situation now." } },
                 ],
               },
             },
@@ -7187,6 +7205,7 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
           options: [
             {
               id: "a_isolate_immediately",
+              quality: "poor",
               label: { en: "Isolate it now, since it's clearly simple and waiting seems unnecessary." },
               consequence: { en: "The isolation is carried out without the Chief Officer's authorization or knowledge." },
               feedback: { en: "How simple a fix looks doesn't change who holds the authority to direct when it happens — that boundary doesn't shrink with the size of the task." },
@@ -7194,14 +7213,15 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 id: "level_2_a",
                 situation: { en: "The isolation, done without authorization, has an unexpected side effect the Chief Officer wasn't tracking for as part of the overall assessment." },
                 options: [
-                  { id: "a1", label: { en: "Don't mention it, since the fix worked anyway." }, consequence: { en: "The Chief Officer's assessment doesn't account for an effect that actually occurred." }, feedback: { en: "The fix working doesn't mean its effects don't need to be known." } },
+                  { id: "a1", quality: "poor", label: { en: "Don't mention it, since the fix worked anyway." }, consequence: { en: "The Chief Officer's assessment doesn't account for an effect that actually occurred." }, feedback: { en: "The fix working doesn't mean its effects don't need to be known." } },
                   { id: "a2", label: { en: "Immediately report what was done and its effect." }, consequence: { en: "The Chief Officer's assessment is now accurate and complete." }, feedback: { en: "Correct — disclosing the action and its effect is what lets the Chief Officer actually account for it." }, isRecommended: true },
-                  { id: "a3", label: { en: "Quietly note it in your own log without telling anyone." }, consequence: { en: "A private record exists, but the Chief Officer's actual assessment remains incomplete." }, feedback: { en: "A private log doesn't inform the person who actually needs the information now." } },
+                  { id: "a3", quality: "poor", label: { en: "Quietly note it in your own log without telling anyone." }, consequence: { en: "A private record exists, but the Chief Officer's actual assessment remains incomplete." }, feedback: { en: "A private log doesn't inform the person who actually needs the information now." } },
                 ],
               },
             },
             {
               id: "b_report_and_wait_idle",
+              quality: "acceptable",
               label: { en: "Report the assessment and wait for authorization, without doing anything further in the meantime." },
               consequence: { en: "No unauthorized action is taken, but the waiting time isn't used for anything." },
               feedback: { en: "Correct not to act before authorization — though the waiting time itself could have been used without crossing that line." },
@@ -7210,8 +7230,8 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Authorization arrives, but no preparation was done in advance, so the isolation now starts from scratch." },
                 options: [
                   { id: "b1", label: { en: "Begin preparing properly now, before executing, accepting the additional time this takes." }, consequence: { en: "The isolation is carried out correctly, just later than it could have been." }, feedback: { en: "Correct — proper preparation still matters, even though starting it earlier would have saved time." }, isRecommended: true },
-                  { id: "b2", label: { en: "Rush the execution without proper preparation, to make up for the lost time." }, consequence: { en: "The isolation is carried out with less care than the situation calls for." }, feedback: { en: "Cutting corners now doesn't recover the earlier lost time safely — it just adds a new risk." } },
-                  { id: "b3", label: { en: "Point out that authorization should have come sooner, as the reason for the delay." }, consequence: { en: "Attention shifts to assigning blame rather than completing the isolation properly." }, feedback: { en: "The choice not to prepare in advance was yours to make differently — the delay isn't only about when authorization arrived." } },
+                  { id: "b2", quality: "poor", label: { en: "Rush the execution without proper preparation, to make up for the lost time." }, consequence: { en: "The isolation is carried out with less care than the situation calls for." }, feedback: { en: "Cutting corners now doesn't recover the earlier lost time safely — it just adds a new risk." } },
+                  { id: "b3", quality: "acceptable", label: { en: "Point out that authorization should have come sooner, as the reason for the delay." }, consequence: { en: "Attention shifts to assigning blame rather than completing the isolation properly." }, feedback: { en: "The choice not to prepare in advance was yours to make differently — the delay isn't only about when authorization arrived." } },
                 ],
               },
             },
@@ -7226,8 +7246,8 @@ export const SPECIALIZED_OPERATION_REGISTRY: Record<SpecializedOperationId, Spec
                 situation: { en: "Authorization arrives." },
                 options: [
                   { id: "c1", label: { en: "Execute immediately, since preparation is already done." }, consequence: { en: "The isolation is carried out promptly and correctly." }, feedback: { en: "Correct — this is exactly what the preparation was for." }, isRecommended: true },
-                  { id: "c2", label: { en: "Still wait further or second-guess, even after receiving authorization." }, consequence: { en: "The correction is delayed for no clear reason." }, feedback: { en: "The authorization just given is real — hesitating past that point adds delay without adding safety." } },
-                  { id: "c3", label: { en: "Execute quickly, but skip a step from the already-prepared safe process to go even faster." }, consequence: { en: "The isolation is carried out with a step skipped that the preparation time was meant to preserve." }, feedback: { en: "Having time to prepare properly is exactly what removes any reason to skip a step now." } },
+                  { id: "c2", quality: "acceptable", label: { en: "Still wait further or second-guess, even after receiving authorization." }, consequence: { en: "The correction is delayed for no clear reason." }, feedback: { en: "The authorization just given is real — hesitating past that point adds delay without adding safety." } },
+                  { id: "c3", quality: "poor", label: { en: "Execute quickly, but skip a step from the already-prepared safe process to go even faster." }, consequence: { en: "The isolation is carried out with a step skipped that the preparation time was meant to preserve." }, feedback: { en: "Having time to prepare properly is exactly what removes any reason to skip a step now." } },
                 ],
               },
             },
