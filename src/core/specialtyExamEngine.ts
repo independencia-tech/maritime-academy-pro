@@ -48,7 +48,7 @@ import type { VesselTypeId } from "./vesselTypeRegistry";
 // SpecializedLessonShared.tsx, a lazy-loaded component) so it can be
 // statically imported by routing code without pulling that heavy module
 // into the main bundle.
-export const SPECIALTY_ENABLED_SHIP_TYPES: VesselTypeId[] = ["ahts", "container_ship", "bulk_carrier", "general_cargo"];
+export const SPECIALTY_ENABLED_SHIP_TYPES: VesselTypeId[] = ["ahts", "container_ship", "bulk_carrier", "general_cargo", "psv", "roro_passenger", "research_vessel", "fpso"];
 
 export type SpecialtyExerciseType = "sequence_reordering" | "error_identification" | "readiness_checklist";
 
